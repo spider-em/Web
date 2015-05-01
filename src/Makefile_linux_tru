@@ -1,0 +1,39 @@
+# 
+# PURPOSE:  MAKEFILE FOR Linux WEB Using 24 bit TrueColor Visual 
+#           Uses the GNU gcc compiler & X/Motif libraries
+#           Dynamic link with static link for Motif libraries: libXm.a libXp.a
+#
+# USAGE:    on patroon2
+#           sw  ; make -f Makefile_linux_tru
+#           swt ; clean ; $swb/web_linux_tru_tmp dat
+#
+# Use Gnu compiler
+CC = gcc
+
+#-mtune=generic  DID NOT WORK
+# Define compiler flags & header include locations
+# Define cpp variable WEB_BGFG to overcome KDE & Gnome WM focus bug
+# Define cpp variable WEB_24   to use Directcolor 24 visual
+# Define cpp variable WEB_TRUE to use Truecolor   24 visual
+
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DWEB_TRUE -DWEB_BGFG
+
+LF     = 
+
+PGM    = web_linux_tru
+
+LIB    = lib$(PGM).a
+
+# Links X dynamic and Motif static: libXm.a libXp.a
+ OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm    
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+../bin/$(PGM) :  $(LIB)
+	@echo "        linking ../bin/$(PGM)"
+	gcc  $(LF) $(LIB) -u main $(OTHERLIBS) -o ../bin/$(PGM)_tmp
+	@chmod ug+w ../bin/$(PGM)_tmp
+
+$(LIB) :  $(ELEMENTS)

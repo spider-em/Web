@@ -1,0 +1,39 @@
+# 
+# PURPOSE:  MAKEFILE FOR Linux WEB Using 24 bit TrueColor Visual 
+#           Uses the GNU gcc compiler & X/Motif libraries
+#           Static link for all libraries except:  libm.so.6, libc.so.6 & /lib/ld-linux.so.2 
+#
+# USAGE:    on patroon2
+#           sw  ; make -f Makefile_linux_trudmc
+#           swt ; clean ; $swb/web_linux_trudmc_tmp dat
+#
+# Use Gnu compiler
+CC = gcc
+
+#-mtune=generic  DID NOT WORK
+# Define compiler flags & header include locations
+# Define cpp variable WEB_BGFG to overcome KDE & Gnome WM focus bug
+# Define cpp variable WEB_24   to use Directcolor 24 visual
+# Define cpp variable WEB_TRUE to use Truecolor   24 visual
+
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DWEB_TRUE -DWEB_BGFG
+
+LF     = 
+
+PGM    = web_linux_tru
+
+LIB    = lib$(PGM).a
+
+# Static link for all libraries except:  libm.so.6, libc.so.6 & /lib/ld-linux.so.2
+OTHERLIBS  = /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a /usr/X11R6/lib/libXt.a /usr/X11R6/lib/libX11.a /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libSM.a /usr/X11R6/lib/libICE.a /usr/X11R6/lib/libXext.a -lm
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+../bin/$(PGM) :  $(LIB)
+	@echo "        linking ../bin/$(PGM)dmc"
+	gcc  $(LF) $(LIB) -u main $(OTHERLIBS) -o ../bin/$(PGM)dmc_tmp
+	@chmod ug+w ../bin/$(PGM)dmc_tmp
+
+$(LIB) :  $(ELEMENTS)

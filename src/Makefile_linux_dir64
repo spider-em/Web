@@ -1,0 +1,39 @@
+# 
+# PURPOSE:  MAKEFILE FOR Linux WEB Using 24 bit DirectColor Visual 
+#           Uses the GNU gcc compiler & X/Motif libraries
+#           Dynamic linking 64 bit
+#
+# USAGE:    on lumpur!!!!
+#           sw  ; make -f Makefile_linux_dir64
+#           swt ; clean ; $swb/web_linux_dir64_tmp dat
+#
+# Use Gnu compiler
+CC = gcc
+
+#-mtune=generic  DID NOT WORK
+# Define compiler flags & header include locations
+# Define cpp variable WEB_BGFG to overcome KDE & Gnome WM focus bug
+# Define cpp variable WEB_24   to use Directcolor 24 visual
+# Define cpp variable WEB_TRUE to use Truecolor   24 visual
+
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DWEB_24 -DWEB_BGFG
+
+LF     = 
+
+PGM    = web_linux_dir64
+
+LIB    = lib$(PGM).a
+
+# Links X dynamic and Motif dynamic
+OTHERLIBS =  -lXm -lXt -lX11 -lXmu -lm    
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+../bin/$(PGM) :  $(LIB)
+	@echo "        linking ../bin/$(PGM)"
+	gcc  $(LF) $(LIB) -u main $(OTHERLIBS) -o ../bin/$(PGM)_tmp
+	@chmod ug+w ../bin/$(PGM)_tmp
+
+$(LIB) :  $(ELEMENTS)
