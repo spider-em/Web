@@ -1,0 +1,185 @@
+<html>
+<head>
+<title> Web : Random Conical Tilt Series Interactive Particle Selection</title>
+</head>
+
+
+<body>  
+
+<dl>
+<dt><b>PURPOSE:</b></dt>
+<dd> Select marker/image coordinates from a tilted/untilted 
+          pair of micrographs (Single exposure random conical tilt
+          series), determine tilt-angle (the sign of the tilt-angle
+          is not determined) and tilt-axis directions in untilted 
+          (zero degree) and tilted image.</dd>
+<p />
+
+<p>
+<dt><b> USAGE:</b></dt>   
+          <dd>
+          <ol>
+
+          <li>Display untilted (left) image.</li>               <br />
+
+          <li>Display tilted (right) image.</li>                <br />
+
+          <li>Give suffix number for document files that are created / read.
+          If these doc. files don't exist in  the current directory
+          they will be created there. If these files already exist they
+          are loaded and particle picking starts with the next
+          particle in the series.</li>                          <br />
+
+          <li>If displayed images are same size as the original 
+          micrographs which will be used for windowing
+          leave the reduction factor at 1.
+           
+          Push: <i>ACCEPT</i></li>                              <br />
+
+          <li>Pick particle location from untilted (left) 
+          image using left button. Locations are saved in 
+          doc file when picked.</li>                            <br />
+ 
+          <li> Pick corresponding particle location from 
+          tilted (right) image using left button. At 
+          <b>least 5</b> particle pairs have to be selected 
+          (seven pairs is preferable). The particles 
+          should be distributed throughout the area of the image.          
+          The previously selected particle location can 
+          be discarded using the right button.</li>             <br />
+
+          <li>Use middle button to call menu to:                <br />
+             <ul>
+
+             <li>Determine tilt and axes rotation angles.
+                 <dl><dd>Tilt angle is found by comparing  areas of 
+                     triangles on both images. The <i>"arealim"</i> 
+                     parameter from the "Expert menu" sets min 
+                     triangle area used for this comparison.</dd></dl></li>   
+
+             <li>Shift images to view hidden areas. 
+                 <dl><dd>Pans images independently. </dd></dl>        </li>  
+
+             <li>Enhance contrast of images.           
+                 <dl><dd>Alters images independently.</dd></dl>       </li>     
+
+             <li>Pick background window locations from images.  
+                 <dl><dd>User sets areas.</dd></dl>                    </li>     
+
+             <li>Erase labels from image.</li>
+                 <dl><dd> Points are not erased from doc files.</dd></dl> </li>
+
+             <li>Draw picked particle locations/numbers 
+                 on images.                                            </li>   
+
+             <li>Draw fitted locations.                                 </li>  
+
+             <li>Save angles in doc file: dcbxxx 
+                  <dl><dd>When satisfied with 
+                        fitting parameters.</dd></dl>                  </li> 
+               
+             <li>Choose expert menu.                                   </li>  
+             </ul></li>
+
+          <br />
+          <li>Continue picking particles.  After selecting location in
+          untilted image, the predicted location in the tilted (right)
+          image will be indicated and the user may select the point. 
+          At any time a new tilt axis can be determined using all of 
+          the selected points.</li>
+          </ol>
+
+<br />
+<dt><b>EXAMPLE OF OPERATION SEQUENCE:</b></dt>
+          <dd>
+          <table >
+          <th>Step.<th> Purpose</th> </tr>
+          <tr><td>Display untilted (left) image</td></tr>
+
+          <tr><td>Display tilted image</td></tr>
+
+          <tr><td> Pick particle locations                </td>
+              <td> &nbsp; &nbsp; After at least 
+                  5 (better 7) such locations  
+                  are picked   .                         </td></tr>
+
+          <tr><td> Determine tilt and axes angles         </td>
+              <td> &nbsp; &nbsp; Can later be run 
+                   again at any time when more 
+                   locations are picked.                  </td></tr>
+       
+          <tr><td>Repeat                                  </td> 
+              <td>&nbsp; &nbsp; Pick remaining 
+                  particles                               </td></tr>
+
+          <tr><td>Draw locations.                         </td>
+              <td> &nbsp; &nbsp; Can be used any 
+                   time to display locations.             </td> </tr>       
+          </table> 
+          </dd>
+
+<br />
+<dt><b>OUTPUT DOCUMENT FILES:</b></dt>
+          <dd>
+          <table>
+          <tr><th>Name</th>    <th>Contents </th>                                     </tr>
+          <tr><td>dcuxxx</td>  <td>&nbsp; &nbsp; Particle coordinates in untilted image        </td></tr>
+          <tr><td>dctxxx</td>  <td>&nbsp; &nbsp; Particle coordinates in tilted image          </td></tr>
+          <tr><td>dcbxxx</td>  <td>&nbsp; &nbsp; Data common to both images (tilt angle, etc.) </td></tr>
+          </table ></dd>
+
+<br />
+<dt><b>DOCUMENT FILE CONTENTS:</b></dt>
+</dl>
+<pre>
+dcuxxx:  (Coordinates in untilted image)
+
+ ; dat/dat  dcu000.dat   Mon Jun 20 09:48:07 2011
+ ;             Particle    Reduced-X,Y-location    Original-X,Y-location   
+ ;
+ 0001 6            1          382          214        382          214       1
+ 0002 6            2           74          339         74          339       1
+ 0003 6            3          205          207        205          207       1
+
+------------------------------------------------------------------------------
+
+dctxxx:  (Coordinates in tilted image)
+
+ 0001 6            1          404          247          404          247     1
+ 0002 6            2           95          354           95          354     1
+ 0003 6            3          234          255          234          255     1
+
+------------------------------------------------------------------------------
+
+dcbxxx:  (Data common to the tilt pair)
+
+ ; dat/dat  dcb000.dat   Mon Jun 20 10:30:16 2011
+
+ ;  Key: 121                    #Markers-fitted   #Backgrounds 
+ 0121 6        0    0    0    0      14             0
+
+ ;  Key: 122   Fitted-flag 
+ 0122 6          1         
+
+ ;  Key: 123    Untilted-X,Y-Origin      Tilted-X,Y-Origin   Img-Reduction 
+ 0123 6          382          214      406.683      245.944       1          
+
+ ; Key: 124 Tilt-angle  Untilted,tilted-axis-dir (Theta, Gamma,Phi) 
+ 0124 6      50.3053     -78.7234     -77.8619      0    0      0
+
+</pre>
+
+<dl>
+<dt><b>Subroutines:</b></dt>
+
+<dd>   fitdoc, pickp, pickmen, fitmen, fitorigin, fitsav,
+       pickdraw, fitdocmen, backmen, spoutfile</dd>
+</dl>
+
+<hr>
+<small> 
+  Last updated on 6/22/11 &nbsp;&nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<TITLE>WEB : CORRMAP</TITLE>
+</HEAD>
+
+<BODY>
+
+<H3>Correspondence map</H3> 
+ 
+Displays a correspondence map containing numerical labels
+for images on the screen. The user can then draw a polygon 
+enclosing a group of image numbers. The average of the group of images
+contained within the polygon can be displayed, and the average image
+can stored in a file.  
+The average image display can be temporary or permanent. 
+Additionally a list of the image numbers in the group can be
+saved to a document file.
+<P>
+
+Input for this command:
+<DL>
+<DT> document file name
+<DD> file contains a list of image numbers (as document file keys).  
+   The document file is created by converting the 
+   IMC*** file (from correspondance analysis) to a document 
+   format using the 
+   <A HREF="../../spider/docs/index.html">SPIDER</A> operation : 
+   <A HREF="../../spider/docs/man/sdc.html">SD C</A> .
+<P>  
+<DT>Image file name template
+<DD>Template for the images whose numbers are listed in the document file
+<P>
+
+<DT>First image key
+<DD>First image number included in  map
+<P>
+
+<DT>Last image key
+<DD>Last image number included in  map.  (This allows skipping some
+    images listed in the document file).
+<P>
+
+<DT>X axis factor register
+<DD>Register in document file which contains factor to be plotted on
+    X axis.
+<P>
+
+<DT>Y axis factor register
+<DD>Register in document file which contains factor to be plotted on
+    Y axis.
+<P>
+
+<DT>Extent (std. dev.)
+<DD>The extent of outlying image
+    locations which are included in the displayed map. 
+<P>
+
+<DT>Lower image Threshold
+<DT>Upper image Threshold
+<DD>Thresholds (in std. deviation units)
+    which can be applied to the average image created from a group. 
+
+
+<DT>Marker radius
+<DD>Radius used for image locations when image numbers are not displayed. 
+<P>
+
+<DT>Show Image Numbers
+<DD>A toggle to specify whether image number of only locations are
+shown on the map. 
+<P>
+</DL>
+
+<HR>
+<SMALL> 
+Last updated : 10/8/99 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ArDean Leith
+</SMALL>
+
+</BODY>
+</HTML>

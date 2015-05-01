@@ -1,0 +1,152 @@
+<html>
+<head>
+<title>WEB: RESOURCES & COMMAND LINE OPTIONS</TITLE>
+</head>
+
+<body>
+
+<h2>Command-line Arguments</h2>
+
+Certain variables in Web can be initialized from the command line.   
+The final command line argument is usually interpreted as the 
+data file extension.  However if you use multiple command line
+arguements you may have to specify the data file extension using
+the following argument:<BR>
+<var>-ext data-file-extension</var>.<BR>
+(There is a bug in IRIX Xt which fails to input more than 2-3
+command line options.  We are awaiting a patch for
+this bug.)
+
+
+<H3>Web specific  Command-line arguments</H3>
+The following command line arguments are specific to Web and alter 
+configuration variables which are commonly set inside Web menus.<P>
+
+<PRE>
+option           resource affected   value set to     variable affected
+-----------      -----------------   -------------    ------------------
+-cfg             *cursorForeground   Next argument    Cursor foreground color
+-cbg             *cursorBackground   Next argument    Cursor background color   
+-cursor          *cursor             Next argument    Cursor       
+-ext             *dataExt            Next argument    File extension
+-listfiles       *listFiles          "FALSE"          List files
+-lutdir          *lutDirectory       Next argument    LUT directory     
+-marx            *imageXMargin       Next argument    Image X margins
+-mary            *imageYMargin       Next argument    Image Y margins    
+-marlef          *imageLeftMargin    Next argument    Image left margin    
+-martop          *imageTopMargin     Next argument    Image top margin    
++names           *listNames          "TRUE"           List names of images
+-nsam8           *nsam8              Next argument    Raw image columns
+-nrow8           *nrow8              Next argument    Raw image rows    
+-nslice8         *nslice8            Next argument    Raw image slices    
+-reduction       *imageReduction     Next argument    Image size reduction
+-wfg             *webForeground      Next argument    Image area foreground
+-wbg             *webBackground      Next argument    Image area background 
+</PRE>
+
+
+<H3>Standard Xt Command-line Arguments</H3>
+The following command line arguments are commonly used by all standard
+Xt applications; most of them will affect Web's operation or appearance.
+<p>
+
+<PRE>
+option           resource affected   value set to     parameter affected
+-----------      -----------------   -------------    ------------------
+-bg              *background         Next argument    Background color
+-background      *background         Next argument    Background color
+-bd              *borderColor        Next argument    Border color
+-bw              .borderWidth        Next argument    Width of border in pixels
+-borderwidth     .borderWidth        Next argument    Width of border in pixels
+-bordercolor     *borderColor        Next argument    Color of border
+-display         .display            Next argument    Server to use
+-fg              *foreground         Next argument    Foreground color
+-fn              *font               Next argument    Font name
+-font            *font               Next argument    Font name
+-foreground      *foreground         Next argument    Foreground color
+-geometry        .geometry           Next argument    Size and position
+-iconic          .iconic             "on"             Start as an icon
+-name            .name               Next argument    Name of application
+-reverse         *reverseVideo       "on"             Reverse video
+-rv              *reverseVideo       "on"             Reverse video
++rv              *reverseVideo       "off"            No Reverse Video
+-selectionTimeot .selectionTimeout   Null             Selection timeout
+-synchronous     *synchronous        "on"             Synchronous debug mode
++synchronous     *synchronous        "off"            Synchronous debug mode
+-title           .title              Next argument    Title of application
+-xrm             value of argument   Next argument    Depends on argument
+</pre>
+ 
+
+
+<a name="resources"></a> 
+<h3>Web specific Resources</h3>
+
+Certain variables in Web can be set in Xt resource files 
+(typically the .Xdefaults file in your home directory).  
+
+<pre>
+resource                 meaning                          default
+-----------              -----------------                -------
+cursor                   web cursor number                22
+cursorForeground         cursor foreground color number   147
+cursorBackground         cursor background color number   137
+dataExt                  data file extension              "DAT"
+fct                      surface attenuation factor       1.0
+scaleVal                 surface scale factor             1.0
+reflectionFactor         surface reflection factor        0.5
+imageReduction           image scaling reduction          1
+imageXMargin             image x margin                   1
+imageYMargin             image y margin                   1
+imageLeftMargin          image left margin                0
+imageTopMargin           image top margin                 0
+listFiles                list files in file selector      True
+magSizeX                 magnifier x size                 64
+magSizeY                 magnifier y size                 64
+markerRadius             marker circle radius             5
+nsam8                    raw image columns                940
+nrow8                    raw image rows                   940
+nslice8                  raw image slices                 1
+overlayColor             overlay color number             157
+webForeground            web foreground color number      137 
+webBackground            web background color number      0
+</PRE>
+</BODY>
+
+<H4> Sample of some possible  .Xdefault  file contents</H4>
+
+<PRE>
+Web*geometry:  1180x924+100+50
+Web*imageReduction:  1
+Web*geometry:  1180x924+100+50
+Web*cursor: 22                 
+Web*cursorForeground: 147
+Web*cursorBackground: 137
+Web*dataExt: "DAT"
+Web*fct: 1.0
+Web*scaleVal: 1.0
+Web*reflectionFactor: 0.5
+Web*imageReduction: 1
+Web*imageXMargin: 1
+Web*imageYMargin: 1
+Web*imageLeftMargin: 0
+Web*imageTopMargin: 0
+Web*listFiles: True
+Web*listNames: False
+Web*magSizeX: 64
+Web*magSizeY: 64
+Web*markerRadius: 5
+Web*nsam8: 940
+Web*nrow8: 940
+Web*nslice8: 1
+Web*overlayColor: 157
+Web*webForeground: 137 
+Web*webBackground: 0
+</pre>
+
+<hr>
+<small> 
+Last Updated : 12/31/97 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ArDean Leith
+</small>
+</html>

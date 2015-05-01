@@ -1,0 +1,60 @@
+<html>
+<head>
+   <title>Motif: Installation on Linux</title>
+</head>
+
+<body>
+
+
+   <p>
+    <i>Web</i> is written in <i>C</i> for use with the 
+   X WINDOW system under Motif.  Most Linux distributions contain
+   the Motif headers and run-time libraries however you may need
+   to install them on your system as they sometimes not part of the
+   default installation.</p>
+
+
+   <p> However Fedora Core 6 no longer comes with OpenMotif and therefore 
+   the <I>libXm.so.3</I> library is
+   not provided in /usr/lib and can not be downloaded easily through a
+   package manager.  Therefore, users installing on FC6 need to do the
+   following or something like it 
+   (<a href="http://codtech.com/wiki/index.php/Citrix_ICA_Client_10_on_Fedora_Core_6">reference</a>)
+   </p>
+
+   <ol>
+
+   <li><p>
+   Download and install XFree86-stub
+   To install OpenMotif you need to satisfy some requirement of the legacy
+   package. Download and install XFree86-stub from
+   <a href="http://codtech.com/downloads/XFree86-stub">http://codtech.com/downloads/XFree86-stub</a>.<br />
+   E.g. <br />
+   wget http://codtech.com/downloads/XFree86-stub/XFree86-stub-1.0-2.noarch.rpm   <br />
+   sudo rpm -Uvh XFree86-stub-1.0-2.noarch.rpm
+   </li></p>
+
+   <li><p>
+   Download and install OpenMotif
+   Download OpenMotif 2.2.2 from Fedora Legacy
+   <a href="http://www.fedoralegacy.org/updates/RH9/2005-05-12-FLSA_2005_152804__Updated_op+enmotif_packages_fix_image_vulnerability.html">
+   http://www.fedoralegacy.org/updates/RH9/2005-05-12-FLSA_2005_152804__Updated_openmotif_packages_fix_image_vulnerability.html</a>
+   or one of the mirrors and install it.
+   E.g. <br />   
+   wget http://mirrors.ircam.fr/pub/fedoralegacy/legacy/fedora/1/updates/i386/openmotif-+2.2.2-16.1.2.legacy.i386.rpm <br />
+   sudo rpm -Uvh openmotif-2.2.2-16.1.2.legacy.i386.rpm <br />
+   </li></p>
+</ol>
+
+   <p>Yhanks to: John Rubinstein, U. of T. for some of the above info. (Mistakes are mine not his). 
+<br />
+<hr>
+
+<small>
+  Source: motif-inst-linux.html  &nbsp;&nbsp;&nbsp; 
+  Updated: 10/30/07            &nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+
+</body> 
+</html>

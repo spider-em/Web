@@ -1,0 +1,496 @@
+<html>
+
+<head>
+  <title>Web</title>
+  <meta name="description" content="Home page for Wadsworth Lab's Web Software
+      for Interacting with Electron Microscopy Images"></meta>
+
+  <meta name="keywords" content="image processing software, SPIDER,
+          three dimensional reconstruction, volume visualization,
+          single particle reconstruction, object segmentation, 
+          Michael Radermacher,  ArDean Leith"></meta> 
+
+<style type="text/css">
+<!--
+div.banner{
+   width:100%;
+   margin-left:0px;
+   padding:5px 10px 5px 12px; 
+   font-size:40px;
+   font-weight:bold;
+   font-family:sans-serif;
+   }
+
+div.leftcontent {
+   margin-left:11px;
+   padding:18px 3px 0px 8px;
+   font-size:21px;
+   font-weight:bold;
+   line-height:160%;
+  }
+
+div.leftcontentinside {
+   margin-left:11px;
+   padding:0px 3px 0px 8px;
+   font-size:21px;
+   font-weight:bold;
+   line-height:110%;
+  }
+p.mh4{
+   font-size:19px;
+   }
+p.mh5{
+   margin-left:14px;
+   font-size:16px;
+   }
+
+div.rightintro {
+   margin-left:12px;
+   padding:12px 3px 0px 8px;
+   font-size:20px;
+   xfont-weight:bold;
+   line-height:110%;
+  }
+
+div.rightcontent {
+   margin-left:12px;
+   padding:2px 3px 20px 8px;
+   font-size:17px;
+   xfont-weight:bold;
+   line-height:108%;
+  }
+
+div.optab {
+   padding-left : 5% ;
+   xfont-weight: bold;
+  }
+-->
+</style>
+
+<noicon />
+</head>
+
+<body>
+
+<!-- ============================= banner (table) ========================== -->
+
+<div class="banner">  
+
+<table cellpadding="9" 
+   style='background-image:url(../../spider/docs/img/spiderweb0_back.jpg); 
+          width:100%;'>
+
+  <tr>
+  <td width="252px"> <img width="216" height="256" alt="Web Surface Rendering" src="../docs/smallweb.gif" > </td>
+  <td><h1 align="center">Web</h1></td>
+  <td align="right"> <img width="256" height="286" alt="Web Image Montage" src="../docs/smallweb1.gif" > </td>
+
+  </tr>
+</table>
+
+<hr />
+</div>  
+
+ <!-- ====================== leftcontent ============ -->
+
+<table border="1">
+
+<tr valign="top">
+ 
+<td>
+<div class="leftcontent">  
+   <p class="mh4"> <a href="whatsnew.html"> WHATS NEW</a></p>
+   <p class="mh4"> <a href="../../spider/docs/faq.html">FAQ</a></p>
+   <p class="mh4"> <a href="../../spider/docs/spider_avail.html">AVAILABILITY</a></p>
+</div>
+
+<div class="leftcontentinside"> 
+   <p class="mh4"> INSTALLATION</a></p>
+      <p class="mh5"> 
+         <a href="web-inst-linux.html">  Linux</a>      <br />
+      </p>
+      <p class="mh5"> 
+         <a href="jweb-inst-linux.html"> JWeb (Linux)</a> <br />
+         <a href="jweb-inst-win.html">   JWeb (Windows)</a>
+      </p>
+</div>
+
+</td>
+
+<!-- ========================================= rightintro === -->
+
+<td valign="top" style='background-image:url(../../spider/docs/img/spiderweb_back.jpg)'>
+
+<div class="rightintro"> 
+
+<p>
+<i>Web</i> is a graphical user interface for displaying 
+and interacting with <a href="../../spider/docs/spider.html"> <i>SPIDER</i></a>  
+format images. It was developed at the
+<a href="http://www.wadsworth.org/index.html ">Wadsworth Center</a> in   
+Albany, New York. 
+<i>Web</i> is written in "C" and runs under X-Window/Motif.   
+<i>Web</i> was developed by 
+<a href="../../spider/docs/agl.html">ArDean Leith</a> 
+with contributions from  L. Odesanya, Y.H. Li, M. Ladjadj, A. Dent, 
+<a href="http://physiology.med.uvm.edu/radermacher/">M. Radermacher</a>, 
+<a href="http://www-bmb.med.uth.tmc.edu/faculty/Penczek/Penczek.html">P. Penczek</a>, and  
+<a href="http://www.wadsworth.org/resnres/bios/frank.htm">J. Frank</a>.  
+X-Window/Motif <i>Web</i> has been in use since 1990 and contains  
+50,000 lines of code.
+A <a href="jweb.html">Java based <i>Web</i></a> with fewer operations, 
+written by Bimal Rath, is also available for use on 
+<a href="jweb-inst-win.html">Windows</a> and 
+<a href="jweb-inst-linux.html">Linux</a>.
+</p>
+</div>
+
+<hr />
+
+<!-- ========================================= rightcontent === -->
+<div class="rightcontent"> 
+
+<h4>USAGE</h4>
+
+<p>Certain variables in <i>Web</i> can be initialized from 
+   <a href="webopt.html"> Command Line Arguments</a>
+    or in your <a href="webopt.html#resources">Xt Resource</a> files. </p>
+
+Operations are grouped under five main menu headings:
+<p>
+<div class="optab">
+   <table>  
+   <tr><td><a href="#OPTIONS">OPTIONS</a>  </td><td>Alter the way information is displayed during a session.  </td></tr>
+   <tr><td><a href="#COMMANDS">COMMANDS</a></td><td>Operations which display or analyze 2D or 3D images.      </td></tr> 
+   <tr><td><a href="#EDIT">EDIT</a>        </td><td>Operations which edit 2D or 3D images.                    </td></tr> 
+   <tr><td><a href="#INFO">INFO</a>        </td><td>Information on workstation and <i>Web </i> capabilities.  </td></tr> 
+   <tr><td><a href="#SYSTEM">SYSTEM</a>    </td><td>Settings for file names and for exiting the application   </td></tr> 
+   </table>  
+</div>
+</p>
+
+<p>
+Additionally the main menu has an area for often used operations:
+<div class="optab">
+   <table>  
+   <tr><td> IMAGE     </td> <td>Display image/volume     </td></tr>
+   <tr><td> CLEAR     </td> <td>Clear images             </td></tr> 
+   <tr><td> EXIT      </td> <td>Exit Web                 </td></tr> 
+   <tr><td> CONTRAST  </td> <td>Set contrast             </td></tr> 
+   <tr><td> SCALING   </td> <td>Set image scaling (size) </td></tr> 
+   </table>  
+</div>
+</p>
+
+<p>Operations are selected by pointing at the relevant menu heading and 
+   then selecting the menu sub-option (and sub-sub-option) using the left 
+   mouse button. <p>
+
+<ul>    
+<li> <strong><a name="OPTIONS"> OPTIONS</a></strong>
+
+   <ul>		
+   <li><strong>Image</strong> <br />
+   Alters image display charactaristics:
+   <ul>
+      <li>Left & top margin around image display area   </li>
+      <li>X & Y margin around each image                </li>
+      <li>Size reduction for image display (-2 is a
+             magnification of 2X)                       </li>
+      <li>Montage movie flag (keeps next image 
+            in same location as current image)          </li>
+      <li>List file names below images                  </li>
+      <li>Start new row or screen of images             </li>
+      <li>Toggle for listing files in file-selector
+             (toggle off if you have hundreds of files!)</li>
+   </ul>
+  
+   <li><strong>Contrast</strong>            <br />
+   Enhances contrast of image using thresholding.</li>
+
+   <li><strong>Cursor</strong>              <br />
+   Selects cursor style from a pallette.</li>
+
+   <li><strong>Display</strong>             <br />
+   Turns off scrolling text window.</li>
+
+   <li><strong>Font</strong>                <br />
+   <li>Selects font for drawing text.</li>
+
+   <li><strong>Magnify</strong>             <br />
+   Sets magnification area and magnification factor.</li>
+
+   <li><strong>Color</strong>                      <br />
+       Selects color for graphics characteristics: <br /> 
+       <table>
+       <tr><td>   Foreground     </td><td>Color for graphics lines, text, etc.</td><tr>
+       <tr><td>   Background     </td><td>Color for image & graphics surround </td></tr>
+       <tr><td>   Overlay        </td><td>Color for Overlay (masking)         </td></tr>
+       <tr><td>   Cursor         </td><td>Color for cursor                    </td></tr>
+       <tr><td>   Cursor outline </td><td>Color for cursor border             </td></tr>
+       </table>
+   </li>
+
+   <li><strong>Line Style</strong>             <br />
+   Alters line style (in some operations)      </li>
+
+   <li><strong>Line Width</strong>             <br />
+   Alters line width (in some operations)      </li>
+
+   </ul>
+</li>
+</p>
+
+<p>
+<li><strong><a name="COMMANDS">COMMANDS</a></strong> 
+   <ul>
+   <li><strong>Clear </strong><br />
+   Clears screen.</li>
+
+   <li><strong>Image </strong><br />
+   Shows an image. Will try to place the image
+   on the screen so that it does not overlap previous images.</li>
+
+   <li><strong>Montage </strong><br />
+   Shows a montage of 2-D images or 3-D slices or a stack.  For 3-D slices
+   the first slice in the file is z = 1 (a right-handed
+   coordinate system).
+
+   <ul>   
+      <li> x-slices have y-axis horizontal (y=1 at left) 
+      and z-axis vertical (z=1 at top), starting with x = 1.
+
+      <li> y-slices have x-axis horizontal (x=1 at left) 
+      and z-axis vertical (z=1 at top), starting with y = 1.
+
+      <li> z-slices have x-axis horizontal (x=1 at left) 
+          and y-axis vertical (y=1 at top), starting with z = 1.
+   </ul>
+   Use the movie toggle in the Image Option menu to force all
+   images to be displayed at the same location.</li>
+
+   <li><strong>Surface</strong><br />
+   Does a fast surface display from a 3D file.  User can
+   specify surface level (threshold), contribution from 
+   depth versus surface reflectivity, scaling, and rotation. 
+   A movie option creates frames of a rotation sequence.
+   Further <a href="./surface.html"> details</a>.</li>
+
+   <li><strong>Shift</strong><br />
+   Pans previously displayed image within its original 
+   display area. Can be used for images too large for the <i>Web </i> 
+   window.</li>
+
+   <li><strong>Annotate </strong><br />
+   Draws circles and numerical labels on top of
+   an image.  Positions for circles and values for labels are
+   read from a <i>SPIDER </i> document file.  User can specify 
+   registers for x & y coordinates and label.</li>
+
+   <li><strong>Categorize </strong><br />
+   Displays montage of individule or stacked images.  Asks for new 
+   <i>SPIDER </i> document file name.  User can assign a category 
+   to each image using mouse to select images.  The 
+   category is toggled using the middle mouse button.
+   Categories and file numbers are stored in a document file.
+   Further <a href="./categorize.html">details</a>.</li>
+
+   <li><strong>Colored Surface</strong><br />
+   Does fast surface display of 3D file.
+   Colors surface according to values found in a second
+   3D file.  Specify surface level, contribution from 
+   depth and surface reflectivity, and number of colors.
+   The values in the color volume are divided into the
+   specified number of colors. A private color-map can be
+   used to alter the correspondence between colors and
+   intensities in the color volume. Can only handle less than
+   six colors. 
+   Further <a href="./surfcolor.html"> details</a>.</li>
+
+   <li><strong>Convolve</strong><br />
+   Does some discrete 
+   <a href="./convolve.html">convolutions</a>  on an image.</li>
+
+   <li><strong>Corr-map</strong><br />
+   Displays correspondance map.  Can 
+   then outline areas and query images found within areas. 
+   Further <a href="./corrmap.html"> details</a>.</li>
+
+   <li><strong>Dendrogram </strong><br />
+   Performs a "dendrogram" plot with input taken   
+   from a <i>SPIDER </i>  
+   <a href="../../spider/docs/man/clcla.html">CL CLA </a> operation
+   document file. Can also display the averaged images of a given threshold setting.</li>
+
+   <li><strong>Distance </strong><br />
+   Interactively queries a pair of pixel 
+   locations to determine their separation distance.  Can 
+   record distances in a document file.  Can record up to
+   six distances from each starting point on a line of the
+   document file. </li>
+
+   <li><strong>General filter </strong><br />
+   Interactively masks a power spectrum image to create
+   a general Fourier filter.  This filter file can then
+   be multipled by a Fourier file for filtering.  The
+   mask is Gaussian and the radius can be specified. 
+   Further <a href="./foufilt.html">details.</a></li>
+
+   <li><strong>Histogram </strong><br />
+   Draws image histogram on screen.</li>
+
+   <li><strong>Magnify</strong><br />
+   Interactively magnifies an area of the screen.</li>
+
+   <li><strong>Markers</strong><br />
+   Interactively selects marker 
+   locations and stores locations relative to image in a <i>SPIDER </i> 
+   document file. 
+   Further <a href="./markers.html"> details.</a></li>
+
+   <li><strong>Mask </strong><br />
+   Interactively draws polygons 
+   on screen to make a binary mask image.  The mask image is stored
+   in a file.  This mask file can then be used in <i>SPIDER </i> 
+   for masking a grey scale image by multiplication. 
+   <b>Will fail if the file to be masked is larger than window.</b></dl>
+
+   <li><strong>Montage from doc. file </strong><br />
+   Makes a montage of individule or stacked 2-D images by looking up the
+   image numbers in a document file. The image numbers must be
+   in the first register (not keys) in the document file.
+   All images must have same prefix in their name 
+   (e.g. IMA***.DAT). 
+   Further <a href="./docmontage.html">details</a>.</li>
+     
+   <li><strong>Movie </strong><br />
+   Displays a movie from a series of images.  
+   Further <a href="./movie.html">details</a>.</li>
+
+   <li><strong>Tilted Particles </strong><br />
+   Interactively selects coordinates from 
+   an untilted/tilted pair of micrographs, determines tilt
+   angle and tilt-axis direction by a least-square fit of
+   all selected particle locations.  
+   Further <a href="./particles.html"> details.</a> </li>
+ 
+   <li><strong>CTF from Document file</strong><br />
+   Interactively study CTF plot.  
+   Further <a href="./ctf.html">details</a>.</li>
+
+   <li><strong>Pixel</strong><br />
+   Queries a pixel for location and color. Can 
+   place pixel location, color index value, in 
+   a document file.</li>
+
+   <li><strong>Pixel within</strong><br />
+   Queries a pixel for location within image, screen intensity,
+   and  pixels intensity in file. Can these values in 
+   a document file. Also used for 
+   <a href="../../spider/docs/partpick.html"> 
+   interactive particle selection</a>. </li>
+
+   <li><strong>Power Spectrum </strong>   <br />
+   Shows a power spectrum of enclosed area in
+   a user drawn window.  The spectrum is from screen data not 
+   file data.  Does not work properly for some window sizes!</li>
+
+   <li><strong>Profile</strong><br />
+   Displays the profile of image intensities along a row 
+   or column. 
+   Further <a href="./profile.html">details.</a> </li>
+
+   <li><strong>Reflections </strong><br />
+   Interactively picks reflections from a
+   diffraction pattern and places indices and locations in
+   a document file.</li>
+
+   <li><strong>SIRDS</strong><br />
+   Creates and displays a "single image 
+   relative displacement stereogram" from a volume.</li>
+
+   </ul>
+</li>
+</p>
+
+<p>
+<li> <strong><a name="EDIT">EDIT</a></strong> 
+   <ul>
+   <li><strong>Bars  </strong><br />
+   Draws horizontal or vertical bars on screen 
+   using previously set foreground color.</li>
+
+   <li><strong>Drill-n-fill </strong><br />
+   Interactively edits a volume while viewing a
+   surface view of volume.  Volume is viewed along X axis. 
+   Surface view is same as surface operation.  Mouse buttons
+   control movement of a tool which drills or fills areas of
+   the volume. 
+   Further <a href="./drill.html">  details.</a> </li>
+
+   <li><strong>Lines  </strong><br />
+   Draws lines on screen using previously set foreground color.</li>
+
+   <li><strong>Text   </strong><br />
+   Draws text on screen using previously set foreground color.</li>
+
+   <li><strong>Draw Boxes </strong><br />
+   Draws boxes on screen using previously set foreground color.</li>
+
+   <li><strong>Move Area</strong><br />
+   Moves or copies an area of the screen from 
+   one position to another.  Useful also for editing labels,
+   etc. for photography.</li>
+
+   <li><strong>Window Last File </strong><br />
+   Interactively windows a displayed file and 
+   saves window from original file in a new <i>SPIDER </i> image file.</li>
+
+   </ul>
+</li>
+</p>
+
+<p>
+<li> <strong><a name="INFO">INFO</a></strong> 
+   <ul>
+   <li><strong>X info</strong><br />
+   Prints some debugging information in terminal window.</li>
+
+   </ul>
+</li>
+</p>
+
+<p>
+<li> <strong><a name="SYSTEM">SYSTEM</a></strong> 
+   <ul>
+   <li><strong>File Extension</strong><br />
+   Sets extension to associate with file names e.g. DAT</li>
+
+   <li><strong>Current Directory</strong><br />
+   Sets current working directory. File 	
+   searches begin from here.</li>
+
+   <li><strong>File Pattern</strong><br />
+   Selects pattern to use in searching for files eg. T*ST**0</li>
+
+   <li><strong>EXIT</strong><br />
+   Stops <i>Web</i> and closes <i>Web</i> window.</li>
+   </ul>
+</li>
+</p>
+
+</ul>
+
+</div>
+</td></tr>
+</table>
+
+<hr />
+ 
+<small>
+Source: web.html       &nbsp;&nbsp;&nbsp;  
+Last update: 4/20/2015 &nbsp;&nbsp;&nbsp;
+</small>
+
+</body>
+</html>

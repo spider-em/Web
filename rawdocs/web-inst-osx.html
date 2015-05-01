@@ -1,0 +1,297 @@
+<html>
+<head>
+   <title>Web: Installation on Mac OSX </title>
+</head>
+
+<body>
+
+<hr>
+
+<ol>
+
+<p>
+<li> <h3><a name="general">GENERAL </a></h3>
+   <i>Web</i> is a point-and-click interface for display and interaction
+   with SPIDER images and data.  <i>Web</i> is written in <i>C</i> for use with the 
+   X WINDOW system under Motif. Thanks to Dr. Ngai Shing Mogk and Dr. Neil Ranson
+   from the University of Leeds for the original port of <i>Web</i> for use on OSX.
+</li> 
+</p>
+
+<p />
+
+<li> <h3><a name="loading">INSTALLING THE SPIDER/WEB DISTRIBUTION</a><br />
+        (May have already been done if you have installed SPIDER!) </h3>
+
+   <ol>
+   <p> <li><a href="../../spider/docs/spi-register.html">Download</a> SPIDER/Web and place it in
+       an appropriate directory: <i>PARENT-DIR</i>.                              <br /> 
+       The uncompressed whole distribution will take about 850Mb but includes libraries 
+       and executables for several different systems some of which can be discarded.</li>  </p>
+
+   <p> <li>Unpack the compressed tar archive e.g. <br />
+       <kbd><i>tar --gunzip -xvf spiderweb.tar*</i></kbd></li>   </p>
+
+   <p>The following <i>Web</i> directories will be created under: 
+       <i>PARENT-DIR</i> (along with other directories for SPIDER, etc.): </p>
+
+   <table border="1" cellpadding="4" cellspacing="4">
+    <tr> <th halign="left">Directory</th> <th halign="left">Contents</th>                </tr> 
+    <tr><td>web/src</td>           <td><i>Web</i> source code, libraries</td>            </tr>
+    <tr><td>web/src/osx</td>       <td><i>Openmotif</i> code, libraries</td>             </tr>
+    <tr><td>web/bin</td>           <td><i>Web</i> executables</td>                       </tr>
+    <tr><td>web/docs</td>          <td><i>Web</i> documentation</td>                     </tr>
+    <tr><td>web/rgb</td>           <td>Color look-up-tables</td>                         </tr>
+    <tr><td>web/jweb</td>          <td><i>JWeb</i> directory</td>                        </tr>  
+   </table>
+   </ol>
+</li>
+<p />
+
+<li> <h3><a name="setting">SETTING <i>"Web"</i> COMMAND</a> AND 
+                          ENVIRONMENT VARIABLES</h3>
+
+  <p>
+  The <i>PARENT-DIR/web/bin</i> directory contains following OSX 
+  executable binary files: </p>  
+
+  <p>
+  <table border="1" cellpadding="4" cellspacing="5">
+  <tr>
+     <th halign="left">For Platform</th>
+     <th halign="left">Startup file</th>
+     <th halign="left"><i>Executable</i></th>
+     <th halign="left">Visual</th>
+     <th halign="left">Libraries</th>
+     <th halign="left">Makefile</th>
+  </tr>
+
+  <tr>
+     <td>OSX 10.4+ on Intel</td>
+     <td>None needed</td>
+     <td>web_osx_tru</td>
+     <td>24 bit Truecolor</td>
+     <td>Static OpenMotif</a></td>
+     <td>Makefile_osx_tru</a></td>
+  </tr>
+ 
+  <tr>
+     <td>OSX 10.5+ on Intel</td>
+     <td><i>web_osx_8.sh</i></td>
+     <td>web_osx_8</td>
+     <td>8 bit</td>
+     <td>Static OpenMotif</a></td>
+     <td>Makefile_osx_8</a></td>
+  </tr>
+
+  <tr>
+     <td> OSX 10.4 on Intel</td>
+     <td><i>web8-osx.zsh</i></td>
+     <td>web_osx_8</td>
+     <td>8 bit</td>
+     <td>Static OpenMotif</a></td>
+     <td>Makefile_osx_8</a></td>
+  </tr>
+
+  </table>
+  </p>
+
+  <dl>
+  <dt> <strong>OSX 10.4+ </strong></dt>
+    <dd>If you are on a Intel based system running OSX 4+ try the 
+       <i>web_osx_tru</i> executable first. It does not require
+       any startup script and simply runs by itself.  If it is unacceptably
+       slow you can try the older 8 bit executables instead.<dd> <p />
+
+   <p>You will need to tell your system the location of your
+   <i>Web</i> executable, and other <i>Web</i> related files. If you are using
+   the <i>'C'</i> shell, you should edit <i>PARENT_DIR</i> in the following line 
+   to point to the location of the <i>web</i> installation on your system. 
+   Finally  
+   place both of the following lines in your <i>.cshrc</i> startup file: 
+   (If you do not have a .cshrc file in your home directory you can create it
+   with any text editor.) 
+   <p />
+
+   <blockquote><kbd>
+   alias  web         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"PARENT_DIR/web/bin/web_osx_tru"<br />
+   setenv SPRGB_DIR   "PARENT_DIR/web/rgb"             <br />
+   </kbd></blockquote>
+
+  <dt> <strong>OSX 10.5+ </strong></dt>
+    <dd>  The <i>Web</i> startup script: 
+    <a href="../bin/web_osx_8.sh">web_osx_8.sh</a> allows use of  <i>Web's</i> 
+    8 bit visual on a machine which has been set to use a 24 bit visual 
+    (i.e. 'millions' of colours in the X11 preferences menu). However this
+    will only work if no 24 bit X11 software is currently running on the
+    machine (i.e. the X11 application is NOT present in the Dock). We 
+    have not yet found a way to use this <i>Web</i> 
+    when 24/32 bit X11 applications are already running. However some X11
+    applications e.g. <i>xclock</i> can be started in the normal OS X 10.5 manner
+    after <i>Web</i> without problems. 
+ 
+    <p>You will need to tell your system the location of your
+    <i>Web</i> executable, and other <i>Web</i> related files. If you are using
+    the <i>'C'</i> shell, you should edit <i>PARENT_DIR</i> in the following line 
+    to point to the location of the <i>web</i> installation on your system. 
+    Finally  place the following four lines in your <i>.cshrc</i> startup file: 
+    (If you do not have a .cshrc file in your home directory you can create it
+    with any text editor.) 
+    <p />
+
+   <blockquote><kbd>
+   setenv WEB_DIR     &nbsp;&nbsp;&nbsp;"PARENT_DIR/web"<br />
+   setenv WEBBIN_DIR        "$WEB_DIR/bin"<br />
+   setenv SPRGB_DIR   &nbsp;"$WEB_DIR/rgb"<br />
+   alias &nbsp;web         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"$WEBBIN_DIR/web_osx_8.sh" 
+   </kbd></blockquote>
+   </dd>
+
+  <dt> <strong>Before OSX 10.5 </strong></dt>
+    <p> The <i>Web</i> startup script: 
+      <a href="../bin/web_osx_8.zsh">web_osx_8.zsh</a> allows use of <i>Web's</i> 
+      8 bit visual without interfering with use of other 
+      applications which need a 24 bit visual 
+      (i.e. 'millions' of colours in the X11 preferences menu). </p>
+   
+   <p>You will need to tell your system the location of your
+   <i>Web</i> executable, and other <i>Web</i> related files. If you are using
+   the <i>'C'</i> shell, you should edit <i>PARENT_DIR</i> in the following line 
+   to point to the location of the <i>web</i> installation on your system. 
+   Finally place the following four lines in your <i>.cshrc</i> startup file: 
+   (If you do not have a .cshrc file in your home directory you can create it
+   with any text editor.) 
+   <p />
+
+   <blockquote><kbd>
+   setenv WEB_DIR     &nbsp;&nbsp;&nbsp;"PARENT_DIR/web"<br />
+   setenv WEBBIN_DIR        "$WEB_DIR/bin"<br />
+   setenv SPRGB_DIR   &nbsp;"$WEB_DIR/rgb"<br />
+   alias &nbsp;web         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"$WEBBIN_DIR/web_osx_8.zsh"
+   </kbd></blockquote>
+                             
+
+</li>
+  </dl>
+
+<li> <h3><a name="testing">TESTING <i>Web</i></a></h3>
+
+  <p>Use your <i>web</i> command to start <i>Web</i>.<br />
+     You may enter the SPIDER file extension on the startup command line, e.g.:  
+     <kbd> web dat </kbd>
+     <p>To control <i>Web</i>: USE MOUSE TO SELECT MENU ITEMS FROM PULL-DOWN MENUS</p>
+
+     <p>Further information is given in the <a href="web.html"><i>Web</i> manual</a>.</p>
+
+</li>
+
+<li> <h3><a name="problems">PROBLEM SOLVING</a></h3>
+  <p>If <i>Web</i> does not run</p>
+ 
+  <ul>
+
+  <li><dl> 
+      <dt>If you get an error message like: <i>Command not found</i> </dt>
+      <dt>See "<a href="#setting">Setting Web command</a>" above to
+          ensure that your desired executable is accessible.</dt>
+  </dl></li> 
+  <p />
+
+  <li><dl> 
+      <dt>If you get an error message about a <i>Missing library ...</i>:                     </dt>
+      <dt>Ensure that the following run time libraries are installed from  your distribution: <br />
+          <i>libXm, libXt, libX11, libXmu, libXau, libXdmcp, libfreetype and libXext</i>.     </dt>
+      <p />
+ 
+      <dt> Also you may need to tell <i>Web</i> the location of  
+          dynamic X Window and Motif libraries.  These X-Window libraries may in: <br />
+          <i>/usr/X11R6/lib</i>. </dt>
+      <p />
+      <dt> If you are using the  <i>'C' </i> shell add the following lines to your 
+          <i>.cshrc</i> startup file:                                          </dt>
+     
+         <kbd> <dl>
+         <dt>if ( $?DYLD_LIBRARY_PATH ) then                                   </dt>
+         <dd>    setenv DYLD_LIBRARY_PATH '$DYLD_LIBRARY_PATH:/usr/X11R6/lib'  </dd>
+         <dt>else                                                              </dt>
+         <dd>    setenv DYLD_LIBRARY_PATH '/usr/X11R6/lib'                     </dd>
+         <dt>endif                                                             </dt>
+         </dl></kbd>
+   </dt></dl>
+   </li>  
+   <p />
+
+  <li><dl> 
+      <dt>If you get another error message or no error message: </dt>
+      <dt> Early Leopard releases of OSX 10.5 have significant problems with X11 applications.
+      Try upgrading to more recent OSX release.</dt>
+  </dl></li>
+  <p />
+
+  <li><dl> 
+      <dt>If <i>Web</i> still does not run:                    </dt>
+      <dt>Try <a href="compilew-linux.html">compiling and linking <i>Web</i></a> 
+         on your system. This is usually easy if you have already installed 
+         the necessary X-window and Motif development headers and 
+         libraries on your system.                     </dt>
+  </dl></li>
+  <p />
+
+  </ul>
+
+  <p>If <i>Web</i> runs but the whole Web application is blank. </p>
+
+  <ul>
+  <li><dl> 
+      <dt>This occurs with earlier X11 releases for OSX 10.5. </dt>
+
+      <dt> Install the latest 
+           <a href="http://xquartz.macosforge.org/trac/wiki">X11</a>
+            version.</dt>
+  </dl></li>
+  </ul>
+  <p />
+
+  If <i>Web</i> runs and but the other windows on the screen 
+     have strange colors when the Web window is in use (has focus).</p>
+  <ul>
+  <li><dl> 
+      <dt>You must be using the alternative 24 bit Web executable .
+          This behaviour is expected for 24 bit <i>Web</i>.
+          We recommend you use 8-bit <i>Web</i> and the 
+          <i>Web</i> startup script: <a href="../bin/web_osx_8.sh">web_osx_8.sh</a>, 
+          described above, which does not have this problem).</dt>
+  </dl></li>
+  </ul>
+  <p />
+</li>
+
+
+<li> <h3><a name="bugs">FURTHER PROBLEMS, BUGS, & SUGGESTIONS</a></h3>
+        
+  If you are still unable to get <i>Web</i> to run properly or you have questions 
+  about methodologies, or wish to report bugs please contact us.
+  Please include <b>complete </b> info on what you are trying to do, 
+  exact error messages, OS version, platform (PPC or Intel), and 
+  the value of environment variable: <i>DYLD_LIBRARY_PATH</i>. 
+  <p />
+  ArDean Leith                                       <br />
+  phone: 518-486-5604                                <br />
+  email: <a href="mailto:spider@wadsworth.org">spider@wadsworth.org</a> <br />
+  </p>
+</li>
+<br />
+
+</ol>
+
+<br />
+<hr>
+
+<small>
+  Source: web-inst-osx.html  &nbsp;&nbsp;&nbsp; 
+  Updated: 09/29/11            &nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+
+</body> 
+</html>

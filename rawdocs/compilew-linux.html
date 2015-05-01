@@ -1,0 +1,159 @@
+<html>
+
+<head>
+   <title>Web Compilation and Linking on Linux</title>
+</head>
+
+<body>
+
+<hr>
+
+<ul>
+
+<li>
+   <h3><a name="executables">EXECUTABLES</a></h3>
+   <p>
+
+   <table border="1" cellpadding="4" cellspacing="5">
+    <tr>
+        <th halign="left">Executable</th>
+        <th halign="left">Optimal byte-ordering</th>
+        <th halign="left">Visual</th>
+        <th halign="left">Makefile</th>
+        <th halign="left">Compiler</th>
+        <th halign="left">Notes</th>
+    </tr>
+    <tr>
+        <td>web_linux_24</td>
+        <td>Big-endian</td>
+        <td>24 bit DirectColor</td>
+        <td> <a href="../src/Makefile_linux">Makefile_linux_24</a></td>
+        <td>gcc</td>
+        <td>32 bit AMD or Intel</td>
+    </tr>
+     <tr>
+        <td>web_linux_24_64</td>
+        <td>Big-endian</td>
+        <td>24 bit DirectColor</td>
+        <td> <a href="../src/Makefile_linux">Makefile_linux_24_64</a></td>
+        <td>gcc</td>
+        <td>64 bit AMD or Intel</td>
+    </tr>
+ </table>
+</li>
+</p>
+
+<p>
+<li>
+   <h3><a name="compiling">COMPILING AND LINKING</a></h3>
+   <p>
+   In the documention that follows <i>WEB_DIR</i> refers
+   to the location of Web on your system and a <i>'?'</i>
+   inside a filename refers to the suffix of one of the 
+   specific Web distributions available e.g. <i>_linux_24</i>
+   or <i>_linux_24_64</i>.
+   </p>
+   <p>
+   The directory: <i>WEB_DIR/src</i> contains <i>Makefiles</i>:
+
+   </p>
+   These makefiles can be used to compile the source code, 
+   place the object code in an object library, 
+   link the object code with system object libraries, and 
+   create an executable binary file. 
+   </p>
+
+
+   <ol>
+      <p>
+      <li> Save copies of the original executables and libraries under
+           an alternative name, e.g.
+
+           <blockquote>  <kbd>
+           cd WEB_DIR/src          <br />
+           mv  web?  web?_orig     <br />
+           mv   web?.a  web?_orig.a     <br />
+           </kbd> </blockquote>
+      </li>
+      </p>
+
+
+      <p><li> Edit source directory Makefile? as necessary (e.g. change processor flags or
+            optimization levels). </li></p>
+
+      <p><li>Compile and /or link <i>Web</i> using the provided Makefiles
+            e.g. 
+
+            <blockquote> <kbd>
+            make -f Makefile?          <br />
+            </kbd> </blockquote>
+
+            If the <i>make</i> operation fails due to a missing 
+            header file: <i>Xm.h</i> then you will have to install
+            the XWindow/Motif Development and headers files.  Some
+            Linux distributions do not install this by default. <br /><br />
+
+            If the <i>make</i> operation still fails to compile or 
+            the new executable does not 
+            run contact us at the address below. 
+      </li></p>
+   </ol>
+</li>
+
+<p> <li>
+   <h3><a name="flags">SOME COMPILATION AND LINKING FLAGS</a></h3>
+
+   <table border="0" cellpadding="4" cellspacing="3">
+    <tr>
+    <td>-DFUNCPROTO</td><td> Require function prototypes                   </td></tr>
+    <td>-O2        </td><td> Optimization level                            </td></tr> 
+    <td>-woff      </td><td> Ignore enumerated warnings                    </td></tr>
+    <td>-fullwarn  </td><td> List verbose warnings                         </td></tr>
+    <td>-P_SGIOSF  </td><td> Our cpp flag for SGI byte ordering                        </td></tr> 
+    <td>-DSP_SUNSP </td><td> Our cpp flag for selective compilation on Sun             </td></tr>
+    <td>-DWEB_BGFG </td><td> Our cpp flag for selective compilation for 24 bit visual  </td></tr>  
+    <td>-I/usr/X11R6/include </td><td> Set location of Xwindow headers                 </td></tr>  
+    </table>
+</li> </p>
+
+<p> <li>
+   <h3><a name="libraries">SHARED RUN-TIME LIBRARIES</a></h3>
+   When we compile <i>Web</i> requires the following shared run time libraries:
+
+   <table border="0" cellpadding="0" cellspacing="8">
+    <tr>
+    <td>-Xmu </td><td> Misc. X11 </td></tr>
+    <td>-Xt  </td><td> X Toolkit </td></tr>
+    <td>-X11 </td><td> X11       </td></tr>
+    <td>-m   </td><td> Math      </td></tr>
+    <td>-Xm  </td><td> Motif     </td></tr>
+    <td>-Xp  </td><td> Motif     </td></tr>
+  </table>
+  Our Makefiles specify static linkage versus the Motif libraries.
+</li> </p>
+
+<p /> <li>
+   <h3><a name="bugs">BUGS, SUGGESTIONS</a></h3>
+    In the event that you have questions or wish
+    to report bugs please send us <b>complete info</b> on what you are trying
+    to do, including any error messages. <p />     
+    Send such info to:<p />
+
+    ArDean Leith                                         <br />
+    Wadsworth Labs, P.O. Box 509, Albany, New York 12201 <br />
+    Phone: 518-486-5604                                  <br />
+    Email:  <a href= "mailto:spider@wadsworth.org">spider@wadsworth.org</a><br />
+</li> <p />
+
+</ul>
+
+<hr>
+
+<p> <small>
+Source file: compilew-linux.html &nbsp;&nbsp;&nbsp;  
+Updated:  15 Jul. 2011  &nbsp;&nbsp;&nbsp; 
+ArDean Leith </small>
+</p>
+
+</body>
+</html>
