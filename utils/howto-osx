@@ -1,0 +1,50 @@
+
+Sep 28 2011  A. Leith on for Intel 32 or Intel 64   -------------------------
+
+On Mac: leith relax1
+Start terminal window
+cd programs/web/src
+
+scp -p 'leith@valcour:/usr8/web/src/*' .
+
+make -f Makefile_osx_tru
+
+Compiled and linked OK!
+
+cd /Users/leith/programs/web/test
+/Users/leith/programs/web/test/web_osx_tru dat
+
+Visable menus!
+
+scp /Users/leith/programs/web/bin/web_osx_tru valcour:/usr8/web/bin
+scp /Users/leith/programs/web/src/web_osx_tru.a valcour:/usr8/web/src
+
+
+
+
+
+July 185 2011  A. Leith on for Intel 32 or Intel 64   -------------------------
+
+On valcour: 
+cd /usr8/web/  
+tar cvf src.tar src
+
+On Mac: leith relax1
+Start terminal window
+mv programs/web/src   programs/web/src8
+mkdir programs/web/src
+cd programs/web/
+
+scp -p 'leith@valcour:/usr8/web/src.tar' .
+tar xvf src.tar
+
+cd src
+make -f Makefile_osx
+
+compiled and linked OK
+
+Invisable menus!
+
+
+
+
