@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fitsav.c,v 1.25 2011/06/22 19:09:19 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitsav.c,v 1.26 2015/06/11 13:28:57 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -8,7 +8,7 @@ C    fitsav
 C
 C **********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -50,14 +50,14 @@ C **********************************************************************
  /* Function prototypes */
 
  /* External common variables used here */
- extern char   dfil3[12], dfil6[12];     /* Doc file names     */
- extern int    iredu;                    /* Image reduction */
- extern int    fitted;
- extern float  phif, thetaf, gammaff;    /* Tilt angles       */
- extern float  xu0t, yu0t, xs0t, ys0t;   /* Tilt origins      */
+ extern char   dfil3[12], dfil6[12];       /* Doc file names   */
+ extern int    iredu;                      /* Image reduction  */
+ extern int    fitted;                     /* Fitted flag      */
+ extern float  phif, thetaf, gammaff;      /* Tilt angles      */
+ extern float  xu0t, yu0t, xs0t, ys0t;     /* Tilt origins     */
  extern float  * xu0, * yu0, * xs2, * ys2; 
  extern int    lbnum, maxpart;
- extern char   datexc[4];                /* File extension   */    
+ extern char   datexc[4];                  /* File extension   */    
      
 
  char     str121[] =
@@ -73,7 +73,7 @@ C **********************************************************************
 //0123 6          379          211      405.087      245.268            1            0
 
  char     str124[] = 
-  "Key: 124 Tilt-angle  Untilted,tilted-axis-dir (Theta, Gamma,Phi)";
+  "Key:  124 Tilt-angle  Untilted-axis-direction-angles (Gamma,Phi)"; 
 //0124 6      49.1505     -77.9898     -77.7016            0            0            0
 
  char     strdft[] = 
@@ -127,7 +127,7 @@ C **********************************************************************
  dlist[5] = iredu; 
  dlist[6] = 0.0;
  
- fpdoc    = savdnc(dfil3, datexc, &fpdoc,dlist, 
+ fpdoc = savdnc(dfil3, datexc, &fpdoc,dlist, 
                    7, &openit, TRUE, TRUE,str123);
 
  /* Set tilt angle info */
@@ -139,14 +139,15 @@ C **********************************************************************
  dlist[5] = 0.0; 
  dlist[6] = 0.0;
       
- fpdoc    = savdnc(dfil3, datexc, &fpdoc, dlist, 
+ fpdoc = savdnc(dfil3, datexc, &fpdoc, dlist, 
                    7, &openit, TRUE, TRUE, str124);
 
  fclose(fpdoc); fpdoc = NULL;
 
  if (fitted)
     {
-    openit = TRUE; append_flag = TRUE;
+    // 2015  openit = TRUE; append_flag = TRUE;
+    openit = TRUE; append_flag = FALSE;
 
     /* Use angles to get predicted location in tilted image  */
     witran(xu0, yu0, xs2, ys2, maxpart, gammaff, thetaf, phif);
