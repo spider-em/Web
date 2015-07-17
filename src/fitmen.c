@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.32 2011/06/22 19:11:55 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.33 2015/06/11 13:25:48 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -11,7 +11,7 @@ C                                                                      *
 C **********************************************************************
 C *  AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -33,15 +33,24 @@ C *  AUTHOR:  ArDean Leith                                             *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    fitmen
-C
-C    PURPOSE:         Display fitmen menu
-C
-C    CALLED BY:       fitorigin, pickmen, pickp.
-C
-C***********************************************************************
+ C **********************************************************************
+ C
+ C    fitmen
+ C
+ C    PURPOSE:         Display fitmen menu
+ C
+ C    CALLED BY:       fitorigin, pickmen, pickp.
+ C
+ C    CALL TREE:
+ C                    | _fit_butfit  --> get text theta
+ C                                       willsg
+ C                                       spout
+ C
+ C                    | _fit_buttilt --> get text arealim
+ C                                       tiltang
+ C                                       fitmen_adv
+ C
+ C***********************************************************************
 */
 
 #include "common.h"
@@ -262,9 +271,8 @@ C***********************************************************************
  if (iflag == 0)
    {   /* Succeeded, fitting is OK */
    fitted = TRUE;
-   sprintf(outmes,
-   "Fitted Gamma: %5.2f  Phi:%5.2f Theta:%5.2f  Origin: (%7.2f,%7.2f)",
-            gammaff,phif,thetaf, xs0t,ys0t);
+   sprintf(outmes,"Tilt (theta): %5.2f  Gamma:%5.2f Phi:%5.2f  Origin: (%7.2f,%7.2f)",
+                  thetaf, gammaff,phif, xs0t,ys0t);
    spout(outmes);
    }
  else
@@ -294,7 +302,7 @@ C***********************************************************************
  spoutfile(TRUE);
 
  /* Determine theta tilt angle */
- flag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim);
+ flag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim, TRUE);
  if (flag > 0)
     {  
     spout("*** Warning, can not calculate tilted angle. Try again");
