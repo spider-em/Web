@@ -1,16 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.19 2011/06/22 19:13:30 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.20 2015/06/11 13:29:54 leith Exp $*/
 
 /*
 C++*********************************************************************
 C                                                                      *
-C  fitdocmen.c          New                      May 93  ArDean Leith  *
+C  fitdocmen.c          New                      May 93   ArDean Leith *
 C                       Improved                 Jun 2011 ArDean Leith *
+C                       Improved                 Jun 2015 ArDean Leith *
 C                                                                      *
 C **********************************************************************
 C    AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -68,7 +69,7 @@ C--*********************************************************************
 
  // Internal file scope variables 
  static Widget    iw_redu, iw_nfd;
- static Widget    iw_fitdocmen= (Widget)0;
+ static Widget    iw_fitdocmen = (Widget)0;
  
  /*********************** fitdocmen ********************************/
 
@@ -152,7 +153,7 @@ C--*********************************************************************
  thetaf = 0.0; gammaff = -90.0; phif = -90.0;
 
  /* Retrieve info from doc files, do not list points, start pickp */
- if (fitdoc(FALSE) > 0)
+ if (fitdoc(TRUE) > 0)
     { 
     spout("*** Can not continue, fix document files!");
     XBell(idispl,50); XBell(idispl,50); XBell(idispl,50); 
