@@ -76,6 +76,8 @@
  extern int      getcorner    (Widget, Widget , int *, int *);
  extern int      getdoc       (FILE *, char *, char *,  
                                int, int, float **, int *);
+ extern int      getdoc_f      (FILE *, char *, char *,  
+                               int, int, float **, int *,int);
  extern void     get_imsiz    (void);
  extern void     getloc       (XEvent *, char, int *, int *);
  extern int      getoldstack  (FILEDATA*, int, int, int);
@@ -199,7 +201,7 @@
                                float, float, float, float,
                                float *, float *, float *);
  extern int      tiltang      (float *, float *, float *, float *,
-	                       int, float *, int *, float);
+	                       int, float *, int *, float, int);
  extern   void   toggle2_cb   (Widget, caddr_t, caddr_t);
  extern int      unsdal       (char *, int *, int, float *,
                                int, float **, int *, int, int);
