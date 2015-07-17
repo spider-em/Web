@@ -1,12 +1,13 @@
 /*
-C++*********************************************************************
-C
-C STACKMEN -- CREATED Jan 1998 Yanhong Li
-C
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                             *
+ C++*********************************************************************
+ C
+ C STACKMEN -- CREATED                            Jan 1998 Yanhong Li
+ C             Keep up menu widgets               Jun 2015 ArDean Leith                                                                    
+ C
+ C **********************************************************************
+ C *  AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -28,17 +29,17 @@ C *  AUTHOR:  ArDean Leith                                             *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C STACKMEN
-C
-C PURPOSE:   DISPLAY MENU FOR STACK FILES
-C
-C VARIABLES:       
-C
-C CALLED BY:       
-C
-C***********************************************************************
+ C **********************************************************************
+ C
+ C STACKMEN
+ C
+ C PURPOSE:   DISPLAY MENU FOR STACK FILES
+ C
+ C VARIABLES:       
+ C
+ C CALLED BY:       
+ C
+ C***********************************************************************
 */
 
 #include <Xm/Scale.h>
@@ -245,7 +246,7 @@ C***********************************************************************
     }
 
  /*  Remove the stack menu */
- XtUnmanageChild(iw_stackmen);
+ XtUnmanageChild(iw_stackmen); 
  expos_cb(NULL,NULL,NULL);
 
  /*  Display the montage, imagego set in imagemen */
