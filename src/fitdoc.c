@@ -1,14 +1,15 @@
 
-/*$Header: /usr8/web/src/RCS/fitdoc.c,v 1.31 2005/10/18 16:59:47 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitdoc.c,v 1.32 2015/06/11 13:30:23 leith Exp $*/
 
 /*
 C++*************************************************************************
 C
 C    fitdoc
+C                       Improved                 Jun 2015 ArDean Leith  
 C
 C **********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-20q5  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -71,39 +72,40 @@ C **********************************************************************
  extern int    fitted;
  extern float  phif, thetaf, gammaff;
  extern float  xu0t, yu0t, xs0t, ys0t;
- extern char   datexc[4];         /* file extension  */
+ extern char   datexc[4];         /* File extension  */
 
- /* variables used elsewhere also */
+ /* Variables used elsewhere also */
  int           limfit, lbnum, ifit, maxtilts, maxpart;
  float        * xu0  = 0, * yu0  = 0, * xs   = 0, * ys   = 0;
  float        * xs2  = 0, * ys2  = 0, * xim  = 0;
       
  /********************   fitdoc   ****************************/
 
- int fitdoc(int unused)
+ int fitdoc(int first)
 
  { 
  int      k, maxreg, maxkeys, maxpartt;
  static   nptsnow = 0;
  float  * dbuf = NULL, * ptr;
  
- /* set size for array pointed to by dbuf */
- maxreg    = 6+1; maxkeys   = 9999;
+ /* Set size for array pointed to by dbuf */
+ maxreg = 6+1;   maxkeys = 9999;
 
- /* retrieve data from dfil1 for untilted points */
+ /* Retrieve data from dfil1 for untilted points */
  
- if (getdoc((FILE *) NULL, dfil1, datexc,maxkeys, maxreg, 
-           &dbuf, &maxpart) > 0) 
-    {   /* problem retrieving doc file, assume it does not exist */
+ if (getdoc_f((FILE *) NULL, dfil1, datexc,maxkeys, maxreg, 
+           &dbuf, &maxpart, FALSE) > 0) 
+    {   /* Problem retrieving doc file, assume it does not exist */
     if (dbuf) free(dbuf); dbuf = NULL;
-    spouts("*** Unable to read untilted doc. file: "); spout(dfil1); 
+    if ( !(first))
+       {spouts("*** Unable to read untilted doc. file: "); spout(dfil1);} 
     maxpart = 0;
     return -1;
     }
 
  if ((xim == NULL) || (maxpart > nptsnow))
     {
-    /* allocate space for  arrays */
+    /* Allocate space for  arrays */
    if (((xim = (float *) realloc((void *) xim, maxpart * sizeof(float))) == 
                (float *) NULL) ||
        ((xu0 = (float *) realloc((void *) xu0, maxpart * sizeof(float))) == 
@@ -129,12 +131,13 @@ C **********************************************************************
     yu0[k]  = *(ptr+5);  ptr  += maxreg; 
     }
 
- /* retrieve data from dfil2 for tilted points */
-  if (getdoc((FILE *) NULL, dfil2, datexc,maxkeys, maxreg, 
-           &dbuf, &maxpartt) > 0) 
-    {   /* problem retrieving doc file, assume it does not exist */
+ /* Retrieve data from dfil2 for tilted points */
+  if (getdoc_f((FILE *) NULL, dfil2, datexc,maxkeys, maxreg, 
+           &dbuf, &maxpartt, FALSE) > 0) 
+    {   /* Problem retrieving doc file, assume it does not exist */
     if (dbuf) free(dbuf); dbuf = NULL;
-    spouts("*** Unable to read tilted doc. file: ");spout(dfil2); 
+    if ( !(first))
+       {spouts("*** Unable to read tilted doc. file: ");spout(dfil2);} 
     maxpart = 0;
     return -2;
     }
@@ -161,21 +164,22 @@ C **********************************************************************
  for (k=0; k < maxpart ; k++)
     { xs[k]  = *(ptr+4); ys[k]  = *(ptr+5);  ptr  += maxreg; }
 
- /* free dbuf here*/
+ /* Free dbuf here*/
  if (dbuf) free(dbuf); dbuf = NULL;
 
 
- /* retrieve data from dfil3 for tilt parameters (if any) */
+ /* Retrieve data from dfil3 for tilt parameters (if any) */
  /* (x,y) coordinates of origin and tilt angles delta, phi ,gamma */
  
  maxreg  = 6+1;  maxkeys = 125;
      
-  /* read the maxpart from dcb*** file */
-  if (getdoc((FILE *) NULL, dfil3, datexc, maxkeys, maxreg, 
-           &dbuf, &maxtilts) > 1) 
-    {   /* problem retrieving doc file, assume it does not exist */
+  /* Read the maxpart from dcb*** file */
+  if (getdoc_f((FILE *) NULL, dfil3, datexc, maxkeys, maxreg, 
+           &dbuf, &maxtilts, FALSE) > 1) 
+    {   /* Problem retrieving doc file, assume it does not exist */
     if (dbuf) free(dbuf); dbuf = NULL;
-    spouts("*** Tilt angle doc. file not available yet: "); spout(dfil3);
+    if ( !(first))
+       {spouts("*** Tilt angle doc. file not available yet: "); spout(dfil3);} 
     return 0;
     }
 
@@ -186,17 +190,17 @@ C **********************************************************************
      return 1;
      }
 
-  /*get last particle number */
+  /* Get last particle number */
   ptr    = dbuf + ((121-1) * maxreg);
   limfit = *(ptr+5);   /* number of markers used in fitting */
   lbnum  = *(ptr+6);   /* used for pickback */
   numb = lbnum;        /* used for pickback */
 
-  /* get fitted flag  */
+  /* Get fitted flag  */
   ptr    = dbuf + ((122-1) * maxreg);
   fitted = *(ptr+1);
 
-  /* get origin */
+  /* Get origin */
   ptr    = dbuf + ((123-1) * maxreg);
   xu0t   = *(ptr+1);
   yu0t   = *(ptr+2);
@@ -204,13 +208,13 @@ C **********************************************************************
   ys0t   = *(ptr+4);
   iredu  = *(ptr+5);
 
-  /* get tilt angles */
+  /* Get tilt angles */
   ptr      = dbuf + ((124-1) * maxreg);
   thetaf   = *(ptr+1);
   gammaff  = *(ptr+2);
   phif     = *(ptr+3);
 	      
-  /* free dbuf here */
+  /* Free dbuf here */
   if (dbuf) free(dbuf);  dbuf = NULL;
 
  return 0;
