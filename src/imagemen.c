@@ -1,16 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.85 2012/11/28 15:01:35 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.86 2015/06/16 15:36:08 leith Exp $*/
 
 /*
  C++********************************************************************
  C
  C imagemen.c                                   Nov 1992 
- C                  Added pixelmen_in call      Jun 2011  ArDean Leith                                                                    
- C                  Keep up image menu widget   Nov 2012  ArDean Leith                                                                    
+ C             Added pixelmen_in call           Jun 2011  ArDean Leith                                                                    
+ C             Keep up image menu widget        Nov 2012  ArDean Leith                                                                    
+ C             Keep up more image menu widgets  Jun 2015  ArDean Leith                                                                    
  C *********************************************************************
  C=* AUTHOR: A. LEITH 
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright 1985-2012  Health Research Inc.,                        *
+ C=* Copyright 1985-2015  Health Research Inc.,                        *
  C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
@@ -251,7 +252,7 @@
 
   if (!listfi)
      XtUnmanageChild(iw_filesnol);
-  else if (ioper != 1)     // new Nov 2012 al
+  else if ((ioper != 1) && (ioper != 2) && (ioper != 3) )     // new Nov 2012 al
      XtUnmanageChild(iw_files);
 
   expos_cb(NULL,NULL,NULL);
