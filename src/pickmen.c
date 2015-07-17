@@ -1,15 +1,16 @@
 
-/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.31 2011/07/18 18:08:01 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.32 2015/06/11 13:28:32 leith Exp $*/
 /*
 C++*********************************************************************
 C                                                                      *
 C  pickmen.c   New                               May 93   ArDean Leith *
 C              Improved                          Jun 2011 ArDean Leith *
+C              Improved formatting               Jun 2015 ArDean Leith *
 C                                                                      *
 C **********************************************************************
 C    AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -70,12 +71,15 @@ C    CALL TREE:
                       |              |
                       |              `-----------> _buta --> pickback
                       |
-                      | _butdet   --> tiltang 
+                      | _butdet   --> fitdoc
+                      |               tiltang 
                       |               willsq 
+                      |               labelg
+                      |               spout
                       |
                       |_fitbutdraw --> fitdoc
-                      |                | witran
-                      |                | pickdraw -> fitmen 
+                      |                witran
+                      |                pickdraw -> fitmen 
                       |
                       |_fitbutsavang --> fitsav
                       |
@@ -105,7 +109,10 @@ C--*********************************************************************
 
  void    fit_butdraw2  (Widget, XtPointer, XtPointer);
  void    fit_butsavang (Widget, XtPointer, XtPointer);
-  
+
+ void    show_tilt(int wantmsg, int wantlabel);
+ 
+ 
  // Externally defined global variables 
  extern int         maxpart;                 // From: fitdoc
  extern int         numm;                    // From: pickp
@@ -120,6 +127,7 @@ C--*********************************************************************
  extern Widget      iw_but_lef1;             // From: pickp
  extern Widget      iw_but_rit0;             // From: pickp
  extern Widget      iw_but_rit1;             // From: pickp
+ extern Widget      iw_but_lefrit;           // From: pickp
 
  // Internally defined global variables 
  Widget  iw_pickmen = (Widget)0;             // Used in: pickp_pop
@@ -130,7 +138,6 @@ C--*********************************************************************
  static Widget iw_parkey;
  static Widget iw_rowcolh;
  static Widget iw_the, iw_phi, iw_gam;
-
 
  /***********************   pickmen   ********************************/
 
@@ -276,6 +283,7 @@ C--*********************************************************************
  XtUnmanageChild(iw_but_lef1);
  XtUnmanageChild(iw_but_rit0);
  XtUnmanageChild(iw_but_rit1);
+ XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the menu widget */
  XtUnmanageChild(iw_pickmen);
@@ -297,6 +305,7 @@ C--*********************************************************************
  XtUnmanageChild(iw_but_lef1);
  XtUnmanageChild(iw_but_rit0);
  XtUnmanageChild(iw_but_rit1);
+ XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the picking menu widget */
  XtUnmanageChild(iw_pickmen);
@@ -364,10 +373,11 @@ C--*********************************************************************
  spoutfile(TRUE);
 
  /* Retrieve tilted and untilted points, & fit angles */
+
  fitdoc(FALSE);
 
  /* Determine theta tilt angle */
- iflag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim);
+ iflag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim, TRUE);
  if (iflag > 0)
     {  
     spout("*** Warning, can not calculate tilted angle. Try again");
@@ -382,14 +392,13 @@ C--*********************************************************************
  xs0t =  xs[orgkey-1];
  ys0t =  ys[orgkey-1];
 
- /* Routine: willsq returns phif, gammaff, & error flag */
+ // willsq reads xu0,yu0,xs,ys,thetaf,& maxpart  and returns phif,gammaff,& error flag 
  iflag = willsq(xu0, yu0, xs, ys, maxpart, 
                 thetaf, &gammaff, &phif);
  if (iflag == 0)
    {   /* Succeeded, fitting is OK */
    fitted = TRUE;
-   sprintf(outmes,
-   "Fitted Theta: %5.2f   Gamma:%5.2f Phi:%5.2f  Origin: (%7.2f,%7.2f)",
+   sprintf(outmes,"Tilt (theta): %5.2f   Gamma: %5.2f   Phi: %5.2f  Origin: (%7.2f,%7.2f)",
             thetaf,gammaff,phif, xs0t,ys0t);
    spout(outmes);
    }
@@ -418,6 +427,7 @@ C--*********************************************************************
  XtUnmanageChild(iw_but_lef1);
  XtUnmanageChild(iw_but_rit0);
  XtUnmanageChild(iw_but_rit1);
+ XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the menu widget */
  XtUnmanageChild(iw_pickmen);
@@ -444,5 +454,49 @@ C--*********************************************************************
  closefile(filedatar); filedatar = NULL;
  }
 
+/****************  Find tilt angle ***********************/
+
+ void show_tilt(int wantmsg, int wantlabel)
+ {
+ char * string;
+ char   outmes[80];
+ char   cval[10];
+ int    iflag;
+ int    iarea;
+
+ spoutfile(TRUE);
+
+ /* Retrieve current tilted and untilted points, & fit angles */
+ fitdoc(TRUE);
+
+ /* Determine theta tilt angle */
+ iflag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim, FALSE);
+ if (iflag > 0)
+    {  
+    spout("*** Warning, can not calculate tilted angle. Try again");
+    XBell(idispl,50); XBell(idispl,50);
+    }
+ if (iflag < 0)
+    { /* Some bad locations accepted */  XBell(idispl,50); }
+
+ if (iflag == 0 && wantmsg)
+   {   /* Succeeded, fitting is OK */
+   sprintf(outmes,"Thetabad: %5.2f   ", thetaf);
+   spout(outmes);
+   }
+
+ spoutfile(FALSE);
+    
+ if (wantlabel && iw_the != NULL)
+   {   
+   // Update label box for angles 
+   sprintf(cval,"%-.2f",thetaf);
+   wid_labelg(NULL,iw_the,cval,0,0);
+   sprintf(cval,"%-.2f",phif);
+   wid_labelg(NULL,iw_phi,cval,0,0);
+   sprintf(cval,"%-.2f",gammaff);
+   wid_labelg(NULL,iw_gam,cval,0,0);
+   }
+ }
 
 
