@@ -1,12 +1,13 @@
 
-/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.19 2011/06/10 12:15:07 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.20 2015/07/27 16:24:17 leith Exp $*/
 /*
- * pixel_in.c
- *              Pixel rewrite                     Jun 2011 ArDean Leith
- *
- ***********************************************************************
+ C pixel_in.c
+ C              Pixel rewrite                   Jun 2011 ArDean Leith
+ C              Doc file close bug              Jul 2015 ArDean Leith
+ C
+ C**********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -28,11 +29,11 @@
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- ***********************************************************************
- *
- * PURPOSE:  Find location of pixel inside image     
- * 
- ***********************************************************************
+ C**********************************************************************
+ C
+ C PURPOSE:  Find location of pixel inside image     
+ C 
+ C**********************************************************************
 */
 
 #include "common.h"
@@ -58,7 +59,7 @@
  extern float  *   fimage;                  // From: imagemen 
 
  /* Internally defined common  variables */
- FILE             *fpdocpix_in = 0;
+ FILE             *fpdocpix_in = NULL;
  int		  *pixellist;
  int	           pixelnum;
 

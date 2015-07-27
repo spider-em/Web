@@ -1,11 +1,12 @@
 
-/*$Header: /usr8/web/src/RCS/pixel.c,v 1.18 2011/05/17 17:50:08 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixel.c,v 1.19 2015/07/27 16:24:37 leith Exp $*/
 /*
- * pixel.c
- *
- ***********************************************************************
+ C pixel.c
+ C               Doc file close bug              Jul 2015 ArDean Leith
+ C
+ C**********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -27,11 +28,11 @@
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- ***********************************************************************
- *
- * PURPOSE:  Find location of pixel      
- * 
- ***********************************************************************
+ C**********************************************************************
+ C
+ C PURPOSE:  Find location of pixel      
+ C 
+ C**********************************************************************
 */
 
 #include "common.h"
@@ -41,15 +42,15 @@
  void    pixel_pop (Widget, XEvent *, String *, Cardinal *);
 
  /* External variables */
- extern XImage  *  imagep;
+ extern XImage     * imagep;
  extern char       outstr[80];
  extern int        ixreg, iyreg, isreg, ivreg;
  extern int        pixelmen_showing;
- extern FILEDATA   *filedatap;
+ extern FILEDATA   * filedatap;
 
  /* Internal common variables */
- FILE             *fpdocpix = 0;
- int		  *pixellist;
+ FILE             * fpdocpix_p = NULL;
+ int		  * pixellist;
  int	          pixelnum;
 
  /* Static varables */
@@ -228,7 +229,7 @@
           dlist[iyreg] = iyi;
           if (getscreen) dlist[isreg] = ipix;
           if (getfile)   dlist[ivreg] = fval;  
-          fpdocpix    = savdn1(docnam, datexc, &fpdocpix, dlist, 7, 
+          fpdocpix_p    = savdn1(docnam, datexc, &fpdocpix_p, dlist, 7, 
                      &openitp, TRUE, TRUE);
           }
 

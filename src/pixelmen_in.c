@@ -1,17 +1,19 @@
 
-/*$Header: /usr8/web/src/RCS/pixelmen_in.c,v 1.22 2011/06/10 12:15:32 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixelmen_in.c,v 1.23 2015/07/27 16:23:29 leith Exp $*/
 
 /*
-C++*********************************************************************
-C
-C PIXELMEN_IN    Renamed 2                         Jun 2011 ArDean Leith 
-C PIXELMEN       Created May 91  Converted to: C -- OCT 92      
-*                24 bit display bug fixed          11/8/07  ArDean Leith         11/8/07
-*                Pixel rewrite                     Jun 2011 ArDean Leith
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                                 *
+ C++********************************************************************
+ C
+ C PIXELMEN      Created                         May 91   ArDean Leith
+ C               Converted to C                  Oct 92   ArDean Leith     
+ C PIXELMEN_IN   Renamed                         Jun 2011 ArDean Leith 
+ C               24 bit display bug fixed        11/8/07  ArDean Leith 
+ C               Pixel rewrite                   Jun 2011 ArDean Leith
+ C               Doc file close bug              Jul 2015 ArDean Leith
+ C *********************************************************************
+ C *  AUTHOR:  ArDean Leith                                            *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2007  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -33,16 +35,16 @@ C *  AUTHOR:  ArDean Leith                                                 *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C   pixelmen_in
-C
-C   PURPOSE:    Set various parameters relating to pixel reading
-C               For use inside displayed image
-c
-c   CALLED BY:  web_com
-C      
-C***********************************************************************
+ C *********************************************************************
+ C
+ C   pixelmen_in
+ C
+ C   PURPOSE:    Set various parameters relating to pixel reading
+ C               For use inside displayed image
+ C
+ C   CALLED BY:  web_com
+ C      
+ C**********************************************************************
 */
 
 #include "common.h"
@@ -380,7 +382,7 @@ C***********************************************************************
  char * stringt;
 
  /* If last doc file is opened, close it first */
- if(fpdocpix_in)
+ if (fpdocpix_in)
     pixelmen_in_buts(NULL,NULL,NULL);
 
   /* Destroy any old image structure */
@@ -472,6 +474,7 @@ C***********************************************************************
 
      // Close the doc file 
      if (fpdocpix_in != NULL) fclose(fpdocpix_in); 
+     fpdocpix_in = NULL;
 
      // Set new starting key
      ikey_in = 1; 

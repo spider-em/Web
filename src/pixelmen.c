@@ -1,15 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/pixelmen.c,v 1.21 2007/11/09 14:21:15 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixelmen.c,v 1.22 2015/07/27 16:23:00 leith Exp $*/
 
 /*
-C++*********************************************************************
-C
-C PIXELMEN -- CREATED MAY 91  CONVERTED TO C -- OCT 92      
-*               24 bit display bug fixed ArDean Leith         11/8/07
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                                 *
+ C++********************************************************************
+ C
+ C PIXELMEN    Created                          May 91  
+ C             Converted to C                   Oct 92      
+ C             24 bit display bug fixed         11/8/07  ArDean Leith 
+ C             Doc file close bug               Jul 2015 ArDean Leith
+ C *********************************************************************
+ C * AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2007  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -31,17 +33,17 @@ C *  AUTHOR:  ArDean Leith                                                 *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    PIXELMEN
-C
-C    PURPOSE:         SET VARIOUS PARAMETERS RELATING TO PIXEL READING
-C
-C    VARIABLES:       
-C
-C    CALLED BY:       WEB_COM
-C      
-C***********************************************************************
+ C *********************************************************************
+ C
+ C  PIXELMEN
+ C
+ C  PURPOSE:       Set various parameters relating to pixel reading
+ C
+ C  VARIABLES:       
+ C
+ C  CALLED BY:     WEB_COM
+ C      
+ C**********************************************************************
 */
 
 #include "common.h"
@@ -52,17 +54,17 @@ C***********************************************************************
 
 #define  MAXREGM1 6
 
- /* internal functions */
- void          pixelmen_buta(Widget, caddr_t, caddr_t);
- void          pixelmen_buts(Widget, caddr_t, caddr_t);
- void          pixelmen_l(Widget, caddr_t, caddr_t);
- void          pixelmen_d(Widget, caddr_t, caddr_t);
- void          pixelmen_sh(Widget, caddr_t, caddr_t);
- void          pixelmen_s(Widget, caddr_t, caddr_t);
- void          pixelmen_f(Widget, caddr_t, caddr_t);
- void          pixelmen_i(Widget, caddr_t, caddr_t);
+ /* Internal functions */
+ void          pixelmen_buta(Widget, XtPointer, XtPointer);
+ void          pixelmen_buts(Widget, XtPointer, XtPointer);
+ void          pixelmen_l(Widget,    XtPointer, XtPointer);
+ void          pixelmen_d(Widget,    XtPointer, XtPointer);
+ void          pixelmen_sh(Widget,   XtPointer, XtPointer);
+ void          pixelmen_s(Widget,    XtPointer, XtPointer);
+ void          pixelmen_f(Widget,    XtPointer, XtPointer);
+ void          pixelmen_i(Widget,    XtPointer, XtPointer);
 
- /* common variables */
+ /* Common variables */
  XImage     *  imagep;
  int           ixreg = 1, iyreg = 2;
  int           isreg = 3, ivreg = 4;
@@ -70,16 +72,16 @@ C***********************************************************************
  Widget        iw_xreg,   iw_yreg,   iw_vreg,    iw_sreg,      iw_docit;
  Widget        iw_radius, iw_doc, iw_shimg;
  int           pixelmen_showing = FALSE;
- extern        FILE * fpdocpix;
+ extern        FILE * fpdocpix_p;
  FILEDATA      *filedatap;
 
- /* file scope variables */
+ /* File scope variables */
  static Widget  iw_pixelmen = (Widget)0;
  static int     shimg;
 
  /************************* pixelmen **********************************/
 
- void pixelmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen(Widget iw_temp, XtPointer data, XtPointer call_data)
  { 
  char     cval[5];
  static   Widget   iw_rowcol, iw_rowcol1, iw_rowcol2;
@@ -107,40 +109,40 @@ C***********************************************************************
     }
 
 if (strlen(filnow) == 0) inimag = FALSE;
- /* create toggle box for docit ---------------------------- docit */
+ /* Create toggle box for docit ---------------------------- docit */
  iw_docit = wid_toggleg(iw_rowcol,iw_docit,
            "Save selections in doc. file",
            docit,pixelmen_d,cdum,-1,-1);
 
- /* create text box for doc file name input  -------------- docnam */
+ /* Create text box for doc file name input  -------------- docnam */
  if (docit || iw_doc == (Widget) 0)
     iw_doc = wid_textboxb(iw_rowcol,iw_doc,"Doc. File:",docnam,12);
  if (!docit) XtUnmanageChild(XtParent(iw_doc));
 
- /* create toggle box for shift image ---------------------- shimg */
+ /* Create toggle box for shift image ---------------------- shimg */
  iw_shimg = wid_pushg(iw_rowcol,iw_shimg,"Shift the last image",
                          pixelmen_sh,(char *)iw_shimg,0,0);
 
- /* create toggle box for inimag -------------------------- inimag */
+ /* Create toggle box for inimag -------------------------- inimag */
  iw_inimag = wid_toggleg(iw_rowcol,iw_inimag,"Inside last image",
                          inimag,pixelmen_i,cdum,-1,-1);
  if (strlen(filnow) <= 0)  XtUnmanageChild((iw_inimag));
 
- /* create toggle box for leavit -------------------------- leavit */
+ /* Create toggle box for leavit -------------------------- leavit */
  iw_leavit = wid_toggleg(iw_rowcol,iw_leavit,"Leave marker",leavit,
                          pixelmen_l,cdum,-1,-1);
 
- /* create toggle box for getfile ------------------------ getfile */
+ /* Create toggle box for getfile ------------------------ getfile */
  if (inimag || iw_getfile == (Widget) 0)
     iw_getfile = wid_toggleg(iw_rowcol,iw_getfile,"Get file value",
                   getfile, pixelmen_f,cdum,-1,-1);
  if (!inimag) XtUnmanageChild(iw_getfile);
  
- /* create toggle box for getscreen ------------------- getscreen */
+ /* Create toggle box for getscreen ------------------- getscreen */
  iw_getscreen = wid_toggleg(iw_rowcol,iw_getscreen,"Get screen value",
                  getscreen,pixelmen_s,cdum,0,0);
 
- /* create text box for key number input  ------------------ ikey */
+ /* Create text box for key number input  ------------------ ikey */
  sprintf(cval,"%4d",ikey);
  iw_key = wid_textboxb(iw_rowcol,iw_key,"Key No.:",cval,4);
 
@@ -170,7 +172,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
     if (getscreen || iw_sreg == (Widget) 0)
        {
-       /* create text box for screen value register input - isreg */
+       /* Create text box for screen value register input - isreg */
        sprintf(cval,"%4d",isreg);
        iw_sreg = wid_textboxb(iw_rowcol2,iw_sreg,
                               "Screen Value Reg.:",cval,4);
@@ -189,7 +191,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
  if (!docit || !getscreen) XtUnmanageChild(XtParent(iw_sreg));
 
  if (leavit || iw_radius == 0)
-    {    /* create text box for radius input  ------------ radius */
+    {    /* Create text box for radius input  ------------ radius */
     sprintf(cval,"%4d",iradius);
     iw_radius = wid_textboxb(iw_rowcol,iw_radius,"Radius:",cval,4);
     }
@@ -208,7 +210,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_i (inimag toggle callback) **************/
 
- void pixelmen_i(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen_i(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
  char * stringt;
 
@@ -227,7 +229,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_f (getfile toggle callback) **************/
 
- void pixelmen_f(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen_f(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
  char * stringt;
 
@@ -247,7 +249,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_s (getscreen toggle callback) ***********/
 
- void pixelmen_s(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen_s(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
  char * stringt;
 
@@ -266,7 +268,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_d (docit toggle callback) *************/
 
- void pixelmen_d(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen_d(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
  char * stringt;
 
@@ -287,7 +289,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_sh (shimg toggle callback) *************/
 
- void pixelmen_sh(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen_sh(Widget iw_temp, XtPointer data, XtPointer call_data)
     {
     if (inimag) 
        {
@@ -302,7 +304,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_l (leavit toggle callback) *************/
 
- void pixelmen_l(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen_l(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
  char * stringt;
 
@@ -321,15 +323,15 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************ accept button callback *********************************/
 
- void pixelmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
 
  char * cdum;
- int iform, iplanes;
+ int    iform, iplanes;
  char * stringt;
 
- /* if last doc file is opened, close it first */
- if(fpdocpix)
+ /* If last doc file is opened, close it first */
+ if (fpdocpix_p)
     pixelmen_buts(NULL,NULL,NULL);
 
  inimag = XmToggleButtonGadgetGetState(iw_inimag);
@@ -340,7 +342,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
     }
 
  getscreen = XmToggleButtonGadgetGetState(iw_getscreen);
- /* destroy any old image structure */
+ /* Destroy any old image structure */
  if (imagep) 
     {
     XDestroyImage(imagep);
@@ -349,7 +351,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  if (getscreen)
     {
-    /* create new imagep */
+    /* Create new imagep */
     /* printf("%d %d %d %d \n",ixulx,iyulx, iwidex, ihighx-iyulx); */
    
    iplanes = pow(2,8) - 1;
@@ -361,8 +363,8 @@ if (strlen(filnow) == 0) inimag = FALSE;
                        iwidex, ihighx-iyulx, iplanes, ZPixmap);
     }
  else
-    { /* make sure image structure pointer is NULL */
-    imagep    = (XImage *) NULL;
+    { /* Make sure image structure pointer is NULL */
+    imagep = (XImage *) NULL;
     }
 
 
@@ -374,12 +376,9 @@ if (strlen(filnow) == 0) inimag = FALSE;
     XtFree(stringt);
 
     if (strlen(docnam) == 0) 
-       {
-       spout("*** Must specify document file name.");
-       return;
-       }
+       { spout("*** Must specify document file name."); return; }
 
-    /* get registers */
+    /* Get registers */
     if (rdpriw(&ixreg,1,MAXREGM1,iw_xreg,"x register",cdum) == FALSE) return;
     if (rdpriw(&iyreg,1,MAXREGM1,iw_yreg,"y register",cdum) == FALSE) return;
     if (rdpriw(&ikey, 1,INT_MAX, iw_key, "key",       cdum) == FALSE) return;
@@ -387,13 +386,13 @@ if (strlen(filnow) == 0) inimag = FALSE;
     }
 
  if (docit && getscreen)
-    {  /* get screen register */
+    {  /* Get screen register */
     if (rdpriw(&isreg,1,MAXREGM1,iw_sreg,"screen value register",cdum) == FALSE) return;
     }
 
  getfile = XmToggleButtonGadgetGetState(iw_getfile);
  if (getfile)
-    {     /* open image file if necessary */
+    {     /* Open image file if necessary */
      
     if (strlen(filnow) == 0)
        {
@@ -401,8 +400,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
        return;
        }
 
-    if ((filedatap = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) 
-       ==  NULL) 
+    if ((filedatap = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) == NULL) 
         {
         spout("*** Can not open image to find file value for pixel.");
         return;
@@ -411,14 +409,14 @@ if (strlen(filnow) == 0) inimag = FALSE;
     inimag = TRUE;   
 
     if (docit)
-       {  /* get file value register */
+       {  /* Get file value register */
        if (rdpriw(&ivreg,1,MAXREGM1,iw_vreg,"file value register",cdum) 
            == FALSE) return;
        }
     }
 
  if (leavit)
-    {  /* get radius for marker */
+    {  /* Get radius for marker */
     if (rdpriw(&iradius,0,1000,iw_radius,"radius",cdum) == FALSE) return;
     }
                
@@ -428,38 +426,41 @@ if (strlen(filnow) == 0) inimag = FALSE;
  pixel();
  }
 
- /************ stop button callback *********************************/
+ /************ Stop button callback *********************************/
 
- void pixelmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void pixelmen_buts(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
 
  int    numdoc, nlet;
 
   if (docit) 
-     {   /* close the doc file */
-     fclose(fpdocpix); 
+     {   /* Close the doc file */
+     fclose(fpdocpix_p); 
+     fpdocpix_p = NULL;
+
      ikey = 1; 
      if (strlen(docnam) != 0) 
-        {   /* increment next doc file name */
+        {   /* Increment next doc file name */
         filinc(docnam, docnam, &nlet, &numdoc);
         }
      }
 
  if (imagep)
-   {    /* free up image storage */
+   {    /* Free up image storage */
    XDestroyImage(imagep);
-   imagep    = (XImage *) 0;
+   imagep = (XImage *) 0;
    }
 
- /* remove the pixelmen */
+ /* Remove the pixelmen */
  XtUnmanageChild(iw_pixelmen);  
 
- /* close the image file, if opened here */
+ /* Close the image file, if opened here */
  if (filedatap != NULL && filedatap->fp != NULL) closefilep(&filedatap); 
- /* uninstall translations */
+
+ /* Uninstall translations */
  XtUninstallTranslations(iw_win);
 
- /* remove button assignment instructions */
+ /* Remove button assignment instructions */
  if (pixelmen_showing) 
     { showbutx("","","",TRUE);  pixelmen_showing = FALSE; }
  }
