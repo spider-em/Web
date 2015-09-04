@@ -1,15 +1,15 @@
 
-/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.20 2015/06/11 13:29:54 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.21 2015/09/01 17:53:12 leith Exp $*/
 
 /*
-C++*********************************************************************
-C                                                                      *
-C  fitdocmen.c          New                      May 93   ArDean Leith *
-C                       Improved                 Jun 2011 ArDean Leith *
-C                       Improved                 Jun 2015 ArDean Leith *
-C                                                                      *
-C **********************************************************************
-C    AUTHOR:  ArDean Leith                                             *
+ C**********************************************************************
+ C                                                                     *
+ C  fitdocmen.c         New                      May   93 ArDean Leith *
+ C                      Improved                 Jun 2011 ArDean Leith *
+ C                      Improved                 Jun 2015 ArDean Leith *
+ C                                                                     *
+ C *********************************************************************
+ C   AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
@@ -33,43 +33,44 @@ C    AUTHOR:  ArDean Leith                                             *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    fitdocmen()
-C
-C    PURPOSE:    Inputs doc file name for particle picking and then
-C                returns to particle picker
-C
-C    PARAMETERS: none   
-C
-C    CALLed BY:  pickp      
-C
-C    CALLS:      
-C
-C--*********************************************************************
+ C**********************************************************************
+ C
+ C  fitdocmen()
+ C
+ C  PURPOSE:    Inputs doc file name for particle picking and then
+ C              returns to particle picker
+ C
+ C  PARAMETERS: none   
+ C
+ C  CALLed BY:  pickp      
+ C
+ C  CALLS:      
+ C
+ C**********************************************************************
 */
+
 #include "common.h"
 #include "routines.h"
 #include <Xm/Text.h>
 
  // Internal subroutine prototypes 
- void       fitdocmen_butc(Widget, XtPointer, XtPointer);
- void       fitdocmen_buta(Widget, XtPointer, XtPointer);
+ void           fitdocmen_butc(Widget, XtPointer, XtPointer);
+ void           fitdocmen_buta(Widget, XtPointer, XtPointer);
 
  //  Global variables (see pickp) 
- int              nfd   = -1;          // Doc file number         
- int              iredu = 1;           // Image reduction factor  
- char             dfil1[12],dfil2[12];
- char             dfil3[12],dfil4[12];
- char             dfil5[12],dfil6[12];
+ int            nfd   = -1;            // Doc file number         
+ int            iredu = 1;             // Image reduction factor  
+ char           dfil1[12],dfil2[12];   // Doc file root names
+ char           dfil3[12],dfil4[12];
+ char           dfil5[12],dfil6[12];
 
- // External global variables used here 
- extern float     phif, thetaf, gammaff; // Defined in: fitmen
- extern int       fitted;                // Defined in: pickp
+ // External global variables used here ??
+ extern float   phif, thetaf, gammaff; // Defined in: fitmen
+ extern int     fitted;                // Defined in: pickp
 
  // Internal file scope variables 
- static Widget    iw_redu, iw_nfd;
- static Widget    iw_fitdocmen = (Widget)0;
+ static Widget  iw_redu, iw_nfd;
+ static Widget  iw_fitdocmen = (Widget)0;
  
  /*********************** fitdocmen ********************************/
 
@@ -83,14 +84,14 @@ C--*********************************************************************
 
  if (iw_fitdocmen == (Widget)0)
     {   
-    /*  Create marker doc file menu */
+    /*   Create marker doc file menu */
 
     iw_fitdocmen = wid_dialog(iw_win, 0, 
                    "Particle document file", -1,-1);
 
     iw_rowcolv = wid_rowcol(iw_fitdocmen, 'v', -1, -1);
 
-    /*  Create text box for doc file number input */
+    /*   Create text box for doc file number input */
     nfd++;
     sprintf(cval,"%4d",nfd);
     iw_nfd = wid_textboxb(iw_rowcolv,0,
@@ -108,7 +109,7 @@ C--*********************************************************************
     }
  else
     {
-    /*  Update text box for doc file number input */
+    /*   Update text box for doc file number input */
     nfd++;
     sprintf(cval,"%4d",nfd);
     iw_nfd = wid_textboxb(iw_rowcolv,iw_nfd,
@@ -124,12 +125,12 @@ C--*********************************************************************
  {
  float        fdum;
 
- /* Find iimage reduction factor */
+ /* Get image reduction factor */
  if (!rdprx(iw_redu,'i',&iredu,&fdum)) return;
  if (iredu < 1) 
     {spout("*** Reduction factor must be >= 1 !"); return;}
 
- /* Find doc file number= nfd */
+ /* Get doc file number: nfd */
  if (!rdprx(iw_nfd,'i',&nfd,&fdum)) return;
  if (nfd < 0 || nfd > 999) 
     {spout("*** Doc. file number range 0 ...999 !"); return;}
@@ -150,24 +151,19 @@ C--*********************************************************************
 
  /* Initialize some variables for each run */
  fitted = FALSE;
- thetaf = 0.0; gammaff = -90.0; phif = -90.0;
+ thetaf = 0.0;  gammaff = -90.0;  phif = -90.0;
 
- /* Retrieve info from doc files, do not list points, start pickp */
- if (fitdoc(TRUE) > 0)
-    { 
-    spout("*** Can not continue, fix document files!");
-    XBell(idispl,50); XBell(idispl,50); XBell(idispl,50); 
-    return;
-    }
+ /* Recover any existing picked particles */
+ ///fitdoc(TRUE);
 
  /* Start picking points now */
  pickp(TRUE);
-
  }
 
 /*********** Docfile cancel button callback ***********************/
 
- void fitdocmen_butc(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void fitdocmen_butc(Widget iw_temp, XtPointer data, 
+                                     XtPointer call_data)
  {
  /*  Remove the menu widget */
  XtUnmanageChild(iw_fitdocmen);
