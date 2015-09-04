@@ -25,7 +25,7 @@
  extern int      closefilep   (FILEDATA**);
  extern void     colmen       (Widget, XtPointer, XtPointer);
  extern Widget   contrastmen  (Widget, XtPointer, XtPointer);
- extern void     curmen       (Widget, caddr_t, caddr_t);
+ extern void     curmen       (Widget, XtPointer, XtPointer);
  extern void     comap        (void);
  extern void     comapsav     (int);
  extern void     comapmen2    (void);
@@ -221,7 +221,7 @@
  extern Widget   wid_angles   (Widget, Widget[3], int,int, int, int, int, int);
  extern Widget   wid_contrast (Widget,  char*,  int, int);
  extern Widget   wid_dialog   (Widget, Widget, char*, int, int);
- extern Widget   wid_file     (Widget, Widget,char*, char*, char*,
+ extern Widget   wid_file     (Widget, Widget, char*, char*, char*,
                                void (*)(), int, int);
  extern void     wid_fileset  (Widget, char*);
  extern void     wid_filedirset(Widget, char*);
@@ -246,7 +246,11 @@
  extern Widget   wid_scale    (Widget, Widget, char*, 
                                int, int, int,  int, int, int, int);
  extern Widget   wid_skip     (Widget,  char*,  int, int);
- extern Widget   wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+ extern Widget   wid_stdbut   (Widget, Widget,  Widget*, Widget*, Widget*, 
+                               char *, void (*)(), void (*)(), void (*)(),
+                               char *);
+ extern Widget   wid_stdbut_str(Widget, Widget,  Widget*, Widget*, Widget*, 
+                               char *,     char *,     char *,    
                                char *, void (*)(), void (*)(), void (*)(),
                                char *);
  extern Widget   wid_text     (Widget, Widget, char*, char*,
