@@ -1,14 +1,18 @@
 
-/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.32 2015/06/11 13:28:32 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.33 2015/09/01 17:53:42 leith Exp $*/
+
 /*
-C++*********************************************************************
-C                                                                      *
-C  pickmen.c   New                               May 93   ArDean Leith *
-C              Improved                          Jun 2011 ArDean Leith *
-C              Improved formatting               Jun 2015 ArDean Leith *
-C                                                                      *
-C **********************************************************************
-C    AUTHOR:  ArDean Leith                                             *
+ C++********************************************************************
+ C                                                                     *
+ C  pickmen.c   New                              May 93   ArDean Leith *
+ C              Improved                         Jun 2011 ArDean Leith *
+ C              Improved formatting              Jun 2015 ArDean Leith *
+ C              shift(TILT), Cosmetic            Jul 2015 ArDean Leith *
+ C              Altered particle deletion        Aug 2015 ArDean Leith *
+ C              Improved                         Aug 2015 ArDean Leith *
+ C                                                                     *
+ C *********************************************************************
+ C   AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
@@ -32,17 +36,17 @@ C    AUTHOR:  ArDean Leith                                             *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    pickmen()
-C
-C    PURPOSE:    Displays particle picking selecting menu
-C
-C    PARAMETERS: None   
-C
-C    CALLED BY:  pickpop 
-C
-C    CALL TREE:
+ C**********************************************************************
+ C
+ C  pickmen()
+ C
+ C  PURPOSE:    Displays particle picking selecting menu
+ C
+ C  PARAMETERS: None   
+ C
+ C  CALLED BY:  pickpop 
+ C
+ C  CALL TREE:
   
  imagemen --> imagemen_cb --> imagemen1 --> showimag --> redvol
                                                             v   
@@ -55,10 +59,10 @@ C    CALL TREE:
  fitdocmen            |
  fitdocmen_buta       | _butel --> backmen
     |                 |
- fitdoc ->unsdal      | _buter --> backmen
-    |                 |
  pickp                | _butcl --> pickdisp
     |                 |
+ fitdoc ->unsdal      | _buter --> backmen
+    |
  pickpop -> pickmen --| _butl  --> fitdoc --> unsdal 
                       |              v          
                       |            pickdraw                  
@@ -85,7 +89,7 @@ C    CALL TREE:
                       |
                       |_fitmenadv -->
 
-C--*********************************************************************
+ C*********************************************************************
 */
 
 #include "common.h"
@@ -110,34 +114,38 @@ C--*********************************************************************
  void    fit_butdraw2  (Widget, XtPointer, XtPointer);
  void    fit_butsavang (Widget, XtPointer, XtPointer);
 
- void    show_tilt(int wantmsg, int wantlabel);
+ void    det_tilt      (int wantmsg, int wantlabel);
  
  
  // Externally defined global variables 
+ extern FILEDATA *  filedatal;               // From: imagemen
+ extern FILEDATA *  filedatar;               // From: imagemen
  extern int         maxpart;                 // From: fitdoc
  extern int         numm;                    // From: pickp
- extern float     * xim, * xu0, * yu0;       // From: fitdoc
- extern float     * xs, * ys, * xs2, * ys2;  // From: fitdoc
- extern FILEDATA  * filedatal;               // From: imagemen
- extern FILEDATA  * filedatar;               // From: imagemen
+ extern float *     xim;                     // From: fitdoc
+ extern float *     xu0;                     // From: fitdoc
+ extern float *     yu0;                     // From: fitdoc
+ extern float *     xs;                      // From: fitdoc
+ extern float *     ys;                      // From: fitdoc
+ extern float *     xs2;                     // From: fitdoc
+ extern float *     ys2;                     // From: fitdoc
  extern float       phif, thetaf, gammaff;   // From: fitmen
  extern float       arealim;                 // From: fitmen
  extern int         fitted;                  // From: pickp
- extern Widget      iw_but_lef0;             // From: pickp
- extern Widget      iw_but_lef1;             // From: pickp
- extern Widget      iw_but_rit0;             // From: pickp
- extern Widget      iw_but_rit1;             // From: pickp
+ extern Widget      iw_but_lef;              // From: pickp
+ extern Widget      iw_but_rit;              // From: pickp
  extern Widget      iw_but_lefrit;           // From: pickp
 
  // Internally defined global variables 
- Widget  iw_pickmen = (Widget)0;             // Used in: pickp_pop
- int     orgkey     = 1;
- float   xu0t, yu0t, xs0t, ys0t;
+ float              xu0t, yu0t, xs0t, ys0t;
+ int                orgkey      = 1;
+ Widget             iw_rowcolh0 = (Widget) 0;
+ Widget             iw_parlabel = (Widget) 0;
+ Widget             iw_pickmen  = (Widget) 0;   // Used in: pickp_pop
  
  // Internal file scope variables 
- static Widget iw_parkey;
- static Widget iw_rowcolh;
- static Widget iw_the, iw_phi, iw_gam;
+ static Widget      iw_rowcolh;
+ static Widget      iw_the, iw_phi, iw_gam;
 
  /***********************   pickmen   ********************************/
 
@@ -157,16 +165,32 @@ C--*********************************************************************
 
     iw_rowcolv = wid_rowcol(iw_pickmen, 'v', -1, -1);
 
-    // Create text box for particle key  --------------------- Key number
+    // Create label boxes for particle key ------------------- Particle number
+    iw_rowcolh0 = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+    wid_labelg(iw_rowcolh0,0,"Next particle number:",-1,-1);
     sprintf(cval,"%4d",numm);
-    iw_parkey   = wid_textboxb(iw_rowcolv,0,
-                            "Next key number:",cval,4);
-    XtAddCallback(iw_parkey,XmNvalueChangedCallback,
-                           (XtCallbackProc) pickmen_butk,"0");
+    iw_parlabel = wid_labelg(iw_rowcolh0,0,cval,-1,-1);
 
-    //Create pushbutton for fitting angles ------------------- Determine angs
-    wid_pushg(iw_rowcolv, 0, "Determine tilt and axes angles",
+    // Create label boxes for angles ------------------------- Angles 
+    iw_rowcolh = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    wid_labelg(iw_rowcolh,0,"Tilt:",-1,-1);
+    sprintf(cval,"%-.2f",thetaf);
+    iw_the = wid_labelg(iw_rowcolh,0,cval,-1,-1);
+
+    wid_labelg(iw_rowcolh,0,"Axis ang:",-1,-1);
+    sprintf(cval,"%-.2f",phif);
+    iw_phi = wid_labelg(iw_rowcolh,0,cval,-1,-1);
+    sprintf(cval,"%-.2f",gammaff);
+    iw_gam = wid_labelg(iw_rowcolh,0,cval,-1,-1);
+
+   //Create pushbutton for fitting angles -------------------- Redetermine angles
+    wid_pushg(iw_rowcolv, 0, "Redetermine tilt & axis angles",
                   pickmen_butdet, NULL, -1,-1);
+
+    // Create push button for saving angles ------------------ Save angles
+    wid_pushg(iw_rowcolv, 0, "Save angles in angles file",
+                     fit_butsavang, NULL, -1,-1);
 
     // Create pushbutton for shifting image ------------------ Shift images
     wid_pushg(iw_rowcolv, 0, "Shift images",
@@ -196,24 +220,9 @@ C--*********************************************************************
     wid_pushg(iw_rowcolv, 0, "Show particle numbers",
                   pickmen_butn, NULL, -1,-1);
 
-    // Create push button for draw points -------------------- Draw 
+    // Create push button for draw points -------------------- Draw fitted
     wid_pushg(iw_rowcolv, 0, "Draw fitted locations",
                      fit_butdraw2, NULL, -1,-1);
-
-    // Create label boxes for angles ------------------------- Angles 
-    iw_rowcolh = wid_rowcol(iw_rowcolv, 'h', -1, -1);
-    wid_labelg(iw_rowcolh,0,"Tilt:",-1,-1);
-    sprintf(cval,"%-.2f",thetaf);
-    iw_the = wid_labelg(iw_rowcolh,0,cval,-1,-1);
-    wid_labelg(iw_rowcolh,0,"Angs:",-1,-1);
-    sprintf(cval,"%-.2f",phif);
-    iw_phi = wid_labelg(iw_rowcolh,0,cval,-1,-1);
-    sprintf(cval,"%-.2f",gammaff);
-    iw_gam = wid_labelg(iw_rowcolh,0,cval,-1,-1);
-
-    // Create push button for saving angles ------------------ Save ang.
-    wid_pushg(iw_rowcolv, 0, "Save angles in doc file",
-                     fit_butsavang, NULL, -1,-1);
 
     // Create push button for advanced ----------------------- Advanced 
     wid_pushg(iw_rowcolv, 0, "Expert menu",
@@ -227,15 +236,17 @@ C--*********************************************************************
 
  else
     {
-    // Update text box for particle key  --------------------- Key number
+    // Update label box for particle ------------------------- Particle number
     sprintf(cval,"%4d",numm);
-    iw_parkey = wid_textboxb(iw_rowcolv,iw_parkey,
-                            "Key number:",cval,4);
+    wid_labelg(iw_rowcolh,iw_parlabel,cval,-1,-1);
+
     // Update label boxes for angles ------------------------- Angles 
     sprintf(cval,"%-.2f",thetaf);
     wid_labelg(iw_rowcolh,iw_the,cval,-1,-1);
+
     sprintf(cval,"%-.2f",phif);
     wid_labelg(iw_rowcolh,iw_phi,cval,-1,-1);
+
     sprintf(cval,"%-.2f",gammaff);
     wid_labelg(iw_rowcolh,iw_gam,cval,-1,-1);
     }
@@ -243,28 +254,7 @@ C--*********************************************************************
  XtManageChild(iw_pickmen);
  }
 
-
-
-/*********** Key number callback ************************/
-
- void pickmen_butk(Widget iw_temp, XtPointer data, 
-                                   XtPointer calldata)
- {
-
- char * string = NULL;
-
- /* Find particle key */
- string = XmTextGetString(iw_parkey);
- sscanf(string,"%d",&numm);
- if (string) free(string);
-
- if (numm < 1) 
-    { spout("*** Key number must be > 0"); return; }
-
- }
-
-
-/************ Erase button callback **********************************/
+ /************ Erase button callback **********************************/
 
  void pickmen_butcl(Widget iw_temp, XtPointer data, 
                                     XtPointer calldata)
@@ -273,16 +263,14 @@ C--*********************************************************************
  pickdisp(TRUE,TRUE);
  }
 
-/************ Shift button callback **********************************/
+ /************ Shift button callback **********************************/
 
  void pickmen_butsh(Widget iw_temp, XtPointer data, 
                                     XtPointer calldata)
  {
  /*  Remove message */
- XtUnmanageChild(iw_but_lef0);
- XtUnmanageChild(iw_but_lef1);
- XtUnmanageChild(iw_but_rit0);
- XtUnmanageChild(iw_but_rit1);
+ XtUnmanageChild(iw_but_lef);
+ XtUnmanageChild(iw_but_rit);
  XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the menu widget */
@@ -291,20 +279,19 @@ C--*********************************************************************
  /*  Cancel buttons */
  XtUninstallTranslations(iw_win);
 
- /* Shift the image using mouse for input */
- shift(TRUE);
+ /* Shift image using mouse for input */
+ shift(TILT);
  }
 
-/************ Background picking callback ****************************/
+
+ /************ Background window picking callback **********************/
 
  void pickmen_butb(Widget iw_temp, XtPointer data, 
                                    XtPointer calldata)
  {
  /*  Remove button assignment messages */
- XtUnmanageChild(iw_but_lef0);
- XtUnmanageChild(iw_but_lef1);
- XtUnmanageChild(iw_but_rit0);
- XtUnmanageChild(iw_but_rit1);
+ XtUnmanageChild(iw_but_lef);
+ XtUnmanageChild(iw_but_rit);
  XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the picking menu widget */
@@ -322,10 +309,7 @@ C--*********************************************************************
  void pickmen_butn(Widget iw_temp, XtPointer data, 
                                   XtPointer calldata)
  {
- /* Retrieve tilted and untilted points, & fit angles */
- fitdoc(FALSE);
-
- /* Draw */
+ /* Draw particle numbers at their location */
  pickdraw(TRUE, TRUE, FALSE, TRUE, FALSE, maxpart);
  }
 
@@ -335,10 +319,7 @@ C--*********************************************************************
  void pickmen_butl(Widget iw_temp, XtPointer data, 
                                    XtPointer alldata)
  {
- /* Retrieve tilted and untilted points, & fit angles */
- fitdoc(FALSE);
-
- // Draw 
+ // Draw locations on both sides
  pickdraw(TRUE, TRUE, TRUE, FALSE, FALSE, maxpart);
  }
 
@@ -364,7 +345,6 @@ C--*********************************************************************
  void pickmen_butdet(Widget iw_temp, XtPointer data, 
                                      XtPointer calldata)
  {
- char * string;
  char   outmes[80];
  char   cval[10];
  int    iflag;
@@ -373,7 +353,6 @@ C--*********************************************************************
  spoutfile(TRUE);
 
  /* Retrieve tilted and untilted points, & fit angles */
-
  fitdoc(FALSE);
 
  /* Determine theta tilt angle */
@@ -386,13 +365,14 @@ C--*********************************************************************
  if (iflag < 0)
     { /* Some bad locations accepted */  XBell(idispl,50); }
 
- // Get origin location for present orgkey
+ // Get origin location using present orgkey
  xu0t = xu0[orgkey-1];
  yu0t = yu0[orgkey-1];
  xs0t =  xs[orgkey-1];
  ys0t =  ys[orgkey-1];
 
- // willsq reads xu0,yu0,xs,ys,thetaf,& maxpart  and returns phif,gammaff,& error flag 
+ // willsq reads:   xu0, yu0, xs, ys, thetaf, & maxpart,  xu0t, yu0t, xs0t, ys0t,  and 
+ //        returns: phif, gammaff & error flag 
  iflag = willsq(xu0, yu0, xs, ys, maxpart, 
                 thetaf, &gammaff, &phif);
  if (iflag == 0)
@@ -417,16 +397,14 @@ C--*********************************************************************
  }
 
 
-/************* Stop button callback **********************************/
+ /************* Stop button callback **********************************/
 
  void pickmen_buts(Widget iw_temp, XtPointer data, 
                                    XtPointer calldata )
  {
  /*  Remove message */
- XtUnmanageChild(iw_but_lef0);
- XtUnmanageChild(iw_but_lef1);
- XtUnmanageChild(iw_but_rit0);
- XtUnmanageChild(iw_but_rit1);
+ XtUnmanageChild(iw_but_lef);
+ XtUnmanageChild(iw_but_rit);
  XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the menu widget */
@@ -456,20 +434,18 @@ C--*********************************************************************
 
 /****************  Find tilt angle ***********************/
 
- void show_tilt(int wantmsg, int wantlabel)
+ void det_tilt(int wantmsg, int wantlabel)
  {
- char * string;
  char   outmes[80];
  char   cval[10];
  int    iflag;
  int    iarea;
 
- spoutfile(TRUE);
-
  /* Retrieve current tilted and untilted points, & fit angles */
  fitdoc(TRUE);
 
  /* Determine theta tilt angle */
+
  iflag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim, FALSE);
  if (iflag > 0)
     {  
@@ -477,19 +453,38 @@ C--*********************************************************************
     XBell(idispl,50); XBell(idispl,50);
     }
  if (iflag < 0)
-    { /* Some bad locations accepted */  XBell(idispl,50); }
+    { /* Some bad locations accepted */  
+    XBell(idispl,50); 
+    }
 
- if (iflag == 0 && wantmsg)
+ // Get origin location using present orgkey
+ xu0t = xu0[orgkey-1];
+ yu0t = yu0[orgkey-1];
+ xs0t =  xs[orgkey-1];
+ ys0t =  ys[orgkey-1];
+
+ /* Determine axis angle */
+ // willsq reads:   xu0, yu0, xs, ys, thetaf, & maxpart,  xu0t, yu0t, xs0t, ys0t   
+ //        returns: phif, gammaff & error iflag 
+
+ iflag = willsq(xu0, yu0, xs, ys, maxpart, 
+                thetaf, &gammaff, &phif);
+ if (iflag == 0)
    {   /* Succeeded, fitting is OK */
-   sprintf(outmes,"Thetabad: %5.2f   ", thetaf);
-   spout(outmes);
-   }
+   fitted = TRUE;
 
- spoutfile(FALSE);
+   if (wantmsg)
+      {   /* Succeeded, fitting is OK */
+      sprintf(outmes,"Tilt (theta): %5.2f   Gamma: %5.2f   Phi: %5.2f",
+                     thetaf,gammaff,phif);
+      spout(outmes);
+      }
+    }
+ else
+   { XBell(idispl,50); }
     
  if (wantlabel && iw_the != NULL)
-   {   
-   // Update label box for angles 
+   {    // Update angles label box 
    sprintf(cval,"%-.2f",thetaf);
    wid_labelg(NULL,iw_the,cval,0,0);
    sprintf(cval,"%-.2f",phif);
