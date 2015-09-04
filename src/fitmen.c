@@ -1,15 +1,16 @@
 
-/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.33 2015/06/11 13:25:48 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.34 2015/09/01 17:53:12 leith Exp $*/
 
 /*
-C++*********************************************************************
-C                                                                      *
-C fitmen                                                               *
-C              In: fit_butfit  moved Unmanage    Dec 2004 ArDean Leith *
-C              Improved                          Jun 2011 ArDean Leith *
-C                                                                      * 
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                             *
+ C**********************************************************************
+ C                                                                     *
+ C fitmen                                                              *
+ C         In: fit_butfit  moved Unmanage        Dec 2004 ArDean Leith *
+ C         Improved                              Jun 2011 ArDean Leith *
+ C         Particle number selector              Aug 2015 ArDean Leith *
+ C                                                                     * 
+ C**********************************************************************
+ C *  AUTHOR:  ArDean Leith                                            *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
@@ -33,7 +34,7 @@ C *  AUTHOR:  ArDean Leith                                             *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- C **********************************************************************
+ C**********************************************************************
  C
  C    fitmen
  C
@@ -50,7 +51,7 @@ C *  AUTHOR:  ArDean Leith                                             *
  C                                       tiltang
  C                                       fitmen_adv
  C
- C***********************************************************************
+ C*********************************************************************
 */
 
 #include "common.h"
@@ -63,25 +64,30 @@ C *  AUTHOR:  ArDean Leith                                             *
  void          fit_butdraw2 (Widget, XtPointer, XtPointer);
  void          fit_butsavang(Widget, XtPointer, XtPointer);
  void          fitmen_butok (Widget, XtPointer, XtPointer);
+ void          fitmen_butk  (Widget, XtPointer, XtPointer);
 
  // Externally defined global variables 
- extern int     maxpart;
- extern float  xu0t,  yu0t,  xs0t,  ys0t;   // From: fitorigin
+ extern int    maxpart;
+ extern float  xu0t,  yu0t,  xs0t,  ys0t;    // From: fitorigin
  extern float  * xim, * xu0, * yu0; 
  extern float  * xs,  * ys, * xs2, * ys2; 
- extern int    fitted;                      // From: pickp
- extern int    orgkey;                      // From: pickmen
+ extern int    fitted;                       // From: pickp
+ extern int    orgkey;                       // From: pickmen
+ extern int    numm;                         // From: pickp
+ extern Widget iw_parlabel;                  // From: pickmen
+ extern Widget iw_rowcolh0;                  // From: pickmen
 	       
  // Global variables defined here, used here & elsewhere 
- float         phif, thetaf, gammaff;
- Widget        iw_fitmen_adv = (Widget) 0;    // Used in: pickp 
- float         arealim = 5000;                // Min. triangle area
-
+ float         phif          = 0.0;
+ float         thetaf        = 0.0;
+ float         gammaff       = 0.0;
+ float         arealim       = 5000;         // Min. triangle area
+ Widget        iw_fitmen_adv = (Widget) 0;   // Used in: pickp 
 
  // File scope variables used here
- static Widget   iw_area, iw_orgkey, iw_xorg, iw_yorg;
- static Widget   iw_thetaf;
- static Widget   iw_advanced_adv;
+ static Widget iw_area, iw_orgkey, iw_xorg, iw_yorg;
+ static Widget iw_thetaf;
+ static Widget iw_partext;
 
 
  /****************************  fitmen_adv   ***********************/
@@ -89,7 +95,7 @@ C *  AUTHOR:  ArDean Leith                                             *
  void fitmen_adv(void)
 
  { 
- static Widget iw_rowcolv, iw_rowcolh0, iw_rowcolh1, iw_rowcolh2;
+ static Widget iw_rowcolv, iw_rowcolh1, iw_rowcolh2, iw_rowcolh3;
  Widget        iw_pushs, iw_dums; 
 
  char   cval[40];
@@ -103,60 +109,67 @@ C *  AUTHOR:  ArDean Leith                                             *
     iw_rowcolv = wid_rowcol(iw_fitmen_adv, 'v', -1, -1);
 
 
+    // Create text box for particle key  --------------------- Key number
+    sprintf(cval,"%4d",numm);
+    iw_partext = wid_textboxb(iw_rowcolv,0,
+                            "Next particle number:",cval,4);
+    XtAddCallback(iw_partext,XmNvalueChangedCallback,
+                           (XtCallbackProc) fitmen_butk,"0");
+
     // Create horizontal rowcol for origins   */
-    iw_rowcolh0  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+    iw_rowcolh1  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
 
     // Create text box for origin key ----------------------  Origin key 
     sprintf(cval,"%4d",orgkey);
-    iw_orgkey = wid_textboxb(iw_rowcolh0,0,
+    iw_orgkey = wid_textboxb(iw_rowcolh1,0,
                          "Key number for origin:",cval,4);
     //XtAddCallback(iw_orgkey,XmNvalueChangedCallback,
     XtAddCallback(iw_orgkey,XmNactivateCallback,
                            (XtCallbackProc) fitmen_butok,"0");
 
     // Create horizontal rowcol for origins   */
-    iw_rowcolh1  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+    iw_rowcolh2  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
 
     // Create text box for x origin ------------------------- X origin 
     sprintf(cval,"%f",xu0t);
-    iw_xorg = wid_textboxb(iw_rowcolh1,0,
+    iw_xorg = wid_textboxb(iw_rowcolh2,0,
                            "X origin:",cval,10);
 
     // Create text box for y origin ------------------------- Y origin 
     sprintf(cval,"%f",yu0t);
-    iw_yorg = wid_textboxb(iw_rowcolh1,0,
+    iw_yorg = wid_textboxb(iw_rowcolh2,0,
                            "Y origin:",cval,10);
 
     // Create horizontal rowcol for angles   */
-    iw_rowcolh2  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+    iw_rowcolh3  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
 
-    // Create text box for thetaf --------------------------- Thetaf 
+    // Create text box for thetaf ---------------------------- Thetaf 
     sprintf(cval,"%f",thetaf);
-    iw_thetaf = wid_textboxb(iw_rowcolh2,0,
+    iw_thetaf = wid_textboxb(iw_rowcolh3,0,
                            "Theta:",cval,10);
 
-    // Create text box for arealim ------------------------- Arealim 
+    // Create text box for arealim --------------------------- Arealim 
     sprintf(cval,"%f",arealim);
     iw_area = wid_textboxb(iw_rowcolv,iw_area,
                            "Min. triangle area:",cval,10);
 
-    // Create push button for tilt angle det. -------------- Tilt 
+    // Create push button for tilt angle det. ---------------- Tilt 
     wid_pushg(iw_rowcolv, 0, "Determine theta",
                      fit_buttilt, NULL, -1,-1);
 
-    // Create push button for fitting angles --------------- Fit 
+    // Create push button for fitting angles ----------------- Fit 
     wid_pushg(iw_rowcolv, 0, "Fit angles",
                      fit_butfit, NULL, -1,-1);
 
-    // Create push button for draw points ------------------ Draw 
+    // Create push button for draw points -------------------- Draw 
     wid_pushg(iw_rowcolv, 0, "Draw fitted locations",
                      fit_butdraw2, NULL, -1,-1);
 
-    // Create push button for saving angles ---------------- Save ang. 
+    // Create push button for saving angles ------------------ Save ang. 
     wid_pushg(iw_rowcolv, 0, "Save angles",
                      fit_butsavang, NULL, -1,-1);
 
-    // Create box for cancel ------------------------------- Cancel 
+    // Create box for cancel --------------------------------- Cancel 
     iw_dums = wid_stdbut(iw_rowcolv, iw_fitmen_adv, 
                         &iw_pushs, &iw_dums, &iw_dums,"C",
                         fin_cb,fin_cb ,fin_cb, NULL);
@@ -164,27 +177,34 @@ C *  AUTHOR:  ArDean Leith                                             *
 
  else
     {
-    // Update text box for origin key ----------------------  Origin key 
+    // Update text box for particle -------------------------  Particle key
+    sprintf(cval,"%4d",numm);
+    iw_partext = wid_textboxb(iw_rowcolv,iw_partext,
+                       "Next particle number:",cval,4);
+    // Update label box for particle number
+    wid_labelg(iw_rowcolh0,iw_parlabel,cval,-1,-1);
+
+    // Update text box for origin key -------------------------  Origin key 
     sprintf(cval,"%4d",orgkey);
     iw_orgkey = wid_textboxb(iw_rowcolv,iw_orgkey,
                        "Key number for origin:",cval,4);
 
-    // Update text box for x origin ------------------------- X origin 
+    // Update text box for x origin -------------------------- X origin 
     sprintf(cval,"%f",xu0t);
-    iw_xorg = wid_textboxb(iw_rowcolh1,iw_xorg,
+    iw_xorg = wid_textboxb(iw_rowcolh2,iw_xorg,
                         "X origin:",cval,10);
 
-    // Update text box for y origin ------------------------- Y origin 
+    // Update text box for y origin -------------------------- Y origin 
     sprintf(cval,"%f",yu0t);
-    iw_yorg = wid_textboxb(iw_rowcolh1,iw_yorg,
+    iw_yorg = wid_textboxb(iw_rowcolh2,iw_yorg,
                         "Y origin:",cval,10);
 
-    // Update text box for thetaf --------------------------- Thetaf 
+    // Update text box for thetaf ---------------------------- Thetaf 
     sprintf(cval,"%f",thetaf);
-    iw_thetaf = wid_textboxb(iw_rowcolh2,iw_thetaf,
+    iw_thetaf = wid_textboxb(iw_rowcolh3,iw_thetaf,
                        "Theta:",cval,10);
 
-    // Update text box for arealim -------------------------  Arealim 
+    // Update text box for arealim --------------------------  Arealim 
     sprintf(cval,"%f",arealim);
     iw_area = wid_textboxb(iw_rowcolv,iw_area,
                       "Min triangle area:",cval,10);
@@ -194,7 +214,28 @@ C *  AUTHOR:  ArDean Leith                                             *
  }  
 
 
-/***********  origin key changed callback ***********************/
+ /*********** Particle number changed callback ************************/
+
+ void fitmen_butk(Widget iw_temp, XtPointer data, 
+                                   XtPointer calldata)
+ {
+ char * string = NULL;
+ char   cval[40];
+
+ /* Find particle number */
+ string = XmTextGetString(iw_partext);
+ sscanf(string,"%d",&numm);
+ if (string) free(string);
+
+ if (numm < 1) 
+    { spout("*** Particle number must be > 0"); return; }
+
+ // Update label box for particle number
+ sprintf(cval,"%4d",numm);
+ wid_labelg(iw_rowcolh0,iw_parlabel,cval,-1,-1);
+ }
+
+/***********  Origin key changed callback ***********************/
 
  void fitmen_butok(Widget iw_temp, XtPointer data, 
                                    XtPointer call_data)
