@@ -1,12 +1,12 @@
 
-/*$Header: /usr8/web/src/RCS/fitsav.c,v 1.26 2015/06/11 13:28:57 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitsav.c,v 1.27 2015/09/01 17:53:12 leith Exp $*/
 
 /*
-C++*********************************************************************
-C
-C    fitsav
-C
-C **********************************************************************
+ C**********************************************************************
+ C
+ C  fitsav.c
+ C
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
@@ -30,16 +30,16 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    fitsav
-C
-C    PURPOSE:    Saves fitted angles in dfil3
-C                Saves tilted predicted loactions in dfil6
-C
-C    CALLED BY:   
-C
-C **********************************************************************
+ C**********************************************************************
+ C
+ C  fitsav(limfitt)
+ C
+ C  PURPOSE:    Saves fitted angles in dfil3
+ C              Saves tilted predicted locations in dfil6
+ C
+ C  CALLED BY:   
+ C
+ C**********************************************************************
 */
 
 #include "std.h"
@@ -50,18 +50,21 @@ C **********************************************************************
  /* Function prototypes */
 
  /* External common variables used here */
- extern char   dfil3[12], dfil6[12];       /* Doc file names   */
- extern int    iredu;                      /* Image reduction  */
- extern int    fitted;                     /* Fitted flag      */
- extern float  phif, thetaf, gammaff;      /* Tilt angles      */
- extern float  xu0t, yu0t, xs0t, ys0t;     /* Tilt origins     */
- extern float  * xu0, * yu0, * xs2, * ys2; 
- extern int    lbnum, maxpart;
- extern char   datexc[4];                  /* File extension   */    
+ extern char    dfil3[12], dfil6[12] ;       /* Doc file names   */
+ extern int     iredu ;                      /* Image reduction  */
+ extern int     fitted ;                     /* Fitted flag      */
+ extern float   phif, thetaf, gammaff ;      /* Tilt angles      */
+ extern float   xu0t, yu0t, xs0t, ys0t ;     /* Tilt origins     */
+ extern float * xu0 ; 
+ extern float * yu0 ; 
+ extern float * xs2 ; 
+ extern float * ys2 ; 
+ extern int     maxpart ;
+ extern char    datexc[4] ;                  /* File extension   */    
      
 
  char     str121[] =
-  " Key: 121                                                   #Markers-fitted   #Backgrounds";
+  " Key: 121                                                   #Markers-fitted         ";
  //121 6            0            0            0            0           24            0
 
  char     str122[] = 
@@ -76,7 +79,9 @@ C **********************************************************************
   "Key:  124 Tilt-angle  Untilted-axis-direction-angles (Gamma,Phi)"; 
 //0124 6      49.1505     -77.9898     -77.7016            0            0            0
 
- char     strdft[] = 
+ char     strdft1[] =  "  Predicted locations in tilted (right) file"; 
+
+ char     strdft2[] = 
   "            Particle   Reduced-X,Y-location     Original-X,Y-location           Flag";
 //0001 6            1      404.354      244.869      404.354      244.869            0
 
@@ -86,9 +91,9 @@ C **********************************************************************
  void fitsav(int limfitt)
 
  { 
- float          dlist[8];
- FILE           * fpdoc;
- int            i, openit, append_flag;
+ float      dlist[8];
+ FILE *     fpdoc;
+ int        i, openit, append_flag, date_flag;
 
  /* Save fit info in dfil3 (dcb***) doc file */ 
  dlist[0] = 121;
@@ -97,9 +102,9 @@ C **********************************************************************
  dlist[3] = 0.0;
  dlist[4] = 0.0;
  dlist[5] = limfitt; 
- dlist[6] = lbnum; 
+ dlist[6] = 0.0;       // Used to be: back_wins; 
     
- /* dfil3  (dcb***) will be opened and closed here. */
+ /* Doc file: dfil3  (dcb***) opened and closed here. */
  openit   = TRUE;  /* Openit first time to get fpdoc pointer */
  fpdoc    = savdnc(dfil3, datexc, &fpdoc, dlist, 
                    7, &openit, FALSE, TRUE,str121);
@@ -146,14 +151,24 @@ C **********************************************************************
 
  if (fitted)
     {
-    // 2015  openit = TRUE; append_flag = TRUE;
-    openit = TRUE; append_flag = FALSE;
-
     /* Use angles to get predicted location in tilted image  */
     witran(xu0, yu0, xs2, ys2, maxpart, gammaff, thetaf, phif);
+       
+    openit      = TRUE; 
+    append_flag = FALSE;
+    date_flag   = TRUE;
+    fpdoc       = savdnc(dfil6, datexc, &fpdoc,
+                         dlist, 0, &openit, append_flag, date_flag, strdft1);
+    if (!fpdoc) 
+       { XBell(idispl,50); XBell(idispl,50); return; }
+
+    append_flag = TRUE;
+    date_flag   = FALSE;
+    fpdoc       = savdnc(dfil6, datexc, &fpdoc,
+                     dlist, 0, &openit, append_flag, date_flag, strdft2);
 
     dlist[6] = 0.0;
-       
+
     for ( i = 0; i < maxpart; i++)
        {
        /* Save predicted right locations in doc file: dfil6 (dft***) */ 
@@ -164,21 +179,11 @@ C **********************************************************************
        dlist[4] = xs2[i];
        dlist[5] = ys2[i];       
    
-       if (i == 0) 
-          { /* First time thru */ 
-          fpdoc   = savdnc(dfil6, datexc, &fpdoc,
-                         dlist, 7, &openit, append_flag, TRUE, strdft);
-          if (!fpdoc) 
-              { XBell(idispl,50); XBell(idispl,50); return; }
-
-          append_flag = TRUE;
-          }
-       else
-          {fpdoc   = savdn1(dfil6, datexc, &fpdoc,
-                          dlist, 7, &openit, append_flag,TRUE);}
+       fpdoc   = savdn1(dfil6, datexc, &fpdoc,
+                        dlist, 7, &openit, append_flag, date_flag);
 
        }
-    fclose(fpdoc);
+    fclose(fpdoc); fpdoc = NULL;
     }
  }
 
