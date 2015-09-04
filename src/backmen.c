@@ -1,16 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/backmen.c,v 1.31 2011/09/27 13:43:55 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/backmen.c,v 1.32 2015/09/01 17:52:41 leith Exp $*/
 
 /*C++*******************************************************************
-C                                                                      *
-C backmen.c                                     Mar  1994 ArDean Leith *
-C                Directcolor mods               Jul  2001 Erik Vogan   *
-C                Truecolor mods                 Sep  2011 ArDean Leith *
-C                                                                      *
-C **********************************************************************
-C *  AUTHOR: A. LEITH                                                  *
+ C                                                                     *
+ C backmen.c                                    Mar  1994 ArDean Leith *
+ C               Directcolor mods               Jul  2001 Erik Vogan   *
+ C               Truecolor mods                 Sep  2011 ArDean Leith *
+ C               Improved                       Aug  2015 ArDean Leith *
+ C                                                                     *
+ C**********************************************************************
+ C * AUTHOR: A. LEITH                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -32,28 +33,27 @@ C *  AUTHOR: A. LEITH                                                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    PARAMETERS:   
-C
-C    PURPOSE:      Sets image contast not using luts
-C
-C    CALLED BY:    fitdocmen -> backmen  -> showimage --> redvol
-C                                             |           wipic
-C                                             |-------------'
-C                                           pickdisp
-C
-C
-C              
-C                  backmen_buta -> showimage --> redvol
-C                                      |         wipic
-C                                      |----------'
-C                                  pickdisp
-C
-C    NOTE:  This routine could be speeded up by caching the floating 
-C           point data from the file
-C
-C--********************************************************************
+ C**********************************************************************
+ C
+ C  PARAMETERS:   
+ C
+ C  PURPOSE:      Sets image contast not using luts
+ C
+ C  CALLED BY:    fitdocmen -> backmen  -> showimage --> redvol
+ C                                             |           wipic
+ C                                             |-------------'
+ C                                           pickdisp
+ C
+ C
+ C              
+ C                backmen_buta -> showimage --> redvol
+ C                                    |         wipic
+ C                                    |----------'
+ C                                pickdisp
+ C
+ C  NOTE:  Could be speeded up by caching floating point data from file
+ C
+ C--********************************************************************
 */
 
 #include "common.h"
@@ -62,11 +62,11 @@ C--********************************************************************
 #include <Xm/Scale.h>
 
  /* Internal function prototypes */
- void          backmen_buta(Widget, XtPointer, XtPointer);
- void          backmen_butm(Widget, XtPointer, XtPointer);
+ void                backmen_buta(Widget, XtPointer, XtPointer);
+ void                backmen_butm(Widget, XtPointer, XtPointer);
 
  /* External function prototypes */
- void          wid_contrast_but(Widget, XtPointer, XtPointer);
+ void                wid_contrast_but(Widget, XtPointer, XtPointer);
 
  /* Externally defined global variables */
  extern XImage     * imager;
@@ -89,7 +89,7 @@ C--********************************************************************
  static Widget   iw_rowcolh;
  Widget          iw_rowcolv;
  Widget          iw_dums, iw_pushc, iw_pusha;
- float*          fptrdum = NULL;
+ float         * fptrdum = NULL;
 
  if (iw_backmen == (Widget)0)
     {   /* Create background enhancing menu widget first */
@@ -105,19 +105,21 @@ C--********************************************************************
     iw_rowcolh = wid_rowcol(iw_rowcolv, 'h', -1,-1);
 
     /* Create scale widget for starting value ------------------ ngo */
-    iw_ngob  = wid_scale(iw_rowcolh, 0, "", imagego,imageend,  ngo, 
-                        180,50, -1,-1);
+    iw_ngob  = wid_scale(iw_rowcolh, 0, "", 
+                         imagego,imageend,  ngo, 
+                         180,50, -1,-1);
 
     /* Create scale widget for ending value -------------------- nend */
-    iw_nendb = wid_scale(iw_rowcolh, 0, "", imagego,imageend,  nend, 
-                       180,50, -1,-1);
+    iw_nendb = wid_scale(iw_rowcolh, 0, "", 
+                         imagego,imageend,  nend, 
+                         180,50, -1,-1);
 
     XtAddCallback(iw_ngob, XmNvalueChangedCallback, 
                            (XtCallbackProc)backmen_butm,"0");
     XtAddCallback(iw_nendb,XmNvalueChangedCallback, 
                            (XtCallbackProc)backmen_butm,"0");
 
-    /* Create box for apply ---------------------------------- apply */
+    /* Create box for apply ----------------------------------- apply */
     iw_dums = wid_stdbut(iw_rowcolv, iw_backmen, 
                         &iw_dums, &iw_pushc, &iw_pusha,  "CA",
                         fin_cb,fin_cb ,backmen_buta, NULL);
@@ -143,7 +145,7 @@ C--********************************************************************
     {
     /* Free up ximage buffer, before creating a new one */
     if (imagel) 
-       {  XFree((void *)imagel); imagel =  NULL; } 
+       { XFree((void *)imagel); imagel = NULL; } 
 
     /* Show left image using original ramp */                 
     nsam2 = nsaml; nrow2 = nrowl;
@@ -187,9 +189,10 @@ C--********************************************************************
  }
 
 
-/*********** movescale  button callback *****************************/
+/*********** Move scale  button callback *****************************/
 
- void backmen_butm(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void backmen_butm(Widget iw_temp, XtPointer data, 
+                                   XtPointer call_data)
 
  {
  int             nindex, ival, iflags, indx;  
@@ -266,7 +269,8 @@ C--********************************************************************
 
  /*********** Accept  button callback *****************************/
 
- void backmen_buta(Widget iw_temp, XtPointer data , XtPointer calldata)
+ void backmen_buta(Widget iw_temp, XtPointer data, 
+                                   XtPointer calldata)
 
  {
  float      fmint, fmaxt;
