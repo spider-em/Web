@@ -1,14 +1,16 @@
 
-/*$Header: /usr8/web/src/RCS/radcur.c,v 1.2 2005/10/18 16:59:45 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/radcur.c,v 1.3 2015/09/01 18:58:21 leith Exp $*/
+
 /*
-C++*************************************************************************
-C
-C RADCUR.C  -- CREATED NOV 93 from curmen.c -- al
-C                                                                   
-C **********************************************************************
-C *  AUTHOR: A. LEITH                                                      *
+ C**********************************************************************
+ C
+ C radcur.c    Created from curmen.c                        Nov 93  al
+ C             Cosmetic                                     Jul 15  al
+ C                                                       
+ C *********************************************************************
+ C * AUTHOR: A. LEITH                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -30,38 +32,35 @@ C *  AUTHOR: A. LEITH                                                      *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    radcur()
-C
-C    PARAMETERS:   IW_PARENT   PARENT WIDGET
-C                  IXUL,IYUL   CORNERS OF WIDGET
-C
-C    PURPOSE:      SETS UP A CURSOR SELECTION SUPER-WIDGET
-C
-C    CALLED BY: 
-C
-C--*********************************************************************
+ C**********************************************************************
+ C
+ C    radcur()
+ C
+ C    PARAMETERS:   
+ C                  
+ C
+ C    PURPOSE:      Sets a specific cursor shape
+ C
+ C    CALLED BY: 
+ C
+ C*********************************************************************
 */
 
 #include "common.h"
 
- /* external function prototypes */
+ /* External function prototypes */
  extern void   spout        (char *);
  extern int    wimakecur    (Cursor *, char * , char *,
                              XColor *, XColor *, int, int);
  extern void   setacursor   (int, int, int);
  
- /* externally defined common variables */
+ /* Externally defined common variables */
  extern Cursor   icurrad;
 
- /* internal common variables */
+ /* Internal common variables */
 
-
- /*  TO CALCULATE CURSOR APPEARANCE USE A 16X16 GRID.  USE A 
-      ENDIAN NUMBERING SYSTEM THAT STARTS WITH ONE AT LEFT END
-      OF EACH BYTE NOT AT THE USUAL RIGHT END!  */
-
+ /*  USE A 16X16 GRID FOR CURSORS.  USE A ENDIAN NUMBERING SYSTEM
+     THAT STARTS WITH ONE AT LEFT END OF EACH BYTE!  */
 
  static char lfore[] = {
       0X01, 0X80,   0X02, 0X40, 
@@ -89,13 +88,12 @@ C--*********************************************************************
  void radcur(int idum)
  {
 
-
  if (icurrad == 0)
     {
-    /* must make cursor before it can be used */
+    /* Make cursor before it can be used */
 
     wimakecur(&icurrad,lfore,lback,
-                      &colorcursf,&colorcursb, 8,8);
+              &colorcursf,&colorcursb, 8,8);
     }
  }
 
