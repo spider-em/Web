@@ -1,14 +1,16 @@
 
-/*$Header: /usr8/web/src/RCS/newcursor.c,v 1.2 2005/10/18 16:59:59 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/newcursor.c,v 1.3 2015/09/01 18:59:18 leith Exp $*/
+
 /*
-C++*********************************************************************
-C
-C newcursor.c  -- Created Jan 31 94 from radcur.c -- al
-C                                                                   
-C **********************************************************************
-C    AUTHOR:  ArDean Leith
+ C**********************************************************************
+ C
+ C newcursor.c    Created from radcur.c                   Jan 31 94 al
+ C                Cosmetic                                Jul    15 al
+ C                                                                   
+ C**********************************************************************
+ C   AUTHOR:  ArDean Leith
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -30,37 +32,35 @@ C    AUTHOR:  ArDean Leith
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    newcursor()
-C
-C    PARAMETERS:   
-C
-C    PURPOSE:      
-C
-C    CALLED BY: 
-C
-C--*********************************************************************
+ C**********************************************************************
+ C
+ C  newcursor()
+ C
+ C  PARAMETERS:   
+ C
+ C  PURPOSE:  Creates some cursors    
+ C
+ C  CALLED BY: 
+ C
+ C**********************************************************************
 */
 
 #include "common.h"
 
- /* external function prototypes */
+ /* External function prototypes */
  extern int    wimakecur    (Cursor *, char * , char *,
                              XColor *, XColor *, int, int);
  
- /* externally defined common variables */
+ /* Externally defined common variables */
 
- /* internal common variables */
+ /* Internal common variables */
  static Cursor icurrad   = 0;
  static Cursor icurone   = 0;
  static Cursor icurtwo   = 0;
  static Cursor icurthree = 0;
 
- /*  TO CALCULATE CURSOR APPEARANCE USE A 16X16 GRID.  USE A 
-      ENDIAN NUMBERING SYSTEM THAT STARTS WITH ONE AT LEFT END
-      OF EACH BYTE NOT AT THE USUAL RIGHT END!  */
-
+ /* USE A 16X16 GRID FOR CURSORS.  USE A ENDIAN NUMBERING SYSTEM
+    THAT STARTS WITH ONE AT LEFT END OF EACH BYTE!  */
 
  static char radfront[] = {
       0X01, 0X80,   0X02, 0X40, 
@@ -119,10 +119,10 @@ static char threefront[] = {
 
  if (icursort == maxcursor + 1) 
     {
-    /* want + cursor */
+    /* Want + cursor */
     if (icurrad == 0) 
        {
-       /* must make cursor before it can be used */
+       /* Must make cursor before it can be used */
        wimakecur(&icurrad,radfront,radback,
                       &colorcursf,&colorcursb, 8,8);
        }
@@ -131,10 +131,10 @@ static char threefront[] = {
 
  else if (icursort == maxcursor + 2) 
     {
-    /* want + cursor */
+    /* Want + cursor */
     if (icurone == 0) 
        {
-       /* must make cursor before it can be used */
+       /* Must make cursor before it can be used */
        wimakecur(&icurone,onefront,oneback,
                       &colorcursf,&colorcursb, 8,8);
        }
@@ -143,10 +143,10 @@ static char threefront[] = {
 
  else if (icursort == maxcursor + 3) 
     {
-    /* want + cursor */
+    /* Want + cursor */
     if (icurtwo == 0) 
        {
-       /* must make cursor before it can be used */
+       /* Must make cursor before it can be used */
        wimakecur(&icurtwo,twofront,twoback,
                       &colorcursf,&colorcursb, 8,8);
        }
@@ -155,10 +155,10 @@ static char threefront[] = {
 
  else if (icursort == maxcursor + 4) 
     {
-    /* want + cursor */
+    /* Want + cursor */
     if (icurthree == 0) 
        {
-       /* must make cursor before it can be used */
+       /* Must make cursor before it can be used */
        wimakecur(&icurthree,threefront,threeback,
                       &colorcursf,&colorcursb, 8,8);
        }
