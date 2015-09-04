@@ -179,6 +179,7 @@ ELEMENTS =  \
  $(LIB)(thresh.o)     \
  $(LIB)(threshmen.o)  \
  $(LIB)(tiltang.o)    \
+ $(LIB)(tiltp_deletemen.o) \
  $(LIB)(toggle2_cb.o) \
  $(LIB)(toggle_cb.o)  \
  $(LIB)(unsdal.o)     \
