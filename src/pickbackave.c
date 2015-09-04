@@ -1,14 +1,14 @@
 
-/*$Header: /usr8/web/src/RCS/pickbackave.c,v 1.7 2005/10/18 17:00:04 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickbackave.c,v 1.9 2015/09/01 18:24:15 leith Exp $*/
 
 /*
-C++*************************************************************************
-C
-C    pickbackave
-C
-C **********************************************************************
+ C++********************************************************************
+ C
+ C  pickbackave.c
+ C
+ C**********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -30,15 +30,15 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    pickbackave
-C
-C    PURPOSE:    add average to background averge docfile (dfil)
-C
-C    CALLED BY:  pickbackmen.c 
-C
-C **********************************************************************
+ C**********************************************************************
+ C
+ C  pickbackave
+ C
+ C  PURPOSE:    Add average to background averge docfile (dfil)
+ C
+ C  CALLED BY:  pickbackmen.c 
+ C
+ C*********************************************************************
 */
 
 #include "common.h"
@@ -46,60 +46,68 @@ C **********************************************************************
 
  /********************   pickbackave   ****************************/
 
- void pickbackave(char dfil[])
+ int pickbackave(char dfil[])
 
  { 
- int      ncount, k, maxregp1, maxkeys, openit, maxback;
- float  * dbuf = NULL, * ptr;
- float    sum, dlist[6];
- FILE   * fp = NULL;
+ int      ncount, k,maxback;
+ float *  ptr;
+ float    sum, avg, dlist[7];
+ float *  dbuf     = NULL;
+ FILE  *  fp       = NULL;
+ char     strwin[] = " Overall-window-avg     #windows"; 
+ int      maxregp1 = 6+1;     /* Size for array pointed to by dbuf */
+ int      maxkeys  = 1001;    /* Size for array pointed to by dbuf */
+ int      openit   = TRUE;
 
- /* set size for array pointed to by dbuf */
- maxregp1 = 5+1;
- maxkeys  = 1001;
-
- /* retrieve data from dfil1 for untilted points */
+ /* Retrieve window averages from dfil */
  
- if (getdoc((FILE *) NULL, dfil, datexc, maxkeys, maxregp1, 
-           &dbuf, &maxback) > 0) 
-    {   /* problem retrieving doc file, assume it does not exist */
+ if (getdoc((FILE *) NULL, dfil, datexc, maxkeys, maxregp1, &dbuf, &maxback) > 0) 
+    {   /* Problem retrieving doc file, assume it does not exist */
     if (dbuf) free(dbuf); dbuf = NULL;
-    spouts("*** Unable to read doc. file: "); spout(dfil); 
-    return;
+    spouts("*** Unable to read doc file: "); spout(dfil); 
+    return -1;
     }
 
  ptr    = dbuf;
  sum    = 0.0;
  ncount = 0;
 
+ /* Sum window averages from dfil */
  for (k = 0; k < maxback; k++)
     {
     if (*ptr != 0.0) 
-        { ncount++; sum += *(ptr+1);  }
-    ptr  += maxregp1; 
+       { ncount++; sum += *(ptr+1); }
+    ptr += maxregp1; 
     }
+
+ if (dbuf) free(dbuf);  dbuf = NULL;
 
  if (ncount < 1)
    {
-   spouts("*** No windows for averaging from doc. file: ");spout(dfil);
+   spouts("*** No windows for averaging in doc file: "); spout(dfil);
    XBell(idispl,50);
-   return;
+   return 0;
    }
 
- /* find average */
- sum = sum / ncount;
- dlist[0] = 999; dlist[1] = sum;
- dlist[2] = 0.0; dlist[3] = 0.0; dlist[4] = 0.0; dlist[5] = 0.0;
+ /* Find average */
+ avg      = sum / ncount;
+ dlist[0] = 999; 
+ dlist[1] = avg;
+ dlist[2] = ncount; 
+ dlist[3] = 0.0; 
+ dlist[4] = 0.0; 
+ dlist[5] = 0.0;
+ dlist[6] = 0.0;
  
- /* save info in doc file  */
- openit = TRUE;  
- if (!(fp = savdn1(dfil, datexc, &fp, dlist, 6, &openit, TRUE, TRUE))) 
-    { /* unable to open the doc file!! */
-    XBell(idispl,50); XBell(idispl,50); return;
+ /* Save average in doc file  */
+
+ if (!(fp = savdnc(dfil, datexc, &fp, dlist, 7, &openit, TRUE, FALSE, strwin))) 
+    { /* Unable to open the doc file!! */
+    XBell(idispl,50); XBell(idispl,50); return 0;
     }
 
- fclose(fp);     
- return;
-
-}
+ fclose(fp); fp = NULL;
+    
+ return ncount;
+ }
 
