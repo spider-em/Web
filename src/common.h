@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/common.h,v 1.22 2011/09/26 13:16:58 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/common.h,v 1.24 2015/09/01 17:51:23 leith Exp $*/
 
 #include "std.h"
 #include "files.h"
@@ -8,10 +8,11 @@
 #ifndef COMMONH
 #define COMMONH
 
-#define MAXCOL   256
+#define MAXCOL   256 
 #define MAXCOLSPI 8
 
 // Used for resetting buttons in shift.c
+#define TILT	1
 #define IMAGE	2
 #define MARKER 	3
 #define	PIXEL	4
@@ -136,7 +137,7 @@
 
  extern Boolean        neednewmap;        /* update vmap */
 
- extern XImage  *      imagel, * imager;  /* image pointers                */         
+ extern XImage  *      imagel, * imager;  /* image pointers */         
  extern int            nsaml,nrowl,nsamr,nrowr;
  extern int            nsam1l,nrow1l,nsam2l,nrow2l;
  extern int            nsam1r,nrow1r,nsam2r,nrow2r;
