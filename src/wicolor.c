@@ -1,17 +1,19 @@
 
-/*$Header: /usr8/web/src/RCS/wicolor.c,v 1.9 2011/09/14 15:38:45 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/wicolor.c,v 1.10 2015/09/01 17:54:34 leith Exp $*/
+
 /*
-C***************************************************************************
-C
-C WICOLOR  -- CREATED           NOV  1989
-C             CONVERTED TO C    SEPT 1992 al 
-C             ADDED BACKGROUND  MAY  2002 al
-C             REWRITE           SEPT 2011 al 
-C                                   
-C **********************************************************************
+ C**********************************************************************
+ C
+ C WICOLOR  -- Created                                    Nov  1989
+ C             Converted to C                             Sept 1992 al 
+ C             Added background                           May  2002 al
+ C             Rewrite                                    Sept 2011 al 
+ C             Cosmetic                                   July 2015 al 
+ C                                   
+ C**********************************************************************
  C=* AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -33,32 +35,33 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C WICOLOR(ICONTX,COLOR)
-C
-C PURPOSE:      SET COLOR FOR GRAPHICS DRAWING
-C
-C PARAMETERS:   ICONTX    PRESENT GRAPHICS CONTEXT
-C               COLOR     SPIDER COLOR NUMBER
-C
-C CALLED BY:    MANY ROUTINES
-C
-C--*********************************************************************
+ C**********************************************************************
+ C
+ C wicolor(icontx,color)
+ C
+ C PURPOSE:      Set color for graphics drawing
+ C
+ C PARAMETERS:   icontx    Current graphics context
+ C               color     Web color number
+ C
+ C CALLED BY:    Many routines
+ C
+ C*********************************************************************
 */
  
- /************************  wicolor  ********************************/
-
 #ifdef WEB_TRUE
 
 #include "common.h"
+
+ /* Externally defined common variables */
+ extern Display *idispl;
 
  int wicolor(GC icontxt, int icolort)
  {
  
  if (icolort >= 0 && icolort < ncolors)
     {
-    /* Set foreground to specified spider color */
+    /* Set foreground to specified Web color */
     XSetForeground(idispl,icontxt, ispicol[icolort]);
 
 #ifdef DEBUG
@@ -68,15 +71,15 @@ C--*********************************************************************
 
     if (icontxt == icontx)
        {
-       /* Record current color in icontx GC */
+       /* Record current foreground color in icontx GC */
        icolor  = icolort;
        icolorx = ispicol[icolort];
        }
     }
  
- else if (colort < -999999) 
+ else if (colort  < -999999) 
     {
-    /* Set background to specified spider color */
+    /* Set background to specified Web color */
     icolort  = icolort + 1000000;
     XSetBackground(idispl,icontxt, ispicol[icolort]);
      
@@ -86,7 +89,7 @@ C--*********************************************************************
 #endif
     if (icontxt == icontx)
        {
-       /* Record current color in icontx GC */
+       /* Record current background color in icontx GC */
        icolorb  = icolort;
        icolorxb = ispicol[icolort];
        }
@@ -94,14 +97,17 @@ C--*********************************************************************
  else
     {
     /* ERROR */
-    spout("*** Pgm error, wicolor get bad color"); return FALSE;   
+    spout("*** Pgm error, wicolor got bad color"); return FALSE;   
     }
 
  return TRUE;
  }
 
+
+/************************  wicolor  ********************************/
+
+
 #else
- /************************  wicolor  ********************************/
 
 
 #include "common.h"
@@ -111,16 +117,17 @@ C--*********************************************************************
  int wicolor(GC icontxt, int color)
  {
  int icolort;
+
  
  if (color <= 0 && color > -NIMAGE)
     {
-    /* Set foreground to specified spider image ramp color */
+    /* Set foreground to specified Web image ramp color */
     icolort = -color;
     }
 
  else if (color >= 0 && color < MAXCOL)
     {
-    /* Set foreground to specified spider color */
+    /* Set foreground to specified Web color */
     icolort  = color;
     }
  
@@ -133,7 +140,7 @@ C--*********************************************************************
 
  if (color < -999999) 
     {
-    /* Set background to specified spider color */
+    /* Set background to specified Web color */
     icolort  = color + 1000000;
     XSetBackground(idispl,icontxt, ispicol[icolort]);
      
@@ -144,7 +151,7 @@ C--*********************************************************************
     }
  else
     {
-    /* Set foreground to specified spider color */
+    /* Set foreground to specified Web color */
     XSetForeground(idispl,icontxt, ispicol[icolort]);
 
 #ifdef DEBUG
