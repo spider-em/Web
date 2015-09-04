@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/web_main.c,v 1.47 2011/09/29 14:26:32 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.48 2015/09/01 18:37:56 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -8,13 +8,12 @@
  *               _BGFG foreground & background   Oct 2005 ArDean Leith *
  *               EXIT                            Feb 2011 ArDean Leith *
  *               WEB_TRUE                        Sep 2011 ArDean Leith *
+ *               Copyright                       Sep 2015 ArDean Leith *
  *                                                                     *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2011  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
  C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
@@ -25,13 +24,8 @@
  C=*                                                                   *
  C=* This program is distributed in the hope that it will be useful,   *
  C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
- C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
- C=* General Public License for more details.                          *
- C=*                                                                   *
- C=* You should have received a copy of the GNU General Public License *
- C=* along with this program; if not, write to the                     *
- C=* Free Software Foundation, Inc.,                                   *
- C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  Contact the *
+ C=* Free Software Foundation, Inc. for specific details on license.   *
  C=*                                                                   *
  ***********************************************************************
  *
@@ -64,10 +58,10 @@
 #define MAX_ARGS     20
 
  // Internal functions defined here
- void query_widget(char * label, Widget iw_widget);
+ void      query_widget  (char * label, Widget iw_widget);
 
  // File scope variables
- char           outstr[80];
+ char      outstr[80];
 
 #ifdef WEB_TRUE
  
@@ -90,7 +84,7 @@
  Window                win_list[2];
  char                * icon_name   = "WEB";
  char                * window_name = 
-  "Web -- A SPIDER image viewer and analyzer       COPYRIGHT (c) 1992-2011 Health Research Inc., Menands, NY";
+  "Web -- A SPIDER image viewer and analyzer       COPYRIGHT (c) 1992-2015 Health Research Inc.";
 
  int                   icolorxtb,icolorxtf;
 
