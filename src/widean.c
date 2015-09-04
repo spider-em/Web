@@ -1,14 +1,16 @@
 
-/*$Header: /usr8/web/new/RCS/widean.c,v 1.8 2011/05/17 17:29:14 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/widean.c,v 1.9 2015/09/01 17:54:34 leith Exp $*/
 /*
-C++*************************************************************************
-C
-C WID_DEAN.FOR -- CREATED JUNE 91
-C widean.c                NOV  92
-C **********************************************************************
-C    AUTHOR:  ArDean Leith
+ C**********************************************************************
+ C
+ C wid_dean.for    Created                         Jun 91 ArDean Leith
+ C                 Converted to C  widean.c        Nov 92 ArDean Leith
+ C                 Cval internal var. now          Jul 15 ArDean Leith
+ C
+ C**********************************************************************
+ C   AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -30,21 +32,20 @@ C    AUTHOR:  ArDean Leith
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C  widean
-C
-C  PARAMETERS:    
-C
-C  PURPOSE:    Displays marker number selecting widget
-C
-C--*********************************************************************
+ C**********************************************************************
+ C
+ C  widean
+ C
+ C  PARAMETERS:    
+ C
+ C  PURPOSE:    Displays marker number selecting widget
+ C
+ C*********************************************************************
 */
 
 #include "common.h"
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
-
 
  /* External function prototypes */
  extern Widget wid_rowcol   (Widget, char , int, int);
@@ -56,10 +57,11 @@ C--*********************************************************************
 
 
  /* Internal function prototypes */
- void     widean_cb   (Widget, caddr_t, caddr_t);
+ void     widean_cb   (Widget, XtPointer, XtPointer);
 
- Widget  iw_deant;
- char    cval[12] = "b0123456789";
+ /* Global variables defined here */
+ char   cval_d[12] = "b0123456789";
+ Widget   iw_deant;
 
  /***********************   widean   ****************************/
   
@@ -80,9 +82,9 @@ C--*********************************************************************
     ctemp[1] = '\0';
     for (i=0; i< 11; i++)
        {
-       strncpy(&ctemp[0],&cval[i],1);
+       strncpy(&ctemp[0],&cval_d[i],1);
        iw_pb[i] = wid_pushg(iw_rowcolh, (Widget)0, ctemp,
-                  widean_cb, &cval[i], -1,-1);
+                  widean_cb, &cval_d[i], -1,-1);
        }
 
     /*  Create the text input part of the box */
@@ -95,9 +97,9 @@ C--*********************************************************************
 
 /***********************  widean_cb ************************/
 
- void widean_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void widean_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
- char opert[2];
+ char   opert[2];
  int    ip;
 
  strncpy(opert,data,1);
@@ -110,7 +112,7 @@ C--*********************************************************************
  if (*opert == 'b')
     {
     /*      Clear the text box string */
-    XmTextSetString(iw_deant,"0");
+    XmTextSetString(iw_deant," ");
     }
  else
     {
