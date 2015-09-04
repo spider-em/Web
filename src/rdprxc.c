@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/rdprxc.c,v 1.4 2005/10/18 16:59:43 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/rdprxc.c,v 1.5 2015/08/03 18:50:32 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -72,7 +72,7 @@ extern void   spouti        (int);
  /* slen is available length including null for astring */
  if (slent >= slen)
     {
-    spouts("*** Sring length limited to: "); spouti(slen-1);
+    spouts("*** String length limited to: "); spouti(slen-1); spout(" ");
     XtFree(astringt);
     return 0;
     }
