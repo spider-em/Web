@@ -1,12 +1,15 @@
 
-/*$Header: /usr8/web/src/RCS/pickp.c,v 1.30 2015/06/11 13:24:37 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickp.c,v 1.31 2015/09/01 17:53:42 leith Exp $*/
 
 /*
- ***********************************************************************
+ C**********************************************************************
  C                                                                     *
  C pickp.c                                                             *
  C               Improved                        Jun 2011 ArDean Leith *
  C               Can start pick either side      Jun 2015 ArDean Leith *
+ C               Altered particle deletion       Jul 2015 ArDean Leith *
+ C               Altered ouput messages          Aug 2015 ArDean Leith *
+ C                                                                     *
  C**********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
@@ -31,7 +34,7 @@
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- ***********************************************************************
+ C**********************************************************************
  *
  * pickp
  * 
@@ -44,60 +47,62 @@
  *              xs,ys     Tilted picked points      dfil2
  *              xs2,ys2   Tilted predicted points   
  *
- ***********************************************************************
+ C**********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
 
  /* External function prototypes */
- extern void show_tilt(int wantmsg, int wantlabel);
- extern void witran_rev(float *, float *, float, float, int,
-                float, float, float);
+ extern void      det_tilt      (int wantmsg, int wantlabel);                            /* From pickmen */
+ extern void      witran_rev    (float *, float *, float, float,int,float,float, float); /* From witran */
+ extern int       fitdoc_addpart(int n,  int iwhich, int xu, int yu, int xt, int yt );   /* From fitdoc */
+ extern void      pickmen_butdet(Widget, XtPointer, XtPointer);                          /* From pickmen */
 
  /* Internal function prototypes */
- void   pick_pop (Widget, XEvent *, String *, Cardinal *);
- Widget showbuts (Widget, char *, char *, char *, int );
+ void             pick_pop (Widget, XEvent *, String *, Cardinal *);
+ Widget           showbuts (Widget, char *, char *, char *, int );
            
  /* Externally defined global variables */
  extern int       firstback;
- extern int       nsaml, nrowl, nsamr, nrowr;
- extern int       nsam1l,nrow1l,nsam2l,nrow2l;
- extern int       nsam1r,nrow1r,nsam2r,nrow2r;
- extern int       ixull, iyull, ixulr, iyulr;
- extern int       ixulli,iyulli,ixulri,iyulri;
- extern int       ixullmin,ixlrlmax,iyullmin,iylrlmax;
- extern int       ixulrmin,ixlrrmax,iyulrmin,iylrrmax;
+ extern int       nsaml,   nrowl, nsamr, nrowr;
+ extern int       nsam1l,  nrow1l,nsam2l,nrow2l;
+ extern int       nsam1r,  nrow1r,nsam2r,nrow2r;
+ extern int       ixull,   iyull, ixulr, iyulr;
+ extern int       ixulli,  iyulli,ixulri,iyulri;
+ extern int       ixullmin,ixlrlmax, iyullmin,iylrlmax;
+ extern int       ixulrmin,ixlrrmax, iyulrmin,iylrrmax;
  extern float     phif, thetaf, gammaff;
  extern char      dfil1[12], dfil2[12];
- extern int       maxpart;        // Max marker in doc file 
- extern int       iredu ;         // Image reduction factor 
- extern Widget    iw_pickmen;     // For: pickmen
- 
- // Internally defined global  variables 
- int              openitl, openitr;
- int              nsamsl, nrowsl, nsamsr, nrowsr;
- int              iradi   = 4;      // Marker radius           
- int              numm    = 1;      // Current marker number   
- int              fitted  = FALSE;
+ extern int       maxpart;              // Max particle in doc file or xim file 
+ extern int       iredu ;               // Image reduction factor 
 
- Widget           iw_but_lef0   = 0;     // For: pickmen
- Widget           iw_but_lef1   = 0;     // For: pickmen
- Widget           iw_but_rit0   = 0;     // For: pickmen
- Widget           iw_but_rit1   = 0;     // For: pickmen
- Widget           iw_but_lefrit = 0;     // For: pickmen
+ extern float   * xu0, * yu0, * xs, * ys, * xs2, * ys2, * xim;
+ 
+ // Internally defined global variables 
+ int              openit1, openit2;
+ int              nsamsl, nrowsl, nsamsr, nrowsr;
+ int              iradi     = 4;        // Particle radius on screen           
+ int              numm      = 1;        // Current particle number   
+ int              numm1     = 0;        // Current particle number   
+ int              numm2     = 0;        // Current particle number   
+ int              fitted    = FALSE;
+ int              leftside  = FALSE;    // Start with left  image   
+ int              rightside = FALSE;    // Start with right image   
+
+ //                0026 6         26          242           61          242           61            1
+ char             strcom1[] = 
+                  " (Untilted)  Particle    Picked-X,Y-location       Original-X,Y-location ";
+ char             strcom2[] = 
+                  " (Tilted)    Particle    Picked-X,Y-location       Original-X,Y-location ";
+
+ Widget           iw_but_lef    = 0;    // For: pickmen
+ Widget           iw_but_rit    = 0;    // For: pickmen
+ Widget           iw_but_lefrit = 0;    // For: pickmen
 
  /* Internal file scope  variables */
  static FILE    * fpdoc1  = NULL;
  static FILE    * fpdoc2  = NULL;
- int              left    = TRUE;   // Start with left image   
- int              right   = FALSE;  // Start with left image   
-
- char     strl[] = 
-  "            Particle    Reduced-X,Y-location      Original-X,Y-location   (in untilted image)";
- char     strr[] = 
-  "            Particle    Reduced-X,Y-location      Original-X,Y-location   (in   tilted image)";
-//0026 6           26          242           61          242           61            1
 
  /***********************  pick  ***********************************/
 
@@ -106,27 +111,33 @@
  {
  if (firstrun)
     {
-    /* Set next marker to number already in doc file */
+    /* Retrieve any existing tilted and untilted points, & fit angles */ 
+    if (fitdoc(TRUE) > 0)
+       { 
+       spout("*** Can not continue, fix document files!");
+       XBell(idispl,50); XBell(idispl,50); XBell(idispl,50); 
+       return;
+       }
+
+    /* Set next particle number based on number already in doc file */
     numm = maxpart + 1;
-    /* Initialize the first back picking flag */
+
+   /* Initialize the first back picking flag */
     firstback = TRUE;
-    left      = TRUE;
 
-    //printf("left,numm,maxpart: %d %d \n", left,numm,maxpart);
+    // printf(" maxpart: %d \n", maxpart); 
 
-    if (maxpart > 0) 
-       {
-       /* Retrieve tilted and untilted points, & fit angles */
-       //printf("calling fitdoc: %d %d \n", left,numm,maxpart);
-       fitdoc(FALSE);
+    if (maxpart > 0)
+       {/* Draw any existing particle numbers & their locations */
+       pickdraw(TRUE, TRUE, FALSE, TRUE, FALSE, maxpart);
        }
     }
 
  // Set circle and # color to green
  wicolor(icontx,colorgo+2);
 
- openitl = TRUE;
- openitr = TRUE;
+ openit1 = TRUE;
+ openit2 = TRUE;
 
  /* Find displayed size of both images */
  nsamsl = nsam2l - nsam1l + 1;
@@ -136,40 +147,29 @@
 
  /* Create button assignment dialogs with following strings  */
  
- iw_but_lef0 = showbuts(iw_but_lef0,
+ iw_but_lef = showbuts(iw_but_lef,
                        "Select left particle.", 
-                       "Menu.", 
-                       "Reselect previous particle pair", FALSE);
+                       "Show menu.", 
+                       "Delete a particle pair", FALSE);
 
- iw_but_lef1 = showbuts(iw_but_lef1,
-                       "Select left particle.", 
-                       "Menu.", 
-                       "Reselect right particle.", FALSE);
-
- iw_but_rit0 = showbuts(iw_but_rit0,
+ iw_but_rit = showbuts(iw_but_rit,
                        "Select right particle.", 
-                       "Menu.", 
-                       "Reselect previous particle pair", FALSE);
-
- iw_but_rit1 = showbuts(iw_but_rit1,
-                       "Select right particle.", 
-                       "Menu.", 
-                       "Reselect left particle", FALSE);
+                       "Show menu.", 
+                       "Delete a particle pair", FALSE);
 
  iw_but_lefrit = showbuts(iw_but_lefrit,
                        "Select left or right particle.", 
-                       "Menu.", 
-                       "Reselect previous particle pair", FALSE);
+                       "Show menu.", 
+                       "Delete a particle pair", FALSE);
 
  // Display first button assignment window
 
  XtManageChild(iw_but_lefrit);
 
- left    = FALSE;
- right   = FALSE;
+ leftside    = FALSE;
+ rightside   = FALSE;
 
  pickmen();
- //XtUnmanageChild(iw_pickmen);
 
  /* Set  actions for right, left, and center buttons */
  actions(iw_win, "pick_pop", pick_pop,"M123");
@@ -182,20 +182,22 @@
  void pick_pop(Widget iw_t, XEvent *event, String *params,
                Cardinal *num_params)
  {
- int           ixr, iyr, ixi, iyi, ixs, iys;
- int           ixt, iyt;
- static int    ixp, iyp;
+ int           ixr, iyr, ixi, iyi, ixs, iys,iok, derror;
  char          outstr[100];
  float         dlist[8];
- float         xt,yt,  fx,fy;
+ float         fx,fy;
  char        * string;
+ static int    ixt, iyt;
+ static float  xt,yt;
 
+ int           nsaytilt = 48;       /* Say angle for this many particles */
+ int           predict_error = 10;  /* Max expected difference from predicted location */
 
  if (!(strcmp(*params, "M")))
    {  /****************************************** Mouse movement only */
    getloc(event,'m',&ixs,&iys);
 
-   if (left && 
+   if (leftside && 
        (ixs < ixull || ixs >= ixull + nsamsl || 
         iys < iyull || iys >= iyull + nrowsl ))
        {    /* Cursor is outside of displayed left image */
@@ -207,11 +209,11 @@
        {    /* Cursor inside displayed left image */
        ixi = ixs - ixulli + 1;
        iyi = iys - iyulli + 1;
-       sprintf(outstr,"In left image #%d: (%d,%d)$", numm,ixi,iyi);
+       sprintf(outstr,"In left  image #%d: (%d,%d)$", numm,ixi,iyi);
        spout(outstr);
        }
 
-    else if (right &&
+    else if (rightside &&
        (ixs < ixulr || ixs >= ixulr + nsamsr || 
         iys < iyulr || iys >= iyulr + nrowsr ))
        {    /* Cursor outside displayed right image */
@@ -243,24 +245,24 @@
 
     getloc(event,'B',&ixs,&iys);
 
-    //printf("Button 1: %d %d (%d,%d)\n", left, right, ixs,iys);
+    //printf("Button 1: %d %d (%d,%d)\n", leftside, rightside, ixs,iys);
     //printf("ixull,nsamsl: (%d,%d) \n", ixull,nsamsl);
     //printf("iyull,nrowsl: (%d,%d) \n", iyull,nrowsl);
     //printf("ixulr,nsamsr: (%d,%d) \n", ixulr,nsamsr);
     //printf("iyulr,nrowsr: (%d,%d) \n", iyulr,nrowsr);
 
-    if (left && 
+    if (leftside && 
        (ixs < ixull || ixs >= ixull + nsamsl || 
         iys < iyull || iys >= iyull + nrowsl ))
        {    /* Cursor is outside of displayed left image */
        spout("*** Not in left image.$"); XBell(idispl,50); XBell(idispl,50);
        }
 
-    else if ( right &&
+    else if ( rightside &&
        (ixs < ixulr || ixs >= ixulr + nsamsr || 
         iys < iyulr || iys >= iyulr + nrowsr ))
        {    /* Cursor outside displayed right image */
-       //printf("xxxButton 1: %d %d (%d,%d)\n", left, right, ixs,iys);
+       //printf("xxxButton 1: %d %d (%d,%d)\n", leftside, rightside, ixs,iys);
        spout("*** Not in right image.$"); XBell(idispl,50); XBell(idispl,50);
        }
     else if (ixs >= ixull && ixs < ixull + nsamsl &&  
@@ -271,39 +273,72 @@
        // sprintf(outstr,"In left image: (%d,%d)$", ixi,iyi);
        // spout(outstr);
 
-       //printf("Left button: %d %d (%d,%d) \n", left,fitted,ixs,iys);
+       //printf("Left button: %d %d (%d,%d) \n", leftside,fitted,ixs,iys);
        //printf("ixull,nsamsl: (%d,%d) \n", ixull,nsamsl);
        //printf("iyull,nrowsl: (%d,%d) \n", iyull,nrowsl);
 
-       if (left || (!left && !right))
+       if (leftside || (!leftside && !rightside))
           {   /* In left image -- button 1 pushed */
               /* Want to record this left particle location */
 
-          /* Save info in doc file */ 
-          dlist[0] = numm;
-          dlist[1] = numm ;
-          dlist[2] = ixi * iredu;
-          dlist[3] = iyi * iredu;
-          dlist[4] = ixi;
-          dlist[5] = iyi;       
-          dlist[6] = 1.0; 
+          /* Save location in array */
+          iok = fitdoc_addpart(numm,  1, ixi,iyi, 0,0 );
 
-          if (openitl)       
-             { fpdoc1 = savdnc(dfil1, datexc, &fpdoc1,
-                          dlist, 7, &openitl, TRUE, TRUE,strl); }
-          else
-             { fpdoc1 = savdn1(dfil1, datexc, &fpdoc1,
-                          dlist, 7, &openitl, TRUE, TRUE);}
+          //printf(" Leftside: %d   rightside: %d   numm: %d\n",leftside,rightside,numm);
+          //printf(" Predicted: %d, %d  Picked: %d, %d \n", (int)xt,(int)yt, ixi,iyi);
+
+          derror = 0; 
+          if (leftside) 
+             {
+             if ( fitted)
+                { /* Check for possible bad location */
+                derror = (int) (sqrt((float)( (ixi - (int)xt) * (ixi - (int)xt) + 
+                                              (iyi - (int)yt) * (iyi - (int)yt)) ));
+                if (derror > predict_error ) 
+                   { 
+                   sprintf(outstr,"Left location is large distance: %d  from expected location!",derror); 
+                   spout(outstr);  XBell(idispl,50);
+                   }
+                }
+
+             /* Save info in doc file */ 
+             dlist[0] = numm;
+             dlist[1] = numm ;
+             dlist[2] = ixi * iredu;
+             dlist[3] = iyi * iredu;
+             dlist[4] = ixi;
+             dlist[5] = iyi;       
+             dlist[6] = 1.0; 
+
+             if (numm == 1)       
+                { fpdoc1 = savdnc(dfil1, datexc, &fpdoc1,
+                          dlist, 7, &openit1, TRUE, TRUE,strcom1); }
+             else
+                { fpdoc1 = savdn1(dfil1, datexc, &fpdoc1,
+                          dlist, 7, &openit1, TRUE, TRUE);}
+
+             dlist[2] = xs[numm] * iredu;
+             dlist[3] = ys[numm] * iredu;
+             dlist[4] = xs[numm];
+             dlist[5] = ys[numm];  
+     
+             if (numm == 1)       
+                { fpdoc2 = savdnc(dfil2, datexc, &fpdoc2,
+                          dlist, 7, &openit2, TRUE, TRUE,strcom2); }
+             else
+                { fpdoc2 = savdn1(dfil2, datexc, &fpdoc2,
+                          dlist, 7, &openit2, TRUE, TRUE);}
+             }
 
           /* Leave permanent circle at this location */
           xorc(iwin,    icontx, TRUE, ixs, iys, iradi);
           xorc(imagsav, icontx, TRUE, ixs, iys, iradi);
 
-          /* Write marker number at this location */
+          /* Write particle number at this location */
           string = itoa(numm);
           witext(icontx, string, ixs, iys, 1, 0, -1, 2, FALSE);
           if (string) free(string);
-
+         
           spoutfile(TRUE);
 
           /* Find predicted location in right image */
@@ -333,54 +368,47 @@
                 }
              }
           else   //  if (!fitted)
-             { /* No tilt angle available yet */
-               /* Move cursor to center of right tilted side */
+             { /* No tilt angle available, Move cursor to center of right side */
              ixt = ixulr + nsamsr / 2;
              iyt = iyulr + nrowsr / 2;
              movecur(ixt-ixs,iyt-iys);
              }
 
-          if (numm > 3 && numm < 32 && left)
-             { 
-             show_tilt(FALSE,TRUE);
-             sprintf(outstr,"Picked left:  #%d  (%d,%d)   Current Tilt: %f6.2",numm,ixi,iyi,thetaf);
+          if (numm > 2 && numm < nsaytilt && leftside)
+             { /* Determine tilt and axis, Sets: fitted */
+             det_tilt(FALSE,TRUE);
              }
-          else
-             { 
-             sprintf(outstr,"Picked left:  #%d  (%d,%d)",  numm,ixi,iyi);
-             }
+          sprintf(outstr,
+                  "Picked left:   #%d  (%d,%d)  Distance: %3d  Current Tilt: %-.2f  Axis: %-.2f, %-.2f",
+                   numm,ixi,iyi, derror, thetaf,phif,gammaff);
           spout(outstr);
           spoutfile(FALSE);
 
-
-          if (left || right) {numm++;}
           if (numm > maxpart) maxpart = numm;
+          if (leftside || rightside) {numm++;}
 
-          if (left) 
-             { right = FALSE;}
+          if (leftside) 
+             { rightside = FALSE;}
           else  
-             { right = TRUE; }
-          left  = FALSE;
+             { rightside = TRUE; }
+          leftside  = FALSE;
 
           // Show button message  
-          XtUnmanageChild(iw_but_lef0);
-          XtUnmanageChild(iw_but_lef1);
-          XtUnmanageChild(iw_but_rit0);
-          XtUnmanageChild(iw_but_rit1);
+          XtUnmanageChild(iw_but_lef);
+          XtUnmanageChild(iw_but_rit);
           XtUnmanageChild(iw_but_lefrit);
-          if (left) 
-             { XtManageChild(iw_but_lef1); }
-          else if (right)
-             { XtManageChild(iw_but_rit1); }
+          if (leftside) 
+             { XtManageChild(iw_but_lef); }
+          else if (rightside)
+             { XtManageChild(iw_but_rit); }
           else
              { XtManageChild(iw_but_lefrit);}
 
-          /* Record undo location */
-          ixp  = ixs;
-          iyp  = iys;
           }
+        
+       //printf(" Left maxpart: %d, numm: %d\n", maxpart,numm);
 
-       } // End of: if (left || (fitted && !left && !right))
+       } // End of: if (leftside || (fitted && !leftside && !rightside))
 
     else if (ixs >= ixulr && ixs < ixulr + nsamsr &&  
              iys >= iyulr && iys < iyulr + nrowsr )
@@ -390,35 +418,72 @@
        // sprintf(outstr,"In right image: (%d,%d)$", ixi,iyi);
        // spout(outstr);
 
-       if (right || ( !left && !right))
+       // printf(" leftside: %d   Rightside: %d   numm: %d\n",leftside,rightside,numm);
+       if (rightside || ( !leftside && !rightside))
           {   /* In right image -- button 1 pushed */
               /* Want to record this right particle location */
           spoutfile(TRUE);
 
-          /* Save info in doc file */ 
-          dlist[0] = numm;
-          dlist[1] = numm;
-          dlist[2] = ixi * iredu;
-          dlist[3] = iyi * iredu;
-          dlist[4] = ixi;
-          dlist[5] = iyi;       
-          dlist[6] = 1.0;   
+          /* Save location in array */
+          iok =  fitdoc_addpart(numm,  2, 0,0, ixi,iyi );
+
+          //printf(" Leftside: %d   rightside: %d   numm: %d\n",leftside,rightside,numm);
+          //printf(" Predicted: %d, %d  Picked: %d, %d \n",(int) xt,(int)yt, ixi,iyi);
+
+          derror = 0; 
+          if (rightside) 
+             {      /* Save info in doc file */ 
+
+             if ( fitted )
+                {    /* Check for possible bad location */
+                derror = (int) (sqrt((float)( (ixi - (int)xt) * (ixi - (int)xt) + 
+                                              (iyi - (int)yt) * (iyi - (int)yt)) ));
+                if (derror > predict_error ) 
+                   { 
+                   sprintf(outstr,"Right location is large distance: %d  from expected location!",derror); 
+                   spout(outstr); XBell(idispl,50);
+                   }
+                }
+
+             dlist[0] = numm;
+             dlist[1] = numm;
+             dlist[2] = ixi * iredu;
+             dlist[3] = iyi * iredu;
+             dlist[4] = ixi;
+             dlist[5] = iyi;       
+             dlist[6] = 1.0;   
 	    
-          if (openitr)       
-             {fpdoc2 = savdnc(dfil2, datexc, &fpdoc2,
-                             dlist, 7, &openitr, TRUE, TRUE,strr);}
-          else
-             {fpdoc2 = savdn1(dfil2, datexc, &fpdoc2,
-                             dlist, 7, &openitr, TRUE, TRUE);}
+             if (numm == 1)       
+                {fpdoc2 = savdnc(dfil2, datexc, &fpdoc2,
+                                dlist, 7, &openit2, TRUE, TRUE,strcom2);}
+             else
+                {fpdoc2 = savdn1(dfil2, datexc, &fpdoc2,
+                             dlist, 7, &openit2, TRUE, TRUE);}
+
+             dlist[2] = xu0[numm] * iredu;
+             dlist[3] = yu0[numm] * iredu;
+             dlist[4] = xu0[numm];
+             dlist[5] = yu0[numm];  
+
+             if (numm == 1)       
+                {fpdoc1 = savdnc(dfil1, datexc, &fpdoc1,
+                                dlist, 7, &openit1, TRUE, TRUE,strcom1);}
+             else
+                {fpdoc1 = savdn1(dfil1, datexc, &fpdoc1,
+                             dlist, 7, &openit1, TRUE, TRUE);}
+             }
 
           /* Leave permanent circle at this location */
           xorc(iwin,    icontx, TRUE, ixs, iys, iradi);
           xorc(imagsav, icontx, TRUE, ixs, iys, iradi);
 
-          /*   Write marker number at this location */
+          /*   Write particle number at this rightside location */
           string = itoa(numm);
           witext(icontx, string, ixs, iys, 1, 0, -1, 2, FALSE);
           if (string) free(string);
+
+          /* Save location in xim arrays */
+          iok =  fitdoc_addpart(numm, 2, ixi,iyi, ixi,iyi );
 
           /* Find predicted location in left image */
           if (fitted)
@@ -454,56 +519,55 @@
              movecur(ixt-ixs,iyt-iys);
              }
 
-          if (numm > 3 && numm < 32 && right)
-             { 
-             show_tilt(FALSE,TRUE);
-             sprintf(outstr,"Picked right: #%d  (%d,%d)   Current tilt: %f6.2",numm,ixi,iyi,thetaf);
+          if (numm > 2 && numm < nsaytilt && rightside)
+             { /* Determine tilt and axis, Sets: fitted */
+             det_tilt(FALSE,TRUE);
              }
-          else
-             { 
-             sprintf(outstr,"Picked right: #%d  (%d,%d)", numm,ixi,iyi);
-             }
+
+          sprintf(outstr,
+                  "Picked right:  #%d  (%d,%d)  Distance: %3d  Current Tilt: %-.2f  Axis: %-.2f, %-.2f",
+                   numm,ixi,iyi, derror, thetaf,phif,gammaff);
           spout(outstr);
           spoutfile(FALSE);
 
-          if (left || right) numm++ ;
           if (numm > maxpart) maxpart = numm;
+          if (leftside || rightside) numm++ ;
 
-          if (right) 
-             { left = FALSE;}
+          if (rightside) 
+             { leftside = FALSE;}
           else  
-             { left = TRUE; }
-          right  = FALSE;
+             { leftside = TRUE; }
+          rightside  = FALSE;
 
           // Show button message  
-          XtUnmanageChild(iw_but_lef0);
-          XtUnmanageChild(iw_but_lef1);
-          XtUnmanageChild(iw_but_rit0);
-          XtUnmanageChild(iw_but_rit1);
+          XtUnmanageChild(iw_but_lef);
+          XtUnmanageChild(iw_but_rit);
           XtUnmanageChild(iw_but_lefrit);
-          if (left) 
-             { XtManageChild(iw_but_lef1); }
-          else if (right)
-             { XtManageChild(iw_but_rit1); }
+          if (leftside) 
+             { XtManageChild(iw_but_lef); }
+          else if (rightside)
+             { XtManageChild(iw_but_rit); }
           else
              { XtManageChild(iw_but_lefrit);}
 
-          /* Record undo location */
-          ixp  = ixs;
-          iyp  = iys;
-          }// End of:  if (left || (fitted && !left && !right))
-       }   // End of:  if (left || (fitted && !left && !right))
-    }      // End of:  else if (ixs >= ixulr && ixs < ixulr + nsamsr &&  iys >= iyulr && iys < iyulr + nrowsr )
+          //printf(" RIT maxpart: %d, numm: %d\n", maxpart,numm);
+
+          }// End of:  if (leftside || (fitted && !leftside && !rightside))
+       }   // End of:  if (leftside || (fitted && !leftside && !rightside))
+
+    // Update label box for next particle number 
+    pickmen();
+    }      // End of:  else if (ixs >= ixulr && ixs < ixulr + .......................
 
  /***************************************************** Middle button */ 
 
  else if (!(strcmp(*params, "2")))
     {                          /* Show menu --       Button 2 pushed */
     if (fpdoc1) 
-       { fclose(fpdoc1); fpdoc1 = NULL; openitl = TRUE; }
+       { fclose(fpdoc1); fpdoc1 = NULL; openit1 = TRUE; }
 
     if (fpdoc2) 
-       { fclose(fpdoc2); fpdoc2 = NULL; openitr = TRUE; }
+       { fclose(fpdoc2); fpdoc2 = NULL; openit2 = TRUE; }
 
     /* Display picking menu */
     pickmen();
@@ -516,47 +580,20 @@
     {                          /* Button 3 pushed */
     getloc(event,'B',&ixs,&iys);
 
-    // Show button message  
-    XtUnmanageChild (iw_but_lef0);
-    XtUnmanageChild (iw_but_lef1);
-    XtUnmanageChild (iw_but_rit0);
-    XtUnmanageChild (iw_but_rit1);
+    // Remove button messages  
+    XtUnmanageChild (iw_but_lef);
+    XtUnmanageChild (iw_but_rit);
 
-   if (right)
+    /* Display particle deletion menu */
+    tiltp_deletemen();
 
-       {   // Move cursor back to left image location 
-       // spout("Moving cursor back to left"); 
-      
-       // Show button assignment message  
-       XtManageChild (iw_but_lef1);
-    
-       movecur(ixp-ixs, iyp-iys);
-
-       right = FALSE;
-       ixp   = ixs; iyp = iys;
-       }
-
-    else if (left)
-       {  // Move cursor back to previous right position 
-       // spout("Moving cursor back to right");        
-
-       // Show button assignment message  
-       XtManageChild (iw_but_rit1);
-
-       left = FALSE;
-       movecur(ixp-ixs, iyp-iys);
-       ixp  = ixs; iyp = iys;
-       }
-
-    else if (!left && !right)
-       {   
-
-       // Show button assignment message  
-       XtManageChild (iw_but_lefrit);
-
-       numm--;
-       ixp     = ixs; iyp = iys;
-       }
+    if (leftside) 
+       { XtManageChild(iw_but_lef); }
+    else if (rightside)
+       { XtManageChild(iw_but_rit); }
+    else
+       { XtManageChild(iw_but_lefrit);}
     }      // End of: else if (!(strcmp(*params, "3"))) 
+
  }
 
