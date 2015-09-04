@@ -1,12 +1,13 @@
 
-/*$Header: /usr8/web/src/RCS/openold.c,v 1.48 2013/03/12 19:08:51 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.50 2015/09/01 17:53:27 leith Exp $*/
 
 /***********************************************************************
  *                                                                     *
- * openold.c       MRC support                  Nov 2012  ArDean Leith * 
+ * openold.c   MRC support                      Nov 2012  ArDean Leith *
+ *             64 bit support                   Sep 2015  ArDean Leith *
  *                                                                     *
  ***********************************************************************
- C=* AUTHOR: A. LEITH                                                  *
+ C   AUTHOR: A. LEITH                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright 1985-2013  Health Research Inc.,                        *
  C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
@@ -46,7 +47,7 @@
  *                      = 132   32 bit MRC real    image
  *    disp            Character specifying readonly or not  (sent)
  *                      = 'o' - Read/write. 
- *                      = 'q' - Read/write, no error message if does not exist 
+ *                      = 'q' - Read/write, no error msg if non-existing 
  *                      = 'r' - File exists, open readonly.
  *
  * RETURNS:        filedata * or null if error reading file
@@ -56,31 +57,34 @@
 #include "files.h"
 #include "routines.h"
 
-// Byte flipping
+// Byte flipping 
 #define CONVERT_4( A, B )                        \
-             (A) =                 \
+             (A) =                               \
             ((unsigned int)(B) >> 24) |          \
             ((unsigned int)(B) << 24) |          \
            (((unsigned int)(B) >> 8) & 0xff00) | \
            (((unsigned int)(B) << 8) & 0xff0000)
 
+ /* Externally defined global variables */
  extern int   nsam8, nrow8, nslice8;
  extern int   nstack, inuse, maxim, imginstack;
 
- int opensmall8(char *, FILEDATA  *, int *,   int * ,  int * , 
-                int ,   int , int , int * );
+ /* Internal function prototypes */
+ int          opensmall8      (char *, FILEDATA  *, int *,   int * ,  int * , 
+                               int ,   int , int , int * );
+ int          is_spider_header(float[]);
+ int          is_mrc_header   (float[]);
+ int          IsLittleEndian  ();
+ int          IsBigEndian     ();
+ float        ReverseFloat    ( const float inFloat );
 
- int is_spider_header(float[]);
- int is_mrc_header(float[]);
- int IsLittleEndian();
- int IsBigEndian();
 
-/* Force it to run image size widget for raw images on first call */
- int needrawsize = TRUE;
+ /* Internal file scope variables */
+ int needrawsize = TRUE;  /* Force it to run image size widget for raw images on first call */
 
 /*********************** openold ************************************/
 
- FILEDATA *openold(char filnam[], int *nsamptr, int *nrowptr, 
+ FILEDATA * openold(char filnam[], int *nsamptr, int *nrowptr, 
                    int *nsliceptr, int *iformptr, char disp[])
  { 
  union  BUFFER 
@@ -93,10 +97,10 @@
  FILEDATA  *fileptr;
 
  char           type[4], output[160], ctemp[10], typefl[1];
- FILE         * fp;
+ FILE *         fp;
  int            nsam,nrow,nslice,iform,headbyt,headrec;
  int            lentitle, k1, locat, lennum, iflag;
- char         * cptr;
+ char *         cptr;
  unsigned int * uiptr;
  int            flip, flipped, spiderkind, mrckind;
  float          hbuf[256];
@@ -173,7 +177,11 @@
     {
     // Determine image/volume format.  May be SPIDER image? 
     // Flips header.hbuf if this is a flipped SPIDER header
+
+    //printf(" Read hbuf[1]: %f   \n", hbuf[1]);
     spiderkind = is_spider_header(&header.hbuf[0]);
+
+    //printf(" spiderkind: %d   hbuf[1]: %f   \n",spiderkind,header.hbuf[1]);
 
     if (spiderkind == 0) 
        {
@@ -189,7 +197,7 @@
 
     iflag = opensmall8(filnam, fileptr, &nsam, &nrow, &nslice, 
                     nstack, inuse, maxim, &lentitle);
-    if (iflag != TRUE) return((FILEDATA *)iflag);
+    if (iflag != TRUE) return(FALSE);
     }
  else if (spiderkind != 0)
     {  /* Standard SPIDER image, may be flipped */
@@ -493,48 +501,74 @@
  return fileptr;
  }
 
+ /*********************** ReverseFloat ***********************************/
+
+float ReverseFloat( const float inFloat )
+{
+   float retVal;
+   char *floatToConvert = ( char* ) & inFloat;
+   char *returnFloat    = ( char* ) & retVal;
+
+   // Swap the bytes into a temporary buffer
+   returnFloat[0] = floatToConvert[3];
+   returnFloat[1] = floatToConvert[2];
+   returnFloat[2] = floatToConvert[1];
+   returnFloat[3] = floatToConvert[0];
+
+   return retVal;
+}
 
  /*********************** is_spider_header ***********************************/
 
+
+//#define CONVERT_4( A, B )                        \
+//             (A) =                               \
+//            ((unsigned int)(B) >> 24) |          \
+//            ((unsigned int)(B) << 24) |          \
+//           (((unsigned int)(B) >> 8) & 0xff00) | \
+//           (((unsigned int)(B) << 8) & 0xff0000)
+
+
+
  int is_spider_header(float hbuf[])
- { /* Is this header a SPIDER header?  Flips if hbuf if not native SPIDER header */
+ { 
+ /* Is this header a SPIDER header?  Flips if hbuf if not native SPIDER header */
 
  unsigned int * uiptr;
+ float *        fptr;
  int            i;
  int            flipped;
+ float          ftemp, a, b;
+ float          h_1, h_4, h_11;
 
- union  BUFFER 
-        {
+ union  {
         float hbuf[256];
         char  cbuf[1024];
-        } temp;
+        } temp ;
 
- for (i = 0; i < 256 ; i++)
-    {temp.hbuf[i] = hbuf[i];}
- 
- //printf(" hbuf[2]: %f   temp.hbuf[2]:%g \n",hbuf[2], temp.hbuf[2]);
+ if (hbuf[1]  < 1.0   || hbuf[1]  > 100000.0 ||
+     hbuf[11] < 1.0   || hbuf[11] > 100000.0 ||
+     hbuf[4]  < -20.0 || hbuf[4] ==  0.0     || hbuf[4]  > 32 )
 
- if (temp.hbuf[11] < 1.0   || temp.hbuf[11] > 100000.0 ||
-     temp.hbuf[1]  < 1.0   || temp.hbuf[1]  > 100000.0 ||
-     temp.hbuf[4]  < -20.0 || temp.hbuf[4] ==  0.0     ||
-     temp.hbuf[4]  > 32    )
-
-    { /* Not native SPIDER try flipping it */
-    //printf(" hbuf[2]: %f Not native SPIDER try flipping it \n",hbuf[2]);
+    { /* Not native SPIDER try flipping header */
+    //printf(" hbuf[1]: %f Not native SPIDER try byte swapping \n", hbuf[1]);
         
-    uiptr = (unsigned int *) &temp.hbuf[0];
-    for (i = 0; i < 256 ; i++, uiptr++)
-       { CONVERT_4(*uiptr,*uiptr);  }
+    h_1  =  ReverseFloat( hbuf[1] );
+    h_4  =  ReverseFloat( hbuf[4] );
+    h_11 =  ReverseFloat( hbuf[11] );
+    //printf(" 1  h_1:  %f \n",  h_1);       
+    //printf(" 1  h_4:  %f \n",  h_4);       
+    //printf(" 1  h_11:  %f \n",  h_11);     
 
-    if (temp.hbuf[11] < 1.0   || temp.hbuf[11] > 100000.0 ||
-        temp.hbuf[1]  < 1.0   || temp.hbuf[1]  > 100000.0 ||
-        temp.hbuf[4]  < -20.0 || temp.hbuf[4] ==  0.0     ||
-        temp.hbuf[4]  > 32    )
+    if (h_1 < 1.0    || h_11 > 100000.0 ||
+        h_1  < 1.0   || h_1  > 100000.0 ||
+        h_4  < -20.0 || h_4 ==  0.0     || h_4  > 32 )
 
-       {/* Not native SPIDER or flipped SPIDER! Returns original hbuf! */
-       //printf(" temp.hbuf[2]: %f   NOT SPIDER \n",temp.hbuf[2]);
+       {/* Neither native SPIDER nor flipped SPIDER!  Returns original hbuf! */
+       //printf(" 4 temp.hbuf[1]:  %f   NOT SPIDER \n", temp.hbuf[1]);
 
-       flipped = 0 ; return flipped;
+       flipped = 0 ; 
+       return flipped;
        }
 
     // Needs flipping, Returns flipped hbuf
@@ -542,16 +576,20 @@
     for (i = 0; i < 256 ; i++, uiptr++)
        { CONVERT_4(*uiptr,*uiptr);  }
 
-    //printf(" hbuf[2]: %f   FLIPPED SPIDER \n",hbuf[2]);
+    //printf(" 5 hbuf[1]:  %f   FLIPPED: %d \n",hbuf[1] ,flipped);
+
     flipped = -1 ; 
     return flipped;
     }
+ 
+ //printf(" 5 hbuf[1]: %f OK SPIDER \n",hbuf[1]);
 
  // No need for flipping, Returns original hbuf
+
  flipped = 1; 
- //printf(" hbuf[2]: %f OK SPIDER \n",hbuf[2]);
  return flipped;
  }   
+
 
 
  /*********************** is_mrc_header ***********************************/
@@ -599,6 +637,7 @@
  */
 
  int is_mrc_header(float hbuf[])
+
  { /* Is this header a MRC header?  Flips if not native MRC header*/
 
  unsigned int * uiptr;
@@ -671,7 +710,7 @@
  int IsLittleEndian()
  {
  int n = 1;
- // little endian if true
+ // Little endian if true
  if (*(char *)&n == 1) {return TRUE;}
  return FALSE;
  }
@@ -679,7 +718,7 @@
  int IsBigEndian()
  {
  int n = 1;
- // little endian if true
+ // Little endian if true
  if (*(char *)&n == 1) {return FALSE;}
  return TRUE;
  }
@@ -753,13 +792,9 @@
         IsLittleEndian() && flipped == FALSE) flipped = TRUE;
     else if ((my_mrc_header.machst)[0] == ((0x4 << 4) + 0x4) &&
              IsBigEndian() && flipped == FALSE) flipped = TRUE;
+
+
 #endif
-
-
-
-
-
-
 
 
 #if BUGGY
