@@ -1,14 +1,15 @@
-/*$Header: /usr8/web/src/RCS/shift.c,v 1.22 2011/09/22 13:00:25 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/shift.c,v 1.23 2015/09/01 17:53:42 leith Exp $*/
 
 /***********************************************************************
- *
- * shift.c
- *                Removed wicolor                Sep 2011 ArDean Leith *
- *                copyarea                       Sep 2011 ArDean Leith *
- *
+ *                                                                     *
+ * shift.c                                                             *
+ *          Removed wicolor                      Sep 2011 ArDean Leith *
+ *          copyarea                             Sep 2011 ArDean Leith *
+ *          Redraw locs after shifting tilt pair Jul 2015 ArDean Leith *
+ *                                                                     *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -158,15 +159,16 @@
                     ixlrlmax - ixullmin, iylrlmax - iyullmin,
                     ixullmin,            iyullmin);
 
-/******************
-       printf("li:(%d,%d) s:(%d,%d) d:(%d,%d) 0t:(%d,%d) iul:(%d,%d)\n",
-         ixulli,iyulli, ixs,iys,  ixd,iyd,  ix0t,iy0t, nsam1l,nrow1l);
-******************/
+          /******************
+          printf("li:(%d,%d) s:(%d,%d) d:(%d,%d) 0t:(%d,%d) iul:(%d,%d)\n",
+          ixulli,iyulli, ixs,iys,  ixd,iyd,  ix0t,iy0t, nsam1l,nrow1l);
+          ******************/
           neednewmap = TRUE;
 
           ix0t = ixs;  iy0t = iys;
 
           }
+
        else if (picking)
           {    /* Right side picking */
           ixulri += ixd;  iyulri += iyd;
@@ -255,13 +257,20 @@
     /* Remove all translations from iw_win */
     XtUninstallTranslations(iw_win);
 
+    if (picking == TILT) 
+        {  /* Call pickp because buttons need to be reassigned */
 
-    /* Call pickp because buttons need to be reassigned */
-    if (picking== 1) pickp(FALSE);
+        pickp(FALSE);
 
-    /* if only shift image, return to imagemen */
+        /* Draw locations */
+        pickmen_butl(NULL, NULL, NULL);
+
+        /* Draw particle numbers at their location */
+        pickmen_butn(NULL, NULL, NULL);
+        }
+
     else if (picking == IMAGE ) 
-        {
+        { /* Only shift image, return to imagemen */
 	ixul = ixulli;
 	iyul = iyulli;
 	}
@@ -279,7 +288,6 @@
      
         // Draw existing markers from doc file
         goldmen_butm((Widget) NULL, NULL, NULL);
-
 	}
 
     else if (picking == MASK) 
