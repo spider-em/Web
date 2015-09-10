@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pixelmen.c,v 1.22 2015/07/27 16:23:00 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixelmen.c,v 1.23 2015/09/08 18:10:47 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -8,6 +8,8 @@
  C             Converted to C                   Oct 92      
  C             24 bit display bug fixed         11/8/07  ArDean Leith 
  C             Doc file close bug               Jul 2015 ArDean Leith
+ C             Doc file input bug               Sep 2015 ArDean Leith
+ C
  C *********************************************************************
  C * AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
@@ -41,7 +43,7 @@
  C
  C  VARIABLES:       
  C
- C  CALLED BY:     WEB_COM
+ C  CALLED BY:     web_com
  C      
  C**********************************************************************
 */
@@ -65,15 +67,15 @@
  void          pixelmen_i(Widget,    XtPointer, XtPointer);
 
  /* Common variables */
- XImage     *  imagep;
+ XImage *      imagep;
  int           ixreg = 1, iyreg = 2;
  int           isreg = 3, ivreg = 4;
  Widget        iw_inimag, iw_leavit, iw_getfile, iw_getscreen, iw_key;
  Widget        iw_xreg,   iw_yreg,   iw_vreg,    iw_sreg,      iw_docit;
  Widget        iw_radius, iw_doc, iw_shimg;
  int           pixelmen_showing = FALSE;
- extern        FILE * fpdocpix_p;
- FILEDATA      *filedatap;
+ externFILE *  fpdocpix_p;
+ FILEDATA *    filedatap;
 
  /* File scope variables */
  static Widget  iw_pixelmen = (Widget)0;
@@ -81,18 +83,20 @@
 
  /************************* pixelmen **********************************/
 
- void pixelmen(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen(Widget iw_temp, XtPointer data, 
+                               XtPointer call_data)
  { 
- char     cval[5];
- static   Widget   iw_rowcol, iw_rowcol1, iw_rowcol2;
- static   Widget   iw_pushc,  iw_pusha,   iw_pushs,   iw_dum = 0;
- char   * cdum = 0;    /* data for a callback is unused here */
+ char            cval[5];
+ static Widget   iw_rowcol, iw_rowcol1, iw_rowcol2;
+ static Widget   iw_pushc,  iw_pusha,   iw_pushs;
+ static Widget   iw_dum = 0;
+ char *          cdum   = 0;   /* Data for a callback is unused here */
 
  if (iw_pixelmen == (Widget)0)
-    {   /* create pixel menu widget first */
+    {   /* Create pixel menu widget first */
 
     iw_pixelmen = wid_dialog(iw_win,iw_pixelmen,
-                             "pixel information options",20,20);
+                             "pixel query options",20,20);
     iw_rowcol   = wid_rowcol(iw_pixelmen,'v',-1,-1);
 
     iw_doc     = (Widget) 0;   iw_shimg   = (Widget) 0;
@@ -108,11 +112,12 @@
     ikey       = 1;
     }
 
-if (strlen(filnow) == 0) inimag = FALSE;
+ if (strlen(filnow) == 0)  inimag = FALSE;
+
  /* Create toggle box for docit ---------------------------- docit */
  iw_docit = wid_toggleg(iw_rowcol,iw_docit,
-           "Save selections in doc. file",
-           docit,pixelmen_d,cdum,-1,-1);
+                "Save selections in doc. file",
+                docit,pixelmen_d,cdum,-1,-1);
 
  /* Create text box for doc file name input  -------------- docnam */
  if (docit || iw_doc == (Widget) 0)
@@ -151,11 +156,11 @@ if (strlen(filnow) == 0) inimag = FALSE;
     if (iw_rowcol1 == 0) 
         iw_rowcol1 = wid_rowcol(iw_rowcol,'h',-1,-1);
      
-    /* create text box for X register input  -------------- ixreg */
+    /* Create text box for X register input  -------------- ixreg */
     sprintf(cval,"%4d",ixreg);
     iw_xreg = wid_textboxb(iw_rowcol1,iw_xreg,"X Reg.:",cval,4);
       
-    /* create text box for Y register input  -------------- iyreg */
+    /* Create text box for Y register input  -------------- iyreg */
     sprintf(cval,"%4d",iyreg);
     iw_yreg = wid_textboxb(iw_rowcol1,iw_yreg,"Y Reg.:",cval,4);
   
@@ -164,7 +169,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
     if (getfile || iw_vreg == (Widget) 0)
        {
-       /* create text box for file value register input --- ivreg */
+       /* Create text box for file value register input --- ivreg */
        sprintf(cval,"%4d",ivreg);
        iw_vreg = wid_textboxb(iw_rowcol2,iw_vreg,
                               "File Value Reg.:",cval,4);
@@ -197,7 +202,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
     }
  if (!leavit) XtUnmanageChild(XtParent(iw_radius));
 
- /* create accept boxes  ---------------------------------- apply */
+ /* Create accept boxes  ---------------------------------- apply */
  
  if (iw_dum == (Widget) 0) 
     iw_dum   = wid_stdbut(iw_rowcol, iw_pixelmen, &iw_pushs, &iw_pushc, &iw_pusha, 
@@ -210,7 +215,8 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_i (inimag toggle callback) **************/
 
- void pixelmen_i(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_i(Widget iw_temp, XtPointer data, 
+                                 XtPointer call_data)
  {
  char * stringt;
 
@@ -229,7 +235,8 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_f (getfile toggle callback) **************/
 
- void pixelmen_f(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_f(Widget iw_temp, XtPointer data, 
+                                 XtPointer call_data)
  {
  char * stringt;
 
@@ -249,7 +256,8 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_s (getscreen toggle callback) ***********/
 
- void pixelmen_s(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_s(Widget iw_temp, XtPointer data, 
+                                 XtPointer call_data)
  {
  char * stringt;
 
@@ -268,7 +276,8 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_d (docit toggle callback) *************/
 
- void pixelmen_d(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_d(Widget iw_temp, XtPointer data, 
+                                 XtPointer call_data)
  {
  char * stringt;
 
@@ -289,7 +298,8 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************** pixelmen_sh (shimg toggle callback) *************/
 
- void pixelmen_sh(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_sh(Widget iw_temp, XtPointer data, 
+                                  XtPointer call_data)
     {
     if (inimag) 
        {
@@ -298,13 +308,15 @@ if (strlen(filnow) == 0) inimag = FALSE;
        }
     else
        {
-       spout(" Image can only be shifted when 'Inside last image' is active.");
+       spout(" *** Image can only be shifted when 'Inside last image' is active.");
+       XBell(idispl,50);
        }
     }
 
  /************** pixelmen_l (leavit toggle callback) *************/
 
- void pixelmen_l(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_l(Widget iw_temp, XtPointer data, 
+                                 XtPointer call_data)
  {
  char * stringt;
 
@@ -323,7 +335,8 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************ accept button callback *********************************/
 
- void pixelmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_buta(Widget iw_temp, XtPointer data, 
+                                    XtPointer call_data)
  {
 
  char * cdum;
@@ -338,6 +351,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
  if (inimag && strlen(filnow) == 0)
     {
     spout("*** Must display image to find file value for pixel.");
+    XBell(idispl,50);
     return;
     }
 
@@ -376,7 +390,7 @@ if (strlen(filnow) == 0) inimag = FALSE;
     XtFree(stringt);
 
     if (strlen(docnam) == 0) 
-       { spout("*** Must specify document file name."); return; }
+       { spout("*** Must specify document file name."); XBell(idispl,50); return; }
 
     /* Get registers */
     if (rdpriw(&ixreg,1,MAXREGM1,iw_xreg,"x register",cdum) == FALSE) return;
@@ -397,12 +411,14 @@ if (strlen(filnow) == 0) inimag = FALSE;
     if (strlen(filnow) == 0)
        {
        spout("*** Must display image to find file value for pixel.");
+       XBell(idispl,50);
        return;
        }
 
     if ((filedatap = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) == NULL) 
         {
         spout("*** Can not open image to find file value for pixel.");
+        XBell(idispl,50);
         return;
         }
 
@@ -428,7 +444,8 @@ if (strlen(filnow) == 0) inimag = FALSE;
 
  /************ Stop button callback *********************************/
 
- void pixelmen_buts(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_buts(Widget iw_temp, XtPointer data, 
+                                   XtPointer call_data)
  {
 
  int    numdoc, nlet;
