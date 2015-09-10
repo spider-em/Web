@@ -76,12 +76,8 @@
  extern char   dfil2[12];       // Doc file 
  extern char   strcom1[];       // Doc file comment
  extern char   strcom2[];       // Doc file comment
-
  extern int    numm ;           // From: fitdoc
  extern int    maxpart;
-
- extern int    leftside;        // Picked left  particle   
- extern int    rightside;       // Picked right particle   
 
  /* Common global variables defined here */
 
@@ -276,16 +272,16 @@
              if (fpdoc2) fclose(fpdoc2); fpdoc2 = NULL;
 
              /* Recover original dfil1 from backup location dfil1 */
-             strcpy(outstr,"mv ") ; 
+             strcpy(outstr,"mv ")  ; 
              strcat(outstr,dfil1)  ; strcat(outstr,".") ; strcat(outstr,datexc); strcat(outstr,"~");
-             strcat(outstr," ")   ;
+             strcat(outstr," ")    ;
              strcat(outstr,dfil1)  ; strcat(outstr,".") ; strcat(outstr,datexc); 
              system(outstr);
 
              /* Recover original dfil2 from backup location dfil2 */
-             strcpy(outstr,"mv ") ; 
+             strcpy(outstr,"mv ")  ; 
              strcat(outstr,dfil2)  ; strcat(outstr,".") ; strcat(outstr,datexc); strcat(outstr,"~");
-             strcat(outstr," ")   ;
+             strcat(outstr," ")    ;
              strcat(outstr,dfil2)  ; strcat(outstr,".") ; strcat(outstr,datexc); 
              system(outstr);
              return 1;
@@ -307,9 +303,6 @@
 
  maxpart   = igot;
  numm      = maxpart + 1;   // Usual next particle
-
- leftside  = FALSE;
- rightside = FALSE;
 
  // Determine new angles using new data set. 
  det_tilt(FALSE,TRUE);
