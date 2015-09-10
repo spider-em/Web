@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.86 2015/06/16 15:36:08 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.87 2015/09/08 18:16:07 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -8,6 +8,8 @@
  C             Added pixelmen_in call           Jun 2011  ArDean Leith                                                                    
  C             Keep up image menu widget        Nov 2012  ArDean Leith                                                                    
  C             Keep up more image menu widgets  Jun 2015  ArDean Leith                                                                    
+ C             Pixelmen_in docit                Sep 2015 ArDean Leith 
+ C
  C *********************************************************************
  C=* AUTHOR: A. LEITH 
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
@@ -29,7 +31,7 @@
  C=*                                                                   *
  C *********************************************************************
  C
- C  IMAGEMEN
+ C  imagemen(widget, data, call_data)
  C
  C  PARAMETERS:   iw_temp, data, call_data (usual callback data)
  C
@@ -51,29 +53,31 @@
 #include "routines.h"
 
  /* External function  prototypes */
- extern void dendromen  (char * );
- extern void ctfmen0    (char * );
- extern void showmovmen2(void);
+ extern void   dendromen  (char * );
+ extern void   ctfmen0    (char * );
+ extern void   showmovmen2(void);
 
  /* Internal function  prototypes */
- void       imagemen_cb    (Widget, XtPointer, XtPointer);
- void       imagemennol_cb (Widget, XtPointer, XtPointer);
- void       imagemen_cb_com(void);
+ void          imagemen_cb    (Widget, XtPointer, XtPointer);
+ void          imagemennol_cb (Widget, XtPointer, XtPointer);
+ void          imagemen_cb_com(void);
 
  /* Externally defined common variables */
- extern char    outstr[80];
- extern float   erodethresh;  /* Used in filtermen, erodemen */
- extern int     docimgtotal;  /* From: docmontmen */
+ extern char   outstr[80];
+ extern float  erodethresh;  /* Used in filtermen, erodemen */
+ extern int    docimgtotal;  /* From: docmontmen */
+ extern int    docit_in;     // From: pixelmen_in
+
 
  /* Common variables defined here and used elsewhere */
- FILEDATA*  filedatal = NULL; /* Used by backmen, pickback, pickmen */
- FILEDATA*  filedatar = NULL; /* Used by backmen, pickback, pickmen */
- float*     fimage = NULL;    /* Used by filtermen, pixelmen_in also */
- char       filcolvol[81];    /* Name for color vol. file */
+ FILEDATA *   filedatal = NULL; /* Used by backmen, pickback, pickmen */
+ FILEDATA *   filedatar = NULL; /* Used by backmen, pickback, pickmen */
+ float *      fimage = NULL;    /* Used by filtermen, pixelmen_in also */
+ char         filcolvol[81];    /* Name for color vol. file */
 
- char*      cptrduml = NULL; /* Data used by image right */
- char*      cptrdumr = NULL; /* and left */
- int        icattyp;
+ char *       cptrduml = NULL; /* Data used by image right &  left */
+ char *       cptrdumr = NULL; 
+ int          icattyp;
 
  /* File scope variables used here */
  static char   filnew[128];
@@ -100,7 +104,8 @@
 
 /*************************  imagemen  ********************************/
 
- void imagemen(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void imagemen(Widget iw_temp, XtPointer data, 
+               XtPointer call_data)
  { 
 
  char   *oper;
@@ -875,6 +880,7 @@
      ixulli   = ixul;   iyulli = iyul;
 
      // Query pixels from this image  
+     docit_in = FALSE;     // From: pixelmen
      pixelmen_in_nod();
 
      /* Free up the file descriptor */
