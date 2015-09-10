@@ -1,13 +1,15 @@
-/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.16 2011/09/23 19:33:02 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.17 2015/09/10 13:17:48 leith Exp $*/
 
 /*
  ***********************************************************************
  *                                                                     *
  * showbutx.c                                                          *
- *                Added showbuts                 Jun 2011 ArDean Leith *
+ *              Added showbuts                   Jun 2011 ArDean Leith *
+ *              Added showbuts_str               Sep 2015 ArDean Leith *
+ *                                                                     *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
@@ -36,9 +38,9 @@
  *
  * RETURNS:     void
  * 
- * PARAMETERS:	char	*but1	       Text description of button 1
- *		char	*but2	       Text description of button 2
- *		char	*but3	       Text description of button 3
+ * PARAMETERS:	char *  but1	       Text description of button 1
+ *		char *  but2	       Text description of button 2
+ *		char *  but3	       Text description of button 3
  *		int	unmanage       Unmanage the window if TRUE
  *
  ***********************************************************************
@@ -53,14 +55,94 @@
 #define MAX_MESSAGE_LENGTH 240
 
 /* External global variables */
-extern Widget       iw_win;    /* Image window widget  */
-extern Display      *idispl;
+extern Widget     iw_win;    /* Image window widget  */
+extern Display *  idispl;
 
 /* Internal file variables */
-static Widget       iw_mess   = (Widget) 0 ;  /* Dialog widget   */
-static Widget       iw_labelg = (Widget) 0 ;  /* Label widget    */
+static Widget     iw_mess   = (Widget) 0 ;  /* Dialog widget   */
+static Widget     iw_labelg = (Widget) 0 ;  /* Label widget    */
 
-    void ForceUpdate (Widget w);
+// Internal function prototypes
+void              ForceUpdate (Widget w);   // unused
+void              showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr, 
+                       char *but1, char *but2, char *but3, int manage);
+
+/********************** showbuts_str ***************************/
+// Can redefine strings within a widget
+
+void showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr, 
+                  char *but1, char *but2, char *but3, int manage)
+ {   
+ unsigned long   ilen;
+ char            message[MAX_MESSAGE_LENGTH];   
+ Arg             args[2];      /* Arg list */
+ XmString        str_label;    /* String label */
+   
+ if (* iw_buts_ptr == 0 ) 
+    {
+    * iw_buts_ptr = XmCreateBulletinBoardDialog(iw_win,"iw_buts_ptr",args,0);
+
+    XtSetArg(args[0], XmNalignment, XmALIGNMENT_BEGINNING);
+    * iw_labelg_str_ptr = XmCreateLabelGadget(*iw_buts_ptr,"iw_labelg_str_ptr",args,1);
+
+  //  XtManageChild(* iw_labelg_str_ptr);
+
+  //printf(" iw_buts_ptr: %d  iw_labelg_str_ptr: %d \n",*iw_buts_ptr, *iw_labelg_str_ptr);
+    }
+
+ /* Error trap kludge for alpha bug on particle picking  buggy */
+ if (but1 != NULL) ilen = strlen(but1);
+ if (but2 != NULL) ilen += strlen(but2);
+ if (but3 != NULL) ilen += strlen(but3);
+
+ if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
+    {
+    message[MAX_MESSAGE_LENGTH - 1] = '\0';
+    printf("*** Showbuts got an overlength string: %d \n",ilen);
+    printf("*** String:%s \n",message); 
+    XBell(idispl,50);
+    }
+
+ /* Set the message string */
+ strcpy(message, "BUTTON   left:    ");
+ strcat(message, but1);
+ strcat(message, "\n");
+
+ if (but2 != NULL) 
+    {
+    strcat(message, "         center:  ");
+    strcat(message, but2);
+    strcat(message, "\n");
+    }
+
+ if (but3 != NULL)
+    {
+    strcat(message, "         right:   ");
+    strcat(message, but3);
+    }
+
+ //  Note: XmStringCreateLtoR handles newline char oK) if this used
+ //        XmStringCreate you woould have to solve newline problem!
+
+ str_label = XmStringCreateLtoR(message,XmSTRING_DEFAULT_CHARSET);
+ XtSetArg(args[0], XmNlabelString, str_label); 
+ XtSetValues(* iw_labelg_str_ptr,args,1);
+
+ /* Free the String (not doing this may result in a memory leak) */
+ XmStringFree(str_label);
+ XtManageChild(* iw_labelg_str_ptr);
+
+ if (manage) 
+    {XtManageChild  (* iw_buts_ptr); }
+ else
+    {XtUnmanageChild(* iw_buts_ptr);}
+
+ //XFlush(idispl);
+
+ return;
+ }
+
+
 
 /********************** showbutx ***************************/
 
@@ -125,22 +207,16 @@ void showbutx(char *but1, char *but2, char *but3, int unmanage)
 
     /* Note: XmStringCreateLtoR handles newline char oK) if this
        changed to XmStringCreate you have to solve newline problem  */
-    //printf(" draw 2 \n");
 
     str_label = XmStringCreateLtoR(message,XmSTRING_DEFAULT_CHARSET);
     XtSetArg(args[0], XmNlabelString, str_label); 
     XtSetValues(iw_labelg,args,1);
-    //printf(" draw 3 \n");
 
     /* Free the String (not doing this may result in a memory leak) */
     XmStringFree(str_label);
 
-    //printf(" draw 4 \n");  // DELAY AFTER THIS
     XtManageChild(iw_mess);
-    //printf(" draw 5 \n");  // DELAY AFTER THIS
-    //ForceUpdate(iw_mess);
-
-    //printf(" draw 6 \n");
+    // ForceUpdate(iw_mess);
     }
 
   XFlush(idispl);
@@ -154,8 +230,8 @@ Widget showbuts(Widget iw_buts,
  {   
  unsigned long   ilen;
  char            message[MAX_MESSAGE_LENGTH];   
- Arg             args[2];     /* Arg list */
- XmString        str_label;   /* String label */
+ Arg             args[2];      /* Arg list */
+ XmString        str_label;    /* String label */
  Widget          iw_labelgt;   /* Label widget    */
    
  if (iw_buts == 0 ) 
@@ -209,7 +285,6 @@ Widget showbuts(Widget iw_buts,
     }
 
  if (manage) XtManageChild(iw_buts);
-
  
  XFlush(idispl);
 
@@ -218,7 +293,6 @@ Widget showbuts(Widget iw_buts,
 
 
 /********************** ForceUpdate ******** unused***********/
-
 
     /* ForceUpdate() -- a superset of XmUpdateDisplay() that ensures
     ** that a window's contents are visible before returning. 
