@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/shift.c,v 1.23 2015/09/01 17:53:42 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/shift.c,v 1.24 2015/09/08 18:14:11 leith Exp $*/
 
 /***********************************************************************
  *                                                                     *
@@ -6,6 +6,7 @@
  *          Removed wicolor                      Sep 2011 ArDean Leith *
  *          copyarea                             Sep 2011 ArDean Leith *
  *          Redraw locs after shifting tilt pair Jul 2015 ArDean Leith *
+ *          Pixelmen_in_nod parameters           Sep 2015 ArDean Leith *
  *                                                                     *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
@@ -47,7 +48,7 @@
  // Internal functions 
  void           shift_pop (Widget, XEvent *, String *, Cardinal *);
 
- // External functions 
+ // External functions not in routines.h
  void           gold_pop       (Widget, XEvent *, String *, Cardinal *);
  void           pixel_in_pop   (Widget, XEvent *, String *, Cardinal *);
  void           mask_pop       (Widget, XEvent *, String *, Cardinal *);
@@ -330,7 +331,7 @@
 	    }
 
 	if (pixelnum == 0)
-            pixelmen_in_nod(NULL, NULL, NULL);
+            pixelmen_in_nod();
 	else 
             {
 	    showbutx("Query location.",
