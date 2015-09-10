@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickp.c,v 1.31 2015/09/01 17:53:42 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickp.c,v 1.32 2015/09/10 13:17:36 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -54,10 +54,11 @@
 #include "routines.h"
 
  /* External function prototypes */
- extern void      det_tilt      (int wantmsg, int wantlabel);                            /* From pickmen */
+ extern void      det_tilt      (int wantmsg, int wantlabel);                             /* From pickmen */
  extern void      witran_rev    (float *, float *, float, float,int,float,float, float); /* From witran */
  extern int       fitdoc_addpart(int n,  int iwhich, int xu, int yu, int xt, int yt );   /* From fitdoc */
  extern void      pickmen_butdet(Widget, XtPointer, XtPointer);                          /* From pickmen */
+ extern void      showbuts_str  (Widget *, Widget *, char *, char *, char *,  int);
 
  /* Internal function prototypes */
  void             pick_pop (Widget, XEvent *, String *, Cardinal *);
@@ -82,23 +83,21 @@
  // Internally defined global variables 
  int              openit1, openit2;
  int              nsamsl, nrowsl, nsamsr, nrowsr;
- int              iradi     = 4;        // Particle radius on screen           
- int              numm      = 1;        // Current particle number   
- int              numm1     = 0;        // Current particle number   
- int              numm2     = 0;        // Current particle number   
- int              fitted    = FALSE;
- int              leftside  = FALSE;    // Start with left  image   
- int              rightside = FALSE;    // Start with right image   
+ int              iradi         = 4;          // Particle radius on screen           
+ int              numm          = 1;          // Current particle number   
+ int              numm1         = 0;          // Current particle number   
+ int              numm2         = 0;          // Current particle number   
+ int              fitted        = FALSE;      // Assume unfitted start
+ int              leftside      = FALSE;      // Start with either image   
+ int              rightside     = FALSE;      // Start with either image   
+ Widget           iw_but_lefrit = (Widget) 0; // For: pickmen
+ Widget           iw_but_str    = (Widget) 0; // For: pickmen
 
  //                0026 6         26          242           61          242           61            1
  char             strcom1[] = 
                   " (Untilted)  Particle    Picked-X,Y-location       Original-X,Y-location ";
  char             strcom2[] = 
                   " (Tilted)    Particle    Picked-X,Y-location       Original-X,Y-location ";
-
- Widget           iw_but_lef    = 0;    // For: pickmen
- Widget           iw_but_rit    = 0;    // For: pickmen
- Widget           iw_but_lefrit = 0;    // For: pickmen
 
  /* Internal file scope  variables */
  static FILE    * fpdoc1  = NULL;
@@ -145,26 +144,14 @@
  nrowsl = nrow2l - nrow1l + 1;
  nrowsr = nrow2r - nrow1r + 1;
 
- /* Create button assignment dialogs with following strings  */
- 
- iw_but_lef = showbuts(iw_but_lef,
-                       "Select left particle.", 
-                       "Show menu.", 
-                       "Delete a particle pair", FALSE);
-
- iw_but_rit = showbuts(iw_but_rit,
-                       "Select right particle.", 
-                       "Show menu.", 
-                       "Delete a particle pair", FALSE);
-
- iw_but_lefrit = showbuts(iw_but_lefrit,
-                       "Select left or right particle.", 
-                       "Show menu.", 
-                       "Delete a particle pair", FALSE);
 
  // Display first button assignment window
+ showbuts_str(&iw_but_lefrit, &iw_but_str,
+              "Select left or right particle.", 
+              "Show menu.", 
+              "Delete a particle pair.", TRUE);
 
- XtManageChild(iw_but_lefrit);
+ //printf(" iw_but_lefrit: %d  iw_but_str: %d \n",iw_but_lefrit, iw_but_str);
 
  leftside    = FALSE;
  rightside   = FALSE;
@@ -190,7 +177,7 @@
  static int    ixt, iyt;
  static float  xt,yt;
 
- int           nsaytilt = 48;       /* Say angle for this many particles */
+ int           nsaytilt      = 48;  /* Say angle for this many particles */
  int           predict_error = 10;  /* Max expected difference from predicted location */
 
  if (!(strcmp(*params, "M")))
@@ -282,10 +269,10 @@
               /* Want to record this left particle location */
 
           /* Save location in array */
-          iok = fitdoc_addpart(numm,  1, ixi,iyi, 0,0 );
+          iok =  fitdoc_addpart(numm,  1, ixi,iyi, 0,0 );
 
-          //printf(" Leftside: %d   rightside: %d   numm: %d\n",leftside,rightside,numm);
-          //printf(" Predicted: %d, %d  Picked: %d, %d \n", (int)xt,(int)yt, ixi,iyi);
+          // printf(" Leftside: %d   rightside: %d   numm: %d\n",leftside,rightside,numm);
+          // printf(" Predicted: %d, %d  Picked: %d, %d \n", (int)xt,(int)yt, ixi,iyi);
 
           derror = 0; 
           if (leftside) 
@@ -299,7 +286,7 @@
                    sprintf(outstr,"Left location is large distance: %d  from expected location!",derror); 
                    spout(outstr);  XBell(idispl,50);
                    }
-                }
+                }    // End of:  if ( fitted)
 
              /* Save info in doc file */ 
              dlist[0] = numm;
@@ -312,10 +299,10 @@
 
              if (numm == 1)       
                 { fpdoc1 = savdnc(dfil1, datexc, &fpdoc1,
-                          dlist, 7, &openit1, TRUE, TRUE,strcom1); }
+                              dlist, 7, &openit1, TRUE, TRUE,strcom1); }
              else
-                { fpdoc1 = savdn1(dfil1, datexc, &fpdoc1,
-                          dlist, 7, &openit1, TRUE, TRUE);}
+                { fpdoc1 = savdn1(dfil1, datexc, &fpdoc1, 
+                              dlist, 7, &openit1, TRUE, TRUE);}
 
              dlist[2] = xs[numm] * iredu;
              dlist[3] = ys[numm] * iredu;
@@ -324,17 +311,17 @@
      
              if (numm == 1)       
                 { fpdoc2 = savdnc(dfil2, datexc, &fpdoc2,
-                          dlist, 7, &openit2, TRUE, TRUE,strcom2); }
+                              dlist, 7, &openit2, TRUE, TRUE,strcom2); }
              else
                 { fpdoc2 = savdn1(dfil2, datexc, &fpdoc2,
-                          dlist, 7, &openit2, TRUE, TRUE);}
+                              dlist, 7, &openit2, TRUE, TRUE);}
              }
 
           /* Leave permanent circle at this location */
           xorc(iwin,    icontx, TRUE, ixs, iys, iradi);
           xorc(imagsav, icontx, TRUE, ixs, iys, iradi);
 
-          /* Write particle number at this location */
+          /* Write particle number at this leftside location */
           string = itoa(numm);
           witext(icontx, string, ixs, iys, 1, 0, -1, 2, FALSE);
           if (string) free(string);
@@ -394,18 +381,28 @@
           leftside  = FALSE;
 
           // Show button message  
-          XtUnmanageChild(iw_but_lef);
-          XtUnmanageChild(iw_but_rit);
-          XtUnmanageChild(iw_but_lefrit);
-          if (leftside) 
-             { XtManageChild(iw_but_lef); }
+          if (leftside)
+             { 
+             showbuts_str(&iw_but_lefrit, &iw_but_str,
+                          "Select left particle.         ", 
+                          "Show menu.", 
+                          "Delete a particle pair.", TRUE);
+             }
           else if (rightside)
-             { XtManageChild(iw_but_rit); }
+             { 
+             showbuts_str(&iw_but_lefrit, &iw_but_str,
+                       "Select right particle.        ", 
+                       "Show menu.", 
+                       "Delete a particle pair.", TRUE);
+             }
           else
-             { XtManageChild(iw_but_lefrit);}
-
-          }
-        
+             { 
+             showbuts_str(&iw_but_lefrit, &iw_but_str,
+                       "Select left or right particle.", 
+                       "Show menu.", 
+                       "Delete a particle pair.", TRUE);
+             }
+         }
        //printf(" Left maxpart: %d, numm: %d\n", maxpart,numm);
 
        } // End of: if (leftside || (fitted && !leftside && !rightside))
@@ -434,6 +431,7 @@
           if (rightside) 
              {      /* Save info in doc file */ 
 
+
              if ( fitted )
                 {    /* Check for possible bad location */
                 derror = (int) (sqrt((float)( (ixi - (int)xt) * (ixi - (int)xt) + 
@@ -457,7 +455,7 @@
                 {fpdoc2 = savdnc(dfil2, datexc, &fpdoc2,
                                 dlist, 7, &openit2, TRUE, TRUE,strcom2);}
              else
-                {fpdoc2 = savdn1(dfil2, datexc, &fpdoc2,
+                { fpdoc2 = savdn1(dfil2, datexc, &fpdoc2,
                              dlist, 7, &openit2, TRUE, TRUE);}
 
              dlist[2] = xu0[numm] * iredu;
@@ -481,9 +479,6 @@
           string = itoa(numm);
           witext(icontx, string, ixs, iys, 1, 0, -1, 2, FALSE);
           if (string) free(string);
-
-          /* Save location in xim arrays */
-          iok =  fitdoc_addpart(numm, 2, ixi,iyi, ixi,iyi );
 
           /* Find predicted location in left image */
           if (fitted)
@@ -526,7 +521,7 @@
 
           sprintf(outstr,
                   "Picked right:  #%d  (%d,%d)  Distance: %3d  Current Tilt: %-.2f  Axis: %-.2f, %-.2f",
-                   numm,ixi,iyi, derror, thetaf,phif,gammaff);
+                   numm,ixi,iyi, derror, thetaf,phif,gammaff); 
           spout(outstr);
           spoutfile(FALSE);
 
@@ -540,15 +535,27 @@
           rightside  = FALSE;
 
           // Show button message  
-          XtUnmanageChild(iw_but_lef);
-          XtUnmanageChild(iw_but_rit);
-          XtUnmanageChild(iw_but_lefrit);
-          if (leftside) 
-             { XtManageChild(iw_but_lef); }
+          if (leftside)
+             { 
+             showbuts_str(&iw_but_lefrit,&iw_but_str,
+                          "Select left particle.         ", 
+                          "Show menu.", 
+                          "Delete a particle pair.", TRUE);
+             }
           else if (rightside)
-             { XtManageChild(iw_but_rit); }
+             { 
+             showbuts_str(&iw_but_lefrit,&iw_but_str,
+                       "Select right particle.        ", 
+                       "Show menu.", 
+                       "Delete a particle pair.", TRUE);
+             }
           else
-             { XtManageChild(iw_but_lefrit);}
+             { 
+             showbuts_str(&iw_but_lefrit,&iw_but_str,
+                       "Select left or right particle.", 
+                       "Show menu.", 
+                       "Delete a particle pair.", TRUE);
+             }
 
           //printf(" RIT maxpart: %d, numm: %d\n", maxpart,numm);
 
@@ -557,6 +564,7 @@
 
     // Update label box for next particle number 
     pickmen();
+
     }      // End of:  else if (ixs >= ixulr && ixs < ixulr + .......................
 
  /***************************************************** Middle button */ 
@@ -565,8 +573,7 @@
     {                          /* Show menu --       Button 2 pushed */
     if (fpdoc1) 
        { fclose(fpdoc1); fpdoc1 = NULL; openit1 = TRUE; }
-
-    if (fpdoc2) 
+    if (fpdoc1) 
        { fclose(fpdoc2); fpdoc2 = NULL; openit2 = TRUE; }
 
     /* Display picking menu */
@@ -580,19 +587,23 @@
     {                          /* Button 3 pushed */
     getloc(event,'B',&ixs,&iys);
 
-    // Remove button messages  
-    XtUnmanageChild (iw_but_lef);
-    XtUnmanageChild (iw_but_rit);
+    if (fpdoc1) 
+       { fclose(fpdoc1); fpdoc1 = NULL; openit1 = TRUE; }
+    if (fpdoc2) 
+       { fclose(fpdoc2); fpdoc2 = NULL; openit2 = TRUE; }
+
+    leftside  = FALSE;
+    rightside = FALSE;
 
     /* Display particle deletion menu */
     tiltp_deletemen();
 
-    if (leftside) 
-       { XtManageChild(iw_but_lef); }
-    else if (rightside)
-       { XtManageChild(iw_but_rit); }
-    else
-       { XtManageChild(iw_but_lefrit);}
+    // Replace button messages  
+    showbuts_str(&iw_but_lefrit, &iw_but_str,
+              "Select left or right particle.", 
+              "Show menu.", 
+              "Delete a particle pair.", TRUE);
+
     }      // End of: else if (!(strcmp(*params, "3"))) 
 
  }
