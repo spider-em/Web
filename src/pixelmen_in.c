@@ -1,15 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/pixelmen_in.c,v 1.23 2015/07/27 16:23:29 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixelmen_in.c,v 1.24 2015/09/08 18:13:32 leith Exp $*/
 
 /*
  C++********************************************************************
  C
- C PIXELMEN      Created                         May 91   ArDean Leith
+ C pixelmen      Created                         May 91   ArDean Leith
  C               Converted to C                  Oct 92   ArDean Leith     
- C PIXELMEN_IN   Renamed                         Jun 2011 ArDean Leith 
+ C pixelmen_in   Renamed                         Jun 2011 ArDean Leith 
  C               24 bit display bug fixed        11/8/07  ArDean Leith 
  C               Pixel rewrite                   Jun 2011 ArDean Leith
  C               Doc file close bug              Jul 2015 ArDean Leith
+ C               Doc file input bug              Sep 2015 ArDean Leith
+ C
  C *********************************************************************
  C *  AUTHOR:  ArDean Leith                                            *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
@@ -37,7 +39,8 @@
  C=*                                                                   *
  C *********************************************************************
  C
- C   pixelmen_in
+ C   pixelmen_in_nod
+ C   pixelmen_in_doc
  C
  C   PURPOSE:    Set various parameters relating to pixel reading
  C               For use inside displayed image
@@ -64,14 +67,14 @@
  void          pixelmen_in_s   (Widget, XtPointer, XtPointer);
 
  /* Externally defined  common variables used here */
- extern int    ixreg_pix, iyreg_pix;  // From pixelmen_sc
- extern int    isreg_pix, ivreg_pix;  // From pixelmen_sc
+ extern int    ixreg_pix, iyreg_pix;    // From pixelmen_sc
+ extern int    isreg_pix, ivreg_pix;    // From pixelmen_sc
  extern int    iradius_pix;
 
- extern FILE * fpdocpix_in;           // From pixel_in
+ extern FILE * fpdocpix_in;             // From pixel_in
 
  // Common variables defined here
- XImage     *  imagep_in    = 0;
+ XImage *      imagep_in    = 0;
  int           docit_in     = FALSE;
  int           getscreen_in = TRUE;
  int           leavit_in    = TRUE;
@@ -87,7 +90,7 @@
  Widget        iw_radius_in_doc, iw_getscreen_in_doc;
  Widget        iw_docit_in_doc,  iw_shimg_in_doc;
 
- FILEDATA      *filedatap;
+ FILEDATA *    filedatap;
 
  /* Static file scope variables */
  static Widget  iw_pixelmen_in_nod = (Widget)0;
@@ -97,12 +100,12 @@
 
  void pixelmen_in_nod()
  { 
- char     cval[5];
- static   Widget   iw_rowcol;
- static   Widget   iw_pushc, iw_pusha, iw_pushs;
- static   Widget   iw_dum = 0;
+ char            cval[5];
+ static Widget   iw_rowcol;
+ static Widget   iw_pushc, iw_pusha, iw_pushs;
+ static Widget   iw_dum = 0;
 
- char   * cdum = 0;    /* Data for a callback is unused here */
+ char *          cdum  = 0;    /* Data for a callback is unused here */
 
  if (iw_pixelmen_in_nod == (Widget)0)
     {   /* Create pixel menu widget first */
@@ -167,7 +170,8 @@
 
  /************************* pixelmen_in_doc **********************************/
 
- void pixelmen_in_doc(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_in_doc(Widget iw_temp, XtPointer data, 
+                                      XtPointer call_data)
  { 
  char     cval[5];
  static   Widget   iw_rowcol, iw_rowcol1, iw_rowcol2;
@@ -289,7 +293,8 @@
 
 /************** pixelmen_in_s (getscreen toggle callback) ***********/
 
- void pixelmen_in_s(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_in_s(Widget iw_temp, XtPointer data, 
+                                    XtPointer call_data)
  {
  if (!strcmp(data, "DOC"))
     {
@@ -305,13 +310,14 @@
 
     /* Restart the pixel menu */                       
     XtUnmanageChild(iw_pixelmen_in_nod);                       
-    pixelmen_in_nod(NULL, NULL, NULL);
+    pixelmen_in_nod();
     }
  }
 
 /************** pixelmen_d (docit toggle callback) *************/
 
- void pixelmen_in_d(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_in_d(Widget iw_temp, XtPointer data, 
+                                    XtPointer call_data)
  {
  char * stringt;
  int    old_docit;
@@ -333,7 +339,7 @@
     {  // Display docit menu instead
     if( iw_pixelmen_in_nod > 0) XtUnmanageChild(iw_pixelmen_in_nod); 
 
-    pixelmen_in_doc(NULL,NULL,NULL);
+        pixelmen_in_doc(NULL, NULL, NULL);
     ikey_in = 1;
     }
 
@@ -341,14 +347,15 @@
     {  // Display non-docit menu instead
     if( iw_pixelmen_in_doc > 0) XtUnmanageChild(iw_pixelmen_in_doc); 
 
-    pixelmen_in_nod(NULL,NULL,NULL);
+    pixelmen_in_nod();
     ikey_in = 1;
     }
  }
 
  /************** pixelmen_in_sh (shimg toggle callback) *************/
 
- void pixelmen_in_sh(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_in_sh(Widget iw_temp, XtPointer data, 
+                                     XtPointer call_data)
 {
  if (!strcmp(data, "DOC"))
     {
@@ -369,12 +376,10 @@
  }
  
 
- 
- 
+ /************ Accept button callback *********************************/
 
- /************ accept button callback *********************************/
-
- void pixelmen_in_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_in_buta(Widget iw_temp, XtPointer data, 
+                                       XtPointer call_data)
  {
 
  char * cdum;
@@ -414,7 +419,7 @@
     XtFree(stringt);
 
     if (strlen(docnam) == 0) 
-       { spout("*** Must specify document file name."); return; }
+       { spout("*** Must specify doc file name."); XBell(idispl,50);  return; }
 
     /* Get registers */
     if (rdpriw(&ikey_in, 1,INT_MAX,  iw_key_in_doc, 
@@ -433,11 +438,11 @@
     }
 
  if (strlen(filnow) == 0)
-    { spout("*** Must display image to find file value for pixel.");  return; }
+    { spout("*** Must display image to find file value for pixel."); XBell(idispl,50);  return; }
 
  if ((filedatap = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) 
        ==  NULL) 
-    { spout("*** Can not open image to find file value for pixel.");  return; }
+    { spout("*** Can not open image to find file value for pixel."); XBell(idispl,50);  return; }
 
 
  /* Get radius for marker */
@@ -459,7 +464,8 @@
 
  /************ Stop button callback *********************************/
 
- void pixelmen_in_buts(Widget iw_temp, XtPointer data, XtPointer call_data)
+ void pixelmen_in_buts(Widget iw_temp, XtPointer data, 
+                                       XtPointer call_data)
  {
 
  int    numdoc, nlet;
