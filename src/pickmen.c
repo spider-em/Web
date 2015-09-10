@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.33 2015/09/01 17:53:42 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.34 2015/09/10 13:17:22 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -132,8 +132,6 @@
  extern float       phif, thetaf, gammaff;   // From: fitmen
  extern float       arealim;                 // From: fitmen
  extern int         fitted;                  // From: pickp
- extern Widget      iw_but_lef;              // From: pickp
- extern Widget      iw_but_rit;              // From: pickp
  extern Widget      iw_but_lefrit;           // From: pickp
 
  // Internally defined global variables 
@@ -269,8 +267,6 @@
                                     XtPointer calldata)
  {
  /*  Remove message */
- XtUnmanageChild(iw_but_lef);
- XtUnmanageChild(iw_but_rit);
  XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the menu widget */
@@ -290,8 +286,6 @@
                                    XtPointer calldata)
  {
  /*  Remove button assignment messages */
- XtUnmanageChild(iw_but_lef);
- XtUnmanageChild(iw_but_rit);
  XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the picking menu widget */
@@ -403,8 +397,6 @@
                                    XtPointer calldata )
  {
  /*  Remove message */
- XtUnmanageChild(iw_but_lef);
- XtUnmanageChild(iw_but_rit);
  XtUnmanageChild(iw_but_lefrit);
 
  /*  Remove the menu widget */
