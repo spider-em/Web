@@ -1,9 +1,12 @@
 
-/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.20 2015/07/27 16:24:17 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.21 2015/09/08 18:09:02 leith Exp $*/
+
 /*
+ C**********************************************************************
  C pixel_in.c
  C              Pixel rewrite                   Jun 2011 ArDean Leith
  C              Doc file close bug              Jul 2015 ArDean Leith
+ C              Bell                            Sep 2015 ArDean Leith
  C
  C**********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
@@ -32,7 +35,8 @@
  C**********************************************************************
  C
  C PURPOSE:  Find location of pixel inside image     
- C 
+ C           Optionally save location in doc file
+ C
  C**********************************************************************
 */
 
@@ -40,33 +44,33 @@
 #include "routines.h"
 
  /* Internal function prototypes */
- void    pixel_in_pop (Widget, XEvent *, String *, Cardinal *);
+ void              pixel_in_pop   (Widget, XEvent *, String *, Cardinal *);
 
  // Externally defined common variables 
  extern char       outstr[80];
- extern FILEDATA   *filedatap;
+ extern FILEDATA * filedatap;
 
  extern int        ixreg_pix, iyreg_pix;    // From: pixelmen_sc
  extern int        isreg_pix, ivreg_pix;    // From: pixelmen_sc
  extern int        iradius_pix;             // From: pixelmen_sc 
  
- extern XImage  *  imagep_in;               // From: pixelmen_in
+ extern XImage *   imagep_in;               // From: pixelmen_in
  extern int        docit_in;                // From: pixelmen_in 
  extern int        getscreen_in;            // From: pixelmen_in 
  extern int        leavit_in;               // From: pixelmen_in 
  extern int        ikey_in;                 // From: pixelmen_in 
 
- extern float  *   fimage;                  // From: imagemen 
+ extern float *    fimage;                  // From: imagemen 
 
  /* Internally defined common  variables */
- FILE             *fpdocpix_in = NULL;
- int		  *pixellist;
+ FILE *            fpdocpix_in = NULL;
+ int *             pixellist;
  int	           pixelnum;
 
- /* Static varables */
- static int       openitp = TRUE;
- static int	  bufsiz  = 0;
- static char      comment[] = "                X            Y       Screen         File"; 
+ /* Static variables */
+ static int        openitp   = TRUE;
+ static int	   bufsiz    = 0;
+ static char       comment[] = "                X            Y       Screen         File"; 
 
 /***************************  pixel_in  *********************************/
 
@@ -78,7 +82,7 @@
 
  /* Open message window with the following prompts  */
  showbutx("Query location.", 
-          "Menu.", 
+          "Show menu.", 
           "Stop this routine.", FALSE);
 
  /* Set actions for right, left, and center buttons */
@@ -129,13 +133,13 @@
 
     else if (inside && getscreen_in )
        {      /* Cursor inside image and want screen value */     
-       sprintf(outstr,"Location: (%d,%d) = %d From: %f At: %d$",
+       sprintf(outstr,"Location: (%d,%d) = %d  Image value: %f At: %d$",
                          ixi,iyi,ipix,fpix,iloc);  
        }
 
     else if ( inside )
-       {/* Want position relative to image*/
-       sprintf(outstr,"Location in image: (%d,%d)  From: %f At: %d$", 
+       {     /* Want position relative to image*/
+       sprintf(outstr,"Location in image: (%d,%d)  Image value: %f At: %d$", 
                        ixi,iyi,fpix,iloc);
        }
     spout(outstr);
@@ -151,18 +155,19 @@
        {    /* Cursor is outside of image, only want inside */
        sprintf(outstr,"*** Outside image: (%d,%d)", ixi,iyi);
        spout(outstr);
+       XBell(idispl,50);
        }
 
     else 
        {   /* Inside.  Want to record location, etc */
 
        if (getscreen_in && (iys < ihighx) )
-          {/* Record location, screen and file values */
-          sprintf(outstr,"Key:%d  (%d,%d) = %d From: %f",
+          {      /* Record location, screen and file values */
+          sprintf(outstr,"Key: %d  (%d,%d) = %d  Image value: %f",
                             ikey_in,ixi,iyi,ipix,fpix);
           }
        else 
-          { /* Record location only */
+          {      /* Record location only */
           sprintf(outstr,"Key:%d  (%d,%d)",
                           ikey_in,ixi,iyi);
           }
@@ -201,7 +206,7 @@
                     	sizeof(int))) == NULL)
                 {
                 spout("*** Unable to realloc pixelbuf in pixel.c");
-                return;
+                XBell(idispl,50);  return;
                 }
 	     bufsiz = bufsiz + 400;
 	     }
@@ -224,7 +229,7 @@
     if (docit_in)
        pixelmen_in_doc(NULL, NULL, NULL);
     else
-       pixelmen_in_nod(NULL, NULL, NULL);
+       pixelmen_in_nod();
     }
 
  else if (!(strcmp(*params, "3")))
