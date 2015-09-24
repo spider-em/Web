@@ -1,12 +1,12 @@
-/*$Header: /usr8/web/src/RCS/getdoc.c,v 1.10 2015/06/11 13:31:27 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/getdoc.c,v 1.11 2015/09/18 16:22:28 leith Exp $*/
 /*
-*****************************************************************************
-**    getdoc.c
-**                 New doc. file format                   Feb. 2004 al
-**                 No complain if can not open new file   June 2015 al
-**
-C **********************************************************************
-** *  SPIDER - MODULAR IMAGE PROCESSING SYSTEM.  AUTHOR: J.FRANK            *
+ C**********************************************************************
+ C    getdoc.c
+ C            New doc. file format                        Feb  2004 al
+ C            No complain if can not open new file        Jun  2015 al
+ C            Cosmetic                                    Sep  2015 al
+ C
+ C**********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
  C=*                                                                   *
@@ -30,70 +30,69 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-**
-**    PURPOSE:  RECOVERS DOCUMENT FILE INFO.
-**
-**    PARAMETERS:
-**         FPDOC         DOC. FILE FILE POINTER               (SENT)
-**         DOCNAM        DOC. FILE NAME                       (SENT)
-**         DOCEXT        DOC. FILE EXTENSION                  (SENT)
-**         MAXKEY        NUMBER OF ROWS IN DBUF               (SENT)
-**         MAXREG        NUMBER OF COLUMNS IN DBUF            (SENT)
-**         DBUF          BUFFER OF RETRIEVAL FROM DOC. FILE   (RETURNED)
-**         LASTKEY       NUMBER OF HIGHEST KEY FOUND IN FILE  (RETURNED)
-**         WANTFILEMSG   WANT VERBOSE FILE INFO               (SENT)
-**
-**    RETURNS:
-**
-**         LERR          ERROR FLAG (  0 IS NORMAL)           
-**
-**                       -5   EXCESSIVE REGISTERS FOR >= ONE KEY
-**                       -4   KEY > MAXKEY FOR >= ONE KEY
-**                        1   LACK SUFFICIENT REGISTER FOR >= ONE KEY
-**                       20   MEMORY ALLOCATION FAILED
-**                       21   NEW DOC FILE NAME TOO LONG
-**                       10   NEW DOC FILE CAN NOT BE OPENED
-**                       22   ERROR READING DOC FILE LINE
-**                       30   MAXREGP1 TOO LARGE
-**
-**    TYPICAL DOC FILE LINE:
-**    COL: 123456789 123456789 123456789 123456789 123456789 1234565789
-**           1 4   20.070000   17.000000   17.000000   17.000000
-**         KEY #REGS/LINE    VALUES ........
-**
-**    WHEN RETRIEVED THIS LINE IS PLACED IN DBUF STARTING AT 
-**    [(KEY -1)*MAXREG].  THE VALUES PLACED THERE ARE THE NUMBER OF
-**    REGISTERS RETIVED FOR THAT KEY, FOLLOWED BY VALUES OF THE
-**    REGISTERS.  THUS FOR THE ABOVE SAMPLE AT DBUF[0] WE HAVE
-**    2, 20, 17, 17, 17.
-**
-**    TO USE DBUF, COMPUTE ADDRESS OF EACH ENTRY BY USING POINTERS:
-**
-**    FOR J REG IN  KEY3 :    PT = DBUF + (KEY3 - 1) * MAXREG + J;
-**
-*****************************************************************************
+ C *********************************************************************
+ C
+ C    PURPOSE:  RECOVERS DOCUMENT FILE INFO.
+ C
+ C    PARAMETERS:
+ C         FPDOC         DOC. FILE FILE POINTER               (SENT)
+ C         DOCNAM        DOC. FILE NAME                       (SENT)
+ C         DOCEXT        DOC. FILE EXTENSION                  (SENT)
+ C         MAXKEY        NUMBER OF ROWS IN DBUF               (SENT)
+ C         MAXREG        NUMBER OF COLUMNS IN DBUF            (SENT)
+ C         DBUF          BUFFER OF RETRIEVAL FROM DOC. FILE   (RETURNED)
+ C         LASTKEY       NUMBER OF HIGHEST KEY FOUND IN FILE  (RETURNED)
+ C         WANTFILEMSG   WANT VERBOSE FILE INFO               (SENT)
+ C
+ C    RETURNS:
+ C         LERR          ERROR FLAG (  0 IS NORMAL)           
+ C
+ C                       -5   EXCESSIVE REGISTERS FOR >= ONE KEY
+ C                       -4   KEY > MAXKEY FOR >= ONE KEY
+ C                        1   LACK SUFFICIENT REGISTER FOR >= ONE KEY
+ C                       20   MEMORY ALLOCATION FAILED
+ C                       21   NEW DOC FILE NAME TOO LONG
+ C                       10   NEW DOC FILE CAN NOT BE OPENED
+ C                       22   ERROR READING DOC FILE LINE
+ C                       30   MAXREGP1 TOO LARGE
+ C
+ C    TYPICAL DOC FILE LINE:
+ C    COL: 123456789 123456789 123456789 123456789 123456789 1234565789
+ C           1 4   20.070000   17.000000   17.000000   17.000000
+ C         KEY #REGS/LINE    VALUES ........
+ C
+ C    WHEN RETRIEVED THIS LINE IS PLACED IN DBUF STARTING AT 
+ C    [(KEY -1)*MAXREG].  THE VALUES PLACED THERE ARE THE NUMBER OF
+ C    REGISTERS RETIVED FOR THAT KEY, FOLLOWED BY VALUES OF THE
+ C    REGISTERS.  THUS FOR THE ABOVE SAMPLE AT DBUF[0] WE HAVE
+ C    2, 20, 17, 17, 17.
+ C
+ C    TO USE DBUF, COMPUTE ADDRESS OF EACH ENTRY BY USING POINTERS:
+ C
+ C    FOR J REG IN  KEY3 :    PT = DBUF + (KEY3 - 1) * MAXREG + J;
+ C
+ C***************************************************************************
 */
 
 #include "std.h"
 #include "routines.h"
 
-/***************************  getdoc_f    *******************************/
+ /***************************  getdoc_f    *******************************/
 
  int getdoc_f(FILE * fpdoc, char *docnam, char * docext,  
             int maxkeys, int maxregp1, float **buf, int * lastkeygot,
             int wantfilemsg)
- {
+  {
   char        outstr[109], docname[81], reclin[180];
-  FILE      * ptrdoc;
-  float     * dbuf, *lptr;
+  FILE  *     ptrdoc;
+  float *     dbuf;
+  float *     lptr;
   int         regsonline, items, message1,  message2, lerr, keygot, i;
   float       regis[12];
   int         message0;
 
   if (maxregp1 > 12)
-     {spout("*** Web can only read 12 registers from doc. file"); 
-     return 30; }  
+     {spout("*** Web can only read 12 registers from doc. file"); return 30; }  
 
   *lastkeygot = 0;
   message0    = TRUE;
@@ -110,8 +109,7 @@ C **********************************************************************
   if (docext)
      {
      if ((strlen(docname) + strlen(docext) + 1) > (size_t) 80)
-        {spouts("*** Doc. file name too long: "); spout(docname); 
-        return 21; }  
+        {spouts("*** Doc. file name too long: "); spout(docname);  return 21; }  
      strcat(strcat(docname,"."),docext);
      }
 
@@ -132,7 +130,7 @@ C **********************************************************************
   if (wantfilemsg) // 2015
      { spouts("Reading docfile: "); spout(docname);}
 
-  /* run time allocation of memory space for buf */
+  /* Run time allocation of memory space for buf */
   if ((dbuf = (float *) calloc(maxkeys * maxregp1, sizeof(float)))
            == (float *) NULL)
      {spout("*** Memory allocation failed in getdoc!"); 
@@ -163,7 +161,7 @@ C **********************************************************************
                  regis[0],regis[1],regis[2]);
         ****************/
 
-        if(items <= 0) 
+        if (items <= 0) 
 	{   /* Try old format */
         items = sscanf(reclin,"%d %1d%12f%12f%12f%12f%12f%12f",
                 &keygot, &regsonline, &regis[0],&regis[1],&regis[2],
@@ -394,7 +392,7 @@ C **********************************************************************
      fseek(fpdoc,0L,SEEK_END);
      }
 
-  /* The doc file has been successfully read */
+  /* Doc file has been successfully read */
   *buf  = dbuf;
 
   return lerr;
