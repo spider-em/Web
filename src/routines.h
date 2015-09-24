@@ -66,7 +66,7 @@
  extern int      filterskel   (float *, int, int, 
                                float *, float *, float *);
  extern void     fin_cb       (Widget, caddr_t, caddr_t);
- extern int      fitdoc       (int);
+ extern int      fitdoc       (Boolean,Boolean,Boolean,Boolean);
  extern void     fitdocmen    (Widget, XtPointer, XtPointer);
  extern void     fitmen_adv   (void);
  extern void     fitsav       (int);
