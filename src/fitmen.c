@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.34 2015/09/01 17:53:12 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.35 2015/09/18 16:17:27 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -177,14 +177,14 @@
 
  else
     {
-    // Update text box for particle -------------------------  Particle key
+    // Update text box for particle -------------------------- Particle key
     sprintf(cval,"%4d",numm);
     iw_partext = wid_textboxb(iw_rowcolv,iw_partext,
                        "Next particle number:",cval,4);
     // Update label box for particle number
     wid_labelg(iw_rowcolh0,iw_parlabel,cval,-1,-1);
 
-    // Update text box for origin key -------------------------  Origin key 
+    // Update text box for origin key ------------------------ Origin key 
     sprintf(cval,"%4d",orgkey);
     iw_orgkey = wid_textboxb(iw_rowcolv,iw_orgkey,
                        "Key number for origin:",cval,4);
@@ -244,16 +244,7 @@
  char *   string;
  char     outmsg[80];
 
- /* Retrieve points from doc file */
- spoutfile(TRUE);
- if (fitdoc(FALSE) != 0)
-    {
-    spout("*** Can not fit angles yet!"); XBell(idispl,50);
-    spoutfile(FALSE);
-    return;
-    }
- spoutfile(FALSE);
-
+ /* Query origin key */
  string = XmTextGetString(iw_orgkey);
  sscanf(string,"%d",&orgkey);
  if (string) free(string);
@@ -265,7 +256,7 @@
     return;
     }
 
- // Set origin location
+ // Set origin location corresponding to location in key 
  xu0t = xu0[orgkey-1];
  yu0t = yu0[orgkey-1];
  xs0t =  xs[orgkey-1];
@@ -310,7 +301,7 @@
  iflag = willsq(xu0, yu0, xs, ys, maxpart, 
                 thetaf, &gammaff, &phif);
  if (iflag == 0)
-   {   /* Succeeded, fitting is OK */
+   {   /*  willsq succeeded, fitting is OK */
    fitted = TRUE;
    sprintf(outmes,"Tilt (theta): %5.2f  Gamma:%5.2f Phi:%5.2f  Origin: (%7.2f,%7.2f)",
                   thetaf, gammaff,phif, xs0t,ys0t);
@@ -321,7 +312,7 @@
 
  spoutfile(FALSE);
 
- /* Restart the fitting menu */
+ /* Restart the advanced fitting menu */
  fitmen_adv(); 
  }
 
