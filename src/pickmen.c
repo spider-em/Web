@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.34 2015/09/10 13:17:22 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.37 2015/09/22 16:34:15 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -10,6 +10,8 @@
  C              shift(TILT), Cosmetic            Jul 2015 ArDean Leith *
  C              Altered particle deletion        Aug 2015 ArDean Leith *
  C              Improved                         Aug 2015 ArDean Leith *
+ C              Stop without saving confirm      Sep 2015 ArDean Leith *
+ C              Det_tilt return                  Sep 2015 ArDean Leith *
  C                                                                     *
  C *********************************************************************
  C   AUTHOR:  ArDean Leith                                             *
@@ -114,8 +116,11 @@
  void    fit_butdraw2  (Widget, XtPointer, XtPointer);
  void    fit_butsavang (Widget, XtPointer, XtPointer);
 
- void    det_tilt      (int wantmsg, int wantlabel);
- 
+ int     det_tilt      (int wantmsg, int wantlabel);
+ void    pickmen_butst (Widget, XtPointer, XtPointer);
+ void    pickmen_butct (Widget, XtPointer, XtPointer);
+ void    pickmen_butat (Widget, XtPointer, XtPointer);
+  
  
  // Externally defined global variables 
  extern FILEDATA *  filedatal;               // From: imagemen
@@ -136,14 +141,15 @@
 
  // Internally defined global variables 
  float              xu0t, yu0t, xs0t, ys0t;
- int                orgkey      = 1;
- Widget             iw_rowcolh0 = (Widget) 0;
- Widget             iw_parlabel = (Widget) 0;
- Widget             iw_pickmen  = (Widget) 0;   // Used in: pickp_pop
+ int                orgkey       = 1;
+ Widget             iw_rowcolh0  = (Widget) 0;
+ Widget             iw_parlabel  = (Widget) 0;
+ Widget             iw_pickmen   = (Widget) 0;   // Used in: pickp_pop
  
  // Internal file scope variables 
  static Widget      iw_rowcolh;
  static Widget      iw_the, iw_phi, iw_gam;
+ static Widget      iw_pickmen_stop = (Widget) 0;  
 
  /***********************   pickmen   ********************************/
 
@@ -285,6 +291,14 @@
  void pickmen_butb(Widget iw_temp, XtPointer data, 
                                    XtPointer calldata)
  {
+ // Pick background windows using mouse 
+ if ( !fitted)
+    {
+    spout("*** Need to determine tilt angles first!!");
+    XBell(idispl,50); XBell(idispl,50);
+    return;
+    }
+
  /*  Remove button assignment messages */
  XtUnmanageChild(iw_but_lefrit);
 
@@ -341,22 +355,22 @@
  {
  char   outmes[80];
  char   cval[10];
- int    iflag;
+ int    iflagt, iflagw;
  int    iarea;
 
  spoutfile(TRUE);
 
- /* Retrieve tilted and untilted points, & fit angles */
- fitdoc(FALSE);
+ /* Retrieve tilted and untilted points */
+ fitdoc(TRUE,FALSE,FALSE,FALSE);
 
  /* Determine theta tilt angle */
- iflag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim, TRUE);
- if (iflag > 0)
+ iflagt = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim, TRUE);
+ if (iflagt > 0)
     {  
     spout("*** Warning, can not calculate tilted angle. Try again");
     XBell(idispl,50); XBell(idispl,50);
     }
- if (iflag < 0)
+ if (iflagt < 0)
     { /* Some bad locations accepted */  XBell(idispl,50); }
 
  // Get origin location using present orgkey
@@ -367,9 +381,9 @@
 
  // willsq reads:   xu0, yu0, xs, ys, thetaf, & maxpart,  xu0t, yu0t, xs0t, ys0t,  and 
  //        returns: phif, gammaff & error flag 
- iflag = willsq(xu0, yu0, xs, ys, maxpart, 
+ iflagw = willsq(xu0, yu0, xs, ys, maxpart, 
                 thetaf, &gammaff, &phif);
- if (iflag == 0)
+ if (iflagw == 0)
    {   /* Succeeded, fitting is OK */
    fitted = TRUE;
    sprintf(outmes,"Tilt (theta): %5.2f   Gamma: %5.2f   Phi: %5.2f  Origin: (%7.2f,%7.2f)",
@@ -396,13 +410,70 @@
  void pickmen_buts(Widget iw_temp, XtPointer data, 
                                    XtPointer calldata )
  {
- /*  Remove message */
- XtUnmanageChild(iw_but_lefrit);
+ Widget  iw_pushst, iw_pushct, iw_pushat; 
+ Widget  iw_rowcolv;
+ Widget  iw_label;
 
- /*  Remove the menu widget */
- XtUnmanageChild(iw_pickmen);
+ if (iw_pickmen_stop == (Widget) 0)
+    {   // Create confirmation menu 
 
- /*  Cancel buttons,  Stop this routine */
+    iw_pickmen_stop = wid_dialog(iw_win, 0, 
+                         "End Particle picking", -1, -1);
+    iw_rowcolv = wid_rowcol(iw_pickmen_stop, 'v', -1, -1);
+
+
+    // Create label for box saving fit angles query
+    iw_label = wid_labelg(iw_rowcolv, 0, "Save fit angles before stopping?", -1, -1);
+
+    /* Create box for stop & start  */
+    wid_stdbut_str(iw_rowcolv, iw_pickmen_stop, 
+                   &iw_pushst, &iw_pushct, &iw_pushat, "SCA",
+                   "SAVE ANGLES THEN STOP",
+                   "CANCEL", 
+                   "STOP WITHOUT SAVING ANGLES",
+                   pickmen_butat, pickmen_butst, pickmen_butst, NULL);
+    }
+
+ XtManageChild(iw_pickmen_stop);
+ }
+
+ 
+ /************* Save angles then stop callback **********************************/
+
+ void pickmen_butat(Widget iw_temp, XtPointer data, 
+                                    XtPointer calldata )
+ {
+ // Save fit angles
+ fit_butsavang(NULL,NULL,NULL);
+
+ // Remove menu and clean up using final stop callback
+ pickmen_butst(NULL,NULL,NULL);
+ }
+
+ /************* Cancel stop callback **********************************/
+
+ void pickmen_butct(Widget iw_temp, XtPointer data, 
+                                    XtPointer calldata )
+ {
+ //  Remove the confirmation widget and continue as before
+ XtUnmanageChild(iw_pickmen_stop);
+ }
+
+ /************* Final stop button callback **********************************/
+
+ void pickmen_butst(Widget iw_temp, XtPointer data, 
+                                    XtPointer calldata )
+ {
+ //  Remove the confirmation widget
+ XtUnmanageChild(iw_pickmen_stop);
+
+/*  Remove picking button message */                                 
+ XtUnmanageChild(iw_but_lefrit);                       
+
+ /*  Remove the pickmen menu widget */
+ XtUnmanageChild(iw_pickmen); 
+
+ /*  Cancel buttons for this routine */
  XtUninstallTranslations(iw_win);
 
  /*  Restore default cursor */
@@ -424,17 +495,18 @@
  closefile(filedatar); filedatar = NULL;
  }
 
+
 /****************  Find tilt angle ***********************/
 
- void det_tilt(int wantmsg, int wantlabel)
+ int det_tilt(int wantmsg, int wantlabel)
  {
  char   outmes[80];
  char   cval[10];
  int    iflag;
  int    iarea;
 
- /* Retrieve current tilted and untilted points, & fit angles */
- fitdoc(TRUE);
+ /* Retrieve current locations & orgkey from doc files */
+ fitdoc(TRUE,TRUE,FALSE,FALSE);
 
  /* Determine theta tilt angle */
 
@@ -466,12 +538,12 @@
    fitted = TRUE;
 
    if (wantmsg)
-      {   /* Succeeded, fitting is OK */
+      {   // Always FALSE currently
       sprintf(outmes,"Tilt (theta): %5.2f   Gamma: %5.2f   Phi: %5.2f",
                      thetaf,gammaff,phif);
       spout(outmes);
       }
-    }
+   }
  else
    { XBell(idispl,50); }
     
