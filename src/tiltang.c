@@ -1,11 +1,14 @@
 
-/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.15 2015/09/01 17:53:42 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.16 2015/09/22 16:33:57 leith Exp $*/
 
 /*
  C**********************************************************************
  C                                                                     *
  C tiltang.c                                                           *
- C               Improved                        Jun 2015 ArDean Leith *
+ C         Improved                              Jun 2015 ArDean Leith *
+ C         Considers all possible locations      Sep 2015 ArDean Leith *
+ C         Improved bad location determination   Sep 2015 ArDean Leith *
+ C                                                                     *
  C**********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
@@ -32,7 +35,7 @@
  C=*                                                                   *
  C**********************************************************************
  C
- C   tiltang(x0,y0,xt,yt,npointss,theta,iarea,arealim,wantmsg)
+ C   tiltang(x0,y0, xt,yt, npoints,theta,iarea,arealim, wantmsg)
  C
  C   PURPOSE:  Calculate the tiltangle between two images
  C
@@ -40,7 +43,7 @@
  C
  C   RETURNS:  0   OK
  C             1   Not enough locations or area betweeen locations
- C            -1   Some locations are bad
+ C            -n   Last bad location = n
  C  
  C   ALSO RETURNS:  theta      Computed tilt angle
  C                             (Theta only altered if ok)
@@ -58,21 +61,24 @@
              int * iarea, float arealim, int wantmsg)
  {
  char        outmsg[80];
- int         i, k, ntot, iflag;
+ int         i, j, k, ntot, iflag;
  float	     areau, areat, w, sum, temp;
  float       x01, x02, y01, y02, xt1, xt2, yt1, yt2;
- int         nbad = 0;
+ int         nbads[npoints+1];
+ int         maxbad, locbad;
 
- const       float pi = 3.14159;
+ const float pi = 3.14159;
 
  sum    = 0.0;
  *iarea = 0;
  ntot   = 0;
 
+ // zero bad location tracking array
+ for (i = 0; i <= npoints; nbads[i]= 0, i++);
+
  if (npoints < 3)
-    { 
-                  //123456789 123456789 123456789 123456789 123456789 123456789 1234567890
-    sprintf(outmsg,"*** Unable to compute tilt;  Need > 2 points, Have only: %d", npoints); 
+    {             //123456789 123456789 123456789 123456789 123456789 123456789 1234567890
+    sprintf(outmsg,"*** Unable to compute tilt;  Need > 2 locations, Have only: %d", npoints); 
     spout(outmsg); 
     XBell(idispl,50);
     return 1;
@@ -81,72 +87,108 @@
  /* Set good locations return flag */
  iflag = 0;
 
- for (i = 0; i < npoints; i++)
+ for       (i = 0;     i < npoints-2; i++)
     {
-    for (k = i + 1; k < npoints-1; k++)
-	{
-        /* Find area in untilted image: */
-	x01    = x0[k]   - x0[i];
-	y01    = y0[k]   - y0[i];
-	x02    = x0[k+1] - x0[i];
-	y02    = y0[k+1] - y0[i];
-	areau  = (float) fabs( (double)(x01 * y02 - x02 * y01));
+    for    (j = i + 1; j < npoints-1; j++)
+       {
+       for (k = j + 1; k < npoints;   k++)
+          {
+          /* Find area in untilted image: */
+	  x01   = x0[j] - x0[i];
+	  y01   = y0[j] - y0[i];
+	  x02   = x0[k] - x0[i];
+	  y02   = y0[k] - y0[i];
+	  areau = (float) fabs( (double)(x01 * y02 - x02 * y01));
 
-        ntot++;
+          ntot++;
 
-//printf("*** Triangle: %d, %d, & %d  Area: %f \n", i+1, k+1, k+2, areau ); 
+          //printf("*** Triangle: %d, %d, & %d  Area: %f \n", i+1, k+1, k+2, areau ); 
 
+          /* Default arealim is 5000 square pixels */
+	  if (areau >= arealim)
+	      {  /* Only triangles > arealim are considered */
 
-        /* Default arealim is 5000 square pixels */
-	if (areau >= arealim)
-	   {  /* Only triangles > arealim are considered */
+              /* Find area in tilted image: */
+              xt1   = xt[j] - xt[i];
+              yt1   = yt[j] - yt[i];
+              xt2   = xt[k] - xt[i];
+              yt2   = yt[k] - yt[i];
+              areat = (float) fabs( (double)(xt1 * yt2 - xt2 * yt1));
 
-           /* Find area in tilted image: */
-           xt1   = xt[k]   - xt[i];
-           yt1   = yt[k]   - yt[i];
-           xt2   = xt[k+1] - xt[i];
-           yt2   = yt[k+1] - yt[i];
-           areat = (float) fabs( (double)(xt1 * yt2 - xt2 * yt1));
+              //printf("*** %d %d %d Areas: %6.2f, %6.2f   \n", i+1,j+1,k+1, areau,areat); 
 
-	   if (areat >= arealim)
-              {
-              /* Area in tilted image should be <= area in untilted */ 
-              w = areat / areau;
+	      if (areat >= arealim)
+                 {  /* Only triangles > arealim are considered */
 
-              if (w > 1.01)
-                 {     /* Set bad location return flag */
-                 iflag = -1;
-                 //printf("*** Areas: %6.2f, %6.2f  Lim: %6.2f \n", areau,areat,arealim); 
-                 printf("*** Check points: %4d, %4d & %d  for a bad value \n", i+1, k+1, k+2); 
-                 }
-	      else
-		 {
-		 *theta = acos(w);
-		 sum    = sum + *theta;
-		 (*iarea)++;
-		 }
-	      }   // End of: if (areat >= arealim)
-           }      // End of: if (areau >= arealim)
-        }         // End of: for (k = i + 1; k < npoints-1; k++)
-    }             // End of: for (i = 0; i < npoints; i++)
+                 /* Area in tilted image should be <= area in untilted */ 
+                 w = areat / areau;
+              
+                 if (w > 1.0)
+                    {     /* Set bad location return flag */
+                    nbads[i+1]++;
+                    nbads[j+1]++;
+                    nbads[k+1]++;
+
+                    //printf("*** Check locations: %4d, %4d & %d  for a bad value %d,%d,%d \n", i+1, j+1, k+1, 
+                    //        nbads[i+1],nbads[j+1],nbads[k+1]); 
+                    //printf("*** Areas: %6.2f, %6.2f  Lim: %6.2f \n", areau,areat,arealim); 
+                    }
+	         else
+	            {
+	   	    *theta = acos(w);
+		    sum    = sum + *theta;
+		    (*iarea)++;
+		    }
+	         }   // End of: if (areat >= arealim)
+              }      // End of: if (areau >= arealim)
+           }         // End of: for (k = j + 1; k < npoints-1; k++)
+        }            // End of: for (j = i + 1; k < npoints-2; j++)
+    }                // End of: for (i = 0;     i < npoints;   i++)
 
  if (*iarea == 0) 
     {
-    spout(" *** Unable to compute tilt angle; Need > 2 points with area > arealim!");
-    spout(" *** Choose points that are more triangular in distribution!");
+    spout(" *** Unable to compute tilt angle, pick more locations.");
+    spout(" *** Choose locations distributed in both X & Y");
+    XBell(idispl,50);
     return 1;
     }
+
+ /* Find maximum bad */
+ maxbad = nbads[0];
+ locbad = 0;
+ for (i=1; i <= npoints; i++)
+    {
+    if (nbads[i] >= maxbad)
+      {
+      maxbad = nbads[i];
+      locbad = i;
+      }
+    }
+ 
+ if (locbad > 0 && maxbad > 0)
+    { // Bad location?
+    //for (i=0; i <= npoints; i++)
+    //      {printf("Location: %d  nbads: %d \n",i,nbads[i]);}
+    //sprintf(outmsg, "*** Check location: %d  for bad position!", locbad);
+    //spout(outmsg);
+    //XBell(idispl,50);
+
+    printf("*** Check location: %d  for bad position! \n",locbad);
+    iflag = -locbad;
+    } 
 
  *theta = sum    / (*iarea);
  *theta = *theta / pi * 180.0;
 
  if (wantmsg)
     {
-    sprintf(outmsg, "Points: %d   Areas used for theta: %d, out of possible: %d", 
+    sprintf(outmsg, "Locations: %d   Areas used for tilt: %d, out of possible: %d", 
                     npoints, *iarea, ntot);
     spout(outmsg);
     } 
 
+ //printf("maxbad:   %d  Locbad: %d  \n",maxbad,locbad);
+ //printf("   \n"); 
+
  return iflag;
  }
-                      
