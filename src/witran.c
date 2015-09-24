@@ -1,11 +1,12 @@
 
-/*$Header: /usr8/web/src/RCS/witran.c,v 1.7 2015/06/11 13:27:14 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/witran.c,v 1.8 2015/09/22 14:19:54 leith Exp $*/
 
 /*
- ***********************************************************************
- *
- * witran.c                          Ported from witran.for by Jing Su
- *
+ C**********************************************************************
+ C
+ C witran.c   Ported from witran.for                      Jing Su
+ C            witran_rev.c added                 Sep 2015 ArDean Leith   
+ C
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
@@ -30,47 +31,47 @@
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- ***********************************************************************
- *
- *  PURPOSE: Apply transformation to x,y and output xs,ys
- *
- ***********************************************************************
+ C***********************************************************************
+ C
+ C  PURPOSE: Apply transformation to x,y and output xs,ys
+ C
+ C***********************************************************************
 */
 
 #include "std.h"
 
-// Internal function prototypes
-void witran_rev(float *, float *, float,float, int, 
+ // Internal function prototypes
+ void witran_rev(float *, float *, float,float, int, 
                 float, float, float);
  
 /***************************** witran ****************************/
 
-void witran(float * x, float * y, float * xs, float * ys, int n,
+ void witran(float * x, float * y, float * xs, float * ys, int n,
             float gam, float the, float phi)
-{
-float        rgam, rthe, rphi, cgam, sgam, cphi, sphi, cthe;
-float        cthecphi, cthesphi;
-extern float xu0t, yu0t, xs0t, ys0t;
-int          i;
+ {
+ float        rgam, rthe, rphi, cgam, sgam, cphi, sphi, cthe;
+ float        cthecphi, cthesphi;
+ extern float xu0t, yu0t, xs0t, ys0t;
+ int          i;
 
-float        xb,yb;    // temp!!!!!!!!!!!!!!!
+ float        xb,yb;    // temp!!!!!!!!!!!!!!!
 
-const float pid =  (3.1415927 / 180.0);
+ const float pid =  (3.1415927 / 180.0);
 
-rthe     = the * pid;
-rphi     = phi * pid;
-rgam     = gam * pid;
+ rthe     = the * pid;
+ rphi     = phi * pid;
+ rgam     = gam * pid;
 
-cgam     = cos(rgam);
-sgam     = sin(rgam);
-cphi     = cos(rphi);
-sphi     = sin(rphi);
-cthe     = cos(rthe);
+ cgam     = cos(rgam);
+ sgam     = sin(rgam);
+ cphi     = cos(rphi);
+ sphi     = sin(rphi);
+ cthe     = cos(rthe);
 
-cthecphi = cthe * cphi;
-cthesphi = cthe * sphi;
+ cthecphi = cthe * cphi;
+ cthesphi = cthe * sphi;
 
-for (i = 0; i < n; i++)
+ for (i = 0; i < n; i++)
     {
     xs[i] =  ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthecphi
             +((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * sphi + xs0t;
@@ -78,48 +79,47 @@ for (i = 0; i < n; i++)
     ys[i] = -((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthesphi
             +((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * cphi + ys0t;
 
-    witran_rev(&xb,&yb, xs[i], ys[i], n,  gam,the,phi);
-
+    // witran_rev(&xb,&yb, xs[i], ys[i], n,  gam,the,phi);
     // printf("In: %f, %f --> %f, %f: \n"  ,x[i],y[i], xb,yb);
     }
 
-return;
-}
+ return;
+ }
 
 /*
  ***********************************************************************
  *
- *  PURPOSE: Apply transformation to xs,ys and output x,s
+ *  PURPOSE: Apply transformation to: xs,ys and output: x,y
  *
  ***********************************************************************
 */
 
-void witran_rev(float * x, float * y, float xs, float ys, int n,
-                float gam, float the, float phi)
-{
-float          rgam, rthe, rphi, cgam, sgam, cphi, sphi, cthe;
-float          cthecphi, cthesphi;
-extern float   xu0t, yu0t, xs0t, ys0t;
-int            i;
-float          TXccss, TXsccs, TYsccc, TYccsc, TX, TY;
+ void witran_rev(float * x, float * y, float xs, float ys, int n,
+                 float gam, float the, float phi)
+ {
+ float          rgam, rthe, rphi, cgam, sgam, cphi, sphi, cthe;
+ float          cthecphi, cthesphi;
+ extern float   xu0t, yu0t, xs0t, ys0t;
+ int            i;
+ float          TXccss, TXsccs, TYsccc, TYccsc, TX, TY;
 
-const float    pid =  (3.1415927 / 180.0);
+ const float    pid =  (3.1415927 / 180.0);
 
-rthe     = the * pid;
-rphi     = phi * pid;
-rgam     = gam * pid;
+ rthe     = the * pid;
+ rphi     = phi * pid;
+ rgam     = gam * pid;
 
-cgam     = cos(rgam);
-sgam     = sin(rgam);
-cphi     = cos(rphi);
-sphi     = sin(rphi);
-cthe     = cos(rthe);
+ cgam     = cos(rgam);
+ sgam     = sin(rgam);
+ cphi     = cos(rphi);
+ sphi     = sin(rphi);
+ cthe     = cos(rthe);
 
-cthecphi = cthe * cphi;
-cthesphi = cthe * sphi;
+ cthecphi = cthe * cphi;
+ cthesphi = cthe * sphi;
 
 #ifdef NEVER
-for (i = 0; i < n; i++)
+ for (i = 0; i < n; i++)
     {
 
     xs[i] =   ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthecphi
