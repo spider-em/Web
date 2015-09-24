@@ -3,6 +3,7 @@
  C++********************************************************************
  C
  C tiltp_deletemen.c
+ C           fitdoc parameters changed          Sep 2015 ArDean Leith   
  C
  C**********************************************************************
  C * AUTHOR:  ArDean Leith                                             *
@@ -255,10 +256,10 @@
           fpdoc1   = savdn1(dfil1, datexc, &fpdoc1,
                             dlist, 7, &openit1, TRUE, TRUE);
 
-          dlist[2] = *(ptri2+2);   /* Unreduced tilted x location   */
-          dlist[3] = *(ptri2+3);   /* Unreduced tilted y location   */
-          dlist[4] = *(ptri2+4);   /* Reduced   tilted x location   */ 
-          dlist[5] = *(ptri2+5);   /* Reduced   tilted y location   */ 
+          dlist[2] = *(ptri2+2);   /* Unreduced tilted X location   */
+          dlist[3] = *(ptri2+3);   /* Unreduced tilted Y location   */
+          dlist[4] = *(ptri2+4);   /* Reduced   tilted X location   */ 
+          dlist[5] = *(ptri2+5);   /* Reduced   tilted Y location   */ 
 
           fpdoc2   = savdn1(dfil2, datexc, &fpdoc2,
                             dlist, 7, &openit2, TRUE, TRUE);
@@ -309,9 +310,6 @@
 
  // Update label box for next particle number (numm) 
  pickmen();
-
- /* Recalculate tilted and untilted points and fit angles */
- fitdoc(FALSE);
 
  /* Redisplay images without labels at current shifted location */
  pickdisp(TRUE,TRUE);
