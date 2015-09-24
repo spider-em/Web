@@ -1,12 +1,13 @@
 
-/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.21 2015/09/01 17:53:12 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.22 2015/09/18 16:25:21 leith Exp $*/
 
 /*
  C**********************************************************************
  C                                                                     *
- C  fitdocmen.c         New                      May   93 ArDean Leith *
- C                      Improved                 Jun 2011 ArDean Leith *
- C                      Improved                 Jun 2015 ArDean Leith *
+ C  fitdocmen.c    New                           May   93 ArDean Leith *
+ C                 Improved                      Jun 2011 ArDean Leith *
+ C                 Improved                      Jun 2015 ArDean Leith *
+ C                 fitdoc call removed           Sep 2015 ArDean Leith *
  C                                                                     *
  C *********************************************************************
  C   AUTHOR:  ArDean Leith                                             *
@@ -79,8 +80,8 @@
 
  {
  static Widget iw_rowcolv;
- Widget  iw_pushc, iw_pusha, iw_dums; 
- char    cval[8];
+ Widget        iw_pushc, iw_pusha, iw_dums; 
+ char          cval[8];
 
  if (iw_fitdocmen == (Widget)0)
     {   
@@ -152,9 +153,6 @@
  /* Initialize some variables for each run */
  fitted = FALSE;
  thetaf = 0.0;  gammaff = -90.0;  phif = -90.0;
-
- /* Recover any existing picked particles */
- ///fitdoc(TRUE);
 
  /* Start picking points now */
  pickp(TRUE);
