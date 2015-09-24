@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickp.c,v 1.32 2015/09/10 13:17:36 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickp.c,v 1.35 2015/09/24 15:12:57 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -54,7 +54,7 @@
 #include "routines.h"
 
  /* External function prototypes */
- extern void      det_tilt      (int wantmsg, int wantlabel);                             /* From pickmen */
+ extern int       det_tilt      (int wantmsg, int wantlabel);                            /* From pickmen */
  extern void      witran_rev    (float *, float *, float, float,int,float,float, float); /* From witran */
  extern int       fitdoc_addpart(int n,  int iwhich, int xu, int yu, int xt, int yt );   /* From fitdoc */
  extern void      pickmen_butdet(Widget, XtPointer, XtPointer);                          /* From pickmen */
@@ -111,7 +111,7 @@
  if (firstrun)
     {
     /* Retrieve any existing tilted and untilted points, & fit angles */ 
-    if (fitdoc(TRUE) > 0)
+    if (fitdoc(TRUE,TRUE,TRUE,TRUE) > 0)
        { 
        spout("*** Can not continue, fix document files!");
        XBell(idispl,50); XBell(idispl,50); XBell(idispl,50); 
@@ -169,19 +169,19 @@
  void pick_pop(Widget iw_t, XEvent *event, String *params,
                Cardinal *num_params)
  {
- int           ixr, iyr, ixi, iyi, ixs, iys,iok, derror;
+ int           ixi, iyi, ixs, iys,iok, ixt, iyt, derror, iflag;
  char          outstr[100];
  float         dlist[8];
- float         fx,fy;
+ float         fxi,fyi;
+ float         x1,y1, x2,y2, xt,yt;
  char        * string;
- static int    ixt, iyt;
- static float  xt,yt;
+ static int    ix1, iy1, ix2, iy2;
 
  int           nsaytilt      = 48;  /* Say angle for this many particles */
  int           predict_error = 10;  /* Max expected difference from predicted location */
 
  if (!(strcmp(*params, "M")))
-   {  /****************************************** Mouse movement only */
+   {  /************************************************ Mouse movement only */
    getloc(event,'m',&ixs,&iys);
 
    if (leftside && 
@@ -225,12 +225,13 @@
 
     /* Should add position indicator in right side window !!!!! */ 
 
- /****************************************************** Left button */
+ /******************************************************************** Left button */
 
  else if ( !(strcmp(*params, "1")))
     {   /*  Cursor anywhere -- button 1 pushed */ 
 
     getloc(event,'B',&ixs,&iys);
+    iflag = 0;
 
     //printf("Button 1: %d %d (%d,%d)\n", leftside, rightside, ixs,iys);
     //printf("ixull,nsamsl: (%d,%d) \n", ixull,nsamsl);
@@ -249,46 +250,60 @@
        (ixs < ixulr || ixs >= ixulr + nsamsr || 
         iys < iyulr || iys >= iyulr + nrowsr ))
        {    /* Cursor outside displayed right image */
-       //printf("xxxButton 1: %d %d (%d,%d)\n", leftside, rightside, ixs,iys);
+       //printf("Button 1: %d %d (%d,%d)\n", leftside, rightside, ixs,iys);
        spout("*** Not in right image.$"); XBell(idispl,50); XBell(idispl,50);
        }
+
     else if (ixs >= ixull && ixs < ixull + nsamsl &&  
              iys >= iyull && iys < iyull + nrowsl ) 
-       {    /* Cursor inside displayed left image */
+       {    /* Cursor inside displayed left image, Save location */
        ixi = ixs - ixulli + 1;
        iyi = iys - iyulli + 1;
-       // sprintf(outstr,"In left image: (%d,%d)$", ixi,iyi);
-       // spout(outstr);
+       // sprintf(outstr,"In left image: (%d,%d)$", ixi,iyi); spout(outstr);
+       // printf("Left button: %d %d (%d,%d) \n", leftside,fitted,ixs,iys);
+       // printf("ixull,nsamsl: (%d,%d) \n", ixull,nsamsl);
+       // printf("iyull,nrowsl: (%d,%d) \n", iyull,nrowsl);
 
-       //printf("Left button: %d %d (%d,%d) \n", leftside,fitted,ixs,iys);
-       //printf("ixull,nsamsl: (%d,%d) \n", ixull,nsamsl);
-       //printf("iyull,nrowsl: (%d,%d) \n", iyull,nrowsl);
-
+       derror = 0; 
        if (leftside || (!leftside && !rightside))
-          {   /* In left image -- button 1 pushed */
-              /* Want to record this left particle location */
+          { // In left image -- button 1 pushed, record current location  
 
-          /* Save location in array */
+          /* Check for possible bad leftside location */
+          if (leftside && fitted)
+             { 
+             derror = (int) (sqrt((float)( (ixi - ix1) * (ixi - ix1) + 
+                                           (iyi - iy1) * (iyi - iy1)) ));
+             }    
+
+          if (fitted)
+             { 
+             /* Use angles to get predicted location in tilted rightside image */
+             fxi = (float)ixi;   fyi = (float)iyi;
+             witran(&fxi,&fyi,  &x2,&y2, 1, gammaff, thetaf, phif);
+             ix2 = x2;   iy2 = y2;
+             }   // End of: if (fitted)
+
+
+          if (!leftside && fitted)
+             {   /* Check for future bad rightside location */
+             if (ix2 < 1 || ix2 > nsamr || iy2 < 1 || iy2 > nrowr)
+                {    /* Predicted cursor loc. is outside of right image, */
+                sprintf(outstr,"*** Tilted cursor not in right image: (%d,%d)$",
+                                ix2,iy2);
+                spout(outstr); XBell(idispl,50);
+                return;
+                }
+             }   // End of: if (!leftside && fitted)
+
+
+          /* Save location in array: xu,yu */
           iok =  fitdoc_addpart(numm,  1, ixi,iyi, 0,0 );
 
           // printf(" Leftside: %d   rightside: %d   numm: %d\n",leftside,rightside,numm);
           // printf(" Predicted: %d, %d  Picked: %d, %d \n", (int)xt,(int)yt, ixi,iyi);
 
-          derror = 0; 
           if (leftside) 
-             {
-             if ( fitted)
-                { /* Check for possible bad location */
-                derror = (int) (sqrt((float)( (ixi - (int)xt) * (ixi - (int)xt) + 
-                                              (iyi - (int)yt) * (iyi - (int)yt)) ));
-                if (derror > predict_error ) 
-                   { 
-                   sprintf(outstr,"Left location is large distance: %d  from expected location!",derror); 
-                   spout(outstr);  XBell(idispl,50);
-                   }
-                }    // End of:  if ( fitted)
-
-             /* Save info in doc file */ 
+             {    /* Save info in doc files */ 
              dlist[0] = numm;
              dlist[1] = numm ;
              dlist[2] = ixi * iredu;
@@ -317,7 +332,7 @@
                               dlist, 7, &openit2, TRUE, TRUE);}
              }
 
-          /* Leave permanent circle at this location */
+          /* Leave circle at this leftside location */
           xorc(iwin,    icontx, TRUE, ixs, iys, iradi);
           xorc(imagsav, icontx, TRUE, ixs, iys, iradi);
 
@@ -330,29 +345,10 @@
 
           /* Find predicted location in right image */
           if (fitted)
-             {
-             /* Transform the x values */
-             fx = (float)ixi;
-             fy = (float)iyi;
-	     
-             /* Use angles to get predicted location in tilted image */
-             witran(&fx, &fy,  &xt, &yt, 1, gammaff, thetaf, phif);
-   
-             ixt = xt;
-             iyt = yt;
-   
-             if (ixt < 1 || ixt > nsamr || iyt < 1 || iyt > nrowr)
-                {    /* Predicted cursor loc. is outside of right image, */
-                sprintf(outstr,"*** Tilted cursor not in right image: (%d,%d)",
-                                ixt,iyt);
-                spout(outstr); XBell(idispl,50);
-                }
-             else
-                {   /* Move cursor to predicted location on right tilted side */
-                ixt = ixt + ixulri;
-                iyt = iyt + iyulri;
-                movecur(ixt-ixs,iyt-iys);
-                }
+             {   /* Move cursor to predicted location on right tilted side */
+             ixt = ix2 + ixulri;
+             iyt = iy2 + iyulri;
+             movecur(ixt-ixs,iyt-iys);
              }
           else   //  if (!fitted)
              { /* No tilt angle available, Move cursor to center of right side */
@@ -363,11 +359,23 @@
 
           if (numm > 2 && numm < nsaytilt && leftside)
              { /* Determine tilt and axis, Sets: fitted */
-             det_tilt(FALSE,TRUE);
+             iflag = det_tilt(FALSE,TRUE);
              }
-          sprintf(outstr,
+
+          if ( iflag == - numm || derror > predict_error ) 
+             { 
+             if (derror > predict_error ) printf("*** Check location: %d  for bad position? \n",numm);
+             sprintf(outstr,
+                  "Picked left:   #%d  (%d,%d)  Distance: %3d  Current Tilt: %-.2f  Axis: %-.2f, %-.2f  BAD??",
+                   numm,ixi,iyi, derror, thetaf,phif,gammaff);
+             XBell(idispl,50);
+             }
+          else
+             {
+             sprintf(outstr,
                   "Picked left:   #%d  (%d,%d)  Distance: %3d  Current Tilt: %-.2f  Axis: %-.2f, %-.2f",
                    numm,ixi,iyi, derror, thetaf,phif,gammaff);
+             }
           spout(outstr);
           spoutfile(FALSE);
 
@@ -409,104 +417,96 @@
 
     else if (ixs >= ixulr && ixs < ixulr + nsamsr &&  
              iys >= iyulr && iys < iyulr + nrowsr )
-       {    /* Cursor is inside displayed right image */
+       {    /* Cursor is inside displayed right image ------------------------------ */
        ixi = ixs - ixulri + 1;
        iyi = iys - iyulri + 1;
        // sprintf(outstr,"In right image: (%d,%d)$", ixi,iyi);
        // spout(outstr);
 
-       // printf(" leftside: %d   Rightside: %d   numm: %d\n",leftside,rightside,numm);
-       if (rightside || ( !leftside && !rightside))
-          {   /* In right image -- button 1 pushed */
-              /* Want to record this right particle location */
-          spoutfile(TRUE);
+       if (rightside || (!leftside && !rightside))
+          { // In right image -- button 1 pushed, record current location  
 
-          /* Save location in array */
+          /* Check for possible bad location */
+          derror = 0; 
+          if (rightside && fitted)
+             {
+             derror = (int) (sqrt((float)( (ixi - ix2) * (ixi - ix2) + 
+                                           (iyi - iy2) * (iyi - iy2)) ));
+             }   
+
+          if (fitted)
+             { 
+             /* Use angles to get predicted location in untilted leftside image */
+             fxi = (float)ixi;   fyi = (float)iyi;
+             witran_rev(&x1,&y1,  fxi,fyi, 1, gammaff, thetaf, phif);
+             ix1 = x1;   iy1 = y1;
+             }   // End of: if (fitted)
+
+          if (!rightside && fitted)
+             {  /* Check for future bad leftside location */
+             if (ix1 < 1 || ix1 > nsaml || iy1 < 1 || iy1 > nrowl)
+                {    /* Predicted cursor loc. is outside of left image, */
+                sprintf(outstr,"*** Untilted cursor not in left image: (%d,%d)$",
+                                ix1,iy1);
+                spout(outstr); XBell(idispl,50);
+                return;
+                }
+             }   // End of: if (!rightside && fitted)
+
+          /* Save location in array: xs,ys */
           iok =  fitdoc_addpart(numm,  2, 0,0, ixi,iyi );
 
-          //printf(" Leftside: %d   rightside: %d   numm: %d\n",leftside,rightside,numm);
-          //printf(" Predicted: %d, %d  Picked: %d, %d \n",(int) xt,(int)yt, ixi,iyi);
+          // printf(" Leftside: %d   rightside: %d   numm: %d\n",leftside,rightside,numm);
+          // printf(" Predicted: %d, %d  Picked: %d, %d \n", (int)xt,(int)yt, ixi,iyi);
 
-          derror = 0; 
           if (rightside) 
-             {      /* Save info in doc file */ 
-
-
-             if ( fitted )
-                {    /* Check for possible bad location */
-                derror = (int) (sqrt((float)( (ixi - (int)xt) * (ixi - (int)xt) + 
-                                              (iyi - (int)yt) * (iyi - (int)yt)) ));
-                if (derror > predict_error ) 
-                   { 
-                   sprintf(outstr,"Right location is large distance: %d  from expected location!",derror); 
-                   spout(outstr); XBell(idispl,50);
-                   }
-                }
-
+             {    /* Save info in doc files */ 
              dlist[0] = numm;
-             dlist[1] = numm;
+             dlist[1] = numm ;
              dlist[2] = ixi * iredu;
              dlist[3] = iyi * iredu;
              dlist[4] = ixi;
              dlist[5] = iyi;       
-             dlist[6] = 1.0;   
-	    
+             dlist[6] = 1.0; 
+
              if (numm == 1)       
-                {fpdoc2 = savdnc(dfil2, datexc, &fpdoc2,
-                                dlist, 7, &openit2, TRUE, TRUE,strcom2);}
+                { fpdoc2 = savdnc(dfil2, datexc, &fpdoc2,
+                              dlist, 7, &openit2, TRUE, TRUE,strcom2); }
              else
-                { fpdoc2 = savdn1(dfil2, datexc, &fpdoc2,
-                             dlist, 7, &openit2, TRUE, TRUE);}
+                { fpdoc2 = savdn1(dfil2, datexc, &fpdoc2, 
+                              dlist, 7, &openit2, TRUE, TRUE);}
 
              dlist[2] = xu0[numm] * iredu;
              dlist[3] = yu0[numm] * iredu;
              dlist[4] = xu0[numm];
              dlist[5] = yu0[numm];  
-
+     
              if (numm == 1)       
-                {fpdoc1 = savdnc(dfil1, datexc, &fpdoc1,
-                                dlist, 7, &openit1, TRUE, TRUE,strcom1);}
+                { fpdoc1 = savdnc(dfil1, datexc, &fpdoc1,
+                              dlist, 7, &openit1, TRUE, TRUE,strcom2); }
              else
-                {fpdoc1 = savdn1(dfil1, datexc, &fpdoc1,
-                             dlist, 7, &openit1, TRUE, TRUE);}
+                { fpdoc1 = savdn1(dfil1, datexc, &fpdoc1,
+                              dlist, 7, &openit1, TRUE, TRUE);} 
              }
 
-          /* Leave permanent circle at this location */
+          /* Leave circle at this rightside location */
           xorc(iwin,    icontx, TRUE, ixs, iys, iradi);
           xorc(imagsav, icontx, TRUE, ixs, iys, iradi);
 
-          /*   Write particle number at this rightside location */
+          /* Write particle number at this rightside location */
           string = itoa(numm);
           witext(icontx, string, ixs, iys, 1, 0, -1, 2, FALSE);
           if (string) free(string);
+         
+          spoutfile(TRUE);
 
-          /* Find predicted location in left image */
           if (fitted)
-             {
-             /* Transform the x values */
-             fx = (float)ixi;
-             fy = (float)iyi;
-	     
-             /* Use angles to get predicted location in un-tilted image */
-             witran_rev(&xt, &yt,  fx, fy, 1, gammaff, thetaf, phif);
-   
-             ixt = xt;
-             iyt = yt;
-   
-             if (ixt < 1 || ixt > nsaml || iyt < 1 || iyt > nrowl)
-                {    /* Predicted cursor loc. is outside of left image, */
-                sprintf(outstr,"*** Untilted cursor not in left image: (%d,%d)",
-                                ixt,iyt);
-                spout(outstr); XBell(idispl,50);
-                }
-             else
-                {   /* Move cursor to predicted location on left untilted side */
-                ixt = ixt + ixulli;
-                iyt = iyt + iyulli;
-                movecur(ixt-ixs,iyt-iys);
-                }             
-             }
-          else   //  if (!fitted)
+             {   /* Move cursor to predicted location on left untilted side */
+             ixt = ix1 + ixulli;
+             iyt = iy1 + iyulli;
+             movecur(ixt-ixs,iyt-iys);
+             }             
+          else   
              {   /* No tilt angle available yet */
                  /* Move cursor to center of left untilted side */
              ixt = ixull + nsamsl / 2;
@@ -516,12 +516,23 @@
 
           if (numm > 2 && numm < nsaytilt && rightside)
              { /* Determine tilt and axis, Sets: fitted */
-             det_tilt(FALSE,TRUE);
+             iflag = det_tilt(FALSE,TRUE);
              }
 
-          sprintf(outstr,
-                  "Picked right:  #%d  (%d,%d)  Distance: %3d  Current Tilt: %-.2f  Axis: %-.2f, %-.2f",
+          if (iflag == -numm || derror > predict_error ) 
+             { 
+             if (derror > predict_error ) printf("*** Check location: %d  for bad position? \n",numm);
+             sprintf(outstr,
+                  "Picked right:  #%d  (%d,%d)  Distance: %3d  Current Tilt: %-.2f  Axis: %-.2f, %-.2f   BAD??",
                    numm,ixi,iyi, derror, thetaf,phif,gammaff); 
+             XBell(idispl,50);
+             }
+          else
+             {
+             sprintf(outstr,
+                  "Picked right:  #%d  (%d,%d)  Distance: %3d  Current Tilt: %-.2f  Axis: %-.2f, %-.2f",
+                   numm,ixi,iyi, derror, thetaf,phif,gammaff);
+              } 
           spout(outstr);
           spoutfile(FALSE);
 
@@ -545,19 +556,17 @@
           else if (rightside)
              { 
              showbuts_str(&iw_but_lefrit,&iw_but_str,
-                       "Select right particle.        ", 
-                       "Show menu.", 
-                       "Delete a particle pair.", TRUE);
+                          "Select right particle.        ", 
+                          "Show menu.", 
+                          "Delete a particle pair.", TRUE);
              }
           else
              { 
              showbuts_str(&iw_but_lefrit,&iw_but_str,
-                       "Select left or right particle.", 
-                       "Show menu.", 
-                       "Delete a particle pair.", TRUE);
+                          "Select left or right particle.", 
+                          "Show menu.", 
+                          "Delete a particle pair.", TRUE);
              }
-
-          //printf(" RIT maxpart: %d, numm: %d\n", maxpart,numm);
 
           }// End of:  if (leftside || (fitted && !leftside && !rightside))
        }   // End of:  if (leftside || (fitted && !leftside && !rightside))
@@ -565,7 +574,7 @@
     // Update label box for next particle number 
     pickmen();
 
-    }      // End of:  else if (ixs >= ixulr && ixs < ixulr + .......................
+    }      // End of:  else if (ixs >= ixulr && ixs < ixulr + ..
 
  /***************************************************** Middle button */ 
 
