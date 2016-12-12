@@ -1,0 +1,43 @@
+head	1.1;
+access;
+symbols
+	pre-tilt-improve:1.1;
+locks;
+comment	@# @;
+
+
+1.1
+date	97.03.11.18.51.57;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#! /bin/sh 
+#
+# Makes debug executable
+# Chooses correct Makefile for this OS version and host     
+#
+# normal usage: maked [version-selector]
+#
+# sample usage: maked 
+#               maked [one of 2, 3, 4, 6] e.g.:  maked 4
+
+which=`whichspider $1`
+#echo which: $which
+
+# activate target makefile
+echo make -f Makefile$which \(debug\)
+ 
+make -f Makefile$which QFFLAGS=-g QLFLAGS=-g SUFFIX=d 
+
+@

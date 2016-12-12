@@ -1,0 +1,316 @@
+head	1.7;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_surf_fromtop:1.7
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.7
+date	2011.07.19.19.43.04;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.18.16.59.57;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.03.21.14.26.46;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.02.18.10.05;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.01.26.20.31.52;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.16.41.19;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.14;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@BGFGO
+@
+text
+@/*$Header: /usr8/web/src/RCS/wid_mess.c,v 1.6 2005/10/18 16:59:57 leith Exp leith $*/
+
+/*
+ ***********************************************************************
+ *
+ * wid_mess.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * wid_mess(iw_parent, iw_mess, message, ix, iy)
+ *
+ * 
+ * PURPOSE:   	Creates a message dialog widget  
+ *
+ * RETURNS:   	The message widget's number
+ * 
+ * PARAMETERS:	Widget	iw_parent	parent widget
+ *		Widget	iw_mess		message widget
+ *		char	*message	message to be put in widget
+ *		int	ix		x coord of ulh corner
+ *		int     iy		y coord of ulh corner
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/BulletinB.h>
+
+#define  MAX_ARGS  4
+
+static  Widget iw_messlabel;
+
+/* Function prototypes */
+Widget wid_labelg (Widget, Widget, char *, int, int);
+
+
+/**********************************************************************/
+Widget wid_mess(Widget iw_parent, Widget iw_mess, char *message,
+                   int ix, int iy)
+{
+   Arg          args[MAX_ARGS];     /* Arg list  */
+   int          n;                  /* Arg count */
+   Position    ixp,iyp;             /* Parent widget's position */
+
+
+   if (iw_mess == (Widget)0) 
+      {
+      /* Need to find location relative to present position of top window */
+      XtSetArg(args[0], XmNx, &ixp);
+      XtSetArg(args[1], XmNy, &iyp);
+      XtGetValues(iw_top,args,2);
+
+      if (ix < 0 || iy < 0)
+         {    /*  Use default placement for message box */
+         ix = 40;
+         iy = 40;
+         }
+
+      n = 0;
+#ifdef WEB_BGFGO
+      XtSetArg(args[n], XmNbackground,  icolorxmb);    n++;
+#endif
+      XtSetArg(args[n], XmNx, (Position) ix+ixp);      n++;
+      XtSetArg(args[n], XmNy, (Position) iy+iyp);      n++;
+      XtSetArg(args[n], XmNdefaultPosition, False);    n++;
+
+      iw_mess      = XmCreateBulletinBoardDialog(iw_parent,"iw_mess",args,n);
+      iw_messlabel = (Widget) 0;
+      }
+
+   iw_messlabel = wid_labelg(iw_mess, iw_messlabel,message,-1,-1);
+
+   XtManageChild(iw_mess);
+
+   return (iw_mess);
+}
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_mess.c,v 1.5 1996/03/21 14:26:46 leith Exp $*/
+d37 1
+a37 1
+ * PURPOSE:   	creates a message dialog widget  
+d39 1
+a39 1
+ * RETURNS:   	the message widget's number
+d53 1
+a53 1
+#define  MAX_ARGS  3
+d57 1
+a57 1
+/* function prototypes */
+d65 3
+a67 3
+   Arg          args[MAX_ARGS];     /* arg list  */
+   int          n;                  /* arg count */
+   Position    ixp,iyp;             /* parent widget's position */
+d72 1
+a72 1
+      /* need to find location relative to present position of top window */
+d78 1
+a78 1
+         {    /*  use default placement for message box */
+d84 3
+d91 1
+a91 1
+      iw_mess = XmCreateBulletinBoardDialog(iw_parent,"iw_mess",args,n);
+a93 1
+
+@
+
+
+1.5
+log
+@Position
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_mess.c,v 1.4 1995/02/02 18:10:05 liy Exp leith $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.  
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.4
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_mess.c,v 1.3 1995/01/26 20:31:52 liy Exp liy $*/
+d53 1
+a53 1
+   if (iw_mess <= (Widget)0) 
+d67 3
+a69 3
+      XtSetArg(args[n], XmNx, ix+ixp);                  n++;
+      XtSetArg(args[n], XmNy, iy+iyp);                  n++;
+      XtSetArg(args[n], XmNdefaultPosition, False);     n++;
+@
+
+
+1.3
+log
+@modified (int)widget for Onyx
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_mess.c,v 1.2 1993/11/10 16:41:19 leith Exp liy $*/
+d53 1
+a53 1
+   if (iw_mess <= (void *)0) 
+@
+
+
+1.2
+log
+@improved location
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d53 1
+a53 1
+   if ((int)iw_mess <= 0) 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+a32 2
+#include "std.h"
+#include "x.h"
+d49 2
+a50 2
+   static       int n;              /* arg count */
+   Position    ixp,iyp;            /* parent widget's position */
+a51 4
+   /* need to find location relative to present position of top window */
+   XtSetArg(args[0], XmNx, &ixp);
+   XtSetArg(args[1], XmNy, &iyp);
+   XtGetValues(iw_top,args,2);
+d53 6
+a58 5
+   if (ix < 0 || iy < 0)
+      {    /*  use default placement for dialog box */
+      ix = 30;
+      iy = 30;
+      }
+d60 5
+a64 4
+   n = 0;
+   XtSetArg(args[n], XmNx, ix+ixp);                  n++;
+   XtSetArg(args[n], XmNy, iy+iyp);                  n++;
+   XtSetArg(args[n], XmNdefaultPosition, False);     n++;
+d66 4
+a69 1
+    printf("starting showbut loc: %d %d \n",ixp,iyp);
+a70 2
+   if ((int)iw_mess <= 0) 
+      {
+a74 8
+/***************************
+   else if (ix > 0 || iy > 0) 
+      {
+      XtSetValues(iw_mess, args, n);
+      }
+ *****************************/
+
+   XtSetValues(iw_mess,args,2);
+@

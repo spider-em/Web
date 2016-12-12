@@ -1,0 +1,723 @@
+head	1.11;
+access;
+symbols
+	pre-tilt-improve:1.11
+	pre_surf_fromtop:1.11
+	pre_neednewmap:1.6
+	pre_apppluss_remove:1.6
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.11
+date	2011.09.23.19.00.58;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2011.09.23.13.30.28;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2011.09.23.12.33.05;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2011.09.22.16.15.47;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2011.09.21.13.35.13;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2011.05.18.18.25.52;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2005.10.18.16.59.58;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.09.12.14.21.54;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.29.15.04.22;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.23.10.53.18;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.25;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.11
+log
+@//showbutx("","... !! CAUSES DELAY
+@
+text
+@ 
+/*$Header: /usr8/web/src/RCS/movearea.c,v 1.10 2011/09/23 13:30:28 leith Exp $*/
+
+/*
+C++*********************************************************************
+C                                                                      *
+C MOVEAREA -- New                                MAR   91 ArDean Leith *
+C             Converted to C                     SEP   92 ArDean Leith *                                               
+C             copyarea used                      SEP 2011 ArDean Leith *                                               
+C                                                                      *
+C **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    movearea()
+C
+C    PURPOSE:       Moves an area of the screen to another location
+C
+C    PARAMETERS:    
+C
+C    CALLED BY:     winsel
+C
+C--********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* Internal function prototypes */
+ void            movearea_pop (Widget, XEvent *, String *, Cardinal *);
+
+ /* Internal common variables */
+ static GC       icontxx;
+
+ /* External common variables */
+ extern int      iwintyp;
+
+ /**************************************************************/
+
+ void movearea()
+
+  {
+#ifdef WEB_TRUE
+  icontxx = icontx;
+#else
+  /* Make a xor graphics context */
+  icontxx = setxor(icontx);
+#endif
+
+  // Use overlay color in icontxx
+  wicolor(icontxx,colorgo+icolorov);
+
+  /* Set up action procedure to move area */
+  actions(iw_win, "movearea_pop", movearea_pop, "M123");
+
+  showbutx("Copies window to this location.",
+           "Moves window to this location.",
+           "Stops this routine.", FALSE);
+
+  XFlush(idispl);
+  } 
+
+
+ /**************** Set window position ***************/
+
+
+ void movearea_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+ int   ixul1,iyul1,ixult,iyult;
+ int   icolorsav;
+ char  outstr[60];
+
+ if (!(strcmp(*params,"M")))            /* Cursor moved */
+    {
+    /* Get mouse position ix,iy  */
+    getloc(event,'M',&ixult,&iyult);
+
+    /* Mouse moved so erase old box and draw new box */
+    xorboxt(iwin,icontxx,FALSE,TRUE,TRUE,ixult,iyult,nsamw,nroww);
+
+    ixul1 = ixult;
+    iyul1 = iyult;
+    } 
+  
+ else if (!(strcmp(*params,"1")))            /* Button 1 pushed */
+    {
+    getloc(event,'M',&ixult,&iyult);
+
+#ifndef WEB_TRUE
+    /* Erase old box */
+    xorbox(iwin,icontxx,TRUE,ixult,iyult,nsamw,nroww);
+#endif
+
+    /* Copy source window in backing store to destination */
+    XCopyArea(idispl,imagsav,imagsav,icontx,
+              ixulw,iyulw,nsamw,nroww,ixult,iyult);
+
+    /* Copy source window in backing store to on-screen destination */
+    copyarea(idispl,imagsav,iwin,icontx,
+              ixulw,iyulw,nsamw,nroww,ixult,iyult);
+
+    /*******************************/
+    sprintf(outstr," (%d,%d) %d X %d --> (%d,%d)", 
+    ixulw,iyulw,nsamw,nroww,ixult,iyult); 
+    spout(outstr); 
+    /*******************************/
+ 
+    /* Since original windowed may be altered,
+       set next move to this destination window */ 
+    ixulw      = ixult;
+    iyulw      = iyult;
+    neednewmap = TRUE;
+    }
+
+ else if (!(strcmp(*params,"2")))            /* Button 2 pushed */
+    {
+    /* Get mouse position 
+    ixult = event -> xkey.x_root;
+    iyult = event -> xkey.y_root;   */
+
+    getloc(event,'M',&ixult,&iyult);
+
+#ifndef WEB_TRUE
+    /* Erase old box and move original  window to this location */
+    xorbox(iwin,icontxx,TRUE,ixult,iyult,nsamw,nroww); // sets neednewmap
+#endif
+
+    /* Set current color to background in icontx GC */
+    icolorsav = icolor;
+    wicolor(icontx,icolorb);
+
+    XFillRectangle(idispl,iwin,icontx,ixulw,iyulw,nsamw,nroww);
+
+    /* Copy source window in backing store to on-screen destination */
+    XCopyArea(idispl,imagsav,iwin,icontx,
+              ixulw,iyulw,nsamw,nroww,ixult,iyult);
+
+    /* Copy source window in backing store to destination in backing store */
+    XCopyArea(idispl,imagsav,imagsav,icontx,
+              ixulw,iyulw,nsamw,nroww,ixult,iyult);
+
+    /* Clear backing store source window location */
+    XFillRectangle(idispl,imagsav,icontx,ixulw,iyulw,nsamw,nroww);
+
+    /* Copy on-screen destination window in backing store destination */ 
+    XCopyArea(idispl,iwin,imagsav,icontx,
+              ixult,iyult,nsamw,nroww,ixult,iyult);  
+
+    /* Since original windowed altered set next move to destination */ 
+    ixulw = ixult;
+    iyulw = iyult;
+
+    /* Restore current foreground color */
+    wicolor(icontx,icolorsav);
+
+    neednewmap = TRUE;
+    }
+
+ else if (!(strcmp(*params,"3")))               
+    {                                       /* Button 3 pushed */
+
+   /* Erase old box */
+    xorbox(iwin,icontxx,TRUE,ixul1,iyul1,nsamw,nroww);
+
+#ifndef WEB_TRUE
+    XFreeGC(idispl,icontxx);
+#endif
+
+    /* Uninstall translations */
+    XtUninstallTranslations(iw_win);
+
+    // printf(" movearea 1        \n");
+    /* Unmanage information box */
+    //showbutx("","","",TRUE);  !! CAUSES DELAY
+    // printf(" movearea 2  calling winsiz1      \n");
+
+    if (iwintyp == 1)
+       {  /* Interactive windowing (Set size again) */
+       winsiz1();
+       }
+    else if (iwintyp == 2)
+       {  /* Fixed size windowing (Use same size) */
+       winmov();
+       }
+    }
+
+ }
+
+@
+
+
+1.10
+log
+@wicolor colorgo
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/movearea.c,v 1.9 2011/09/23 12:33:05 leith Exp leith $*/
+a50 1
+
+d193 3
+a195 2
+    XtUninstallTranslations(iw_t);
+ 
+d197 2
+a198 1
+    showbutx("","","",TRUE);
+d201 1
+a201 1
+       {  /* Interactive windowing (set size again) */
+d205 1
+a205 1
+       {  /* Fixed size windowing (use same size) */
+a206 1
+
+@
+
+
+1.9
+log
+@xorboxt(imagsav, icontx, TRUE,TRUE,TRUE
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/movearea.c,v 1.8 2011/09/22 16:15:47 leith Exp leith $*/
+d67 2
+a70 2
+#else
+  icontxx = icontx;
+d74 1
+a74 1
+  wicolor(icontxx,icolorov);
+@
+
+
+1.8
+log
+@for TRUE color
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/movearea.c,v 1.7 2011/09/21 13:35:13 leith Exp leith $*/
+d103 1
+a103 1
+    xorboxt(iwin,icontxx,FALSE,TRUE,ixult,iyult,nsamw,nroww);
+@
+
+
+1.7
+log
+@mesg.
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/movearea.c,v 1.6 2011/05/18 18:25:52 leith Exp leith $*/
+d6 5
+a10 3
+C
+C MOVEAREA -- MAR 91 al
+C             CONVERTED TO C -- SEPT 92 al                                                
+d37 1
+a37 1
+C    movearea
+d66 1
+d69 5
+d94 1
+a94 1
+ int   icoloro;
+d103 1
+a103 1
+    xorbox(iwin,icontxx,FALSE,ixult,iyult,nsamw,nroww);
+d113 1
+d116 1
+d123 1
+a123 1
+    XCopyArea(idispl,imagsav,iwin,icontx,
+d126 1
+a126 1
+/*******************************/
+d130 1
+a130 1
+/*******************************/
+d134 3
+a136 3
+    ixulw = ixult;
+    iyulw = iyult;
+
+d147 1
+d150 1
+a150 1
+
+d153 1
+a153 1
+    icoloro = icolor;
+d162 1
+a162 1
+    /* Copy source window in backing store to destination */
+d177 4
+a180 2
+    /* Restore current forgrround color */
+    wicolor(icontx,icoloro);
+d189 1
+d191 1
+@
+
+
+1.6
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header:  leith Exp leith $*/
+d138 2
+a139 1
+    xorbox(iwin,icontxx,TRUE,ixult,iyult,nsamw,nroww);
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/movearea.c,v 1.4 94/09/12 14:21:54 leith Exp $*/
+d5 1
+a5 1
+C++*************************************************************************
+d35 1
+a35 1
+C movearea
+d37 1
+a37 1
+C    PURPOSE:       MOVES AN AREA OF THE SCREEN TO ANOTHER LOCATION
+d43 1
+a43 1
+C--*********************************************************************
+d50 1
+a50 1
+ /* internal function prototypes */
+d53 1
+a53 1
+ /* internal common variables */
+d56 1
+a56 1
+ /* external common variables */
+d63 4
+a66 4
+ {
+ /* make a xor graphics context */
+ icontxx = setxor(icontx);
+ wicolor(icontxx,icolorov);
+d68 2
+a69 2
+ /* set up action procedure to move area */
+ actions(iw_win, "movearea_pop", movearea_pop, "M123");
+d71 3
+a73 3
+ showbutx("Copies window to this location.",
+          "Moves window to this location.",
+          "Stops this routine.", FALSE);
+d75 2
+a76 2
+ XFlush(idispl);
+ } 
+d79 1
+a79 1
+ /**************** set window position ***************/
+d85 3
+a87 3
+ int ixul1,iyul1,ixult,iyult;
+ int icoloro;
+ char outstr[60];
+d89 1
+a89 1
+ if (!(strcmp(*params,"M")))            /* cursor moved */
+d91 1
+a91 1
+    /* get mouse position ix,iy  */
+d94 1
+a94 1
+    /* mouse moved so erase old box and draw new box */
+d101 1
+a101 1
+ else if (!(strcmp(*params,"1")))            /* button 1 pushed */
+d105 1
+a105 1
+    /* erase old box */
+d108 1
+a108 1
+    /* copy source window in backing store to destination */
+d112 1
+a112 1
+    /* copy source window in backing store to on-screen destination */
+d122 1
+a122 1
+    /* since original windowed may be altered,
+d129 1
+a129 1
+ else if (!(strcmp(*params,"2")))            /* button 2 pushed */
+d131 1
+a131 1
+    /* get mouse position 
+d137 1
+a137 1
+    /* erase old box and move original  window to this location */
+d140 1
+a140 1
+    /* set current color to background in icontx GC */
+d146 1
+a146 1
+    /* copy source window in backing store to on-screen destination */
+d150 1
+a150 1
+    /* copy source window in backing store to destination */
+d154 1
+a154 1
+    /* clear backing store source window location */
+d157 1
+a157 1
+    /* copy on-screen destination window in backing store destination */ 
+d161 1
+a161 1
+    /* since original windowed altered set next move to destination */ 
+d165 1
+a165 1
+    /* restore current forgrround color */
+a166 1
+
+d170 1
+a170 1
+    {                                       /* button 3 pushed */
+d172 1
+a172 1
+   /* erase old box */
+d177 1
+a177 1
+    /* uninstall translations */
+d180 1
+a180 1
+    /* unmanage information box */
+d184 1
+a184 1
+       {  /* interactive windowing (set size again) */
+d188 1
+a188 1
+       {  /* fixed size windowing (use same size) */
+d190 1
+@
+
+
+1.4
+log
+@ reworked color assignments
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/movearea.c,v 1.3 94/03/29 15:04:22 leith Exp Locker: leith $*/
+d9 25
+a33 9
+C **************************************************************************
+C *  PART OF SPIDER - MODULAR IMAGE PROCESSING SYSTEM.                     *
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.3
+log
+@window move placement fixed
+quit
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/movearea.c,v 1.2 93/11/23 10:53:18 leith Exp $*/
+d31 1
+a32 10
+ extern void     showbutx   (char *, char *, char *, int);
+ extern void     xorbox     (Window, GC, int, int, int, int, int);
+ extern void     actions    (Widget, char *, void (*)(), char *);
+ extern void     outmess    (char *);
+ extern GC       setxor     (GC);
+ extern int      wicolor    (GC, int);
+ extern void     getloc     (XEvent *, char, int *, int *);
+ extern void     winsiz1    (void);
+ extern void     winmov     (void);
+ extern void     spout      (char *);
+d50 1
+a50 1
+ wicolor(icontxx,29);
+d124 1
+a124 1
+    /* set current color to black in icontx GC */
+d126 1
+a126 1
+    wicolor(icontx,0);
+d149 1
+a149 1
+    /* restore current color */
+@
+
+
+1.2
+log
+@after move loopback added
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/movearea.c,v 1.1 93/11/10 10:11:25 leith Exp Locker: leith $*/
+d124 1
+a124 1
+    /* get mouse position */
+d126 1
+a126 1
+    iyult = event -> xkey.y_root;
+d128 2
+d150 1
+a150 1
+    /* copy on-screen destination window in backing store destination */
+d152 1
+a152 1
+              ixult,iyult,nsamw,nroww,ixult,iyult);
+a187 3
+
+
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 2
+a3 1
+/*$Header$*/
+a29 2
+#include "x.h"
+#include "std.h"
+d39 3
+d43 1
+d46 2
+a47 1
+ static GC     icontxx;
+d49 3
+a56 2
+ char   * ctemp;
+
+a71 1
+
+d78 1
+a78 1
+ int ix,iy,ixul1,iyul1,ixul,iyul;
+d85 1
+a85 1
+    getloc(event,'M',&ixul,&iyul);
+d88 1
+a88 1
+    xorbox(iwin,icontxx,FALSE,ixul,iyul,nsamw,nroww);
+d90 2
+a91 2
+    ixul1 = ixul;
+    iyul1 = iyul;
+d96 1
+a96 1
+    getloc(event,'M',&ixul,&iyul);
+d99 1
+a99 1
+    xorbox(iwin,icontxx,TRUE,ixul,iyul,nsamw,nroww);
+d103 1
+a103 1
+              ixulw,iyulw,nsamw,nroww,ixul,iyul);
+d107 1
+a107 1
+              ixulw,iyulw,nsamw,nroww,ixul,iyul);
+a108 1
+
+d111 1
+a111 1
+    ixulw,iyulw,nsamw,nroww,ixul,iyul); 
+d117 2
+a118 2
+    ixulw = ixul;
+    iyulw = iyul;
+d125 2
+a126 2
+    ixul = event -> xkey.x_root;
+    iyul = event -> xkey.y_root;
+d129 1
+a129 1
+    xorbox(iwin,icontxx,TRUE,ixul,iyul,nsamw,nroww);
+d139 1
+a139 1
+              ixulw,iyulw,nsamw,nroww,ixul,iyul);
+d143 1
+a143 1
+              ixulw,iyulw,nsamw,nroww,ixul,iyul);
+d150 1
+a150 1
+              ixul,iyul,nsamw,nroww,ixul,iyul);
+d153 2
+a154 2
+    ixulw = ixul;
+    iyulw = iyul;
+d174 9
+@

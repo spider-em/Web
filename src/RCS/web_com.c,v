@@ -1,0 +1,2695 @@
+head	1.73;
+access;
+symbols
+	pre-tilt-improve:1.73
+	pre_surf_fromtop:1.70
+	pre_neednewmap:1.69
+	pre_apppluss_remove:1.66
+	pre_tiltpair_chng:1.64
+	pre_GPL:1.51;
+locks;
+comment	@ * @;
+
+
+1.73
+date	2015.04.14.13.25.04;	author leith;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2013.03.29.14.24.46;	author leith;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2012.11.27.19.13.26;	author leith;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2011.09.27.17.47.06;	author leith;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	2011.09.16.18.58.29;	author leith;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	2011.09.16.13.12.35;	author leith;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	2011.07.22.19.34.35;	author leith;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	2011.07.18.14.29.51;	author leith;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	2011.06.22.18.59.21;	author leith;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	2011.06.10.16.27.05;	author leith;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	2011.06.10.16.14.31;	author leith;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	2011.06.10.12.17.33;	author leith;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	2011.05.31.12.18.52;	author leith;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	2011.05.27.13.58.46;	author leith;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	2011.05.20.17.04.56;	author leith;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	2011.05.18.18.36.25;	author leith;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	2011.05.09.19.32.54;	author leith;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	2011.05.05.12.05.27;	author leith;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	2011.02.28.15.22.13;	author leith;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2007.10.30.18.19.05;	author leith;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2006.02.04.18.18.43;	author leith;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2005.10.18.16.59.46;	author leith;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2005.10.12.16.32.14;	author leith;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2001.09.12.14.43.27;	author leith;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2001.09.05.12.36.36;	author leith;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2001.09.04.15.08.06;	author leith;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2001.08.08.16.09.47;	author leith;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2001.08.08.13.50.52;	author leith;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	99.07.06.16.11.58;	author leith;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	98.10.02.15.05.19;	author leith;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	97.05.12.18.44.34;	author leith;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	97.02.26.15.05.55;	author leith;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	96.08.21.15.46.44;	author leith;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	96.06.13.18.48.01;	author leith;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	96.03.26.18.14.07;	author leith;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	96.03.26.17.24.07;	author leith;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	95.11.28.20.28.38;	author leith;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	95.11.28.16.23.13;	author liy;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	95.08.15.13.51.06;	author leith;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	95.08.10.12.46.13;	author leith;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	95.07.21.20.16.10;	author liy;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	95.06.21.16.12.43;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	95.05.08.16.36.22;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	95.04.21.19.29.01;	author liy;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	95.03.30.17.13.16;	author mladjadj;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	94.11.17.16.24.37;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	94.08.21.21.12.02;	author odesanya;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	94.08.03.15.26.11;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	94.08.02.13.51.24;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	94.07.20.19.04.10;	author odesanya;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	94.07.20.18.50.36;	author odesanya;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	94.07.19.12.25.34;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	94.07.01.23.28.37;	author odesanya;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	94.05.26.14.00.01;	author odesanya;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	94.05.25.14.14.01;	author odesanya;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	94.05.24.18.14.08;	author odesanya;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	94.05.12.12.40.58;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	94.04.07.14.29.45;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	94.04.07.13.46.50;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	94.04.05.16.48.11;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	94.03.25.15.58.18;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.03.18.16.57.49;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.02.18.14.40.51;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.02.10.16.46.28;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.02.10.12.03.15;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.02.08.11.42.36;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.02.03.16.38.54;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.01.28.17.14.21;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	93.12.09.11.07.47;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.11.30.10.09.46;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.16.13.50.46;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.17.01.59;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.16;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.73
+log
+@removed lut button
+@
+text
+@
+/***********************************************************************
+ *                                                                     *
+ * web_com.c                                                           *
+ *              _BGFG foreground & background    Oct 2005 ArDean Leith *
+ *              _BGFG in submenus                Oct 2007 ArDean Leith *
+ *              Removed blackout menu item       Mar 2011 ArDean Leith *
+ *              Removed lu sub menu items        Mar 2011 ArDean Leith *
+ *              Pixel rewrite                    Jun 2011 ArDean Leith *
+ *              Truecolor                        Sep 2011 ArDean Leith *
+ *              Montage quick button             Nov 2012 ArDean Leith *
+ *              Surface quick button             Mar 2013 ArDean Leith *
+ *              Removed Lut button               Mar 2015 ArDean Leith *
+ *                                                                     *
+ ***********************************************************************
+ C=* AUTHOR: ArDean Leith                                              *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright 1985-2015  Health Research Inc.,                        *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but without any warranty; without even the implied warranty of    *
+ c=* merchantability or fitness for a particular purpose.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+ C=*                                                                   *
+ C**********************************************************************
+ * 
+ * web_com(iw_menub)
+ *
+ * PURPOSE:     Contains commands for menu bar
+ *
+ * PARAMETERS:  iw_menub     menu-bar widget for menu item    
+ *
+ ***********************************************************************
+*/
+
+#include "routines.h"
+#include "common.h"
+
+#define MAX_ARGS     20
+Arg args[MAX_ARGS];   /* Arg list */
+
+// Function prototypes
+extern Widget wid_seper(Widget, Widget, char *,  int, int);
+
+/*******************************  web_com  ***************************/
+
+ void web_com(Widget iw_menub)
+ { 
+ Widget iw_menup1c, iw_menup1d;
+ Widget iw_menup1,  iw_menup2,  iw_menup4, iw_menup5;
+ Widget iw_menup2a, iw_menup2b, iw_menup2c, iw_menup2d,iw_menup2e;
+ Widget iw_menup2f, iw_menup2g;
+
+ int  n;
+
+ n = 0;
+
+ // Create OPTIONS entry on menubar -------------------------------
+ iw_menup1 = wid_pulldown(iw_menub,"OPTIONS  ",'O');
+
+ // Create menu items for OPTIONS  
+ wid_pushg(iw_menup1,(Widget)0,"Image",         imoptmen,     "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Contrast",      contrastmen,  "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Cursor",        curmen,       "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Display",       dispmen,      "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Font",          fontmen,      "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Magnify",       setmag,       "0",0,0);
+//#ifndef WEB_TRUE
+// wid_pushg(iw_menup1,(Widget)0,"Lut",           lutmen,       "0",0,0);
+//#endif
+ wid_pushg(iw_menup1,(Widget)0,"Colors",        colmen,       "0",0,0);
+ 
+ // Create a line style menu item in OPTIONS 
+ iw_menup1c = wid_pulldown(iw_menup1,"Line Style",'M');
+
+ wid_pushg(iw_menup1c,(Widget)0,"Solid",        setline,   "0",0,0);
+ wid_pushg(iw_menup1c,(Widget)0,"OnOffDash",    setline,   "1",0,0);
+ wid_pushg(iw_menup1c,(Widget)0,"DoubleDash",   setline,   "2",0,0);
+
+ // Create a line width menu item in OPTIONS 
+ iw_menup1d = wid_pulldown(iw_menup1,"Line Width",'M');
+
+ wid_pushg(iw_menup1d,(Widget)0,"0",            setline,   "3",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"1",            setline,   "4",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"2",            setline,   "5",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"3",            setline,   "6",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"4",            setline,   "7",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"5",            setline,   "8",0,0);
+
+
+
+// Create COMMANDS entry on menubar ---------------------------------
+ iw_menup2 = wid_pulldown(iw_menub,"COMMANDS ",'C');
+
+ /* Create menu items for COMMANDS */ 
+ wid_pushg(iw_menup2,(Widget)0,"Clear",                webclear,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Image",                imagemen,  "1",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Montage",              imagemen,  "2",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Surface",              imagemen,  "3",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Shift",                imagemen,  "i",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Annotate",             imagemen,  "9",0,0);
+#ifndef WEB_TRUE
+ wid_pushg(iw_menup2,(Widget)0,"Colored Surface",      imagemen,  "h",0,0);
+#endif
+ wid_pushg(iw_menup2,(Widget)0,"Convolve",             imagemen,  "a",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Corr-Map",             comapmen,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Dendrogram",           imagemen,  "e",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Distance",             distmen,   "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Histogram",            imagemen,  "4",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Magnify",              mag     ,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Markers",              imagemen,  "5",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Mask",                 imagemen,  "6",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Montage from doc file",imagemen,  "k",0,0);
+
+ /* Create a  Movie menu item in COMMANDS */
+ iw_menup2g = wid_pulldown(iw_menup2,"Movie",'G');
+
+ wid_pushg(iw_menup2g,(Widget)0,"Large images",     imagemen,"o",0,0);
+ wid_pushg(iw_menup2g,(Widget)0,"Small images",     imagemen,"g",0,0);
+
+ wid_pushg(iw_menup2,(Widget)0,"Tilted Particles",  imagemen,"8",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"CTF from doc file", imagemen,"m",0,0);
+
+/* Create a  Categorize menu item in COMMANDS */
+ iw_menup2f = wid_pulldown(iw_menup2,"Categorize",'N');
+
+ wid_pushg(iw_menup2f,(Widget)0,"Sequential montage",imagemen,"b",0,0);
+ wid_pushg(iw_menup2f,(Widget)0,"Doc file montage",  imagemen,"n",0,0);
+
+ /* Create a  Power Spectrum menu item in COMMANDS */
+ iw_menup2e = wid_pulldown(iw_menup2,"Power Spectrum",'M');
+
+ wid_pushg(iw_menup2e,(Widget)0,"Interactive",      winsiz,   "81",0,0);
+ wid_pushg(iw_menup2e,(Widget)0,"Fixed size",       winsiz,   "82",0,0);
+ wid_pushg(iw_menup2e,(Widget)0,"Specified coord.", winsiz,   "83",0,0);
+
+ wid_pushg(iw_menup2,(Widget)0,"Pixel on screen",   pixelmen_sc_nod, "0",0,0); 
+ wid_pushg(iw_menup2,(Widget)0,"Pixel within image",imagemen,    "p",0,0); 
+ wid_pushg(iw_menup2,(Widget)0,"Profile",           imagemen,    "7",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Reflections",       imagemen,    "c",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"General filter",    imagemen,    "l",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"SIRDS",             imagemen,    "f",0,0);
+
+
+/* Create a RECORD menu item in COMMANDS */
+// iw_menup2b = wid_pulldown(iw_menup2,"Record screen",'W');
+
+// wid_pushg(iw_menup2b,(Widget)0,"Interactive",      winsiz,   "61",0,0);
+// wid_pushg(iw_menup2b,(Widget)0,"Fixed size",       winsiz,   "62",0,0);
+// wid_pushg(iw_menup2b,(Widget)0,"Specified coord.", winsiz,   "63",0,0);
+
+// wid_pushg(iw_menup2,(Widget)0,"Show Recording",    imagemen, "d",0,0);
+
+ /* Create a EDIT entry on menubar -----------------------------------*/
+ iw_menup5 = wid_pulldown(iw_menub,"EDIT ",'O');
+
+ wid_pushg(iw_menup5,(Widget)0,"Bars",              bar,        "0",0,0);
+ wid_pushg(iw_menup5,(Widget)0,"Drill-n-fill",      imagemen,   "j",0,0);
+ wid_pushg(iw_menup5,(Widget)0,"Lines",             rubberline, "0",0,0);
+ wid_pushg(iw_menup5,(Widget)0,"Text",              itex,       "0",0,0);
+
+/* Create a boxes menu item in EDIT */
+ iw_menup2c = wid_pulldown(iw_menup5,"Draw Boxes",'W');
+
+ wid_pushg(iw_menup2c,(Widget)0,"Interactive",      winsiz,     "51",0,0);
+ wid_pushg(iw_menup2c,(Widget)0,"Fixed size",       winsiz,     "52",0,0);
+ wid_pushg(iw_menup2c,(Widget)0,"Specified coord.", winsiz,     "53",0,0);
+
+ /* Create a move area menu item in EDIT */
+ iw_menup2a = wid_pulldown(iw_menup5,"Move area",'M');
+
+ wid_pushg(iw_menup2a,(Widget)0,"Interactive",      winsiz,     "71",0,0);
+ wid_pushg(iw_menup2a,(Widget)0,"Fixed size",       winsiz,     "72",0,0);
+ wid_pushg(iw_menup2a,(Widget)0,"Specified coord.", winsiz,     "73",0,0);
+
+ /* Create a window file  menu item in EDIT */
+ iw_menup2d = wid_pulldown(iw_menup5,"Window Last File",'M');
+
+ wid_pushg(iw_menup2d,(Widget)0,"Interactive",      winsiz,     "41",0,0);
+ wid_pushg(iw_menup2d,(Widget)0,"Fixed size",       winsiz,     "42",0,0);
+ wid_pushg(iw_menup2d,(Widget)0,"Specified coord.", winsiz,     "43",0,0);
+ 
+ /* Create a SYSTEM  entry on menubar ----------------------------------*/
+ iw_menup4 = wid_pulldown(iw_menub,"SYSTEM",'O');
+
+ /* Create menu items in SYSTEM */ 
+ wid_pushg(iw_menup4,(Widget)0,"File extension",    newext   ,  "0",0,0);
+ wid_pushg(iw_menup4,(Widget)0,"Current directory", changedir,  "0",0,0);
+ wid_pushg(iw_menup4,(Widget)0,"File pattern ",     changepat,  "0",0,0);
+ wid_pushg(iw_menup4,(Widget)0,"X-info",            web_info,   "0",0,0);
+ wid_pushg(iw_menup4,(Widget)0,"EXIT",              exitexit,   "0",0,0);
+
+ }
+
+ 
+/*******************************  web_com2  ***************************/
+
+#include <Xm/PushBG.h>
+
+ void web_com2(Widget iw_quickmen)
+ { 
+ Widget         iw_quicki, iw_quickm, iw_clear, iw_exit;
+ Widget         iw_space, iw_skip;
+ Widget         iw_exit2;
+ Widget         iw_contrast;
+ Widget         iw_seper1 = (Widget) 0;
+ Widget         iw_seper2 = (Widget) 0;
+ Widget         iw_seper3 = (Widget) 0;
+ Widget         iw_quicks = (Widget) 0;
+
+ int            n;
+
+ // Create a separator -----------------------------------------
+ iw_seper1 = wid_seper(iw_quickmen, iw_seper1, "|", 0, 0);
+ 
+ // Create a push button  for QUICK IMAGE ----------------------
+
+ n = 0;
+#ifdef WEB_BGFG
+ XtSetArg(args[n], XmNbackground,      icolorxmb); n++;      
+#endif
+ XtSetArg(args[n], XmNshadowThickness, 0);                 n++;
+ XtSetArg(args[n], XmNmarginHeight,    0);                 n++;
+ XtSetArg(args[n], XmNtopAttachment,   XmATTACH_FORM);     n++;
+
+ n = 4;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_FORM);     n++;
+
+ iw_quicki = XmCreatePushButtonGadget(iw_quickmen," IMAGE",args,n);
+ if (iw_quicki == (Widget) NULL)
+    { XtWarning("*** Can not create Quick image widget!"); exit (-1);}
+
+ XtAddCallback(iw_quicki, XmNactivateCallback, imagemen, "1");
+ XtManageChild(iw_quicki); 
+
+
+ // Create a push button  for QUICK Montage ----------------------
+
+ n = 4;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XmNleftWidget,      iw_quicki);         n++;
+
+ iw_quickm = XmCreatePushButtonGadget(iw_quickmen," MONTAGE",args,n);
+ if (iw_quickm == (Widget) NULL)
+    { XtWarning("*** Can not create Quick MONTAGE widget!"); exit (-1);}
+
+ XtAddCallback(iw_quickm, XmNactivateCallback, imagemen, "2");
+ XtManageChild(iw_quickm); 
+
+ // Create a push button  for QUICK Surface ----------------------
+
+ n = 4;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XmNleftWidget,      iw_quickm);         n++;
+
+ iw_quicks = XmCreatePushButtonGadget(iw_quickmen," SURFACE",args,n);
+ if (iw_quicks == (Widget) NULL)
+    { XtWarning("*** Can not create Quick MONTAGE widget!"); exit (-1);}
+
+ XtAddCallback(iw_quicks, XmNactivateCallback, imagemen, "3");
+ XtManageChild(iw_quicks); 
+
+
+
+ // Create a push button  for CLEAR ---------------------------
+
+ n = 4;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XmNleftWidget,      iw_quickm);         n++;
+
+ iw_clear = XmCreatePushButtonGadget(iw_quickmen," CLEAR ",args,n);
+ if (iw_clear == (Widget) NULL)
+    { XtWarning("*** Can not create CLEAR widget!"); exit (-1);}
+
+ XtAddCallback(iw_clear, XmNactivateCallback, (XtCallbackProc) webclear, "0");
+ XtManageChild(iw_clear); 
+
+ // Create a push button  for EXIT ----------------------------
+
+ n = 4;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XmNleftWidget,      iw_clear);         n++;
+ XtSetArg(args[n], XmNrightAttachment, XmATTACH_FORM);     n++;
+
+ iw_exit = XmCreatePushButtonGadget(iw_quickmen,"EXIT ",args,n);
+ if (iw_exit == (Widget) NULL)
+    { XtWarning("*** Can not create EXIT widget!"); exit (-1);}
+
+ XtAddCallback(iw_exit, XmNactivateCallback, (XtCallbackProc) exitexit, "0");
+ XtManageChild(iw_exit); 
+
+
+ // Create a separator -----------------------------------------
+iw_seper2 = wid_seper(iw_quickmen, iw_seper2, "|", 0, 0);
+
+
+ // Create a widget  for Contrast ---------------------------------
+ iw_contrast = wid_contrast(iw_quickmen," I:",  0,0);
+
+ // Create a widget  for SKIP ---------------------------------
+ iw_skip = wid_skip(iw_quickmen," X:",  0,0);
+
+ // Create a separator -----------------------------------------
+iw_seper3 = wid_seper(iw_quickmen, iw_seper3, "|", 0, 0);
+
+ // Create a push button  for EXIT ----------------------------
+
+ n = 4;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XmNleftWidget,      iw_clear);         n++;
+ XtSetArg(args[n], XmNrightAttachment, XmATTACH_FORM);     n++;
+
+ iw_exit2 = XmCreatePushButtonGadget(iw_quickmen,"EXIT ",args,n);
+ if (iw_exit2 == (Widget) NULL)
+    { XtWarning("*** Can not create EXIT widget!"); exit (-1);}
+
+ XtAddCallback(iw_exit2, XmNactivateCallback, (XtCallbackProc) exitexit, "0");
+ XtManageChild(iw_exit2); 
+ }
+@
+
+
+1.72
+log
+@quick surface button
+@
+text
+@d13 1
+d16 1
+a16 1
+ C=* AUTHOR: A. LEITH                                                  *
+d18 1
+a18 1
+ C=* Copyright 1985-2013  Health Research Inc.,                        *
+d78 1
+a78 1
+ wid_pushg(iw_menup1,(Widget)0,"Lut",           lutmen,       "0",0,0);
+@
+
+
+1.71
+log
+@MONTAGE quick menu
+@
+text
+@d12 1
+d17 1
+a17 1
+ C=* Copyright 1985-2012  Health Research Inc.,                        *
+d210 2
+a211 1
+ Widget         iw_quicki, iw_quickm, iw_clear, iw_exit, iw_space, iw_skip;
+d217 1
+d257 15
+@
+
+
+1.70
+log
+@removed colored surfacces in web_true
+@
+text
+@d11 1
+d14 1
+d16 2
+a17 5
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d26 2
+a27 2
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+a28 1
+ C=*                                                                   *
+d30 1
+a30 3
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+d32 1
+a32 1
+ ***********************************************************************
+d57 1
+a57 1
+ Widget iw_menup1,  iw_menup2,  iw_menup3,  iw_menup4, iw_menup5;
+d61 1
+a61 1
+ int     n;
+a69 1
+//#ifndef WEB_TRUE
+a70 1
+//#endif
+d75 1
+a75 1
+#ifndef WEB_TRUE
+d77 1
+a77 1
+#endif
+a189 7
+ /* Create a INFO entry on menubar -------------------------------------*/
+ iw_menup3 = wid_pulldown(iw_menub,"INFO",'O');
+
+ /* Create menu items in INFO */ 
+ wid_pushg(iw_menup3,(Widget)0,"X-info",            web_info,   "0",0,0);
+ // wid_pushg(iw_menup3,(Widget)0,"Manual",            web_info,   "1",0,0);
+
+d193 1
+a193 1
+ /* create menu items in SYSTEM */ 
+d197 1
+d209 1
+a209 1
+ Widget         iw_quicki, iw_clear, iw_exit, iw_space, iw_skip;
+d242 13
+d259 1
+a259 1
+ XtSetArg(args[n], XmNleftWidget,      iw_quicki);         n++;
+@
+
+
+1.69
+log
+@activated contrast option menu
+@
+text
+@d3 9
+a11 8
+ *
+ * web_com.c
+ *              _BGFG foreground & background     Oct 2005 ArDean Leith
+ *              _BGFG in submenus                 Oct 2007 ArDean Leith
+ *              Removed blackout menu item        Mar 2011 ArDean Leith
+ *              Removed lu sub menu items         Mar 2011 ArDean Leith
+ *              Pixel rewrite                     Jun 2011 ArDean Leith
+ *
+d115 1
+d117 1
+@
+
+
+1.68
+log
+@*** empty log message ***
+@
+text
+@d73 1
+d75 1
+@
+
+
+1.67
+log
+@removed duplicate image options menu
+@
+text
+@d78 1
+d80 1
+@
+
+
+1.66
+log
+@removed manual from info menu
+@
+text
+@a77 1
+ wid_pushg(iw_menup1,(Widget)0,"Image",         imoptmen,     "0",0,0);
+@
+
+
+1.65
+log
+@iw_exit2 added
+@
+text
+@d195 1
+a195 1
+ wid_pushg(iw_menup3,(Widget)0,"Manual",            web_info,   "1",0,0);
+@
+
+
+1.64
+log
+@seperation width changes
+@
+text
+@d216 1
+d220 1
+d286 16
+@
+
+
+1.63
+log
+@wid_contrast
+@
+text
+@d223 1
+a223 1
+ iw_seper1 = wid_seper(iw_quickmen, iw_seper1, " || ", 0, 0);
+d238 1
+a238 1
+ iw_quicki = XmCreatePushButtonGadget(iw_quickmen,"IMAGE",args,n);
+d266 1
+a266 1
+ iw_exit = XmCreatePushButtonGadget(iw_quickmen,"EXIT",args,n);
+d275 1
+a275 1
+iw_seper2 = wid_seper(iw_quickmen, iw_seper2, " || ", 0, 0);
+@
+
+
+1.62
+log
+@pixel call changed
+@
+text
+@d52 1
+d64 1
+a64 1
+ int                 n;
+d72 9
+a80 9
+ wid_pushg(iw_menup1,(Widget)0,"Image",     imoptmen,     "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Contrast",  contrastmen,  "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Cursor",    curmen,       "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Display",   dispmen,      "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Font",      fontmen,      "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Magnify",   setmag,       "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Image",     imoptmen,     "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Lut",       lutmen,       "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Colors",    colmen,       "0",0,0);
+d216 1
+d277 3
+@
+
+
+1.61
+log
+@black seperator added
+@
+text
+@d9 1
+d143 6
+a148 5
+ wid_pushg(iw_menup2,(Widget)0,"Pixel",             pixelmen,  "0",0,0); 
+ wid_pushg(iw_menup2,(Widget)0,"Profile",           imagemen,  "7",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Reflections",       imagemen,  "c",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"General filter",    imagemen,  "l",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"SIRDS",             imagemen,  "f",0,0);
+d152 1
+a152 1
+ iw_menup2b = wid_pulldown(iw_menup2,"Record screen",'W');
+d154 3
+a156 3
+ wid_pushg(iw_menup2b,(Widget)0,"Interactive",      winsiz,   "61",0,0);
+ wid_pushg(iw_menup2b,(Widget)0,"Fixed size",       winsiz,   "62",0,0);
+ wid_pushg(iw_menup2b,(Widget)0,"Specified coord.", winsiz,   "63",0,0);
+d158 1
+a158 1
+ wid_pushg(iw_menup2,(Widget)0,"Show Recording",    imagemen, "d",0,0);
+@
+
+
+1.60
+log
+@*** empty log message ***
+@
+text
+@d47 6
+a52 1
+ 
+a61 2
+#define MAX_ARGS     20
+ Arg                 args[MAX_ARGS];   /* Arg list */
+d213 2
+a215 1
+ Arg            args[MAX_ARGS];   /* Arg list */
+d218 3
+d234 1
+a234 1
+ iw_quicki = XmCreatePushButtonGadget(iw_quickmen,"   ||    IMAGE",args,n);
+d262 1
+a262 1
+ iw_exit = XmCreatePushButtonGadget(iw_quickmen," EXIT ",args,n);
+d269 5
+d275 1
+a275 1
+ iw_skip = wid_skip(iw_quickmen,"      ||   SCALE:",  0,0);
+@
+
+
+1.59
+log
+@updates
+@
+text
+@d40 1
+a40 1
+ * PARAMETERS: iw_menub     menu-bar widget for menu item    
+d52 1
+a52 1
+ Widget iw_menup1a, iw_menup1b, iw_menup1c, iw_menup1d;
+d58 1
+a58 1
+ Arg                 args[MAX_ARGS];   /* arg list */
+d220 3
+d224 1
+a224 1
+ XtSetArg(args[n], XmNtopAttachment,   XmATTACH_FORM);     n++;
+d227 1
+a227 4
+ XtSetArg(args[n], XmNshadowThickness, 0);                 n++;
+ XtSetArg(args[n], XmNmarginHeight,    3);                 n++;
+
+ iw_quicki = XmCreatePushButtonGadget(iw_quickmen,"QUICK IMAGE",args,n);
+d237 1
+a237 2
+ n = 1;
+ XtSetArg(args[n], XmNtopAttachment,   XmATTACH_FORM);     n++;
+a240 3
+ XtSetArg(args[n], XmNshadowThickness, 0);                 n++;
+ XtSetArg(args[n], XmNmarginHeight,    3);                 n++;
+
+d250 1
+a250 2
+ n = 1;
+ XtSetArg(args[n], XmNtopAttachment,   XmATTACH_FORM);     n++;
+a253 3
+
+ XtSetArg(args[n], XmNshadowThickness, 0);                 n++;
+ XtSetArg(args[n], XmNmarginHeight,    3);                 n++;
+@
+
+
+1.58
+log
+@*** empty log message ***
+@
+text
+@a153 1
+ wid_pushg(iw_menup2,(Widget)0,"Show Contourfile",  cntmen0,  "0",0,0);
+d207 1
+a207 1
+ void web_com2(Widget iw_quickb)
+d209 1
+a209 1
+ Widget         iw_quicki, iw_exit;
+d211 1
+a211 1
+ Arg            args[MAX_ARGS];   /* arg list */
+a212 1
+ XmString       str_temp;
+d214 2
+a215 1
+  /* Create a push button  for QUICK IMAGE ----------------- */
+d217 4
+d227 1
+a227 5
+#ifdef WEB_BGFG
+ XtSetArg(args[n], XmNbackground,      icolorxmb); n++;      
+#endif
+
+ iw_quicki = XmCreatePushButtonGadget(iw_quickb,"QUICK IMAGE",args,n);
+d234 4
+a237 1
+ n = 0;
+a240 1
+ XtSetArg(args[n], XmNrightAttachment, XmATTACH_FORM);     n++;
+d245 8
+a252 3
+#ifdef WEB_BGFG
+ XtSetArg(args[n], XmNbackground,      icolorxmb); n++;      
+#endif
+d254 5
+a258 1
+ wid_pushg(iw_quickb,(Widget)0,"Clear",    webclear,  "0",0,0);
+d260 2
+d263 1
+a263 1
+ iw_exit = XmCreatePushButtonGadget(iw_quickb," EXIT ",args,n);
+d267 1
+a267 1
+ XtAddCallback(iw_exit, XmNactivateCallback, exitexit, "0");
+d269 3
+@
+
+
+1.57
+log
+@web_com2
+@
+text
+@d38 1
+a38 1
+ * PURPOSE:     Contains web commands for menu bar
+d63 1
+a63 1
+ /* Create a OPTIONS entry on menubar ----------------------------*/
+d66 10
+a75 18
+ /* Create menu items for OPTIONS */ 
+ wid_pushg(iw_menup1,(Widget)0,"Image",        imoptmen,   "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Contrast",  contrastmen,   "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Cursor",         curmen,   "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Display",       dispmen,   "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Font",          fontmen,   "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Magnify",        setmag,   "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Image",        imoptmen,   "0",0,0);
+ wid_pushg(iw_menup1,(Widget)0,"Lut",            lutmen,   "0",0,0);
+
+ /* Create a color menu item in OPTIONS */
+ iw_menup1a = wid_pulldown(iw_menup1,"Color",'M');
+
+ wid_pushg(iw_menup1a,(Widget)0,"Foreground",     colmen,    "0",0,0);
+ wid_pushg(iw_menup1a,(Widget)0,"Background",     colmen,    "1",0,0);
+ wid_pushg(iw_menup1a,(Widget)0,"Overlay",        colmen,    "2",0,0);
+ wid_pushg(iw_menup1a,(Widget)0,"Cursor Center",  colmen,    "3",0,0);
+ wid_pushg(iw_menup1a,(Widget)0,"Cursor Outline", colmen,    "4",0,0);
+d77 1
+a77 1
+ /* Create a line style menu item in OPTIONS */
+d84 1
+a84 1
+ /* Create a line width menu item in OPTIONS */
+d95 2
+a96 1
+/* Create a COMMAND entry on menubar ---------------------------*/
+d100 16
+a115 16
+ wid_pushg(iw_menup2,(Widget)0,"Clear",          webclear,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Image",          imagemen,  "1",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Montage",        imagemen,  "2",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Surface",        imagemen,  "3",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Shift",          imagemen,  "i",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Annotate",       imagemen,  "9",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Colored Surface",imagemen,  "h",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Convolve",       imagemen,  "a",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Corr-Map",       comapmen,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Dendrogram",     imagemen,  "e",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Distance",       distmen,   "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Histogram",      imagemen,  "4",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Magnify",        mag     ,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Markers",        imagemen,  "5",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Mask",           imagemen,  "6",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Montage from doc. file",imagemen,  "k",0,0);
+d120 2
+a121 2
+ wid_pushg(iw_menup2g,(Widget)0,"Large images", imagemen,"o",0,0);
+ wid_pushg(iw_menup2g,(Widget)0,"Small images", imagemen,"g",0,0);
+d123 2
+a124 2
+ wid_pushg(iw_menup2,(Widget)0,"Tilted Particles",imagemen,"8",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"CTF from doc. file", imagemen,"m",0,0);
+d126 1
+a126 1
+/* create a  Categorize menu item in COMMANDS */
+d130 1
+a130 1
+ wid_pushg(iw_menup2f,(Widget)0,"Doc. file montage", imagemen,"n",0,0);
+d132 1
+a132 1
+ /* create a  Power Spectrum menu item in COMMANDS */
+d135 9
+a143 9
+ wid_pushg(iw_menup2e,(Widget)0,"Interactive",     winsiz,"81",0,0);
+ wid_pushg(iw_menup2e,(Widget)0,"Fixed size",      winsiz,"82",0,0);
+ wid_pushg(iw_menup2e,(Widget)0,"Specified coord.",winsiz,"83",0,0);
+
+ wid_pushg(iw_menup2,(Widget)0,"Pixel",         pixelmen,  "0",0,0); 
+ wid_pushg(iw_menup2,(Widget)0,"Profile",       imagemen,  "7",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Reflections",   imagemen,  "c",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"General filter",imagemen,  "l",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"SIRDS",         imagemen,  "f",0,0);
+d149 3
+a151 3
+ wid_pushg(iw_menup2b,(Widget)0,"Interactive",     winsiz,"61",0,0);
+ wid_pushg(iw_menup2b,(Widget)0,"Fixed size",      winsiz,"62",0,0);
+ wid_pushg(iw_menup2b,(Widget)0,"Specified coord.",winsiz,"63",0,0);
+d153 2
+a154 2
+ wid_pushg(iw_menup2,(Widget)0,"Show Recording",   imagemen,"d",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Show Contourfile", cntmen0,"0",0,0);
+d159 4
+a162 4
+ wid_pushg(iw_menup5,(Widget)0,"Bars",          bar,       "0",0,0);
+ wid_pushg(iw_menup5,(Widget)0,"Drill-n-fill",  imagemen,  "j",0,0);
+ wid_pushg(iw_menup5,(Widget)0,"Lines",         rubberline,"0",0,0);
+ wid_pushg(iw_menup5,(Widget)0,"Text",          itex,      "0",0,0);
+d167 3
+a169 3
+ wid_pushg(iw_menup2c,(Widget)0,"Interactive",     winsiz,"51",0,0);
+ wid_pushg(iw_menup2c,(Widget)0,"Fixed size",      winsiz,"52",0,0);
+ wid_pushg(iw_menup2c,(Widget)0,"Specified coord.",winsiz,"53",0,0);
+d174 3
+a176 3
+ wid_pushg(iw_menup2a,(Widget)0,"Interactive",     winsiz,"71",0,0);
+ wid_pushg(iw_menup2a,(Widget)0,"Fixed size",      winsiz,"72",0,0);
+ wid_pushg(iw_menup2a,(Widget)0,"Specified coord.",winsiz,"73",0,0);
+d181 3
+a183 3
+ wid_pushg(iw_menup2d,(Widget)0,"Interactive",     winsiz,"41",0,0);
+ wid_pushg(iw_menup2d,(Widget)0,"Fixed size",      winsiz,"42",0,0);
+ wid_pushg(iw_menup2d,(Widget)0,"Specified coord.",winsiz,"43",0,0);
+d185 1
+a185 1
+ /* create a INFO entry on menubar -----------------------------------*/
+d188 3
+a190 3
+ /* create menu items in INFO */ 
+ wid_pushg(iw_menup3,(Widget)0,"X-info", web_info, "0",0,0);
+ wid_pushg(iw_menup3,(Widget)0,"Manual", web_info, "1",0,0);
+d192 1
+a192 1
+ /* create a SYSTEM  entry on menubar --------------------------------*/
+d196 4
+a199 4
+ wid_pushg(iw_menup4,(Widget)0,"File extension",    newext   ,"0",0,0);
+ wid_pushg(iw_menup4,(Widget)0,"Current directory", changedir,"0",0,0);
+ wid_pushg(iw_menup4,(Widget)0,"File pattern ",     changepat,"0",0,0);
+ wid_pushg(iw_menup4,(Widget)0,"EXIT",              exitexit, "0",0,0);
+d210 1
+a210 1
+ Widget iw_quicki, iw_exit;
+a223 2
+ //XtSetArg(args[n], XmNhighlightColor,  WhitePixelOfScreen(iscreen));    n++;
+
+d248 3
+d253 1
+a253 1
+    { XtWarning("*** Can not create exit widget!"); exit (-1);}
+@
+
+
+1.56
+log
+@-cmap_changes_etc
+@
+text
+@a39 2
+ * RETURNS:
+ * 
+a44 2
+#include "std.h"
+#include "x.h"
+d58 2
+a59 2
+ Arg                  args[MAX_ARGS];   /* arg list */
+ int                  n;
+a61 2
+ XtSetArg(args[n], XmNforeground, BlackPixelOfScreen(iscreen)); n++;     
+ XtSetArg(args[n], XmNbackground, WhitePixelOfScreen(iscreen)); n++;      
+d63 1
+a63 1
+ /* create a OPTIONS entry on menubar ----------------------------*/
+a64 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup1, args, n );
+#endif
+d66 1
+a66 1
+ /* create menu items for OPTIONS */ 
+d78 1
+a78 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup1a, args, n );
+#endif
+d85 1
+a85 1
+ /* create a line style menu item in OPTIONS */
+d87 1
+a87 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup1c, args, n );
+#endif
+d92 1
+a92 1
+ /* create a line width menu item in OPTIONS */
+d94 1
+a94 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup1d, args, n );
+#endif
+d102 2
+a103 1
+/* create a COMMAND entry on menubar ---------------------------*/
+a104 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup2, args, n );
+#endif
+d106 16
+a121 16
+ /* create menu items for COMMANDS */ 
+ wid_pushg(iw_menup2,(Widget)0,"Clear",         webclear,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Image",         imagemen,  "1",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Montage",       imagemen,  "2",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Surface",       imagemen,  "3",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Shift",         imagemen,  "i",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Annotate",      imagemen,  "9",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Colored Surface",imagemen, "h",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Convolve",      imagemen,  "a",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Corr-Map",      comapmen,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Dendrogram",    imagemen,  "e",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Distance",      distmen,   "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Histogram",     imagemen,  "4",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Magnify",       mag     ,  "0",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Markers",       imagemen,  "5",0,0);
+ wid_pushg(iw_menup2,(Widget)0,"Mask",          imagemen,  "6",0,0);
+d124 1
+a124 1
+ /* create a  Movie menu item in COMMANDS */
+d126 1
+a126 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup2g, args, n );
+#endif
+d135 1
+a135 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup2f, args, n );
+#endif
+d141 1
+a141 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup2e, args, n );
+#endif
+d153 1
+a153 1
+/* create a record menu item in COMMANDS */
+d155 1
+a155 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup2b, args, n );
+#endif
+d163 1
+a163 1
+ /* create a EDIT entry on menubar -----------------------------------*/
+a164 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup5, args, n );
+#endif
+d173 1
+a173 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup2c, args, n );
+#endif
+d180 1
+a180 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup2a, args, n );
+#endif
+a186 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup2d, args, n );
+#endif
+a193 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup3, args, n );
+#endif
+a200 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup4, args, n );
+#endif
+d223 1
+a223 1
+  /* create a push button  for QUICK IMAGE ----------------- */
+d231 1
+a231 1
+ XtSetArg(args[n], XmNhighlightColor,  WhitePixelOfScreen(iscreen));    n++;
+d234 1
+a234 2
+ XtSetArg(args[n], XmNforeground,      BlackPixelOfScreen(iscreen)); n++;     
+ XtSetArg(args[n], XmNbackground,      WhitePixelOfScreen(iscreen)); n++;      
+d254 1
+a254 2
+ XtSetArg(args[n], XmNforeground,      BlackPixelOfScreen(iscreen)); n++;     
+ XtSetArg(args[n], XmNbackground,      WhitePixelOfScreen(iscreen)); n++;      
+@
+
+
+1.55
+log
+@Quick image, exit buttons
+@
+text
+@d5 4
+a8 2
+ *                 _BGFG foreground & background   Oct 2005 ArDean Leith
+ *                 _BGFG in submenus               Oct 2007 ArDean Leith
+d83 2
+d92 5
+a96 4
+ wid_pushg(iw_menup1a,(Widget)0,"Foreground",   colmen,    "0",0,0);
+ wid_pushg(iw_menup1a,(Widget)0,"Background",   colmen,    "2",0,0);
+ wid_pushg(iw_menup1a,(Widget)0,"Overlay",      colmen,    "1",0,0);
+ wid_pushg(iw_menup1a,(Widget)0,"Cursor",       colmen,    "3",0,0);
+a120 9
+ /* create a lut menu item in OPTIONS */
+ iw_menup1b = wid_pulldown(iw_menup1,"Lut",'M');
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup1b, args, n );
+#endif
+ wid_pushg(iw_menup1b,(Widget)0,"Shared",        lutmen,   "0",0,0);
+ wid_pushg(iw_menup1b,(Widget)0,"Private",       lutmen,   "1",0,0);
+
+a134 1
+ wid_pushg(iw_menup2,(Widget)0,"Blackout",      blackout,  "0",0,0);
+@
+
+
+1.54
+log
+@_BGFG in submenus
+@
+text
+@a1 2
+/*$Header: /net/bali/usr1/web/src/RCS/web_com.c,v 1.53 2006/02/04 18:18:43 leith Exp $*/
+
+d214 1
+a214 1
+/* create a boxes menu item in EDIT */
+d224 1
+a224 1
+ /* create a move area menu item in EDIT */
+d234 1
+a234 1
+ /* create a window file  menu item in EDIT */
+a244 1
+
+d268 1
+d271 57
+@
+
+
+1.53
+log
+@extra bad XtSetValues(iw_menup1, removed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_com.c,v 1.52 2005/10/18 16:59:46 leith Exp leith $*/
+d8 1
+d84 1
+a84 1
+ /* create a color menu item in OPTIONS */
+d86 4
+d97 4
+d107 4
+d120 4
+d155 4
+d167 4
+d176 4
+d193 4
+d218 4
+d228 4
+d236 1
+a236 1
+ /* create a window file  menu item in EDIT ----------------------*/
+d238 4
+@
+
+
+1.52
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_com.c,v 1.51 2005/10/12 16:32:14 leith Exp $*/
+a66 4
+#ifdef WEB_BGFG
+ /* Set colors to avoid WM focus bug */
+ XtSetValues(iw_menup1, args, n );
+#endif
+@
+
+
+1.51
+log
+@_BGFG foreground & background
+.\
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_com.c,v 1.50 2001/09/12 14:43:27 leith Exp leith $*/
+d10 23
+a32 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.50
+log
+@added volume movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_com.c,v 1.49 2001/09/05 12:36:36 leith Exp $*/
+d7 1
+d20 1
+a20 1
+ * PURPOSE:     contains web commands for menu bar
+d32 1
+d43 12
+d57 4
+d99 4
+d160 5
+d192 4
+d203 4
+@
+
+
+1.49
+log
+@menu wording changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_com.c,v 1.48 2001/09/04 15:08:06 leith Exp leith $*/
+d103 1
+a103 1
+ wid_pushg(iw_menup2g,(Widget)0,"Big images",   imagemen,"o",0,0);
+d109 1
+a109 6
+ /* create a  Movie menu item in COMMANDS */
+ iw_menup2g = wid_pulldown(iw_menup2,"Movie",'G');
+ wid_pushg(iw_menup2g,(Widget)0,"Big movie",   imagemen,"o",0,0);
+ wid_pushg(iw_menup2g,(Widget)0,"Small movie", imagemen,"g",0,0);
+
+ /* create a  Categorize menu item in COMMANDS */
+@
+
+
+1.48
+log
+@big movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_com.c,v 1.47 2001/08/08 16:09:47 leith Exp $*/
+d103 2
+a104 2
+ wid_pushg(iw_menup2g,(Widget)0,"Big movie",   imagemen,"o",0,0);
+ wid_pushg(iw_menup2g,(Widget)0,"Small movie", imagemen,"g",0,0);
+@
+
+
+1.47
+log
+@stack support improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.45 1999/07/06 16:11:58 leith Exp $*/
+d39 1
+a39 1
+ Widget iw_menup2f;
+d67 6
+a72 6
+ wid_pushg(iw_menup1d,(Widget)0,"0",        setline,   "3",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"1",        setline,   "4",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"2",        setline,   "5",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"3",        setline,   "6",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"4",        setline,   "7",0,0);
+ wid_pushg(iw_menup1d,(Widget)0,"5",        setline,   "8",0,0);
+d100 6
+a105 1
+ wid_pushg(iw_menup2,(Widget)0,"Movie",         imagemen,  "g",0,0);
+d108 5
+@
+
+
+1.46
+log
+@stack support improved
+@
+text
+@d39 1
+a39 1
+ Widget iw_menup2f, iw_menup2g;
+d99 1
+a99 6
+
+ /* create a  Montage from doc. file menu item in COMMANDS */
+ iw_menup2g = wid_pulldown(iw_menup2,"Montage from doc. file",'P');
+ wid_pushg(iw_menup2g,(Widget)0,"Images or Volumes",imagemen,"k",0,0);
+ wid_pushg(iw_menup2g,(Widget)0,"Stacked Images", imagemen,"o",0,0);
+
+a107 1
+ wid_pushg(iw_menup2f,(Widget)0,"Doc. file stack montage", imagemen,"q",0,0);
+@
+
+
+1.45
+log
+@addec ctfmen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.44 1998/10/02 15:05:19 leith Exp $*/
+d39 1
+a39 1
+ Widget iw_menup2f;
+d99 6
+a104 1
+ wid_pushg(iw_menup2,(Widget)0,"Montage from doc. file", imagemen, "k",0,0);
+d111 3
+a113 2
+ wid_pushg(iw_menup2f,(Widget)0,"From sequential montage",imagemen,"b0",0,0);
+ wid_pushg(iw_menup2f,(Widget)0,"From doc. file montage", imagemen,"b1",0,0);
+@
+
+
+1.44
+log
+@added general filter
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.43 1997/05/12 18:44:34 leith Exp $*/
+d102 1
+@
+
+
+1.43
+log
+@renamed particles
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.42 1997/02/26 15:05:55 leith Exp leith $*/
+d101 1
+a101 1
+ wid_pushg(iw_menup2,(Widget)0,"Tilted Particles",imagemen,  "8",0,0);
+d117 1
+@
+
+
+1.42
+log
+@added categorize from doc file
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.41 1996/08/21 15:46:44 leith Exp leith $*/
+d101 1
+a101 1
+ wid_pushg(iw_menup2,(Widget)0,"Particles",     imagemen,  "8",0,0);
+@
+
+
+1.41
+log
+@called distmen for distances insted of dist
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.40 1996/06/13 18:48:01 leith Exp leith $*/
+d39 1
+a89 1
+ wid_pushg(iw_menup2,(Widget)0,"Categorize",    imagemen,  "b",0,0);
+d102 5
+@
+
+
+1.40
+log
+@added doc montage
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.39 1996/03/26 18:14:07 leith Exp leith $*/
+d94 1
+a94 1
+ wid_pushg(iw_menup2,(Widget)0,"Distance",      dist,      "0",0,0);
+@
+
+
+1.39
+log
+@had left out exit
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.38 1996/03/26 17:24:07 leith Exp leith $*/
+d99 1
+@
+
+
+1.38
+log
+@removed unused variables that were set
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.37 1995/11/28 20:28:38 leith Exp leith $*/
+d155 1
+a155 2
+ wid_pushg(iw_menup3,(Widget)0,"Manual", web_info,
+                      "1",0,0);
+d164 1
+d166 1
+@
+
+
+1.37
+log
+@added drill-n-fill command
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.36 1995/11/28 16:23:13 liy Exp leith $*/
+a35 1
+ Widget iw_pbe1, iw_pbe2, iw_pbe3;
+a38 10
+ Widget iw_pb1,  iw_pb2,  iw_pb3,  iw_pb4,  iw_pb5,  iw_pb6,  iw_pb7;
+ Widget iw_pb8,  iw_pb9,  iw_pb10, iw_pb11, iw_pb12, iw_pb13, iw_pb14;
+ Widget iw_pb15, iw_pb16, iw_pb17, iw_pb18, iw_pb19, iw_pb20, iw_pb21;
+ Widget iw_pb22, iw_pb23, iw_pb24, iw_pb25, iw_pb26, iw_pb27, iw_pb28;
+ Widget iw_pb29, iw_pb30, iw_pb31, iw_pb32, iw_pb33, iw_pb34, iw_pb35;
+ Widget iw_pb36, iw_pb37, iw_pb38, iw_pb39, iw_pb40, iw_pb41, iw_pb42;
+ Widget iw_pb43, iw_pb44, iw_pb45, iw_pb46, iw_pb47, iw_pb48, iw_pb49;
+ Widget iw_pb50, iw_pb51, iw_pb52, iw_pb53, iw_pb54, iw_pb55, iw_pb56;
+ Widget iw_pb57, iw_pb58, iw_pb59, iw_pb60, iw_pb61, iw_pb62, iw_pb63;
+ Widget iw_pb64, iw_pb65, iw_pb66, iw_pb67, iw_pb68;
+d44 6
+a49 6
+ iw_pb15 = wid_pushg(iw_menup1,(Widget)0,"Image",        imoptmen,   "0",0,0);
+ iw_pb32 = wid_pushg(iw_menup1,(Widget)0,"Contrast",  contrastmen,   "0",0,0);
+ iw_pb20 = wid_pushg(iw_menup1,(Widget)0,"Cursor",         curmen,   "0",0,0);
+ iw_pb42 = wid_pushg(iw_menup1,(Widget)0,"Display",       dispmen,   "0",0,0);
+ iw_pb49 = wid_pushg(iw_menup1,(Widget)0,"Font",          fontmen,   "0",0,0);
+ iw_pb35 = wid_pushg(iw_menup1,(Widget)0,"Magnify",        setmag,   "0",0,0);
+d53 4
+a56 4
+ iw_pb21 = wid_pushg(iw_menup1a,(Widget)0,"Foreground",   colmen,    "0",0,0);
+ iw_pb27 = wid_pushg(iw_menup1a,(Widget)0,"Background",   colmen,    "2",0,0);
+ iw_pb28 = wid_pushg(iw_menup1a,(Widget)0,"Overlay",      colmen,    "1",0,0);
+ iw_pb29 = wid_pushg(iw_menup1a,(Widget)0,"Cursor",       colmen,    "3",0,0);
+d60 3
+a62 3
+ iw_pb54 = wid_pushg(iw_menup1c,(Widget)0,"Solid",        setline,   "0",0,0);
+ iw_pb55 = wid_pushg(iw_menup1c,(Widget)0,"OnOffDash",    setline,   "1",0,0);
+ iw_pb56 = wid_pushg(iw_menup1c,(Widget)0,"DoubleDash",   setline,   "2",0,0);
+d66 6
+a71 6
+ iw_pb57 = wid_pushg(iw_menup1d,(Widget)0,"0",        setline,   "3",0,0);
+ iw_pb58 = wid_pushg(iw_menup1d,(Widget)0,"1",        setline,   "4",0,0);
+ iw_pb59 = wid_pushg(iw_menup1d,(Widget)0,"2",        setline,   "5",0,0);
+ iw_pb60 = wid_pushg(iw_menup1d,(Widget)0,"3",        setline,   "6",0,0);
+ iw_pb61 = wid_pushg(iw_menup1d,(Widget)0,"4",        setline,   "7",0,0);
+ iw_pb62 = wid_pushg(iw_menup1d,(Widget)0,"5",        setline,   "8",0,0);
+d75 2
+a76 2
+ iw_pb31 = wid_pushg(iw_menup1b,(Widget)0,"Shared",        lutmen,   "0",0,0);
+ iw_pb47 = wid_pushg(iw_menup1b,(Widget)0,"Private",       lutmen,   "1",0,0);
+d82 19
+a100 19
+ iw_pb5  = wid_pushg(iw_menup2,(Widget)0,"Clear",         webclear,  "0",0,0);
+ iw_pb1  = wid_pushg(iw_menup2,(Widget)0,"Image",         imagemen,  "1",0,0);
+ iw_pb4  = wid_pushg(iw_menup2,(Widget)0,"Montage",       imagemen,  "2",0,0);
+ iw_pb22 = wid_pushg(iw_menup2,(Widget)0,"Surface",       imagemen,  "3",0,0);
+ iw_pb66 = wid_pushg(iw_menup2,(Widget)0,"Shift",         imagemen,  "i",0,0);
+ iw_pb38 = wid_pushg(iw_menup2,(Widget)0,"Annotate",      imagemen,  "9",0,0);
+ iw_pb23 = wid_pushg(iw_menup2,(Widget)0,"Blackout",      blackout,  "0",0,0);
+ iw_pb40 = wid_pushg(iw_menup2,(Widget)0,"Categorize",    imagemen,  "b",0,0);
+ iw_pb65 = wid_pushg(iw_menup2,(Widget)0,"Colored Surface",imagemen, "h",0,0);
+ iw_pb46 = wid_pushg(iw_menup2,(Widget)0,"Convolve",      imagemen,  "a",0,0);
+ iw_pb51 = wid_pushg(iw_menup2,(Widget)0,"Corr-Map",      comapmen,  "0",0,0);
+ iw_pb52 = wid_pushg(iw_menup2,(Widget)0,"Dendrogram",    imagemen,  "e",0,0);
+ iw_pb67 = wid_pushg(iw_menup2,(Widget)0,"Distance",      dist,      "0",0,0);
+ iw_pb24 = wid_pushg(iw_menup2,(Widget)0,"Histogram",     imagemen,  "4",0,0);
+ iw_pb26 = wid_pushg(iw_menup2,(Widget)0,"Magnify",       mag     ,  "0",0,0);
+ iw_pb37 = wid_pushg(iw_menup2,(Widget)0,"Markers",       imagemen,  "5",0,0);
+ iw_pb33 = wid_pushg(iw_menup2,(Widget)0,"Mask",          imagemen,  "6",0,0);
+ iw_pb64 = wid_pushg(iw_menup2,(Widget)0,"Movie",         imagemen,  "g",0,0);
+ iw_pb34 = wid_pushg(iw_menup2,(Widget)0,"Particles",     imagemen,  "8",0,0);
+d104 8
+a111 8
+ iw_pbe1 = wid_pushg(iw_menup2e,(Widget)0,"Interactive",     winsiz,"81",0,0);
+ iw_pbe2 = wid_pushg(iw_menup2e,(Widget)0,"Fixed size",      winsiz,"82",0,0);
+ iw_pbe3 = wid_pushg(iw_menup2e,(Widget)0,"Specified coord.",winsiz,"83",0,0);
+
+ iw_pb3  = wid_pushg(iw_menup2,(Widget)0,"Pixel",         pixelmen,  "0",0,0); 
+ iw_pb36 = wid_pushg(iw_menup2,(Widget)0,"Profile",       imagemen,  "7",0,0);
+ iw_pb48 = wid_pushg(iw_menup2,(Widget)0,"Reflections",   imagemen,  "c",0,0);
+ iw_pb63 = wid_pushg(iw_menup2,(Widget)0,"SIRDS",         imagemen,  "f",0,0);
+d116 3
+a118 3
+ iw_pb9  = wid_pushg(iw_menup2b,(Widget)0,"Interactive",     winsiz,"61",0,0);
+ iw_pb10 = wid_pushg(iw_menup2b,(Widget)0,"Fixed size",      winsiz,"62",0,0);
+ iw_pb11 = wid_pushg(iw_menup2b,(Widget)0,"Specified coord.",winsiz,"63",0,0);
+d120 2
+a121 2
+ iw_pb39 = wid_pushg(iw_menup2,(Widget)0,"Show Recording",   imagemen,"d",0,0);
+ iw_pb50 = wid_pushg(iw_menup2,(Widget)0,"Show Contourfile", cntmen0,"0",0,0);
+d125 4
+a128 4
+ iw_pb25 = wid_pushg(iw_menup5,(Widget)0,"Bars",          bar,       "0",0,0);
+ iw_pb68 = wid_pushg(iw_menup5,(Widget)0,"Drill-n-fill",  imagemen,  "j",0,0);
+ iw_pb19 = wid_pushg(iw_menup5,(Widget)0,"Lines",         rubberline,"0",0,0);
+ iw_pb2  = wid_pushg(iw_menup5,(Widget)0,"Text",          itex,      "0",0,0);
+d132 3
+a134 3
+ iw_pb12 = wid_pushg(iw_menup2c,(Widget)0,"Interactive",     winsiz,"51",0,0);
+ iw_pb13 = wid_pushg(iw_menup2c,(Widget)0,"Fixed size",      winsiz,"52",0,0);
+ iw_pb14 = wid_pushg(iw_menup2c,(Widget)0,"Specified coord.",winsiz,"53",0,0);
+d138 3
+a140 3
+ iw_pb6 = wid_pushg(iw_menup2a,(Widget)0,"Interactive",     winsiz,"71",0,0);
+ iw_pb7 = wid_pushg(iw_menup2a,(Widget)0,"Fixed size",      winsiz,"72",0,0);
+ iw_pb8 = wid_pushg(iw_menup2a,(Widget)0,"Specified coord.",winsiz,"73",0,0);
+d145 3
+a147 3
+ iw_pb16 = wid_pushg(iw_menup2d,(Widget)0,"Interactive",     winsiz,"41",0,0);
+ iw_pb17 = wid_pushg(iw_menup2d,(Widget)0,"Fixed size",      winsiz,"42",0,0);
+ iw_pb18 = wid_pushg(iw_menup2d,(Widget)0,"Specified coord.",winsiz,"43",0,0);
+d154 2
+a155 2
+ iw_pb30  = wid_pushg(iw_menup3,(Widget)0,"X-info", web_info, "0",0,0);
+ iw_pb53  = wid_pushg(iw_menup3,(Widget)0,"Manual", web_info,
+d162 3
+a164 4
+ iw_pb41  = wid_pushg(iw_menup4,(Widget)0,"File extension",    newext   ,"0",0,0);
+ iw_pb43  = wid_pushg(iw_menup4,(Widget)0,"Current directory", changedir,"0",0,0);
+ iw_pb44  = wid_pushg(iw_menup4,(Widget)0,"File pattern ",     changepat,"0",0,0);
+ iw_pb45  = wid_pushg(iw_menup4,(Widget)0,"EXIT",              exitexit,"0",0,0);
+@
+
+
+1.36
+log
+@Added Distance operation
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.35 1995/08/15 13:51:06 leith Exp liy $*/
+a35 1
+
+d49 1
+a49 1
+ Widget iw_pb64, iw_pb65, iw_pb66, iw_pb67;
+d90 1
+a90 1
+ iw_menup2 = wid_pulldown(iw_menub,"COMMAND",'C');
+a111 6
+ iw_pb3  = wid_pushg(iw_menup2,(Widget)0,"Pixel",         pixelmen,  "0",0,0); 
+ iw_pb36 = wid_pushg(iw_menup2,(Widget)0,"Profile",       imagemen,  "7",0,0);
+ iw_pb48 = wid_pushg(iw_menup2,(Widget)0,"Reflections",   imagemen,  "c",0,0);
+ iw_pb50 = wid_pushg(iw_menup2,(Widget)0,"Show Contourfile", cntmen0,"0",0,0);
+ iw_pb39 = wid_pushg(iw_menup2,(Widget)0,"Show Recording",imagemen,  "d",0,0);
+ iw_pb63 = wid_pushg(iw_menup2,(Widget)0,"SIRDS",         imagemen,  "f",0,0);
+d119 6
+d131 3
+d135 1
+a135 1
+ iw_menup5 = wid_pulldown(iw_menub,"EDIT",'O');
+d137 1
+@
+
+
+1.35
+log
+@fixed manual display
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.34 1995/08/10 12:46:13 leith Exp leith $*/
+d50 1
+a50 1
+ Widget iw_pb64, iw_pb65, iw_pb66;
+d106 1
+@
+
+
+1.34
+log
+@put name of manual in web_man call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.33 1995/07/21 20:16:10 liy Exp leith $*/
+d162 2
+a163 2
+ iw_pb53  = wid_pushg(iw_menup3,(Widget)0,"Manual", web_man,
+                      "web.man",0,0);
+@
+
+
+1.33
+log
+@added shift image function
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.32 1995/06/21 16:12:43 leith Exp liy $*/
+d162 2
+a163 1
+ iw_pb53  = wid_pushg(iw_menup3,(Widget)0,"Manual", web_man,  "1",0,0);
+@
+
+
+1.32
+log
+@added surfcolor capability
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.31 1995/05/08 16:36:22 leith Exp leith $*/
+d50 1
+a50 1
+ Widget iw_pb64, iw_pb65;
+d98 1
+@
+
+
+1.31
+log
+@manual call was lost
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.30 1995/04/21 19:29:01 liy Exp leith $*/
+d50 1
+a50 1
+ Widget iw_pb64;
+d101 1
+a170 1
+
+@
+
+
+1.30
+log
+@create EDIT menu group, move in some commands from COMMANDS
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_com.c,v 1.29 1995/03/30 17:13:16 mladjadj Exp $*/
+d159 2
+a160 2
+ iw_pb30  = wid_pushg(iw_menup3,(Widget)0,"X-info", web_info,  "0",0,0);
+ iw_pb53  = wid_pushg(iw_menup3,(Widget)0,"Manual", web_info,  "1",0,0);
+@
+
+
+1.29
+log
+@added iw_pb64=movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.28 94/11/17 16:24:37 leith Exp $*/
+a98 1
+ iw_pb25 = wid_pushg(iw_menup2,(Widget)0,"Bars",          bar,       "0",0,0);
+a104 1
+ iw_pb19 = wid_pushg(iw_menup2,(Widget)0,"Lines",         rubberline,"0",0,0);
+a115 1
+ iw_pb2  = wid_pushg(iw_menup2,(Widget)0,"Text",          itex,      "0",0,0);
+a116 12
+/* create a boxes menu item in COMMANDS */
+ iw_menup2c = wid_pulldown(iw_menup2,"Draw Boxes",'W');
+ iw_pb12 = wid_pushg(iw_menup2c,(Widget)0,"Interactive",     winsiz,"51",0,0);
+ iw_pb13 = wid_pushg(iw_menup2c,(Widget)0,"Fixed size",      winsiz,"52",0,0);
+ iw_pb14 = wid_pushg(iw_menup2c,(Widget)0,"Specified coord.",winsiz,"53",0,0);
+
+ /* create a move area menu item in COMMANDS */
+ iw_menup2a = wid_pulldown(iw_menup2,"Move area",'M');
+ iw_pb6 = wid_pushg(iw_menup2a,(Widget)0,"Interactive",     winsiz,"71",0,0);
+ iw_pb7 = wid_pushg(iw_menup2a,(Widget)0,"Fixed size",      winsiz,"72",0,0);
+ iw_pb8 = wid_pushg(iw_menup2a,(Widget)0,"Specified coord.",winsiz,"73",0,0);
+
+d129 20
+a148 2
+ /* create a window file  menu item in COMMANDS ----------------------*/
+ iw_menup2d = wid_pulldown(iw_menup2,"Window Last File",'M');
+@
+
+
+1.28
+log
+@added sird menu
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.27 94/08/21 21:12:02 odesanya Exp Locker: leith $*/
+d50 1
+d110 1
+a112 1
+
+@
+
+
+1.27
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.26 94/08/03 15:26:11 leith Exp $*/
+d49 1
+a49 1
+ Widget iw_pb57, iw_pb58, iw_pb59, iw_pb60, iw_pb61, iw_pb62;
+d116 1
+@
+
+
+1.26
+log
+@changed menu for power spectrum
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.25 94/08/02 13:51:24 leith Exp $*/
+d37 2
+a40 2
+ Widget iw_pbe1, iw_pbe2, iw_pbe3;
+ Widget iw_menup1a, iw_menup1b;
+d48 2
+a49 1
+ Widget iw_pb50, iw_pb51, iw_pb52, iw_pb53;
+d56 1
+d58 1
+a61 8
+ /* create a lut menu item in OPTIONS */
+ iw_menup1b = wid_pulldown(iw_menup1,"Lut",'M');
+ iw_pb31 = wid_pushg(iw_menup1b,(Widget)0,"Shared",        lutmen,   "0",0,0);
+ iw_pb47 = wid_pushg(iw_menup1b,(Widget)0,"Private",       lutmen,   "1",0,0);
+
+ iw_pb42 = wid_pushg(iw_menup1,(Widget)0,"Display",       dispmen,   "0",0,0);
+ iw_pb32 = wid_pushg(iw_menup1,(Widget)0,"Contrast",  contrastmen,   "0",0,0);
+
+d68 6
+d75 15
+a89 1
+ /* create a COMMAND entry on menubar ---------------------------*/
+a111 6
+ /* create a  Power Spectrum menu item in COMMANDS */
+ iw_menup2e = wid_pulldown(iw_menup2,"Power Spectrum",'M');
+ iw_pbe1 = wid_pushg(iw_menup2e,(Widget)0,"Interactive",     winsiz,"81",0,0);
+ iw_pbe2 = wid_pushg(iw_menup2e,(Widget)0,"Fixed size",      winsiz,"82",0,0);
+ iw_pbe3 = wid_pushg(iw_menup2e,(Widget)0,"Specified coord.",winsiz,"83",0,0);
+
+d118 6
+d130 6
+a140 6
+
+/* create a boxes menu item in COMMANDS */
+ iw_menup2c = wid_pulldown(iw_menup2,"Draw Boxes",'W');
+ iw_pb12 = wid_pushg(iw_menup2c,(Widget)0,"Interactive",     winsiz,"51",0,0);
+ iw_pb13 = wid_pushg(iw_menup2c,(Widget)0,"Fixed size",      winsiz,"52",0,0);
+ iw_pb14 = wid_pushg(iw_menup2c,(Widget)0,"Specified coord.",winsiz,"53",0,0);
+@
+
+
+1.25
+log
+@added power
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.24 94/07/20 19:04:10 odesanya Exp Locker: leith $*/
+d38 2
+a39 1
+ Widget iw_menup2a, iw_menup2b, iw_menup2c, iw_menup2d;
+d48 1
+a48 1
+ Widget iw_pb50, iw_pb51, iw_pb52, iw_pb53, iw_pb54;
+d96 7
+a102 1
+ iw_pb54 = wid_pushg(iw_menup2,(Widget)0,"Power Spectrum",powermena, "0",0,0);
+@
+
+
+1.24
+log
+@include the web manual viewer menu
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr1/web/src/RCS/web_com.c,v 1.22 94/07/19 12:25:34 leith Exp $*/
+d47 1
+a47 1
+ Widget iw_pb50, iw_pb51, iw_pb52, iw_pb53;
+d95 1
+d98 1
+a98 1
+ iw_pb50 = wid_pushg(iw_menup2,(Widget)0,"Show Contourfile", cntmen0,   "0",0,0);
+@
+
+
+1.23
+log
+@include the web manual viewer
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.20 1994/05/26 14:00:01 odesanya Exp $*/
+d53 4
+a56 4
+ iw_pb15 = wid_pushg(iw_menup1,(Widget)0,"Image",   imoptmen,   "0",0,0);
+ iw_pb20 = wid_pushg(iw_menup1,(Widget)0,"Cursor",  curmen,     "0",0,0);
+ iw_pb49 = wid_pushg(iw_menup1,(Widget)0,"Font",  fontmen,     "0",0,0);
+ iw_pb35 = wid_pushg(iw_menup1,(Widget)0,"Magnify", setmag,     "0",0,0);
+d60 2
+a61 2
+ iw_pb31 = wid_pushg(iw_menup1b,(Widget)0,"Shared", lutmen,"0",0,0);
+ iw_pb47 = wid_pushg(iw_menup1b,(Widget)0,"Private",lutmen,"1",0,0);
+d63 2
+a64 2
+ iw_pb42 = wid_pushg(iw_menup1,(Widget)0,"Display", dispmen,    "0",0,0);
+ iw_pb32 = wid_pushg(iw_menup1,(Widget)0,"Contrast",contrastmen,"0",0,0);
+d68 4
+a71 4
+ iw_pb21 = wid_pushg(iw_menup1a,(Widget)0,"Foreground",colmen,"0",0,0);
+ iw_pb27 = wid_pushg(iw_menup1a,(Widget)0,"Background",colmen,"2",0,0);
+ iw_pb28 = wid_pushg(iw_menup1a,(Widget)0,"Overlay",   colmen,"1",0,0);
+ iw_pb29 = wid_pushg(iw_menup1a,(Widget)0,"Cursor",    colmen,"3",0,0);
+d77 23
+a99 23
+ iw_pb5  = wid_pushg(iw_menup2,(Widget)0,"Clear",    webclear,  "0",0,0);
+ iw_pb1  = wid_pushg(iw_menup2,(Widget)0,"Image",    imagemen,  "1",0,0);
+ iw_pb4  = wid_pushg(iw_menup2,(Widget)0,"Montage",  imagemen,  "2",0,0);
+ iw_pb22 = wid_pushg(iw_menup2,(Widget)0,"Surface",  imagemen,  "3",0,0);
+ iw_pb38 = wid_pushg(iw_menup2,(Widget)0,"Annotate", imagemen,  "9",0,0);
+ iw_pb25 = wid_pushg(iw_menup2,(Widget)0,"Bars",     bar,       "0",0,0);
+ iw_pb23 = wid_pushg(iw_menup2,(Widget)0,"Blackout", blackout,  "0",0,0);
+ iw_pb40 = wid_pushg(iw_menup2,(Widget)0,"Categorize",imagemen, "b",0,0);
+ iw_pb46 = wid_pushg(iw_menup2,(Widget)0,"Contours",  cntmen0,  "0",0,0);
+ iw_pb39 = wid_pushg(iw_menup2,(Widget)0,"Convolve", imagemen,  "a",0,0);
+ iw_pb51 = wid_pushg(iw_menup2,(Widget)0,"Corr-Map", comapmen,  "0",0,0);
+ iw_pb52 = wid_pushg(iw_menup2,(Widget)0,"Dendrogram", imagemen, "e",0,0);
+ iw_pb24 = wid_pushg(iw_menup2,(Widget)0,"Histogram",imagemen,  "4",0,0);
+ iw_pb19 = wid_pushg(iw_menup2,(Widget)0,"Lines",    rubberline,"0",0,0);
+ iw_pb26 = wid_pushg(iw_menup2,(Widget)0,"Markers",  imagemen,  "5",0,0);
+ iw_pb33 = wid_pushg(iw_menup2,(Widget)0,"Mask",     imagemen,  "6",0,0);
+ iw_pb34 = wid_pushg(iw_menup2,(Widget)0,"Magnify",  mag     ,  "0",0,0);
+ iw_pb37 = wid_pushg(iw_menup2,(Widget)0,"Particles",imagemen,  "8",0,0);
+ iw_pb3  = wid_pushg(iw_menup2,(Widget)0,"Pixel",    pixelmen,  "0",0,0); 
+ iw_pb36 = wid_pushg(iw_menup2,(Widget)0,"Profile",  imagemen,  "7",0,0);
+ iw_pb48 = wid_pushg(iw_menup2,(Widget)0,"Reflections",imagemen,"c",0,0);
+ iw_pb50 = wid_pushg(iw_menup2,(Widget)0,"Show Recording",imagemen,"d",0,0);
+ iw_pb2  = wid_pushg(iw_menup2,(Widget)0,"Text",     itex,      "0",0,0);
+@
+
+
+1.22
+log
+@renamed header
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.21 94/07/01 23:28:37 odesanya Exp Locker: leith $*/
+d47 1
+a47 1
+ Widget iw_pb50, iw_pb51, iw_pb52;
+d53 4
+a56 4
+ iw_pb15 = wid_pushg(iw_menup1,(Widget)0,"Image",        imoptmen,   "0",0,0);
+ iw_pb20 = wid_pushg(iw_menup1,(Widget)0,"Cursor",         curmen,   "0",0,0);
+ iw_pb49 = wid_pushg(iw_menup1,(Widget)0,"Font",          fontmen,   "0",0,0);
+ iw_pb35 = wid_pushg(iw_menup1,(Widget)0,"Magnify",        setmag,   "0",0,0);
+d60 2
+a61 2
+ iw_pb31 = wid_pushg(iw_menup1b,(Widget)0,"Shared",        lutmen,   "0",0,0);
+ iw_pb47 = wid_pushg(iw_menup1b,(Widget)0,"Private",       lutmen,   "1",0,0);
+d63 2
+a64 2
+ iw_pb42 = wid_pushg(iw_menup1,(Widget)0,"Display",       dispmen,   "0",0,0);
+ iw_pb32 = wid_pushg(iw_menup1,(Widget)0,"Contrast",  contrastmen,   "0",0,0);
+d68 4
+a71 4
+ iw_pb21 = wid_pushg(iw_menup1a,(Widget)0,"Foreground",   colmen,    "0",0,0);
+ iw_pb27 = wid_pushg(iw_menup1a,(Widget)0,"Background",   colmen,    "2",0,0);
+ iw_pb28 = wid_pushg(iw_menup1a,(Widget)0,"Overlay",      colmen,    "1",0,0);
+ iw_pb29 = wid_pushg(iw_menup1a,(Widget)0,"Cursor",       colmen,    "3",0,0);
+d77 23
+a99 23
+ iw_pb5  = wid_pushg(iw_menup2,(Widget)0,"Clear",         webclear,  "0",0,0);
+ iw_pb1  = wid_pushg(iw_menup2,(Widget)0,"Image",         imagemen,  "1",0,0);
+ iw_pb4  = wid_pushg(iw_menup2,(Widget)0,"Montage",       imagemen,  "2",0,0);
+ iw_pb22 = wid_pushg(iw_menup2,(Widget)0,"Surface",       imagemen,  "3",0,0);
+ iw_pb38 = wid_pushg(iw_menup2,(Widget)0,"Annotate",      imagemen,  "9",0,0);
+ iw_pb25 = wid_pushg(iw_menup2,(Widget)0,"Bars",          bar,       "0",0,0);
+ iw_pb23 = wid_pushg(iw_menup2,(Widget)0,"Blackout",      blackout,  "0",0,0);
+ iw_pb40 = wid_pushg(iw_menup2,(Widget)0,"Categorize",    imagemen,  "b",0,0);
+ iw_pb46 = wid_pushg(iw_menup2,(Widget)0,"Convolve",      imagemen,  "a",0,0);
+ iw_pb51 = wid_pushg(iw_menup2,(Widget)0,"Corr-Map",      comapmen,  "0",0,0);
+ iw_pb52 = wid_pushg(iw_menup2,(Widget)0,"Dendrogram",    imagemen,  "e",0,0);
+ iw_pb24 = wid_pushg(iw_menup2,(Widget)0,"Histogram",     imagemen,  "4",0,0);
+ iw_pb19 = wid_pushg(iw_menup2,(Widget)0,"Lines",         rubberline,"0",0,0);
+ iw_pb26 = wid_pushg(iw_menup2,(Widget)0,"Magnify",       mag     ,  "0",0,0);
+ iw_pb37 = wid_pushg(iw_menup2,(Widget)0,"Markers",       imagemen,  "5",0,0);
+ iw_pb33 = wid_pushg(iw_menup2,(Widget)0,"Mask",          imagemen,  "6",0,0);
+ iw_pb34 = wid_pushg(iw_menup2,(Widget)0,"Particles",     imagemen,  "8",0,0);
+ iw_pb3  = wid_pushg(iw_menup2,(Widget)0,"Pixel",         pixelmen,  "0",0,0); 
+ iw_pb36 = wid_pushg(iw_menup2,(Widget)0,"Profile",       imagemen,  "7",0,0);
+ iw_pb48 = wid_pushg(iw_menup2,(Widget)0,"Reflections",   imagemen,  "c",0,0);
+ iw_pb50 = wid_pushg(iw_menup2,(Widget)0,"Show Contourfile", cntmen0,   "0",0,0);
+ iw_pb39 = wid_pushg(iw_menup2,(Widget)0,"Show Recording",imagemen,  "d",0,0);
+ iw_pb2  = wid_pushg(iw_menup2,(Widget)0,"Text",          itex,      "0",0,0);
+d132 1
+@
+
+
+1.21
+log
+@added menu for dendrogram
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.20 1994/05/26 14:00:01 odesanya Exp $*/
+d53 4
+a56 4
+ iw_pb15 = wid_pushg(iw_menup1,(Widget)0,"Image",   imoptmen,   "0",0,0);
+ iw_pb20 = wid_pushg(iw_menup1,(Widget)0,"Cursor",  curmen,     "0",0,0);
+ iw_pb49 = wid_pushg(iw_menup1,(Widget)0,"Font",  fontmen,     "0",0,0);
+ iw_pb35 = wid_pushg(iw_menup1,(Widget)0,"Magnify", setmag,     "0",0,0);
+d60 2
+a61 2
+ iw_pb31 = wid_pushg(iw_menup1b,(Widget)0,"Shared", lutmen,"0",0,0);
+ iw_pb47 = wid_pushg(iw_menup1b,(Widget)0,"Private",lutmen,"1",0,0);
+d63 2
+a64 2
+ iw_pb42 = wid_pushg(iw_menup1,(Widget)0,"Display", dispmen,    "0",0,0);
+ iw_pb32 = wid_pushg(iw_menup1,(Widget)0,"Contrast",contrastmen,"0",0,0);
+d68 4
+a71 4
+ iw_pb21 = wid_pushg(iw_menup1a,(Widget)0,"Foreground",colmen,"0",0,0);
+ iw_pb27 = wid_pushg(iw_menup1a,(Widget)0,"Background",colmen,"2",0,0);
+ iw_pb28 = wid_pushg(iw_menup1a,(Widget)0,"Overlay",   colmen,"1",0,0);
+ iw_pb29 = wid_pushg(iw_menup1a,(Widget)0,"Cursor",    colmen,"3",0,0);
+d77 23
+a99 23
+ iw_pb5  = wid_pushg(iw_menup2,(Widget)0,"Clear",    webclear,  "0",0,0);
+ iw_pb1  = wid_pushg(iw_menup2,(Widget)0,"Image",    imagemen,  "1",0,0);
+ iw_pb4  = wid_pushg(iw_menup2,(Widget)0,"Montage",  imagemen,  "2",0,0);
+ iw_pb22 = wid_pushg(iw_menup2,(Widget)0,"Surface",  imagemen,  "3",0,0);
+ iw_pb38 = wid_pushg(iw_menup2,(Widget)0,"Annotate", imagemen,  "9",0,0);
+ iw_pb25 = wid_pushg(iw_menup2,(Widget)0,"Bars",     bar,       "0",0,0);
+ iw_pb23 = wid_pushg(iw_menup2,(Widget)0,"Blackout", blackout,  "0",0,0);
+ iw_pb40 = wid_pushg(iw_menup2,(Widget)0,"Categorize",imagemen, "b",0,0);
+ iw_pb46 = wid_pushg(iw_menup2,(Widget)0,"Contours",  cntmen0,  "0",0,0);
+ iw_pb39 = wid_pushg(iw_menup2,(Widget)0,"Convolve", imagemen,  "a",0,0);
+ iw_pb51 = wid_pushg(iw_menup2,(Widget)0,"Corr-Map", comapmen,  "0",0,0);
+ iw_pb52 = wid_pushg(iw_menup2,(Widget)0,"Dendrogram", imagemen, "e",0,0);
+ iw_pb24 = wid_pushg(iw_menup2,(Widget)0,"Histogram",imagemen,  "4",0,0);
+ iw_pb19 = wid_pushg(iw_menup2,(Widget)0,"Lines",    rubberline,"0",0,0);
+ iw_pb26 = wid_pushg(iw_menup2,(Widget)0,"Markers",  imagemen,  "5",0,0);
+ iw_pb33 = wid_pushg(iw_menup2,(Widget)0,"Mask",     imagemen,  "6",0,0);
+ iw_pb34 = wid_pushg(iw_menup2,(Widget)0,"Magnify",  mag     ,  "0",0,0);
+ iw_pb37 = wid_pushg(iw_menup2,(Widget)0,"Particles",imagemen,  "8",0,0);
+ iw_pb3  = wid_pushg(iw_menup2,(Widget)0,"Pixel",    pixelmen,  "0",0,0); 
+ iw_pb36 = wid_pushg(iw_menup2,(Widget)0,"Profile",  imagemen,  "7",0,0);
+ iw_pb48 = wid_pushg(iw_menup2,(Widget)0,"Reflections",imagemen,"c",0,0);
+ iw_pb50 = wid_pushg(iw_menup2,(Widget)0,"Show Recording",imagemen,"d",0,0);
+ iw_pb2  = wid_pushg(iw_menup2,(Widget)0,"Text",     itex,      "0",0,0);
+@
+
+
+1.20
+log
+@contains corr-map menu from Mladjadj
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.19 1994/05/25 14:14:01 odesanya Exp $*/
+d47 1
+a47 1
+ Widget iw_pb50, iw_pb51;
+d81 1
+a81 1
+ iw_pb3  = wid_pushg(iw_menup2,(Widget)0,"Pixel",    pixelmen,  "0",0,0); 
+d83 7
+a90 3
+ iw_pb2  = wid_pushg(iw_menup2,(Widget)0,"Text",     itex,      "0",0,0);
+ iw_pb24 = wid_pushg(iw_menup2,(Widget)0,"Histogram",imagemen,  "4",0,0);
+ iw_pb23 = wid_pushg(iw_menup2,(Widget)0,"Blackout", blackout,  "0",0,0);
+d94 2
+a96 6
+ iw_pb37 = wid_pushg(iw_menup2,(Widget)0,"Particles",imagemen,  "8",0,0);
+ iw_pb38 = wid_pushg(iw_menup2,(Widget)0,"Annotate", imagemen,  "9",0,0);
+ iw_pb51 = wid_pushg(iw_menup2,(Widget)0,"Corr-Map", comapmen,  "0",0,0);
+ iw_pb39 = wid_pushg(iw_menup2,(Widget)0,"Convolve", imagemen,  "a",0,0);
+ iw_pb40 = wid_pushg(iw_menup2,(Widget)0,"Categorize",imagemen, "b",0,0);
+ iw_pb46 = wid_pushg(iw_menup2,(Widget)0,"Contours",  cntmen0,  "0",0,0);
+d99 1
+@
+
+
+1.19
+log
+@went back and updated with 'Show Recording' menu option
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_com.c,v 1.18 1994/05/24 18:14:08 odesanya Exp odesanya $*/
+d47 1
+a47 1
+ Widget iw_pb50;
+d93 1
+@
+
+
+1.18
+log
+@added the font selection to the menu
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.16 94/04/07 14:29:45 leith Exp $*/
+d47 1
+d97 1
+@
+
+
+1.17
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/web_com.c,v 1.16 94/04/07 14:29:45 leith Exp Locker: leith $*/
+d54 1
+a95 1
+ iw_pb49 = wid_pushg(iw_menup2,(Widget)0,"Show Recording",imagemen,"d",0,0);
+@
+
+
+1.16
+log
+@used imagemen before reflmen
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.15 94/04/07 13:46:50 leith Exp Locker: leith $*/
+d46 1
+a46 1
+ Widget iw_pb43, iw_pb44, iw_pb45, iw_pb46, iw_pb47, iw_pb48;
+d95 1
+@
+
+
+1.15
+log
+@added reflmen
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.14 94/04/05 16:48:11 leith Exp Locker: leith $*/
+d32 1
+a32 2
+  
+/**************************  web_com  ********************/
+d94 1
+a94 1
+ iw_pb48 = wid_pushg(iw_menup2,(Widget)0,"Reflections",reflmen, "0",0,0);
+@
+
+
+1.14
+log
+@added reflections /commented out still/
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.13 94/03/25 15:58:18 leith Exp Locker: leith $*/
+d47 1
+a47 1
+ Widget iw_pb43, iw_pb44, iw_pb45, iw_pb46, iw_pb47, wi_pb48;
+d95 1
+a95 2
+/* iw_pb48 = wid_pushg(iw_menup2,(Widget)0,"Reflections",reflmen,  "0",0,0);*/
+
+@
+
+
+1.13
+log
+@added lut private option
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.12 94/03/18 16:57:49 leith Exp Locker: leith $*/
+a32 31
+ /*  function prototypes */
+ extern Widget  wid_pulldown (Widget, char *, int);
+ extern Widget  wid_pushg    (Widget, Widget, char *, void (*cb)
+                              (Widget,caddr_t,caddr_t), char *,int,int);
+
+
+ extern void    imoptmen   (Widget, caddr_t, caddr_t);
+ extern void    colmen     (Widget, caddr_t, caddr_t);
+ extern void    curmen     (Widget, caddr_t, caddr_t);
+ extern void    lutmen     (Widget, caddr_t, caddr_t);
+ extern void    contrastmen(Widget, caddr_t, caddr_t);
+
+ extern void    web_info  (Widget, caddr_t, caddr_t);
+ 
+ extern void    imagemen  (Widget, caddr_t, caddr_t);
+ extern void    itex      (Widget, caddr_t, caddr_t);
+ extern void    webclear  (Widget, caddr_t, caddr_t);
+ extern void    winsiz    (Widget, caddr_t, caddr_t);
+ extern void    pixelmen  (Widget, caddr_t, caddr_t);
+ extern void    rubberline(Widget, caddr_t, caddr_t);
+ extern void    blackout  (Widget, caddr_t, caddr_t);
+ extern void    bar       (Widget, caddr_t, caddr_t);
+ extern void    mag       (Widget, caddr_t, caddr_t);
+ extern void    setmag    (Widget, caddr_t, caddr_t);
+ extern void    newext    (Widget, caddr_t, caddr_t);
+ extern void    dispmen   (Widget, caddr_t, caddr_t);
+ extern void    changedir (Widget, caddr_t, caddr_t);
+ extern void    changepat (Widget, caddr_t, caddr_t);
+ extern void    exitexit  (Widget, caddr_t, caddr_t);
+ extern void    cntmen0   (Widget, caddr_t, caddr_t);
+
+d47 1
+a47 1
+ Widget iw_pb43, iw_pb44, iw_pb45, iw_pb46, iw_pb47;
+d95 1
+@
+
+
+1.12
+log
+@added contours
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.11 94/02/18 14:40:51 leith Exp Locker: leith $*/
+d30 1
+d69 1
+a69 1
+ Widget iw_menup1, iw_menup2, iw_menup3, iw_menup4, iw_menup5;
+d71 1
+a71 1
+ Widget iw_menup1a;
+d78 1
+a78 1
+ Widget iw_pb43, iw_pb44, iw_pb45, iw_pb46;
+d87 6
+a92 1
+ iw_pb31 = wid_pushg(iw_menup1,(Widget)0,"Lut",     lutmen,     "0",0,0);
+a152 1
+
+@
+
+
+1.11
+log
+@added exit
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.10 94/02/10 16:46:28 leith Exp Locker: leith $*/
+d61 1
+d77 1
+a77 1
+ Widget iw_pb43, iw_pb44, iw_pb45;
+d101 1
+d119 1
+a146 1
+ iw_pb5  = wid_pushg(iw_menup2, (Widget)0,"Clear",           webclear,"0",0,0);
+@
+
+
+1.10
+log
+@added changepat
+sw
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.9 94/02/10 12:03:15 leith Exp Locker: leith $*/
+d60 1
+d67 1
+a67 1
+ Widget iw_menup1, iw_menup2, iw_menup3, iw_menup4;
+d76 1
+a76 1
+ Widget iw_pb43, iw_pb44;
+d160 1
+@
+
+
+1.9
+log
+@added changedir
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.8 94/02/08 11:42:36 leith Exp Locker: leith $*/
+d59 1
+d75 1
+a75 1
+ Widget iw_pb43;
+d156 3
+a158 2
+ iw_pb41  = wid_pushg(iw_menup4,(Widget)0,"File extension",    newext,"0",0,0);
+ iw_pb41  = wid_pushg(iw_menup4,(Widget)0,"Current directory", changedir,"0",0,0);
+@
+
+
+1.8
+log
+@added dispmen
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.7 94/02/03 16:38:54 leith Exp Locker: leith $*/
+d58 1
+d74 1
+d155 2
+a156 1
+ iw_pb41  = wid_pushg(iw_menup4,(Widget)0,"File extension", newext,"0",0,0);
+@
+
+
+1.7
+log
+@added systems menu with newext to the selections
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.6 94/01/28 17:14:21 leith Exp Locker: leith $*/
+d57 1
+d72 1
+a72 1
+ Widget iw_pb36, iw_pb37, iw_pb38, iw_pb39, iw_pb40, iw_pb41;
+d82 1
+d152 1
+a152 1
+ /* create menu items in INFO */ 
+@
+
+
+1.6
+log
+@added cat routine
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.5 93/12/09 11:07:47 leith Exp Locker: leith $*/
+d56 1
+d71 1
+a71 1
+ Widget iw_pb36, iw_pb37, iw_pb38, iw_pb39, iw_pb40;
+d141 1
+a141 1
+ /* create a INFO entry on menubar --------------------------------*/
+d146 6
+@
+
+
+1.5
+log
+@added convolve
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.4 93/11/30 10:09:46 leith Exp Locker: leith $*/
+d70 1
+a70 1
+ Widget iw_pb36, iw_pb37, iw_pb38, iw_pb39;
+d109 1
+@
+
+
+1.4
+log
+@added annote call
+@
+text
+@d2 3
+a4 3
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.3 93/11/16 13:50:46 leith Exp Locker: leith $*/
+/*
+ ***********************************************************************
+d70 1
+a70 1
+ Widget iw_pb36, iw_pb37, iw_pb38;
+d108 1
+@
+
+
+1.3
+log
+@added particles selection
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.2 93/11/10 17:01:59 leith Exp Locker: leith $*/
+d70 1
+a70 1
+ Widget iw_pb36, iw_pb37;
+d107 1
+@
+
+
+1.2
+log
+@added profile
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/web_com.c,v 1.1 93/11/10 10:11:16 leith Exp Locker: leith $*/
+d70 1
+a70 1
+ Widget iw_pb36;
+d106 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d70 1
+d105 1
+@

@@ -1,0 +1,284 @@
+head	1.7;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_surf_fromtop:1.7
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.7
+date	2005.10.18.16.59.58;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.05.09.14.44.13;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.02.02.17.09.35;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.01.24.16.57.24;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.04.19.11.50.25;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.04.08.10.43.57;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.32;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_label.c,v 1.6 1996/05/09 14:44:13 leith Exp $*/
+/*
+ * wid_label.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * wid_label(Widget iw_parent, Widget iw_label, 
+               char *label, int ix, int iy)
+ * 
+ * PURPOSE:    creates a label widget  
+ *
+ * RETURNS:    iw_button      widget for the pushbutton gadget
+ * 
+ * PARAMETERS:     
+ *
+ * RETURNS:    widget number
+ *
+ ***********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+#include <Xm/Label.h>
+
+/***************************  wid_label  *****************************/
+
+ Widget wid_label(Widget iw_parent, Widget iw_label, 
+               char *label, Colormap mapt, int ix, int iy)
+ { 
+ Arg           args[5];          /* arg list */
+ int           n;                /* arg count */
+ XmString      str_label;        /* String label */
+
+ n = 0;
+
+ /* note: XmStringCreateLtoR handles newline char oK) if this
+    changed to XmStringCreate you will have to solve newline problem*/
+
+ str_label = XmStringCreateLtoR(label,XmSTRING_DEFAULT_CHARSET);
+ XtSetArg(args[n], XmNlabelString, str_label); n++;
+ 
+ if (  iw_label ==  (Widget) 0)
+    {      /* create new label gadget */
+    if (ix > 0 && iy > 0)
+       {     /* set label position */
+       XtSetArg(args[n], XmNx, (Position) ix);   n++;
+       XtSetArg(args[n], XmNy, (Position) iy);   n++;
+       }
+    else
+       {
+       /* use default alignment */
+       XtSetArg(args[n], XmNalignment, XmALIGNMENT_BEGINNING);  n++;
+       }
+
+     if (mapt) 
+        {
+        XtSetArg(args[n], XmNcolormap, mapt);  n++;
+        }
+
+    iw_label = XmCreateLabel(iw_parent,"iw_label",args,n);
+    }
+ else 
+    {
+    XtSetValues(iw_label,args,n);
+    }
+
+ /* free the String (not doing this may result in a memory leak) */
+ XmStringFree(str_label);
+
+ XtManageChild(iw_label);
+ return iw_label;
+ }
+ 
+@
+
+
+1.6
+log
+@used Position , moved mapt test outside of position test
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_label.c,v 1.5 1995/02/02 17:09:35 liy Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.5
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_label.c,v 1.4 1995/01/24 16:57:24 leith Exp liy $*/
+a32 2
+#define MAX_ARGS 5
+
+d38 1
+a38 1
+ Arg           args[MAX_ARGS];   /* arg list */
+d50 1
+a50 1
+ if (  iw_label <=  (Widget) 0)
+d54 2
+a55 7
+       XtSetArg(args[n], XmNx,        ix);   n++;
+       XtSetArg(args[n], XmNy,        iy);   n++;
+       if ((int) mapt != 0) 
+          {
+          XtSetArg(args[n], XmNcolormap, mapt);
+          n++;
+          }
+d60 1
+a60 2
+       XtSetArg(args[n], XmNalignment, XmALIGNMENT_BEGINNING);
+       n++;
+d62 5
+@
+
+
+1.4
+log
+@changed pointer cast to (void *)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_label.c,v 1.3 94/04/19 11:50:25 leith Exp Locker: leith $*/
+d52 1
+a52 1
+ if (  iw_label <=  (void *) 0)
+@
+
+
+1.3
+log
+@increased arguements number
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/wid_label.c,v 1.2 94/04/08 10:43:57 leith Exp Locker: leith $*/
+d52 1
+a52 1
+ if ((int)iw_label <= 0)
+@
+
+
+1.2
+log
+@bug in blocking of n++
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/wid_label.c,v 1.1 93/11/10 10:11:32 leith Exp $*/
+d33 1
+a33 1
+#define MAX_ARGS 4
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d29 1
+a29 1
+
+a31 1
+#include "std.h"
+d35 1
+a35 1
+/*******************  wid_label  *****************************/
+a39 1
+
+a50 1
+
+d58 5
+a62 1
+       if ((int) mapt != 0) XtSetArg(args[n], XmNcolormap, mapt);  n++;
+d65 1
+d67 3
+a69 1
+       XtSetArg(args[n], XmNalignment, XmALIGNMENT_BEGINNING);  n++;
+a82 1
+
+@

@@ -1,0 +1,699 @@
+head	1.21;
+access;
+symbols
+	pre-tilt-improve:1.21
+	pre_surf_fromtop:1.21
+	pre_neednewmap:1.21
+	pre_apppluss_remove:1.21
+	pre_tiltpair_chng:1.21
+	pre_GPL:1.18;
+locks;
+comment	@ * @;
+
+
+1.21
+date	2007.11.28.16.18.33;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2005.10.18.16.59.53;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	96.06.20.16.38.50;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	96.03.18.14.29.10;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	95.09.07.15.25.03;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.08.17.14.16.46;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.08.09.15.55.20;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.08.08.21.08.29;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.07.21.20.14.37;	author liy;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.05.08.15.11.42;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.02.08.15.50.43;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.01.11.21.40.31;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.06.16.15.29.32;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.06.03.16.39.27;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.06.03.15.57.58;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.05.12.12.39.51;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.18.12.07.07;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.03.14.15.08;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.13.58.00;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.06;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.21
+log
+@fmin
+@
+text
+@/*$Header: /net/bali/usr1/web/src/RCS/imagedis.c,v 1.20 2007/11/01 19:33:45 leith Exp $*/
+
+/*
+ ***********************************************************************
+ *
+ * imagedis.c  -- renamed from image.c Aug. 95
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * imagedis(FILEDATA *filedatat,int keepimage, XImage ** imaget,
+ *          int keepimagec, int nmint, int nmaxt)
+ * 
+ * PURPOSE:    displays an image slice, after freeing existing image
+ *             and image buffer (if they had originally been allocated
+ *             inside imagedis, only)
+ *
+ * RETURNS:    true if successfull
+ *
+ * CALL TREE:  imagemen --> showimage --> redvol  
+ *                                    --> wipic
+ * PARAMETERS:     
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+/**************************  image  *****************************/
+
+void imagedis(FILEDATA *filedatat, int keepimage, XImage ** imaget,
+              int keepimagec, int keepimagef, float ** imagef,
+              int nmint, int nmaxt)
+ {   
+ static char  *cimage  = NULL;
+
+  if (*imaget) 
+     {
+     /* free any existing allocated memory in imaget */
+     XFree((void*) *imaget);
+     *imaget = NULL;
+     }
+ 
+ if (cimage) 
+    { /* free any existing image data */
+    free (cimage);
+    cimage = NULL;
+    }
+
+ showimage(filedatat,keepimagec, &cimage, 
+                     keepimage,  imaget, 
+                     keepimagef, imagef, TRUE,
+                     (float) filedatat->fmin_spi, (float) filedatat->fmax_spi,
+                     nmint, nmaxt);
+
+ return;
+ }
+
+ 
+@
+
+
+1.20
+log
+@fmin ->fmin_spi..
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagedis.c,v 1.19 2005/10/18 16:59:53 leith Exp $*/
+d77 1
+a77 1
+                     filedatat->fmin_spi, filedatat->fmax_spi,
+@
+
+
+1.19
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagedis.c,v 1.18 1996/06/20 16:38:50 leith Exp $*/
+d77 1
+a77 1
+                     filedatat->fmin, filedatat->fmax,
+@
+
+
+1.18
+log
+@added 2 parameters
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagedis.c,v 1.17 1996/03/18 14:29:10 leith Exp $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.17
+log
+@changed comments only
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagedis.c,v 1.16 1995/09/07 15:25:03 leith Exp leith $*/
+d38 4
+a41 3
+void imagedis(FILEDATA *filedatat,int keepimage, XImage ** imaget,
+              int keepimagec, int nmint, int nmaxt)
+{   
+a42 1
+ static float *fptrdum = NULL;
+d58 2
+a59 2
+                     keepimage,   imaget, 
+                     FALSE,      &fptrdum, TRUE,
+@
+
+
+1.16
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagedis.c,v 1.15 1995/08/17 14:16:46 leith Exp leith $*/
+d20 3
+a22 1
+ * PURPOSE:    displays an image slice
+@
+
+
+1.15
+log
+@renamed imagedis (was image)
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/image.c,v 1.14 1995/08/09 15:55:20 leith Exp $*/
+d45 1
+a45 1
+     XFree(*imaget);
+@
+
+
+1.14
+log
+@alterd pointers
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/image.c,v 1.13 1995/08/08 21:08:29 leith Exp leith $*/
+d4 3
+a6 1
+ * image.c
+d17 2
+a18 1
+ * image(
+d24 2
+a25 2
+ * CALL TREE:  imagemen --> image --> widisp --> wipic 
+ * 
+d36 2
+a37 2
+void image(FILEDATA *filedatat,int keepimage, XImage ** imaget,
+           int keepimagec, int nmint, int nmaxt)
+d39 2
+a40 29
+ int        irec1, nsams, nrows, iyline, idum;
+ char       * s, * fname;
+
+ irec1 = (islice-1) * nrow + 1;
+
+ /* find nsams, nrows in displayed image */
+ dispsize(nsam1,nsam2,nrow1,nrow2,idum,idum,iskip,
+         &nsams, &nrows, &idum);
+
+ if (placed == TRUE) 
+    {  /* use location from ixuln, iyuln */
+    ixul = ixuln;
+    iyul = iyuln;
+    }
+
+ if (names == TRUE) 
+    /* find y-offset needed for file name label */
+    {
+    /*  future wid_imglabeloc(filnow,iyline,iytot); ****
+    nrowt = nrows; !!!!!!!!!!!!*/
+    nrows += 10;
+    }
+
+ if (movie == FALSE)
+    {   /* find location for next image */
+    locc(&ixul, &iyul, nsams, nrows, 
+               &ntop, &nbot,  &nrit, marx, mary, marlef, martop,
+               iwidex, ihighx, placed , newline, &nuscrn, force);
+    }
+a41 1
+  /* free any existing allocated memory in imaget */
+d44 2
+a45 2
+     /*  (*(*(imaget))).data = (char *) NULL; */
+     XDestroyImage(*imaget);
+d47 7
+a53 1
+     } 
+d55 5
+a59 33
+ /* display image at ixul, iyul, if keepimage do not destroy XImage */
+ widisp(icontx,filedatat,nsam, MYMAX(nsam1,1),MYMAX(nsam2,nsam),
+              MYMAX(1,nrow1+irec1-1), MYMAX(nrow,nrow2+irec1-1),
+              filedatat ->fmin, filedatat -> fmax, 
+              ixul, iyul, nmint, nmaxt, iskip, 
+               keepimage, imaget, keepimagec);
+ lastskip = iskip;
+
+ if (names)
+    {     /* print image file name below image */
+    /* future wid_imglabel(filnow,ixul,iyul+nrows+iyline) !!!!! */
+
+/* strip pathname from filename  */
+#ifdef VMS
+/* vms specific line follows */
+     s = strrchr(filnow,']');
+#else
+/* unix specific line follows */
+     s = strrchr(filnow,'/');
+#endif
+     if(s) 
+      {
+        s++;
+        fname = (char *) malloc(sizeof(char) * (strlen(s) + 1));
+        strcpy(fname,s);
+        fname = strtok(fname,".");
+
+	/* The 7th parameter is set to -1 in order to use the current 
+	   foreground color */
+        witext(icontx, fname, ixul, iyul+nrows+2, 1, 0, -1, 2, FALSE);
+        free( fname );
+      }
+    }
+a60 2
+ placed = FALSE;
+ 
+@
+
+
+1.13
+log
+@changed image pointer handling
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/image.c,v 1.12 1995/07/21 20:14:37 liy Exp leith $*/
+d36 1
+a36 1
+ int        irec1, nsams, nrows, iyline;
+d41 3
+a43 16
+ if (iskip >= -1 && iskip <= 1)
+    { /* display image full-sized  */
+    iskip = 1;
+    nsams = (nsam2 - nsam1 + 1) ;
+    nrows = (nrow2 - nrow1 + 1) ;
+    }
+ else if (iskip > 1)
+    { /* shrink image by factor of iskip */
+    nsams = 1 + (nsam2 - nsam1) / iskip;
+    nrows = 1 + (nrow2 - nrow1) / iskip;
+    }
+ else if (iskip < 1) 
+    {  /* magnify image by factor of iskip */
+    nsams = (nsam2 - nsam1 + 1) * -iskip;
+    nrows = (nrow2 - nrow1 + 1) * -iskip;
+    }
+@
+
+
+1.12
+log
+@added shift image function
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/image.c,v 1.11 1995/05/08 15:11:42 leith Exp liy $*/
+d20 2
+d36 1
+a36 1
+ int        it, irec1, nsams, nrows, nrowt, iyline;
+d67 2
+a68 2
+    /*  future wid_imglabeloc(filnow,iyline,iytot); !!!!!!!!!!!!*/
+    nrowt = nrows;
+d79 7
+a85 1
+ /* display image at ixul, iyul */
+d87 2
+a88 1
+ it = widisp(icontx,filedatat,nsam, MYMAX(nsam1,1),MYMAX(nsam2,nsam),
+d101 1
+d104 1
+@
+
+
+1.11
+log
+@put in trap for nsam2, etc
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/image.c,v 1.10 1995/02/08 15:50:43 liy Exp $*/
+d37 1
+a37 1
+ irec1 = (islice - 1) * nrow + 1;
+d79 2
+a80 2
+ it = widisp(icontx,filedatat,nsam, MYMAX(nsam1,1),MYMIN(nsam2,nsam),
+              MYMAX(1,nrow1+irec1-1), MYMIN(nrow2,nrow2+irec1-1),
+@
+
+
+1.10
+log
+@removed <iytot>
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/image.c,v 1.9 1995/01/11 21:40:31 liy Exp liy $*/
+d79 3
+a81 3
+ it = widisp(icontx,filedatat,nsam, nsam1,nsam2, 
+              nrow1+irec1-1, nrow2+irec1-1,
+              filedatat ->fmin,filedatat -> fmax, 
+@
+
+
+1.9
+log
+@fixed image labeling problem
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web/src/RCS/image.c,v 1.8 94/06/16 15:29:32 odesanya Exp $*/
+d34 1
+a34 1
+ int        it, irec1, nsams, nrows, nrowt, iyline, iytot;
+d66 1
+a66 1
+    nrowt = nrows + iytot;
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web/src/RCS/image.c,v 1.7 94/06/03 16:39:27 odesanya Exp $*/
+d102 4
+a105 1
+        witext(icontx, fname, ixul, iyul+nrows+2, 1, 0, 9, 2, FALSE);
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web/src/RCS/image.c,v 1.6 94/06/03 15:57:58 odesanya Exp Locker: odesanya $*/
+d102 1
+a102 1
+        witext(icontx, fname, ixul, iyul+nrows+10, 1, 0, 9, 2, FALSE);
+@
+
+
+1.6
+log
+@added filename labeling of images capability
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web/src/RCS/image.c,v 1.5 94/05/12 12:39:51 leith Exp $*/
+d102 1
+a102 1
+        witext(icontx, fname, ixul, iyul+nrow+10, 1, 0, 9, 2, FALSE);
+@
+
+
+1.5
+log
+@ used imagego...imageend
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web/src/RCS/image.c,v 1.4 94/03/18 12:07:07 leith Exp Locker: leith $*/
+d35 1
+d47 2
+a48 2
+    nsams = (nsam2 - nsam1 + 1) / iskip;
+    nrows = (nrow2 - nrow1 + 1) / iskip;
+d67 1
+d89 16
+@
+
+
+1.4
+log
+@deallocated cbuf as necessary
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/image.c,v 1.3 94/02/03 14:15:08 leith Exp $*/
+a28 1
+
+d32 1
+a32 1
+           int keepimagec)
+d80 2
+a81 1
+              ixul, iyul, 127, iskip, keepimage, imaget, keepimagec);
+@
+
+
+1.3
+log
+@fixed top line
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/image.c,v 1.2 93/11/16 13:58:00 leith Exp Locker: leith $*/
+d27 1
+a28 6
+/* function prototypes */
+extern int widisp(GC, FILEDATA *, int, int, int, int, int, 
+                  double, double ,int, int, int, int, int, XImage **);
+extern void locc(int *, int *, int, int, 
+                 int *, int *, int *, int, int, int, int, int,   
+                 int, int, int, int *, int);
+d30 1
+a30 1
+/************************************************************/
+d32 2
+a33 1
+void image(FILEDATA *filedatat,int keepimage, XImage ** imaget)
+d81 1
+a81 1
+              ixul, iyul, 127, iskip, keepimage, imaget);
+@
+
+
+1.2
+log
+@for particle selection use also
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d41 1
+a41 1
+ irec1 = (islice - 1) * nrow;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+d30 1
+a30 1
+                  double, double ,int, int, int, int);
+d37 1
+a37 1
+void image(FILEDATA *filedatat)
+d39 1
+a39 2
+ int        it, irec1, irec2, nsams, nrows, nrowt, iyline, iytot;
+ int        irec;
+d41 1
+a41 3
+ irec1 = (islice - 1) * nrow + 1;
+ irec2 = irec1 + nrow - 1;
+ irec  = irec2 - irec1 + 1;
+a42 4
+ /* record number of cols and rows in source file */
+ nsams = nsam;
+ nrows = irec2 - irec1 + 1;
+
+d46 2
+a47 1
+    irec2 = irec1 + nrow - 1;
+d51 2
+a52 2
+    nsam  = nsam / iskip;
+    nrow  = nrow / iskip;
+d56 2
+a57 2
+    nsam = - nsam * iskip;
+    nrow = - irec * iskip;
+d70 1
+a70 1
+    nrowt = nrow + iytot;
+d75 1
+a75 1
+    locc(&ixul, &iyul, nsam, nrow, 
+d82 4
+a85 2
+ it = widisp(icontx,filedatat,nsams, 1,nsams, irec1,irec2,
+              filedatat ->fmin,filedatat -> fmax, ixul, iyul, 127,iskip);
+d90 1
+a90 1
+    /* future wid_imglabel(filnow,ixul,iyul+nrow+iyline) !!!!! */
+d97 1
+@

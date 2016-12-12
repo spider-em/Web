@@ -1,0 +1,732 @@
+head	1.17;
+access;
+symbols
+	pre-tilt-improve:1.17
+	pre_surf_fromtop:1.15
+	pre_neednewmap:1.15
+	pre_apppluss_remove:1.15
+	pre_tiltpair_chng:1.15
+	pre_GPL:1.13;
+locks;
+comment	@ * @;
+
+
+1.17
+date	2012.11.27.19.12.31;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2012.11.09.19.18.15;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2007.03.02.17.59.36;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2005.10.18.17.00.00;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.03.03.19.36.17;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2000.06.29.15.50.23;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	99.05.12.16.36.16;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	98.03.05.18.40.14;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	98.02.25.19.16.24;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.05.08.15.12.24;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.01.25.19.50.52;	author mladjadj;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.11.17.13.07.12;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.11.17.10.29.57;	author mladjadj;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.11.10.16.15.17;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.02.12.10.50;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.10.46.17;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.02;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.17
+log
+@MRC support
+@
+text
+@/*$Header: /usr8/web/src/RCS/redlin.c,v 1.15 2007/03/02 17:59:36 leith Exp $*/
+
+/*
+ ***********************************************************************
+ *                                                                     *
+ * redlin.c       MRC support                   Nov 2012  ArDean Leith * 
+ *                                                                     *
+ ***********************************************************************
+ C=* AUTHOR: A. LEITH                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright 1985-2012  Health Research Inc.,                        *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but without any warranty; without even the implied warranty of    *
+ c=* merchantability or fitness for a particular purpose.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * redlin(fileptr,buf,nx,irec)
+ * 
+ * PURPOSE:      Read one 'record' from image/volume file     
+ *
+ * RETURNS:      True if ok, false otherwise
+ * 
+ * PARAMETERS:   fileptr   File info
+ *               buf       Data array
+ *               nx        Record or read length
+ *               irec      Record number wanted 
+ *
+ **********************************************************************/
+
+#include "files.h"
+
+// Byte flipping
+#define CONVERT_4( A, B )                        \
+             (A) =                               \
+            ((unsigned int)(B) >> 24) |          \
+            ((unsigned int)(B) << 24) |          \
+           (((unsigned int)(B) >> 8) & 0xff00) | \
+           (((unsigned int)(B) << 8) & 0xff0000)
+
+ int redlin8f( FILEDATA *fileptr, float *buf, int nx, int irec);
+ int redlin16f(FILEDATA *fileptr, float *buf, int nx, int irec);
+
+ extern int  nsam8,nrow8,nslice8; /* size of raw files           */
+
+
+ // *************************** redlin *********************************
+
+ int redlin(FILEDATA *fileptr, float *buf, int nx, int irec)
+ {
+
+ FILE         * fp;
+ long           ioff;
+ int            k1;
+ size_t         igot;
+ unsigned int * pt;
+
+ extern int  nsam8,nrow8,nslice8; /* size of raw files */
+
+ if ((fileptr -> iform) > 99)
+    {    // MRC file should start at lower left) 
+    irec = ((fileptr -> nsam) * (fileptr -> nslice)) - irec + 1;
+    }
+
+ if ((fileptr -> iform) == 8 || (fileptr -> iform) == 108)
+    {    // 8-bit file (may be MRC or raw) 
+    return(redlin8f(fileptr, buf, nx, irec));
+    }
+ else if ((fileptr -> iform) == 16 || (fileptr -> iform) == 116)
+    {    // 16-bit integer file (may be MRC or raw)  
+    return(redlin16f(fileptr, buf, nx, irec));
+    }
+
+ // Find number of header and record bytes to be skipped before irec 
+ // fileptr -> offset currently unused, nov 2012 al
+
+ if (irec != 0) 
+    ioff  = (fileptr -> offset) + (fileptr -> headbyt) + (irec -1) * nx * 4;
+ else
+    ioff  = (fileptr -> offset);
+
+
+ /*  Find file pointer for this file */
+ fp = (fileptr -> fp);
+
+ if ((igot = fseek(fp,ioff,SEEK_SET)) != 0) 
+     {       /* Offset seek failed */
+     printf("*** Seek failed in redlin: %d \n",igot);
+     printf(" igot: % d, ioff: %d ,nx: %d \n",igot,ioff,nx);
+     return FALSE;
+     }
+
+ /* Offset seek was successful, read nx floats from file */
+ igot = fread(buf, sizeof(float), nx, fp);
+ 
+ if ((fileptr -> flip) == 1)
+   {
+   /* Flip the bytes */
+   pt = (unsigned int *) buf;
+   for (k1 = 0; k1 < nx; k1++, pt++)
+      { CONVERT_4(*pt,*pt);  }
+   }
+
+ if (feof(fp) && nsam8 > 0 && nrow8 > 0)
+      {
+      printf("*** End of file in redlin \n");
+      printf("igot: %d, ioff: %d ,nx: %d irec: %d\n",
+              igot,ioff,nx,irec);
+      printf(" fp->nrow: %d, fp->offset: %d \n",
+                fileptr->nrow, fileptr->offset);
+      return FALSE;
+      }          
+
+ if (ferror(fp))
+      {
+      printf("*** Error reading input file in redlin \n");
+      return FALSE;
+      }
+
+ return TRUE;
+ }
+
+@
+
+
+1.16
+log
+@MRC support
+@
+text
+@d55 3
+d69 4
+a72 2
+if ((fileptr -> iform) > 99)
+    {    /* MRC file should start at lower left) */
+d77 1
+a77 1
+    {    /* 8-bit file (may be MRC or raw) */
+d81 1
+a81 1
+    {    /* 16-bit integer file (may be MRC or raw) */
+d85 3
+a87 1
+ /* Find number of header and record bytes to be skipped before irec */
+d115 1
+a115 1
+ if (feof(fp))
+@
+
+
+1.15
+log
+@ioff now long
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/redlin.c,v 1.14 2005/10/18 17:00:00 leith Exp leith $*/
+d4 6
+a9 6
+ *************************************************************************
+ *
+ * redlin.c
+ *
+ *************************************************************************
+ * AUTHOR: A. LEITH 
+d11 2
+a12 5
+ C=* Copyright (C) 1992-2007  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d21 2
+a22 2
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+a23 1
+ C=*                                                                   *
+d25 1
+a25 3
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+d27 1
+a27 1
+ **************************************************************************
+d29 1
+a29 1
+ * redlin(fileptr,buf,nsam,irec)
+d31 1
+a31 1
+ * PURPOSE:     
+d33 1
+a33 1
+ * RETURNS:      TRUE IF OK, FALSE OTHERWISE
+d35 4
+a38 4
+ * PARAMETERS:   fileptr
+ *               buf
+ *               nsam
+ *               irec    
+d44 1
+d46 1
+a46 1
+             (A) =                 \
+d52 2
+a53 2
+ int redlin8f(FILEDATA *fileptr, float *buf, int nsam, int irec);
+ int redlin16f(FILEDATA *fileptr, float *buf, int nsam, int irec);
+d55 1
+a55 1
+ /* *************************** redlin *******************************/
+d57 1
+a57 1
+ int redlin(FILEDATA *fileptr, float *buf, int nsam, int irec)
+d60 14
+a73 9
+ FILE      *fp;
+ long      ioff;
+ int       k1;
+ size_t    igot;
+ unsigned int  * pt;
+
+ if (fileptr -> iform == 8)
+    {    /* 8-bit raw file */
+    return(redlin8f(fileptr, buf, nsam, irec));
+d75 3
+a77 3
+ else if (fileptr -> iform == 16)
+    {    /* Tietz 16-bit raw file */
+    return(redlin16f(fileptr, buf, nsam, irec));
+d80 1
+a80 1
+ /* find number of header and record bytes to be skipped */
+d82 1
+a82 1
+    ioff  = fileptr -> offset + fileptr -> headbyt + (irec -1) * nsam * 4;
+d84 1
+a84 1
+    ioff  = fileptr -> offset;
+d87 2
+a88 2
+ /* find file pointer for this file */
+ fp    = fileptr -> fp;
+d91 3
+a93 3
+     {       /* offset seek failed */
+     printf("*** seek failed in redlin: %d \n",igot);
+     printf(" igot: % d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+d97 2
+a98 2
+ /* offset seek was successful, read nsam floats from file*/
+ igot = fread(buf, sizeof(float), nsam, fp);
+d100 1
+a100 1
+ if (fileptr -> flip == 1)
+d102 1
+a102 1
+   /* flip the bytes */
+d104 1
+a104 1
+   for (k1 = 0; k1 < nsam; k1++, pt++)
+d111 2
+a112 2
+      printf("igot: %d, ioff: %d ,nsam: %d irec: %d\n",
+              igot,ioff,nsam,irec);
+d114 1
+a114 1
+                fileptr->nrow,fileptr->offset);
+@
+
+
+1.14
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/redlin.c,v 1.13 2003/03/03 19:36:17 leith Exp $*/
+d11 1
+a11 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d66 2
+a67 1
+ int       ioff,k1;
+d69 1
+a69 1
+ unsigned int       * pt;
+@
+
+
+1.13
+log
+@endedness
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redlin.c,v 1.12 2000/06/29 15:50:23 leith Exp $*/
+d10 23
+a32 6
+ * COPYRIGHT (C)1981,1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.12
+log
+@vms removed
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redlin.c,v 1.11 1999/05/12 16:36:16 leith Exp $*/
+a32 2
+#ifdef P_SGIOSF
+unsigned int *pt;
+d34 1
+a34 1
+             (unsigned int)(A) =                 \
+a39 2
+#endif
+
+d49 1
+a49 1
+ int       ioff,it,k1;
+d51 1
+a51 1
+ int       * pt;
+d82 3
+a84 1
+#ifdef P_SGIOSF
+a85 1
+   /* flip the bytes for date and time in header */
+d88 1
+a88 1
+#endif
+@
+
+
+1.11
+log
+@removed Yh's error commented out P_SGIOSF
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redlin.c,v 1.10 1998/03/05 18:40:14 leith Exp leith $*/
+d53 1
+a53 1
+ int       ioff,it,k1,ot;
+d55 1
+d68 1
+a68 1
+    ioff  = fileptr -> offset + (irec -1) * nsam * 4;
+d70 1
+a70 1
+    ioff  = 0;
+a75 1
+
+d83 1
+a83 1
+ /* offset seek was successful, read record number nsam */
+@
+
+
+1.10
+log
+@tietz support
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redlin.c,v 1.9 1998/02/25 19:16:24 liy Exp $*/
+d86 1
+a86 2
+/* Comment out!!! Flips will be done in openold.c ---liy
+#ifdef  P_SGIOSF
+d88 2
+a89 2
+*/   /* flip the bytes for date and time in header */
+/*   for (k1 = 0; k1 < nsam; k1++, pt++)
+d92 1
+a92 1
+*/
+@
+
+
+1.9
+log
+@comment fliping action out
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redlin.c,v 1.8 1995/05/08 15:12:24 leith Exp liy $*/
+d45 1
+d59 4
+@
+
+
+1.8
+log
+@cosmetic
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redlin.c,v 1.7 1995/01/25 19:50:52 mladjadj Exp leith $*/
+d81 1
+d84 2
+a85 2
+   /* flip the bytes for date and time in header */
+   for (k1 = 0; k1 < nsam; k1++, pt++)
+d88 1
+a88 1
+
+@
+
+
+1.7
+log
+@ alpha/osf add CONVERT_$ macro to flip bytes faster
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/redlin.c,v 1.6 94/11/17 13:07:12 leith Exp $*/
+a32 5
+/*  #ifdef   P_SGIOSF      */
+/*  #include <cvt.h>   */
+/*   int cvt_ftof( void *, int, void *, int, int);   */
+/*  #endif   */
+
+a59 1
+
+a80 18
+ 
+/*    #ifdef  P_SGIOSF     */
+
+/*        DEC OSF/1 with files written in IEEE standard        
+          to allow portability to other unix machines  */
+
+/*     for (k1 = 0; k1 < nsam; k1++)     */
+/*        {     */
+/*        ot = cvt_ftof(&buf[k1], CVT_BIG_ENDIAN_IEEE_S,     */
+/*                      &buf[k1], CVT_IEEE_S, 0);     */
+/*        if (ot)         */
+/*            {      */
+ /* ot=0 success */
+/*            printf("*** cvt_ftof of position: %d failed!\n",k1);     */
+/*            }      */
+/*        }     */
+/*    #endif     */
+
+d91 4
+a94 1
+      printf("igot: %d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+@
+
+
+1.6
+log
+@fixed botched return after redlin8f call
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/redlin.c,v 1.5 94/11/17 15:29:57 mladjadj Exp Locker: leith $*/
+d33 14
+a46 3
+#ifdef  __osf__ 
+#include <cvt.h>
+ int cvt_ftof( void *, int, void *, int, int);
+d88 1
+a88 1
+#ifdef __osf__ 
+d93 17
+a109 7
+ for (k1 = 0; k1 < nsam; k1++)
+    {
+    ot = cvt_ftof(&buf[k1], CVT_BIG_ENDIAN_IEEE_S,
+                  &buf[k1], CVT_IEEE_S, 0);
+    if (ot)     /* ot=0 success */
+        printf("*** cvt_ftof of position: %d failed!\n",k1);
+    }
+a110 1
+
+@
+
+
+1.5
+log
+@fixed ifdef for cpp
+@
+text
+@d1 2
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/redlin.c,v 1.4 1994/11/10 16:15:17 mladjadj Exp mladjadj $*/
+d4 2
+d29 1
+a29 1
+ *********************************************************************/
+d32 1
+a34 1
+
+d40 2
+d51 1
+a51 15
+    it = redlin8f(fileptr, buf, nsam, irec);
+
+/*        DEC OSF/1 with files written in IEEE standard        
+**        to allow portability to other unix machines  
+*/ 
+#ifdef __osf__ 
+    for (k1 = 0; k1 < nsam; k1++)
+       {
+       ot = cvt_ftof(&buf[k1], CVT_BIG_ENDIAN_IEEE_S,
+                     &buf[k1], CVT_IEEE_S, 0);
+       if (ot)     /* ot=0 success */
+           printf(" Conversion cvt_ftof of float %d has failed !!\n",k1);
+       }
+#endif
+    
+d76 3
+d80 2
+a81 3
+**        to allow portability to other unix machines  
+*/ 
+#ifdef __osf__ 
+d87 1
+a87 1
+        printf(" Conversion cvt_ftof of float %d has failed !!\n",k1);
+@
+
+
+1.4
+log
+@add cpp switch __osf__ for DEC/OSF1 alpha machines
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/redlin.c,v 1.3 94/03/02 12:10:50 leith Exp $*/
+d29 1
+a29 1
+#if  __osf__ 
+d51 1
+a51 1
+#if __osf__ 
+d88 1
+a88 1
+#if __osf__ 
+@
+
+
+1.3
+log
+@added 8 bit redirect to redlin8.f
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/redlin.c,v 1.2 93/11/10 10:46:17 leith Exp $*/
+d29 2
+d32 3
+d41 1
+a41 1
+ int       ioff;
+d46 15
+a60 1
+    return (redlin8f(fileptr, buf, nsam, irec));
+d84 14
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/redlin.c,v 1.1 93/11/10 10:11:02 leith Exp Locker: leith $*/
+d30 2
+d39 4
+d44 1
+d68 2
+a69 2
+      printf(" *** End of file in redlin \n");
+     printf(" igot: %d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+d75 1
+a75 1
+      printf(" *** Read error in redlin \n");
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 2
+/* $Header: /alwyn/usr1/web/RCS/redlin.c,v 1.1 93/11/09 14:24:46 leith Exp Locker: leith $ */
+/*$Header$*/
+@

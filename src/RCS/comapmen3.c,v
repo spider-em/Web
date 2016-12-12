@@ -1,0 +1,286 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.16.59.56;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	97.03.27.15.18.49;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.07.11.17.28.09;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.10.20.17.12.32;	author mladjadj;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.26.14.06.50;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@built by mladjadj for corr-map
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@/*
+*****************************************************************************
+** comapmen3.c		8/93
+**
+** Purpose: Display menu for saving image numbers in doc file.
+**
+**
+** WID_COMAPMEN3.FOR transported to UNIX
+**
+C **********************************************************************
+** *   AUTHOR:  Mahieddine Ladjadj                                          *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+*****************************************************************************
+*/
+
+#include "common.h"
+#include "std.h"
+#include <Xm/Text.h>
+#include "routines.h"
+
+  extern char   datexc[4];         /* file extension           */
+  char   docnammo[81] = "docimg001";
+  int    itxrego, ityrego, labrego;
+
+  void   comapmen3_buta (Widget, caddr_t, caddr_t);
+
+  /* internal variables */
+  static Widget iw_comapmen3= (Widget) 0, iw_doc, iw_xreg, 
+                iw_yreg, iw_labreg;
+
+/********************** comapmen3 ***********************************/
+
+void comapmen3(Widget iw_t, caddr_t itag, caddr_t callpar)
+{
+  Widget iw_rowcol, iw_dum, iw_buts,iw_buta, iw_butc;
+  char cval[5];
+ 
+  if (iw_comapmen3 == (Widget) 0)
+      {
+      /* create a dialog box */
+      iw_comapmen3 = wid_dialog(iw_win,0,"Saving Image options",20,20);
+      iw_rowcol = wid_rowcol(iw_comapmen3,'v',-1,-1);
+
+      /* set up variables in the dialog widget */
+      itxrego = 1;
+      ityrego = 2;
+      labrego  = 3;
+
+      /* create a text box for doc file name input */
+      iw_doc =  wid_textboxb(iw_rowcol,(Widget) 0,
+                             "New Doc. File:", docnammo,20);
+      /* create a box for ixrego input */
+      sprintf(cval,"%4d",itxrego);
+      iw_xreg = wid_textboxb(iw_rowcol,(Widget) 0,"        X Reg:",cval,4);
+
+      /* create a box for iyrego input */
+      sprintf(cval,"%4d",ityrego);
+      iw_yreg = wid_textboxb(iw_rowcol,(Widget) 0,"        Y Reg:",cval,4);
+
+      /* create a box for labrego input */
+      sprintf(cval,"%4d",labrego);
+      iw_labreg = wid_textboxb(iw_rowcol,(Widget) 0,"    Label Reg:",cval,4);
+
+      /* create a push button for stop, cancel & apply */
+      iw_dum = wid_stdbut(iw_rowcol,iw_comapmen3,
+                          &iw_buts,&iw_butc,&iw_buta,"CA",
+                          fin_cb,fin_cb,comapmen3_buta, NULL);
+      }
+  else
+      { /* doc file name is incremented between calls. redraw it */
+      iw_doc = wid_textboxb(iw_rowcol,iw_doc, "New Doc. File:", 
+                             docnammo,20);
+      }
+
+  XtManageChild(iw_comapmen3);
+
+  } /* end of comapmen3 function */
+
+/*******************  comapmen3_buta ******************************/
+
+void comapmen3_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
+  {
+  char  outstr[80];
+  char *string;
+
+  /* get docnammo from text widget */
+  string = XmTextGetString(iw_doc);
+  if (strlen(string) == 0)
+    {
+      XtFree(string);
+      spout(" *** WARNING: no doc file name: docnammo ");
+      return;
+    }
+  else
+    {
+      strcpy(docnammo,string);
+      XtFree(string);
+    }
+
+  /* get x register */
+  string = XmTextGetString(iw_xreg);
+  sscanf(string,"%d",&itxrego);
+  XtFree(string);
+
+  /* get y register */
+  string = XmTextGetString(iw_yreg);
+  sscanf(string,"%d",&ityrego);
+  XtFree(string);
+
+  /* get label register */
+  string = XmTextGetString(iw_labreg);
+  sscanf(string,"%d",&labrego);
+  XtFree(string);
+
+  if (itxrego == ityrego || itxrego == labrego || ityrego == labrego)
+     {sprintf(outstr," WARNING: USING SAME X & Y or LABEL REGISTERS %d %d %d", 
+              itxrego, ityrego, labrego); spout(outstr);}
+
+  /* remove menu */
+  XtUnmanageChild(iw_comapmen3);
+
+  /* start comap doc saving routine */
+  comapsav(1);
+
+} /* end of comapmen3_buta function */
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d10 1
+a10 1
+** **************************************************************************
+d12 24
+a35 7
+** *  COPYRIGHT (C)1990 , WADSWORTH CENTER FOR LABORATORIES AND             *
+** *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+** *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+** *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+** *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+** *    THE CENTER FOR LABORATORIES AND RESEARCH			    *
+** **************************************************************************
+@
+
+
+1.3
+log
+@static Widget = (Widget)0
+@
+text
+@d29 1
+a29 1
+  extern int    itxreg, ityreg, labreg;
+d51 3
+a53 3
+      itxreg = 1;
+      ityreg = 2;
+      labreg = 3;
+d58 2
+a59 2
+      /* create a box for ixreg input */
+      sprintf(cval,"%4d",itxreg);
+d62 2
+a63 2
+      /* create a box for iyreg input */
+      sprintf(cval,"%4d",ityreg);
+d66 2
+a67 2
+      /* create a box for labreg input */
+      sprintf(cval,"%4d",labreg);
+d108 1
+a108 1
+  sscanf(string,"%d",&itxreg);
+d113 1
+a113 1
+  sscanf(string,"%d",&ityreg);
+d118 1
+a118 1
+  sscanf(string,"%d",&labreg);
+d121 3
+a123 3
+  if (itxreg == ityreg && itxreg == labreg && ityreg == labreg)
+     {sprintf(outstr," WARNING: USING SAME X & Y & LABEL REGISTERS %d %d %d", 
+              itxreg, ityreg, labreg); spout(outstr);}
+@
+
+
+1.2
+log
+@fixed document name incrementation
+@
+text
+@d34 2
+a35 1
+  static Widget iw_comapmen3, iw_doc, iw_xreg, iw_yreg, iw_labreg;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d28 1
+a28 1
+  char   docnammo[81];
+a41 1
+  char   docnammo[] = "docimg000";
+a56 1
+
+@

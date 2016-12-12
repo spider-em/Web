@@ -1,0 +1,2099 @@
+head	1.25;
+access;
+symbols
+	pre-tilt-improve:1.25
+	pre_surf_fromtop:1.24
+	pre_neednewmap:1.24
+	pre_apppluss_remove:1.24
+	pre_tiltpair_chng:1.24
+	pre_GPL:1.22;
+locks;
+comment	@ * @;
+
+
+1.25
+date	2012.12.05.17.10.27;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2005.10.18.17.00.03;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2002.05.17.13.36.05;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2002.05.16.20.21.42;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2002.05.15.17.52.57;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2002.04.10.18.48.10;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2001.09.12.14.43.10;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	97.08.25.19.59.50;	author liy;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	96.03.26.15.07.42;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.08.08.19.34.22;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.04.13.17.16.14;	author liy;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.03.30.16.29.23;	author mladjadj;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.02.14.19.21.22;	author liy;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.08.15.14.40.19;	author odesanya;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.08.09.15.47.07;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.06.24.11.30.15;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.06.17.11.33.06;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.06.16.16.42.22;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.05.12.12.40.15;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.01.28.10.25.04;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.12.07.11.44.15;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.16.14.51.43;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.14.44.13;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.18;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.25
+log
+@cosmetic & copyrigtt
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/mont3.c,v 1.24 2007/11/01 19:33:45 leith Exp leith $*/
+
+/*
+C++*********************************************************************
+C
+C MONT3.C -- CREATED JAN 90 FROM WKMONT
+C            WIDGETIZED MAY 91
+C            CONVERTED TO C JULY 92 al
+C            ADDED INCORE MOVIE SEPT 2001 ArDean Leith
+C
+C **********************************************************************
+C=* AUTHOR: A. LEITH                                                  *
+C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+C=* Copyright 1985-2012  Health Research Inc.,                        *
+C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+C=* Email:  spider@@wadsworth.org                                      *
+C=*                                                                   *
+C=* This program is free software; you can redistribute it and/or     *
+C=* modify it under the terms of the GNU General Public License as    *
+C=* published by the Free Software Foundation; either version 2 of    *
+C=* the License, or (at your option) any later version.               *
+C=*                                                                   *
+C=* This program is distributed in the hope that it will be useful,   *
+C=* but without any warranty; without even the implied warranty of    *
+c=* merchantability or fitness for a particular purpose.  See the GNU *
+C=* General Public License for more details.                          *
+C=* You should have received a copy of the GNU General Public License *
+C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+C=*                                                                   *
+C **********************************************************************
+C
+C    MONT3
+C
+C    PURPOSE:         DISPLAY MONTAGE FROM FILE SERIES.
+C                     CAN NORMALIZE SLICE BY SLICE, ALSO.
+C
+C    VARIABLES:       NAMES      LOGICAL FLAG TO PRINT NAMES
+C
+C    CALLED BY:       
+C
+C***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+#define MAXDIM 32000000
+
+ /* External variables defined here */
+ char      *cmont3buf  = NULL;
+ int       nsami, nrowi, nslicei;
+
+ /* External variables used here */
+ extern int      ixulmon, iyulmon, ndone;
+ extern int      endfile;           
+ extern XImage * ximagelist[1000]; /* from showmovie */
+
+/******************************  mont3 *******************************/
+   
+ int  mont3(FILEDATA *fileptr, int nmint, int nmaxt)
+ {   
+ int       maxvox, maxflt, numvox, resetmar, marlefo;
+ int       irow, isam, nrec1, nrec2, miskip;
+ int       nsliceu, j , ival,l, iy;
+ int       numfil, nlet,  toomany,  file_exist = TRUE;
+ int       nsamn, nrown, nslicen, iformn;
+ FILEDATA  * filedatan;
+ char      label[] = "    ";
+ float     fn, fncon;
+ float     *buf;
+ int       iloc, nrowspn, irec, irec1, iret;
+
+ /* max. no. of voxels in output buffer */
+ maxvox = MAXDIM * 4;
+ maxflt = MAXDIM;
+
+ /* set image size and window */
+
+ if (axis == 'z')
+     {        /* 3-D file with z slice */
+     dispsize(nsam1,nsam2,nrow1,nrow2,nslice1,nslice2,iskip, &nsami, &nrowi, &nslicei);
+     }
+ else if (axis == 'y')
+     {        /* Y slice */
+     dispsize(nsam1,nsam2,nslice1,nslice2,nrow1,nrow2,iskip, &nsami, &nrowi, &nslicei);
+     }
+ else if (axis == 'x')
+     {        /* X slice */
+     dispsize(nrow1,nrow2,nslice1,nslice2,nsam1,nsam2,iskip, &nsami, &nrowi, &nslicei);
+     }
+ miskip = abs(iskip);
+
+ /* Numvox is number of pixels in whole montage of images */
+ numvox  = nsami * nrowi * nslicei;
+ 
+ toomany = FALSE;
+
+ /* Find y-offset needed for name label */
+ nrowspn = nrowi;
+ if (names) nrowspn += wrtname(-1,-1,(char *) NULL, -1);
+
+ resetmar = FALSE;
+
+ if (placed == TRUE) 
+    {   /* Position sent from caller */
+    ixul     = ixuln;
+    iyul     = iyuln;
+    marlefo  = marlef;
+    marlef   = ixuln - marx;
+    resetmar = TRUE;
+    }
+
+ force = FALSE;
+ filedata = fileptr;
+
+ /* Set wait cursor */
+ waitcursor(iwin, TRUE, 79);
+
+ /* Find following image names and display them */
+ do
+   {
+   if (file_exist)
+     {
+     /* conversion from floating point to byte range */
+     fn      = (float) (nmaxt-nmint) / (fmax_spi - fmin_spi);
+     fncon   = -fmin_spi * fn + nmint + 0.5;
+
+     ndone   = 0;
+     newline = TRUE;
+
+     if (ioper == 24)
+       {   /* Large movie  display of x, y or z slices ****************/
+
+       if ((cmont3buf = (char *) malloc(numvox * sizeof(char))) == (char *) 0)
+          {
+          spout(" *** Can not allocate cmont3buf in mont3."); 
+          waitcursor(iwin, FALSE, 79); return FALSE;
+          }
+
+       if (normit == TRUE)
+         {   /* Normalize slice by slice (handles iskip OK) */
+         iret = ztoxyn(fileptr,cmont3buf, axis,nmaxt,iskip,mapgo); 
+         }
+       else
+         {  /* do not normalize by slice */    
+         iret = ztoxy(fileptr, cmont3buf, axis, fn, fncon, iskip);
+         }
+
+       if (! iret) 
+           { /* Something failed */
+           if (cmont3buf) free(cmont3buf); closefile(fileptr); fileptr = NULL; 
+           cmont3buf = NULL; waitcursor(iwin, FALSE, 79); return FALSE;
+           }  
+
+       for (islice=1; islice <= nslicei; islice++)
+         {  /* Make XImages for values returned from 'ztoxy'  routine in cmont3buf */
+         iloc = (islice -1 ) * nsami * nrowi;
+
+         /* force wipic to allocate new XImage */
+         if (imagel) 
+            {imagel =  NULL;}
+
+         wipic(icontx, &cmont3buf[iloc], ixul, iyul, nsami, nrowi, FALSE, 
+               TRUE, &imagel); 
+
+         /* Record image list for movie */
+         ximagelist[++ndone] = imagel;
+         }   /* for (islice=1; islice <= nslicei; islice++) */
+       }
+
+     else if (axis == 'z')
+       {   /* 3d file with z slice (no need for incore speedup ********/  
+
+       for (islice=nslice1; islice<=nslice2; islice++)
+         {
+         nrec1  = (islice -1) * nrow + nrow1;
+         nrec2  = (islice -1) * nrow + nrow2;
+
+         if (movie == FALSE)
+           {
+           /* Force a new line in montage if necessary */
+           if (ndone%nprow == 0) newline = TRUE;
+ 
+           locc(&ixul,&iyul,nsami,nrowspn,&ntop,&nbot,&nrit,
+              marx,mary,marlef,martop,iwidex,ihighx,placed,
+              newline,&nuscrn,force);
+           newline = FALSE;
+           }
+
+         if (normit == TRUE)
+           {       /* Normalize each z slice (handles iskip OK) */
+           if (monn(icontx,fileptr,islice,nsami,nrowi,nslicei,
+               nmint,nmaxt) ==  FALSE) 
+              {waitcursor(iwin, FALSE, 79); return FALSE;}
+           }
+         else
+           {       /* Just display (handles iskip OK) */
+           if (widisp(icontx,fileptr,nsam,nsam1,nsam2,nrec1,nrec2,
+                      fmin_spi,fmax_spi,ixul,iyul,nmint,nmaxt,iskip,FALSE,
+                      &imagel,FALSE)  == FALSE)
+             {waitcursor(iwin, FALSE, 79); return FALSE;}
+           }
+
+         if (names)
+           {    /* Put slice number under each pane */
+           wrtname(ixul,iyul+nrowi,(char *) NULL,islice); 
+           }
+
+         if (!ndone) 
+            {ixulmon = ixul; iyulmon = iyul;}
+         ndone  = ndone + 1;
+         placed = FALSE;
+
+         /* Force desired no. of images / line even if it truncates an image */
+         force  = TRUE;
+         }   /*for (islice=nslice1; islice<=nslice2; islice++) */
+       }     /*  if (axis = z) */
+       
+     else if ((normit == FALSE && numvox < maxvox) ||
+              (normit == TRUE  && numvox < maxflt))
+       {   /* can use fast incore routine for display of x or y slices */
+
+       if ((cmont3buf = (char *) malloc(numvox * sizeof(char))) == (char *) 0)
+          {
+          spout(" *** Can not allocate cmont3buf in mont3."); 
+          waitcursor(iwin, FALSE, 79); return FALSE; 
+          }
+
+       if (normit == TRUE)
+         {   /* Normalize slice by slice (handles iskip OK) */
+         iret = ztoxyn(fileptr,cmont3buf,axis,nmaxt,iskip,mapgo); 
+         }
+       else
+         {  /* Do not normalize by slice */    
+         iret = ztoxy(fileptr, cmont3buf, axis, fn, fncon, iskip); 
+          }
+       if (! iret)
+           {
+           if (cmont3buf) free(cmont3buf); closefile(fileptr); fileptr = NULL; 
+           cmont3buf = NULL; waitcursor(iwin, FALSE, 79); return FALSE;
+           }  
+
+       for (islice=1; islice <= nslicei; islice++)
+         {  /* plot out values returned from ztoxy  routine in cmont3buf */
+         if (movie == FALSE)
+           {
+           /* Force a new line in montage if necessary */
+           if (ndone%nprow == 0) newline = TRUE;
+ 
+           /* find image position */
+           locc(&ixul,&iyul,nsami,nrowspn,&ntop,&nbot,&nrit,
+               marx,mary,marlef,martop,iwidex,ihighx,placed,
+               newline,&nuscrn,force);
+           newline = FALSE;
+           }
+
+         iloc = (islice -1) * nsami * nrowi;
+         wipic(icontx, &cmont3buf[iloc], ixul, iyul, nsami, nrowi, TRUE, 
+             TRUE, &imagel); 
+
+         if (names)
+           {    /* put slice number under each pane */
+           wrtname(ixul,iyul+nrowi,(char *) NULL,islice); 
+           }
+
+         if (!ndone)
+            {ixulmon = ixul; iyulmon = iyul;}
+         ndone  = ndone + 1;
+         placed = FALSE;
+         /* force desired no. of images / line even if it truncates image */
+         force  = TRUE;
+         }    /* for (islice=1; islice <= nslicei; islice++) */
+
+       if (cmont3buf) free(cmont3buf);  cmont3buf = NULL; 
+     }
+
+   else if (axis == 'y')
+     {   /* 3-D FILE WITH Y SLICE,CAN NOT USE FAST INCORE ROUTINE *****/
+
+     if (normit == FALSE && 
+         (cmont3buf = (char *) malloc(nsami * nrowi * sizeof(char))) == (char *) 0)
+        {
+        spout(" *** Can not malloc cmont3buf2 in mont3."); 
+        waitcursor(iwin, FALSE, 79); return FALSE;
+        }
+
+     buf = filedata -> buf;
+     for (irow=nrow1; irow<=nrow2; irow++)
+       {
+       if (movie == FALSE)
+          {
+          /* force a new line in montage if necessary */
+          if (ndone%nprow == 0) newline = TRUE;
+ 
+          /* find image position */
+          locc(&ixul,&iyul,nsami,nrowspn,&ntop,&nbot,&nrit,
+               marx,mary,marlef,martop,iwidex,ihighx,placed,
+               newline,&nuscrn,force);
+          newline = FALSE;
+          }
+
+       if (normit == TRUE)
+          {   /* normalize slice by slice */
+          if (monn(icontx,fileptr,irow,
+              nsami,nrowi,nslicei,nmint,nmaxt) == FALSE)
+             {waitcursor(iwin, FALSE, 79); return FALSE; }
+          }
+       else
+          {           /* OVERALL FILE NORMALIZED Y SLICING */
+          if (iskip >= 1)
+             {        /* normal or reduced size display */
+
+             /* find upper end of slice and sample series */
+             nsliceu = nslice2 - ((nslice2 - nslice1 + 1) % iskip) - 1;
+
+             iy      = iyul;
+             for (islice=nslice1; islice <= nsliceu; islice=islice + iskip)
+                {
+                irec = (islice -1) * nrow + irow;
+                if (redlin(fileptr,buf,nsam,irec) == FALSE) 
+                   {if (cmont3buf) free(cmont3buf);  cmont3buf = NULL;
+                    waitcursor(iwin, FALSE, 79); return FALSE;
+                   }
+
+                l = 0;
+                for (isam=nsam1-1; isam<nsam2; isam = isam + iskip)
+                  {
+                  ival = buf[isam] * fn + fncon;
+                  if (ival > 127) ival = ival - 256;
+                  cmont3buf[l++] = ival;
+                  }
+
+                /* DISPLAY THIS LINE OF THE IMAGE */
+                wipic(icontx, cmont3buf, ixul, iy++, nsami, 1, TRUE,
+                      TRUE, &imagel);  
+                }
+             }
+
+          else if (iskip < -1)
+             {        /* magnified display */
+             for (islice=nslice1; islice<=nslice2; islice++)
+                {
+                irec = (islice -1) * nrow + irow;
+                if (redlin(fileptr,buf,nsam,irec) == FALSE) 
+                   { if (cmont3buf) free(cmont3buf);  cmont3buf = NULL;
+                        waitcursor(iwin, FALSE, 79); return FALSE;}
+                iloc = 0;
+                for (isam=nsam1-1; isam<nsam2; isam = isam + iskip)
+                   {
+                   ival = buf[isam] * fn + fncon;
+                   if (ival > 127) ival = ival - 256;
+
+                   for (j=1; j <= miskip; j++)
+                       cmont3buf[iloc++] = ival;
+                   }
+
+                /* display this line -iskip times */
+                for (j=1; j <= miskip; j++)
+                   wipic(icontx, cmont3buf, ixul, iy++, nsami, 1, TRUE,
+                      TRUE, &imagel);  
+                }
+             }
+          }
+         if (names)
+           {    /* put slice number under each pane */
+           wrtname(ixul,iyul+nrowi,(char *) NULL,islice); 
+           }
+
+       if (!ndone)
+          {ixulmon = ixul; iyulmon = iyul;}
+       ndone  = ndone + 1;
+       placed = FALSE;
+       /* force desired no. of images / line even if it truncates an image */
+       force  = TRUE;
+       }
+    if (normit == FALSE) { free(cmont3buf); cmont3buf = NULL;} 
+    }
+
+ else if (axis == 'x')
+    {    /* 3-D FILE WITH X SLICE (CAN NOT USE INCORE) ****************/
+
+    spout("WARNING X AXIS SLICING IS SLOW!");
+
+    if (normit == FALSE && (cmont3buf = (char *) malloc(nsami * nrowi * sizeof(char))) == (char *) 0)
+       {
+       spout(" *** Can not allocate cmont3buf2 in mont3."); 
+       closefile(fileptr);  fileptr = NULL; 
+       waitcursor(iwin, FALSE, 79); return FALSE;
+       }
+
+    buf = filedata -> buf;
+    for (isam= nsam1; isam<=nsam2; isam++)
+       { 
+       if (movie == FALSE)
+          {
+          /* force a new line in montage if necessary */
+          if (ndone%nprow == 0) newline = TRUE;
+ 
+          /* find image position */
+          locc(&ixul,&iyul, nsami,nrowspn,&ntop,&nbot,&nrit,
+               marx,mary,marlef,martop,iwidex,ihighx,placed,
+               newline,&nuscrn,force);
+          newline = FALSE;
+          }
+
+       if (normit == TRUE)
+          {   /* normalize slice by slice */
+          if (monn(icontx,fileptr,isam,
+              nsami,nrowi,nslicei,nmint,nmaxt) == FALSE) 
+              {
+              closefile(fileptr);  waitcursor(iwin, FALSE, 79); 
+              fileptr = NULL; return FALSE;
+              }
+          }
+       else
+          {
+          if (iskip >= 1)
+             {  /* normal or reduced size display */
+
+             /* find upper end of slice and sample series */
+             nsliceu = nslice2 - ((nslice2 - nslice1 + 1) % iskip) - 
+                       iskip + 1;
+
+             iy = iyul;
+
+             for (islice=nslice1; islice<=nsliceu; islice=islice + iskip)
+                {
+                irec1 = (islice -1) * nrow + irow;
+                l = 0;
+                for (irow=nrow1-1; irow<nrow2; irow = irow + iskip)
+                  {
+                  if (redlin(fileptr,buf,nsam,irec1+irow) == FALSE) 
+                      { 
+                      if (cmont3buf) free(cmont3buf);  cmont3buf = NULL; 
+                      closefile(fileptr);  waitcursor(iwin, FALSE, 79); 
+                      fileptr = NULL;   return FALSE;
+                      }
+                  ival = buf[isam-1] * fn + fncon;
+                  if (ival > 127) ival = ival - 256;
+                  cmont3buf[l++] = ival;
+                  }
+
+                /* DISPLAY THIS LINE OF THE IMAGE */
+                wipic(icontx, cmont3buf, ixul, iy++, nsami, 1, TRUE,  
+                      TRUE, &imagel);  
+                }
+             }
+
+          else if (iskip < -1)
+             {        /* magnified display */
+
+             for (islice=nslice1; islice <= nslice2; islice++)
+                {
+                irec1 = (islice -1) * nrow + irow;
+                iloc  = 0;
+                iy    = iyul;
+
+                for (irow=nrow1-1; irow<nrow2; irow++)
+                   {
+                   if (redlin(fileptr,buf,nsam,irec+irow) == FALSE) 
+                       {
+                       if (cmont3buf) free(cmont3buf);  cmont3buf = NULL; 
+                       closefile(fileptr); fileptr = NULL;
+                       waitcursor(iwin, FALSE, 79); return FALSE;
+                       }
+
+                   ival = buf[isam] * fn + fncon;
+                   if (ival > 127) ival = ival - 256;
+
+                   for (j=1; j<=miskip; j++)
+                      cmont3buf[iloc++] = ival;
+                   }
+
+                /* display this line -iskip times */
+                for (j=1; j <= miskip; j++)
+                   wipic(icontx, cmont3buf, ixul, iy++, nsami, 1, TRUE,
+                      TRUE, &imagel);  
+                }
+             }
+
+         if (names)
+           {    /* put slice number under each pane */
+           wrtname(ixul,iyul+nrowi,(char *) NULL,islice); 
+           }
+
+          if (!ndone) 
+            {ixulmon = ixul; iyulmon = iyul;}
+          ndone  = ndone + 1;
+          placed = FALSE;
+          /* force desired no. of images / line even if it truncates an image */
+          force  = TRUE;
+          }
+       } 
+    if (normit == FALSE && cmont3buf) { free(cmont3buf);  cmont3buf = NULL;}
+    }
+
+    /* free up the file descriptor for this image */
+    closefile(filedata); fileptr = NULL;
+
+   }   /*  file exists  */
+
+   /* get next file name */
+   if (filinc(filnow, filnext, &nlet, &numfil) != FALSE) 
+      {   /* file number incrementing succeeded */  
+      if (numfil <= endfile || endfile < 0) 
+         {     /* still want to display this next file so open it */
+         if ((filedatan = openold(filnext, &nsamn, &nrown, &nslicen, 
+              &iformn, "q")) == NULL)
+            {   /* Next file not found (may not exist if * was used) */
+                /* Stop if lastfile indicates * was used for files */
+            file_exist = FALSE;
+            if (endfile < 0) 
+               {toomany = TRUE;}
+            else        /* otherwise, skip and continue */
+               {strcpy(filnow,filnext);}  /* try opening file on next loop */
+            }
+         else
+            {   /* Next image file found OK, set filnow to filnext */
+            file_exist = TRUE;
+            filedata = fileptr = filedatan;
+ 
+            if ((filedata->imami != 1) && (norm(filedata) == FALSE))
+              {    
+              spout("*** Normalization failed in mont3");
+              closefile(filedata); fileptr = NULL;
+              waitcursor(iwin, FALSE, 79);
+              newline = FALSE;
+              return FALSE;
+              }
+
+            strcpy(filnow,filnext);
+            fmin_spi     = filedata->fmin_spi;
+            fmax_spi     = filedata->fmax_spi; 
+            nsam     = nsamn;
+            nrow     = nrown;
+            nslice   = nslicen;
+            }       /* ends: if ((filedatan */
+         }          /* ends: if (numfil     */
+      }             /* ends: if (filinc     */
+
+    force = FALSE;
+    if (resetmar == TRUE) marlef = marlefo;
+
+ }   /* ends: do { }while          */
+
+ while ((numfil <= endfile && !toomany) || (endfile < 0 && !toomany));
+
+ /*  CANCEL WAIT CURSOR */
+ waitcursor(iwin, FALSE, 79);
+ newline = FALSE;
+
+ return TRUE;
+ }
+
+
+@
+
+
+1.24
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 2
+/*$Header: /net/bali/usr1/web/src/RCS/mont3.c,v 1.23 2005/10/18 17:00:03 leith Exp $*/
+
+d13 18
+a30 24
+C * WEB.    AUTHOR: ARDEAN LEITH                                       *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+d50 1
+a50 1
+ /* external variables defined here */
+d54 1
+a54 1
+ /* external variables used here */
+d81 1
+a81 1
+     {        /* 3-d file with z slice */
+d85 1
+a85 1
+     {        /* y slice */
+d89 1
+a89 1
+     {        /* x slice */
+d94 1
+a94 1
+ /* numvox is number of pixels in whole montage of images */
+d99 1
+a99 1
+ /* find y-offset needed for name label */
+d106 1
+a106 1
+    {   /* position sent from caller */
+d117 1
+a117 1
+ /* set wait cursor */
+d120 1
+a120 1
+ /* find following image names and display them */
+d133 1
+a133 1
+       {   /* large movie  display of x, y or z slices ****************/
+d142 1
+a142 1
+         {   /* normalize slice by slice (handles iskip OK) */
+d151 1
+a151 1
+           { /* something failed */
+d157 1
+a157 1
+         {  /* make XImages for values returned from 'ztoxy'  routine in cmont3buf */
+d167 1
+a167 1
+         /* record image list for movie */
+d182 1
+a182 1
+           /* force a new line in montage if necessary */
+d192 1
+a192 1
+           {       /* normalize each z slice (handles iskip OK) */
+d198 1
+a198 1
+           {       /* just display (handles iskip OK) */
+d206 1
+a206 1
+           {    /* put slice number under each pane */
+d215 1
+a215 1
+         /* force desired no. of images / line even if it truncates an image */
+d231 1
+a231 1
+         {   /* normalize slice by slice (handles iskip OK) */
+d235 1
+a235 1
+         {  /* do not normalize by slice */    
+d248 1
+a248 1
+           /* force a new line in montage if necessary */
+d510 2
+a511 2
+            {   /* next file not found (may not exist if * was used) */
+                /* stop if lastfile indicates * was used for files */
+d519 1
+a519 1
+            {   /* next image file found OK, set filnow to filnext */
+@
+
+
+1.23
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont3.c,v 1.22 2002/05/17 13:36:05 leith Exp $*/
+d133 2
+a134 2
+     fn      = (float) (nmaxt-nmint) / (fmax - fmin);
+     fncon   = -fmin * fn + nmint + 0.5;
+d207 1
+a207 1
+                      fmin,fmax,ixul,iyul,nmint,nmaxt,iskip,FALSE,
+d540 2
+a541 2
+            fmin     = filedata->fmin;
+            fmax     = filedata->fmax; 
+@
+
+
+1.22
+log
+@wrtname
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont3.c,v 1.21 2002/05/16 20:21:42 leith Exp leith $*/
+d15 23
+a37 5
+C * COPYRIGHT (C)1990, 2001. HEALTH RESEARCH INCORPORATED (HRI),       *
+C * ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                   *
+C * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO HRI AND ARE NOT   *
+C * TO BE DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED *
+C * WITHOUT WRITTEN APPROVAL OF HRI.                                   *
+@
+
+
+1.21
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont3.c,v 1.19 2002/04/10 18:48:10 leith Exp leith $*/
+d90 1
+a90 1
+ if (names) nrowspn = nrowi + names_height;
+d196 1
+a196 2
+           sprintf(label,"%4d",islice);
+           wrtname(iyul+nrowspn,(char *) NULL,label);
+d251 3
+a253 5
+         if (names == TRUE)
+           {   /* put slice number under each pane */
+           sprintf(label,"%4d",islice);
+           witext(icontx, label, ixul, iyul+nrowspn+2, 1, 0, 9, 2, FALSE);
+           /* future !!!!! WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+d354 4
+a357 6
+       if (names == TRUE)
+          {   /* put slice number under each pane */
+          sprintf(label,"%4d",islice);
+          witext(icontx, label, ixul, iyul+nrowspn+2, 1, 0, 9, 2, FALSE);
+          /* future ! WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+          }
+d471 4
+a474 7
+          if (names == TRUE)
+             {   /* put slice number under each pane */
+             sprintf(label,"%4d",islice);
+             witext(icontx, label, ixul, iyul+nrowspn+2, 1, 0, 
+                    9, 2, FALSE);
+             /* future WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+             }
+@
+
+
+1.20
+log
+@*** empty log message ***
+@
+text
+@d41 1
+a52 1
+ int       nsami, nrowi, nslices;
+d71 1
+a71 1
+     dispsize(nsam1,nsam2,nrow1,nrow2,nslice1,nslice2,iskip, &nsami, &nrowi, &nslices);
+d75 1
+a75 1
+     dispsize(nsam1,nsam2,nslice1,nslice2,nrow1,nrow2,iskip, &nsami, &nrowi, &nslices);
+d79 1
+a79 1
+     dispsize(nrow1,nrow2,nslice1,nslice2,nsam1,nsam2,iskip, &nsami, &nrowi, &nslices);
+d84 1
+a84 1
+ numvox  = nsami * nrowi * nslices;
+d86 3
+d90 1
+a90 1
+ toomany = FALSE;
+a91 7
+ if (names == TRUE)
+    {      /* find y-offset needed for name label */
+    /*  future !! WID_IMGLABELOC(FILNOW,IYLINE,IYTOT) 
+    NROWSPN  = NROWSPN + IYTOT */
+    nrowspn += 10;
+    names    = TRUE;
+    }
+d132 1
+a132 2
+         iret = ztoxyn(fileptr,cmont3buf,nsam,nsam1,nsam2,nrow,nrow1,nrow2,
+                nslice,nslice1,nslice2,axis,nmaxt,iskip,mapgo); 
+d136 1
+a136 3
+         iret = ztoxy(fileptr, cmont3buf,   nsam,   nsam1,   nsam2,
+                nrow,   nrow1,   nrow2,nslice, nslice1, nslice2,
+                axis, fn, fncon, iskip);
+d145 1
+a145 1
+       for (islice=1; islice <= nslices; islice++)
+d158 1
+a158 1
+         }   /* for (islice=1; islice <= nslices; islice++) */
+d182 1
+a182 1
+           if (monn(icontx,fileptr,islice,nsami,nrowi,nslices,
+d194 1
+a194 1
+         if (names == TRUE)
+d197 1
+a197 3
+           witext(icontx, label, ixul, iyul+nrowspn+2, 1,
+                         0, 9, 2, FALSE);
+           /* future ! WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+d222 1
+a222 2
+         iret = ztoxyn(fileptr,cmont3buf,nsam,nsam1,nsam2,nrow,nrow1,nrow2,
+                       nslice,nslice1,nslice2,axis,nmaxt,iskip,mapgo); 
+d226 1
+a226 3
+         iret = ztoxy(fileptr, cmont3buf,  nsam,  nsam1, nsam2,
+                      nrow,    nrow1, nrow2, nslice, nslice1, nslice2,
+                      axis, fn, fncon, iskip); 
+d234 1
+a234 1
+       for (islice=1; islice <= nslices; islice++)
+d265 1
+a265 1
+         }    /* for (islice=1; islice <= nslices; islice++) */
+d298 1
+a298 1
+              nsami,nrowi,nslices,nmint,nmaxt) == FALSE)
+d404 1
+a404 1
+              nsami,nrowi,nslices,nmint,nmaxt) == FALSE) 
+@
+
+
+1.19
+log
+@for stacks
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont3.c,v 1.18 2001/09/12 14:43:10 leith Exp $*/
+d52 1
+a52 1
+ int       nsam3, nrow3, nslice3, nsami, nrowi, nslices;
+a67 3
+ nsam3   = nsam2   - nsam1   + 1;
+ nrow3   = nrow2   - nrow1   + 1;
+ nslice3 = nslice2 - nslice1 + 1;
+d70 3
+a72 19
+     {           /* 3-d file with z slice */
+     nslices = nslice3;
+     if (iskip > 1)
+        {   /* display reduced size image */
+        nsami   =  (1 + nsam2 - nsam1) / iskip;
+        nrowi   =  (1 + nrow2 - nrow1) / iskip;
+        }
+     else if (iskip < -1) 
+        {        /* display magnified image */
+        miskip  = -iskip;
+        nsami   = nsam3 * miskip;
+        nrowi   = nrow3 * miskip;
+         }
+     else
+        {        /* display full size image */
+        nsami   = nsam3;
+        nrowi   = nrow3;
+        }
+      }
+d74 3
+a76 23
+     {   /* y slice */
+     nslices = nrow3;
+     if (iskip > 1)
+        {        /* display reduced size image */
+        nsami   = (nsam2 - nsam1+1) / iskip;
+        nrowi   = (nslice2 - nslice1+1) / iskip;
+
+	/* modify the size because the reducing is implemented by resampling */
+	if ((nsami * iskip) != (nsam2 - nsam1+1))   nsami++;
+	if ((nrowi * iskip) != (nslice2 - nslice1+1))   nrowi++;
+        }
+     else if (iskip < -1) 
+        {        /* display magnified image */
+        miskip  = -iskip;
+        nsami   = nsam3   * miskip;
+        nrowi   = nslice3 * miskip;
+        }
+     else
+        {        /* display full size image */
+        nsami   = nsam3;
+        nrowi   = nslice3;
+        }
+      }
+d78 4
+a81 2
+     {   /* x slice */
+    nslices = nsam3;
+d83 1
+a83 22
+     if (iskip > 1)
+        {       /* display reduced size image */
+        nsami   = (1 + nrow2 - nrow1) / iskip;
+        nrowi   = (1 + nslice2 - nslice1) / iskip;
+
+	/* modify the size because the reducing is implemented by resampling */
+	if ((nsami * iskip) != (nrow2 - nrow1+1))   nsami++;
+	if ((nrowi * iskip) != (nslice2 - nslice1+1))   nrowi++;
+        }
+     else if (iskip < -1) 
+        {       /* display magnified image */
+        miskip  = -iskip; 
+        nsami   = nrow3   * miskip;
+        nrowi   = nslice3 * miskip;
+        }
+     else
+        {       /* display full size image */
+        nsami   = nrow3;
+        nrowi   = nslice3;
+        }
+     }
+ /* numvox is number of pixels in whole montage */
+@
+
+
+1.18
+log
+@added volume movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont3.c,v 1.17 1997/08/25 19:59:50 leith Exp $*/
+d40 1
+a40 1
+ char      *cmont3buf ;
+@
+
+
+1.17
+log
+@fixed the bug that gets garbage when the shrunk images are displayed in x or y axis
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont3.c,v 1.16 1996/03/26 15:07:42 leith Exp $*/
+d4 1
+d6 1
+a6 1
+C++************************************************************************
+d11 1
+d13 8
+a20 9
+C **************************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+d24 1
+a24 1
+C    PURPOSE:         DIPLAY MONTAGE FROM FILE SERIES ON WORKSTATION.
+d37 4
+a40 1
+#define MAXDIM 3000000
+d42 4
+a45 3
+ /* external variables */
+ extern int ixulmon, iyulmon, ndone;
+ extern int endfile;           
+d54 1
+a54 1
+ int       nsliceu, j , ival,l, iy, i;
+d61 1
+a61 2
+ char      *cbuf ;
+ int       iloc, nrowspn, irec, irec1;
+d174 1
+a174 1
+   if(file_exist)
+d177 2
+a178 3
+
+     fn    = (float) (nmaxt-nmint) / (fmax - fmin);
+     fncon = -fmin * fn + nmint + 0.5;
+d183 45
+a227 2
+     if (axis == 'z')
+       {   /* 3d file with z slice (no need for incore speedup -------- */  
+d244 1
+d249 1
+a249 1
+             {  waitcursor(iwin, FALSE, 79); return FALSE;}
+d256 1
+a256 1
+             {  waitcursor(iwin, FALSE, 79); return FALSE;  }
+d267 3
+a269 3
+         if(!ndone) 
+           {ixulmon = ixul; iyulmon = iyul;}
+         ndone = ndone + 1;
+d271 1
+d281 5
+a285 3
+       if ((cbuf = (char *) malloc(numvox * sizeof(char))) == (char *) 0)
+         { spout(" *** Can not allocate cbuf in mont3."); 
+         waitcursor(iwin, FALSE, 79); return FALSE; }
+d289 2
+a290 4
+         if (ztoxyn(fileptr,cbuf,nsam,nsam1,nsam2,nrow,nrow1,nrow2,
+             nslice,nslice1,nslice2,axis,nmaxt,iskip,mapgo) == FALSE) 
+           { if (cbuf)free(cbuf); closefile(fileptr); fileptr = NULL; 
+              waitcursor(iwin, FALSE, 79);  cbuf = NULL; return FALSE;}
+d294 9
+a302 6
+         if (ztoxy(fileptr, cbuf,   nsam,   nsam1,   nsam2,
+             nrow,   nrow1,   nrow2,nslice, nslice1, nslice2,
+             axis, fn, fncon, iskip) == FALSE) 
+           {if (cbuf) free(cbuf); closefile(fileptr); fileptr = NULL; 
+               cbuf = NULL; waitcursor(iwin, FALSE, 79); return FALSE;}
+         }  
+d305 1
+a305 1
+         {  /* plot out values returned from ztoxy  routine in cbuf */
+a307 1
+           /* find image position */
+d311 1
+d319 1
+a319 1
+         wipic(icontx, &cbuf[iloc], ixul, iyul, nsami, nrowi, TRUE, 
+d329 3
+a331 3
+         if(!ndone)
+           {ixulmon = ixul; iyulmon = iyul;}
+         ndone = ndone + 1;
+d336 2
+a337 1
+       if (cbuf) free(cbuf);  cbuf = NULL; 
+d341 1
+a341 1
+     {   /* 3-D FILE WITH Y SLICE,CAN NOT USE FAST INCORE ROUTINE ---- */
+d344 5
+a348 3
+         (cbuf = (char *) malloc(nsami * nrowi * sizeof(char))) == (char *) 0)
+       {spout(" *** Can not malloc cbuf2 in mont3."); 
+        waitcursor(iwin, FALSE, 79); return FALSE; }
+a354 1
+          /* find image position */
+d358 1
+d369 1
+a369 1
+            {  waitcursor(iwin, FALSE, 79); return FALSE; }
+d377 1
+a377 2
+             nsliceu = nslice2 - ((nslice2 - nslice1 + 1) % iskip) - 
+                       + 1;
+d379 1
+a379 1
+             iy = iyul;
+d384 3
+a386 2
+                   { if (cbuf) free(cbuf);  cbuf = NULL;
+                       waitcursor(iwin, FALSE, 79); return FALSE;}
+d393 1
+a393 1
+                  cbuf[l++] = ival;
+d395 1
+d397 1
+a397 1
+                wipic(icontx, cbuf, ixul, iy++, nsami, 1, TRUE,
+d408 1
+a408 1
+                   { if (cbuf) free(cbuf);  cbuf = NULL;
+d417 1
+a417 1
+                       cbuf[iloc++] = ival;
+d422 1
+a422 1
+                   wipic(icontx, cbuf, ixul, iy++, nsami, 1, TRUE,
+d434 2
+a435 2
+       if(!ndone)
+         {ixulmon = ixul; iyulmon = iyul;}
+d441 1
+a441 1
+    if (normit == FALSE) { free(cbuf); cbuf = NULL;} 
+d445 1
+a445 1
+    {    /* 3-D FILE WITH X SLICE (CAN NOT USE INCORE) ------------- */
+d449 3
+a451 2
+    if (normit == FALSE && (cbuf = (char *) malloc(nsami * nrowi * sizeof(char))) == (char *) 0)
+       {spout(" *** Can not allocate cbuf2 in mont3."); 
+d453 2
+a454 1
+       waitcursor(iwin, FALSE, 79); return FALSE; }
+a460 1
+          /* find image position */
+d464 1
+d477 2
+a478 1
+              fileptr = NULL; return FALSE;}
+d498 5
+a502 3
+                     { if (cbuf) free(cbuf);  cbuf = NULL; 
+                       closefile(fileptr);  waitcursor(iwin, FALSE, 79); 
+                       fileptr = NULL;   return FALSE;}
+d505 1
+a505 1
+                  cbuf[l++] = ival;
+d507 1
+d509 1
+a509 1
+                wipic(icontx, cbuf, ixul, iy++, nsami, 1, TRUE,  
+a522 1
+
+d526 5
+a530 3
+                      { if (cbuf) free(cbuf);  cbuf = NULL; 
+                          closefile(fileptr); fileptr = NULL;
+                          waitcursor(iwin, FALSE, 79); return FALSE;}
+d536 1
+a536 1
+                      cbuf[iloc++] = ival;
+d541 1
+a541 1
+                   wipic(icontx, cbuf, ixul, iy++, nsami, 1, TRUE,
+d554 1
+a554 1
+          if(!ndone) 
+d562 1
+a562 1
+    if (normit == FALSE && cbuf) { free(cbuf);  cbuf = NULL;}
+d567 3
+a569 1
+   } /*  file exists  */
+d580 4
+a583 4
+            if (endfile < 0) toomany = TRUE;
+            /* otherwise, skip and continue */
+
+            else strcpy(filnow,filnext);  /* try opening file on next loop */
+d612 1
+a612 1
+ }               /* ends: do { }while          */
+d619 1
+@
+
+
+1.16
+log
+@misc.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont3.c,v 1.15 1995/08/08 19:34:22 leith Exp leith $*/
+d49 1
+a49 1
+ int       nsliceu, j , ival,l, iy;
+d73 2
+a74 2
+        nsami   =  1 + (nsam2 - nsam1) / iskip;
+        nrowi   =  1 + (nrow2 - nrow1) / iskip;
+d93 6
+a98 2
+        nsami   = 1 + (nsam2 - nsam1) / iskip;
+        nrowi   = 1 + (nslice2 - nslice1) / iskip;
+d118 6
+a123 2
+        nsami   = 1 + (nrow2 - nrow1) / iskip;
+        nrowi   = 1 + (nslice2 - nslice1) / iskip;
+a296 1
+
+d324 1
+a324 1
+                       iskip + 1;
+@
+
+
+1.15
+log
+@set showit in wipic call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont3.c,v 1.14 1995/04/13 17:16:14 liy Exp leith $*/
+d49 2
+a50 2
+ int       nsliceu, nrowu, nsamu, j , ival,l, iy;
+ int       numfil, nlet,  toomany, nummis, file_exist = TRUE;
+d57 1
+a57 1
+ int       iloc, nrowspn, k, irec, irec1, irec2;
+a133 1
+ nummis  = 0;
+d233 2
+a234 2
+           { if (cbuf)free(cbuf); closefile(fileptr); 
+              waitcursor(iwin, FALSE, 79);  return FALSE;}
+d241 2
+a242 2
+           {if(cbuf) free(cbuf); closefile(fileptr); 
+              waitcursor(iwin, FALSE, 79); return FALSE;}
+d277 1
+a277 1
+       if (cbuf) free(cbuf); 
+a317 2
+             nsamu   = nsam2 -   ((nsam2   - nsam1   + 1) % iskip) -
+                       iskip + 1;
+d324 1
+a324 1
+                   { if (cbuf) free(cbuf); 
+d346 1
+a346 1
+                   { if (cbuf) free(cbuf); 
+d379 1
+a379 1
+    if (normit == FALSE) free(cbuf);
+d389 2
+a390 1
+       closefile(fileptr);  waitcursor(iwin, FALSE, 79); return FALSE; }
+d413 1
+a413 1
+              return FALSE;}
+a422 2
+             nrowu   = nrow2 -   ((nrow2   - nrow1   + 1) % iskip) -
+                       iskip + 1;
+d433 1
+a433 1
+                     { if (cbuf) free(cbuf); 
+d435 1
+a435 1
+                                  return FALSE;}
+d459 2
+a460 2
+                      { if (cbuf) free(cbuf); 
+                          closefile(fileptr);
+d493 1
+a493 1
+    if (normit == FALSE && cbuf) free(cbuf);
+d497 1
+a497 1
+    closefile(filedata);
+d522 1
+a522 1
+              closefile(filedata);
+a530 1
+            nummis   = 0;
+@
+
+
+1.14
+log
+@modified for montage skip black images
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont3.c,v 1.13 1995/03/30 16:29:23 mladjadj Exp liy $*/
+d261 1
+a261 1
+         wipic(icontx, &cbuf[iloc], ixul, iyul, nsami, nrowi, FALSE, 
+d338 1
+a338 1
+                wipic(icontx, cbuf, ixul, iy++, nsami, 1, FALSE,
+d363 1
+a363 1
+                   wipic(icontx, cbuf, ixul, iy++, nsami, 1, FALSE,
+d445 1
+a445 1
+                wipic(icontx, cbuf, ixul, iy++, nsami, 1, FALSE,  
+d476 1
+a476 1
+                   wipic(icontx, cbuf, ixul, iy++, nsami, 1, FALSE,
+@
+
+
+1.13
+log
+@added if(not(ndone)) to know position of first image for MOVIE
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/mont3.c,v 1.11 1994/08/15 14:40:19 odesanya Exp $*/
+d514 1
+a514 2
+            /* if more than two missing files, stop here anyway */
+            if (++nummis > 2) toomany = TRUE;
+@
+
+
+1.12
+log
+@modified for montage 3D
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont3.c,v 1.11 1994/08/15 14:40:19 odesanya Exp liy $*/
+d39 1
+d46 1
+a46 1
+ int       maxvox, maxflt, numvox, ndone, resetmar, marlefo;
+d160 2
+a161 4
+/* find following image names and display them */
+do
+ {
+  if(file_exist)
+d163 3
+a165 1
+ /* conversion from floating point to byte range */
+d176 9
+a184 9
+         for (islice=nslice1; islice<=nslice2; islice++)
+          {
+       nrec1  = (islice -1) * nrow + nrow1;
+       nrec2  = (islice -1) * nrow + nrow2;
+
+       if (movie == FALSE)
+          {
+          /* force a new line in montage if necessary */
+          if (ndone%nprow == 0) newline = TRUE;
+d186 14
+a199 14
+          locc(&ixul,&iyul,nsami,nrowspn,&ntop,&nbot,&nrit,
+               marx,mary,marlef,martop,iwidex,ihighx,placed,
+               newline,&nuscrn,force);
+          newline = FALSE;
+          }
+       if (normit == TRUE)
+          {       /* normalize each z slice (handles iskip OK) */
+          if (monn(icontx,fileptr,islice,nsami,nrowi,nslices,
+              nmint,nmaxt) ==  FALSE) {  waitcursor(iwin, FALSE, 79);
+               return FALSE;}
+          }
+       else
+          {       /* just display (handles iskip OK) */
+          if (widisp(icontx,fileptr,nsam,nsam1,nsam2,nrec1,nrec2,
+d201 28
+a228 4
+                      &imagel,FALSE)
+                     == FALSE) {  waitcursor(iwin, FALSE, 79);
+             return FALSE;  }
+          }
+d230 4
+a233 25
+       if (names == TRUE)
+         {        /* put slice number under each pane */
+         sprintf(label,"%4d",islice);
+         witext(icontx, label, ixul, iyul+nrowspn+2, 1, 0, 9, 2, FALSE);
+         /* future ! WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+         }
+
+       ndone = ndone + 1;
+       placed = FALSE;
+       /* force desired no. of images / line even if it truncates an image */
+       force  = TRUE;
+       }
+    }
+ else if ((normit == FALSE && numvox < maxvox) ||
+          (normit == TRUE  && numvox < maxflt))
+    {   /* can use fast incore routine for display of x or y slices */
+
+    if ((cbuf = (char *) malloc(numvox * sizeof(char))) == (char *) 0)
+       {spout(" *** Can not allocate cbuf in mont3."); 
+       waitcursor(iwin, FALSE, 79); return FALSE; }
+
+    if (normit == TRUE)
+       {   /* normalize slice by slice (handles iskip OK) */
+       if (ztoxyn(fileptr,cbuf,nsam,nsam1,nsam2,nrow,nrow1,nrow2,nslice,
+           nslice1,nslice2,axis,nmaxt,iskip,mapgo) == FALSE) 
+d236 6
+a241 6
+       }
+    else
+       {  /* do not normalize by slice */    
+       if (ztoxy(fileptr, cbuf,   nsam,   nsam1,   nsam2,
+           nrow,   nrow1,   nrow2,nslice, nslice1, nslice2,
+           axis, fn, fncon, iskip) == FALSE) 
+d244 1
+a244 1
+       }  
+d246 7
+a252 7
+    for (islice=1; islice <= nslices; islice++)
+       {  /* plot out values returned from ztoxy  routine in cbuf */
+       if (movie == FALSE)
+          {
+          /* find image position */
+          /* force a new line in montage if necessary */
+          if (ndone%nprow == 0) newline = TRUE;
+d254 1
+a254 1
+          locc(&ixul,&iyul,nsami,nrowspn,&ntop,&nbot,&nrit,
+d257 2
+a258 2
+          newline = FALSE;
+          }
+d260 2
+a261 2
+       iloc = (islice -1) * nsami * nrowi;
+       wipic(icontx, &cbuf[iloc], ixul, iyul, nsami, nrowi, FALSE, 
+d264 16
+a279 14
+       if (names == TRUE)
+          {   /* put slice number under each pane */
+          sprintf(label,"%4d",islice);
+          witext(icontx, label, ixul, iyul+nrowspn+2, 1, 0, 9, 2, FALSE);
+          /* future !!!!! WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+          }
+
+       ndone = ndone + 1;
+       placed = FALSE;
+       /* force desired no. of images / line even if it truncates image */
+       force  = TRUE;
+       }
+    if (cbuf) free(cbuf); 
+    }
+d281 2
+a282 2
+ else if (axis == 'y')
+    {   /* 3-D FILE WITH Y SLICE,CAN NOT USE FAST INCORE ROUTINE ---- */
+d284 2
+a285 1
+    if (normit == FALSE && (cbuf = (char *) malloc(nsami * nrowi * sizeof(char))) == (char *) 0)
+d289 1
+a289 1
+    buf = filedata -> buf;
+d291 1
+a291 1
+    for (irow=nrow1; irow<=nrow2; irow++)
+a312 1
+
+a322 1
+
+d375 2
+d489 2
+d500 1
+a500 1
+ /* free up the file descriptor for this image */
+d514 2
+a516 1
+	    /* otherwise, try to find the next one until the user defined No. */
+d547 1
+a547 1
+    }               /* ends: while          */
+@
+
+
+1.11
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/mont3.c,v 1.10 94/08/09 15:47:07 leith Exp $*/
+a504 2
+            /* if more than two missing files, stop here anyway */
+            if (++nummis > 2) toomany = TRUE;
+d506 1
+@
+
+
+1.10
+log
+@used q disp for silent 2nd file opening if not found
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/mont3.c,v 1.9 94/06/24 11:30:15 odesanya Exp Locker: leith $*/
+d49 1
+a49 1
+ int       numfil, nlet,  toomany, nummis;
+d162 2
+a163 1
+
+d166 2
+a167 2
+ fn    = (float) (nmaxt-nmint) / (fmax - fmin);
+ fncon = -fmin * fn + nmint + 0.5;
+d169 2
+a170 2
+ ndone   = 0;
+ newline = TRUE;
+d172 2
+a173 2
+ if (axis == 'z')
+    {   /* 3d file with z slice (no need for incore speedup -------- */  
+d175 2
+a176 2
+    for (islice=nslice1; islice<=nslice2; islice++)
+       {
+d493 1
+a493 1
+
+d496 1
+a496 1
+      {   /* file number incrementing succeeded */
+d503 1
+d508 1
+a508 1
+            else strcpy(filnow,filnext);  /* try opening next file */
+d512 1
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/mont3.c,v 1.8 94/06/17 11:33:06 odesanya Exp $*/
+d23 1
+a23 1
+C    PURPOSE:         DIPLAY MONTAGE FROM FILE SERIES ON X WORKSTATION.
+a26 2
+C                     IXUL,IYUL  UPPER LEFT CORNER FOR LAST IMAGE
+C                     NRIT       RIGHT OF THIS ROW OF IMAGES
+d137 2
+a138 2
+    /*  future !!!!!!!! WID_IMGLABELOC(FILNOW,IYLINE,IYTOT) 
+    NROWSPN = NROWSPN + IYTOT */
+d140 1
+a140 1
+    names = TRUE;
+d208 1
+a208 1
+         /* future !!!!! WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+d278 2
+a279 2
+       {spout(" *** Can not allocate cbuf2 in mont3."); 
+           waitcursor(iwin, FALSE, 79); return FALSE; }
+d366 1
+a366 1
+          /* future !!!!! WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+d404 4
+a407 2
+              nsami,nrowi,nslices,nmint,nmaxt) == FALSE) {
+              closefile(fileptr);  waitcursor(iwin, FALSE, 79); return FALSE;}
+a408 1
+
+d476 3
+a478 2
+             witext(icontx, label, ixul, iyul+nrowspn+2, 1, 0, 9, 2, FALSE);
+             /* future !!!!!WID_IMGLABEL(LABEL,IXUL,IYUL+NROWS+IYLINE)*/
+d499 1
+a499 1
+              &iformn, "o")) == NULL)
+d505 2
+a506 1
+            else  strcpy(filnow,filnext);  /* try opening next file */
+d513 2
+a514 2
+             {    
+              spout("mont3.c: *** Normalization failed.");
+d519 1
+a519 1
+             }
+a520 3
+            fmin = filedata->fmin;
+            fmax = filedata->fmax; 
+            nummis = 0;
+d522 3
+d535 2
+a536 1
+   }                /* ends: while          */
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/mont3.c,v 1.7 94/06/16 16:42:22 odesanya Exp $*/
+a157 5
+ /* conversion from floating point to byte range */
+
+ fn    = (float) (nmaxt-nmint) / (fmax - fmin);
+ fncon = -fmin * fn + nmint + 0.5;
+
+d165 5
+d509 13
+a523 1
+            filedata = filedatan;
+@
+
+
+1.7
+log
+@added loop to display multiple volumes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/mont3.c,v 1.6 94/05/12 12:40:15 leith Exp $*/
+a63 1
+
+a132 1
+ ndone   = 0;
+d134 2
+d170 3
+a182 1
+          newline = FALSE;
+d189 1
+a247 1
+          newline = FALSE;
+d254 1
+a289 1
+          newline = FALSE;
+d296 1
+a393 1
+          newline = FALSE;
+d400 1
+d518 4
+a522 1
+
+a524 2
+ force = FALSE;
+
+d527 1
+a527 3
+
+ if (resetmar == TRUE) marlef = marlefo;
+
+@
+
+
+1.6
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/mont3.c,v 1.5 94/01/28 10:25:04 leith Exp Locker: leith $*/
+d40 3
+d51 3
+d75 2
+a76 2
+        nsami   = nsam3 / iskip;
+        nrowi   = nrow3 / iskip;
+d95 2
+a96 2
+        nsami   = nsam3   / iskip;
+        nrowi   = nslice3 / iskip;
+d116 2
+a117 2
+        nsami   = nrow3   / iskip;
+        nrowi   = nslice3 / iskip;
+d141 1
+d156 1
+d166 4
+d191 2
+a192 1
+              nmint,nmaxt) ==  FALSE) return FALSE;
+d199 2
+a200 2
+                     == FALSE)
+             return FALSE;
+d205 2
+a206 1
+         sprintf(label,"%d4.4",islice);
+d221 2
+a222 1
+       {spout(" *** Can not allocate cbuf in mont3."); return FALSE; }
+d228 2
+a229 1
+           { if (cbuf)free(cbuf); closefile(fileptr); return FALSE;}
+d236 2
+a237 1
+           {if(cbuf) free(cbuf); closefile(fileptr); return FALSE;}
+d260 2
+a261 1
+          sprintf(label,"%d4.4",islice);
+d277 2
+a278 1
+       {spout(" *** Can not allocate cbuf2 in mont3."); return FALSE; }
+d299 2
+a300 1
+              nsami,nrowi,nslices,nmint,nmaxt) == FALSE) return FALSE;
+d320 2
+a321 1
+                   { if (cbuf) free(cbuf); return FALSE;}
+d342 2
+a343 1
+                   { if (cbuf) free(cbuf); return FALSE;}
+d363 2
+a364 1
+          sprintf(label,"%d4.4",islice);
+d383 1
+a383 1
+       closefile(fileptr); return FALSE; }
+d404 1
+a404 1
+              closefile(fileptr); return FALSE;}
+d428 2
+a429 1
+                       closefile(fileptr);return FALSE;}
+d454 2
+a455 1
+                          closefile(fileptr);return FALSE;}
+d473 2
+a474 1
+             sprintf(label,"%d4.4",islice);
+d487 32
+a524 1
+ closefile(fileptr);
+@
+
+
+1.5
+log
+@closed fileptr
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont3.c,v 1.4 93/12/07 11:44:15 leith Exp Locker: leith $*/
+d36 2
+a39 22
+ extern int  redlin     (FILEDATA *, float *, int, int);
+ extern int  closefile  (FILEDATA *);
+ extern void locc       (int *, int *, int, int,
+                         int *, int *, int *, int, int, int, int, int,
+                         int, int, int, int *, int);
+
+ extern int widisp      (GC, FILEDATA *, int, int, int, int, int, 
+                         double, double ,int, int, int, int, int, XImage **);
+
+ extern int  ztoxy     (FILEDATA *, char *,
+                         int,  int,   int, int,  int,   int,
+                         int,  int,   int, char, float, float, int);
+
+ extern int  ztoxyn    (FILEDATA *, char *,
+                        int, int, int, int, int, int, int, int, int,
+                        char, int, int, int);
+
+ extern int  monn      (GC, FILEDATA *, int, int, int, int, int);
+ extern void spout     (char *);
+ extern void waitcursor(Window, int, int);
+ extern void wipic     (GC, char *, int, int, int, int, int, int, XImage **);
+
+d42 1
+a42 1
+ int  mont3(FILEDATA *fileptr)
+d152 2
+a153 2
+ fn    = (float) (nmax-mapgo) / (fmax - fmin);
+ fncon = -fmin * fn + mapgo + 0.5;
+d178 2
+a179 2
+          if (monn(icontx,fileptr,islice,nsami,nrowi,nslices,nmax) == 
+                  FALSE) return FALSE;
+d184 2
+a185 1
+                      fmin,fmax,ixul,iyul,nmax,iskip,FALSE,&imagel)
+d212 1
+a212 1
+           nslice1,nslice2,axis,nmax,iskip,mapgo) == FALSE) 
+d280 1
+a280 1
+              nsami,nrowi,nslices,nmax) == FALSE) return FALSE;
+d380 1
+a380 1
+              nsami,nrowi,nslices,nmax) == FALSE) {
+@
+
+
+1.4
+log
+@ removed uncbuf from wipic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont3.c,v 1.3 93/11/16 14:51:43 leith Exp Locker: leith $*/
+d39 1
+a39 1
+
+d232 1
+a232 1
+           { free(cbuf); return FALSE;}
+d239 1
+a239 1
+           {free(cbuf); return FALSE;}
+d378 2
+a379 1
+       {spout(" *** Can not allocate cbuf2 in mont3."); return FALSE; }
+d399 2
+a400 1
+              nsami,nrowi,nslices,nmax) == FALSE) return FALSE;
+d423 2
+a424 1
+                     { if (cbuf) free(cbuf); return FALSE;}
+d448 2
+a449 1
+                      { if (cbuf) free(cbuf); return FALSE;}
+d486 2
+@
+
+
+1.3
+log
+@widisp call altered
+@
+text
+@d2 2
+a3 1
+/*$Header: /alwyn/usr1/web//RCS/mont3.c,v 1.2 93/11/16 14:44:13 leith Exp Locker: leith $*/
+d258 1
+a258 1
+             FALSE, &imagel); 
+d271 1
+a271 1
+    free(cbuf); 
+d319 1
+a319 1
+                   { free(cbuf); return FALSE;}
+d330 1
+a330 1
+                      FALSE, &imagel);  
+d340 1
+a340 1
+                   { free(cbuf); return FALSE;}
+d354 1
+a354 1
+                      FALSE, &imagel);  
+d421 1
+a421 1
+                     { free(cbuf); return FALSE;}
+d428 1
+a428 1
+                      FALSE, &imagel);  
+d445 1
+a445 1
+                      { free(cbuf); return FALSE;}
+d457 1
+a457 1
+                      FALSE, &imagel);  
+d473 1
+a473 1
+    if (normit == FALSE) free(cbuf);
+@
+
+
+1.2
+log
+@altered wipic call
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont3.c,v 1.1 93/11/10 10:11:18 leith Exp Locker: leith $*/
+d43 2
+a44 2
+ extern int  widisp     (GC, FILEDATA *, int, int, int, int, int,
+                         double, double ,int, int, int, int);
+d46 1
+a46 1
+ extern int   ztoxy     (FILEDATA *, char *,
+d203 2
+a204 1
+                      fmin,fmax,ixul,iyul,nmax,iskip) == FALSE)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d20 1
+a20 1
+C $$ MONT3
+a33 2
+#include "std.h"
+#include "x.h"
+d37 1
+a37 1
+ extern int  redlin(FILEDATA *, float *, int, int);
+d39 3
+a41 1
+ extern void wipic(GC, char *, int, int, int, int, int);
+d43 2
+a44 3
+ extern void locc(int *, int *, int, int,
+                int *, int *, int *, int, int, int, int, int,
+                int, int, int, int *, int);
+d46 3
+a48 2
+ extern int  widisp(GC, FILEDATA *, int, int, int, int, int,
+                double, double ,int, int, int, int);
+d50 3
+a52 3
+ extern int  ztoxy(FILEDATA *, char *,
+                int,  int,   int, int,  int,   int,
+                int,  int,   int, char, float, float, int);
+d54 2
+a55 7
+ extern int  ztoxyn(FILEDATA *, char *,
+               int, int, int, int, int, int, int, int, int,
+               char, int, int, int);
+
+ extern int  monn(GC, FILEDATA *, int, int, int, int, int);
+
+ extern void spout (char *);
+d57 1
+d59 1
+a59 4
+
+
+
+/*************************************************************/
+d255 2
+a256 1
+       wipic(icontx, &cbuf[iloc], ixul, iyul, nsami, nrowi, FALSE); 
+d327 2
+a328 1
+                wipic(icontx, cbuf, ixul, iy++, nsami, 1, FALSE);  
+d351 2
+a352 1
+                   wipic(icontx, cbuf, ixul, iy++, nsami, 1, FALSE);
+d425 2
+a426 1
+                wipic(icontx, cbuf, ixul, iy++, nsami, 1, FALSE);  
+d454 2
+a455 1
+                   wipic(icontx, cbuf, ixul, iy++, nsami, 1, FALSE);
+@

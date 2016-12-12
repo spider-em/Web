@@ -1,0 +1,401 @@
+head	1.11;
+access;
+symbols
+	pre-tilt-improve:1.11
+	pre_surf_fromtop:1.11
+	pre_neednewmap:1.11
+	pre_apppluss_remove:1.11
+	pre_tiltpair_chng:1.11
+	pre_GPL:1.9;
+locks;
+comment	@ * @;
+
+
+1.11
+date	2011.06.10.14.14.39;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2005.10.18.16.59.41;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.05.13.14.38.31;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.07.11.20.17.49;	author mladjadj;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.07.11.17.28.08;	author mladjadj;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.02.01.21.42.28;	author liy;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.01.26.18.51.05;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.01.23.10.21.20;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.16.11.50.45;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.11.10.36.48;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.02.10.16.19.57;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@updates current directory (dirnow) and dir. for file widget
+@
+
+
+1.11
+log
+@update
+@
+text
+@
+/*$Header: /usr8/web/new/RCS/changedir.c,v 1.10 2005/10/18 16:59:41 leith Exp $*/
+
+/***********************************************************************
+ *
+ * changedir.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ * 
+ * PURPOSE:  Change current directory     
+ * 
+ * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
+ *		XtPointer		data		label text string
+ *		XtPointer		call_data	not used 
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+//#include "routines.h"
+
+#include <unistd.h>
+
+#include <Xm/FileSB.h>
+
+ /* Internal functions */
+ void            changedir_cb(Widget, XtPointer, XtPointer);
+
+ /* File scope variables */
+ static Widget     iw_text = (Widget)0;
+
+/************************  changedir  ***********************************/
+
+ void changedir(Widget iw_temp, XtPointer data, XtPointer call_data)
+ 
+ {
+ /* Create new directory input box */
+ iw_text = wid_text(iw_win, iw_text, "Enter new directory", dirnow,
+                       *changedir_cb, NULL, 0, 0);
+ }
+
+
+ /**********************  changedir_cb  *********************************/
+
+ void changedir_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ Arg         args[1];   
+ XmString    str_dir;
+ char        *cptr;
+
+ XmSelectionBoxCallbackStruct *cbs =
+      (XmSelectionBoxCallbackStruct *) call_data;
+ 
+ cptr = extractstr(cbs -> value);
+
+ if (strlen(cptr) > (size_t) 80)
+    {
+    spout("*** Directory name truncated ");
+    XBell(idispl,50);
+    }
+ /* Should have better handling of too long directories!!! */
+
+ strncpy(dirnow,cptr,80);
+ free(cptr);
+ chdir(dirnow);
+ getcwd(dirnow,80);
+ spouts(" Current directory: "); spout(dirnow);
+
+ if (iw_files != (Widget)0)
+    {   /* Update file widget current directory */
+
+    str_dir = XmStringCreate(dirnow, XmSTRING_DEFAULT_CHARSET);
+    XtSetArg(args[0], XmNdirectory, str_dir);   
+    XtSetValues(iw_files, args,1);
+    if (str_dir)  XmStringFree(str_dir);
+    }
+ }
+
+@
+
+
+1.10
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/changedir.c,v 1.9 1996/05/13 14:38:31 leith Exp $*/
+d44 1
+a45 4
+#ifdef VMS
+#include <unixio.h>
+#include <unixlib.h>
+#else
+a46 1
+#endif
+a48 1
+#include "routines.h"
+d50 1
+a50 1
+ /* internal functions */
+d53 2
+a54 2
+ /* file variables */
+ static Widget     iw_text=(Widget)0;
+d61 1
+a61 1
+ /* create new directory input box */
+d85 1
+a85 1
+ /* should have better handling of too long directories!!! */
+d94 1
+a94 1
+    {   /* update file widget current directory */
+@
+
+
+1.9
+log
+@used XtPointer, strlen error msg added
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/changedir.c,v 1.8 1995/07/11 20:17:49 mladjadj Exp leith $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.8
+log
+@correct type fot iytest & ixtest
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/changedir.c,v 1.7 1995/07/11 17:28:08 mladjadj Exp mladjadj $*/
+d20 2
+a21 2
+ *		caddr_t		data		label text string
+ *		caddr_t		call_data	not used 
+a37 1
+
+d39 1
+a39 2
+ void            changedir_cb   (Widget, caddr_t, caddr_t);
+
+a41 1
+ static char       label_string[] = "Enter new directory";  
+a42 3
+ static int        ixtext=0;      /* x coord for widget    */
+ static int        iytext=0;      /* y coord for widget    */
+ 
+d46 2
+a47 1
+ void changedir(Widget iw_temp, caddr_t data, caddr_t call_data)
+a48 1
+
+d50 2
+a51 2
+ iw_text = wid_text(iw_win, iw_text, label_string, dirnow,
+                       *changedir_cb, NULL, ixtext, iytext);
+d57 1
+a57 1
+ void changedir_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+d59 3
+a61 2
+ Arg           args[1];   
+ XmString      str_dir;
+d66 11
+a76 1
+ strncpy(dirnow,extractstr(cbs -> value),80);
+d79 1
+a79 2
+ spout(" Current directory:$");
+ spout(dirnow);
+d81 1
+a81 1
+ if (iw_files > (Widget)0)
+a87 1
+
+@
+
+
+1.7
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/changedir.c,v 1.6 1995/02/01 21:42:28 liy Exp mladjadj $*/
+d46 2
+a47 2
+ static int        ixtext=(Widget)0;      /* x coord for widget    */
+ static int        iytext=(Widget)0;      /* y coord for widget    */
+@
+
+
+1.6
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/changedir.c,v 1.5 1995/01/26 18:51:05 liy Exp liy $*/
+d45 3
+a47 3
+ static Widget     iw_text;
+ static int        ixtext;           /* x coord for widget    */
+ static int        iytext;           /* y coord for widget    */
+@
+
+
+1.5
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/changedir.c,v 1.4 1995/01/23 10:21:20 leith Exp liy $*/
+d77 1
+a77 1
+ if (iw_files > (void *)0)
+@
+
+
+1.4
+log
+@shortened name of extractstring to extractstr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/changedir.c,v 1.3 94/02/16 11:50:45 leith Exp Locker: leith $*/
+d77 1
+a77 1
+ if ((int)iw_files > 0)
+@
+
+
+1.3
+log
+@added if VMS for proper includes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/changedir.c,v 1.2 94/02/11 10:36:48 leith Exp Locker: leith $*/
+d36 1
+a37 5
+ /* function prototypes */
+ extern Widget   wid_text      (Widget, Widget, char *, char *, 
+                                void (*)(),  caddr_t, int, int);
+ extern char *   extractstring (XmString);
+ extern void     spout         (char *);
+d71 1
+a71 1
+ strncpy(dirnow,extractstring(cbs -> value),80);
+@
+
+
+1.2
+log
+@added ifndef VMS for unistd include
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/changedir.c,v 1.1 94/02/10 16:19:57 leith Exp Locker: leith $*/
+d27 5
+a31 1
+#ifndef VMS
+d34 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d27 1
+d29 1
+@

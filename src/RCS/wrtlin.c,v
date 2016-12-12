@@ -1,0 +1,395 @@
+head	1.9;
+access;
+symbols
+	pre-tilt-improve:1.9
+	pre_surf_fromtop:1.9
+	pre_neednewmap:1.9
+	pre_apppluss_remove:1.9
+	pre_tiltpair_chng:1.9
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.9
+date	2005.10.18.16.59.59;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.03.03.19.36.19;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2000.06.29.15.51.11;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.05.08.15.12.13;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.01.25.19.51.02;	author mladjadj;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.11.17.15.30.02;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.11.10.16.16.28;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.16.12.51.28;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.02;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@GPL
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/wrtlin.c,v 1.8 2003/03/03 19:36:19 leith Exp $*/
+/*
+ * wrtlin.c
+ *
+ *************************************************************************
+ * SPIDER - MODULAR IMAGE PROCESSING SYSTEM.  AUTHOR: J.FRANK 
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ **************************************************************************
+ *
+ * wrtlin(fileptr,buf,nsam,irec)
+ * 
+ * PURPOSE:     
+ *
+ * RETURNS: number of positions written into file
+ * 
+ * PARAMETERS:   fileptr
+ *               buf
+ *               nsam
+ *               irec    
+ *
+ *********************************************************************/
+
+#include "files.h"
+
+unsigned int *pt;
+#define CONVERT_4( A, B )                        \
+              (A) =                 \
+            ((unsigned int)(B) >> 24) |          \
+            ((unsigned int)(B) << 24) |          \
+           (((unsigned int)(B) >> 8) & 0xff00) | \
+           (((unsigned int)(B) << 8) & 0xff0000)
+
+
+ int wrtlin(FILEDATA *fileptr, float *buf, int nsam, int irec)
+
+ {
+ FILE    *fp;
+ int     ioff, itest, k1;
+ size_t  igot;
+
+ /* find offset of this line in the file */ 
+ if (irec != 0) 
+    ioff  = fileptr -> offset + fileptr -> headbyt + (irec -1) * nsam * 4;
+ else
+    ioff  = fileptr -> offset;
+
+ /* find fileptr for this file */
+ fp    = fileptr -> fp;
+
+ if ((igot = fseek(fp,ioff,SEEK_SET)) != 0) 
+    {
+    printf("*** Seek failed in wrtlin: %d \n",igot);
+    printf("wrtlin; igot: %d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+    return FALSE;
+    }
+
+ /* have set file position to the correct offset, put buf in file */
+
+ if (fileptr -> flip == 1)
+   {
+   /* flip the bytes */
+   pt = (unsigned int *) buf;
+   for (k1 = 0; k1 < nsam; k1++, pt++)
+      { CONVERT_4(*pt,*pt);  }
+   }
+
+    igot = fwrite(buf, sizeof(float), nsam, fp);
+    itest = nsam;
+
+ if ((int) igot == itest)
+    return TRUE;
+
+ else 
+    {
+    printf("*** Write error in wrtlin. \n");
+    printf("wrtlin; fp: %d igot: %d   ioff: %d nsam: %d \n",
+                    fp,    igot,      ioff,    nsam);
+    return FALSE;
+    }
+ }
+
+@
+
+
+1.8
+log
+@endedness
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wrtlin.c,v 1.7 2000/06/29 15:51:11 leith Exp $*/
+d8 23
+a30 6
+ * COPYRIGHT (C)1981,1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.7
+log
+@vms removed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wrtlin.c,v 1.6 1995/05/08 15:12:13 leith Exp $*/
+a30 1
+#ifdef P_SGIOSF
+d33 1
+a33 1
+             (unsigned int)(A) =                 \
+a38 1
+#endif
+d64 8
+a71 7
+#ifdef  P_SGIOSF
+       /* convert to sgi like byte order */
+       pt = (unsigned int *) buf;
+       /* flip the bytes for date and time in header */
+       for (k1 = 0; k1 < nsam; k1++, pt++)
+          { CONVERT_4(*pt,*pt);  }
+#endif
+@
+
+
+1.6
+log
+@vms code defective
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wrtlin.c,v 1.5 1995/01/25 19:51:02 mladjadj Exp $*/
+d46 1
+a46 1
+ int     ioff, itest, k1, ot;
+d50 2
+a51 2
+ if (irec != 0)
+    ioff  = (fileptr -> offset) + (irec -1) * nsam * 4;
+d53 1
+a53 1
+    ioff  = 0;
+a65 4
+#ifdef VMS
+    igot    = fwrite(buf, (size_t)(nsam*sizeof(float)), 1, fp);
+    itest   = 1;
+#else
+a75 1
+#endif
+@
+
+
+1.5
+log
+@ alpha/osf add CONVERT_$ macro to flip bytes faster
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wrtlin.c,v 1.4 1994/11/17 15:30:02 mladjadj Exp $*/
+a30 5
+/*  #ifdef   P_SGIOSF      */
+/*  #include <cvt.h>   */
+/*   int cvt_ftof( void *, int, void *, int, int);   */
+/*  #endif   */
+
+d47 1
+a47 1
+ size_t  igot, reclen, nrec;
+d60 2
+a61 2
+    printf(" *** Seek failed in wrtlin: %d \n",igot);
+    printf(" wrtlin; igot: %d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+d67 2
+a68 4
+ reclen = fileptr->reclen;
+ nrec = (size_t) ceil((float) (nsam*sizeof(float))/fileptr->reclen);
+ igot = fwrite(buf, reclen, nrec, fp);
+ itest = (int) nrec;
+a69 17
+/*    #ifdef  P_SGIOSF     */
+
+/*        DEC OSF/1 with files written in IEEE standard        
+          to allow portability to other unix machines  */
+
+/*     for (k1 = 0; k1 < nsam; k1++)     */
+/*        {     */
+/*        ot = cvt_ftof(&buf[k1], CVT_BIG_ENDIAN_IEEE_S,     */
+/*                      &buf[k1], CVT_IEEE_S, 0);     */
+/*        if (ot)         */
+/*            {      */
+ /* ot=0 success */
+/*            printf("*** cvt_ftof of position: %d failed!\n",k1);     */
+/*            }      */
+/*        }     */
+/*    #endif     */
+
+d71 5
+a75 4
+   pt = (unsigned int *) buf;
+   /* flip the bytes for date and time in header */
+   for (k1 = 0; k1 < nsam; k1++, pt++)
+      { CONVERT_4(*pt,*pt);  }
+d78 2
+a79 2
+ igot = fwrite(buf, sizeof(float), nsam, fp);
+ itest = nsam;
+d87 3
+a89 3
+    printf(" *** Write error in wrtlin. \n");
+    printf(" wrtlin; fp: %d igot: %d   ioff: %d nsam: %d \n",
+                     fp,    igot,      ioff,    nsam);
+@
+
+
+1.4
+log
+@fixed ifdef for cpp
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wrtlin.c,v 1.3 1994/11/10 16:16:28 mladjadj Exp mladjadj $*/
+a29 2
+#ifdef  __osf__ 
+#include <cvt.h>
+d31 14
+a44 1
+ int cvt_ftof( void *, int, void *, int, int);
+d77 1
+d80 19
+a98 10
+**        to allow portability to other unix machines  
+*/
+#ifdef __osf__ 
+    for (k1 = 0; k1 < nsam; k1++)
+       {
+       ot = cvt_ftof(&buf[k1], CVT_BIG_ENDIAN_IEEE_S,
+                     &buf[k1], CVT_IEEE_S, 0);
+       if (ot)     /* ot=0 success */
+           printf(" Conversion cvt_ftof of float %d has failed !!\n",k1);
+       }
+@
+
+
+1.3
+log
+@add cpp switch __osf__ for DEC/OSF1 alpha machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/wrtlin.c,v 1.2 94/02/16 12:51:28 leith Exp $*/
+d30 1
+a30 1
+#if  __osf__ 
+d70 1
+a70 1
+#if __osf__ 
+@
+
+
+1.2
+log
+@used VMS version
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/wrtlin.c,v 1.1 93/11/10 10:11:02 leith Exp $*/
+d30 2
+d33 3
+d40 1
+a40 1
+ int     ioff, itest;
+d66 14
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 2
+/*$Header$*/
+/*$Header$*/
+d35 2
+a36 2
+ int     ioff;
+ size_t  igot;
+d55 6
+d62 2
+d65 1
+a65 1
+ if ((int) igot == nsam)
+@

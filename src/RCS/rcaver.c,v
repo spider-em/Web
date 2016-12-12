@@ -1,0 +1,151 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.5
+date	94.08.25.09.35.02;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.08.24.20.56.51;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.08.23.17.13.02;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.08.23.13.25.49;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.04.12.14.28.29;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@/**
+C++*******************************************************************
+C
+C    rcaver.c -- CONVERTED NOV., 1993 BY JINGSU
+C
+C		 FROM RCAVER.FOR
+C
+C    PURPOSE:    CUTS OUT A RECTANGULAR IMAGE SECTION AND DETERMINES
+C		 AVERAGE
+C
+C    VOID RCAVER(FPTR,NSAM,NROW,NSAMW1,NROWW1,NSAM2,NROW2,AVER)
+C
+C    VARIABLES:  FPTR           FILE POINTER OF INPUT IMAGE
+C                NSAM,NROW      DIMENSIONS OF INPUT PICTURE
+C                NSAMW1,NROWW1  COORDINATES, WITH RESPECT TO INPUT IMAGE,
+C                               OF TOP LEFT CORNER OF WINDOW
+C                NSAM2,NROW2    DIMENSIONS OF WINDOW = DIMENSIONS AREA
+C				FOR AVERAGE
+C
+C    CALLED BY   BACKP.C
+C
+C--*******************************************************************/
+
+#include "std.h"
+#include "routines.h"
+
+
+ /*****************************  rcaver  *****************************/
+
+ void rcaver(FILEDATA * fptr, int nsam, int nrow, int nsamw,
+	     int nroww, int ixul, int iyul, float * aver)
+ {
+ int icol, irow;
+
+ * aver = 0;
+
+ for (irow = iyul; irow < iyul + nroww; irow++)
+     {
+     if (redlin(fptr, fptr -> buf, nsam, irow) == TRUE)
+        {
+        for (icol = ixul; icol < ixul + nsamw;  icol++)
+           *aver = *aver + (fptr -> buf[icol]);
+        }
+     }
+ * aver = (* aver) / (nsamw * nroww);
+ return;
+ }
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d31 1
+a31 1
+	     int nroww, int ixul, int iyul, int xoff, float * aver)
+d42 1
+a42 1
+           *aver = *aver + (fptr -> buf[icol - xoff]);
+@
+
+
+1.2
+log
+@reference to the data values were wrong and have been corrected
+@
+text
+@a26 1
+extern int ixulr;
+d31 1
+a31 1
+	     int nroww, int ixul, int iyul, float * aver)
+d42 1
+a42 1
+           *aver = *aver + (fptr -> buf[icol - ixulr]);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d27 2
+d34 1
+a34 1
+ int icol, irow ;
+d42 2
+a43 2
+        for (icol = nsamw - 1; icol < ixul + nsamw -1;  icol++)
+            *aver = *aver + (fptr -> buf[icol]);
+@

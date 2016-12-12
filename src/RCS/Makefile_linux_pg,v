@@ -1,0 +1,90 @@
+head	1.2;
+access;
+symbols
+	pre-tilt-improve:1.2;
+locks;
+comment	@# @;
+
+
+1.2
+date	2004.07.13.15.04.09;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.01.31.17.38.38;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@update
+@
+text
+@# 
+# ------ MAKEFILE FOR Linux WEB Using Regular 8 bit Visual ------------------
+#
+# Uses the Portland group compiler and public domain X library
+# For SGI byte ordering (opposite of native Intel)
+#
+# Makefile for WEB system on SGI   March 1992          ArDean Leith
+# Additional modifications - ArDean Leith 2002
+#
+# Use Portland group compiler
+CC       = pgcc
+
+# Define compiler flags & header include location for use with PGI compiler
+# Define cpp variable P_SGIOSF to use byte-swapped images from SGI 
+CFLAGS   = -v -DP_SGIOSF -I/usr/X11R6/include/X11 -I/usr/X11R6/LessTif/Motif2.1/include/
+
+PGM      = web_linux
+
+LIB    =  $(PGM).a
+
+XLIBS  =  -L/usr/X11R6/lib -lXm -lXt -lX11 -lXmu
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+$(PGM)    :  $(LIB)
+	@@echo linking $(PGM)
+	$(CC)  $(LIB) -u main $(XLIBS) -lm -v -o $@@
+
+$(LIB)    :  $(ELEMENTS)
+
+$(ELEMENTS) : 
+	$(CC) -c $(CFLAGS) $*.c
+	$(AR) r $(LIB) $*.o
+	@@\rm $*.o
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+# ------ MAKEFILE FOR Linux WEB Using Regular 8  bit Visual ------------------
+d4 2
+a5 3
+# Makefile for use on Linux kindly provided by William Nicholson.
+# Uses the gcc compiler and public domain X library
+# For native byte ordering (opposite of SGI)
+d8 1
+a8 3
+# Modifications for Sun: Mars 1993; Septembre 1994; Daniel Thomas
+# Modified Makefile for Linux from Chao Yang 2001
+# Additional modifications - William Nicholson 2001
+d13 3
+a15 2
+# Define pgcc flags & include location
+CFLAGS   = -v -I/usr/X11R6/include/X11 -I/usr/X11R6/LessTif/Motif2.1/include/
+@

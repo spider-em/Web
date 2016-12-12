@@ -1,0 +1,297 @@
+head	1.7;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_surf_fromtop:1.7
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.7
+date	2011.05.05.12.05.27;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.18.16.59.56;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.03.29.15.10.44;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.24.13.42.44;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.21.12.22.32;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.03.17.13.54.09;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.49;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@-cmap_changes_etc
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/setamap.c,v 1.6 2005/10/18 16:59:56 leith Exp $*/
+/*
+C***************************************************************************
+C
+C    setamap -- created DEC 92
+C
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    setamap(mapt)
+C
+C    PURPOSE:       To set a colormap
+C
+C    PARAMETERS:    mapt      colormap to be used
+C
+C    CALLED BY:     
+C
+C--********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+
+ extern Display   *idispl;
+ extern Window    iwin, iwtop;
+
+ /**************************  setamap   *****************************/
+
+ void setamap(Colormap mapt) 
+ {
+ Window          win_list[2];
+
+ XSetWindowColormap(idispl, iwin, mapt);
+
+ win_list[0] = iwin;
+ win_list[1] = iwtop;
+ XSetWMColormapWindows(idispl,iwtop,win_list,2); 
+
+ XFlush(idispl);
+
+ return ;
+ }
+
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setamap.c,v 1.5 1994/03/29 15:10:44 leith Exp $*/
+d37 1
+a37 1
+C    PURPOSE:       to set a colormap
+d39 1
+d41 1
+a41 3
+C    PARAMETERS:    MAPT    COLORMAP WANTED
+C
+C    CALLED BY:     gold
+a50 1
+ extern Widget    iw_win, iw_top;
+a55 3
+ Arg           args[2];
+ Colormap      imap;
+
+a56 3
+ XSetWindowAttributes  xswa;
+
+#ifdef VMS
+d58 1
+a58 1
+  XSetWindowColormap(idispl, iwin, mapt);
+d60 3
+a62 25
+  win_list[0] = iwin;
+  win_list[1] = iwtop;
+  XSetWMColormapWindows(idispl,iwtop,win_list,2); 
+
+/*****************
+  XtSetArg(args[0], XmNcolormap, mapt);
+  XtSetValues(iw_win,args,1);
+  xswa.colormap = mapt;
+  XChangeWindowAttributes (idispl, iwtop, CWColormap, &xswa);
+  XChangeWindowAttributes (idispl, iwin, CWColormap, &xswa);
+  XFlush(idispl);
+  XtSetArg(args[0], XmNcolormap, &imap);
+  XtGetValues(iw_top,args,1);
+  printf("iw_top colormap:        %6d \n",imap);
+  XtGetValues(iw_win,args,1);
+  printf("iw_win colormap:        %6d \n",imap);
+************************/
+
+#else
+  XSetWindowColormap(idispl, iwin, mapt);
+
+  win_list[0] = iwin;
+  win_list[1] = iwtop;
+  XSetWMColormapWindows(idispl,iwtop,win_list,2); 
+#endif
+@
+
+
+1.5
+log
+@changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/setamap.c,v 1.4 94/03/24 13:42:44 leith Exp $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1992,  WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.4
+log
+@added VMS test
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/setamap.c,v 1.3 94/03/21 12:22:32 leith Exp $*/
+d41 2
+d48 10
+d60 9
+d70 1
+a70 1
+ XSetWindowColormap(idispl, iwin, mapt);
+d72 3
+a74 3
+ win_list[0] = iwin;
+ win_list[1] = iwtop;
+ XSetWMColormapWindows(idispl,iwtop,win_list,2); 
+@
+
+
+1.3
+log
+@changes for vax
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/setamap.c,v 1.2 94/03/17 13:54:09 leith Exp $*/
+d37 1
+a37 1
+ /*************************  setamap   ****************************/
+d45 1
+a45 1
+
+d48 2
+a50 5
+/*
+  XSetWindowColormap(idispl, iwin, mapt);
+  XFlush(idispl);
+*/
+ /*************************
+d54 3
+a56 1
+ ***********************************/
+@
+
+
+1.2
+log
+@added WM colormap setting
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/setamap.c,v 1.1 93/11/10 10:11:49 leith Exp $*/
+d43 1
+a44 2
+ XSetWindowColormap(idispl, iwin, mapt);
+ XFlush(idispl);
+d46 8
+a53 1
+ /*************************/
+d57 1
+a57 1
+ /***********************************/
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d47 1
+a47 1
+ /*************************
+d51 1
+a51 1
+ ***********************************/
+@

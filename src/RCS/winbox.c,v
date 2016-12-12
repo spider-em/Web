@@ -1,0 +1,261 @@
+head	1.6;
+access;
+symbols
+	pre-tilt-improve:1.6
+	pre_surf_fromtop:1.6
+	pre_neednewmap:1.4
+	pre_apppluss_remove:1.4
+	pre_tiltpair_chng:1.4
+	pre_GPL:1.3;
+locks;
+comment	@ * @;
+
+
+1.6
+date	2011.09.23.12.32.54;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2011.09.23.11.52.30;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.10.18.16.59.41;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.04.11.13.46.02;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.10.43.31;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.29;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@xorboxt(imagsav, icontx, TRUE,TRUE,TRUE
+@
+text
+@/*$Header: /usr8/web/src/RCS/winbox.c,v 1.5 2011/09/23 11:52:30 leith Exp leith $*/
+/*
+C***********************************************************************
+C
+C WINBOX  -- Created                             FEB   92 ArDean Leith
+C            Converted to C                      SEP   92 ArDean Leith
+C            For TRUE                            SEP   11 ArDean Leith *                                                               
+C                                                                 
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                              *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C winbox(iwintyp)
+C
+C PURPOSE:      Draw box on screen in current color
+C
+C PARAMETERS:   none
+C
+C CALLED BY:    winsel     pickback
+C
+C CALL TREE:  
+C                    / winsiz_pop --> winsiz_pop2 --> winsel --> winbox
+C winsiz -> winsiz1 -- wid_posiz  --> winmov       /           
+C                    \ wid_posiz  --> winsiz3     /
+C
+C--*********************************************************************
+*/
+
+
+#include "common.h"
+#include "routines.h"
+
+ /*************************  winbox  ***************************/
+
+ void winbox(int iwintyp)
+ {
+#ifdef WEB_TRUE
+
+ // Draw box in backing store and copy to screen with cmap  
+ xorboxt(imagsav, icontx, TRUE,TRUE,TRUE, ixulw,iyulw, nsamw,nroww);
+
+#else
+
+ // Draw box on screen   
+ xorbox(iwin,    icontx, TRUE, ixulw,iyulw, nsamw,nroww);
+
+ // Draw box in backing store   
+ xorbox(imagsav, icontx, TRUE, ixulw,iyulw, nsamw,nroww);
+
+#endif
+
+ if (iwintyp != 3) 
+    {            /* Fixed size or interactive window   */
+    winmov();    // Move next window around screen
+    }
+
+ return;
+ }
+
+@
+
+
+1.5
+log
+@for true color
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/winbox.c,v 1.4 2005/10/18 16:59:41 leith Exp $*/
+a61 1
+
+d63 1
+a63 1
+ xorboxt(imagsav, icontx, TRUE,TRUE, ixulw,iyulw, nsamw,nroww);
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/winbox.c,v 1.3 94/04/11 13:46:02 leith Exp $*/
+d3 1
+a3 1
+C***************************************************************************
+d5 3
+a7 2
+C WINBOX  -- CREATED FEB 92
+C            CONVERTED TO C -- SEPT 92 al
+d10 1
+a10 1
+C *  AUTHOR: ArDean Leith                                                  *
+d36 1
+a36 1
+C WINBOX(iwintyp)
+d38 1
+a38 1
+C PURPOSE:      DRAW BOX ON SCREEN IN CURRENT COLOR
+d40 1
+a40 1
+C PARAMETERS:   NONE
+d44 6
+a49 1
+C--***************************************************************
+d52 1
+d60 15
+a74 2
+ xorbox(iwin,    icontx, TRUE, ixulw, iyulw, nsamw, nroww);
+ xorbox(imagsav, icontx, TRUE, ixulw, iyulw, nsamw, nroww);
+d77 2
+a78 2
+    {            /* fixed size or interactive window   */
+    winmov();
+@
+
+
+1.3
+log
+@changed call
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/winbox.c,v 1.2 93/11/10 10:43:31 leith Exp Locker: leith $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1989, WADWSWORTH CENTER FOR LABORATORIES AND RESEARCH,   *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.2
+log
+@repw wiline
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/winbox.c,v 1.1 93/11/10 10:11:29 leith Exp Locker: leith $*/
+d18 1
+a18 1
+C WINBOX()
+d24 1
+a24 1
+C CALLED BY:    WINSEL
+a28 2
+#include "std.h"
+#include "x.h"
+d30 1
+a31 8
+ /* external subroutines */
+ void xorbox(Window, GC, int, int, int, int, int);
+ void winmov(void);
+
+ /* global variables */
+ extern int iwintyp;
+
+
+d34 1
+a34 1
+ void winbox()
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+@

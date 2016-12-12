@@ -1,0 +1,734 @@
+head	1.6;
+access;
+symbols
+	pre-tilt-improve:1.6
+	pre_surf_fromtop:1.6
+	pre_neednewmap:1.6
+	pre_apppluss_remove:1.6
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.6
+date	2005.10.18.17.00.05;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.05.16.20.21.58;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2001.09.12.14.43.22;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	97.08.25.19.59.42;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.14.12.45.35;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.19;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@GPL
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/ztoxy.c,v 1.5 2002/05/16 20:21:58 leith Exp $*/
+/*
+C++************************************************************************
+C
+C ZTOXY -- CREATED JULY 92 al
+C          ADDED Z AXIS SEPT 01 ArDean Leith
+C          SIMPLIFIED MAY 02 al
+C
+C **********************************************************************
+C * WEB.    AUTHOR: ARDEAN LEITH                                       *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    ZTOXY(NSAM,NSAM1,NSAM2,NROW,NROW1,NROW2,
+C           NSLICE,NSLICE1,NSLICE2,AXIS,FN,FNCON)
+C
+C    PURPOSE:         DIPLAYING MONTAGE FROM FILE SERIES ON X WORKSTATION
+C
+C    RETURNS:         ERROR FLAG
+C
+C    CALLED BY:       MONT3
+C
+C    NOTES:
+C
+C     AXIS      NEW SECTION         NEW ROW            NEW SAMPLE
+C     ---        -----------     -----------------    --------------
+C      X       (ISAM-NSAM1+1)    (ISLICE-NSLICE1+1)   (IROW-NROW1+1)
+C
+C
+C     LOC = (NEW SECTION-1)*NSAMS*NROWS + (NEW ROW-1)*NSAMS + NEW SAMPLE
+C
+C
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C***********************************************************************
+*/
+
+#include "files.h"
+#include "routines.h"
+#include "common.h"
+
+/**********************************************************/
+
+ int ztoxy(FILEDATA *filedata, char *lbuf, 
+            char axis, float fn, float fncon, int iskip)
+ {  
+
+ int        nsamd, nrowd, nsliced, icon;
+ int        npixpsl, miskip, iskipz, icons, irect;
+ int        iconr, ival, iloc, l, m, iloct; 
+ int        isam, irow, islice;
+ float      *buf;
+
+ /* set image size and window */
+ if (axis == 'z')
+     {        /* 3-d file with z slice */
+     dispsize(nsam1,nsam2,nrow1,nrow2,nslice1,nslice2,iskip, &nsamd, &nrowd, &nsliced);
+     }
+ else if (axis == 'y')
+     {        /* y slice */
+     dispsize(nsam1,nsam2,nslice1,nslice2,nrow1,nrow2,iskip, &nsamd, &nrowd, &nsliced);
+     }
+ else if (axis == 'x')
+     {        /* x slice */
+     dispsize(nrow1,nrow2,nslice1,nslice2,nsam1,nsam2,iskip, &nsamd, &nrowd, &nsliced);
+     }
+ else 
+    {
+    spout(" *** IN ZTOXY: UNSUPPORTED AXIS");
+    return FALSE;
+    }
+
+ buf      = filedata -> buf;
+ if (iskip > -1 && iskip < 1) iskip = 1;
+ npixpsl  = nrowd * nsamd;
+ miskip   = abs(iskip);
+
+ if (iskip >= 1)
+    {   /* display at full or reduced size */
+
+    if (axis == 'y')
+       {
+       icon = -nrow1 * npixpsl - nslice1 * nsamd / iskip -  nsam1 / iskip ;  
+       }
+    if (axis == 'x')
+       {
+       icon = -nsam1 * npixpsl - nslice1 * nsamd / iskip -  nrow1 / iskip;
+       }
+    }
+ else if (iskip < -1)
+    {   /* display magnified image */
+    if (axis == 'y')
+       icon = -nrow1 * npixpsl - nslice1 * miskip * nsamd - 1;
+    else
+       icon = -nsam1 * npixpsl - nslice1 * miskip * nsamd -
+               nrow1 * miskip;
+    }
+
+ /* find skip factors for z axis */
+ iskipz = MYMAX(1,iskip);
+ 
+ for (islice=nslice1; islice<=nslice2; islice+=iskipz)
+   {
+   if (axis == 'y')
+      {                                                     /* y axis */
+      if (iskip < 0)
+         icons = islice * nsamd * miskip + icon;
+      else 
+         icons = islice * nsamd / iskip  + icon;
+
+      for (irow=nrow1; irow <= nrow2; irow+=iskipz)
+         {
+         irect = (islice - 1) * nrow + irow;
+         if (redlin(filedata,buf,nsam,irect) == FALSE)  return FALSE;
+
+         if (iskip >= 1)
+            {  /* display full or reduced size y slice */
+
+            iconr = irow * npixpsl + icons;
+            for (isam=nsam1; isam <= nsam2; isam+=miskip)
+               {
+               ival  = buf[isam-1] * fn + fncon;
+               if (ival >= 128) ival = ival - 256;
+
+               iloc = isam / iskip + iconr;
+
+/***************bug ************/
+   if (iloc < 0 || iloc > nsamd * nrowd * nsliced -1)
+    printf("illegal iloc: %d, irow: %d, isam: %d \n",iloc,irow,isam);
+
+/********************/
+
+               lbuf[iloc] = ival;
+               }         
+            }
+            
+         else if (iskip < -1) 
+            {   /* display magnified image y slice */
+
+            iloc = irow * npixpsl + icons;
+            
+            for (isam=nsam1-1; isam < nsam2; isam++)
+               {
+               ival  = buf[isam] * fn + fncon;
+               if (ival >= 128) ival = ival - 256;
+
+               for (l = 0; l < miskip; l++)
+                  {
+                  iloc++;
+                  for (m = 0; m < miskip; m++)
+                     {
+/***************bug ************/
+   iloct = iloc + m * nsamd;
+   if (iloct < 0 || iloct > nsamd * nrowd * nsliced - 1) 
+    {
+    printf("illegal iloct: %d, irow: %d, isam: %d \n",iloct,irow,isam);
+    printf("icons: %d, iconr: %d, npixpsl: %d \n",icons,iconr,npixpsl);
+    printf("l: %d, m: %d  \n",l,m);
+    }
+/********************/
+                     lbuf[iloc + m * nsamd] = ival;
+                     }
+                  }
+               }      
+            }
+         }
+      }
+      
+   else if (axis == 'x')
+      {                                                   /*  x axis */ 
+      if (iskip >= 1)
+         {   /* full or reduced size x slice */
+         icons = islice * nsamd / iskip + icon;
+
+         for (irow=nrow1; irow <= nrow2; irow+=miskip)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE)  return FALSE;
+            iconr = irow / iskip + icons;
+
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               ival  = buf[isam-1] * fn + fncon;
+               if (ival >= 128) ival = ival - 256;
+
+               iloc = isam * npixpsl + iconr;
+/***************bug ************/
+   if (iloc < 0 || iloc > nsamd * nrowd * nsliced -1) {
+    printf("illegal iloc: %d, irow: %d, isam: %d \n",iloc,irow,isam);
+    printf("icons: %d, iconr: %d, npixpsl: %d \n",icons,iconr,npixpsl);
+     }
+/********************/
+               lbuf[iloc] = ival;
+               }         
+            }
+         }
+      else if (iskip < -1)
+         {   /* magnifed x slice */ 
+
+         icons = islice * nsamd * miskip + icon;
+
+         for (irow=nrow1; irow <= nrow2; irow++)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE) return FALSE;
+
+            iconr = irow * miskip + icons;
+
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               ival  = buf[isam-1] * fn + fncon;
+               if (ival >= 128) ival = ival - 256;
+
+               iloc = isam * npixpsl + iconr;
+ 
+               for (l = 0; l < miskip; l++)
+                  {
+                  for (m = 0; m < miskip; m++)
+                     {
+        
+/***************bug ************/
+   iloct = iloc + m * nsamd;
+   if (iloct < 0 || iloct > nsamd * nrowd * nsliced -1) 
+    {
+    printf("illegal iloct: %d, irow: %d, isam: %d \n",iloct,irow,isam);
+    printf("icons: %d, iconr: %d, npixpsl: %d \n",icons,iconr,npixpsl);
+    printf("l: %d, m: %d nsamd: %d ,icon %d \n",l,m,nsamd,icon);
+    }
+/********************/
+                     lbuf[iloc + m * nsamd] = ival;
+                     }
+                  iloc++;
+                  }
+               }
+            }
+         }
+      }
+ 
+
+   else if (axis == 'z')
+      {                                                  /*  z axis  */ 
+      iloc  = (islice - nslice1) * npixpsl;
+
+      if (iskip >= 1)
+         {   /* full size z slice or  reduced size z slice */
+
+         for (irow=nrow1; irow <= nrow2; irow+=miskip)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE)  
+               {return FALSE;}
+
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               ival       = buf[isam-1] * fn + fncon;
+               if (ival >= 128) ival = ival - 256;
+               lbuf[iloc++] = ival;
+               }         
+            }
+         }
+      else if (iskip < -1)
+         {   /* magnifed z slice */ 
+
+         for (irow=nrow1; irow <= nrow2; irow++)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE) 
+               {return FALSE;}
+
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               ival  = buf[isam-1] * fn + fncon;
+               if (ival >= 128) ival = ival - 256;
+
+               for (l = 0; l < miskip; l++)
+                  {
+                  for (m = 0; m < miskip; m++)
+                     {lbuf[iloc + m * nsamd] = ival;}
+                  iloc++;
+                  }
+               }
+            iloc += nsamd * (miskip - 1);         
+            }
+         }
+      }
+   }
+
+ return TRUE;
+ }       
+
+@
+
+
+1.5
+log
+@bug fix
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/ztoxy.c,v 1.4 2001/09/12 14:43:22 leith Exp leith $*/
+d12 23
+a34 5
+C * COPYRIGHT (C)1992, 2001. HEALTH RESEARCH INCORPORATED (HRI),       *
+C * ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                   *
+C * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO HRI AND ARE NOT   *
+C * TO BE DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED *
+C * WITHOUT WRITTEN APPROVAL OF HRI.                                   *
+@
+
+
+1.4
+log
+@added volume movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/ztoxy.c,v 1.3 1997/08/25 19:59:42 liy Exp $*/
+d8 1
+a37 1
+C        0         2         3         4         5         6         7     
+d43 2
+a45 4
+ /* external function  prototypes */
+ extern int   redlin(FILEDATA *, float *, int, int);
+ extern void  spout(char *);
+
+d48 2
+a49 5
+ int ztoxy(FILEDATA *filedata,    char *lbuf, 
+             int nsam,   int nsam1,   int nsam2,
+             int nrow,   int nrow1,   int nrow2,
+             int nslice, int nslice1, int nslice2,
+             char axis, float fn, float fncon, int iskip)
+d52 2
+a53 2
+ int        nsami, nrowi, nslices, icon;
+ int        npixpsl, miskip, miskipm1, iskipz, icons, irect;
+d55 1
+a55 1
+ int        isam, irow, islice, nsamu, nsliceu;
+d58 5
+a62 6
+ if (axis == 'x')
+    { 
+    nsami   = nrow2   - nrow1   + 1;
+    nrowi   = nslice2 - nslice1 + 1;
+    nslices = nsam2   - nsam1   + 1;
+    }
+d64 7
+a70 11
+    {
+    nsami   = nsam2   - nsam1   + 1;
+    nrowi   = nslice2 - nslice1 + 1;
+    nslices = nrow2   - nrow1   + 1;
+    }
+ else if (axis == 'z')
+    {
+    nsami   = nsam2   - nsam1   + 1;
+    nrowi   = nrow2   - nrow1   + 1;
+    nslices = nslice2 - nslice1 + 1;
+    }
+d73 1
+a73 1
+    spout(" *** IN ZTOXY: UNSUPORTED AXIS");
+d77 4
+a80 15
+ buf = filedata -> buf;
+
+ if (iskip == 1)
+    {    /* display full size */
+    npixpsl = nrowi * nsami;
+    if (axis == 'y')
+       {
+       icon = -nrow1 * npixpsl - nslice1 * nsami - nsam1;
+       nsamu = nsam2;
+       }
+    else if (axis == 'x') 
+       {
+       icon = -nsam1 * npixpsl - nslice1 * nsami -nrow1;
+       }
+    }
+d82 2
+a83 10
+ else if (iskip > 1)
+    {   /* display at reduced size */
+    if ((nsami / iskip*iskip) == nsami)
+    	nsami   = nsami / iskip;
+    else 
+    	nsami   = nsami / iskip + 1;
+    if ((nrowi / iskip*iskip) == nrowi)
+    	nrowi   = nrowi / iskip;
+    else 
+    	nrowi   = nrowi / iskip + 1;
+a84 1
+    npixpsl = nrowi * nsami;
+d87 1
+a87 3
+       icon = -nrow1 * npixpsl - nslice1 * nsami / iskip - 
+              nsam1 / iskip ;  
+       nsamu = nsam2 - (nsam2 - nsam1 + 1) % iskip + 1;
+d91 1
+a91 2
+       icon = -nsam1 * npixpsl - nslice1 * nsami / iskip -
+               nrow1 / iskip;
+a95 5
+    miskip   = -iskip;
+    miskipm1 = miskip - 1;
+    nsami    = nsami * miskip;
+    nrowi    = nrowi * miskip;
+    npixpsl  = nrowi * nsami;
+d97 1
+a97 1
+       icon = -nrow1 * npixpsl - nslice1 * miskip * nsami - 1;
+d99 1
+a99 1
+       icon = -nsam1 * npixpsl - nslice1 * miskip * nsami -
+a101 2
+ else
+    { spout("*** invalid iskip in ztoxy"); return FALSE; }
+d106 1
+a106 4
+ /* find upper end of col. series */
+ nsliceu = nslice2;
+
+ for (islice=nslice1; islice<=nsliceu; islice=islice+iskipz)
+d109 1
+a109 1
+      {                                                   /**** y ****/
+d111 3
+a113 5
+         icons = islice * nsami * miskip + icon;
+      else if (iskip > 1)
+         icons = islice * nsami / iskip  + icon;
+      else
+         icons = islice * nsami          + icon;
+d115 1
+a115 1
+      for (irow=nrow1; irow <= nrow2; irow++)
+d120 2
+a121 2
+         if (iskip == 1)
+            {  /* display full size y slice */
+d124 1
+a124 1
+            for (isam=nsam1; isam <= nsam2; isam++)
+d129 1
+a129 1
+               iloc = isam + iconr;
+d132 1
+a132 1
+   if (iloc < 0 || iloc > nsami * nrowi * nslices -1)
+a139 3
+         else if (iskip > 1) 
+            {   /* display reduced size image y slice */
+            iconr = irow * npixpsl + icons;
+a140 9
+            for (isam=nsam1; isam <= nsamu; isam=isam+iskip)
+               {
+               ival  = buf[isam-1] * fn + fncon;
+               if (ival >= 128) ival = ival - 256;
+
+               iloc = isam / iskip + iconr;
+               lbuf[iloc] = ival;
+               }         
+            }
+d151 1
+a151 1
+               for (l = 1; l <= miskip; l++)
+d154 1
+a154 1
+                  for (m = 0; m <= miskipm1; m++)
+d157 2
+a158 2
+   iloct = iloc + m * nsami;
+   if (iloct < 0 || iloct > nsami * nrowi * nslices -1) 
+d165 1
+a165 1
+                     lbuf[iloc + m * nsami] = ival;
+d174 4
+a177 4
+      {                                                   /**** x ****/ 
+      if (iskip ==1)
+         {   /* full size x slice */
+         icons = islice * nsami + icon;
+d179 1
+a179 1
+         for (irow=nrow1; irow <= nrow2; irow++)
+d182 2
+a183 2
+            if (redlin(filedata,buf,nsam,irect) == FALSE) return FALSE;
+            iconr = irow + icons;
+d190 1
+a190 2
+               iloc = isam *npixpsl + iconr;
+
+d192 1
+a192 1
+   if (iloc < 0 || iloc > nsami * nrowi * nslices -1) {
+a200 21
+
+      else if (iskip > 1)
+         {   /* reduced size x slice */
+         icons = islice * nsami / iskip + icon;
+
+         for (irow=nrow1; irow <= nrow2; irow=irow+iskip)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE)  return FALSE;
+            iconr = irow / iskip + icons;
+
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               ival  = buf[isam-1] * fn + fncon;
+               if (ival >= 128) ival = ival - 256;
+
+               iloc = isam * npixpsl + iconr;
+               lbuf[iloc] = ival;
+               }         
+            }
+         }
+d204 1
+a204 1
+         icons = islice * nsami * miskip + icon;
+d220 1
+a220 1
+               for (l = 1; l <= miskip; l++)
+d222 1
+a222 1
+                  for (m = 0; m <= miskipm1; m++)
+d226 2
+a227 2
+   iloct = iloc + m * nsami;
+   if (iloct < 0 || iloct > nsami * nrowi * nslices -1) 
+d231 1
+a231 1
+    printf("l: %d, m: %d nsami: %d ,icon %d \n",l,m,nsami,icon);
+d234 1
+a234 1
+                     lbuf[iloc + m * nsami] = ival;
+d245 3
+a247 1
+      {                                                   /**** z ****/ 
+a249 1
+         iloc  = (islice - nslice1) * npixpsl;
+d251 1
+a251 1
+         for (irow=nrow1; irow <= nrow2; irow=irow+iskip)
+d259 1
+a259 1
+               ival  = buf[isam-1] * fn + fncon;
+a260 1
+
+d279 1
+a279 1
+               for (l = 1; l <= miskip; l++)
+d281 2
+a282 2
+                  for (m = 0; m <= miskipm1; m++)
+                     {lbuf[iloc + m * nsami] = ival;}
+d286 1
+@
+
+
+1.3
+log
+@fixed the bug that gets garbage when the shrunk images are displayed in x or y axis
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/ztoxy.c,v 1.2 94/02/14 12:45:35 leith Exp $*/
+d7 1
+d9 8
+a16 9
+C **************************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+C *  COPYRIGHT (C)1992 , WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+d44 1
+a44 1
+ /* function  prototypes */
+a54 1
+
+d57 1
+a57 1
+ int        nsami, nrowi, nslices, icon, iconx, icony, iconz;
+d60 1
+a60 1
+ int        isam, irow, islice, nsamu, nrowu, nsliceu;
+a99 1
+       nrowu = nrow2;
+a124 1
+       nrowu = nrow2 - (nrow2-nrow1+1) % iskip + 1;
+d152 1
+a152 1
+      {  
+d231 1
+a231 1
+      { 
+d259 1
+d315 47
+@
+
+
+1.2
+log
+@replaced MIN,MAX with MYMIN,MYMAX
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/ztoxy.c,v 1.1 93/11/10 10:11:19 leith Exp Locker: leith $*/
+d96 1
+a96 1
+       nsamu = nsam2 - (nsam2 - nsam1 + 1) % iskip - iskip + 1;
+d101 1
+a101 1
+       nrowu = nrow2 - (nrow2-nrow1+1) % iskip - iskip + 1;
+d107 9
+a115 2
+    nsami   = nsami / iskip;
+    nrowi   = nrowi / iskip;
+d121 1
+a121 1
+       nsamu = nsam2 - (nsam2 - nsam1 + 1) % iskip - iskip + 1;
+d127 1
+a127 1
+       nrowu = nrow2 - (nrow2-nrow1+1) % iskip - iskip + 1;
+d150 1
+a150 4
+ if (iskip > 1)
+    nsliceu = nslice2 - (nslice2-nslice1+1) % iskip - iskip + 1;
+ else
+    nsliceu = nslice2;
+d266 1
+a266 1
+         for (irow=nrow1; irow <= nrowu; irow=irow+iskip)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d140 1
+a140 1
+ iskipz = MAX(1,iskip);
+@

@@ -1,0 +1,1139 @@
+head	1.11;
+access;
+symbols
+	pre-tilt-improve:1.11
+	pre_surf_fromtop:1.10
+	pre_neednewmap:1.9
+	pre_apppluss_remove:1.9
+	pre_tiltpair_chng:1.9
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.11
+date	2011.10.25.19.06.00;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2011.10.21.12.15.47;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2005.10.18.16.59.48;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.04.05.16.47.59;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.02.16.14.32.52;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.01.21.10.36.15;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	93.12.31.13.41.05;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.11.24.14.22.33;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.24.12.13.08;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.10.45.13;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.34;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.11
+log
+@surf as viewed from top
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/surfrot.c,v 1.9 2005/10/18 16:59:48 leith Exp $*/
+/*
+C***********************************************************************
+C
+C   surfrot.c  Created FEB 92 as wid_surf.for                FEB 92 al * 
+C              Converted to C                                OCT 92 al *
+C              Modified                                      NOV 93 lo *
+C              Modified                                      NOV 11 al *
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C
+C **********************************************************************
+*/
+
+#include "common.h"
+
+ // Static internal variables
+ static int            nsr, vcx, vcy, vcz;
+ static float          xl, xh, yl, yh, zl, zh, rm11, rm21;
+ static float          rm31, rm12, rm22, rm32, rm13, rm23, rm33;
+
+ /************************* surfrot ****************************/
+
+ float surfrot(int * newang, int * newsize, float thetat,
+              float phit, float psit, unsigned char * vol, 
+              unsigned char lthlev, int iy, int iz)
+
+ {
+ float          theta, phi, psi;
+ float          y, z, qr1, qr2, qr3, qout;
+ float          u, v, w, bv, fv, xx, yy, zz;
+ float          a1, a2, a3, a4, a5, a6, a7, a8;
+ int            ix, ixgo, ixend, iox, ioy, ioz;
+ unsigned char  *p1, *p2, *p3, *p4, *p5; 
+ unsigned char  *cptr, *p6, *p7, *p8;
+
+
+ if (*newang) 
+    {
+    theta = thetat / 360.0 * 8.0 * atan(1.0);
+    phi   = phit   / 360.0 * 8.0 * atan(1.0);
+    psi   = psit   / 360.0 * 8.0 * atan(1.0); 
+
+    rm11  =  cos(theta)*cos(phi)*cos(psi)-sin(phi)*sin(psi);
+    rm21  = -cos(theta)*cos(phi)*sin(psi)-sin(phi)*cos(psi);
+    rm31  =  sin(theta)*cos(phi);
+    rm12  =  cos(theta)*sin(phi)*cos(psi)+cos(phi)*sin(psi);
+    rm22  = -cos(theta)*sin(phi)*sin(psi)+cos(phi)*cos(psi);
+    rm32  =  sin(theta)*sin(phi);
+    rm13  = -sin(theta)*cos(psi);
+    rm23  =  sin(theta)*sin(psi);
+    rm33  =  cos(theta);
+
+    rm11  =  cos(theta)*cos(phi)*cos(psi)-sin(phi)*sin(psi);
+    rm21  = -cos(theta)*cos(phi)*sin(psi)-sin(phi)*cos(psi);
+    rm31  =  sin(theta)*cos(phi);
+    rm12  =  cos(theta)*sin(phi)*cos(psi)+cos(phi)*sin(psi);
+    rm22  = -cos(theta)*sin(phi)*sin(psi)+cos(phi)*cos(psi);
+    rm32  =  sin(theta)*sin(phi);
+    rm13  = -sin(theta)*cos(psi);
+    rm23  =  sin(theta)*sin(psi);
+    rm33  =  cos(theta);
+
+
+     * newang  = FALSE;
+    }
+
+ if (*newsize) 
+      {   
+      vcx  = nslice / 2;
+      vcy  = nsam   / 2;
+      vcz  = nrow   / 2;
+
+      xl   = 1.0    - vcx;
+      xh   = nslice - vcx; 
+      yl   = 1.0    - vcy;
+      yh   = nsam   - vcy; 
+      zl   = 1.0    - vcz;
+      zh   = nrow   - vcz;
+      nsr  = nslice * nsam;
+
+      * newsize  = FALSE;
+      }
+
+    ixgo  = nslice1 - vcx;
+    ixend = nslice2 - vcx;
+    y     = iy - vcy;
+    z     = iz - vcz;
+        
+    qr1  = rm11 * ixgo + rm21 * y + rm31 * z;   
+    qr2  = rm12 * ixgo + rm22 * y + rm32 * z;   
+    qr3  = rm13 * ixgo + rm23 * y + rm33 * z;   
+
+    for (ix = ixgo; ix <= ixend; ix++)
+       {
+       if (qr1 > xl && qr1 < xh && qr2 > yl && 
+           qr2 < yh && qr3 > zl && qr3 < zh)  
+             {
+             xx  = vcx + qr1;
+             yy  = vcy + qr2;
+             zz  = vcz + qr3;
+
+             iox = xx;       ioy = yy;       ioz = zz;
+             u   = xx - iox;   v = yy - ioy;   w = zz - ioz;
+
+             cptr = vol + (ioz-1)*nsr + (ioy-1)*nslice + iox-1; 
+
+             p1 = cptr;            p5 = p1 + 1;
+             p2 = p1 + nslice;     p6 = p2 + 1;
+             p3 = p2 + nsr;        p7 = p3 + 1;
+             p4 = p1 + nsr;        p8 = p4 + 1;
+
+             a1 = *p1; a2 = *p2; a3 = *p3; a4 = *p4;
+             a5 = *p5; a6 = *p6; a7 = *p7; a8 = *p8;
+
+             bv = a1 + w*(a4 - a1) 
+                + v*(a2 - a1 + w*(a3 + a1 - a2 - a4));
+             fv = a5 + w*(a8 - a5) 
+                + v*(a6 - a5 + w*(a7 + a5 - a6 - a8));
+
+             qout = u*(fv - bv) + bv;
+             if ( qout >= (float) lthlev)
+                 {return( 1.0 );}
+             }
+       qr1 += rm11;
+       qr2 += rm12;
+       qr3 += rm13;
+     }
+
+    return( 0.0 );
+}
+
+
+/*************************************************************************/
+/* ORIGINAL                                                                    */
+/* volval computes the value within the volume at position x,y,z (origin */
+/* shifted to middle of volume) using trilinear interpolation.           */
+/*                                                                       */
+/*************************************************************************/
+
+
+float volval(int ipos, int jpos, int kpos, unsigned char * vol)
+
+  {
+  int              iox, ioy, ioz;
+  float            u, bv, fv, qr1, qr2, qr3;
+  float            v, w, x, y, z, xx, yy, zz;
+  float            a1, a2, a3, a4, a5, a6, a7, a8;
+  unsigned char   *cptr, *p1, *p2, *p3;
+  unsigned char   *p4, *p5, *p6, *p7, *p8; 
+
+
+       x = ipos - vcx;
+       y = jpos - vcy;
+       z = kpos - vcz;
+
+       qr1  = rm11 * x + rm21 * y + rm31 * z;   
+       qr2  = rm12 * x + rm22 * y + rm32 * z;   
+       qr3  = rm13 * x + rm23 * y + rm33 * z;   
+
+       if (qr1 > xl && qr1 < xh && qr2 > yl && 
+           qr2 < yh  && qr3 > zl && qr3 < zh)  
+          {
+             xx = vcx + qr1;
+             yy = vcy + qr2;
+             zz = vcz + qr3;
+
+             iox = xx;       ioy = yy;       ioz = zz;
+             u = xx - iox;   v = yy - ioy;   w = zz - ioz;
+
+             cptr = vol + (ioz-1)*nsr + (ioy-1)*nsam + iox-1; 
+
+             p1 = cptr;            p5 = p1 + 1;
+             p2 = p1 + nsam;       p6 = p2 + 1;
+             p3 = p2 + nsr;        p7 = p3 + 1;
+             p4 = p1 + nsr;        p8 = p4 + 1;
+
+             a1 = *p1; a2 = *p2; a3 = *p3; a4 = *p4;
+             a5 = *p5; a6 = *p6; a7 = *p7; a8 = *p8;
+
+             bv = a1 + w*(a4 - a1) 
+                + v*(a2 - a1 + w*(a3 + a1 - a2 - a4));
+             fv = a5 + w*(a8 - a5) 
+                + v*(a6 - a5 + w*(a7 + a5 - a6 - a8));
+
+             return( u*(fv - bv) + bv );
+          }
+       else
+          /* Have to return original spot value.... erroneous but satisfactory! */
+          return( *(vol + (kpos-1)*nsr + (jpos-1)*nsam + ipos-1) );   
+
+  }
+
+#ifdef NEVER
+// NSAM   --> NSLICE
+// NROW   --> NSAM
+// NSLICE --> NROW
+/*************************************************************************/
+/*                                                                       */
+/* volval computes the value within the volume at position x,y,z (origin */
+/* shifted to middle of volume) using trilinear interpolation.           */
+/*                                                                       */
+/*************************************************************************/
+
+
+float volval(int ipos, int jpos, int kpos, unsigned char * vol)
+
+  {
+  int              iox, ioy, ioz;
+  float            u, bv, fv, qr1, qr2, qr3;
+  float            v, w, x, y, z, xx, yy, zz;
+  float            a1, a2, a3, a4, a5, a6, a7, a8;
+  unsigned char   *cptr, *p1, *p2, *p3;
+  unsigned char   *p4, *p5, *p6, *p7, *p8; 
+
+
+       x = ipos - vcx;
+       y = jpos - vcy;
+       z = kpos - vcz;
+
+       qr1  = rm11 * x + rm21 * y + rm31 * z;   
+       qr2  = rm12 * x + rm22 * y + rm32 * z;   
+       qr3  = rm13 * x + rm23 * y + rm33 * z;   
+
+       if (qr1 > xl && qr1 < xh && qr2 > yl && 
+           qr2 < yh  && qr3 > zl && qr3 < zh)  
+          {
+             xx = vcx + qr1;
+             yy = vcy + qr2;
+             zz = vcz + qr3;
+
+             iox = xx;       ioy = yy;       ioz = zz;
+             u = xx - iox;   v = yy - ioy;   w = zz - ioz;
+
+             cptr = vol + (ioz-1)*nsr + (ioy-1)*nslice + iox-1; 
+
+             p1 = cptr;            p5 = p1 + 1;
+             p2 = p1 + nslice;       p6 = p2 + 1;
+             p3 = p2 + nsr;        p7 = p3 + 1;
+             p4 = p1 + nsr;        p8 = p4 + 1;
+
+             a1 = *p1; a2 = *p2; a3 = *p3; a4 = *p4;
+             a5 = *p5; a6 = *p6; a7 = *p7; a8 = *p8;
+
+             bv = a1 + w*(a4 - a1) 
+                + v*(a2 - a1 + w*(a3 + a1 - a2 - a4));
+             fv = a5 + w*(a8 - a5) 
+                + v*(a6 - a5 + w*(a7 + a5 - a6 - a8));
+
+             return( u*(fv - bv) + bv );
+          }
+       else
+          /* Have to return original spot value.... erroneous but satisfactory! */
+          return( *(vol + (kpos-1)*nsr + (jpos-1)*nslice + ipos-1) );   
+
+  }
+#endif
+@
+
+
+1.10
+log
+@cosmetic
+@
+text
+@d5 1
+a5 1
+C                                                                      *
+d9 1
+a9 1
+C                                                                      *
+d13 1
+a13 1
+ C=* Copyright (C) 1992-2011  Health Research Inc.                     *
+d43 1
+a43 1
+  // Static internal variables
+d70 20
+a89 9
+    rm11 =  cos(theta)*cos(phi)*cos(psi)-sin(phi)*sin(psi);
+    rm21 = -cos(theta)*cos(phi)*sin(psi)-sin(phi)*cos(psi);
+    rm31 =  sin(theta)*cos(phi);
+    rm12 =  cos(theta)*sin(phi)*cos(psi)+cos(phi)*sin(psi);
+    rm22 = -cos(theta)*sin(phi)*sin(psi)+cos(phi)*cos(psi);
+    rm32 =  sin(theta)*sin(phi);
+    rm13 = -sin(theta)*cos(psi);
+    rm23 =  sin(theta)*sin(psi);
+    rm33 =  cos(theta);
+d96 12
+a107 11
+      vcx  = nsam   / 2;
+      vcy  = nrow   / 2;
+      vcz  = nslice / 2;
+
+      xl   = 1.0 - vcx;
+      xh   = nsam - vcx; 
+      yl   = 1.0 - vcy;
+      yh   = nrow - vcy; 
+      zl   = 1.0 - vcz;
+      zh   = nslice - vcz;
+      nsr    = nsam * nrow;
+d111 4
+a114 4
+    ixgo = nsam1 - vcx;
+    ixend = nsam2 - vcx;
+    y = iy - vcy;
+    z = iz - vcz;
+d123 1
+a123 1
+           qr2 < yh  && qr3 > zl && qr3 < zh)  
+d125 3
+a127 3
+             xx = vcx + qr1;
+             yy = vcy + qr2;
+             zz = vcz + qr3;
+d130 1
+a130 1
+             u = xx - iox;   v = yy - ioy;   w = zz - ioz;
+d132 1
+a132 1
+             cptr = vol + (ioz-1)*nsr + (ioy-1)*nsam + iox-1; 
+d135 1
+a135 1
+             p2 = p1 + nsam;       p6 = p2 + 1;
+d148 2
+a149 2
+             if( qout >= (float) lthlev)
+                return( 1.0 );
+d154 1
+a154 1
+       }
+d161 1
+a161 1
+/*                                                                       */
+d170 1
+a170 1
+{
+d189 1
+a189 1
+             {
+d213 65
+a277 1
+             }
+d280 1
+a280 1
+             return( *(vol + (kpos-1)*nsr + (jpos-1)*nsam + ipos-1) );   
+d282 2
+a283 1
+ }
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfrot.c,v 1.8 94/04/05 16:47:59 leith Exp $*/
+d4 6
+a9 5
+C**************************************************************************
+C
+C   SURFROT.FOR  -- CREATED FEB 92 as WID_SURF.FOR
+C   SURFROT.C       CONVERTED TO C OCT 92 al
+C                   MODIFIED  NOV 93 lo
+d13 1
+a13 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d43 1
+a69 4
+    /*theta = thetat * 8.0 * atan(1.0) / 360.0;
+    phi   = phit   * 8.0 * atan(1.0) / 360.0;
+    psi   = psit   * 8.0 * atan(1.0) / 360.0; ****/
+
+d79 1
+d84 1
+a84 1
+    {   
+d96 2
+a97 2
+     * newsize  = FALSE;
+    }
+d109 1
+a109 1
+     {
+d112 1
+a112 1
+        {
+d137 2
+a138 2
+              return( 1.0 );
+        }
+d142 1
+a142 1
+     }
+d177 1
+a177 1
+        {
+d201 1
+a201 1
+        }
+d203 1
+a203 1
+/* will have to return original spot value.... erroneous but satisfactory! */
+@
+
+
+1.8
+log
+@tests to find change in nsam1 and nsam2
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfrot.c,v 1.7 94/02/16 14:32:52 leith Exp $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH     *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+d37 1
+a37 1
+C **************************************************************************
+@
+
+
+1.7
+log
+@used VMS version with float changes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/surfrot.c,v 1.5 93/12/31 13:41:05 leith Exp $*/
+d31 1
+a31 1
+ float surfrot(int newang, int * newsize, float thetat,
+d45 1
+a45 1
+ if (newang) 
+d64 1
+@
+
+
+1.6
+log
+@bugs fixed
+@
+text
+@d39 1
+d110 2
+a111 4
+             bv = *p1 + w*(*p4 - *p1) 
+                + v*(*p2 - *p1 + w*(*p3 + *p1 - *p2 - *p4));
+             fv = *p5 + w*(*p8 - *p5) 
+                + v*(*p6 - *p5 + w*(*p7 + *p5 - *p6 - *p8));
+d113 5
+d145 1
+d175 7
+a181 4
+             bv = *p1 + w*(*p4 - *p1) 
+                + v*(*p2 - *p1 + w*(*p3 + *p1 - *p2 - *p4));
+             fv = *p5 + w*(*p8 - *p5) 
+                + v*(*p6 - *p5 + w*(*p7 + *p5 - *p6 - *p8));
+@
+
+
+1.5
+log
+@added lekans scaling
+@
+text
+@d1 2
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfrot.c,v 1.2 93/11/10 10:45:13 leith Exp $*/
+d25 1
+a27 1
+ static int            nsr, vcx, vcy, vcz;
+d31 1
+a31 1
+ void surfrot(int newang, int * newsize, float thetat,
+d33 1
+a33 2
+              unsigned char lthlev, unsigned char * refmap, 
+              float fd1, float fd2, float csfact)
+d36 6
+a41 15
+ int            i, ix, ixx, ixgo, ixend, iox, ioy, ioz; 
+ int            j, iloc, ioxo = 0, ioyo = 0, iozo = 0;
+ int            k, kgo, kend, jgo, jend, islicet, irow;
+ float          xl1, xr1, xl2, xr2, xl3, xr3, xl4, xr4;
+ float          xl5, xr5, xl6, xr6, xl7, xr7, xl8, xr8;
+ float          yb1, yt1, yb2, yt2, yb3, yt3, yb4, yt4;
+ float          yb5, yt5, yb6, yt6, yb7, yt7, yb8, yt8;
+ float          zi1, zo1, zi2, zo2, zi3, zo3, zi4, zo4;
+ float          zi5, zo5, zi6, zo6, zi7, zo7, zi8, zo8;
+ float          Nx, Ny, Nz, bgx, bgy, bgz, fgx, fgy, fgz;
+ float          theta, phi, psi, xx, yy, zz, bv, fv, ivall;
+ float		y, z, u, v, w, qr1, qr2, qr3, qout, jslope;
+ float          a1, a2, a3, a4, a5, a6, a7, a8, ft, kslope;
+ unsigned char * cptr;
+ unsigned char  *p1, *p2, *p3, *p4, *p5, *p6, *p7, *p8;
+d43 1
+a76 1
+
+d81 8
+d90 1
+a90 15
+   /* interpolated rotation */
+
+ jslope = (1.0 - nrow*scaleval)/(1.0 - nrow);
+ kslope = (1.0 - nslice*scaleval)/(1.0 - nslice);
+ ixgo  = nsam1 - vcx;
+ ixend = nsam2 - vcx;
+ iloc = -1;
+ kgo = 1 + kslope*(nslice1 - 1);
+
+ for (islicet = nslice1; islicet < nslice2; islicet++)
+  {
+    kend = 1 + kslope*islicet;
+    if(islicet == (nslice2 -1) ) kend++;
+
+    for(k = kgo; k < kend; k++)
+d92 6
+a97 12
+       z = 1.0 + (k - 1.0)/kslope;
+       z -= vcz;
+      jgo = 1 + jslope*(nrow1 - 1);
+      for(irow = nrow1; irow < nrow2; irow++)
+       {
+        jend = 1 + jslope*irow;
+        if(irow == (nrow2 -1) ) jend++;
+   /* set starting location for this row in reflection image */
+        for (j = jgo; j < jend; j++)
+         {
+            y = 1.0 + (j - 1.0)/jslope;
+            y -= vcy;
+d99 2
+a100 3
+            qr1  = rm11 * ixgo + rm21 * y + rm31 * z;
+            qr2  = rm12 * ixgo + rm22 * y + rm32 * z;
+            qr3  = rm13 * ixgo + rm23 * y + rm33 * z;
+d102 1
+a102 9
+            ivall = 0.0;
+            for (ix = ixgo; ix <= ixend; ix++)
+             {
+               if(ix > ixgo)
+                {
+                  qr1 += rm11;
+                  qr2 += rm12;
+                  qr3 += rm13;
+                }
+d104 4
+a107 6
+              if (qr1 > xl && qr1 < xh && qr2 > yl && 
+                  qr2 < yh  && qr3 > zl && qr3 < zh)  
+               {
+                 xx = vcx + qr1;
+                 yy = vcy + qr2;
+                 zz = vcz + qr3;
+d109 4
+a112 1
+                iox = xx; ioy = yy; ioz = zz;
+d114 8
+a121 3
+                if(ioxo != iox || ioyo != ioy || iozo != ioz)
+                 {
+                   cptr = vol + (ioz-1)*nsr + (ioy-1)*nsam + iox-1; 
+d123 2
+a124 31
+                   ioxo = iox; ioyo = ioy; iozo = ioz;
+
+                   p1 = cptr;            p5 = p1 + 1;
+                   p2 = p1 + nsam;       p6 = p2 + 1;
+                   p3 = p2 + nsr;        p7 = p3 + 1;
+                   p4 = p1 + nsr;        p8 = p4 + 1;
+                 }
+ 
+                  u = xx - iox;
+                  v = yy - ioy;
+                  w = zz - ioz;
+
+                  if(*p1 < lthlev && *p2 < lthlev && *p3 < lthlev &&
+                     *p4 < lthlev && *p5 < lthlev && *p6 < lthlev &&
+                     *p7 < lthlev && *p8 < lthlev) continue;
+
+                   bv = *p1 + w*(*p4 - *p1) + v*(*p2 - *p1 
+                      + w*(*p3 + *p1 - *p2 - *p4));
+                   fv = *p5 + w*(*p8 - *p5) + v*(*p6 - *p5 
+                      + w*(*p7 + *p5 - *p6 - *p8));
+
+                   qout = u*(fv - bv) + bv;
+      
+                   if(qout >= (float) lthlev) 
+                    {
+                      ivall = ix - xl + 1.0;   
+                      ixx = ivall;
+                      break;
+                    }
+                }
+             }  /*  for ix  */
+d127 6
+a132 1
+       /* surface located, now find value for the reflection map buffer */
+a133 2
+             if (ivall > 0)
+              {  
+d135 1
+a135 1
+               a1 = *p1; a2 = *p2; a3 = *p3; a4 = *p4; 
+d137 6
+a142 6
+               a5 = *p5; a6 = *p6; a7 = *p7; a8 = *p8; 
+ 
+               xl2 = yt4 = zi5 = a1;
+               xr1 = yt3 = zi6 = a2;
+               yb2 = xr4 = zi7 = a3;
+               yb1 = xl3 = zi8 = a4;
+a143 4
+               xl6 = yt8 = zo1 = a5;
+               xr5 = yt7 = zo2 = a6;
+               yb6 = xr8 = zo3 = a7;
+               yb5 = xl7 = zo4 = a8;
+d145 3
+a147 53
+   
+               if(islicet == 1)  /* topmost */
+                 {
+		   yt1 = a1; 
+                   yt2 = a2;
+		   yt5 = a5; 
+                   yt6 = a6;
+                 }
+                else 
+                 if(islicet == (nslice - 1)) /* bottommost */
+                  {
+                    yb3 = a3;
+                    yb4 = a4;
+                    yb7 = a7;
+                    yb8 = a8;
+                  }
+                 else
+                  if(irow == 1)  /* leftmost  */
+                   {
+                     xl1 = a1;
+                     xl4 = a4;
+                     xl5 = a5;
+                     xl8 = a8;
+                   }
+                  else
+                   if(irow == (nrow-1))  /* rightmost  */
+                    {
+                      xr2 = a2;
+                      xr3 = a3;
+                      xr6 = a6;
+                      xr7 = a7;
+                    }
+                   else
+                   if(ixx == 1)  /* backmost  */
+                    {
+                      zi1 = a1;
+                      zi2 = a2;
+                      zi3 = a3;
+                      zi4 = a4;
+                    }
+                   else
+                   if(ixx == (nsam - 1))  /* frontmost  */
+                    {
+                      zo5 = a5;
+                      zo6 = a6;
+                      zo7 = a7;
+                      zo8 = a8;
+                    }
+                   else
+                    {
+                      xl1 = *(p1 - nsam);
+                      yt1 = *(p1 - nsr);
+                      zi1 = *(p1 - 1);
+d149 3
+a151 3
+                      xr2 = *(p2 + nsam);
+                      yt2 = *(p2 - nsr);
+                      zi2 = *(p2 - 1);
+d153 6
+a158 3
+                      xr3 = *(p3 + nsam);
+                      yb3 = *(p3 + nsr);
+                      zi3 = *(p3 - 1);
+d160 2
+a161 3
+                      xl4 = *(p4 - nsam);
+                      yb4 = *(p4 + nsr);
+                      zi4 = *(p4 - 1);
+d163 1
+a163 3
+                      xl5 = *(p5 - nsam);
+                      yt5 = *(p5 - nsr);
+                      zo5 = *(p5 + 1);
+d165 4
+a168 3
+                      xr6 = *(p6 + nsam);
+                      yt6 = *(p6 - nsr);
+                      zo6 = *(p6 + 1);
+d170 4
+a173 3
+                      xr7 = *(p7 + nsam);
+                      yb7 = *(p7 + nsr);
+                      zo7 = *(p7 + 1);
+d175 5
+a179 74
+                      xl8 = *(p8 - nsam);
+                      yb8 = *(p8 + nsr);
+                      zo8 = *(p8 + 1);
+
+                    }  
+/* compute gradient at the back face for x, y & z */
+/* y gradient */                      
+            a1 = xr1 - xl1;
+            a2 = xr2 - xl2;
+            a3 = xr3 - xl3;
+            a4 = xr4 - xl4; 
+            bgy = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+
+/* z gradient */                      
+            a1 = yt1 - yb1;
+            a2 = yt2 - yb2;
+            a3 = yt3 - yb3;
+            a4 = yt4 - yb4; 
+            bgz = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+
+/* x gradient */                      
+            a1 = zo1 - zi1;
+            a2 = zo2 - zi2;
+            a3 = zo3 - zi3;
+            a4 = zo4 - zi4; 
+            bgx = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+
+/* compute gradient at the front face for x, y & z */
+/* y gradient */                      
+            a1 = xr5 - xl5;
+            a2 = xr6 - xl6;
+            a3 = xr7 - xl7;
+            a4 = xr8 - xl8; 
+            fgy = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+
+/* z gradient */                      
+            a1 = yt5 - yb5;
+            a2 = yt6 - yb6;
+            a3 = yt7 - yb7;
+            a4 = yt8 - yb8; 
+            fgz = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+
+/* x gradient */                      
+            a1 = zo5 - zi5;
+            a2 = zo6 - zi6;
+            a3 = zo7 - zi7;
+            a4 = zo8 - zi8; 
+            fgx = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+
+               Nx = u*(fgx - bgx) + bgx;
+               if(fabs(Nx) > 0.05)
+                {
+                  Ny = (u*(fgy - bgy) + bgy)/Nx;
+                  Nz = (u*(fgz - bgz) + bgz)/Nx;
+
+                  ft = Ny*Ny + Nz*Nz;
+
+                  refmap[++iloc] = fd1*ivall + fd2 
+                          + csfact/sqrt((fct * ft) + 1.0);
+                }
+               else
+                  refmap[++iloc] = fd1*ivall + fd2;
+            }
+          else
+            {   
+              refmap[++iloc] = mapgo;
+            }
+
+        } /* j */
+       jgo = jend;
+        } /* irow */
+       }  /* k */
+      kgo = kend;
+     } /* islicet  */
+@
+
+
+1.4
+log
+@changed angle output
+@
+text
+@d1 1
+a1 3
+
+/*$Header: /alwyn/usr1/web//RCS/surfrot.c,v 1.3 93/11/24 12:13:08 leith Exp Locker: leith $*/
+
+d7 1
+a7 1
+C              
+d24 3
+a26 4
+ static float          rm11, rm21, rm31, rm12, rm22, rm32, rm13, rm23, rm33;
+ static int            nsamd2,   nrowd2,   nsliced2,   iox1, ioy1, ioz1; 
+ static int            nsamd2p1, nrowd2p1, nsliced2p1, iox2, ioy2, ioz2; 
+ static int            cptrcon, nsamrow;
+d30 4
+a33 4
+ int surfrot(int * newang, int * newsize,
+             float thetat,float phit,float psit,
+             unsigned char * vol, unsigned char lthlev,
+             int irow,  int islicet)
+d36 13
+a48 2
+ int            iz, iy, ixgo, ixend;
+ float          theta, phi, psi, con1, con2, con3; 
+d50 1
+a50 2
+ int            ix, iox, ioy, ioz; 
+ char           outmsg[80];
+d52 1
+a52 1
+ if (* newang) 
+d54 1
+a55 1
+    theta = thetat / 360.0 * 8.0 * atan(1.0);
+d58 4
+a70 5
+    
+    sprintf(outmsg, "Rotation angles: %3d %3d %3d", 
+            (int) phit, (int)thetat, (int)psit);
+    spout(outmsg);
+    * newang = FALSE;
+a72 1
+
+d75 3
+a77 3
+    nsamd2     = nsam   / 2;
+    nrowd2     = nrow   / 2;
+    nsliced2   = nslice / 2;
+d79 6
+a84 3
+    nsamd2p1   = nsamd2   + 1;
+    nrowd2p1   = nrowd2   + 1;
+    nsliced2p1 = nsliced2 + 1;
+d86 3
+a88 6
+    iox1       = -nsamd2;
+    iox2       = iox1 + nsam   - 1;
+    ioy1       = -nrowd2;
+    ioy2       = ioy1 + nrow   - 1;
+    ioz1       = -nsliced2;
+    ioz2       = ioz1 + nslice - 1;
+d91 63
+a153 3
+    nsamrow    = nsam * nrow;
+    cptrcon    = (int) vol + nsliced2 * nsamrow + nrowd2 * nsam + nsamd2;
+    * newsize  = FALSE;
+d155 3
+a157 1
+    }
+d159 3
+a161 2
+ iz    = islicet - nsliced2p1;
+ iy    = irow    - nrowd2p1;
+d163 4
+a166 2
+ ixgo  = nsam1   - nsamd2p1;
+ ixend = nsam2   - nsamd2p1;
+d168 10
+a177 3
+ con1  = rm21 * iy + rm31 * iz;
+ con2  = rm22 * iy + rm32 * iz;
+ con3  = rm23 * iy + rm33 * iz;
+d180 1
+a180 1
+    /* fast non-interpolated rotation */
+d182 2
+a183 5
+    for (ix=ixgo; ix <= ixend; ix++)
+      {
+      iox = rm11 * ix + con1;
+      ioy = rm12 * ix + con2;
+      ioz = rm13 * ix + con3;
+d185 1
+a185 5
+      if ((iox >= iox1 && iox <= iox2) &&
+          (ioy >= ioy1 && ioy <= ioy2)  &&
+          (ioz >= ioz1 && ioz <= ioz2))  
+          {
+          cptr = (unsigned char *)(cptrcon + ioz * nsamrow + ioy  * nsam + iox) ;
+d187 6
+a192 7
+          if (*cptr >= lthlev) 
+              {
+              /* find distance along the depth ray */
+              return ( ix - iox1 +1);
+              }
+          }
+       }
+d194 58
+a251 2
+ return 0;
+ }
+d253 3
+d257 3
+a259 9
+#ifdef NEVER
+  else
+     {
+     /* interpolated rotation (higher quality) */
+     for (ix=igo; ix <= iend; ix++)
+        {
+        qr1 = rm11 * ix + con1;
+        qr2 = rm12 * ix + con2;
+        qr3 = rm13 * ix + con3;
+d261 3
+a263 7
+        iox = qr1 + f1mklx;
+        dx  = qr1 + f1mklx - iox;
+        iox = iox + klx - 1;
+  
+        ioy = qr2 + f1mkly ;
+        dy  = qr2 + f1mkly - ioy;
+        ioy = ioy + kly - 1;
+d265 3
+a267 3
+        ioz = qr3 + f1mklz;
+        dz  = qr3 + f1mklz - ioz;
+        ioz = ioz + klz - 1;
+d269 3
+a271 7
+        if ((iox>klx && iox<knx) &&
+            (ioy>kly && ioy<kny)  &&
+            (ioz>klz && ioz<knz)) 
+            {
+            dxi   = 1 - dx;
+            dyi   = 1 - dy;
+            dzi   = 1 - dz;
+d273 3
+a275 3
+            ioxp1 = iox + 1;
+            ioyp1 = ioy + 1;
+            iozp1 = ioz + 1;
+d277 51
+a327 10
+            qout =   dxi * dyi * dzi * lq1(iox,  ioy,  ioz)
+                  +  dx  * dyi * dzi * lq1(ioxp1,ioy,  ioz)
+                  +  dxi *  dy * dzi * lq1(iox,  ioyp1,ioz)
+                  +  dxi * dyi *  dz * lq1(iox,  ioy,  iozp1)
+                  +  dx  *  dy * dzi * lq1(ioxp1,ioyp1,ioz)
+                  +  dx  * dyi *  dz * lq1(ioxp1,ioy,  iozp1)
+                  +  dxi *  dy *  dz * lq1(iox,  ioyp1,iozp1)
+                  +  dx  *  dy *  dz * lq1(ioxp1,ioyp1,iozp1);
+            lout = qout;
+            if (lout >= lthlev) 
+d329 7
+a335 3
+                /*   find distance along the depth ray */
+                ivall = ix - klx + 1;
+                return ivall;
+d337 2
+d340 13
+a352 3
+         }
+      }
+#endif
+@
+
+
+1.3
+log
+@added angleoutput
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfrot.c,v 1.2 93/11/10 10:45:13 leith Exp Locker: leith $*/
+d61 1
+a61 1
+    sprintf(outmsg, "new-angles: %3d %3d %3d", 
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 3
+a3 1
+/*$Header: /alwyn/usr1/web//RCS/surfrot.c,v 1.1 93/11/10 10:11:34 leith Exp Locker: leith $*/
+d33 1
+a33 1
+ int surfrot(int newang, int * newsize,
+d43 1
+d45 1
+a45 1
+ if (newang) 
+d47 1
+a48 1
+    phi   = phit   / 360.0 * 8.0 * atan(1.0);
+a50 4
+    /*theta = thetat * 8.0 * atan(1.0) / 360.0;
+    phi   = phit   * 8.0 * atan(1.0) / 360.0;
+    psi   = psit   * 8.0 * atan(1.0) / 360.0;****/
+
+d60 5
+d67 1
+d89 1
+a89 2
+
+   
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+@

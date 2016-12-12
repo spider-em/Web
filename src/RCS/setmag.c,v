@@ -1,0 +1,469 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2011.09.23.12.46.42;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2011.07.19.19.28.22;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.18.17.00.02;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.02.02.19.49.19;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.01.26.20.23.27;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.07.19.15.47.25;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.10.45.53;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.51;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@reformatted
+@
+text
+@/*$Header: /usr8/web/src/RCS/setmag.c,v 1.7 2011/07/19 19:28:22 leith Exp $*/
+/*
+C++*************************************************************************
+C
+C setmag.c -- Created                                          Jul  92
+C setmag.c                                                     Nov  92                                                                    
+C
+C **********************************************************************
+C *  AUTHOR: YANHONG LI                                                      *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    setmag(Widget iw_temp, XtPointer data, XtPointer call_data)
+C
+C    PARAMETERS:   iw_temp, data, call_data (usual callback data)
+C
+C    PURPOSE:      Set magnification parameters
+C
+C    CALLED BY:    web_main
+C
+C--********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/RowColumn.h>
+#include <Xm/Scale.h>
+
+#define  MAX_ARGS 13
+
+ /* External function  prototypes */
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_dialog   (Widget,...);
+ extern Widget wid_stdbut   (Widget,...);
+ extern void   fin_cb	    (Widget, caddr_t, caddr_t);
+ 
+ /* Internal function  prototypes */
+ Widget scalev	(Widget iw_parent,Widget iw_its,int imin,int imax,
+		int inow,int iwid,int ihi,int ixdum,int iydum);
+
+ void   pushbuta(Widget iw_temp, XtPointer data, XtPointer callback);
+
+ /* Internal file variables */
+ static  Widget	 iw_magx, iw_magy, iw_magf, iw_setmag = 0;
+
+/***********************  setmag  **************************/
+
+ void setmag(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ Widget	 iw_but, ipushc, ipusha, rowcolh;
+ Arg     args[MAX_ARGS];         /* Arg list  */
+ int     n;
+
+ if (iw_setmag <= (Widget)0)
+    {
+    iw_setmag = wid_dialog( iw_main, 0, "setmag", 0, 0 );
+ 
+    /* Create the labels of magsize and magfac	*/
+    wid_labelg(iw_setmag, 0, "size",60, 30);
+    wid_labelg(iw_setmag, 0, "x",40, 60);
+    wid_labelg(iw_setmag, 0, "y",120, 60);
+    wid_labelg(iw_setmag, 0, "factor ", 180, 30);
+
+    /* Create the magsize scale	*/
+    iw_magx  = scalev(iw_setmag,0, 2,512,magsizx,50,200, 10,80);
+    iw_magy  = scalev(iw_setmag,0, 2,512,magsizy,50, 200,90,80);
+    iw_magf  = scalev(iw_setmag,0, 2,32,magfac,55, 210,180, 70);
+
+    /* Create standard buttons for set mag varibles */
+    /* Set the position for standard buttons	*/
+    n = 0;
+    Setbgfg(args, MAX_ARGS, &n);       // Handles BGFG Args
+    XtSetArg(args[n], XmNx, 10);                       n++;                
+    XtSetArg(args[n], XmNy, 300);                      n++;
+    XtSetArg(args[n], XmNdefaultPosition, False );     n++;              
+    rowcolh = XmCreateRowColumn(iw_setmag, "sss", args, n);
+    XtManageChild( rowcolh );
+
+    /* Create the buttons	*/
+    iw_but = wid_stdbut(rowcolh,iw_setmag, &ipushc,&ipushc,
+		      &ipusha,"CA",fin_cb,fin_cb,pushbuta,NULL);
+    }
+
+    XtManageChild(iw_setmag);
+ 
+ }
+
+/*****************  scalev  ***************************/
+
+ Widget scalev(Widget iw_parent,Widget iw_its,int imin,int imax,
+		int inow,int iwid,int ihi,int ixdum,int iydum)
+{   
+    Arg          args[MAX_ARGS];    /* arg list  */
+    Widget       iw_lab;
+    Widget       iw_rowcolh;
+    int          n;
+
+    if (iw_its == (Widget)0) 
+    { 
+    	/* Create scale widget */
+        n = 0;
+        Setbgfg(args, MAX_ARGS, &n);       // Handles BGFG Args
+    	XtSetArg(args[n], XmNwidth, iwid);              n++;                  
+    	XtSetArg(args[n], XmNheight, ihi);              n++;              
+    	XtSetArg(args[n], XmNscaleWidth, iwid-30);      n++;          
+    	XtSetArg(args[n], XmNscaleHeight, ihi);         n++;       
+    	XtSetArg(args[n], XmNminimum, imin);            n++;              
+    	XtSetArg(args[n], XmNmaximum, imax);            n++;            
+    	XtSetArg(args[n], XmNdecimalPoints, 0);         n++;            
+    	XtSetArg(args[n], XmNvalue, inow);              n++;                
+    	XtSetArg(args[n], XmNorientation, XmVERTICAL);  n++;       
+    	XtSetArg(args[n], XmNshowValue, TRUE);          n++;         
+     	XtSetArg(args[n], XmNx, ixdum);                 n++;                
+    	XtSetArg(args[n], XmNy, iydum);                 n++;             
+
+    	iw_its = XmCreateScale(iw_parent, "iw_scale", args, n);
+    }
+
+    else 
+    { /* Alter scale size in existing widget */
+
+    	XtSetArg(args[0], XmNminimum, imin);       
+    	XtSetArg(args[1], XmNmaximum, imax);       
+    	XtSetArg(args[2], XmNvalue,   inow);
+       
+    	XtSetValues(iw_its, args, 3);
+    }
+
+ XtManageChild(iw_its);
+ return iw_its;
+ }
+
+ /*****************  pushbuta  ***************************/
+
+ void  pushbuta(Widget iw_temp, XtPointer  data, XtPointer callback)
+    {
+    /* Get values of magsizx, magsizy and magfac	*/
+    XmScaleGetValue(iw_magx,&magsizx);
+    XmScaleGetValue(iw_magy,&magsizy);
+    XmScaleGetValue(iw_magf,&magfac);
+
+    XtUnmanageChild(iw_setmag);
+    }
+
+
+
+@
+
+
+1.7
+log
+@BGFGO
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/setmag.c,v 1.6 2005/10/18 17:00:02 leith Exp leith $*/
+d5 3
+a7 2
+C MAGNIFY -- CREATED July 92
+C setmag.c           Nov  92                                                                    
+d35 1
+a35 1
+C    SET MAGNIFICATION PARAMETERS
+d39 1
+a39 1
+C    PURPOSE:      SET MAGNIFICATION PARAMETERS
+a45 1
+
+a55 1
+
+d62 1
+a62 1
+ void   pushbuta(Widget iw_temp, caddr_t data, caddr_t callback);
+d65 1
+a65 1
+ static  Widget		iw_magx, iw_magy, iw_magf, iw_setmag = 0;
+d69 5
+a73 5
+ void setmag(Widget iw_temp, caddr_t data, caddr_t call_data)
+{
+    Widget		iw_but, ipushc, ipusha, rowcolh;
+    Arg          	args[4];    /* Arg list  */
+    int                 n;
+d76 1
+a76 1
+   {
+d85 1
+a85 1
+    /* create the magsize scale	*/
+d93 1
+a93 4
+#ifdef WEB_BGFGO
+    XtSetArg(args[n], XmNbackground,  icolorxmb);      n++;
+#endif
+
+d103 1
+a103 1
+   }
+d108 1
+d123 1
+a123 3
+#ifdef WEB_BGFGO
+        XtSetArg(args[n], XmNbackground,  icolorxmb);   n++;
+#endif
+d150 3
+a152 2
+    XtManageChild(iw_its);
+    return iw_its;
+d154 1
+a154 2
+ }
+/*****************  pushbuta  ***************************/
+d156 2
+a157 2
+ void   pushbuta(Widget iw_temp, caddr_t data, caddr_t callback)
+{
+d164 1
+a164 1
+}
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setmag.c,v 1.5 1995/02/02 19:49:19 liy Exp $*/
+d46 1
+a46 2
+#include "x.h"
+#include "std.h"
+d50 1
+a50 4
+#define  MAX_ARGS 12
+
+ /* common variables */
+#include "common.h"
+d52 1
+a52 1
+ /* external function  prototypes */
+d59 1
+a59 1
+ /* internal function  prototypes */
+d62 1
+d65 1
+a65 1
+ /* internal file variables */
+d73 3
+a75 2
+    Arg          	args[3];    /* arg list  */
+    
+d80 1
+a80 1
+    /* create the labels of magsize and magfac	*/
+d91 11
+a101 6
+    /* create standard buttons for set mag varibles */
+    /* set the position for standard buttons	*/
+    XtSetArg(args[0], XmNx, 10);                    
+    XtSetArg(args[1], XmNy, 300);
+    XtSetArg(args[2], XmNdefaultPosition, False );                
+    rowcolh = XmCreateRowColumn(iw_setmag, "sss", args, 3);
+d104 1
+a104 1
+    /* create the buttons	*/
+d120 1
+d124 17
+a140 13
+    	/* create scale widget */
+    	XtSetArg(args[0], XmNwidth, iwid);                    
+    	XtSetArg(args[1], XmNheight, ihi);                
+    	XtSetArg(args[2], XmNscaleWidth, iwid-30);            
+    	XtSetArg(args[3], XmNscaleHeight, ihi);        
+    	XtSetArg(args[4], XmNminimum, imin);                
+    	XtSetArg(args[5], XmNmaximum, imax);             
+    	XtSetArg(args[6], XmNdecimalPoints, 0);            
+    	XtSetArg(args[7], XmNvalue, inow);                  
+    	XtSetArg(args[8], XmNorientation, XmVERTICAL);       
+    	XtSetArg(args[9], XmNshowValue, TRUE);           
+     	XtSetArg(args[10], XmNx, ixdum);                    
+    	XtSetArg(args[11], XmNy, iydum);                
+d142 1
+a142 1
+    	iw_its = XmCreateScale(iw_parent, "iw_scale", args, 12);
+d146 1
+a146 1
+    { /* alter scale size in existing widget */
+d163 1
+a163 1
+/* accept the values of magsizx, magsizy and magfac	*/
+@
+
+
+1.5
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/setmag.c,v 1.4 1995/01/26 20:23:27 liy Exp $*/
+d7 1
+a7 1
+C **************************************************************************
+d9 24
+a32 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH	        		   *
+C **************************************************************************
+@
+
+
+1.4
+log
+@modified (int)widget for Onyx
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/setmag.c,v 1.3 1994/07/19 15:47:25 odesanya Exp liy $*/
+d61 1
+a61 1
+ if (iw_setmag <= (Widget) 0)
+d101 1
+a101 1
+    if (iw_its == (void *)0) 
+@
+
+
+1.3
+log
+@cause the magnify option to disappear when accept button clicked
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/setmag.c,v 1.2 93/11/10 10:45:53 leith Exp $*/
+d101 1
+a101 1
+    if ((int)iw_its == 0) 
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/setmag.c,v 1.1 93/11/10 10:11:51 leith Exp Locker: leith $*/
+d52 1
+a52 1
+ static  Widget		iw_magx, iw_magy, iw_magf;
+d58 1
+a58 2
+    Widget		iw_setmag, rowcolh;
+    Widget		iw_but, ipushc, ipusha;
+d60 3
+a62 3
+
+    iw_setmag = 0;
+
+d87 1
+d142 2
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+@

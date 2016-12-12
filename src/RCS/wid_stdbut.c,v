@@ -1,0 +1,363 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.4
+	pre_surf_fromtop:1.4
+	pre_neednewmap:1.3
+	pre_apppluss_remove:1.3
+	pre_tiltpair_chng:1.3
+	pre_GPL:1.2;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2015.09.01.17.54.34;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2011.10.21.12.22.00;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.16.59.50;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.07.23.17.22.24;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.17;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@$2
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/wid_stdbut.c,v 1.4 2011/10/21 12:22:00 leith Exp $*/
+
+/*
+ C++********************************************************************
+ C
+ C  wid_stdbut    Created                                   May 91 AL
+ C                Converted to C                            Jul 92 AL
+ C                Added delete button                       Aug 15 AL
+ C
+ C *********************************************************************
+ C   AUTHOR:  ArDean Leith              
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C wid_stdbut(iw_parent, iw_pushs, iw_pushc,iw_pusha, type, 
+ C            cbs, cbc,  cba, data)
+ C
+ C wid_stdbut_str(iw_parent, iw_pushs, iw_pushc,iw_pusha, type, 
+ C                lab_s,  lab_c,  lab_a, cbs, cbc,  cba, data)
+ C
+ C PARAMETERS:   iw_parent     Parent for this box
+ C               iw_pushs      Stop button widget   
+ C               iw_pushc      Cancel button widget
+ C               iw_pusha      Accept button widget                 
+ C               type          Type of buttons wanted (SCADFH)
+ C               lab_s         Stop   button msg
+ C               lab_c         Cancel button msg
+ C               lab_a         Accept button msg
+ C               cbs           Stop button callback
+ C               cba           Accept button callback
+ C               cbc           Cancel button callback
+ C               data          Accept button data
+ C                  
+ C*********************************************************************
+*/
+
+#include "x.h"
+#include "std.h"
+
+ /* Function prototypes */
+ extern      Widget wid_rowcol ( Widget, char , int, int);
+ extern void web_man           ( Widget, caddr_t, caddr_t );
+ extern      Widget wid_pushg  ( Widget, Widget, char *, void (*)(), 
+                                 char *, int, int);
+
+/******************************** wid_stdbut_str *******************/
+
+ Widget wid_stdbut_str(Widget iw_parent, Widget iw_bigparent,
+                   Widget *iw_pushs, Widget *iw_pushc,  Widget *iw_pusha,
+                   char * type,
+                   char * lab_s,  char * lab_c,  char * lab_a, 
+                   void (*cbs)(), void (*cbc)(), void (*cba)(),  
+                   char * data)
+ { 
+ Widget  iw_rowcol, iw_pushh;
+
+ iw_rowcol = wid_rowcol(iw_parent,'h',-1,-1);
+
+ if (strchr(type,'s') != NULL  || strchr(type,'S') != NULL)
+    {   /* Make push button for stop */
+    *iw_pushs = wid_pushg(iw_rowcol, 0, lab_s, cbs, 
+                        (char *) iw_bigparent, 0,0);
+    }
+
+ if (strchr(type,'c') != NULL  || strchr(type,'C') != NULL)
+    {   /* Make a push button for cancel */
+    *iw_pushc = wid_pushg(iw_rowcol, 0, lab_c, cbc,
+                        (char *) iw_bigparent ,0,0);
+    }
+
+ if (strchr(type,'a') != NULL || strchr(type,'A') != NULL)
+    {   /* Make push button for accept */
+    *iw_pusha = wid_pushg(iw_rowcol, 0, lab_a, cba, 
+                         data, 0,0);
+     }
+
+ return  iw_rowcol;
+ }
+
+
+
+/******************************** wid_stdbut *******************/
+
+ Widget wid_stdbut(Widget iw_parent, Widget iw_bigparent,
+                   Widget *iw_pushs, Widget *iw_pushc,  Widget *iw_pusha,
+                   char * type,
+                   void (*cbs)(), void (*cbc)(), void (*cba)(), 
+                   char * data)
+ { 
+ Widget  iw_rowcol, iw_pushh;
+
+ iw_rowcol  = wid_rowcol(iw_parent,'h',-1,-1);
+
+ if (strchr(type,'s') != NULL  || strchr(type,'S') != NULL)
+    {   /* Make push button for stop */
+    *iw_pushs = wid_pushg(iw_rowcol, 0, "   STOP   ",   cbs, 
+                        (char *) iw_bigparent, 0,0);
+    }
+         /** printf("Created iw_pushs \n"); */
+
+ if (strchr(type,'k') != NULL  || strchr(type,'K') != NULL)
+    {   /* Make push button for save file (uses callback s !!) */
+    *iw_pushs = wid_pushg(iw_rowcol, 0, "   SAVE   ",   cbs, 
+                        (char *) iw_bigparent, 0,0);
+    }
+
+ if (strchr(type,'c') != NULL  || strchr(type,'C') != NULL)
+    {   /* Make a push button for cancel */
+    *iw_pushc = wid_pushg(iw_rowcol, 0, "  CANCEL  ",   cbc,
+                        (char *) iw_bigparent ,0,0);
+    }
+
+ if (strchr(type,'a') != NULL || strchr(type,'A') != NULL)
+    {   /* Make push button for accept */
+    *iw_pusha = wid_pushg(iw_rowcol, 0, "  ACCEPT  ",   cba, 
+                         data, 0,0);
+     }
+
+ if (strchr(type,'d') != NULL || strchr(type,'D') != NULL)
+    {   /* Make push button for delete  (uses callback a !!) */
+    *iw_pusha = wid_pushg(iw_rowcol, 0, "  DELETE  ",   cba,
+                        (char *) iw_bigparent ,0,0);
+    }
+ if (strchr(type,'f') != NULL || strchr(type,'F') != NULL)
+    {   /* Make push button for finished (uses callback a !!) */
+    *iw_pusha = wid_pushg(iw_rowcol, 0, " FINISHED ", cba, 
+                        (char *) iw_bigparent, 0,0);
+    }
+
+ if (strchr(type,'h') != NULL || strchr(type,'H') != NULL)
+    {   /* Make push button for help (uses fixed callback web_man !!) */
+    iw_pushh = wid_pushg(iw_rowcol, 0, " HELP ", web_man, 
+                        data, 0, 0);
+    }
+
+ return  iw_rowcol;
+ }
+@
+
+
+1.4
+log
+@added save button
+@
+text
+@d2 2
+a3 1
+/*$Header: /usr8/web/new/RCS/wid_stdbut.c,v 1.3 2005/10/18 16:59:50 leith Exp $*/
+d5 8
+a12 6
+C++*************************************************************************
+C
+C  WID_STDBUT -- CREATED MAY 91
+C                CONVERTED TO C -- JULY 92 AL
+C **********************************************************************
+C    AUTHOR:  ArDean Leith              
+d14 1
+a14 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d36 22
+a57 16
+C **********************************************************************
+C
+C    WID_STDBUT(iw_parent, iw_pushs, iw_pushc,iw_pusha, type, 
+C               cbs, cbc,  cba, data)
+C
+C    PARAMETERS:   iw_parent     Parent for this box
+C                  iw_pushs      Stop button widget   
+C                  iw_pushc      Cancel button widget
+C                  iw_pusha      Accept button widget                 
+C                  type          Type of buttons wanted (SCAF)
+C                  cbs           Stop button callback
+C                  cba           Accept button callback
+C                  cbc           Cancel button callback
+C                  data          Accept button data
+C                  
+C--*********************************************************************
+d63 40
+a102 1
+ extern void web_man ( Widget, caddr_t, caddr_t );
+a103 3
+ extern Widget wid_pushg  (Widget, Widget, char *, void (*)(), 
+                           char *, int, int);
+ extern Widget wid_rowcol (Widget, char , int, int);
+d105 1
+a105 1
+/************************************************************/
+d108 4
+a111 4
+                 Widget *iw_pushs, Widget *iw_pushc,  Widget *iw_pusha,
+                 char * type,
+                 void (*cbs)(), void (*cbc)(), void (*cba)(), 
+                 char * data)
+a114 2
+         /*  printf("Creating iw_rowcol \n"); */
+
+d118 1
+a118 1
+    {   /* Make a push button for stop */
+d125 1
+a125 1
+    {   /* Make a push button for save file (uses callback s !!) */
+d137 1
+a137 1
+    {   /* Make a push button for accept */
+d142 5
+d148 1
+a148 1
+    {   /* Make a push button for finished (uses callback a !!) */
+d154 1
+a154 1
+    {   /* Make a push button for help (uses fixed callback web_man !!) */
+@
+
+
+1.3
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/wid_stdbut.c,v 1.2 94/07/23 17:22:24 odesanya Exp $*/
+d38 9
+a46 9
+C    PARAMETERS:   iw_parent     parent for this box
+C                  iw_pushs      stop button widget   
+C                  iw_pushc      cancel button widget
+C                  iw_pusha      accept button widget                 
+C                  type          type of buttons wanted (SCAF)
+C                  cbs           stop button callback
+C                  cba           accept button callback
+C                  cbc           cancel button callback
+C                  data          accept button data
+d75 1
+a75 1
+    {   /* make a push button for stop */
+d81 6
+d88 1
+a88 1
+    {   /* make a push button for cancel */
+d94 1
+a94 1
+    {   /* make a push button for accept */
+d100 1
+a100 1
+    {   /* make a push button for finished (uses callback a !!) */
+d106 1
+a106 1
+    {   /* make a push button for help (uses fixed callback web_man !!) */
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/wid_stdbut.c,v 1.1 93/11/10 10:11:17 leith Exp $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d37 2
+d51 1
+a51 1
+ Widget  iw_rowcol;
+d82 6
+a89 1
+
+@

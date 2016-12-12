@@ -1,0 +1,917 @@
+head	1.20;
+access;
+symbols
+	pre-tilt-improve:1.20
+	pre_surf_fromtop:1.20
+	pre_neednewmap:1.20
+	pre_apppluss_remove:1.20
+	pre_tiltpair_chng:1.20
+	pre_GPL:1.18;
+locks;
+comment	@ * @;
+
+
+1.20
+date	2011.06.10.12.15.42;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2005.10.18.16.59.47;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2004.03.30.17.49.09;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2004.02.03.15.02.06;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2004.01.06.17.05.20;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	96.05.13.15.17.02;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	96.05.13.14.39.19;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	96.05.01.16.13.56;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.04.24.15.06.41;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.04.23.14.10.46;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.04.22.20.10.01;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.04.15.13.19.41;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	96.04.12.16.59.26;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	96.04.05.16.48.58;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.02.08.16.46.34;	author liy;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.06.07.18.13.28;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.21.12.23.05;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.08.11.40.00;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.14.01.52;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.44;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.20
+log
+@added comment capability
+@
+text
+@/*$Header: /usr8/web/new/RCS/savdn1.c,v 1.19 2005/10/18 16:59:47 leith Exp $*/
+
+/*
+C++*************************************************************************
+C
+C savdn1.c                                                Nov. 1992 al
+C                   Allowed keys > 9999                   Jan. 2004 al
+C                   New ' ' doc file format               Feb. 2004 al
+C                   New comment routine                   Jun. 2011 al
+C
+C **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    savdn1(docnam,datexc,fileptr,dlist,nlist,openit,append)
+C
+C    PURPOSE:    Save parameters in document file 
+C
+C    PARAMETERS:   docnam  Name for doc file (without extension!)
+c                  datexc  File extension
+c                  fileptr Filepointer
+c                  dlist   Array containing floating pt. numbers to be saved.
+c                  nlist   Number of elements in array dlist
+c                          first element is key, others are registers
+c                  openit  True = first call (opens file)
+c                  append  True = open/append, false = open/discard old
+C
+C    RETURNS:      fileptr or null
+C
+C--*******************************************************************
+*/
+
+#include "std.h"
+
+extern void  spout(char *);
+extern void  spouts(char *);
+
+/*************************  savdn1  ****************************/
+
+
+ FILE * savdn1(char * docnam, char * datexct, FILE ** fpt,
+               float * dlist, int nlist, int * openit, int append,
+               int dateit)
+ {
+ FILE     * fp;
+ time_t     now;
+ char     * datentime, * docname;
+ int        icount, ikey, i;
+ size_t     slen;
+
+ if (*openit) 
+    {
+    /* first call of this routine */
+
+    /* add datexct to docnam if not already there */
+    slen = strlen(docnam) + strlen(datexct) + (size_t) 2;
+
+    if (!(docname = (char *) malloc(slen * sizeof(char))))
+       {
+       spout("*** Unable to allocate memory in savdn1!");
+       return (FILE *) 0;
+       }  
+
+    strcpy(docname,docnam);
+    if (strstr(docname,datexct) != 
+               (docname + strlen(docname) - strlen(datexct)))
+       {   /* add extension now */
+       strcat(docname,".");  strcat(docname,datexct);
+       }
+
+    if (append )
+       {fp = fopen(docname,"a+");}
+    else
+       { fp = fopen(docname,"w+"); }
+
+
+    if (fp ==  (FILE *) NULL)
+       {    /* file can not be opened */
+       spouts("*** Unable to open: "); spout(docname);  
+       free(docname); return fp;
+       }
+
+    if (dateit) 
+       {  /* put date, etc in file now */
+       /* find current date and time */
+       now       = time(NULL);
+       datentime = ctime(&now);
+       /* should these pointers be freed later ? */
+
+       fprintf(fp," ; %3.3s/%3.3s  %s   %s",
+                datexct,datexct, docname, datentime);
+       }
+
+    *openit = FALSE;
+    if (docname) free(docname);
+    *fpt = fp;
+    }
+ else if (*fpt)
+    {
+    /* use file pointer sent from caller */
+    fp = *fpt;
+    }
+ else
+    {
+    spout("*** Pgm error: NULL fp sent to savdn1 without openit");
+    return (FILE *) 0;
+    }
+
+
+ ikey = dlist[0] + 0.5;
+ if (nlist > 0 && ikey > 99999) 
+    {
+    spout("*** Document file keys must be < 100000");
+    return fp;
+    }
+
+ if (nlist < 0)
+    {
+    spout("*** Continuation lines not supported by savdn1.c");
+    return (FILE *) 0;
+    }
+
+ else if (nlist > 0 && nlist <= 7) 
+    {
+    icount = nlist - 1;
+
+    /* ikey is the key number which identifies each line       */
+    /* icount is the number of values (registers) in that line */
+
+    if (ikey < 10000 && icount < 10)
+       { fprintf(fp," %4.4d %1.1d",ikey, icount); }
+    else
+       { fprintf(fp,"%d %d",ikey, icount); }
+
+    for (i = 1; i <= icount; i++)
+       { fprintf(fp," %12.6g",dlist[i]);  }
+    fprintf(fp,"\n");
+    }
+
+ fflush(fp);
+ return fp;
+ }
+
+
+
+
+ FILE * savdnc(char * docnam, char * datexct, FILE ** fpt,
+               float * dlist, int nlist, int * openit, int append,
+               int dateit, char * comment)
+ {
+ FILE     * fp;
+ time_t     now;
+ char     * datentime, * docname;
+ int        icount, ikey, i;
+ size_t     slen;
+
+ if (*openit) 
+    {
+    /* First call of this routine */
+
+    /* Add datexct to docnam if not already there */
+    slen = strlen(docnam) + strlen(datexct) + (size_t) 2;
+
+    if (!(docname = (char *) malloc(slen * sizeof(char))))
+       {
+       spout("*** Unable to allocate memory in savdn1!");
+       return (FILE *) 0;
+       }  
+
+    strcpy(docname,docnam);
+    if (strstr(docname,datexct) != 
+               (docname + strlen(docname) - strlen(datexct)))
+       {   /* Add extension now */
+       strcat(docname,".");  strcat(docname,datexct);
+       }
+
+    if (append )
+       {fp = fopen(docname,"a+");}
+    else
+       { fp = fopen(docname,"w+"); }
+
+
+    if (fp ==  (FILE *) NULL)
+       {    /* File can not be opened */
+       spouts("*** Unable to open: "); spout(docname);  
+       free(docname); return fp;
+       }
+
+    if (dateit) 
+       {  /* Put date, etc in file now */
+       /* find current date and time */
+       now       = time(NULL);
+       datentime = ctime(&now);
+       /* Should these pointers be freed later ? */
+
+       fprintf(fp," ; %3.3s/%3.3s  %s   %s",
+                datexct,datexct, docname, datentime);
+       }
+
+    *openit = FALSE;
+    if (docname) free(docname);
+    *fpt = fp;
+    }
+ else if (*fpt)
+    {
+    /* Use file pointer sent from caller */
+    fp = *fpt;
+    }
+ else
+    {
+    spout("*** Pgm error: NULL fp sent to savdn1 without openit");
+    return (FILE *) 0;
+    }
+
+  if (comment)
+     { // Add a comment line
+     fprintf(fp," ; %s \n",comment);
+     }
+
+ ikey = dlist[0] + 0.5;
+ if (nlist > 0 && ikey > 99999) 
+    {
+    spout("*** Document file keys must be < 100000");
+    return fp;
+    }
+
+ if (nlist < 0)
+    {
+    spout("*** Continuation lines not supported by savdn1.c");
+    return (FILE *) 0;
+    }
+
+ else if (nlist > 0) 
+    {
+    icount = nlist - 1;
+
+    /* ikey is the key number which identifies each line       */
+    /* icount is the number of values (registers) in that line */
+
+    if (ikey < 10000 && icount < 10)
+       { fprintf(fp," %4.4d %1.1d",ikey, icount); }
+    else
+       { fprintf(fp,"%d %d",ikey, icount); }
+
+    for (i = 1; i <= icount; i++)
+       { fprintf(fp," %12.6g",dlist[i]);  }
+    fprintf(fp,"\n");
+    }
+
+ fflush(fp);
+
+ return fp;
+ }
+
+@
+
+
+1.19
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/savdn1.c,v 1.18 2004/03/30 17:49:09 leith Exp $*/
+d6 4
+a9 3
+C savdn1.c                                     Nov. 1992 al
+C                   Allowed keys > 9999        Jan. 2004 al
+C                   New ' ' doc file format    Feb. 2004 al
+d37 1
+a37 1
+C    SAVDN1(DOCNAM,DATEXC,FILEPTR,DLIST,NLIST,OPENIT,APPEND)
+d39 1
+a39 1
+C    PURPOSE:    SUBROUTINE TO SAVE PARAMETERS IN DOCUMENT FILE ALREADY OPENED
+d41 8
+a48 8
+C    PARAMETERS:   DOCNAM  NAME FOR DOC FILE (WITHOUT EXTENSION!)
+C                  DATEXC  FILE EXTENSION
+C                  FILEPTR FILEPOINTER
+C                  DLIST   ARRAY CONTAINING FLOATING PT. NUMBERS TO BE SAVED.
+C                  NLIST   NUMBER OF ELEMENTS IN ARRAY DLIST
+C                          FIRST ELEMENT IS KEY, OTHERS ARE REGISTERS
+C                  OPENIT  TRUE = FIRST CALL (OPENS FILE)
+C                  APPEND  TRUE = OPEN/APPEND, FALSE = OPEN/DISCARD OLD
+d50 1
+a50 1
+C    RETURNS:      FILEPTR OR NULL
+d163 111
+@
+
+
+1.18
+log
+@format
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/savdn1.c,v 1.17 2004/02/03 15:02:06 leith Exp leith $*/
+d10 25
+a34 8
+C **************************************************************************
+C *  COPYRIGHT (C)1981,1987, WADSWORTH CENTER FOR LABORATORIES AND         *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.17
+log
+@new doc file format output
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/savdn1.c,v 1.16 2004/01/06 17:05:20 leith Exp leith $*/
+d140 1
+a140 1
+       { fprintf(fp," %12.5g",dlist[i]);  }
+@
+
+
+1.16
+log
+@keys up to 100,000 now
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/savdn1.c,v 1.15 1996/05/13 15:17:02 leith Exp leith $*/
+d6 3
+a8 2
+C savdn1.c          NOV 92 al
+C                   Allowed keys > 9999   Jan 2004 al
+d134 1
+a134 1
+    if (ikey < 10000)
+d137 1
+a137 1
+       { fprintf(fp," %5.5d%1.1d",ikey, icount); }
+d140 1
+a140 1
+       { fprintf(fp,"%12.6f",dlist[i]);  }
+@
+
+
+1.15
+log
+@bad malloc check for docname
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.14 1996/05/13 14:39:19 leith Exp leith $*/
+d7 1
+d77 1
+a77 11
+       {
+#ifdef VMS
+       /* first test if file exists */
+       if ((fp = fopen(docname,"r")) != NULL ) 
+          {fp = freopen(docname,"r+", fp);}
+       else    
+          {fp = fopen(docname,"w+");}   
+#else
+       fp = fopen(docname,"w+"); 
+#endif
+       }
+d114 1
+a114 1
+ if (nlist > 0 && ikey > 9999) 
+d116 1
+a116 1
+    spout("*** Document file keys must be < 10000");
+d133 4
+a136 1
+    fprintf(fp," %4.4d %1.1d",ikey, icount);
+@
+
+
+1.14
+log
+@strlen error trap improved
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.13 1996/05/01 16:13:56 leith Exp leith $*/
+d60 1
+a60 1
+    if (docname = (char *) malloc(slen * sizeof(char)))
+@
+
+
+1.13
+log
+@altered savdn1 call
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.12 1996/04/24 15:06:41 leith Exp leith $*/
+d26 1
+d38 1
+d43 1
+a43 1
+ FILE * savdn1(char * docnam, char * datexc, FILE ** fpt,
+d49 1
+a49 1
+ char     * datentime, docname[81];
+d51 1
+d57 9
+a65 1
+    /* add datexc to docnam if not already there */
+d67 4
+a70 8
+    if (strstr(docname,datexc) == 0)
+       {
+       if ((strlen(docname) + strlen(datexc) + 1) > (size_t) 80)
+          {
+          spout("*** Doc. file name too long: $"); spout(docname);
+          return (FILE *) 0;
+          }  
+       strcat(docname,".");  strcat(docname,datexc);
+d91 2
+a92 1
+       spout("*** Unable to open: $"); spout(docname);  return fp;
+d103 1
+a103 1
+                datexc,datexc, docname, datentime);
+d107 1
+a107 1
+
+@
+
+
+1.12
+log
+@simplifed date
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.11 1996/04/23 14:10:46 leith Exp leith $*/
+d42 2
+a43 1
+               float * dlist, int nlist, int * openit, int append)
+d87 6
+a92 4
+    /* find current date and time */
+    now       = time(NULL);
+    datentime = ctime(&now);
+    /* should these pointers be freed later ? */
+d94 1
+a94 1
+    fprintf(fp," ; %3.3s/%3.3s  %s   %s",
+d96 2
+@
+
+
+1.11
+log
+@bad else if
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.10 1996/04/22 20:10:01 leith Exp leith $*/
+d29 2
+a46 1
+ char       datet[12], timet[9];
+d57 1
+a57 1
+       if ((strlen(docname) + strlen(datexc) + 1) > 80)
+d62 1
+a62 2
+       strcat(docname,".");
+       strcat(docname,datexc);
+d65 2
+a66 2
+    if( append )
+      fp = fopen(docname,"a+");
+d68 1
+d70 5
+a74 6
+  /* first test if file exists */
+      if( (fp = fopen(docname,"r")) != NULL ) 
+         fp = freopen(docname,"r+", fp);
+      else    
+         fp = fopen(docname,"w+");   
+
+d76 1
+a76 1
+      fp = fopen(docname,"w+"); 
+d78 2
+d82 3
+a84 3
+      {    /* file can not be opened */
+      spout("*** Unable to open: $"); spout(docname);   return fp;
+      }
+a88 1
+
+d91 2
+a92 15
+
+    /* set date for file header */
+    strncpy(&datet[0],datentime + 8,  2);
+    datet[2] = '-';
+    strncpy(&datet[3],datentime + 4,  3);
+    datet[6] = '-';
+    strncpy(&datet[7],datentime + 20, 4);
+    datet[11] = '\0';
+
+    /* set time in file header */
+    strncpy(&timet[0],datentime + 11, 8);
+    timet[8] = '\0';
+
+    fprintf(fp," ; %3.3s/%3.3s   %9.9s at %8.8s   %s\n",
+                datexc,datexc, datet,timet,docname);
+d97 2
+a98 1
+ else
+d101 7
+d110 1
+a110 1
+ if (ikey > 9999) 
+d116 1
+a116 1
+ if (nlist <= 7) 
+d118 6
+d126 1
+a126 1
+    /* ikey is the key number which identifies each line */
+d132 1
+a132 3
+       {
+       fprintf(fp,"%12.6f",dlist[i]);
+       }
+a133 3
+    fflush(fp);
+
+    return fp;
+d136 2
+a137 10
+ else if (nlist < 0)
+    {
+    spout("*** Continuation lines not supported by savdn1.c");
+    return (FILE *) 0;
+    }
+ else
+    {  /* open but do not write any keys  yet */
+    fflush(fp);
+    return fp;
+    }
+@
+
+
+1.10
+log
+@added 0 key input
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.9 1996/04/15 13:19:41 leith Exp leith $*/
+d139 1
+a139 1
+ elseif (nlist < 0)
+@
+
+
+1.9
+log
+@added error if > 9999 key and added fflush
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.8 1996/04/12 16:59:26 leith Exp leith $*/
+d139 1
+a139 1
+ else
+d143 5
+@
+
+
+1.8
+log
+@length of data stuff changed
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.7 1996/04/05 16:48:58 leith Exp leith $*/
+d114 5
+d134 2
+a135 1
+  
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.6 1995/02/08 16:46:34 liy Exp leith $*/
+d45 1
+a45 1
+ char       datet[12], timet[10];
+d101 1
+a101 1
+    timet[9] = '\0';
+@
+
+
+1.6
+log
+@extent the array size of <timet>
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/savdn1.c,v 1.5 1994/06/07 18:13:28 odesanya Exp liy $*/
+d85 1
+a85 1
+    now = time(0);
+d88 3
+d97 1
+a97 1
+    datet[11] = ' ';
+d104 1
+a104 1
+                datexc,datexc,datet,timet,docname);
+@
+
+
+1.5
+log
+@fixed to avoid making several versions of doc files
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/savdn1.c,v 1.4 94/03/21 12:23:05 leith Exp $*/
+d45 1
+a45 1
+ char       datet[12], timet[9];
+@
+
+
+1.4
+log
+@changes for vax
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/savdn1.c,v 1.3 94/02/08 11:40:00 leith Exp $*/
+d65 1
+a65 3
+
+    if (append)
+      /* open for appending to end of file */
+d68 6
+a73 2
+      /* discard file contents upon opening file */
+      fp = fopen(docname,"w+");
+d75 4
+a101 1
+    fflush(fp);
+a125 1
+    fflush(fp);
+@
+
+
+1.3
+log
+@chnged output format to preserve trailing zero
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/savdn1.c,v 1.2 93/11/16 14:01:52 leith Exp Locker: leith $*/
+d4 1
+a4 1
+C++************************************************************************
+d65 1
+d68 1
+a68 2
+      fp = fopen(docname,"a");
+
+d71 1
+a71 1
+      fp = fopen(docname,"w");
+d73 1
+a73 1
+    if ((int * ) fp ==  NULL)
+@
+
+
+1.2
+log
+@added fflush
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d118 1
+a118 1
+       fprintf(fp,"%12.5g",dlist[i]);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+a5 2
+C SAVDN1.FOR
+C                                           LONG FILENAMES JAN 89 al
+d17 1
+a17 1
+C    SAVDN1(NDOC,DOCNAM,DLIST,NLIST,OPENIT,APPEND)
+d23 1
+d39 1
+a39 1
+ FILE * savdn1(char * docnam, char * datexc,
+d42 1
+a42 1
+ FILE      *fp;
+d58 1
+a58 2
+          spout("*** Doc. file name too long: $");
+          spout(docname);
+d68 1
+d75 1
+a75 3
+      spout("*** Unable to open: $");
+      spout(docname);  
+      return fp;
+d96 1
+d98 2
+d101 3
+d121 2
+a122 12
+
+   /************* debug *************
+    printf("%4.4d %1.1d",ikey, icount);
+
+    for (i = 1; i <= icount; i++)
+       {
+       printf(" %f ",dlist[i]);
+       }
+    printf("\n");
+
+   ************ debug **************/
+    
+@

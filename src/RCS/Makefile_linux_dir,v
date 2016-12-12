@@ -1,0 +1,566 @@
+head	1.22;
+access;
+symbols
+	pre-tilt-improve:1.22;
+locks;
+comment	@# @;
+
+
+1.22
+date	2013.05.02.15.08.58;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2013.03.07.12.50.21;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2013.03.06.15.16.23;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2012.11.27.19.25.16;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2011.09.28.13.17.09;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2011.09.27.19.23.58;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2011.08.01.15.58.45;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2011.07.26.15.57.46;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2011.07.26.15.56.56;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2011.06.23.15.18.45;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2011.05.27.13.39.14;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2006.03.17.15.11.12;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2005.10.20.17.39.32;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2005.10.12.16.33.02;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.12.02.19.13.40;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.12.02.19.11.28;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2004.07.16.16.43.56;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.03.24.18.49.01;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.18.20.32.26;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.01.31.17.38.56;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.10.12.13.55.20;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.10.12.13.49.42;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.22
+log
+@*** empty log message ***
+@
+text
+@# 
+# PURPOSE:  MAKEFILE FOR Linux WEB Using 24 bit DirectColor Visual 
+#           Uses the GNU gcc compiler & X/Motif libraries
+#           Dynamic link with static link for Motif libraries: libXm.a libXp.a
+#
+# USAGE:    on patroon2
+#           make -f Makefile_linux_dir
+#           swt ; $swb/web_linux_dir_tmp dat &
+
+# Use Gnu compiler
+CC    = gcc
+
+#-mtune=generic  DID NOT WORK
+# Define compiler flags & header include locations
+# Define cpp variable WEB_BGFG to overcome KDE & Gnome WM focus bug
+# Define cpp variable WEB_24   to use Directcolor 24 visual
+# Define cpp variable WEB_TRUE to use Truecolor   24 visual
+
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DWEB_24 -DWEB_BGFG
+
+LF     = 
+
+PGM    = web_linux_dir
+
+LIB    = lib$(PGM).a
+
+# Links X dynamic and Motif static: libXm.a libXp.a
+#OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libXext.a  -lm   ! links shared
+ OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm    
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+../bin/$(PGM) :  $(LIB)
+	@@echo "        linking ../bin/$(PGM)"
+	gcc  $(LF) $(LIB) -u main $(OTHERLIBS) -o ../bin/$(PGM)_tmp
+	@@chmod ug+w ../bin/$(PGM)_tmp
+
+$(LIB) :  $(ELEMENTS)
+
+
+
+@
+
+
+1.21
+log
+@static
+@
+text
+@d4 1
+a4 1
+#           Static link for Motif libraries: libXm.a 
+d6 2
+a7 1
+# USAGE:    make -f Makefile_linux_dir
+d21 1
+a21 1
+LF     = -static
+d27 3
+a29 3
+# Static link for Motif libraries libXm.a 
+#OTHERLIBS = -L/usr/X11R6/lib  /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libXext.a  -lm   ! links shared
+OTHERLIBS  = /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a /usr/X11R6/lib/libXt.a /usr/X11R6/lib/libX11.a /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libSM.a /usr/X11R6/lib/libICE.a /usr/X11R6/lib/libXext.a /usr/lib/libpthread.a -lm
+@
+
+
+1.20
+log
+@static Xm...
+@
+text
+@d20 1
+a20 1
+LF     = 
+d28 1
+a28 1
+OTHERLIBS  = /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a /usr/X11R6/lib/libXt.a /usr/X11R6/lib/libX11.a /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libSM.a /usr/X11R6/lib/libICE.a /usr/X11R6/lib/libXext.a -lm
+@
+
+
+1.19
+log
+@makes _tmp
+@
+text
+@d27 2
+a28 1
+OTHERLIBS  = -L/usr/X11R6/lib  /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libXext.a  -lm
+@
+
+
+1.18
+log
+@*** empty log message ***
+@
+text
+@a2 1
+#           Byteswaps images for compatibility with SGI 
+a13 1
+# Define cpp variable P_SGIOSF to use SGI byte-order images 
+d15 2
+d18 1
+a18 1
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DP_SGIOSF -DWEB_24 -DWEB_BGFG
+d27 1
+a27 1
+OTHERLIBS  =  -L/usr/X11R6/lib   /usr/X11R6/lib/libXm.a  /usr/X11R6/lib/libXp.a -lXt -lX11 /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libXext.a  -lm
+d33 6
+a38 1
+include Makebody.inc
+@
+
+
+1.17
+log
+@*** empty log message ***
+@
+text
+@d8 1
+a8 1
+#           swt ; $swb/web_linux_dir_tmp
+@
+
+
+1.16
+log
+@byte order msg
+@
+text
+@d7 2
+a8 2
+# USAGE:    make -f Makefile_linux_24
+#
+d22 1
+a22 1
+PGM    = web_linux_24
+a27 2
+#OTHERLIBS =  -L/usr/X11R6/lib   /usr/X11R6/lib/libXm.a  /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm
+#OTHERLIBS =  -L/usr/X11R6/lib64 -lXm -lXt -lX11 -lXmu -lm (for 64 bit)
+@
+
+
+1.15
+log
+@no apppluss now
+@
+text
+@d15 1
+a15 1
+# Define cpp variable P_SGIOSF to use byte-swapped images from SGI
+@
+
+
+1.14
+log
+@no apppluss now
+@
+text
+@d17 1
+@
+
+
+1.13
+log
+@static Xmu and dependencies
+@
+text
+@a8 1
+# NOTE:     To create AppPlusS library:  cd ../AppPlusS ;  xmkmf  ; make
+d17 1
+a17 1
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DP_SGIOSF -Dapp_plus -DWEB_24 -DWEB_BGFG
+d23 1
+a23 3
+LIB    =  lib$(PGM).a
+
+LIBAP  =  ../AppPlusS/libAppPlusS.a
+d26 3
+a28 3
+OTHERLIBS  =  $(LIBAP) -L/usr/X11R6/lib   /usr/X11R6/lib/libXm.a  /usr/X11R6/lib/libXp.a -lXt -lX11 /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libXext.a  -lm
+#OTHERLIBS  =  $(LIBAP) -L/usr/X11R6/lib   /usr/X11R6/lib/libXm.a  /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm
+#OTHERLIBS  = $(LIBAP) -L/usr/X11R6/lib64 -lXm -lXt -lX11 -lXmu -lm (for 64 bit)
+d30 1
+a30 1
+.PRECIOUS : $(LIB) $(LIBAP) $(PGM)
+@
+
+
+1.12
+log
+@static Xm
+@
+text
+@d29 2
+a30 1
+OTHERLIBS  =  $(LIBAP) -L/usr/X11R6/lib   /usr/X11R6/lib/libXm.a  /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm
+@
+
+
+1.11
+log
+@lib name
+@
+text
+@d5 1
+a5 2
+# 
+#  NOTES: 
+d7 1
+a7 1
+#	To create executable:        make -f Makefile_linux_24
+d9 1
+a9 1
+#       To create AppPlusS library:  cd ../AppPlusS ;  xmkmf  ; make
+d12 1
+a12 1
+CC    = cc
+d14 1
+d18 1
+a18 1
+CFLAGS  = -DFUNCPROTO -O2 -I/usr/X11R6/include -DP_SGIOSF -Dapp_plus -DWEB_24 -DWEB_BGFG
+d20 1
+a20 1
+LF     =
+d28 3
+a30 2
+OTHERLIBS  =  $(LIBAP) -L/usr/X11R6/lib   -lXm -lXt -lX11 -lXmu -lm
+#OTHERLIBS  = $(LIBAP) -L/usr/X11R6/lib64 -lXm -lXt -lX11 -lXmu -lm (for SUSE 64)
+@
+
+
+1.10
+log
+@_linux not in APPPLUS
+@
+text
+@d4 1
+a4 1
+#           Uses the GNU gcc compiler & X libraries
+d24 1
+a24 1
+LIB    =  $(PGM).a
+@
+
+
+1.9
+log
+@_BGFG foreground & background
+@
+text
+@d2 1
+a2 1
+# PURPOSE:  MAKEFILE FOR Linux WEB Using 24 bit DirectColor Visual ---------------
+d10 1
+a10 1
+#       To create AppPlusS library:  cd ../AppPlusS_linux ;  xmkmf  ; make
+d26 1
+a26 1
+LIBAP  =  ../AppPlusS_linux/libAppPlusS.a
+@
+
+
+1.8
+log
+@libapp
+@
+text
+@d2 1
+a2 1
+# PURPOSE:  MAKEFILE FOR Linux WEB Using 24 bit Visual ---------------
+a5 2
+#  Original provided by: Erik Vogan 5/19/00 
+# 
+d8 1
+a8 1
+#	To create executable: make -f Makefile_linux_24
+d10 1
+a10 2
+#       To create AppPlusS:   cd ../AppPlusS ;  xmkmf  ; make
+#                             (Ignore error for undefined mains)
+d16 3
+a18 2
+# Define cpp variable P_SGIOSF to use byte-swapped images from SGI 
+CFLAGS =  -DFUNCPROTO -O2 -I/usr/X11R6/include -DP_SGIOSF -Dapp_plus -DWEB_24
+d26 1
+a26 1
+LIBAP  =  ../AppPlusS/libAppPlusS.a
+d28 2
+a29 2
+OTHERLIBS  =  $(LIBAP) -L/usr/X11R6/lib -lXm -lXt -lX11 -lXmu -lm
+#OTHERLIBS  =  -L/usr/X11R6/lib64 -lXm -lXt -lX11 -lXmu -lm (for SUSE 64)
+@
+
+
+1.7
+log
+@makebody usge
+@
+text
+@d28 3
+a30 1
+OTHERLIBS  =  -L/usr/X11R6/lib -lXm -lXt -lX11 -lXmu -lm
+a31 2
+
+LIBAP  =  ../AppPlusS/libAppPlusS.a
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d2 3
+a4 1
+# ------ MAKEFILE FOR Linux WEB Using 24 bit Visual ------------------
+d8 1
+a8 2
+#  Notes: 
+#       Define cpp variable P_SGIOSF to write files in SGI byte ordering 
+d18 1
+a18 1
+# Define compiler flags & include locations
+d20 1
+a20 1
+CFLAGS = -Wall -DFUNCPROTO -O2 -I/usr/X11R6/include -DP_SGIOSF -Dapp_plus -DWEB_24
+d37 2
+a38 10
+$(PGM) :  $(LIB)
+	@@echo linking $(PGM)
+	$(CC) $(LF) $(LIB) -u main $(LIBAP) $(OTHERLIBS) -o $@@
+
+$(LIB) :  $(ELEMENTS)
+
+$(ELEMENTS) : 
+	$(CC) -c $(CFLAGS) $*.c
+	$(AR) r $(LIB) $*.o
+	@@\rm $*.o
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d28 1
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d9 1
+a9 1
+#	To create executable: make -f Makefile_linux_24be
+d23 1
+a23 1
+PGM    = web_linuxieee24
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d7 1
+d9 1
+a9 2
+#       Define cpp variable P_SGIOSF to write files in IEEE standard for 
+#       portability to other unix machines (SGI, ...)
+d11 2
+a12 4
+#	To create executable:   make -f web_linuxieee24
+#
+#       To create AppPlusS:  cd ../AppPlusS ;  xmkmf  ; make
+#                            (Ignore error for undefined mains)
+@
+
+
+1.2
+log
+@DWEB_24
+@
+text
+@d4 1
+a4 1
+#  erik vogan 5/19/00 after DEC makefile by Mahieddine Ladjadj   1/25/95
+d8 1
+a8 1
+#       define cpp macro P_SGIOSF to write files in IEEE standard for 
+d11 1
+a11 2
+#       the commands for ELEMENTS are necessary, otherwise it
+#	will not archive the object files in the library
+d13 11
+a23 14
+#	To create web executable:   make -f Makefile_linux web_linuxieee
+#	if you only type:: make  , the make facility will compile 
+#	the source code but will not create the executable.
+#
+#       This runs: cc web_linux.a -u main -lXm -lXt -lX11 -lm -o web_linuxieee
+#
+# native mode for regular linux UNIX image file format
+# CFLAGS = -Wall -DFUNCPROTO -DSP_UNIX -O1 -I/usr/X11R6/include
+#
+# to allow web to use images from other machines, define macro P_SGIOSF
+# gcc flags
+# CFLAGS = -Wall -DFUNCPROTO -DSP_UNIX -O1 -I/usr/X11R6/include -DP_SGIOSF
+# CFLAGS = -Wall -DFUNCPROTO -DSP_UNIX -O0 -g3 -I/usr/X11R6/include -DP_SGIOSF
+CFLAGS = -Wall -DFUNCPROTO -DSP_UNIX -O0 -g3 -I/usr/X11R6/include -DP_SGIOSF -Dapp_plus -DWEB_24
+d28 3
+a31 1
+XLIBS  =  -L/usr/X11R6/lib -lXm -lXt -lX11 -lXmu
+d37 1
+a37 1
+$(PGM) :  $(LIB) $(LIBAP)
+d39 1
+a39 1
+	cc  $(LIB) $(LIBAP) -u main $(XLIBS) -lm -o $@@
+d42 6
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d27 1
+a27 1
+CFLAGS = -Wall -DFUNCPROTO -DSP_UNIX -O0 -g3 -I/usr/X11R6/include -DP_SGIOSF -Dapp_plus
+@

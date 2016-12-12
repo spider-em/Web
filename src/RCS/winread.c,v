@@ -1,0 +1,808 @@
+head	1.16;
+access;
+symbols
+	pre-tilt-improve:1.16
+	pre_surf_fromtop:1.16
+	pre_neednewmap:1.16
+	pre_apppluss_remove:1.16
+	pre_tiltpair_chng:1.16
+	pre_GPL:1.12;
+locks;
+comment	@ * @;
+
+
+1.16
+date	2011.05.05.12.05.27;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2009.02.06.17.05.52;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2007.11.09.14.24.40;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2005.10.18.16.59.41;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.03.29.15.32.01;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.07.11.17.28.18;	author mladjadj;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.01.23.10.22.14;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.12.29.16.27.46;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.10.05.13.27.44;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.09.12.11.22.08;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.08.02.10.12.31;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.07.28.09.53.25;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.05.25.14.47.23;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.24.18.09.49;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.12.02.11.25.50;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.28;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@-cmap_changes_etc
+@
+text
+@
+/*$Header:    $*/
+/*
+C **********************************************************************
+C
+C WINREAD  -- CREATED MAY 91 FROM WIREAD al
+C             CONVERTED TO C -- SEPT 92 al
+*               24 bit display bug fixed ArDean Leith         11/8/07
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                              *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2007  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C  WINREAD()
+C
+C  PURPOSE:      Readsback window, stores in a image file
+C
+C  PARAMETERS:   None
+C
+C  CALLED BY:    WINSEL    MASKMEN
+C
+--**********************************************************************
+*/
+
+#include <Xm/SelectioB.h>
+#include "common.h"
+#include "routines.h"
+
+ /* internal functions */
+ void winread_cb(Widget, XtPointer, XtPointer);
+
+ /* External common variables */
+ extern char      outstr[80];
+
+ /* File variables */
+ static char     prompt[] = "Enter window file name"; 
+ static Widget   iw_text  = (Widget) 0;
+  
+/************************  winread  *********************************/
+
+ void winread(void)
+ {
+ int nlet, numwin;
+
+ if (strlen(winnam) > 0) 
+    {   /* increment window file name */
+    filinc(winnam, winnam, &nlet, &numwin);
+    }
+
+ /* Create text input box */
+ iw_text = wid_text(iw_win, iw_text, prompt, winnam,
+                    *winread_cb, &winnam[0],
+                    ixulw+nsamw, iyulw+nroww);
+ }
+
+ /*************  winread_cb  (Runs after ?) *****************/
+
+ void winread_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char * string;
+ int    iplanes;
+ int    iwintyp = 0;
+
+ XmSelectionBoxCallbackStruct * cbs;
+
+ cbs    = (XmSelectionBoxCallbackStruct *) call_data;
+
+ string = extractstr(cbs -> value); 
+ strcpy(winnam,string);
+ XtFree(string);
+
+ iplanes = pow(2,16) - 1;            // For image ramp
+ 
+ winread1(winnam,TRUE,iwintyp,iplanes);
+ }
+
+ /*************  winread1  (Runs after winread_cb) ******************/
+
+ void winread1(char * winnamt,int zmap, int iwintyp,  unsigned long ipmask)
+ {
+ XImage         *imagerec = NULL;
+ float          *buf, value;
+ FILEDATA       *filedatat = NULL;
+ int            i, j, k, ipad, itemp, ilen;
+ char           *text;
+ unsigned char  cit;
+
+/* Add datexc to winnam if not already there */
+ if (strstr(winnamt,datexc) == 0)
+    {
+    strcat(winnamt,".");
+    strcat(winnamt,datexc);
+    }
+
+ /* Open new output file for window */
+ filedatat = opennew(winnamt, nsamw, nroww, 1, 1, "u");
+ if (filedatat == (FILEDATA *) NULL) return;
+
+ /* Redraw image in case damaged by window name box */ 
+ //expos_cb(NULL,NULL,NULL);
+
+ /* Set wait cursor */
+ waitcursor(iwin, TRUE, 79);
+
+ if (zmap)
+    {
+    //printf(" ipmask: %#x = %d,  zmap T: %d \n",ipmask,ipmask,zmap);
+    imagerec = XGetImage(idispl, imagsav, ixulw,iyulw, nsamw,nroww,
+                         ipmask, ZPixmap);
+    }
+ else
+    {
+    printf(" ipmask: %#x = %d,  zmap F: %d \n",ipmask,ipmask,zmap);
+
+    imagerec = XGetImage(idispl, imagsav, ixulw,iyulw, nsamw,nroww,
+                         ipmask, XYPixmap);
+    }
+
+ if (imagerec == (XImage *) NULL) 
+    { spout("*** Image formation failed");  return; }
+
+ /* X images are padded to units of four bytes */
+ ipad = nsamw % 4;
+ if (ipad > 0) ipad = 4 - ipad;
+
+ /* Use default read / write buffer from filedatat */
+ buf = filedatat -> buf;
+
+ if (!zmap)
+    {
+    /* Convert single bit image to spider format */
+    ilen = imagerec -> bytes_per_line;
+    for (i=1; i <= nroww; i++)
+       {
+       itemp = (i-1) * ilen;
+
+       for (j=0; j < nsamw; j++)
+          {
+          /* Recover the relevant character of line every 8 cols */
+          /* USED TO BE: if defined(__osf__) || defined(VMS) jan 2009 al*/
+ 
+#ifdef __BYTE_ORDER
+         //printf(" defined __BYTE_ORDER \n"); YES on x86-64
+#    if __BYTE_ORDER == __LITTLE_ENDIAN
+         //printf(" defined __LITTLE_ENDIAN \n");  YES on x86-64
+
+         if (!(j%8))
+              {
+              cit    = imagerec -> data[itemp++];
+              buf[j] = cit & 1; 
+              // if (buf[j] != 0) printf("loc: %4d %4d %f \n",i,j,buf[j]);  
+              }
+          else
+              { 
+              cit    = cit >> 1;        
+              buf[j] = cit & 1 ;
+              }
+#else
+          if (!(j%8))
+              {
+              cit    = imagerec -> data[itemp++];
+              buf[j] = (cit & 128) >> 7;   
+              }
+          else
+              { 
+              cit    = cit << 1;        
+              buf[j] = (cit & 128) >> 7;
+              }
+
+#endif
+
+#else
+          if (!(j%8))
+              {
+              cit    = imagerec -> data[itemp++];
+              buf[j] = (cit & 128) >> 7;   
+              }
+          else
+              { 
+              cit    = cit << 1;        
+              buf[j] = (cit & 128) >> 7;
+              }
+#endif
+
+          }
+       wrtlin(filedatat, buf, nsamw, i);
+       }
+    }
+
+ else if (zmap)
+    {
+    /* Convert image to spider format */
+    k = 0;
+    for (i=1; i <= nroww; i++)
+       {
+       for (j=0; j < nsamw; j++)
+          {
+          value  = (unsigned char) imagerec->data[k++];
+          buf[j] = value;
+          }
+       wrtlin(filedatat, buf, nsamw, i);
+       k = k + ipad;
+       }
+    }
+
+ sprintf(outstr,"A %d x %d window recorded from: (%d,%d)\n",
+                        nsamw,nroww,ixulw,iyulw);
+ spout(outstr);
+
+ closefile(filedatat); filedatat = NULL;
+
+ /* Free image memory.  This deallocates image buffer also */
+ XDestroyImage(imagerec);
+
+ /* Reset wait cursor */
+ waitcursor(iwin, FALSE, 79);
+
+ if (iwintyp != 3)
+    {   /* Fixed size or interactive window */
+    winmov;
+    }
+
+ }
+
+
+
+
+
+
+
+
+@
+
+
+1.15
+log
+@'__osf no longer works on linux so wrong endedness used'
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/winread.c,v 1.14 2007/11/09 14:24:40 leith Exp $*/
+d10 1
+a10 1
+C *  AUTHOR: ArDean Leith                                                  *
+d38 1
+a38 1
+C  PURPOSE:      READSBACK WINDOW, STORES IN A IMAGE FILE
+d40 1
+a40 1
+C  PARAMETERS:   NONE
+a52 1
+ void winread1(char *, int, int);
+d54 1
+a54 2
+ /* external common variables */
+ extern int       iwintyp;
+d57 1
+a57 1
+ /* file variables */
+d72 1
+a72 1
+ /* create text input box */
+d78 1
+a78 1
+ /*************  winread_cb  (runs after wid_text) *****************/
+d84 1
+d88 1
+a88 1
+ cbs = (XmSelectionBoxCallbackStruct *) call_data;
+a90 1
+
+a91 1
+
+d94 3
+a96 5
+ iplanes = pow(2,8) - 1;
+#ifdef WEB_24
+ iplanes = pow(2,16) - 1;
+#endif
+ winread1(winnam,TRUE,iplanes);
+d99 1
+a99 1
+ /*************  winread1  (runs after winread_cb) ******************/
+d101 1
+a101 1
+ void winread1(char * winnamt,int zmap, int ipmask)
+d103 6
+a108 9
+ XImage        *imagerec = NULL;
+ float         *buf, value;
+ FILEDATA      *filedatat = NULL;
+ int           i, j, k, ipad, itemp, ilen;
+ char          *text;
+ unsigned char cit;
+
+
+
+d110 1
+a110 1
+/* add datexc to winnam if not already there */
+d117 1
+a117 1
+ /* open new output file for window */
+d121 2
+a122 2
+ /* redraw image in case damaged by window name box */ 
+ expos_cb(NULL,NULL,NULL);
+d124 1
+a124 1
+ /* set wait cursor */
+d129 1
+d131 1
+a131 1
+                      ipmask, ZPixmap);
+d135 2
+d138 1
+a138 1
+                      ipmask, XYPixmap);
+d144 1
+a144 1
+ /* images are padded to units of four bytes */
+d148 1
+a148 1
+ /* use default read / write buffer from filedatat */
+d153 1
+a153 1
+    /* convert single bit image to spider format */
+d158 1
+d161 2
+a162 3
+          /* recover the relevant character of line every 8 cols */
+
+ /* USED TO BE: if defined(__osf__) || defined(VMS) jan 2009 al*/
+d165 1
+d167 1
+d172 2
+a173 1
+              buf[j] = cit & 1;   
+d214 1
+a214 1
+    /* convert image to spider format */
+d229 1
+a229 1
+     nsamw,nroww,ixulw,iyulw);
+d232 3
+a234 1
+ /* free image memory.  This deallocates image buffer also */
+d237 1
+a237 3
+ closefile(filedatat); filedatat = NULL;
+
+ /* reset wait cursor */
+d241 1
+a241 1
+    {   /* fixed size or interactive window */
+@
+
+
+1.14
+log
+@*               24 bit display bug fixed ArDean Leith         11/8/07
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/winread.c,v 1.13 2005/10/18 16:59:41 leith Exp $*/
+d115 4
+a118 1
+ /* add datexc to winnam if not already there */
+d167 4
+a170 1
+#if defined(__osf__) || defined(VMS)
+d172 1
+a172 1
+          if (!(j%8))
+d182 14
+@
+
+
+1.13
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winread.c,v 1.12 1996/03/29 15:32:01 leith Exp $*/
+d8 1
+d12 1
+a12 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d85 1
+d97 5
+a101 1
+ winread1(winnam,TRUE,255);
+@
+
+
+1.12
+log
+@freed string
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winread.c,v 1.11 1995/07/11 17:28:18 mladjadj Exp leith $*/
+d10 23
+a32 6
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH,    *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH 			   *
+@
+
+
+1.11
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winread.c,v 1.10 1995/01/23 10:22:14 leith Exp mladjadj $*/
+d34 1
+a34 1
+ void winread_cb(Widget, caddr_t, caddr_t);
+d64 1
+a64 1
+ void winread_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+d66 2
+d72 5
+a76 1
+ strcpy(winnam,extractstr(cbs -> value));
+d85 1
+a85 2
+ XmString      txt_string;
+ XImage        *imagerec;
+d87 1
+a87 1
+ FILEDATA      *filedatat;
+d101 1
+a108 4
+ sprintf(outstr,"A %d x %d window recorded from: (%d,%d)\n",
+     nsamw,nroww,ixulw,iyulw);
+ spout(outstr);
+
+d187 5
+a191 2
+ /* free image memory */
+ /* Warning, this deallocates image buffer also!!!!!!!! */
+d194 1
+a194 1
+ closefile(filedatat);
+@
+
+
+1.10
+log
+@ shortened name of extractstring to extractstr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winread.c,v 1.9 94/12/29 16:27:46 leith Exp Locker: leith $*/
+d43 1
+a43 1
+ static Widget   iw_text  = 0;
+@
+
+
+1.9
+log
+@put in code for vax readback
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winread.c,v 1.8 94/10/05 13:27:44 leith Exp Locker: leith $*/
+d70 1
+a70 1
+ strcpy(winnam,extractstring(cbs -> value));
+@
+
+
+1.8
+log
+@used (unsigned char) on read for alpha use
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winread.c,v 1.7 94/09/12 11:22:08 leith Exp Locker: leith $*/
+d138 3
+d144 11
+d162 1
+@
+
+
+1.7
+log
+@added window location report
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winread.c,v 1.6 94/08/02 10:12:31 odesanya Exp Locker: leith $*/
+d4 1
+a4 1
+C *************************************************************************
+d8 1
+a8 1
+C **************************************************************************
+d16 1
+a16 1
+C **************************************************************************
+d20 1
+a20 1
+C  PURPOSE:      READSBACK VAXSTATION WINDOW, STORES IN A IMAGE FILE
+d26 1
+a26 1
+--*********************************************************************
+d38 2
+a39 2
+ extern int iwintyp;
+ extern char              outstr[80];
+a44 1
+
+d119 1
+a119 4
+    {
+    spout("*** Image formation failed");
+    return;
+    }
+d162 1
+a162 4
+          value = imagerec->data[k++];
+/****************** slows down reading too much **********
+          if(value < (float) mapgo) value = (float) mapgo;
+*/
+@
+
+
+1.6
+log
+@shift operator included to make sure of writing 0 and 1 in the the mask file
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winread.c,v 1.5 94/07/28 09:53:25 leith Exp $*/
+d39 1
+d81 1
+a81 1
+ XImage        *image;
+d104 4
+d110 1
+a110 1
+    image = XGetImage(idispl, imagsav, ixulw,iyulw, nsamw,nroww,
+d115 1
+a115 1
+    image = XGetImage(idispl, imagsav, ixulw,iyulw, nsamw,nroww,
+d119 1
+a119 1
+ if (image == (XImage *) NULL) 
+d135 1
+a135 1
+    ilen = image -> bytes_per_line;
+d144 1
+a144 1
+              cit    = image -> data[itemp++];
+d166 2
+a167 2
+          value = image->data[k++];
+/*
+d179 1
+a179 1
+ XDestroyImage(image);
+@
+
+
+1.5
+log
+@used routines.h
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winread.c,v 1.4 94/05/25 14:47:23 odesanya Exp Locker: leith $*/
+d140 1
+a140 1
+              buf[j] = cit & 128;   
+d145 1
+a145 1
+              buf[j] = cit & 128;
+d147 1
+@
+
+
+1.4
+log
+@temporarily discard the crude fix on screen recording
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winread.c,v 1.3 1994/05/24 18:09:49 odesanya Exp $*/
+d31 1
+a32 17
+
+ /* external function prototypes */
+ extern void     showbutx   (char *, char *, char *, int);
+ extern void     outmess    (char *);
+ extern Widget   wid_text   (Widget, Widget, char *, char *,
+                             void (*)(), caddr_t, int, int);
+ extern char *   extractstring (XmString);
+ extern int      filinc     (char *, char *, int *, int *);
+ extern FILEDATA *opennew   (char filnam[], int, int, int, 
+                                 int, char disp[]);
+ extern void     expos_cb   (Widget, caddr_t, caddr_t);
+ extern void     waitcursor (Window, int, int);
+ extern int      closefile  (FILEDATA *); 
+ extern void     winmov     ();
+ extern int      wrtlin     (FILEDATA *, float *, int, int);
+ extern void     spout      (char *);
+
+a36 1
+
+d47 1
+a47 1
+ void winread()
+d75 1
+a75 1
+ /*************  winread1  (runs after winread_cb) ***************/
+d136 1
+a136 1
+          /* recover the relevant character of the line every 8 cols */
+@
+
+
+1.3
+log
+@add data exte to the recording file and fixed the recording of screen image
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/winread.c,v 1.2 93/12/02 11:25:50 leith Exp $*/
+d178 1
+d180 1
+@
+
+
+1.2
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/winread.c,v 1.1 93/11/10 10:11:28 leith Exp Locker: leith $*/
+d98 1
+a98 1
+ float         *buf;
+d104 7
+d177 3
+a179 1
+          buf[j] = image->data[k++];
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d178 1
+@

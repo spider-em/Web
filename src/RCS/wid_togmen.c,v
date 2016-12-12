@@ -1,0 +1,253 @@
+head	1.7;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_surf_fromtop:1.7
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.7
+date	2005.10.18.16.59.51;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.02.28.17.04.20;	author liy;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.01.23.10.23.40;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.12.01.11.34.19;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.12.01.11.32.35;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.05.25.12.56.55;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.16;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_togmen.c,v 1.6 1995/02/28 17:04:20 liy Exp $*/
+/*
+ * wid_togmen.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * wid_togmen(iw_parent, iw_pushg, label, value, ix, iy)
+ * 
+ * PURPOSE:    creates a toggle button gadget  
+ *
+ * RETURNS:    iw_button      widget for the pushbutton gadget
+ * 
+ * PARAMETERS:     
+ *
+ ***********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+#include <Xm/ToggleBG.h>
+
+#define MAX_ARGS 8
+
+/*************************  wid_togmen  ***************************/
+
+ Widget wid_togmen(Widget iw_parent, Widget iw_toggleg, 
+               char *label,int value, int ix, int iy)
+ { 
+ Arg           args[MAX_ARGS];   /* arg list */
+ register      int  n;           /* arg count */
+
+ n = 0;
+
+ XtSetArg(args[n], XmNset,TRUE);     n++;
+ XtSetArg(args[n], XmNselectColor, 147); n++;	/* red */
+ XtSetArg(args[n], XmNlabelString, XmStringCreate(label,
+                              XmSTRING_DEFAULT_CHARSET)); n++;
+
+ if ((long)iw_toggleg <= 0)
+    {   /* create widget first */
+
+    if (ix >= 0 && iy >= 0)
+       { /* set label position */
+       XtSetArg(args[n], XmNx, ix); n++;
+       XtSetArg(args[n], XmNy, iy); n++;
+       }
+    else
+       {
+       /* use default alignment */
+       XtSetArg(args[n], XmNalignment, XmALIGNMENT_BEGINNING);  n++;
+       }
+
+    iw_toggleg = XmCreateToggleButtonGadget(iw_parent,"iw_tog",args,n);
+    }
+ else 
+    {
+    XtSetValues(iw_toggleg,args,n);
+    }
+
+ XmToggleButtonGadgetSetState(iw_toggleg,value,FALSE);
+
+ XtManageChild(iw_toggleg);
+
+ return iw_toggleg;
+ }
+ 
+@
+
+
+1.6
+log
+@change the color of toggle buttons
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_togmen.c,v 1.5 1995/01/23 10:23:40 leith Exp liy $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.5
+log
+@shortened name from wid_togglem
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_togmen.c,v 1.4 94/12/01 11:34:19 leith Exp Locker: leith $*/
+d43 1
+@
+
+
+1.4
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_togglemen.c,v 1.2 94/05/25 12:56:55 odesanya Exp Locker: leith $*/
+d4 1
+a4 1
+ * wid_togglemen.c
+d15 1
+a15 1
+ * wid_togglemen(iw_parent, iw_pushg, label, value, ix, iy)
+d32 1
+a32 1
+/*************************  wid_togglemen  ***************************/
+d34 1
+a34 1
+ Widget wid_togglemen(Widget iw_parent, Widget iw_toggleg, 
+d46 1
+a46 1
+ if ((int)iw_toggleg <= 0)
+@
+
+
+1.3
+log
+@had bug with {} and n
+@
+text
+@a31 2
+
+
+a36 1
+
+a38 1
+
+@
+
+
+1.2
+log
+@increased MAX_ARGS so to avoid crashing on VMS
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_togglemen.c,v 1.1 1993/11/10 10:11:16 leith Exp odesanya $*/
+d34 1
+d38 1
+a38 1
+ { /************************************************************/
+d59 1
+d62 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d30 1
+a30 1
+#define MAX_ARGS 5
+@

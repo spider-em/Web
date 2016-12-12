@@ -1,0 +1,3385 @@
+head	1.50;
+access;
+symbols
+	pre-tilt-improve:1.49
+	pre_surf_fromtop:1.42
+	pre_neednewmap:1.42
+	pre_apppluss_remove:1.40
+	pre_tiltpair_chng:1.40
+	pre_GPL:1.38;
+locks;
+comment	@ * @;
+
+
+1.50
+date	2015.09.01.17.53.27;	author leith;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2015.08.25.14.10.24;	author leith;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2013.03.12.19.08.51;	author leith;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2012.12.05.17.06.28;	author leith;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2012.11.28.15.19.13;	author leith;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2012.11.27.19.12.06;	author leith;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2012.11.09.19.18.01;	author leith;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2012.04.17.16.36.58;	author leith;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2011.08.01.16.02.14;	author leith;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2011.08.01.15.45.58;	author leith;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2005.10.18.16.59.52;	author leith;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.03.03.19.36.15;	author leith;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2001.08.28.19.26.55;	author leith;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2001.06.28.14.57.08;	author leith;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2000.06.29.15.49.48;	author leith;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	99.10.04.14.40.59;	author leith;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	99.09.30.17.34.18;	author leith;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	98.06.15.18.18.09;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	98.03.05.18.40.24;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	98.02.05.22.20.40;	author liy;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	97.04.04.14.01.14;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	97.03.18.16.30.17;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	95.08.23.16.17.53;	author mladjadj;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	95.08.07.20.21.31;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	95.08.03.14.23.11;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	95.07.21.17.28.23;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	95.02.21.20.53.52;	author liy;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	95.01.31.14.01.02;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	95.01.25.19.50.37;	author mladjadj;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	95.01.17.16.00.43;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	94.11.17.17.12.02;	author mladjadj;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	94.11.17.15.29.51;	author mladjadj;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	94.11.10.16.14.17;	author mladjadj;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	94.09.07.15.36.21;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	94.09.07.12.43.32;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	94.09.07.12.37.56;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	94.09.07.11.58.55;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.08.30.11.33.23;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.08.09.15.46.57;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.06.17.14.57.38;	author odesanya;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.06.02.15.52.48;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.05.27.16.36.22;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.05.27.15.24.31;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.03.02.12.10.40;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.02.28.15.52.54;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.02.16.14.34.33;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.16.12.37.49;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.12.25.10;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.03;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.50
+log
+@$2
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.48 2013/03/12 19:08:51 leith Exp $*/
+
+/***********************************************************************
+ *                                                                     *
+ * openold.c   MRC support                      Nov 2012  ArDean Leith *
+ *             64 bit support                   Sep 2015  ArDean Leith *
+ *                                                                     *
+ ***********************************************************************
+ C   AUTHOR: A. LEITH                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright 1985-2013  Health Research Inc.,                        *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but without any warranty; without even the implied warranty of    *
+ c=* merchantability or fitness for a particular purpose.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * openold(filnam, nsamptr, nrowptr, nsliceptr, iformptr, disp)
+ *
+ * PURPOSE:     Open an existing data file for random access I/O
+ *
+ * PARAMETERS:         
+ *    filnam          File name                      (Sent)
+ *    nsamptr,nrowptr Dimensions of file             (Returned)
+ *    nsliceptr       No. of slices in file          (Returned)
+ *    iformptr        File type specifier.           (Unused)
+ *                      = +3    3-D SPIDER image
+ *	                = +1    2-D SPIDER image
+ *                      = -1    2-D SPIDER Fourier transform
+ *                      = -3    3-D SPIDER Fourier transform
+ *                      = +8    8  bit raw black and white image
+ *                      = 11    8  bit color image
+ *                      = 108   8  bit MRC byte    image signed -128..127
+ *                      = 116   16 bit MRC integer image
+ *                      = 132   32 bit MRC real    image
+ *    disp            Character specifying readonly or not  (sent)
+ *                      = 'o' - Read/write. 
+ *                      = 'q' - Read/write, no error msg if non-existing 
+ *                      = 'r' - File exists, open readonly.
+ *
+ * RETURNS:        filedata * or null if error reading file
+ *
+ *********************************************************************/
+
+#include "files.h"
+#include "routines.h"
+
+// Byte flipping 
+#define CONVERT_4( A, B )                        \
+             (A) =                               \
+            ((unsigned int)(B) >> 24) |          \
+            ((unsigned int)(B) << 24) |          \
+           (((unsigned int)(B) >> 8) & 0xff00) | \
+           (((unsigned int)(B) << 8) & 0xff0000)
+
+ /* Externally defined global variables */
+ extern int   nsam8, nrow8, nslice8;
+ extern int   nstack, inuse, maxim, imginstack;
+
+ /* Internal function prototypes */
+ int          opensmall8      (char *, FILEDATA  *, int *,   int * ,  int * , 
+                               int ,   int , int , int * );
+ int          is_spider_header(float[]);
+ int          is_mrc_header   (float[]);
+ int          IsLittleEndian  ();
+ int          IsBigEndian     ();
+ float        ReverseFloat    ( const float inFloat );
+
+
+ /* Internal file scope variables */
+ int needrawsize = TRUE;  /* Force it to run image size widget for raw images on first call */
+
+/*********************** openold ************************************/
+
+ FILEDATA * openold(char filnam[], int *nsamptr, int *nrowptr, 
+                   int *nsliceptr, int *iformptr, char disp[])
+ { 
+ union  BUFFER 
+        {
+        float hbuf[256];
+        char  cbuf[1024];
+        int   ibuf[256];
+        } header;
+
+ FILEDATA  *fileptr;
+
+ char           type[4], output[160], ctemp[10], typefl[1];
+ FILE *         fp;
+ int            nsam,nrow,nslice,iform,headbyt,headrec;
+ int            lentitle, k1, locat, lennum, iflag;
+ char *         cptr;
+ unsigned int * uiptr;
+ int            flip, flipped, spiderkind, mrckind;
+ float          hbuf[256];
+
+ /* Retrieve stacked image number, if present */ 
+ nstack     = 0;
+ imginstack = 0;
+ inuse      = 0;
+ maxim      = 0;
+ strcpy(ctemp,"          ");
+
+ locat = strcspn(filnam,"@@");
+ if (locat < strlen(filnam))
+    { /* Has @@ in filnam denoting image stack */
+    lennum     = strspn(&filnam[locat+1],"0123456789");
+    if (lennum > 0)
+       {  /* Has number after @@ in filnam, stacked image requested */
+       strncpy(ctemp,&filnam[locat+1],lennum);
+       imginstack = atoi(ctemp);
+       }
+    /* Remove @@ and stacked image number from filnam */
+    strcpy(&filnam[locat],&filnam[locat+1+lennum]);
+    }
+
+ /* Open file */
+ if (strcmp(disp,"r") == 0) 
+    fp = fopen(filnam,"rb");   // "r" Never used? al dec 2012
+
+ else if (strcmp(disp,"o") == 0 || strcmp(disp,"q") == 0) // Q from mont2 al dec 2012
+    fp = fopen(filnam,"r+b");
+
+ else 
+    { spout("*** Unknown disp in openold"); return FALSE; }
+
+ if (fp ==  NULL)
+     {    /* File does not exist, or is write protected try readonly */
+     fp = fopen(filnam,"rb");
+     if (fp ==  NULL)
+        {  /* Does not exist, etc. */
+
+       //printf(" *** null in openold: fp: %d disp:%s file: %s \n",fp,disp,filnam);
+       if (strcmp(disp,"q") != 0)
+           {  /* Give error output (used in montage increment) */
+           sprintf(output,"*** Unable to open: %s",filnam);
+           spout(output);  
+           }
+        return FALSE;
+        }
+     else
+        {  /* Opened readonly */
+        spout("Opening file as read only!!:");
+        }
+     } 
+
+ /* Allocate space for a spider file info structure */
+ if ((fileptr = (FILEDATA *) malloc(sizeof(FILEDATA))) ==
+    (FILEDATA *) 0) 
+    {spout("*** Unable to malloc filedata in openold."); return FALSE; }
+
+ /* Set offset for reading initial header from file */
+ fileptr -> offset     = 0;
+ fileptr -> iform      = 0;
+ fileptr -> flip       = 0;
+ fileptr -> headbyt    = 0;
+ fileptr -> fp         = fp;
+ fileptr -> imginstack = imginstack;
+
+ /* Read initial header of image file and determine image format ---*/
+
+ spiderkind = 0;
+ mrckind    = 0;
+
+ if (redlin(fileptr,&header.hbuf[0],256,0))
+    {
+    // Determine image/volume format.  May be SPIDER image? 
+    // Flips header.hbuf if this is a flipped SPIDER header
+
+    //printf(" Read hbuf[1]: %f   \n", hbuf[1]);
+    spiderkind = is_spider_header(&header.hbuf[0]);
+
+    //printf(" spiderkind: %d   hbuf[1]: %f   \n",spiderkind,header.hbuf[1]);
+
+    if (spiderkind == 0) 
+       {
+       // Not a SPIDER header.  Is this a MRC header?  
+       // Flips header.hbuf if this is a flipped MRC header
+       mrckind = is_mrc_header(&header.hbuf[0]);
+       }
+    }
+  
+ /* Parse initial header of image file--------------------------- */
+ if (spiderkind == 0 && mrckind == 0)
+    {  /* Not a SPIDER or MRC image, treat as 8 bit raw */
+
+    iflag = opensmall8(filnam, fileptr, &nsam, &nrow, &nslice, 
+                    nstack, inuse, maxim, &lentitle);
+    if (iflag != TRUE) return(FALSE);
+    }
+ else if (spiderkind != 0)
+    {  /* Standard SPIDER image, may be flipped */
+
+    nslice = header.hbuf[0];
+    if (nslice < 0) nslice = - nslice;
+    fileptr -> nslice   = nslice;
+
+    fileptr -> nrow     = header.hbuf[1];
+
+    fileptr -> nlabel   = header.hbuf[3];
+    fileptr -> iform    = header.hbuf[4];
+    fileptr -> imami    = header.hbuf[5];
+    fileptr -> fmax_spi = header.hbuf[6];
+    fileptr -> fmin_spi = header.hbuf[7];
+    fileptr -> av       = header.hbuf[8];
+    fileptr -> sig      = header.hbuf[9];
+
+    fileptr -> nsam     = header.hbuf[11];
+    fileptr -> headrec  = header.hbuf[12];
+    fileptr -> iangle   = header.hbuf[13];
+    fileptr -> phi      = header.hbuf[14];
+    fileptr -> theta    = header.hbuf[15];
+    fileptr -> gamma    = header.hbuf[16];
+
+    fileptr -> headbyt  = header.hbuf[21];
+    fileptr -> reclen   = header.hbuf[22];
+
+    fileptr -> nstack   = header.hbuf[23];
+    fileptr -> inuse    = header.hbuf[24];
+    fileptr -> maxim    = header.hbuf[25];
+
+    fileptr -> flip     = 0;
+    if (spiderkind < 0) fileptr -> flip = 1;
+
+    maxim   = fileptr -> maxim;
+    nstack  = fileptr -> nstack;
+
+    /* Set error correction for bad headbyt and reclen SPIDER files */
+    iform = fileptr -> iform;
+    if (iform < 4 && 
+       (fileptr -> reclen < (fileptr -> nsam) * 4)) 
+       {
+       fileptr -> reclen = (fileptr -> nsam) * 4;
+       } 
+
+    headrec = 1024 / (fileptr -> reclen);
+    if (fileptr->reclen < 1024 &&
+       (1024 % (fileptr -> reclen)) != 0) headrec++;
+    headbyt = headrec * (fileptr -> reclen);
+
+    if (iform < 4 && ((fileptr -> headbyt) < headbyt))
+       { fileptr -> headbyt = headbyt;  }
+
+    /* Set date in current file information */
+    uiptr = (unsigned int *) &header.hbuf[211];
+    /* Flip the bytes for date and time in header */
+    for (k1 = 211; k1 <= 216 ; k1++, uiptr++)
+       { CONVERT_4(*uiptr,*uiptr);  }
+
+    strncpy(&fileptr -> date[0], &header.cbuf[844],11);
+
+    if (fileptr -> date[1] == '-')
+       {
+       uiptr = (unsigned int *) &header.hbuf[211];
+       /* Flip the bytes for date....  in header */
+       for (k1 = 211; k1 <= 216 ; k1++, uiptr++)
+          { CONVERT_4(*uiptr,*uiptr);  }
+
+       strncpy(&fileptr -> date[0], &header.cbuf[844],11);
+       }
+    fileptr -> date[11] = '\0';
+
+    /* Set time in current file information */
+    strncpy(&fileptr -> time[0], &header.cbuf[856],9);
+    fileptr -> time[8] = '\0';
+
+    /* set title in current file information */
+    strncpy(&fileptr -> title[0], &header.cbuf[864], 160);
+    fileptr -> title[159] = '\0';
+
+    lentitle = strlen(fileptr -> title);
+    }
+
+ else if (mrckind != 0)
+    {  /* Standard MRC image */
+
+    fileptr -> nsam     = header.ibuf[0];
+    fileptr -> nrow     = header.ibuf[1];
+    fileptr -> nslice   = header.ibuf[2];
+    nslice              = fileptr -> nslice;
+
+    if (header.ibuf[3] == 0)
+       { // 8 bit MRC
+       fileptr -> iform  = 108;
+       fileptr -> reclen = (fileptr -> nsam) ;
+       }
+    else if (header.ibuf[3] == 1)
+       { // 16 bit MRC
+       fileptr -> iform  = 116;
+       fileptr -> reclen = (fileptr -> nsam) * 2 ;
+       }
+    else if (header.ibuf[3] == 2)
+       { // 32 bit MRC
+       fileptr -> iform  = 132;
+       fileptr -> reclen = (fileptr -> nsam) * 4 ;
+       }
+    else
+       {
+       sprintf(output,"***  %s    Unsupported MRC image format: %d",
+               filnam,header.ibuf[3]);
+       spout(output);  
+       return FALSE;
+       }
+
+    if (header.ibuf[16] != 1  || 
+        header.ibuf[17] != 2  || 
+        header.ibuf[18] != 3)
+       { // Not X,Y,Z voxel order
+       sprintf(output,"*** %s    Web only supports MRC voxel order: X, Y, Z",filnam);
+       spout(output);  
+       return FALSE;
+       }
+   
+    fileptr -> fmin_spi = header.hbuf[19];
+    fileptr -> fmax_spi = header.hbuf[20];
+    fileptr -> av       = header.hbuf[21];
+    fileptr -> sig      = 0;
+
+    fileptr -> imami    = 0;
+    if (fileptr -> fmin_spi != 0.0 ||
+        fileptr -> fmax_spi != 0.0 ||
+        fileptr -> av       != 0.0) 
+        {fileptr -> imami = 1;}
+
+    fileptr -> nlabel   = header.ibuf[55];
+    fileptr -> headrec  = 1;
+    fileptr -> headbyt  = 1024;
+    fileptr -> iangle   = 0;
+    fileptr -> phi      = 0;
+    fileptr -> theta    = 0;
+    fileptr -> gamma    = 0;
+    fileptr -> nstack   = 0;
+    fileptr -> inuse    = 1;
+    fileptr -> maxim    = 0;
+
+    fileptr -> flip     = 0;
+    if (mrckind < 0) fileptr -> flip = 1;
+
+    fileptr -> date[0]  = '\0';
+    fileptr -> time[0]  = '\0';
+    fileptr -> title[0] = '\0';
+
+    maxim    = 0;
+    nstack   = 0;
+    lentitle = 0;
+    }
+
+ *nsamptr   = fileptr -> nsam;
+ *nrowptr   = fileptr -> nrow;
+ *nsliceptr = fileptr -> nslice;
+
+ /* Getoldstack may use buf if it needs to normalize */
+ if ((fileptr -> buf = (float *) malloc(*nsamptr * sizeof(float))) == 
+      (float *) 0) 
+    {spout("*** Unable to malloc buf in openold."); return FALSE; }
+  
+ /* Getoldstack adjusts offset for reading header from stacked file */
+ fileptr -> offset = 0;
+ if (fileptr -> nstack > 0  && fileptr -> imginstack > 0)
+     {  /* Set header pointer to current image in stack */
+     if (getoldstack(fileptr, imginstack, FALSE, TRUE) != imginstack)
+         {return FALSE;}
+     }
+
+ /* Initialize ximage pointer */
+ fileptr -> ximage = NULL;
+
+ /* Print file opening information */
+ strcpy(typefl," ");
+ if (fileptr -> flip > 0) strcpy(typefl,"F" );
+ 
+ iform = fileptr -> iform;
+
+ if (iform == -1)
+     strcpy(type,"f ");
+ else if (iform == -11)
+     strcpy(type,"fo");
+ else if (iform == -12)
+     strcpy(type,"fe");
+ else if (iform == -21)
+     strcpy(type,"3fe");
+ else if (iform == -22)
+     strcpy(type,"3fe");
+ else if (iform == 0)
+     strcpy(type,"d ");
+ else if (iform == 3)
+     strcpy(type,"r3");
+ else if (iform == 8)
+     strcpy(type,"8 ");
+ else if (iform == 16)
+     strcpy(type,"16");
+ else if (iform == 108)
+     strcpy(type,"MRC0");
+ else if (iform == 116)
+     strcpy(type,"MRC1");
+ else if (iform == 132)
+     strcpy(type,"MRC2");
+ else
+     strcpy(type,"r ");
+
+ if (imginstack > 0 && 
+    (lentitle > 0)  && (lentitle + strlen(filnam)) < 70)
+    /* Print filename and title on one line */
+    {
+    sprintf(output," %s@@%d  %s", filnam,imginstack, fileptr -> title);
+    spout(output);
+    }
+ else if(imginstack > 0)
+    /* Print filename */
+    {
+    sprintf(output," %s@@%d", filnam,imginstack);
+    spout(output);
+    }
+ else if ((lentitle > 0) && (lentitle + strlen(filnam)) < 70)
+    /* Print filename and title on one line */
+    {
+    sprintf(output," %s %s", filnam,fileptr -> title);
+    spout(output);
+    }
+ else
+    /* Print filename */
+    {
+    sprintf(output," %s",filnam);
+    spout(output);
+    }
+
+ if (iform == 8 && fileptr -> headbyt <= 0)
+     {  /* Opened a raw 8 bit image (no header) */
+     if (nslice > 1)
+        sprintf(output," (raw) %d %d %d   Header bytes: 0",
+           *nsamptr, *nrowptr, *nsliceptr);
+     else
+        sprintf(output," (raw) %d %d    Header bytes: 0",
+           *nsamptr, *nrowptr);
+     spout(output);
+     }
+
+ else
+     { /* Print file parameters */
+     if (fileptr -> nstack > 0 && fileptr -> imginstack == 0)
+       { /* Overall stack header */
+       if (nslice > 1)
+          sprintf(output," (%s) %d %d %d  (...%d) Old: %s At %s  Header bytes: %d",
+             type, *nsamptr, *nrowptr, *nsliceptr, maxim, fileptr -> date, 
+             fileptr -> time, fileptr -> headbyt);
+       else
+          sprintf(output," (%s) %d %d (...%d)     Old: %s At %s  Header bytes: %d",
+             type, *nsamptr, *nrowptr, maxim, fileptr -> date, fileptr -> time, 
+             fileptr -> headbyt);
+       }
+    else if (fileptr -> iform > 99)
+       {
+        /* Print file parameters for MRC file*/
+       if (nslice > 1)
+          sprintf(output," (%s %s) %d %d %d", type, typefl,
+                          *nsamptr, *nrowptr, *nsliceptr);
+       else
+          sprintf(output," (%s %s) %d %d", type, typefl,
+                          *nsamptr, *nrowptr);
+       }
+  
+    else
+       {
+        /* Print file parameters */
+       if (nslice > 1)
+          sprintf(output," (%s) %d %d %d  Old: %s At %s  Header bytes: %d",
+             type, *nsamptr, *nrowptr, *nsliceptr, fileptr -> date, 
+             fileptr -> time, fileptr -> headbyt);
+       else
+          sprintf(output," (%s) %d %d     Old: %s At %s  Header bytes: %d",
+             type, *nsamptr, *nrowptr, fileptr -> date, fileptr -> time, 
+             fileptr -> headbyt);
+       }
+    spout(output);
+
+    if ((lentitle > 0) && (lentitle + strlen(filnam)) >= 70)
+       {    /* Must print rest of title on separate lines */
+       strncpy(&output[0],&fileptr -> title[0],80);
+       output[80] = '\0';
+       spout(output);
+       if (lentitle > 80)
+          {
+          cptr = fileptr -> title + 80;
+          strncpy(output,cptr,80);
+          spout(output);
+          }
+       }
+    }
+ 
+ return fileptr;
+ }
+
+ /*********************** ReverseFloat ***********************************/
+
+float ReverseFloat( const float inFloat )
+{
+   float retVal;
+   char *floatToConvert = ( char* ) & inFloat;
+   char *returnFloat    = ( char* ) & retVal;
+
+   // Swap the bytes into a temporary buffer
+   returnFloat[0] = floatToConvert[3];
+   returnFloat[1] = floatToConvert[2];
+   returnFloat[2] = floatToConvert[1];
+   returnFloat[3] = floatToConvert[0];
+
+   return retVal;
+}
+
+ /*********************** is_spider_header ***********************************/
+
+
+//#define CONVERT_4( A, B )                        \
+//             (A) =                               \
+//            ((unsigned int)(B) >> 24) |          \
+//            ((unsigned int)(B) << 24) |          \
+//           (((unsigned int)(B) >> 8) & 0xff00) | \
+//           (((unsigned int)(B) << 8) & 0xff0000)
+
+
+
+ int is_spider_header(float hbuf[])
+ { 
+ /* Is this header a SPIDER header?  Flips if hbuf if not native SPIDER header */
+
+ unsigned int * uiptr;
+ float *        fptr;
+ int            i;
+ int            flipped;
+ float          ftemp, a, b;
+ float          h_1, h_4, h_11;
+
+ union  {
+        float hbuf[256];
+        char  cbuf[1024];
+        } temp ;
+
+ if (hbuf[1]  < 1.0   || hbuf[1]  > 100000.0 ||
+     hbuf[11] < 1.0   || hbuf[11] > 100000.0 ||
+     hbuf[4]  < -20.0 || hbuf[4] ==  0.0     || hbuf[4]  > 32 )
+
+    { /* Not native SPIDER try flipping header */
+    //printf(" hbuf[1]: %f Not native SPIDER try byte swapping \n", hbuf[1]);
+        
+    h_1  =  ReverseFloat( hbuf[1] );
+    h_4  =  ReverseFloat( hbuf[4] );
+    h_11 =  ReverseFloat( hbuf[11] );
+    //printf(" 1  h_1:  %f \n",  h_1);       
+    //printf(" 1  h_4:  %f \n",  h_4);       
+    //printf(" 1  h_11:  %f \n",  h_11);     
+
+    if (h_1 < 1.0    || h_11 > 100000.0 ||
+        h_1  < 1.0   || h_1  > 100000.0 ||
+        h_4  < -20.0 || h_4 ==  0.0     || h_4  > 32 )
+
+       {/* Neither native SPIDER nor flipped SPIDER!  Returns original hbuf! */
+       //printf(" 4 temp.hbuf[1]:  %f   NOT SPIDER \n", temp.hbuf[1]);
+
+       flipped = 0 ; 
+       return flipped;
+       }
+
+    // Needs flipping, Returns flipped hbuf
+    uiptr = (unsigned int *) &hbuf[0];
+    for (i = 0; i < 256 ; i++, uiptr++)
+       { CONVERT_4(*uiptr,*uiptr);  }
+
+    //printf(" 5 hbuf[1]:  %f   FLIPPED: %d \n",hbuf[1] ,flipped);
+
+    flipped = -1 ; 
+    return flipped;
+    }
+ 
+ //printf(" 5 hbuf[1]: %f OK SPIDER \n",hbuf[1]);
+
+ // No need for flipping, Returns original hbuf
+
+ flipped = 1; 
+ return flipped;
+ }   
+
+
+
+ /*********************** is_mrc_header ***********************************/
+
+ /*C  MAP/IMAGE HEADER FORMAT
+ C 	LENGTH = 1024 BYTES, ORGANIZED AS 56 LONG WORDS FOLLOWED
+ C                BY SPACE FOR 10 80 BYTE TEXT LABELS.
+ C  1	NX		# OF COLUMNS	(FASTEST CHANGING IN MAP)
+ C  2	NY		# OF ROWS
+ C  3	NZ		# OF SECTIONS 	(SLOWEST CHANGING IN MAP)
+ C  4	MODE		DATA TYPE
+ C			0	IMAGE : SIGNED 8-BIT BYTES RANGE -128  TO 127				*
+ C			1	IMAGE : 16-BIT HALFWORDS		
+ C			2	IMAGE : 32-BIT REALS			
+ C			3	TRANSFORM : COMPLEX 16-BIT INTEGERS	
+ C			4	TRANSFORM : COMPLEX 32-BIT REALS	
+ C  5	NXSTART		NUMBER OF FIRST COLUMN  IN MAP (Default = 0)
+ C  6	NYSTART		NUMBER OF FIRST ROW     IN MAP       
+ C  7	NZSTART		NUMBER OF FIRST SECTION IN MAP       
+ C  8	MX		NUMBER OF INTERVALS ALONG X
+ C  9	MY		NUMBER OF INTERVALS ALONG Y
+ C 10	MZ		NUMBER OF INTERVALS ALONG Z
+ C 11-13                CELLA           CELL DIMENSIONS IN ANGSTROMS
+ C 14-16                CELLB           CELL ANGLES IN DEGREES	
+ C 17	MAPC		WHICH AXIS CORRESPONDS TO COLUMNS  (1,2,3 FOR X,Y,Z)
+ C 18	MAPR		WHICH AXIS CORRESPONDS TO ROWS     (1,2,3 FOR X,Y,Z)
+ C 19	MAPS		WHICH AXIS CORRESPONDS TO SECTIONS (1,2,3 FOR X,Y,Z)
+ C 20	DMIN		MINIMUM DENSITY VALUE
+ C 21	DMAX		MAXIMUM DENSITY VALUE
+ C 22	DMEAN		MEAN    DENSITY VALUE    (AVERAGE)
+ C 23	ISPG		SPACE GROUP NUMBER 0 OR 1 (DEFAULT=0)
+ C 24	NSYMBT		NUMBER OF BYTES USED FOR SYMMETRY DATA (0 OR 80)
+ C 25-49 EXTRA          EXTRA, USER DEFINED STORAGE SPACE. 29 WORDS MAX.
+ C 50-52                ORIGIN          ORIGIN IN X,Y,Z USED FOR TRANSFORMS
+ C 53	MAP	        CHARACTER STRING 'MAP ' TO IDENTIFY FILE TYPE	
+ C 54	MACHST          MACHINE STAMP		
+ C 55	RMS	        RMS DEVIATION OF MAP FROM MEAN DENSITY	
+ C 56	NLABL	        NUMBER OF LABELS BEING USE	
+ C 57-256	        LABEL(20,10) 10 80-CHARACTER TEXT LABELS		
+ C SYMMETRY RECORDS FOLLOW - IF ANY - STORED AS TEXT AS IN INTERNATIONAL
+ C TABLES, OPERATORS SEPARATED BY * AND GROUPED INTO 'LINES' OF 80
+ C CHARACTERS (IE. SYMMETRY OPERATORS DO NOT CROSS THE ENDS OF THE
+ C 80-CHARACTER 'LINES' AND THE 'LINES' DO NOT TERMINATE IN A *).
+ C DATA RECORDS FOLLOW.
+ */
+
+ int is_mrc_header(float hbuf[])
+
+ { /* Is this header a MRC header?  Flips if not native MRC header*/
+
+ unsigned int * uiptr;
+ int            i;
+ char           machst[4];    // Machine stamp   
+ int            flipit;
+ int            il,ib;
+ int            flipped; 
+
+ union  BUFFER 
+        {
+        float hbuf[256];
+        char  cbuf[1024];
+        int   ibuf[1024];
+        } temp;
+
+ //il = IsLittleEndian(); ib = IsBigEndian();
+ //printf(" lit: %d  big:%d \n",il,ib);
+
+ for (i = 0; i < 256 ; i++)
+    {temp.hbuf[i] = hbuf[i];}
+ 
+ //printf(" hbuf[0..2]:%f %f %f \n",hbuf[0],hbuf[1],hbuf[2]);
+ //printf(" ibuf[0..2]:%d %d %d %d\n",
+ //         temp.ibuf[0],temp.ibuf[1],temp.ibuf[2],temp.ibuf[3]);
+
+ if (temp.ibuf[0]  < 1.0   || temp.ibuf[0]  > 1000000.0 ||
+     temp.ibuf[1]  < 1.0   || temp.ibuf[1]  > 1000000.0 ||
+     temp.ibuf[2]  < 1.0   || temp.ibuf[2]  > 1000000.0 ||
+     temp.ibuf[3]  <   0   || temp.ibuf[3]  > 3          )
+    { 
+    /* Not native MRC. Image size abnormal or bad MRC format*/
+
+    uiptr = (unsigned int *) &temp.hbuf[0];
+    for (i = 0; i < 256 ; i++, uiptr++)
+       { CONVERT_4(*uiptr,*uiptr);} 
+
+    //printf(" ibuf[0..2]:%f %f %f %f\n",
+    //         temp.ibuf[0],temp.ibuf[1],temp.ibuf[2],temp.ibuf[3]);
+
+    if (temp.ibuf[0]  < 1.0   || temp.ibuf[0]  > 1000000.0 ||
+        temp.ibuf[1]  < 1.0   || temp.ibuf[1]  > 1000000.0 ||
+        temp.ibuf[2]  < 1.0   || temp.ibuf[2]  > 1000000.0 ||
+        temp.ibuf[3]  <   0   || temp.ibuf[3]  > 3          )
+       { 
+       /* Image size out of normal values or bad MRC format*/
+       /* Not native MRC or flipped MRC! Returns unflipped hbuf! */
+       flipped = 0 ;
+       //printf(" temp.hbuf[1]: %f not mrc  \n",temp.hbuf[1]);
+       return flipped;
+       }
+
+    // Flip the input buffer for return
+    uiptr = (unsigned int *) &hbuf[0];
+    for (i = 0; i < 256 ; i++, uiptr++)
+       { CONVERT_4(*uiptr,*uiptr);}
+ 
+    flipped = -1 ; 
+    //printf(" hbuf[1]: %f flipped mrc:%d \n",hbuf[1],flipped);
+    return flipped ;
+    }
+    
+ // No flipping, return un flipped hbuf
+ flipped = 1 ; 
+ //printf(" hbuf[1]: %f native mrc:%d \n",hbuf[1],flipped);
+ return flipped ;
+ }
+
+
+ int IsLittleEndian()
+ {
+ int n = 1;
+ // Little endian if true
+ if (*(char *)&n == 1) {return TRUE;}
+ return FALSE;
+ }
+
+ int IsBigEndian()
+ {
+ int n = 1;
+ // Little endian if true
+ if (*(char *)&n == 1) {return FALSE;}
+ return TRUE;
+ }
+
+
+ /*********************** opensmall8 *********************************/
+ 
+ int opensmall8(char filnam[], FILEDATA  *fileptr,
+               int * nsamptr,   int * nrowptr,  int * nsliceptr, 
+               int nstack,      int inuse, int maxim, int * lentitle)
+  
+ { 
+ char   output[160];
+
+ // Not a SPIDER image, treat as 8 bit raw 
+
+ if (nsam8 <= 0 || nrow8 <= 0 || nslice8 <= 0)
+    {   // Need correct raw image size 
+    sprintf(output,"*** %s  Unknown image format. Raw image size not set in options", filnam);
+    spout(output);
+ 
+    // get_imsiz();
+    // closefile(fileptr);
+    return -1;
+    }
+
+ *nsamptr  = nsam8;
+ *nrowptr   = nrow8;
+ *nsliceptr = MYMAX(nslice8,1);
+
+ fileptr -> nslice   = nslice8;
+ fileptr -> nrow     = nrow8;
+
+ fileptr -> nlabel   = 0;
+ fileptr -> iform    = 8;
+ fileptr -> imami    = 1;
+ fileptr -> fmax_spi = 255.0;
+ fileptr -> fmin_spi = 0.0;
+ fileptr -> av       = 0.0;
+ fileptr -> sig      = 0.0;
+
+ fileptr -> nsam     = nsam8;
+ fileptr -> headrec  = 0.0;
+ fileptr -> iangle   = 0.0;
+ fileptr -> phi      = 0.0;
+ fileptr -> theta    = 0.0;
+ fileptr -> gamma    = 0.0;
+
+ fileptr -> headbyt  = 0;
+ fileptr -> reclen   = nsam8;
+
+ fileptr -> nstack   = nstack;
+ fileptr -> inuse    = inuse;
+ fileptr -> maxim    = maxim;
+
+ /* Set date, time title to NULL in current file information */
+ fileptr -> date[0]  =  '\0';
+ fileptr -> time[0]  =  '\0';
+ fileptr -> title[0] =  '\0';
+
+ *lentitle = 0;
+ return TRUE;
+ }
+  
+
+
+
+#ifdef NEVER
+    fseek(fp, 0xd0, SEEK_SET);
+    if ((my_mrc_header.machst)[0] == ((0x1 << 4) + 0x1) &&
+        IsLittleEndian() && flipped == FALSE) flipped = TRUE;
+    else if ((my_mrc_header.machst)[0] == ((0x4 << 4) + 0x4) &&
+             IsBigEndian() && flipped == FALSE) flipped = TRUE;
+
+
+#endif
+
+
+#if BUGGY
+c__________________________________________________________
+  printf(" *** in open: fp: %d file: %s \n",fp,filnam);
+  printf(" *** in open: date: %s \n",fileptr -> date);
+  printf(" *** in open: time: %s \n",fileptr -> time);
+  printf(" *** in open: header.cbuf: %s \n",&header.cbuf[844]);
+  printf(" *** in open: title: %s \n",fileptr -> title);
+  printf(" *** in open: lentitle: %d \n",lentitle);
+  printf(" *** in open: *nsam: %d \n",*nsamptr);
+  printf(" *** in open: fileptr: %d \n",fileptr);
+c---------------------------------------------------
+#endif
+
+@
+
+
+1.49
+log
+@return((FILEDATA *)iflag) --> return(FALSE)
+@
+text
+@d6 2
+a7 1
+ * openold.c       MRC support                  Nov 2012  ArDean Leith * 
+d10 1
+a10 1
+ C=* AUTHOR: A. LEITH                                                  *
+d50 1
+a50 1
+ *                      = 'q' - Read/write, no error message if does not exist 
+d60 1
+a60 1
+// Byte flipping
+d62 1
+a62 1
+             (A) =                 \
+d68 1
+d72 8
+a79 2
+ int opensmall8(char *, FILEDATA  *, int *,   int * ,  int * , 
+                int ,   int , int , int * );
+a80 4
+ int is_spider_header(float[]);
+ int is_mrc_header(float[]);
+ int IsLittleEndian();
+ int IsBigEndian();
+d82 2
+a83 2
+/* Force it to run image size widget for raw images on first call */
+ int needrawsize = TRUE;
+d100 1
+a100 1
+ FILE         * fp;
+d103 1
+a103 1
+ char         * cptr;
+d180 2
+d184 2
+d504 16
+d523 10
+d534 2
+a535 1
+ { /* Is this header a SPIDER header?  Flips if hbuf if not native SPIDER header */
+d538 1
+d541 2
+d544 1
+a544 2
+ union  BUFFER 
+        {
+d547 1
+a547 1
+        } temp;
+d549 3
+a551 12
+ for (i = 0; i < 256 ; i++)
+    {temp.hbuf[i] = hbuf[i];}
+ 
+ //printf(" hbuf[0]: %f   temp.hbuf[0]: %g \n",hbuf[0], temp.hbuf[0]);
+ //printf(" hbuf[1]: %f   temp.hbuf[1]: %g \n",hbuf[1], temp.hbuf[1]);
+ //printf(" hbuf[2]: %f   temp.hbuf[2]: %g \n",hbuf[2], temp.hbuf[2]);
+ //printf(" hbuf[3]: %f   temp.hbuf[3]: %g \n",hbuf[3], temp.hbuf[3]);
+
+ if (temp.hbuf[11] < 1.0   || temp.hbuf[11] > 100000.0 ||
+     temp.hbuf[1]  < 1.0   || temp.hbuf[1]  > 100000.0 ||
+     temp.hbuf[4]  < -20.0 || temp.hbuf[4] ==  0.0     ||
+     temp.hbuf[4]  > 32    )
+d553 2
+a554 2
+    { /* Not native SPIDER try flipping it */
+    //printf(" hbuf[2]: %f Not native SPIDER try flipping it \n",hbuf[2]);
+d556 10
+a565 13
+    uiptr = (unsigned int *) &temp.hbuf[0];
+    for (i = 0; i < 256 ; i++, uiptr++)
+       { CONVERT_4(*uiptr,*uiptr);  }
+
+    //printf(" hbuf[0]: %f   temp.hbuf[0]: %g \n",hbuf[0], temp.hbuf[0]);
+    //printf(" hbuf[1]: %f   temp.hbuf[1]: %g \n",hbuf[1], temp.hbuf[1]);
+    //printf(" hbuf[2]: %f   temp.hbuf[2]: %g \n",hbuf[2], temp.hbuf[2]);
+    //printf(" hbuf[3]: %f   temp.hbuf[3]: %g \n",hbuf[3], temp.hbuf[3]);
+
+    if (temp.hbuf[11] < 1.0   || temp.hbuf[11] > 100000.0 ||
+        temp.hbuf[1]  < 1.0   || temp.hbuf[1]  > 100000.0 ||
+        temp.hbuf[4]  < -20.0 || temp.hbuf[4] ==  0.0     ||
+        temp.hbuf[4]  > 32    )
+d568 1
+a568 1
+       //printf(" temp.hbuf[2]: %f   NOT SPIDER \n",temp.hbuf[2]);
+d579 2
+a580 1
+    //printf(" hbuf[2]: %f   FLIPPED SPIDER \n",hbuf[2]);
+d584 2
+d588 1
+a589 1
+ //printf(" hbuf[2]: %f OK SPIDER \n",hbuf[2]);
+d594 1
+d640 1
+a794 5
+#endif
+
+
+
+
+d797 1
+@
+
+
+1.48
+log
+@removed temp.hbuf[5] test in is_spider_header
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.47 2012/12/05 17:06:28 leith Exp leith $*/
+d83 1
+a83 1
+ FILEDATA *openold(char filnam[], int *nsamptr, int *nrowptr, 
+d192 1
+a192 1
+    if (iflag != TRUE) return((FILEDATA *)iflag);
+d515 4
+a518 1
+ //printf(" hbuf[2]: %f   temp.hbuf[2]:%g \n",hbuf[2], temp.hbuf[2]);
+d532 5
+d542 1
+a542 1
+       {/* Not native SPIDER or flipped SPIDER! Returns original hbuf! */
+d545 2
+a546 1
+       flipped = 0 ; return flipped;
+d683 1
+a683 1
+ // little endian if true
+d691 1
+a691 1
+ // little endian if true
+@
+
+
+1.47
+log
+@// Q from mont2
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.46 2012/11/28 15:19:13 leith Exp leith $*/
+d11 1
+a11 1
+ C=* Copyright 1985-2012  Health Research Inc.,                        *
+a518 1
+     temp.hbuf[5]  < -.5   || temp.hbuf[5]  >     2.0  ||
+d520 2
+a521 1
+     temp.hbuf[4]  > 32  )
+d523 1
+d531 3
+a533 3
+        temp.hbuf[5]  < -.5   || temp.hbuf[5]  >     2.0 ||
+        temp.hbuf[4]  < -20.0 || temp.hbuf[4] ==  0.0    ||
+        temp.hbuf[4]  > 32  )
+d536 1
+d549 1
+@
+
+
+1.46
+log
+@better raw and MRC error messages
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.45 2012/11/27 19:12:06 leith Exp leith $*/
+d126 1
+a126 1
+    fp = fopen(filnam,"rb");
+d128 1
+a128 1
+ else if (strcmp(disp,"o") == 0 || strcmp(disp,"q") == 0)
+d140 1
+a140 1
+       // printf(" *** null in openold: fp: %d file: %s \n",fp,filnam);
+@
+
+
+1.45
+log
+@MRC support
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.43 2012/04/17 16:36:58 leith Exp $*/
+d70 2
+a71 2
+ int opensmall8(FILEDATA  *, int *,   int * ,  int * , 
+                int ,      int , int , int * );
+d98 1
+a98 1
+ int            lentitle, k1, locat, lennum;
+d189 4
+a192 3
+    //printf(" Opening small8 \n");
+    if (!opensmall8(fileptr, &nsam, &nrow, &nslice, 
+                    nstack, inuse, maxim, &lentitle)) { return FALSE;}
+d302 11
+a312 1
+       sprintf(output,"*** Unsupported MRC image format: %d",header.ibuf[3]);
+d316 1
+a316 1
+    
+d687 1
+a687 1
+  int opensmall8(FILEDATA  *fileptr,
+d692 1
+a692 1
+ //printf(" nsam8: %d \n",nsam8);
+d694 49
+a742 48
+      /* Not a SPIDER image, treat as 8 bit raw */
+      if (nsam8 <= 0 || nrow8 <= 0 || nslice8 <= 0)
+         {   /* Inquire as to correct raw image size */
+         spout("*** Unknown image format, Raw image size not set in options.");
+         //spout("*** If this is raw image set raw image size using opeionts and try again");
+         //get_imsiz();
+         //closefile(fileptr);
+ //printf(" nsam8: %d returning\n",nsam8);
+         return FALSE;
+         }
+
+      *nsamptr  = nsam8;
+      *nrowptr   = nrow8;
+      *nsliceptr = MYMAX(nslice8,1);
+
+      fileptr -> nslice   = nslice8;
+      fileptr -> nrow     = nrow8;
+
+      fileptr -> nlabel   = 0;
+      fileptr -> iform    = 8;
+      fileptr -> imami    = 1;
+      fileptr -> fmax_spi = 255.0;
+      fileptr -> fmin_spi = 0.0;
+      fileptr -> av       = 0.0;
+      fileptr -> sig      = 0.0;
+
+      fileptr -> nsam     = nsam8;
+      fileptr -> headrec  = 0.0;
+      fileptr -> iangle   = 0.0;
+      fileptr -> phi      = 0.0;
+      fileptr -> theta    = 0.0;
+      fileptr -> gamma    = 0.0;
+
+      fileptr -> headbyt  = 0;
+      fileptr -> reclen   = nsam8;
+
+      fileptr -> nstack   = nstack;
+      fileptr -> inuse    = inuse;
+      fileptr -> maxim    = maxim;
+
+      /* Set date, time title to NULL in current file information */
+      fileptr -> date[0]  =  '\0';
+      fileptr -> time[0]  =  '\0';
+      fileptr -> title[0] =  '\0';
+
+      *lentitle = 0;
+      return TRUE;
+      }
+@
+
+
+1.44
+log
+@MRC support
+@
+text
+@d5 3
+a7 3
+ *
+ * openold.c
+ *
+d9 1
+a9 1
+ C=* AUTHOR: A. LEITH 
+d189 1
+d191 1
+a191 2
+                    nstack, inuse, maxim, &lentitle))
+        return FALSE;
+a192 1
+
+d248 1
+a248 1
+    /* flip the bytes for date and time in header */
+d285 1
+a285 1
+       { // 8 bit 
+d290 1
+a290 1
+       { // 16 bit
+d295 1
+a295 1
+       { // 32 bit
+d351 1
+a351 1
+ if (fileptr -> nstack     > 0  && fileptr -> imginstack > 0)
+d675 2
+a676 2
+
+ int opensmall8(FILEDATA  *fileptr,
+d681 1
+d686 5
+a690 3
+         spout("*** Set raw image size and try again");
+         get_imsiz();
+         closefile(fileptr);
+@
+
+
+1.43
+log
+@removed debug output: printf(" ***still null in op...
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.42 2011/08/01 16:02:14 leith Exp $*/
+d9 1
+d11 2
+a12 5
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d21 2
+a22 2
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+a23 1
+ C=*                                                                   *
+d25 1
+a25 3
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+d29 1
+a29 1
+ *  openold(filnam, nsamptr, nrowptr, nsliceptr, iformptr, disp)
+d31 1
+a31 2
+ * PURPOSE:     Open an existing data file for random access
+ *              reading-writing.
+d34 17
+a50 15
+ *      filnam          File name                  (sent)
+ *      nsamptr,nrowptr Dimensions of file         (returned)
+ *      nsliceptr       No. of slices in file      (returned)
+ *      iformptr        File type specifier.       (unused)
+ *                        = +3    3-d image
+ *	                  = +1    2-d image
+ *                        = -1    2-d fourier transform
+ *                        = -3    3-d fourier transform
+ *                        = +8    8 bit black and white image
+ *                        = 11    8 bit color image
+ *      disp       Character specifying readonly or not  (sent)
+ *                        = 'o' - Read/write. 
+ *                        = 'q' - Read/write, no error message if
+ *                                does not exist 
+ *                        = 'r' - File exists, open readonly.
+d59 1
+d70 9
+a78 1
+ /* force it to run image size widget for raw images on first call */
+a84 1
+  
+d90 1
+a90 1
+        int   sbuf[512];
+d95 5
+a99 5
+ char      type[3], output[160], ctemp[10];
+ FILE      *fp;
+ int       nsam,nrow,nslice,iform,headbyt,headrec;
+ int       lentitle, k1, locat, lennum;
+ char *    cptr;
+d101 2
+d111 1
+a111 1
+ locat      = strcspn(filnam,"@@");
+d124 1
+d154 1
+a154 1
+ /* Allocate space for a spider file structure */
+d159 34
+a192 15
+  /* Set offset for reading overall header from file */
+  fileptr -> offset     = 0;
+  fileptr -> iform      = 0;
+  fileptr -> flip       = 0;
+  fileptr -> headbyt    = 0;
+  fileptr -> fp         = fp;
+  fileptr -> imginstack = imginstack;
+
+  /* Read overall header of image file */
+  if (redlin(fileptr,&header.hbuf[0],256,0) != TRUE)
+     { /* Assume file is small 8 bit file */
+     output[0] = 'N'; 
+     }
+  else
+     { sprintf(output,"%e",header.hbuf[1]);  }
+d194 2
+a195 28
+  if (output[0] != 'N')
+      {  /* Not Tietz, not small 8 bit raw */
+      
+      if (header.hbuf[11] < 1.0  || header.hbuf[11] > 100000.0 ||
+           header.hbuf[1] < 1.0  || header.hbuf[1]  > 100000.0 ||
+           header.hbuf[4] > 32  )
+         {    /* Not a native SPIDER image, flip header */
+         uiptr = (unsigned int *) &header.hbuf[0];
+         for (k1 = 0; k1 < 256 ; k1++, uiptr++)
+            { CONVERT_4(*uiptr,*uiptr);  }
+
+         fileptr -> flip = 1;
+
+         if (header.hbuf[11] < 1.0   || header.hbuf[11] > 100000.0 ||
+             header.hbuf[1]  < 1.0   || header.hbuf[1]  > 100000.0 ||
+             header.hbuf[5]  < -.5   || header.hbuf[5]  >     2.0 ||
+             header.hbuf[4]  < -20.0 || header.hbuf[4] ==  0.0    ||
+             header.hbuf[4]  > 32  )
+             {    /* Not a SPIDER image, treat as 8 bit raw */
+             /* Unflip it first */
+             fileptr -> flip = 0;
+             uiptr = (unsigned int *) &header.hbuf[0];
+             for (k1 = 0; k1 < 256 ; k1++, uiptr++)
+               { CONVERT_4(*uiptr,*uiptr);  }
+             output[0] = 'N'; 
+             }
+         }
+      }
+d197 64
+a260 9
+   if (output[0] == 'N')
+      {  /* Not a SPIDER image, treat as 8 bit raw */
+      if (nsam8 <= 0 || nrow8 <= 0 || nslice8 <= 0)
+         {   /* inquire as to correct raw image size */
+         spout("*** Set raw image size and try again");
+         get_imsiz();
+         closefile(fileptr);
+         return FALSE;
+         }
+d262 3
+a264 3
+      nsam   = nsam8;
+      nrow   = nrow8;
+      nslice = MYMAX(nslice8,1);
+d266 3
+a268 2
+      fileptr -> nslice   = nslice;
+      fileptr -> nrow     = nrow;
+d270 3
+a272 7
+      fileptr -> nlabel   = 0;
+      fileptr -> iform    = 8;
+      fileptr -> imami    = 1;
+      fileptr -> fmax_spi = 255.0;
+      fileptr -> fmin_spi = 0.0;
+      fileptr -> av       = 0.0;
+      fileptr -> sig      = 0.0;
+d274 2
+a275 6
+      fileptr -> nsam     = nsam;
+      fileptr -> headrec  = 0.0;
+      fileptr -> iangle   = 0.0;
+      fileptr -> phi      = 0.0;
+      fileptr -> theta    = 0.0;
+      fileptr -> gamma    = 0.0;
+d277 2
+a278 2
+      fileptr -> headbyt  = 0;
+      fileptr -> reclen   = nsam;
+d280 60
+a339 3
+      fileptr -> nstack   = nstack;
+      fileptr -> inuse    = inuse;
+      fileptr -> maxim    = maxim;
+d341 3
+a343 89
+      /* Set date, time title to NULL in current file information */
+      fileptr -> date[0]  =  '\0';
+      fileptr -> time[0]  =  '\0';
+      fileptr -> title[0] = '\0';
+
+      lentitle = 0;
+      }
+  else
+      {  /* Standard SPIDER image */
+
+      nslice = header.hbuf[0];
+      if (nslice < 0) nslice = - nslice;
+      fileptr -> nslice   = nslice;
+
+      fileptr -> nrow     = header.hbuf[1];
+
+      fileptr -> nlabel   = header.hbuf[3];
+      fileptr -> iform    = header.hbuf[4];
+      fileptr -> imami    = header.hbuf[5];
+      fileptr -> fmax_spi = header.hbuf[6];
+      fileptr -> fmin_spi = header.hbuf[7];
+      fileptr -> av       = header.hbuf[8];
+      fileptr -> sig      = header.hbuf[9];
+
+      fileptr -> nsam     = header.hbuf[11];
+      fileptr -> headrec  = header.hbuf[12];
+      fileptr -> iangle   = header.hbuf[13];
+      fileptr -> phi      = header.hbuf[14];
+      fileptr -> theta    = header.hbuf[15];
+      fileptr -> gamma    = header.hbuf[16];
+
+      fileptr -> headbyt  = header.hbuf[21];
+      fileptr -> reclen   = header.hbuf[22];
+
+      fileptr -> nstack   = header.hbuf[23];
+      fileptr -> inuse    = header.hbuf[24];
+      fileptr -> maxim    = header.hbuf[25];
+      maxim   = fileptr -> maxim;
+      nstack  = fileptr -> nstack;
+
+      /* Set error correction for bad headbyt and reclen SPIDER files */
+      iform = fileptr -> iform;
+      if (iform < 4 && 
+         (fileptr -> reclen < (fileptr -> nsam) * 4)) 
+         {
+         fileptr -> reclen = (fileptr -> nsam) * 4;
+         } 
+
+      headrec = 1024 / (fileptr -> reclen);
+      if (fileptr->reclen < 1024 &&
+         (1024 % (fileptr -> reclen)) != 0) headrec++;
+      headbyt = headrec * (fileptr -> reclen);
+
+      if (iform < 4 && ((fileptr -> headbyt) < headbyt))
+         { fileptr -> headbyt = headbyt;  }
+
+      /* Set date in current file information */
+      uiptr = (unsigned int *) &header.hbuf[211];
+      /* flip the bytes for date and time in header */
+      for (k1 = 211; k1 <= 216 ; k1++, uiptr++)
+         { CONVERT_4(*uiptr,*uiptr);  }
+
+      strncpy(&fileptr -> date[0], &header.cbuf[844],11);
+
+      if (fileptr -> date[1] == '-')
+         {
+         uiptr = (unsigned int *) &header.hbuf[211];
+         /* Flip the bytes for date....  in header */
+         for (k1 = 211; k1 <= 216 ; k1++, uiptr++)
+            { CONVERT_4(*uiptr,*uiptr);  }
+
+         strncpy(&fileptr -> date[0], &header.cbuf[844],11);
+         }
+      fileptr -> date[11] = '\0';
+
+      /* Set time in current file information */
+      strncpy(&fileptr -> time[0], &header.cbuf[856],9);
+      fileptr -> time[8] = '\0';
+
+      /* set title in current file information */
+      strncpy(&fileptr -> title[0], &header.cbuf[864], 160);
+      fileptr -> title[159] = '\0';
+
+      lentitle = strlen(fileptr -> title);
+      }
+
+  *nsamptr   = fileptr -> nsam;
+  *nrowptr   = fileptr -> nrow;
+  *nsliceptr = fileptr -> nslice;
+d345 2
+a346 2
+  /* Getoldstack may use buf if it needs to normalize */
+  if ((fileptr -> buf = (float *) malloc(*nsamptr * sizeof(float))) == 
+d348 1
+a348 1
+     {spout("*** Unable to malloc buf in openold."); return FALSE; }
+d350 5
+a354 6
+  /* Getoldstack adjusts offset for reading header from stacked file */
+  fileptr -> offset = 0;
+  if (fileptr -> nstack     > 0  && 
+      fileptr -> imginstack > 0)
+      {  /* Set header pointer to current image in stack */
+      if (getoldstack(fileptr, imginstack, FALSE, TRUE) != imginstack)
+d356 1
+a356 1
+      }
+d362 3
+d385 6
+d394 34
+a427 23
+  if (imginstack > 0 && 
+     (lentitle > 0)  && (lentitle + strlen(filnam)) < 70)
+     /* Print filename and title on one line */
+     {
+     sprintf(output," %s@@%d  %s", filnam,imginstack, fileptr -> title);
+     spout(output);
+     }
+  else if(imginstack > 0)
+     /* Print filename */
+     {
+     sprintf(output," %s@@%d", filnam,imginstack);
+     spout(output);
+     }
+  else if ((lentitle > 0) && (lentitle + strlen(filnam)) < 70)
+     /* Print filename and title on one line */
+     {
+     sprintf(output," %s %s", filnam,fileptr -> title);
+     spout(output);
+     }
+  else
+     /* Print filename */
+     {
+     sprintf(output," %s",filnam);
+d431 166
+a596 10
+  if (iform == 8 && fileptr -> headbyt <= 0)
+      {  /* opened a raw 8 bit image (no header) */
+      if (nslice > 1)
+         sprintf(output," (raw) %d %d %d   Header bytes: 0",
+           *nsamptr, *nrowptr, *nsliceptr);
+      else
+         sprintf(output," (raw) %d %d    Header bytes: 0",
+           *nsamptr, *nrowptr);
+      spout(output);
+      }
+d598 1
+a598 14
+  else
+      { /* Print file parameters */
+      if (fileptr -> nstack > 0 && fileptr -> imginstack == 0)
+        { /* overall stack header */
+        if (nslice > 1)
+           sprintf(output," (%s) %d %d %d  (...%d) Old: %s At %s  Header bytes: %d",
+           type, *nsamptr, *nrowptr, *nsliceptr, maxim, fileptr -> date, 
+           fileptr -> time, fileptr -> headbyt);
+        else
+           sprintf(output," (%s) %d %d (...%d)     Old: %s At %s  Header bytes: %d",
+           type, *nsamptr, *nrowptr, maxim, fileptr -> date, fileptr -> time, 
+           fileptr -> headbyt);
+        }
+     else
+d600 7
+a606 11
+        /* Print file parameters */
+        if (nslice > 1)
+           sprintf(output," (%s) %d %d %d  Old: %s At %s  Header bytes: %d",
+           type, *nsamptr, *nrowptr, *nsliceptr, fileptr -> date, 
+           fileptr -> time, fileptr -> headbyt);
+        else
+           sprintf(output," (%s) %d %d     Old: %s At %s  Header bytes: %d",
+           type, *nsamptr, *nrowptr, fileptr -> date, fileptr -> time, 
+           fileptr -> headbyt);
+        }
+     spout(output);
+d608 2
+a609 13
+     if ((lentitle > 0) && (lentitle + strlen(filnam)) >= 70)
+        {    /* Must print rest of title on separate lines */
+        strncpy(&output[0],&fileptr -> title[0],80);
+        output[80] = '\0';
+        spout(output);
+        if (lentitle > 80)
+           {
+           cptr = fileptr -> title + 80;
+           strncpy(output,cptr,80);
+           spout(output);
+           }
+        }
+     }
+d611 135
+a745 2
+  return fileptr;
+}
+a760 1
+
+@
+
+
+1.42
+log
+@prints removed
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.41 2011/08/01 15:45:58 leith Exp leith $*/
+d133 1
+a133 1
+   printf(" ***still null in open: fp: %d file: %s \n",fp,filnam);
+@
+
+
+1.41
+log
+@cosmetic & tietz file format removed
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/openold.c,v 1.40 2007/11/01 19:33:45 leith Exp $*/
+a116 4
+
+ printf("at: %d,  lenum: %d  imginstack: %d:\n",locat,lennum,imginstack);
+ printf("ctemp:%s:\n",ctemp);
+ printf("filnam:%s:\n",filnam);
+@
+
+
+1.40
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/openold.c,v 1.39 2005/10/18 16:59:52 leith Exp $*/
+a8 1
+ * SPIDER - MODULAR IMAGE PROCESSING SYSTEM.  AUTHOR: J.FRANK 
+d36 2
+a37 2
+ * PURPOSE:     TO OPEN AN EXISTING DATA FILE FOR RANDOM ACCESS
+ *              READING-WRITING.
+d40 13
+a52 13
+ *      FILNAM          FILE NAME                  (SENT)
+ *      NSAMPTR,NROWPTR DIMENSIONS OF FILE         (RETURNED)
+ *      NSLICEPTR       NO. OF SLICES IN FILE      (RETURNED)
+ *      IFORMPTR        FILE TYPE SPECIFIER.       (UNUSED)
+ *                        = +3    3-D IMAGE
+ *	                  = +1    2-D IMAGE
+ *                        = -1    2-D FOURIER TRANSFORM
+ *                        = -3    3-D FOURIER TRANSFORM
+ *                        = +8    8 BIT BLACK AND WHITE IMAGE
+ *                        = 11    8 BIT COLOR IMAGE
+ *      DISP       CHARACTER SPECIFYING READONLY OR NOT  (SENT)
+ *                        = 'o' - READ/WRITE. 
+ *                        = 'q' - READ/WRITE, no error message if
+d54 1
+a54 1
+ *                        = 'r' - FILE EXISTS, OPEN READONLY.
+d56 1
+a56 1
+ * RETURNS:    FILEDATA * OR NULL IF ERROR READING FILE
+d98 1
+a98 1
+ /* retrieve stacked image number, if present */ 
+d103 1
+d107 1
+a107 1
+    { /* has @@ in filnam denoting image stack */
+d110 1
+a110 1
+       {  /* has number after @@ in filnam, stacked image requested */
+d114 1
+a114 1
+    /* remove @@ and stacked image number from filnam */
+d118 4
+d132 1
+a132 1
+     {    /* file does not exist, or is write protected try readonly */
+d135 1
+a135 1
+        {  /* does not exist, etc. */
+d137 3
+a139 2
+        if (strcmp(disp,"q") != 0)
+           {  /* give error output (used in montage increment) */
+d146 1
+a146 1
+        {  /* opened readonly */
+d151 1
+a151 1
+ /* allocate space for a spider file structure */
+d156 1
+a156 1
+  /* set offset for reading overall header from file */
+d164 1
+a164 1
+  /* read overall header of image file */
+d166 1
+a166 1
+     { /* assume file is small 8 bit file */
+d172 2
+a173 42
+   if (header.sbuf[0] == 65538)
+      {    /* Tietz 16 bit image with 512 byte header*/
+
+      nsam   = header.sbuf[1];
+      nrow   = header.sbuf[2];
+      nslice = 1;
+
+      fileptr -> nslice  = nslice;
+      fileptr -> nrow    = nrow;
+
+      fileptr -> nlabel  = 0;
+      fileptr -> iform   = 16;
+      fileptr -> imami   = 1;
+      fileptr -> fmax_spi    = header.sbuf[37];
+      fileptr -> fmin_spi    = header.sbuf[36];
+      fileptr -> av      = header.sbuf[38];
+      fileptr -> sig     = -1.0;
+
+      fileptr -> nsam    = nsam;
+      fileptr -> headrec = 0.0;
+      fileptr -> iangle  = 0.0;
+      fileptr -> phi     = 0.0;
+      fileptr -> theta   = 0.0;
+      fileptr -> gamma   = 0.0;
+
+      fileptr -> headbyt = 512;
+      fileptr -> reclen  = nsam;
+
+      fileptr -> nstack  = nstack;
+      fileptr -> inuse   = inuse;
+      fileptr -> maxim   = maxim;
+
+      /* set date, time title to NULL in current file information */
+      fileptr -> date[0] =  '\0';
+      fileptr -> time[0] =  '\0';
+      fileptr -> title[0] = '\0';
+
+      lentitle = 0;
+      }
+
+  else if (output[0] != 'N')
+      {  /* not Tietz, not small 8 bit raw */
+d215 2
+a216 2
+      fileptr -> nslice  = nslice;
+      fileptr -> nrow    = nrow;
+d218 25
+a242 25
+      fileptr -> nlabel  = 0;
+      fileptr -> iform   = 8;
+      fileptr -> imami   = 1;
+      fileptr -> fmax_spi    = 255.0;
+      fileptr -> fmin_spi    = 0.0;
+      fileptr -> av      = 0.0;
+      fileptr -> sig     = 0.0;
+
+      fileptr -> nsam    = nsam;
+      fileptr -> headrec = 0.0;
+      fileptr -> iangle  = 0.0;
+      fileptr -> phi     = 0.0;
+      fileptr -> theta   = 0.0;
+      fileptr -> gamma   = 0.0;
+
+      fileptr -> headbyt = 0;
+      fileptr -> reclen  = nsam;
+
+      fileptr -> nstack  = nstack;
+      fileptr -> inuse   = inuse;
+      fileptr -> maxim   = maxim;
+
+      /* set date, time title to NULL in current file information */
+      fileptr -> date[0] =  '\0';
+      fileptr -> time[0] =  '\0';
+d248 1
+a248 1
+      {  /* standard SPIDER image */
+d252 1
+a252 1
+      fileptr -> nslice  = nslice;
+d254 1
+a254 1
+      fileptr -> nrow    = header.hbuf[1];
+d256 21
+a276 21
+      fileptr -> nlabel  = header.hbuf[3];
+      fileptr -> iform   = header.hbuf[4];
+      fileptr -> imami   = header.hbuf[5];
+      fileptr -> fmax_spi    = header.hbuf[6];
+      fileptr -> fmin_spi    = header.hbuf[7];
+      fileptr -> av      = header.hbuf[8];
+      fileptr -> sig     = header.hbuf[9];
+
+      fileptr -> nsam    = header.hbuf[11];
+      fileptr -> headrec = header.hbuf[12];
+      fileptr -> iangle  = header.hbuf[13];
+      fileptr -> phi     = header.hbuf[14];
+      fileptr -> theta   = header.hbuf[15];
+      fileptr -> gamma   = header.hbuf[16];
+
+      fileptr -> headbyt = header.hbuf[21];
+      fileptr -> reclen  = header.hbuf[22];
+
+      fileptr -> nstack  = header.hbuf[23];
+      fileptr -> inuse   = header.hbuf[24];
+      fileptr -> maxim   = header.hbuf[25];
+d280 1
+a280 1
+      /* set error correction for bad headbyt and reclen SPIDER files */
+d296 1
+a296 1
+      /* set date in current file information */
+d307 1
+a307 1
+         /* flip the bytes for date....  in header */
+d315 1
+a315 1
+      /* set time in current file information */
+d330 1
+a330 1
+  /* getoldstack may use buf if it needs to normalize */
+d334 2
+a335 2
+ 
+  /* getoldstack adjusts offset for reading header from stacked file */
+d337 3
+a339 2
+  if (fileptr -> nstack > 0 && fileptr -> imginstack > 0)
+      {  /* set header pointer to current image in stack */
+d344 1
+a344 1
+ /* initialize ximage pointer */
+d347 1
+a347 1
+ /*        print file opening information */
+d371 3
+a373 2
+  if (imginstack > 0 && (lentitle > 0) && (lentitle + strlen(filnam)) < 70)
+     /* print filename and title on one line */
+d379 1
+a379 1
+     /* print filename */
+d385 1
+a385 1
+     /* print filename and title on one line */
+d391 1
+a391 1
+     /* print filename */
+d409 1
+a409 1
+      { /* print file parameters */
+d423 1
+a423 1
+        /* print file parameters */
+d436 1
+a436 1
+        {    /* must print rest of title on separate lines */
+@
+
+
+1.39
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/openold.c,v 1.38 2003/03/03 19:36:15 leith Exp $*/
+d180 2
+a181 2
+      fileptr -> fmax    = header.sbuf[37];
+      fileptr -> fmin    = header.sbuf[36];
+d256 2
+a257 2
+      fileptr -> fmax    = 255.0;
+      fileptr -> fmin    = 0.0;
+d294 2
+a295 2
+      fileptr -> fmax    = header.hbuf[6];
+      fileptr -> fmin    = header.hbuf[7];
+@
+
+
+1.38
+log
+@endedness
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/openold.c,v 1.37 2001/08/28 19:26:55 leith Exp $*/
+d10 23
+a32 6
+ * COPYRIGHT (C)1981,1987, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.37
+log
+@prints stack dimensions on opening stack
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/openold.c,v 1.36 2001/06/28 14:57:08 leith Exp $*/
+a46 8
+/*       #ifdef P_SGIOSF          */
+/*       #include <cvt.h>        */
+/*        int cvt_ftof( void *, int, void *, int, int);        */
+/*       #endif        */
+
+
+#ifdef P_SGIOSF
+unsigned int *pt;
+d48 1
+a48 1
+             (unsigned int)(A) =                 \
+a53 2
+#endif
+
+d80 1
+d137 1
+d148 1
+a148 26
+     { sprintf(output,"%e",header.hbuf[1]);}
+
+/*        DEC OSF/1 with files written in IEEE standard        
+**        to allow portability to other unix machines  
+*/ 
+/*    #ifdef P_SGIOSF         */
+/*     for (k1 = 211; k1 <= 216 ; k1++)        */
+/*           {            */
+             /* need 180:4 floats for title,date,time */
+/*           ot = cvt_ftof(&header.hbuf[k1], CVT_BIG_ENDIAN_IEEE_S,        */
+/*                         &header.hbuf[k1], CVT_IEEE_S, 0);        */
+/*           if (ot)         */
+/*                 {         */
+                     /* ot=0 success */
+/*        printf(" Conversion cvt_ftof of float %d has failed !!\n",k1);    */
+/*                 }        */
+/*           }        */
+/*    #endif          */
+
+#ifdef P_SGIOSF
+   pt = (unsigned int *) &header.hbuf[211];
+   /* flip the bytes for date and time in header */
+   for (k1 = 211; k1 <= 216 ; k1++, pt++)
+      { CONVERT_4(*pt,*pt);  }
+#endif
+    
+d150 1
+a150 1
+  if (header.sbuf[0] == 65538)
+d190 28
+a217 7
+  else if ((output[0] == 'N') ||
+      header.hbuf[11] < 1.0   || header.hbuf[11] > 50000.0 ||
+      header.hbuf[1]  < 1.0   || header.hbuf[1]  > 50000.0 ||
+      header.hbuf[5]  < -.5   || header.hbuf[5]  >     2.0 ||
+      header.hbuf[4]  < -20.0 || header.hbuf[4] ==  0.0    ||
+      header.hbuf[4]  > 32  )
+      {    /* this is not a spider image, treat as 8 bit raw */
+d219 2
+d312 1
+a312 3
+         {
+         fileptr -> headbyt = headbyt;
+         }
+d315 5
+d321 10
+d364 4
+a367 3
+  /*        print file opening information */
+  iform = fileptr -> iform;
+  if (iform == -1)
+d369 1
+a369 7
+  else if (iform == -3)
+     strcpy(type,"f3");
+  else if (iform == -7)
+     strcpy(type,"fq");
+  else if (iform == -9)
+     strcpy(type,"fs");
+  else if (iform == -11)
+d371 1
+a371 1
+  else if (iform == -12)
+d373 7
+a379 1
+  else if (iform == 3)
+d381 1
+a381 1
+  else if (iform == 8)
+d383 1
+a383 7
+  else if (iform == 10)
+     strcpy(type,"cp");
+  else if (iform == 11)
+     strcpy(type,"cc");
+  else if (iform == 12)
+     strcpy(type,"cr");
+  else if (iform == 16)
+d385 1
+a385 3
+  else if (iform == 88)
+     strcpy(type,"ra");
+  else
+@
+
+
+1.36
+log
+@Tietz support
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/openold.c,v 1.35 2000/06/29 15:49:48 leith Exp leith $*/
+d305 1
+d429 17
+a445 4
+      {
+     /* print file parameters */
+     if (nslice > 1)
+        sprintf(output," (%s) %d %d %d  Old: %s At %s  Header bytes: %d",
+d448 2
+a449 2
+     else
+        sprintf(output," (%s) %d %d     Old: %s At %s  Header bytes: %d",
+d452 1
+@
+
+
+1.35
+log
+@bug if norm called without buf allocation
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.34 1999/10/04 14:40:59 leith Exp $*/
+d145 1
+a422 11
+           *nsamptr, *nrowptr);
+      spout(output);
+      }
+
+  else if (iform == 16 && fileptr -> headbyt <= 0)
+      {  /* opened a raw 8 bit image (no header) */
+      if (nslice > 1)
+         sprintf(output," (Tietz) %d %d %d   Header bytes: 0",
+           *nsamptr, *nrowptr, *nsliceptr);
+      else
+         sprintf(output," (Tietz) %d %d    Header bytes: 0",
+@
+
+
+1.34
+log
+@stack support
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.33 1999/09/30 17:34:18 leith Exp leith $*/
+d27 1
+a27 1
+ *      IFORMPTR        FILE TYPE SPECIFIER.       (RETURNED)
+d88 1
+a88 1
+ int       lentitle, k1, i, lenf, locat, lennum;
+d98 1
+a98 2
+ lenf       = strlen(filnam);
+ if (locat < lenf)
+d143 1
+a143 2
+
+  /* set offset for reading header from file */
+d145 1
+d149 2
+a150 2
+  /* read header of image file */
+  if (redlin(fileptr,&header.hbuf[0],256,1) != TRUE)
+d306 1
+a306 1
+      /* set error correction for bad headbyt and reclen spider files */
+a338 9
+  /* set offset for reading image data from file in future */
+  if (fileptr -> nstack > 0 && fileptr -> imginstack > 0)
+      {  /* set pointer to current image in stack */
+      if (getoldstack(fileptr, imginstack, FALSE, TRUE) != imginstack)
+         {return FALSE;}
+      }
+  else
+      {fileptr -> offset = fileptr -> headbyt;}
+
+d343 1
+d348 8
+a362 2
+  else if (iform == -2)
+     strcpy(type,"p ");
+a372 2
+  else if (iform == 0)
+     strcpy(type,"d ");
+@
+
+
+1.33
+log
+@@@stack supported
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.32 1998/06/15 18:18:09 leith Exp $*/
+d92 1
+d94 3
+d146 3
+a148 2
+  fileptr -> offset = 0;
+  fileptr -> fp     = fp;
+a188 1
+      nstack = 0;
+d211 4
+a241 1
+      nstack = 0;
+d264 4
+d301 5
+a305 3
+      nstack = header.hbuf[23];
+      inuse  = header.hbuf[24];
+      maxim  = header.hbuf[25];	
+d341 1
+a341 1
+  if (nstack > 0 && imginstack > 0)
+@
+
+
+1.32
+log
+@headbyt for 8 bits should be 0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.31 1998/03/05 18:40:24 leith Exp leith $*/
+d65 1
+a65 1
+ extern int   nstack, inuse, maxim;
+d85 1
+a85 1
+ char      type[3], output[160];
+d88 1
+a88 1
+ int       lentitle, k1, i;
+d91 16
+a152 1
+
+d169 1
+d184 1
+d234 1
+d265 1
+a265 1
+      {
+d328 7
+a334 1
+  fileptr -> offset = fileptr -> headbyt;
+d382 13
+a394 1
+  if ((lentitle > 0) && (lentitle + strlen(filnam)) < 70)
+@
+
+
+1.31
+log
+@tietz support
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.30 1998/02/05 22:20:40 liy Exp leith $*/
+d236 1
+a236 1
+      fileptr -> headbyt = 512;
+@
+
+
+1.30
+log
+@changes for stack files
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.29 1997/04/04 14:01:14 leith Exp $*/
+a63 1
+ extern float param[102];
+d80 1
+d137 1
+d162 37
+a198 1
+  if ((output[0] == 'N') ||
+a227 1
+      fileptr -> ihist   = 0;
+d236 1
+a236 1
+      fileptr -> headbyt = 0;
+a261 1
+      fileptr -> ihist   = header.hbuf[10];
+d382 11
+a418 8
+
+  param[2] = fileptr -> nsam;
+  param[3] = fileptr -> nrow;
+  param[4] = fileptr -> fmax;
+  param[5] = fileptr -> fmin;
+  param[6] = fileptr -> av;
+  param[7] = fileptr -> sig;
+  param[8] = fileptr -> nslice;
+@
+
+
+1.29
+log
+@added more 8 bit traps
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.28 1997/03/18 16:30:17 leith Exp leith $*/
+d66 1
+d88 1
+a88 1
+ int       lentitle, k1;
+d237 3
+@
+
+
+1.28
+log
+@can open readonly now
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.27 1995/08/23 16:17:53 mladjadj Exp $*/
+d161 6
+a166 4
+      header.hbuf[11] < 1.0  || header.hbuf[11] > 50000.0 ||
+      header.hbuf[1]  < 1.0  || header.hbuf[1]  > 50000.0 ||
+      header.hbuf[4]  < -20.  )
+      {    /* assume this is not a spider image, try 8 bit raw */
+@
+
+
+1.27
+log
+@int k1
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.26 1995/08/07 20:21:31 leith Exp mladjadj $*/
+d100 11
+a110 5
+     {    /* file does not exist */
+     if (strcmp(disp,"q") != 0)
+        {  /* give error output (used in montage increment) */
+        sprintf(output,"*** Unable to open: %s",filnam);
+        spout(output);  
+d112 4
+a115 1
+     return FALSE;
+@
+
+
+1.26
+log
+@added ximage pointer
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.25 1995/08/03 14:23:11 leith Exp leith $*/
+d87 1
+a87 1
+ int       lentitle;
+@
+
+
+1.25
+log
+@removed redundant headbyt setting
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.24 1995/07/21 17:28:23 leith Exp leith $*/
+d270 2
+@
+
+
+1.24
+log
+@fixed title & time length bugs
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.23 1995/02/21 20:53:52 liy Exp leith $*/
+d203 1
+a204 1
+      fileptr -> nslice  = nslice;
+a205 1
+      fileptr -> headbyt = header.hbuf[2];
+@
+
+
+1.23
+log
+@changed the size of param[]
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.22 1995/01/31 14:01:02 leith Exp liy $*/
+d86 3
+a88 3
+ int       nsam,nrow,nslice,iform,nlabel,reclen,headrec;
+ int       lentitle,k,k1,ot;
+ char      cbuff;
+a170 1
+      fileptr -> headbyt = 0;
+d234 7
+a240 1
+      if (iform < 4 && ((fileptr -> headbyt) < 1024))
+d242 1
+a242 4
+         headrec = 1024 / (fileptr -> reclen);
+         if (fileptr->reclen < 1024 &&
+            (1024 % (fileptr -> reclen)) != 0) headrec++;
+         fileptr -> headbyt = headrec * (fileptr -> reclen);
+d251 1
+d346 2
+a347 2
+     
+        sprintf(output," %.80s",fileptr -> title);
+d351 2
+a352 1
+           sprintf(output," %s", fileptr -> title[80]);
+@
+
+
+1.22
+log
+@fixed undefined iform
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/openold.c,v 1.21 95/01/25 19:50:37 mladjadj Exp Locker: leith $*/
+d64 1
+a64 1
+ extern float param[103];
+@
+
+
+1.21
+log
+@ alpha/osf add CONVERT_$ macro to flip bytes faster
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.20 95/01/17 16:00:43 leith Exp $*/
+d229 1
+@
+
+
+1.20
+log
+@fixed  error correction for bad headbyt and reclen spider files
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.19 94/11/17 17:12:02 mladjadj Exp Locker: leith $*/
+d45 1
+a45 2
+#if  defined(__osf__) && defined(osf_ieee)
+#include <cvt.h>
+d47 15
+a61 1
+ int cvt_ftof( void *, int, void *, int, int);
+a63 7
+
+ extern int   redlin(FILEDATA *, float *, int, int);
+ extern int   closefile(FILEDATA *);
+ extern void  spout(char *);
+ extern void  get_imsiz(void);
+
+
+d130 18
+a147 8
+#if defined(__osf__) && defined(osf_ieee)
+    for (k1 = 211; k1 < 25 ; k1++)
+       {     /* need 180:4 floats for title,date,time */
+       ot = cvt_ftof(&header.hbuf[k1], CVT_BIG_ENDIAN_IEEE_S,
+                     &header.hbuf[k1], CVT_IEEE_S, 0);
+       if (ot)     /* ot=0 success */
+           printf(" Conversion cvt_ftof of float %d has failed !!\n",k1);
+       }
+@
+
+
+1.19
+log
+@added if defined(__osf__) && defined()
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.18 1994/11/17 15:29:51 mladjadj Exp mladjadj $*/
+a214 4
+          fileptr -> reclen = (fileptr -> nsam) * 4;
+ 
+      if (iform < 4 && 
+         ((fileptr -> headbyt) < 1024))
+d216 4
+d221 2
+a222 2
+         if (headrec < 1) headrec = 1;
+         if ((1024 % (fileptr -> reclen)) != 0) headrec = headrec + 1;
+@
+
+
+1.18
+log
+@fixed ifdef for cpp
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.17 1994/11/10 16:14:17 mladjadj Exp mladjadj $*/
+d45 1
+a45 1
+#ifdef  __osf__ && osf_ieee
+d124 1
+a124 1
+#ifdef __osf__ && osf_ieee
+@
+
+
+1.17
+log
+@add cpp switch __osf__ for DEC/OSF1 alpha machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /tmp_mnt/net/alwyn/usr1/web/src/RCS/openold.c,v 1.16 94/09/07 15:36:21 leith Exp $*/
+d45 1
+a45 1
+#if  __osf__ && osf_ieee
+d124 1
+a124 1
+#if __osf__ && osf_ieee
+@
+
+
+1.16
+log
+@fixed headbyt
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.15 94/09/07 12:43:32 leith Exp Locker: leith $*/
+d45 2
+d48 4
+d81 2
+a82 1
+ int       lentitle,k;
+d119 15
+a133 1
+     {sprintf(output,"%e",header.hbuf[1]);}
+@
+
+
+1.15
+log
+@bug in last if statment altered
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.14 94/09/07 12:37:56 leith Exp Locker: leith $*/
+d192 3
+a194 1
+      if (iform < 4 && reclen < nsam * 4) fileptr -> reclen = nsam * 4;
+d197 1
+a197 2
+         ((fileptr ->headbyt) < 1024)  || 
+          (fileptr ->headbyt) < nsam * 4)
+d199 1
+a199 1
+          headrec = 1024 / (fileptr -> reclen);
+@
+
+
+1.14
+log
+@better trap for bad headbyte in spider header
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.13 94/09/07 11:58:55 leith Exp Locker: leith $*/
+d196 1
+a196 1
+          (fileptr ->headbyt) < nsam * 4))
+@
+
+
+1.13
+log
+@added default values for headbyt and reclen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.12 94/08/30 11:33:23 leith Exp Locker: leith $*/
+d194 3
+a196 1
+      if (iform < 4 && ((fileptr ->headbyt) < 1024))
+@
+
+
+1.12
+log
+@can open small 8bit files now (but gives error message!)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/openold.c,v 1.11 94/08/09 15:46:57 leith Exp Locker: leith $*/
+d190 11
+@
+
+
+1.11
+log
+@added q disp
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/openold.c,v 1.10 94/06/17 14:57:38 odesanya Exp $*/
+d108 5
+a112 3
+     { closefile(fileptr); return FALSE; }
+
+  sprintf(output,"%e",header.hbuf[1]);
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d2 4
+a5 2
+/*$Header: /alwyn/usr1/web/src/RCS/openold.c,v 1.6 94/03/02 12:10:40 leith Exp $*/
+/*
+d8 1
+a8 1
+ *************************************************************************
+d16 1
+a16 1
+ **************************************************************************
+d18 1
+a18 1
+ * OPENOLD(FILNAM,LUN,NSAM,NROW,DISP,IFORM,NSLICE)
+d23 5
+a27 18
+ * PARAMETERS:     FILNAM     CHARACTER ARRAY, CONTAINING FILE NAME 
+ *      LUN        LOGICAL UNIT NUMBER TO BE ASSIGNED TO FILNAM.
+ *      NSAM,NROW  DIMENSIONS OF FILE - INPUT OR OUTPUT PARAMETERS
+ *                 OF OPEN, DEPENDING ON DISP.
+ *      DISP       CHARACTER CONTAINING ONE OF THE FOLLOWING 
+ *                 DISPOSITION SPECIFICATIONS:
+ *
+ *                 'O' -      THE FILE IS ASSUMED TO EXIST; NSAM AND
+ *                             NROW AND LABEL INFO (IN COMMON) ARE 
+ *                             RETURNED TO THE CALLING PROGRAM. 
+ *        NF                    ERROR RETURN FLAG.
+ *                              NF = 0    NORMAL RETURN 
+ *                              NF = 1    ERROR RETURN
+ *
+ *	 NSLICE	                NUMBER OF PLANES, EACH CONTAINING NSAM*NROW 
+ *                              ELEMENTS. 
+ *
+ *    VARIABLES:   IFORM  = FILE TYPE SPECIFIER. 
+d34 5
+d40 2
+d58 1
+a58 1
+/***********************************************************/
+d60 2
+a61 2
+ FILEDATA *openold(char filnam[], int *nsamptr, int *nrowptr, int *nsliceptr,
+          int *iformptr, char disp[])
+d80 1
+a80 1
+ else if (strcmp(disp,"o") == 0)
+d88 6
+a93 2
+     sprintf(output,"*** Unable to open: %s",filnam);
+     spout(output);  return FALSE;
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/openold.c,v 1.8 94/05/27 16:36:22 odesanya Exp $*/
+d53 1
+d55 1
+d57 1
+d59 3
+d81 2
+a82 2
+  if (strcmp(disp,"r") == 0) 
+     fp = fopen(filnam,"rb");
+d84 2
+a85 2
+  else if (strcmp(disp,"o") == 0)
+     fp = fopen(filnam,"r+b");
+d87 2
+a88 2
+  else 
+     { spout("*** Unknown disp in openold"); return FALSE; }
+d90 5
+a94 5
+  if (fp ==  NULL)
+      {    /* file does not exist */
+      sprintf(output,"*** Unable to open: %s",filnam);
+      spout(output);  return FALSE;
+      } 
+d96 4
+a99 4
+  /* allocate space for a spider file structure */
+  if ((fileptr = (FILEDATA *) malloc(sizeof(FILEDATA))) ==
+      (FILEDATA *) 0) 
+     {spout("*** Unable to malloc filedata in openold."); return FALSE; }
+d101 1
+d110 1
+a110 2
+  nslice = header.hbuf[0];
+  if (nslice < 0) nslice = - nslice;
+d112 5
+a116 3
+  fileptr -> nslice  = nslice;
+  fileptr -> nrow    = header.hbuf[1];
+  fileptr -> headbyt = header.hbuf[2];
+d118 7
+a124 8
+  fileptr -> nlabel  = header.hbuf[3];
+  fileptr -> iform   = header.hbuf[4];
+  fileptr -> imami   = header.hbuf[5];
+  fileptr -> fmax    = header.hbuf[6];
+  fileptr -> fmin    = header.hbuf[7];
+  fileptr -> av      = header.hbuf[8];
+  fileptr -> sig     = header.hbuf[9];
+  fileptr -> ihist   = header.hbuf[10];
+d126 3
+a128 6
+  fileptr -> nsam    = header.hbuf[11];
+  fileptr -> headrec = header.hbuf[12];
+  fileptr -> iangle  = header.hbuf[13];
+  fileptr -> phi     = header.hbuf[14];
+  fileptr -> theta   = header.hbuf[15];
+  fileptr -> gamma   = header.hbuf[16];
+d130 3
+a132 2
+  fileptr -> headbyt = header.hbuf[21];
+  fileptr -> reclen  = header.hbuf[22];
+d134 69
+a213 3
+  /* set date in current file information */
+  strncpy(&fileptr -> date[0], &header.cbuf[844],11);
+  fileptr -> date[11] = '\0';
+a214 22
+  /* set time in current file information */
+  strncpy(&fileptr -> time[0], &header.cbuf[856],9);
+
+  /* set title in current file information */
+  strncpy(&fileptr -> title[0], &header.cbuf[864], 160);
+  fileptr -> title[159] = '\0';
+
+  lentitle = strlen(fileptr -> title);
+
+#if BUGGY
+c__________________________________________________________
+  printf(" *** in open: fp: %d file: %s \n",fp,filnam);
+  printf(" *** in open: date: %s \n",fileptr -> date);
+  printf(" *** in open: time: %s \n",fileptr -> time);
+  printf(" *** in open: header.cbuf: %s \n",&header.cbuf[844]);
+  printf(" *** in open: title: %s \n",fileptr -> title);
+  printf(" *** in open: lentitle: %d \n",lentitle);
+  printf(" *** in open: *nsam: %d \n",*nsamptr);
+  printf(" *** in open: fileptr: %d \n",fileptr);
+c---------------------------------------------------
+#endif
+
+d245 2
+d249 1
+a249 1
+ 
+d262 17
+a278 4
+  /* print file parameters */
+  if (nslice > 1)
+     {
+     sprintf(output," (%s) %d %d %d  Old: %s At %s  Header bytes: %d",
+d281 2
+a282 5
+     spout(output);
+     }
+  else
+     {
+     sprintf(output," (%s) %d %d     Old: %s At %s  Header bytes: %d",
+d286 3
+a288 3
+     }
+  if ((lentitle > 0) && (lentitle + strlen(filnam)) >= 70)
+     {    /* must print rest of title on separate lines */
+d290 1
+a290 5
+     sprintf(output," %.80s",fileptr -> title);
+     spout(output);
+     if (lentitle > 80)
+        {
+        sprintf(output," %s", fileptr -> title[80]);
+d292 5
+d311 13
+@
+
+
+1.8
+log
+@put descriptive message for invalid entries in the header of file
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/openold.c,v 1.7 94/05/27 15:24:31 odesanya Exp $*/
+a127 8
+
+ if( fileptr -> headbyt == 0.0 )
+  { spout("Problem in the file header! headbyt = 0!!");
+      closefile(fileptr); return FALSE; }
+ if( fileptr -> reclen == 0.0 )
+  { spout("Problem in the file header! reclen = 0!!");
+      closefile(fileptr); return FALSE; }
+
+@
+
+
+1.7
+log
+@test for the validity of headbyte and reclen entries
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/openold.c,v 1.5 94/02/28 15:52:54 leith Exp $*/
+d130 2
+a131 1
+  { closefile(fileptr); return FALSE; }
+d133 2
+a134 1
+  { closefile(fileptr); return FALSE; }
+@
+
+
+1.6
+log
+@added raw image support
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/openold.c,v 1.4 94/02/16 14:34:33 leith Exp $*/
+a52 1
+ extern void  get_imsiz(void);
+a53 1
+
+a54 1
+ extern int   nsam8, nrow8, nslice8;
+a55 3
+ /* force it to run image size widget for raw images on first call */
+ int needrawsize = TRUE;
+
+d75 2
+a76 2
+ if (strcmp(disp,"r") == 0) 
+    fp = fopen(filnam,"rb");
+d78 2
+a79 2
+ else if (strcmp(disp,"o") == 0)
+    fp = fopen(filnam,"r+b");
+d81 2
+a82 2
+ else 
+    { spout("*** Unknown disp in openold"); return FALSE; }
+d84 5
+a88 5
+ if (fp ==  NULL)
+     {    /* file does not exist */
+     sprintf(output,"*** Unable to open: %s",filnam);
+     spout(output);  return FALSE;
+     } 
+d90 4
+a93 4
+ /* allocate space for a spider file structure */
+ if ((fileptr = (FILEDATA *) malloc(sizeof(FILEDATA))) ==
+    (FILEDATA *) 0) 
+    {spout("*** Unable to malloc filedata in openold."); return FALSE; }
+a94 1
+
+d103 2
+a104 1
+  sprintf(output,"%e",header.hbuf[1]);
+d106 3
+a108 5
+  if ((output[0] == 'N') ||
+      header.hbuf[11] < 1.0  || header.hbuf[11] > 50000.0 ||
+      header.hbuf[1]  < 1.0  || header.hbuf[1]  > 50000.0 ||
+      header.hbuf[4]  < -20.  )
+      {    /* assume this is not a spider image, try 8 bit raw */
+d110 8
+a117 7
+      if (nsam8 <= 0 || nrow8 <= 0 || nslice8 <= 0)
+         {   /* inquire as to correct raw image size */
+         spout("*** Set raw image size and try again");
+         get_imsiz();
+         closefile(fileptr);
+         return FALSE;
+         }
+d119 6
+a124 3
+      nsam   = nsam8;
+      nrow   = nrow8;
+      nslice = MYMAX(nslice8,1);
+d126 2
+a127 3
+      fileptr -> nslice  = nslice;
+      fileptr -> nrow    = nrow;
+      fileptr -> headbyt = 0;
+d129 4
+a132 8
+      fileptr -> nlabel  = 0;
+      fileptr -> iform   = 8;
+      fileptr -> imami   = 1;
+      fileptr -> fmax    = 255.0;
+      fileptr -> fmin    = 0.0;
+      fileptr -> av      = 0.0;
+      fileptr -> sig     = 0.0;
+      fileptr -> ihist   = 0;
+a133 6
+      fileptr -> nsam    = nsam;
+      fileptr -> headrec = 0.0;
+      fileptr -> iangle  = 0.0;
+      fileptr -> phi     = 0.0;
+      fileptr -> theta   = 0.0;
+      fileptr -> gamma   = 0.0;
+a134 53
+      fileptr -> headbyt = 0;
+      fileptr -> reclen  = nsam;
+
+      /* set date, time title to NULL in current file information */
+      fileptr -> date[0] =  '\0';
+      fileptr -> time[0] =  '\0';
+      fileptr -> title[0] = '\0';
+
+      lentitle = 0;
+      }
+  else
+      {
+
+      nslice = header.hbuf[0];
+      if (nslice < 0) nslice = - nslice;
+
+      fileptr -> nslice  = nslice;
+      fileptr -> nrow    = header.hbuf[1];
+      fileptr -> headbyt = header.hbuf[2];
+
+      fileptr -> nlabel  = header.hbuf[3];
+      fileptr -> iform   = header.hbuf[4];
+      fileptr -> imami   = header.hbuf[5];
+      fileptr -> fmax    = header.hbuf[6];
+      fileptr -> fmin    = header.hbuf[7];
+      fileptr -> av      = header.hbuf[8];
+      fileptr -> sig     = header.hbuf[9];
+      fileptr -> ihist   = header.hbuf[10];
+
+      fileptr -> nsam    = header.hbuf[11];
+      fileptr -> headrec = header.hbuf[12];
+      fileptr -> iangle  = header.hbuf[13];
+      fileptr -> phi     = header.hbuf[14];
+      fileptr -> theta   = header.hbuf[15];
+      fileptr -> gamma   = header.hbuf[16];
+
+      fileptr -> headbyt = header.hbuf[21];
+      fileptr -> reclen  = header.hbuf[22];
+
+      /* set date in current file information */
+      strncpy(&fileptr -> date[0], &header.cbuf[844],11);
+      fileptr -> date[11] = '\0';
+
+      /* set time in current file information */
+      strncpy(&fileptr -> time[0], &header.cbuf[856],9);
+
+      /* set title in current file information */
+      strncpy(&fileptr -> title[0], &header.cbuf[864], 160);
+      fileptr -> title[159] = '\0';
+
+      lentitle = strlen(fileptr -> title);
+      }
+
+d146 3
+d150 22
+a201 2
+  else if (iform == 88)
+     strcpy(type,"ra");
+d204 1
+a204 1
+
+d217 4
+a220 17
+
+  if (iform == 8 && fileptr -> headbyt <= 0)
+      {  /* opened a raw 8 bit image (no header) */
+      if (nslice > 1)
+         sprintf(output," (raw) %d %d %d   Header bytes: 0",
+           *nsamptr, *nrowptr, *nsliceptr);
+      else
+         sprintf(output," (raw) %d %d    Header bytes: 0",
+           *nsamptr, *nrowptr);
+      spout(output);
+      }
+
+  else
+      {
+     /* print file parameters */
+     if (nslice > 1)
+        sprintf(output," (%s) %d %d %d  Old: %s At %s  Header bytes: %d",
+d223 5
+a227 2
+     else
+        sprintf(output," (%s) %d %d     Old: %s At %s  Header bytes: %d",
+d231 3
+a233 3
+
+     if ((lentitle > 0) && (lentitle + strlen(filnam)) >= 70)
+        {    /* must print rest of title on separate lines */
+d235 5
+a239 1
+        sprintf(output," %.80s",fileptr -> title);
+a240 5
+        if (lentitle > 80)
+           {
+           sprintf(output," %s", fileptr -> title[80]);
+           spout(output);
+           }
+a254 13
+
+#if BUGGY
+c__________________________________________________________
+  printf(" *** in open: fp: %d file: %s \n",fp,filnam);
+  printf(" *** in open: date: %s \n",fileptr -> date);
+  printf(" *** in open: time: %s \n",fileptr -> time);
+  printf(" *** in open: header.cbuf: %s \n",&header.cbuf[844]);
+  printf(" *** in open: title: %s \n",fileptr -> title);
+  printf(" *** in open: lentitle: %d \n",lentitle);
+  printf(" *** in open: *nsam: %d \n",*nsamptr);
+  printf(" *** in open: fileptr: %d \n",fileptr);
+c---------------------------------------------------
+#endif
+@
+
+
+1.5
+log
+@lengthened output (buggy)
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/openold.c,v 1.4 94/02/16 14:34:33 leith Exp Locker: leith $*/
+d53 1
+d55 1
+d57 1
+d59 3
+d81 2
+a82 2
+  if (strcmp(disp,"r") == 0) 
+     fp = fopen(filnam,"rb");
+d84 2
+a85 2
+  else if (strcmp(disp,"o") == 0)
+     fp = fopen(filnam,"r+b");
+d87 2
+a88 2
+  else 
+     { spout("*** Unknown disp in openold"); return FALSE; }
+d90 5
+a94 5
+  if (fp ==  NULL)
+      {    /* file does not exist */
+      sprintf(output,"*** Unable to open: %s",filnam);
+      spout(output);  return FALSE;
+      } 
+d96 4
+a99 4
+  /* allocate space for a spider file structure */
+  if ((fileptr = (FILEDATA *) malloc(sizeof(FILEDATA))) ==
+      (FILEDATA *) 0) 
+     {spout("*** Unable to malloc filedata in openold."); return FALSE; }
+d101 1
+d110 1
+a110 2
+  nslice = header.hbuf[0];
+  if (nslice < 0) nslice = - nslice;
+d112 5
+a116 3
+  fileptr -> nslice  = nslice;
+  fileptr -> nrow    = header.hbuf[1];
+  fileptr -> headbyt = header.hbuf[2];
+d118 7
+a124 8
+  fileptr -> nlabel  = header.hbuf[3];
+  fileptr -> iform   = header.hbuf[4];
+  fileptr -> imami   = header.hbuf[5];
+  fileptr -> fmax    = header.hbuf[6];
+  fileptr -> fmin    = header.hbuf[7];
+  fileptr -> av      = header.hbuf[8];
+  fileptr -> sig     = header.hbuf[9];
+  fileptr -> ihist   = header.hbuf[10];
+d126 3
+a128 6
+  fileptr -> nsam    = header.hbuf[11];
+  fileptr -> headrec = header.hbuf[12];
+  fileptr -> iangle  = header.hbuf[13];
+  fileptr -> phi     = header.hbuf[14];
+  fileptr -> theta   = header.hbuf[15];
+  fileptr -> gamma   = header.hbuf[16];
+d130 3
+a132 2
+  fileptr -> headbyt = header.hbuf[21];
+  fileptr -> reclen  = header.hbuf[22];
+d134 69
+a213 3
+  /* set date in current file information */
+  strncpy(&fileptr -> date[0], &header.cbuf[844],11);
+  fileptr -> date[11] = '\0';
+a214 22
+  /* set time in current file information */
+  strncpy(&fileptr -> time[0], &header.cbuf[856],9);
+
+  /* set title in current file information */
+  strncpy(&fileptr -> title[0], &header.cbuf[864], 160);
+  fileptr -> title[159] = '\0';
+
+  lentitle = strlen(fileptr -> title);
+
+#if BUGGY
+c__________________________________________________________
+  printf(" *** in open: fp: %d file: %s \n",fp,filnam);
+  printf(" *** in open: date: %s \n",fileptr -> date);
+  printf(" *** in open: time: %s \n",fileptr -> time);
+  printf(" *** in open: header.cbuf: %s \n",&header.cbuf[844]);
+  printf(" *** in open: title: %s \n",fileptr -> title);
+  printf(" *** in open: lentitle: %d \n",lentitle);
+  printf(" *** in open: *nsam: %d \n",*nsamptr);
+  printf(" *** in open: fileptr: %d \n",fileptr);
+c---------------------------------------------------
+#endif
+
+d245 2
+d249 1
+a249 1
+ 
+d262 17
+a278 4
+  /* print file parameters */
+  if (nslice > 1)
+     {
+     sprintf(output," (%s) %d %d %d  Old: %s At %s  Header bytes: %d",
+d281 2
+a282 5
+     spout(output);
+     }
+  else
+     {
+     sprintf(output," (%s) %d %d     Old: %s At %s  Header bytes: %d",
+d286 3
+a288 3
+     }
+  if ((lentitle > 0) && (lentitle + strlen(filnam)) >= 70)
+     {    /* must print rest of title on separate lines */
+d290 1
+a290 5
+     sprintf(output," %.80s",fileptr -> title);
+     spout(output);
+     if (lentitle > 80)
+        {
+        sprintf(output," %s", fileptr -> title[80]);
+d292 5
+d311 13
+@
+
+
+1.4
+log
+@bug in /0 use should be \0
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/openold.c,v 1.3 94/02/16 12:37:49 leith Exp Locker: leith $*/
+d70 1
+a70 1
+ char      type[3], output[80];
+@
+
+
+1.3
+log
+@null changed to '\0'
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/openold.c,v 1.2 93/11/16 12:25:10 leith Exp Locker: leith $*/
+d149 1
+a149 1
+  fileptr -> title[159] = '/0';
+@
+
+
+1.2
+log
+@nulled end of title
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/openold.c,v 1.1 93/11/10 10:11:03 leith Exp Locker: leith $*/
+d149 1
+a149 1
+  fileptr -> title[159] = NULL;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d86 1
+a86 1
+      sprintf(output," *** Unable to open: %s",filnam);
+d93 1
+a93 1
+     {spout("*** Unable to allocate filedata in openold."); return FALSE; }
+d138 1
+a138 4
+      {     
+      spout("*** Unable to allocate buf memory in openold.");
+      return FALSE;
+      }
+d149 1
+@

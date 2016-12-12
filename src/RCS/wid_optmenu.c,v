@@ -1,0 +1,210 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.4
+	pre_GPL:1.3;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2011.07.19.19.39.06;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.10.18.16.59.57;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	96.04.01.17.26.36;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	96.03.22.17.39.45;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.07.26.15.26.51;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@BGFGO
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/wid_optmenu.c,v 1.4 2005/10/18 16:59:57 leith Exp leith $*/
+/*
+ * wid_optmenu.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * wid_optmenu(Widget iw_parent, char *label)
+ * 
+ * PURPOSE:    creates option menu
+ *
+ * RETURNS:    iw_button      widget for the option menu
+ * 
+ * PARAMETERS: iw_parent      parent
+ *             label          label for menu item
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/RowColumn.h>
+
+ /************************************************************/
+
+ Widget wid_optmenu(Widget iw_parent, char *label)
+ { 
+ Arg           args[4];   /* arg list */
+ register      int  n;           /* arg count */
+ Widget        iw_pull, iw_button;
+ XmString      str_temp;
+
+ iw_pull = XmCreatePulldownMenu(iw_parent,"iw_menup",NULL,0);
+
+ n = 0;
+#ifdef WEB_BGFGO
+    XtSetArg(args[n], XmNbackground,  icolorxmb); n++;
+#endif
+ XtSetArg(args[n], XmNsubMenuId, iw_pull);        n++;
+
+ str_temp =  XmStringCreate(label, XmSTRING_DEFAULT_CHARSET); 
+ XtSetArg(args[n], XmNlabelString, str_temp); n++;
+
+ iw_button = XmCreateOptionMenu(iw_parent,"iw_optmenu",args,n);
+ XtManageChild(iw_button);
+
+ /* can free the string now */
+ XmStringFree(str_temp);
+
+ return iw_pull;
+ }
+ 
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_optmenu.c,v 1.3 1996/04/01 17:26:36 leith Exp $*/
+d44 1
+a44 2
+#include "std.h"
+#include "x.h"
+d51 1
+a51 1
+ Arg           args[3];   /* arg list */
+d59 4
+a62 1
+ XtSetArg(args[n], XmNsubMenuId, iw_pull); n++;
+@
+
+
+1.3
+log
+@removed unused includes
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_optmenu.c,v 1.2 1996/03/22 17:39:45 leith Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.2
+log
+@removed XmString leak, cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_optmenu.c,v 1.1 1994/07/26 15:26:51 odesanya Exp leith $*/
+d15 1
+a15 1
+ * wid_optmenu(Widget iw_parent, char *label, int quick)
+a22 1
+ *             quick          unused
+a28 4
+/*
+#include <Xm/CascadeBG.h>
+#include <Xm/CascadeB.h>
+*/
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/wid_pulldown.c,v 1.1 93/11/10 10:11:05 leith Exp $*/
+a35 2
+#define MAX_ARGS 3
+
+d40 1
+a40 1
+ Arg           args[MAX_ARGS];   /* arg list */
+d43 1
+d49 3
+a51 2
+ XtSetArg(args[n], XmNlabelString, XmStringCreate(label,
+                                 XmSTRING_DEFAULT_CHARSET)); n++;
+d56 3
+a59 1
+
+@

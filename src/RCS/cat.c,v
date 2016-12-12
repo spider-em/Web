@@ -1,0 +1,1060 @@
+head	1.22;
+access;
+symbols
+	pre-tilt-improve:1.22
+	pre_surf_fromtop:1.20
+	pre_neednewmap:1.20
+	pre_apppluss_remove:1.20
+	pre_tiltpair_chng:1.20
+	pre_GPL:1.19;
+locks;
+comment	@ * @;
+
+
+1.22
+date	2012.12.12.15.59.04;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2012.04.17.18.33.41;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2005.10.18.16.59.44;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2001.08.08.13.51.14;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	99.08.03.14.02.58;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	99.07.30.19.27.17;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	97.09.09.19.46.55;	author liy;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	97.03.20.20.10.51;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	97.02.26.15.05.18;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	96.07.26.15.54.14;	author mladjadj;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.07.26.15.18.16;	author mladjadj;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.05.01.16.13.24;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.04.01.18.56.21;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.04.01.17.28.15;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.12.14.19.26.04;	author mladjadj;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.11.03.20.32.01;	author liy;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.10.31.20.22.36;	author liy;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.08.02.16.30.02;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.08.02.16.27.58;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.25.17.00.16;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.01.12.04.53;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.01.28.17.14.33;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.22
+log
+@but 3 fpdoc undefined bug
+@
+text
+@/*$Header: /usr8/web/src/RCS/cat.c,v 1.21 2012/04/17 18:33:41 leith Exp leith $*/
+/*
+C++*********************************************************************
+C
+C  cat.c                                                      Jan 94 
+C                 Undefined fpdoc                             Dec 12  
+C **********************************************************************
+C   AUTHOR:  ArDean Leith                                             *
+C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+C=* Copyright 1985-2012  Health Research Inc.,                        *
+C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+C=* Email:  spider@@wadsworth.org                                      *
+C=*                                                                   *
+C=* This program is free software; you can redistribute it and/or     *
+C=* modify it under the terms of the GNU General Public License as    *
+C=* published by the Free Software Foundation; either version 2 of    *
+C=* the License, or (at your option) any later version.               *
+C=*                                                                   *
+C=* This program is distributed in the hope that it will be useful,   *
+C=* BUT WITHOUT ANY WARRANTY; WITHOUT EVEN THE IMPLIED WARRANTY OF    *
+c=* merchantability or fitness for a particular purpose.  See the GNU *
+C=* General Public License for more details.                          *
+C=* You should have received a copy of the GNU General Public License *
+C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+C=*                                                                   *
+C **********************************************************************
+C
+C    cat()
+C
+C    PURPOSE:     Category selecting program
+C
+C    PARAMETERS:  None   
+C
+C    CALLED BY:   catmen_buta     
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+
+#define MAXCURSOR 75
+
+#include "routines.h"
+
+ /* External subroutines */
+
+ /* Internal subroutine prototypes */
+ void          cat_pop     (Widget, XEvent *, String *, Cardinal *);
+
+ /* Externally defined common variables */
+ extern int    ndone;
+ extern char   filego[81];       /* Name of first image in montage */
+ extern char   outstr[80];
+ extern int    ixulmon, iyulmon;
+ extern int   *docimgnums;
+ extern int    docimgtotal;
+ extern int    imagelist[1000];  // List of images in montage (for stack)
+ extern int    nimage;
+
+ // Externally used variables  
+ int           ncat = 3;         // No. of categories wanted (used in catmen)
+
+ static int    openit, icat, ifil, ifilgo;
+
+ /************************  cat   *******************************/
+
+ void cat(void)
+
+ {
+ int   nlet;
+ char  filejnk[81];    
+
+ /*  Refresh screen */
+ expos_cb(NULL,NULL,NULL);
+
+ if (ioper == 11 && nstack == 0)
+    {
+    /*  Extract first filenumber from first file name */
+    filinc(filego,filejnk,&nlet,&ifilgo);
+    ifilgo = ifilgo - 1;
+    if (ifilgo < 0)
+       {
+       spouts("*** Bad file number in cat.c: "); spouti(ifilgo);
+       spouts(" from: "); spout(filego);
+       return;
+       }
+    }
+ 
+ /*  Set initial category */
+ icat  = 1;
+
+ openit = TRUE;
+
+ /* Set cursor to category */
+ setacursor(MAXCURSOR + 1 + icat, -1,-1);
+
+ showbutx("Assign category to file.",
+          "Increment current category number.",
+          "Stop this routine.",FALSE);
+
+ actions(iw_win, "cat_pop", cat_pop, "M123");
+
+ sprintf(outstr,"Starting category: %d",icat);
+ spout(outstr);
+ spout(" ");
+
+ }
+
+
+ /********************* cat_pop **********************************/
+
+ void cat_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+ int           ixe, ix1, iy1, ixi, iyi, irow, icol, ipane;
+ char *        ctemp;
+ static FILE  *fpdoc = (FILE *) NULL;
+ float         dlist[5];
+
+ if (!(strcmp(*params,"M")))              /*  Mouse moved */ 
+    {
+    /*  Get mouse position */
+    getloc(event,'M',&ix1,&iy1);
+
+    /*  Find location relative to montage */
+    ixi = ix1 - ixulmon;
+    iyi = iy1 - iyulmon;
+
+    /*  Find image number */
+    if (iskip < -1)
+       {
+       irow  = (iyi / (nrow * -iskip + mary + names_height)) + 1;
+       icol  = (ixi / (nsam * -iskip + marx)) + 1;
+       }
+    else if (iskip > 1)
+       {
+       irow  = (int)((iyi / (nrow / (float)iskip + mary + names_height)) + 1);
+       icol  = (int)((ixi / (nsam / (float)iskip + marx)) + 1);
+       }
+    else
+       {
+       irow  = (iyi / (nrow  + mary + names_height)) + 1;
+       icol  = (ixi / (nsam  + marx)) + 1;
+       }
+
+    ipane = (irow -1) * nprow + icol;
+    if (ioper != 11  &&  ipane <= docimgtotal) 
+       {ifil  = docimgnums[ipane - 1];}
+    else if (ioper != 11)
+       {ifil  = 0; ipane = 0;}
+    else if (ioper == 11  &&  nstack == 2 && ipane <= nimage) 
+       {ifil  = imagelist[ipane - 1];
+       }  // Seq. stack list
+    else
+       {ifil  = ipane + ifilgo -1;}
+
+    sprintf(outstr,"Row: %d  Col: %d  Pane: %d File: %d$", 
+            irow, icol, ipane, ifil);
+    spout(outstr);
+    }
+
+ if (!(strcmp(*params,"1")))            /*  Button 1 pushed */ 
+    {
+    /*  Left button, find image */
+
+    /*  Get mouse position */
+    getloc(event,'M',&ix1,&iy1);
+ 
+    /*  Find location relative to montage */
+    ixi = ix1 - ixulmon;
+    iyi = iy1 - iyulmon;
+
+    /*  Find image number */
+    if (iskip < -1)
+       {
+       irow  = (iyi / (nrow * -iskip + mary + names_height)) + 1;
+       icol  = (ixi / (nsam * -iskip + marx)) + 1;
+       }
+    else if (iskip > 1)
+       {
+       irow  = (int)((iyi / (nrow / (float)iskip + mary + names_height)) + 1);
+       icol  = (int)((ixi / (nsam / (float)iskip + marx)) + 1);
+       }
+    else
+       {
+       irow  = (iyi / (nrow  + mary + names_height)) + 1;
+       icol  = (ixi / (nsam  + marx)) + 1;
+       }
+
+    ipane = (irow -1) * nprow + icol;
+
+    if (ioper != 11 &&  ipane <= docimgtotal) // From doc. file montage
+       {ifil  = docimgnums[ipane - 1];}
+
+    else if (ioper == 11  &&  nstack == 2 && ipane <= nimage) 
+       {ifil  = imagelist[ipane - 1];}        // From seq. stack list
+         
+    else
+       {ifil  = ipane + ifilgo - 1;}
+    
+    /* Are we trying to write on the filename of the image */
+    ixe = (irow - 1) * (nrow + mary + names_height) + nrow ;
+    
+    /* Left button, record category if inside an image */
+    if ( (ioper == 11 && nstack == 2 && 
+         (ipane < 1 || ipane > nimage)) || 
+          icol > nprow || iyi > ixe)
+       {
+       spout("*** Outside montage, unable to categorize location");
+
+       sprintf(outstr,"Row: %d   Col: %d", irow, icol);
+       spout(outstr);
+       }
+
+    else if (ipane < 1 || 
+            (ioper == 11 && nstack == 0 && 
+            (ifil > ndone + ifilgo-1)) || 
+            (ioper != 11 && (ipane > docimgtotal)) || 
+             icol > nprow || iyi > ixe ) 
+       {
+       spout("*** Outside montage, unable to categorize location");
+
+       sprintf(outstr,"Row: %d   Col: %d", irow, icol);
+       spout(outstr);
+      }
+
+    else
+       {
+       /*    Inside montage, put category in doc file */
+
+       sprintf(outstr,"File: %d   Category: %d", ifil, icat);
+       spout(outstr);
+ 
+       /*    Write category number at this location of screen */
+       ctemp = itoa(icat);
+       witext(icontx, ctemp, ix1, iy1, 0, 0, -9, 2, FALSE);
+       if (ctemp) free(ctemp);
+
+       /*    Put this category in the file */
+       dlist[0] = ikeyc;
+       ikeyc++;
+       dlist[1] = ifil;
+       dlist[2] = icat;
+
+       /*   Allow addition of more data to the same file,
+            have append set to TRUE (last argument) */
+       fpdoc    = savdn1(docnam, datexc, &fpdoc, dlist, 3, 
+                  &openit, TRUE, TRUE);
+       }
+    }
+ else if (!(strcmp(*params,"2")))            /* Button 2 pushed */ 
+    {
+    /*  Increment present category  */
+    icat++;
+    if (icat > ncat) icat = 1;
+
+    /*  Make a numbered cursor */
+    setacursor(MAXCURSOR + 1 + icat,  -1,-1);
+
+    sprintf(outstr,"New category: %d",icat);
+    spout(outstr);
+    }
+
+
+ else if (!(strcmp(*params,"3")))            /* Button 3 pushed */ 
+    {
+    if (docimgnums) free(docimgnums);
+    docimgnums = NULL;
+
+    /*  Close doc file */
+    if (fpdoc != NULL) fclose(fpdoc);
+
+    /*  Reset default cursor */
+    setacursor(0,-1,-1);
+
+    /*  Uninstall translations */
+    XtUninstallTranslations(iw_t);
+
+    /*  Remove message */
+    showbutx("","","",TRUE);
+    }
+ }
+
+@
+
+
+1.21
+log
+@bug with seq. stack use fixed
+cosmetic
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/cat.c,v 1.20 2005/10/18 16:59:44 leith Exp $*/
+d5 2
+a6 2
+C  cat.c          Jan 94 
+C
+d8 18
+a25 24
+C    AUTHOR:  ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+d117 1
+a117 1
+ static FILE  *fpdoc;
+d244 1
+d271 1
+a271 1
+    fclose(fpdoc);
+@
+
+
+1.20
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/cat.c,v 1.19 2001/08/08 13:51:14 leith Exp $*/
+d3 1
+a3 1
+C++**********************************************************************
+d36 1
+a36 1
+C    PURPOSE:     category selecting program
+d38 1
+a38 1
+C    PARAMETERS: none   
+d40 1
+a40 1
+C    CALLED BY:  catmen_buta     
+d51 1
+a51 1
+ /* external subroutines */
+d53 1
+a53 1
+ /* internal subroutine prototypes */
+d56 1
+a56 1
+ /* external common variables */
+d58 1
+a58 1
+ extern char   filego[81];     /* name of first image in montage   */
+d63 2
+d66 2
+a67 2
+ /* common variables */
+ int           ncat = 3;
+d76 2
+a77 2
+ int nlet;
+ char   filejnk[81];    
+d79 1
+a79 1
+ /* refresh screen */
+d82 1
+a82 1
+ if (ioper == 11)
+d84 1
+a84 1
+    /* extract first filenumber from first file name */
+d87 1
+a87 1
+    if (ioper == 11 && ifilgo < 0)
+d95 1
+a95 1
+ /* set initial */
+d100 1
+a100 1
+ /* set cursor to category */
+d121 4
+a124 4
+ int          ixe, ix1, iy1, ixi, iyi, irow, icol, ipane;
+ char *       ctemp;
+ static FILE *fpdoc;
+ float        dlist[5];
+d126 1
+a126 1
+ if (!(strcmp(*params,"M")))            /*mouse moved */ 
+d128 1
+a128 3
+    /* left button, find image */
+
+    /* get mouse position */
+d131 1
+a131 1
+    /* find location relative to montage */
+d135 1
+a135 1
+    /* find image number */
+d157 3
+d168 1
+a168 1
+ if (!(strcmp(*params,"1")))            /* button 1 pushed */ 
+d170 1
+a170 1
+    /* left button, find image */
+d172 1
+a172 1
+    /* get mouse position */
+d175 1
+a175 1
+    /* find location relative to montage */
+d179 1
+a179 1
+    /* find image number */
+d197 2
+a198 1
+    if (ioper != 11 &&  ipane <= docimgtotal) /* from doc. file montage*/
+d200 4
+d207 1
+a207 1
+    /* are we trying to write on the filename of the image */
+d210 16
+a225 4
+    /* left button, record category if inside an image */
+    if (ipane < 1 || (ioper == 11 && (ifil > ndone + ifilgo-1)) || 
+                     (ioper != 11 && (ipane > docimgtotal)) || 
+        icol > nprow || iyi > ixe ) 
+d232 1
+d235 1
+a235 1
+       /* inside montage, put category in doc file */
+d240 1
+a240 1
+       /*    write category number at this location of screen */
+d245 1
+a245 1
+       /*     put this marker in the file */
+d250 2
+a251 2
+       /* allow addition of more data to the same file,
+          have append set to TRUE (last argument) */
+d256 1
+a256 1
+ else if (!(strcmp(*params,"2")))            /* button 2 pushed */ 
+d258 1
+a258 1
+    /*  increment present category  */
+d262 1
+a262 1
+    /* make a numbered cursor */
+d270 1
+a270 1
+ else if (!(strcmp(*params,"3")))            /* button 3 pushed */ 
+d275 1
+a275 1
+    /*     close doc file */
+d278 1
+a278 1
+    /* reset default cursor */
+d281 1
+a281 1
+    /* uninstall translations */
+d284 1
+a284 1
+    /*  remove message */
+@
+
+
+1.19
+log
+@stack support improved
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.18 1999/08/03 14:02:58 leith Exp $*/
+d9 23
+a31 5
+C * COPYRIGHT (C)1994, 2001. HEALTH RESEARCH INCORPORATED (HRI),       *
+C * ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                   *
+C * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO HRI AND ARE NOT   *
+C * TO BE DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED *
+C * WITHOUT WRITTEN APPROVAL OF HRI.                                   *
+@
+
+
+1.18
+log
+@typo
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.17 1999/07/30 19:27:17 leith Exp leith $*/
+d9 5
+a13 6
+C *  COPYRIGHT (C)1994, WADSWORTH CENTER FOR LABORATORIES AND          *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.  *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS *
+C *    OR USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN        *
+C *    APPROVAL OF THE CENTER FOR LABORATORIES AND RESEARCH            *
+a44 1
+ extern int    icattyp; /* 0 = montage ; 1= doc.montage */
+d62 1
+a62 4
+ /* extract first filenumber from first file name */
+ filinc(filego,filejnk,&nlet,&ifilgo);
+ ifilgo = ifilgo - 1;
+ if (icattyp != 1 && ifilgo < 0)
+d64 9
+a72 3
+    spouts("*** Bad file number in cat.c: "); spouti(ifilgo);
+    spouts(" from: "); spout(filego);
+    return;
+d74 1
+a74 1
+
+d135 1
+a135 1
+    if (icattyp > 0 &&  ipane <= docimgtotal) 
+d137 1
+a137 1
+    else if (icattyp > 0)
+d176 1
+a176 1
+    if (icattyp > 0 &&  ipane <= docimgtotal) /* from doc. file montage*/
+d185 2
+a186 2
+    if (ipane < 1 || (icattyp == 0 && (ifil > ndone + ifilgo-1)) || 
+                     (icattyp == 1 && (ipane > docimgtotal)) || 
+@
+
+
+1.17
+log
+@needed trap for ifil outside docnumimg array
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.16 1997/09/09 19:46:55 liy Exp leith $*/
+d134 1
+a134 1
+    if (icattyp > 0 &&  ipane <= docimgtotal) /* from doc. file montage*/
+d136 2
+a137 2
+    elseif (icattyp > 0)
+       {ifil  = 0; ipane = 0}
+d139 1
+a139 1
+       ifil  = ipane + ifilgo -1;
+@
+
+
+1.16
+log
+@added ikeyc for categorization to get accumulatedkey number
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.15 1997/03/20 20:10:51 leith Exp $*/
+d134 4
+a137 2
+    if (icattyp > 0)  /* from doc. file  montage */
+       ifil  = docimgnums[ipane -1];
+@
+
+
+1.15
+log
+@added trap for ifilgo
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.14 1997/02/26 15:05:18 leith Exp $*/
+d51 1
+a51 1
+ static int    openit, ikeyc, icat, ifil, ifilgo;
+d74 1
+a74 2
+ /* set initial key to 0 */
+ ikeyc = 0;
+d204 2
+a205 1
+       dlist[0] = ++ikeyc;
+@
+
+
+1.14
+log
+@added categorize from doc file
+added categorize from doc file
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.13 1996/07/26 15:54:14 mladjadj Exp leith $*/
+d46 1
+a46 1
+ extern int    icattyp;
+d67 1
+a67 1
+ if (ifilgo < 0)
+d69 2
+a70 1
+    spout("*** Bad file number in cat.c (Program error) ");
+d135 1
+a135 1
+    if (icattyp > 0) 
+d174 1
+a174 1
+    if (icattyp > 0 &&  ipane <= docimgtotal)
+@
+
+
+1.13
+log
+@delete a useless spout msg
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.11 1996/05/01 16:13:24 leith Exp $*/
+d44 3
+d64 1
+a64 1
+ /* extract filenumber from current file name */
+d66 1
+a66 1
+ ifilgo = ifilgo-1;
+d134 4
+a137 1
+    ifil  = ipane + ifilgo -1;
+d173 4
+a176 1
+    ifil  = ipane + ifilgo -1;
+d182 3
+a184 2
+    if (ipane < 1 || ifil > ndone + ifilgo-1 || icol > nprow
+        || iyi > ixe ) 
+d193 1
+a193 1
+       /* inside montage and want to categorize in  doc file */
+d198 1
+a198 1
+       /*    write category number at this location */
+a210 1
+
+d229 3
+d237 3
+@
+
+
+1.12
+log
+@correct position of cursor w/ img name added
+@
+text
+@d171 1
+a171 6
+
+       spout("                ");
+
+       sprintf(outstr,"ixi: %d   ixe: %d", ixi,ixe);
+       spout(outstr);
+       
+@
+
+
+1.11
+log
+@altered savdn1 call
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.10 1996/04/01 18:56:21 leith Exp leith $*/
+d97 1
+a97 1
+ int          ix1, iy1, ixi, iyi, irow, icol, ipane;
+d116 1
+a116 1
+       irow  = (iyi / (nrow * -iskip + mary)) + 1;
+d121 1
+a121 1
+       irow  = (int)((iyi / (nrow / (float)iskip + mary)) + 1);
+d126 1
+a126 1
+       irow  = (iyi / (nrow  + mary)) + 1;
+d152 1
+a152 1
+       irow  = (iyi / (nrow * -iskip + mary)) + 1;
+d157 1
+a157 1
+       irow  = (int)((iyi / (nrow / (float)iskip + mary)) + 1);
+d162 1
+a162 1
+       irow  = (iyi / (nrow  + mary)) + 1;
+d168 9
+a176 1
+
+d178 2
+a179 1
+    if (ipane < 1 || ifil > ndone + ifilgo-1 || icol > nprow) 
+@
+
+
+1.10
+log
+@added M for mouse listing of location
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.9 1996/04/01 17:28:15 leith Exp leith $*/
+d196 1
+a196 1
+                  &openit, TRUE);
+@
+
+
+1.9
+log
+@added debug output onto mouse move
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.8 1995/12/14 19:26:04 mladjadj Exp leith $*/
+d83 1
+a83 1
+ actions(iw_win, "cat_pop", cat_pop, "123");
+@
+
+
+1.8
+log
+@allow to add more categorises to an existing file
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.7 1995/11/03 20:32:01 liy Exp mladjadj $*/
+d46 1
+a46 3
+ int           ncat = 3, icat, ifil, ifilgo;
+ int           openit;
+ int           ikeyc;
+d48 2
+d87 1
+d101 36
+@
+
+
+1.7
+log
+@fixed Categorize set wrong file numbers
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.6 1995/10/31 20:22:36 liy Exp liy $*/
+d156 2
+d159 1
+a159 1
+                  &openit, FALSE);
+@
+
+
+1.6
+log
+@fixed categorize does not work for iskip<1
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.5 1995/08/02 16:30:02 leith Exp $*/
+d120 2
+a121 2
+       irow  = (iyi / (nrow / iskip + mary)) + 1;
+       icol  = (ixi / (nsam / iskip + marx)) + 1;
+d133 1
+a133 1
+    if (ipane < 1 || ifil > ndone + ifilgo-1) 
+@
+
+
+1.5
+log
+@fixed free typo
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.4 1995/08/02 16:27:58 leith Exp leith $*/
+d115 2
+a116 2
+       irow  = (iyi / (nrow * iskip + mary)) + 1;
+       icol  = (ixi / (nsam * iskip + marx)) + 1;
+d133 1
+a133 1
+    if (ipane < 1 || ifil > ndone + ifilgo) 
+@
+
+
+1.4
+log
+@fixed irow,icol calculation & memory leaks
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.3 1994/05/25 17:00:16 odesanya Exp leith $*/
+d150 1
+a150 1
+       if (ctemp) free ctemp;
+@
+
+
+1.3
+log
+@place "openit = TRUE" inside cat so that new files can be opened
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/cat.c,v 1.2 1994/02/01 12:04:53 leith Exp odesanya $*/
+d32 2
+a34 14
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern void   witext       (GC, char *, int, int,int, int, 
+                               int, int, int);
+ extern int    filinc       (char *, char *, int *, int *);
+ extern void   spout        (char *);
+ extern void   showbutx     (char *, char *, char *, int);
+ extern void   actions      (Widget, char *, void (*)(), char *);
+ extern FILE * savdn1       (char *, char *, FILE **, float *, 
+                             int,int *,int);
+ extern void   xorc         (Window, GC, int, int, int, int);
+ extern void   getloc       (XEvent *, char, int *, int *);
+ extern char * itoa         (int);
+ void          setacursor   (int, int, int);
+
+d45 1
+a45 1
+ /* internal common variables */
+a87 1
+
+d103 1
+a103 1
+    /* left button, record category if inside an image */
+d109 2
+a110 2
+    ixi = ix1 - ixulmon + 1;
+    iyi = iy1 - iyulmon + 1;
+d113 16
+a128 2
+    irow  = (iyi / (nrow + mary)) + 1;
+    icol  = (ixi / (nsam + marx)) + 1;
+d132 1
+d150 1
+@
+
+
+1.2
+log
+@fixed
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d59 1
+a59 1
+ int           openit = TRUE;
+d85 2
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+/*$Header $*/
+d30 2
+d45 1
+d47 1
+d75 1
+a75 1
+ ifilgo--;
+d86 3
+d127 1
+a127 1
+    ifil  = ipane + ifilgo;
+d129 1
+a129 1
+    if (ipane < 1 || ifil > ndone) 
+d133 1
+a133 2
+       sprintf(outstr,"irow: %d   icol: %d %d %d %d  ", irow, icol,
+                ipane, ifil, ifilgo);
+d162 3
+d174 3
+@

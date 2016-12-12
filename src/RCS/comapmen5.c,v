@@ -1,0 +1,185 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.16.59.56;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.07.11.17.28.09;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.01.23.10.21.49;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.10.20.17.13.27;	author mladjadj;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.26.14.06.58;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@built by mladjadj for corr-map
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@/*
+*****************************************************************************
+** comapmen5.c		8/93
+**
+** Purpose:   Display menu for image data in a file.
+**
+**
+** WID_COMAPMEN5.FOR transported to UNIX
+**
+C **********************************************************************
+** *   AUTHOR:  Mahieddine Ladjadj                                          *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+*****************************************************************************
+*/
+
+#include "common.h"
+#include "std.h"
+#include "x.h"
+#include <Xm/Text.h>
+#include "routines.h"
+
+  extern char   datexc[4];         /* file extension           */
+
+  static Widget iw_im = (Widget)0;
+  char imnamm[81] = "avgimg001"; 
+  extern Widget iw_comapmen2;
+  void     comapmen5_buta  (Widget iw_t, caddr_t itag, caddr_t call_data);
+                                                                         
+/********************** comapmen5 ***********************************/
+
+void comapmen5(Widget iw_t, caddr_t itag, caddr_t callpar)
+  {
+  /* create a text box for image name input */
+  iw_im = wid_text(iw_win, iw_im, "New Average Image", imnamm,
+                   *comapmen5_buta,(caddr_t) NULL,20,20);
+  }
+                                                               
+/********************** comapmen5_buta ***********************************/
+
+void comapmen5_buta(Widget iw_t, caddr_t itag, caddr_t call_data)
+  {
+  XmSelectionBoxCallbackStruct * cbs;
+
+  cbs = (XmSelectionBoxCallbackStruct *) call_data;
+  strcpy(imnamm,extractstr(cbs -> value));
+
+  if (strlen(imnamm) == 0)
+      { spout(" *** WARNING: no doc file name: imnamm "); return; }
+ 
+  /* remove menu widget */
+  XtUnmanageChild(iw_comapmen2);
+ 
+  /* refresh screen */
+  expos_cb(NULL,NULL,NULL);
+
+  /* start comap doc saving and averaging routine */
+  comapsav(3);
+
+  }
+@
+
+
+1.4
+log
+@static Widget = (Widget)0
+@
+text
+@d10 1
+a10 1
+** **************************************************************************
+d12 24
+a35 7
+** *  COPYRIGHT (C)1990 , WADSWORTH CENTER FOR LABORATORIES AND             *
+** *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+** *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+** *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+** *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+** *    THE CENTER FOR LABORATORIES AND RESEARCH			    *
+** **************************************************************************
+@
+
+
+1.3
+log
+@ shortened name of extractstring to extractstr
+@
+text
+@d30 1
+a30 1
+  static Widget iw_im = 0;
+@
+
+
+1.2
+log
+@fixed document name incrementation
+@
+text
+@d51 1
+a51 1
+  strcpy(imnamm,extractstring(cbs -> value));
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d31 1
+a31 1
+  char imnamm[81] = "avgimg000"; 
+@

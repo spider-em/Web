@@ -1,0 +1,493 @@
+head	1.13;
+access;
+symbols
+	pre-tilt-improve:1.13
+	pre_surf_fromtop:1.13
+	pre_neednewmap:1.13
+	pre_apppluss_remove:1.13
+	pre_tiltpair_chng:1.13
+	pre_GPL:1.12;
+locks;
+comment	@ * @;
+
+
+1.13
+date	2005.10.18.17.00.01;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2000.01.31.16.38.36;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.03.29.17.23.23;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.01.26.14.44.37;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.03.10.14.46.11;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.01.23.10.22.00;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.07.06.17.49.06;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.05.03.09.07.24;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.04.04.16.09.35;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.25.16.57.02;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.25.15.57.55;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.03.14.14.30;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.48;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/lutmen.c,v 1.12 2000/01/31 16:38:36 leith Exp $*/
+/*
+C++*************************************************************************
+C
+C created from imagemen.c          Nov  92
+C lutmen.c
+C                                                                    
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                      *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    LUTMEN
+C
+C    PARAMETERS:   iw_temp, data, call_data (usual callback data)
+C
+C    PURPOSE:      MAKES A FILE WIDGET, INTERROGATES FILE WIDGET AND
+C                  CALLS LUT DISPLAY ROUTINE
+C
+C    CALLED BY:    web_com
+C
+C--********************************************************************
+*/
+
+#include <Xm/FileSB.h>
+#include "common.h"
+#include "routines.h"
+
+ /* internal function  prototypes */
+ void               lutmen_cb (Widget, XtPointer, XtPointer);
+ void               lutmen1   (char *);
+
+ /* internal file variables */
+ static char   * fillutp;
+ static char     fillut[81]  = "\0";
+ static Widget   iw_lutfiles = 0;
+ static char     coper[1];
+ static char     lutdirstr[81];
+
+/********************************  lutmen  ***************************/
+
+ void lutmen(Widget iw_temp, XtPointer data, XtPointer call_data)
+ { 
+ char * lutdirptr;
+
+ /* create a lut file selector widget */
+ strncpy(coper, data,1);
+
+if (iw_lutfiles == (Widget) 0)
+   {
+   if( (lutdirptr = getenv("SPRGB_DIR") ) == NULL)
+       {
+       spout("*** The SPRGB_DIR environment variable is blank!");
+       lutdirstr[0] = '\0';
+       }
+   else
+       {
+       strcpy(lutdirstr,lutdirptr);
+       }
+    }
+
+ /* create a file selector box */
+ iw_lutfiles =  wid_file(iw_win, iw_lutfiles , "Look-up-table",
+               &fillut[0], lutdirstr, *lutmen_cb, -1, -1);
+
+ /* kludge to keep filename in selection box */
+ wid_fileset(iw_lutfiles,fillut);
+ }
+
+
+/************************** lutmen_cb ****************************/
+
+ void lutmen_cb(Widget iw_temp, XtPointer data,  XtPointer call_data)
+ { 
+ XmFileSelectionBoxCallbackStruct *cbs;
+ Colormap                          mapt;
+ unsigned long                     cells[256];
+ 
+ /* get file name from file selector widget */
+ cbs = (XmFileSelectionBoxCallbackStruct *) call_data;
+
+ fillutp = extractstr(cbs -> value);
+
+ /* get rid of file selector */
+ XtUnmanageChild(iw_lutfiles);
+ 
+ /* apply the lut */
+ if (!strcmp(coper, "0"))
+    lut(&fillutp[0], map, mapgo, mapend);
+ else
+    {
+    mapt = XCopyColormapAndFree(idispl, map);
+    XAllocColorCells(idispl, map, TRUE, NULL, 0, cells, 256);
+    lut(&fillutp[0], map, 0, 255);
+    XFreeColormap(idispl, mapt);
+    }
+
+ /* start lutmen again */
+ strcpy(fillut,extractstr(cbs -> value));
+
+ lutmen(NULL,coper,NULL);
+
+ return;
+ }
+
+@
+
+
+1.12
+log
+@traps for missing envi. variable added
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/lutmen.c,v 1.11 1996/03/29 17:23:23 leith Exp leith $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH	        		   *
+C **************************************************************************
+@
+
+
+1.11
+log
+@altered wid_files use
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/lutmen.c,v 1.10 1996/01/26 14:44:37 leith Exp leith $*/
+d44 1
+a49 1
+ char    nulled = '\0';
+d53 1
+d55 12
+a66 9
+ strncpy(coper, data,1);
+ if (iw_lutfiles == (Widget) 0)
+#ifdef VMS
+    lutdirptr = &lutdir[0];
+#else
+    lutdirptr = getenv("SPRGB_DIR");
+#endif 
+else
+    lutdirptr = &nulled;
+d70 1
+a70 1
+               &fillut[0], lutdirptr, *lutmen_cb, -1, -1);
+@
+
+
+1.10
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/lutmen.c,v 1.9 1995/03/10 14:46:11 liy Exp leith $*/
+d36 1
+a36 1
+ void               lutmen_cb (Widget, caddr_t, caddr_t);
+d40 2
+a41 2
+ char            * fillutp;
+ char            fillut[81]  = "\0";
+a44 1
+
+d47 1
+a47 1
+ void lutmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d64 1
+d75 1
+a75 1
+ void lutmen_cb(Widget iw_temp, caddr_t data,  caddr_t call_data)
+a84 1
+ /*   strncpy(fillut,extractstr(cbs -> value),80);*/
+d93 1
+a93 1
+  {
+d98 1
+a98 1
+  }
+@
+
+
+1.9
+log
+@changed string assignment for compling WEB on alpha
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/lutmen.c,v 1.8 1995/01/23 10:22:00 leith Exp liy $*/
+d40 4
+a43 4
+ char*    fillutp;
+ char     fillut[81] = "\0";
+ Widget   iw_lutfiles = 0;
+ static   char coper[1];
+d50 1
+a50 1
+ char nulled = '\0';
+@
+
+
+1.8
+log
+@ shortened name of extractstring to extractstr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/lutmen.c,v 1.7 94/07/06 17:49:06 odesanya Exp Locker: leith $*/
+d43 1
+a43 1
+ static   char coper;
+d55 1
+a55 1
+ coper       = *data;
+d91 1
+a91 1
+ if (coper == '0')
+d104 1
+a104 1
+ lutmen(NULL,&coper,NULL);
+@
+
+
+1.7
+log
+@modified to avoid crashing when private colormap is requested
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/lutmen.c,v 1.6 94/05/03 09:07:24 leith Exp $*/
+d84 2
+a85 2
+ fillutp = extractstring(cbs -> value);
+ /*   strncpy(fillut,extractstring(cbs -> value),80);*/
+d102 1
+a102 1
+ strcpy(fillut,extractstring(cbs -> value));
+@
+
+
+1.6
+log
+@fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/lutmen.c,v 1.5 94/04/04 16:09:35 leith Exp $*/
+d78 2
+d94 3
+d98 2
+@
+
+
+1.5
+log
+@altered rgb loc
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/lutmen.c,v 1.4 94/03/25 16:57:02 leith Exp $*/
+d57 3
+d61 2
+a62 1
+ else
+@
+
+
+1.4
+log
+@bad initialization for fillut
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/lutmen.c,v 1.3 94/03/25 15:57:55 leith Exp Locker: leith $*/
+d57 1
+a57 1
+    lutdirptr = &lutdir[0];
+@
+
+
+1.3
+log
+@better widget handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/lutmen.c,v 1.2 94/02/03 14:14:30 leith Exp Locker: leith $*/
+d41 1
+a41 1
+ char     fillut[81] = '\0';
+@
+
+
+1.2
+log
+@used own file widget
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/lutmen.c,v 1.1 93/11/10 10:11:48 leith Exp Locker: leith $*/
+d33 1
+a34 10
+ /* external function  prototypes */
+ extern Widget      wid_file  (Widget, Widget, char *, char *, char *,
+                               void (*)(),int, int);
+ extern char     *  extractstring (XmString);
+ extern void        spout         (char *message);
+ extern void        waitcursor    (Window, int, int);
+ extern int         lut           (char *, Colormap, int, int);
+
+
+
+d40 2
+a41 1
+ char    *fillut;
+d43 1
+d46 1
+a46 1
+/***************************  lutmen  ***************************/
+d50 2
+d55 11
+a65 5
+ if (*data == '0')
+    {
+    iw_lutfiles =  wid_file(iw_win, iw_lutfiles , "Look-up-table",
+               &fillut[0], &lutdir[0], *lutmen_cb, -1, -1);
+    }
+a68 1
+
+d73 2
+a74 2
+ char * extractstring(XmString);
+
+d76 1
+a76 2
+ XmFileSelectionBoxCallbackStruct *cbs = 
+    (XmFileSelectionBoxCallbackStruct *) call_data;
+d78 2
+a79 1
+ fillut = extractstring(cbs->value);
+d85 9
+a93 1
+ lut(fillut, map, mapgo, mapend);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d50 1
+a50 1
+ Widget   iw_lutfiles;
+d62 1
+a62 1
+    iw_lutfiles =  wid_file(iw_win, iw_files , "Look-up-table",
+@

@@ -1,0 +1,308 @@
+head	1.6;
+access;
+symbols
+	pre-tilt-improve:1.6
+	pre_surf_fromtop:1.6
+	pre_neednewmap:1.6
+	pre_apppluss_remove:1.6
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.6
+date	2007.05.17.16.02.49;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.02.24.14.50.55;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.10.16.13.47.00;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.10.12.15.28.41;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.11.18.16.59.41;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.11.17.16.23.52;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new sird routine
+@
+
+
+1.6
+log
+@round --> round_macro
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/sird.c,v 1.5 1998/02/24 14:50:55 leith Exp leith $*/
+/*
+C***********************************************************************
+C
+C   sird.c
+C                round --> round_macro    May 17 2007 ArDean Leith
+C           
+C **********************************************************************
+C
+C  sird(distbuf, sirdmap, nsam,nrow, y, freeit)
+C
+C  PURPOSE:     Creates single image random dot stereogram from distance
+C               map.  Adapted from:  Thimbleby, HW., Inglis, S and I.H. 
+C               Whitten.  Displaying 3D Images: Algorithms for Single-
+C               Image Random-Dot Stereograms.  Computer, Vol 27 pg 
+C               38-48, Oct 94.
+C
+C  PARAMETERS:  
+C
+C  RETURNS:     T or F
+C
+C  CALLED BY:   surf
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+#define round_macro(X)  (int)((X)+0.5)   /* rounding macro            */
+#define DPI           72                 /* pixels per inch           */
+#define E             round_macro(2.5*DPI)/* eye separation           */
+#define mu            (1/3.0)            /* depth of field            */
+#define separation(Z) round_macro((1-mu*Z)*E/(2-mu*Z))
+                                         /* stereo separation at Z    */
+#define far           separation(0)      /* far plane z= 0!!          */
+
+static int * pix  = (int *) 0;           /* pixel color               */
+static int * same = (int *) 0;           /* a pixel on right is       */
+                                         /* constrained to this color */
+
+ /*************************** sirds ***********************************/
+
+ int sird(float Z[], unsigned char * sirdmap, int maxx, int maxy,
+           int y, int freeit )
+ {
+ int  x;                              /* current point                */
+ int  s;                              /* current stereo separation    */
+ int  left, right;                    /* x values of left and rit eye */
+
+ if (freeit == -1) 
+    {          /* allocate same and pix memory */
+    if (((same = (int *) malloc(maxx*sizeof(int))) == (int *) 0))
+        {
+        spout("*** Unable to allocate same memory in sird1.c");
+        return FALSE;
+        }
+
+    if (((pix = (int *) malloc(maxx*sizeof(int))) == (int *) 0))
+        {
+        spout("*** Unable to allocate pix memory in sird1.c");
+        return FALSE;
+        }
+     return TRUE;
+     }
+
+ if (freeit == 1) 
+    {        /* free same and pix memory */
+    if (pix)  free( pix);
+    if (same) free( same);
+    return TRUE;
+    }
+
+
+ /* each pixel is initially linked with itself */         
+ for (x= 0; x< maxx; x++)
+    {same[x] = x; }
+
+ for (x= 0; x< maxx; x++)
+    {
+    s     = separation(Z[x]);
+    left  = x - (s+(s&y&1)) / 2;   /* pixels at left and rit       */
+    right = left + s;              /* must be the same?            */
+
+    if (0 <= left && right < maxx)
+       {
+       int visible;              /* Do hidden surface removal       */
+       int t = 1;                /* check (x-t) and (x+t)           */
+       float zt;                 /* z coord. of ray at these points */
+          
+       do
+          {
+          zt = Z[x] + 2*(2-mu*Z[x])*t/(mu*E);
+          visible = Z[x-t] < zt && Z[x+t] < zt;   /* FALSE if obscured*/
+          t++;
+          } while (visible && zt < 1);  /* finished hidden surf. removal */
+
+       if (visible)                 /* pixels at l & r are the same */
+          {
+          int k;
+          for (k=same[left]; k != left && k != right; k= same[left])
+             {
+             if (k < right)     /* flip the pointers until either   */
+                {               /* same[left] = left or             */
+                left = k;       /* same[right] = left               */
+                }
+             else
+                {
+                left  = right;
+                right = k;
+                }
+             }
+             same[left] = right;    /* record same value */
+          }
+       }
+    }
+
+ for (x=maxx-1; x >= 0; x--)
+    {
+    if (same[x] == x) 
+      { /* random choice        */
+#ifdef SP_SUNSP
+      pix[x] = lrand48()&1;
+#else
+
+#ifdef SP_NT
+      pix[x] = rand()&1; 
+#else
+      pix[x] = random()&1;
+#endif
+
+#endif
+      }
+    else 
+      {  /* constrained choice   */
+      pix[x] = pix[same[x]];
+      }
+
+    sirdmap[x] = (char) pix[x];
+    }
+
+ /* draw convergence dots at far plane near screen bottem */
+ return TRUE;
+ }
+   
+@
+
+
+1.5
+log
+@NT specific changes
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/sird.c,v 1.3 1995/10/12 15:28:41 mladjadj Exp $*/
+d7 2
+a8 1
+C             
+a9 1
+C **********************************************************************
+d13 2
+a14 2
+C  PURPOSE:     creates single image random dot steroegram from distance
+C               map.  Adapted from Thimbleby, HW., Inglis, S and I.H. 
+a24 2
+C  NOTES:       
+C
+d31 1
+a31 12
+#ifdef VMS 
+ int sird(float Z[], unsigned char * sirdmap, int maxx, int maxy,
+           int y, int freeit )
+{
+    spout("*** Not implemented on VMS");
+    return FALSE;
+}
+
+#else
+    
+
+#define round(X)      (int)((X)+0.5)     /* rounding macro            */
+d33 1
+a33 1
+#define E             round(2.5*DPI)     /* eye separation            */
+d35 1
+a35 1
+#define separation(Z) round((1-mu*Z)*E/(2-mu*Z))
+d130 1
+a130 1
+	  pix[x] = random()&1;
+a143 1
+
+a145 1
+#endif
+@
+
+
+1.4
+log
+@remove extraneous lines
+@
+text
+@d139 7
+a145 1
+      pix[x] = random()&1; 
+@
+
+
+1.3
+log
+@use mrand48 for SUN SPARC. compile with -DSP_SUNSP
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/sird.c,v 1.2 1994/11/18 16:59:41 leith Exp mladjadj $*/
+a133 4
+#ifdef SP_SUN
+#endif
+
+
+@
+
+
+1.2
+log
+@ifdef VMS stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/sird.c,v 1.1 94/11/17 16:23:52 leith Exp Locker: leith $*/
+d134 16
+a149 2
+    if (same[x] == x) pix[x] = random()&1;  /* random choice        */
+    else              pix[x] = pix[same[x]];/* constrained choice   */
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d33 11
+d144 1
+a144 1
+
+@

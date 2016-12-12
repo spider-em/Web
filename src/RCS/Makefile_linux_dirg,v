@@ -1,0 +1,85 @@
+head	1.2;
+access;
+symbols
+	pre-tilt-improve:1.2;
+locks;
+comment	@# @;
+
+
+1.2
+date	2011.09.27.19.23.51;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2011.09.20.16.45.48;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@# 
+# PURPOSE:  MAKEFILE FOR Linux WEB Using 24 bit DirectColor Visual FOR Gnome WM
+#           Byteswaps images for compatibility with SGI 
+#           Uses the GNU gcc compiler & X/Motif libraries
+#           Static link for Motif libraries: libXm.a 
+#           AppplusS not used
+#
+# USAGE:    sw  ; make -f Makefile_linux_dirg
+#           swt ; clean ; /usr8/web/bin/web_linux_dir_tmp dat
+#
+# Use Gnu compiler
+CC = gcc
+
+#-mtune=generic DID NOT WORK
+# Define compiler flags & header include locations
+# Define cpp variable P_SGIOSF  to use byte-swapped images from SGI
+# Define cpp variable WEB_BGFG  to overcome KDE WM menu color bug
+# Define cpp variable WEB_BGFGO to overcome Gnome & OSX WM menu color bug
+
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DP_SGIOSF -DWEB_24 -DWEB_BGFG -DWEB_BGFGO
+
+LF     = 
+
+PGM    = web_linux_dirg
+
+LIB    =  lib$(PGM).a
+
+# Static link for Motif libraries libXm.a 
+OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libXext.a -lm
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+include Makebody.inc
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d6 4
+a9 1
+#           No: AppplusS
+a10 3
+# USAGE:    make -f Makefile_linux_24_gnome
+
+
+d14 1
+a14 1
+#-mtune=generic  DID NOT WORK
+d24 1
+a24 1
+PGM    = web_linux_24_gnome
+@

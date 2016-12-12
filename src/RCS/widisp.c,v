@@ -1,0 +1,661 @@
+head	1.15;
+access;
+symbols
+	pre-tilt-improve:1.15
+	pre_surf_fromtop:1.15
+	pre_neednewmap:1.15
+	pre_apppluss_remove:1.15
+	pre_tiltpair_chng:1.15
+	pre_GPL:1.13;
+locks;
+comment	@ * @;
+
+
+1.15
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2005.10.18.16.59.53;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.08.08.21.08.50;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.07.26.21.21.47;	author liy;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.07.25.20.07.33;	author liy;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.07.21.20.15.07;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.01.11.19.16.09;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.06.01.17.18.47;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.06.01.10.46.12;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.05.12.12.40.33;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.04.22.11.18.31;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.18.12.07.37;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.12.07.11.44.30;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.13.58.22;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.06;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.15
+log
+@fmin ->fmin_spi..
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/widisp.c,v 1.14 2005/10/18 16:59:53 leith Exp $*/
+
+/*
+C++*************************************************************************
+C
+C    WIDISP
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C WIDISP(ICONTX,FILEDATA,NROW1,NROW2,fmax_spi,fmin_spi,IXUL,IYUL,ISKIP)
+C
+C    PURPOSE:    TO DISPLAY AN IMAGE FROM fp AT IXUL,IYUL
+C
+C    PARAMETERS:    ICONTX       GRAPHICS CONTEXT
+C                   NSAM         NUMBER OF PIXELS ON A LINE
+C                   NSAM1        COL IN FILE OF IMAGE START
+C                   NSAM2        COL IN FILE OF IMAGE START
+C                   NROW1        ROW (RECORD) IN FILE OF IMAGE START
+C                   NROW2        ROW OF END OF IMAGE
+C                   fmax_spi         MAX. VALUE OF IMAGE
+C                   fmin_spi         MIN. VALUE OF IMAGE
+C                   IXUL         POSITION OF LEFT SIDE OF IMAGE ON SCREEN
+C                   IYUL         POSITION OF TOP OF IMAGE ON SCREEN
+C                   NMAX         MAX VALUE OF INDEX WRITTEN TO SCREEN
+C                   ISKIP        INCREMENT FOR DO LOOP TO SKIP PIXELS
+C
+C    CALLED BY:     mont3 image
+C--*******************************************************************
+*/
+
+#include "routines.h"
+#include "common.h"
+
+
+ /****************************  widisp  *****************************/
+ 
+ int widisp(GC icontx, FILEDATA *filedata, int nsam, int nsam1,int nsam2, 
+            int nrow1, int nrow2, double fmin_spi, double fmax_spi,
+            int ixul,  int iyul,  int nmint,   int    nmaxt, int iskip, 
+            int keepimage, XImage ** imaget, int keepimagec)
+ { 
+
+ float  *buf;
+ char   *cbuf;
+ int    nsams, nrows, npix, ival,miskip;
+ int    j, m, k,irect;
+ float  scal, fm;
+
+ if (fabs(fmax_spi - fmin_spi) < FLTZER)
+    { spout("*** BLANK IMAGE SKIPPED"); return FALSE; }
+
+ buf = filedata -> buf;
+
+ /* find number of rows in displayed image and allocate buffer space */
+ if (iskip > 1) 
+    {
+    nsams = 1 + (nsam2 - nsam1) / iskip;
+    nrows = 1 + (nrow2 - nrow1) / iskip;
+    }
+ else if (iskip < -1)
+    {
+    miskip = -iskip;
+    nsams = (nsam2 - nsam1 + 1) * miskip;
+    nrows = (nrow2 - nrow1 + 1) * miskip;
+    }
+ else
+    {
+    nsams = (nsam2 - nsam1 + 1);
+    nrows = (nrow2 - nrow1 + 1);
+    } 
+    
+ if ((cbuf = (char *) malloc(nsams * nrows * sizeof(char))) == (char *) 0)    
+    { 
+    spout("*** Unable to allocate cbuf memory in widisp.");
+    return FALSE;
+    }
+
+ /* CONVERSION FACTOR FROM FLOATING POINT TO LOGICAL * 1 RANGE */
+ scal = (float) (nmaxt - nmint) / (fmax_spi - fmin_spi);
+ fm   = -fmin_spi * scal + nmint + 0.5;
+
+ npix = 0;  
+
+ if (iskip > -2 && iskip < 2)
+    {    /* display full size */
+
+    for (irect = nrow1; irect <= nrow2; irect++)
+       {
+       if (redlin(filedata,buf,nsam,irect) != TRUE) 
+          { free(cbuf);  return FALSE; }
+
+       if (nmaxt < 128) 
+           {   /* no need to convert numbers > 128 */   
+           for (k = nsam1 - 1; k < nsam2; k++)
+              {
+              ival = (*(buf + k) * scal) + fm;
+              *(cbuf + npix++) = ival;
+              }
+           }
+       else
+           {   /* need to convert numbers > 128 */   
+           for (k = nsam1 - 1; k < nsam2; k++)
+              {
+              ival = (*(buf + k) * scal) + fm;
+              /* convert 0..255  integers to -128...127 */
+              if (ival > 127) ival = ival - 256;
+              *(cbuf + npix++) = ival;
+              }
+           }
+       }
+    }
+
+ else if (iskip > 1)
+    {    /* display reduced size image */
+
+    for (irect = nrow1; irect <= nrow2; irect = irect + iskip)
+       {
+       if (redlin(filedata,buf,nsam,irect) != TRUE) 
+          { free(cbuf); return FALSE; }
+
+       if (nmaxt < 128) 
+           {   /* no need to convert numbers > 128 */   
+           for (k = nsam1 - 1; k < nsam2; k = k + iskip)
+              {
+              ival = (*(buf + k) * scal) + fm;
+              *(cbuf + npix++) = ival;
+              }
+           }
+       else
+           {   /* need to convert numbers > 128 */   
+           for (k = nsam1 - 1; k < nsam2; k = k + iskip)
+              {
+              ival = (*(buf + k) * scal) + fm;
+              /* convert 0..255  integers to -128...127 */
+              if (ival > 127) ival = ival - 256;
+              *(cbuf + npix++) = ival;
+              }
+           }
+       }
+    }
+
+
+ else if (iskip < -1)
+    {    /* display magnified size image */
+
+    for (irect = nrow1; irect <= nrow2; irect++)
+       {
+       if (redlin(filedata,buf,nsam,irect) != TRUE) 
+          { free(cbuf);   return FALSE; }
+       if (nmaxt < 128) 
+           {   /* no need to convert numbers > 128 */   
+           for (k = nsam1 - 1; k < nsam2; k++)
+              {
+              ival = (*(buf + k) * scal) + fm;
+
+              for (j = 0; j < miskip ; j++)
+                 {
+                 for (m = 0; m < miskip; m++)
+                   *(cbuf + npix + m * nsams + j) = ival;
+                 }
+              npix = npix + miskip;
+              }
+           }
+       else
+           {   /* need to convert numbers > 128 */   
+           for (k = nsam1 - 1; k < nsam2; k++)
+              {
+              ival = (*(buf+k)) * scal + fm;
+              /* convert 0..255  integers to -128...127 */
+              if (ival > 127) ival = ival - 256;
+
+              for (j = 0; j < miskip ; j++)
+                 {
+                 for (m = 0; m < miskip; m++)
+                   *(cbuf + npix + m * nsams + j) = ival;
+                 }
+              npix = npix + miskip;
+              }
+           }
+        npix = (irect - nrow1 + 1) * miskip * nsams + nsam1- 1;
+        }
+    }
+
+ /* display the image */
+ wipic(icontx,cbuf,ixul,iyul,nsams,nrows,TRUE,keepimage,imaget);
+ 
+ /* free up the character buffer unless it is still wanted */
+ if (!keepimagec && cbuf)
+     {
+     free(cbuf);
+     cbuf = NULL;
+     }	
+
+ /* record ximage for possible later reference */
+ filedata -> ximage = *imaget;
+
+ return TRUE;
+}
+
+@
+
+
+1.14
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/widisp.c,v 1.13 1995/08/08 21:08:50 leith Exp $*/
+d35 1
+a35 1
+C WIDISP(ICONTX,FILEDATA,NROW1,NROW2,FMAX,FMIN,IXUL,IYUL,ISKIP)
+d45 2
+a46 2
+C                   FMAX         MAX. VALUE OF IMAGE
+C                   FMIN         MIN. VALUE OF IMAGE
+d63 1
+a63 1
+            int nrow1, int nrow2, double fmin, double fmax,
+d74 1
+a74 1
+ if (fabs(fmax - fmin) < FLTZER)
+d104 2
+a105 2
+ scal = (float) (nmaxt - nmint) / (fmax - fmin);
+ fm   = -fmin * scal + nmint + 0.5;
+@
+
+
+1.13
+log
+@changed image pointer handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/widisp.c,v 1.12 1995/07/26 21:21:47 liy Exp leith $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+@
+
+
+1.12
+log
+@display program clears the prior image buffer only when Image, Pixel & Markers
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/widisp.c,v 1.11 1995/07/25 20:07:33 liy Exp liy $*/
+a41 2
+ char   *imagebuf;
+ static int	keepbuf=0;
+a79 4
+ /* free the old imagebuf */
+ if( imagebuf !=NULL && keepbuf>=IMAGE && keepbuf<=PIXEL ) 
+    free(imagebuf);
+
+d98 1
+a98 1
+          { free(cbuf); return FALSE; }
+d157 1
+a157 1
+          { free(cbuf); return FALSE; }
+d193 1
+a193 1
+ wipic(icontx,cbuf,ixul,iyul,nsams,nrows,FALSE,keepimage,imaget);
+d196 2
+a197 1
+ if (!keepimagec && cbuf){
+d199 1
+a199 1
+     imagebuf = NULL;
+d201 3
+a203 4
+ else {
+     keepbuf = keepimagec;
+     imagebuf = cbuf;
+     }
+@
+
+
+1.11
+log
+@fixed the image display crash problem
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/widisp.c,v 1.10 1995/07/21 20:15:07 liy Exp liy $*/
+d40 2
+d43 1
+d83 2
+a84 1
+ if( imagebuf !=NULL ) free(imagebuf);
+d206 2
+a207 1
+ else 
+d209 1
+@
+
+
+1.10
+log
+@added shift image function
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/widisp.c,v 1.9 1995/01/11 19:16:09 liy Exp $*/
+d198 6
+a203 2
+ if (!keepimagec && cbuf)    	free(cbuf);
+ else 		    		imagebuf = cbuf;
+@
+
+
+1.9
+log
+@fixed the bug on image magnification
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/widisp.c,v 1.8 94/06/01 17:18:47 odesanya Exp $*/
+d40 1
+d78 3
+d198 2
+a199 2
+ if (!keepimagec && cbuf)
+    free(cbuf);
+@
+
+
+1.8
+log
+@further fix on image reduction problem
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/widisp.c,v 1.6 94/05/12 12:40:33 leith Exp $*/
+a38 2
+#include "files.h"
+#include "x.h"
+d174 1
+a174 1
+              ival = (*(buf + k) * scal) + fm;
+d186 1
+a186 1
+        npix = (irect - nrow1 + 1) * miskip * nsams - 1;
+@
+
+
+1.7
+log
+@fixed reduction problem with large files again
+@
+text
+@d54 1
+a54 1
+ int    j, m, k,irect, nrowu, ntotal;
+d65 2
+a66 2
+    nsams = (nsam2 - nsam1 + 1) / iskip;
+    nrows = (nrow2 - nrow1 + 1) / iskip;
+d80 1
+a80 2
+ ntotal = nsams * nrows;
+ if ((cbuf = (char *) malloc(ntotal * sizeof(char))) == (char *) 0)    
+d124 1
+a124 3
+    nrowu = nrow2 - (nrow2-nrow1+1) % iskip - iskip + 1;
+
+    for (irect = nrow1; irect <= nrowu; irect=irect + iskip)
+a125 1
+       if( npix == ntotal ) break;
+a134 1
+               if( npix == ntotal ) break;
+a144 1
+               if( npix == ntotal ) break;
+@
+
+
+1.6
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/widisp.c,v 1.5 94/04/22 11:18:31 leith Exp Locker: leith $*/
+d54 1
+a54 1
+ int    j, m, k,irect, nrowu;
+d80 2
+a81 2
+ if ((cbuf = (char *) malloc(nsams * nrows * sizeof(char))) == 
+    (char *) 0)
+d91 1
+a91 1
+ npix = 0;
+d129 1
+d139 1
+d143 2
+a144 2
+           {   /* no need to convert numbers > 128 */   
+           for (k = nsam1 - 1; k < nsam2; k++)
+d150 1
+@
+
+
+1.5
+log
+@bug in image reduction by -2 and odd size image 
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/widisp.c,v 1.4 94/03/18 12:07:37 leith Exp $*/
+a42 2
+ extern int mapgo;
+
+d47 1
+a47 1
+            int ixul,  int iyul,  int    nmax, int    iskip, 
+d88 2
+a89 2
+ scal = (float) (nmax - mapgo) / (fmax - fmin);
+ fm   = -fmin * scal + mapgo + 0.5;
+d101 1
+a101 1
+       if (nmax < 128) 
+d132 1
+a132 1
+       if (nmax < 128) 
+d161 1
+a161 1
+       if (nmax < 128) 
+@
+
+
+1.4
+log
+@deallocated cbuf as necessary
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/widisp.c,v 1.3 93/12/07 11:44:30 leith Exp $*/
+d165 1
+a165 1
+           for (k = nsam1 - 1; k < nsam2; k = k++)
+@
+
+
+1.3
+log
+@ removed uncbuf from wipic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/widisp.c,v 1.2 93/11/16 13:58:22 leith Exp Locker: leith $*/
+d35 1
+a35 1
+C    CALLED BY:     IMAGE    MONT2   MONT3
+d41 1
+a42 4
+ extern void spout (char *);
+ extern void wipic(GC, char *, int, int, int, int, int, int, XImage **);
+ extern int redlin(FILEDATA *, float *, int , int);
+
+a44 1
+
+d50 1
+a50 1
+            int keepimage, XImage ** image)
+d85 1
+a85 1
+    spout(" *** Unable to allocate memory in widisp.");
+d197 2
+a198 1
+ wipic(icontx,cbuf,ixul,iyul,nsams,nrows,FALSE,keepimage,image);
+d200 4
+@
+
+
+1.2
+log
+@for particle selection use alterations
+@
+text
+@a0 1
+/*$Header$*/
+d2 2
+d201 1
+a201 1
+ wipic(icontx,cbuf,ixul,iyul,nsams,nrows,TRUE,keepimage,image);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+d42 1
+a42 1
+ extern void wipic(GC, char *, int, int, int, int, int);
+d48 1
+a48 1
+ /*************************************************************/
+d52 2
+a53 1
+            int ixul,  int iyul,  int    nmax, int    iskip)
+d60 1
+a60 1
+ float  scal, fm, fskip;
+d200 2
+a201 2
+ wipic(icontx,cbuf,ixul,iyul,nsams,nrows,TRUE);
+
+@

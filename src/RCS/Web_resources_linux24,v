@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols
+	pre-tilt-improve:1.1;
+locks;
+comment	@# @;
+
+
+1.1
+date	2005.09.30.15.16.42;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@for linux web_24
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@Web*applicationDepth: 24
+Web*visualClass: DirectColor
+Web_24*applicationDepth: 24
+Web_24*visualClass: DirectColor
+@

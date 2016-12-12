@@ -1,0 +1,1721 @@
+head	1.23;
+access;
+symbols
+	pre-tilt-improve:1.23
+	pre_surf_fromtop:1.22
+	pre_neednewmap:1.22
+	pre_apppluss_remove:1.22
+	pre_tiltpair_chng:1.22
+	pre_GPL:1.19;
+locks;
+comment	@ * @;
+
+
+1.23
+date	2015.07.27.16.23.57;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2011.06.10.12.15.25;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2007.11.09.14.21.15;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2005.10.18.16.59.57;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	96.07.25.15.46.06;	author liy;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	96.03.22.16.52.41;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	95.08.09.16.40.52;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	95.08.08.20.54.24;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.07.21.20.15.42;	author liy;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.07.11.20.23.42;	author mladjadj;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.07.11.17.28.14;	author mladjadj;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.02.02.16.55.59;	author liy;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.01.26.20.20.51;	author liy;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.10.18.15.23.19;	author odesanya;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.09.28.14.37.22;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.09.12.17.24.23;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.09.12.10.02.48;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.08.11.12.50.59;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.07.13.18.36.26;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.06.10.14.39.18;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.03.12.55.04;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.03.11.24.54;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.13;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.23
+log
+@Doc file close bug
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/pixelmen_sc.c,v 1.22 2011/06/10 12:15:25 leith Exp $*/
+
+/*
+ C**********************************************************************
+ C
+ C PIXELMEN -- Created                           MAY 91   ArDean Leith 
+ C             Converted to C                    Oct 92   ArDean Leith      
+ C             24 bit display bug fixed          11/8/07  ArDean Leith
+ C             Pixel rewrite                     Jun 2011 ArDean Leith
+ C             Doc file close bug                Jul 2015 ArDean Leith
+ C *********************************************************************
+ C *  AUTHOR:  ArDean Leith                                            *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C *********************************************************************
+ C
+ C  pixelmen
+ C
+ C  PURPOSE:     Set various parameters relating to pixel reading
+ C               Not for pixels within a file
+ C
+ C  CALLED BY:   web_com
+ C      
+ C**********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+#define  MAXREGM1 6
+
+ // Internal functions 
+ void          pixelmen_sc_buta(Widget, XtPointer, XtPointer);
+ void          pixelmen_sc_buts(Widget, XtPointer, XtPointer);
+ void          pixelmen_sc_l   (Widget, XtPointer, XtPointer);
+ void          pixelmen_sc_d   (Widget, XtPointer, XtPointer);
+ void          pixelmen_sc_s   (Widget, XtPointer, XtPointer);
+
+ // Common variables defined here
+ int           ixreg_pix    = 1, iyreg_pix = 2;
+ int           isreg_pix    = 3, ivreg_pix = 4;
+ int           iradius_pix  = 5;
+
+ // Externally defined variables used here
+ extern FILE   * fpdocpix_sc;             // From pixel_sc
+
+ // Common variables defined here
+ XImage     *  imagep_sc    = 0;
+ int           docit_sc     = FALSE;
+ int           getscreen_sc = TRUE;
+ int           leavit_sc    = TRUE;
+ int           ikey_sc      = 1;
+
+ Widget        iw_radius_sc_nod, iw_getscreen_sc_nod;
+ Widget        iw_docit_sc_nod;
+
+ Widget        iw_doc_sc_doc,  iw_key_sc_doc; 
+ Widget        iw_xreg_sc_doc, iw_yreg_sc_doc;
+ Widget        iw_sreg_sc_doc;
+
+ Widget        iw_radius_sc_doc, iw_getscreen_sc_doc;
+ Widget        iw_docit_sc_doc;
+
+ // Static file scope variables 
+ static Widget  iw_pixelmen_sc_nod = (Widget)0;
+ static Widget  iw_pixelmen_sc_doc = (Widget)0;
+
+ /************************* pixelmen_sc_nod **********************************/
+
+ void pixelmen_sc_nod(Widget iw_temp, XtPointer data, XtPointer call_data)
+ { 
+ char     cval[5];
+ static   Widget   iw_rowcol, iw_rowcol1;
+ static   Widget   iw_pushc, iw_pusha, iw_pushs;
+ static   Widget   iw_dum = 0;
+
+ char   * cdum = 0;        // Data for a callback is unused here 
+
+
+ if (iw_pixelmen_sc_nod == (Widget)0)
+    {   // Create pixel menu widget first
+
+    iw_pixelmen_sc_nod  = wid_dialog(iw_win,iw_pixelmen_sc_nod,
+                             "pixel info options",20,20);
+
+    iw_rowcol           = wid_rowcol(iw_pixelmen_sc_nod,
+                                     'v',-1,-1);
+
+    iw_radius_sc_nod    = (Widget) 0;
+    iw_getscreen_sc_nod = (Widget) 0;
+    iw_docit_sc_nod     = (Widget) 0;
+
+    iw_pushc            = (Widget) 0;   
+    iw_pusha            = (Widget) 0;
+    iw_pushs            = (Widget) 0;   
+    }
+
+ /* Create text box for radius input  --------------------- radius */
+ sprintf(cval,"%4d",iradius_pix);
+ iw_radius_sc_nod = wid_textboxb(iw_rowcol,
+                              iw_radius_sc_nod,
+                              "Marker radius:",cval,4);
+
+ /* Create toggle box for getscreen --------------------- getscreen */
+ iw_getscreen_sc_nod = wid_toggleg(iw_rowcol,
+                             iw_getscreen_sc_nod,
+                             "Get screen value",
+                             getscreen_sc, pixelmen_sc_s,
+                             "XXX",0,0);
+
+ /* Create toggle box for docit ---------------------------- docit */
+ iw_docit_sc_nod = wid_toggleg(iw_rowcol,
+                            iw_docit_sc_nod,
+                            "Save selections in doc. file",
+                            docit_sc, pixelmen_sc_d,
+                            "XXX",-1,-1);
+
+ // Create accept boxes  ------------------------------------- apply 
+ if (iw_dum  == (Widget) 0) 
+    iw_dum    = wid_stdbut(iw_rowcol, iw_pixelmen_sc_nod, 
+                          &iw_pushs, &iw_pushc, &iw_pusha, 
+                          "SA",
+                          pixelmen_sc_buts,
+                          fin_cb,
+                          pixelmen_sc_buta, "XXX");
+
+ XtManageChild(iw_pixelmen_sc_nod);
+ }
+
+
+ /************************* pixelmen_sc_doc *******************************/
+
+ void pixelmen_sc_doc(Widget iw_temp, XtPointer data, XtPointer call_data)
+ { 
+ char     cval[5];
+ static   Widget   iw_rowcol, iw_rowcol1;
+ static   Widget   iw_pushc,  iw_pusha, iw_pushs;
+ static   Widget   iw_dum = 0;
+
+ char   * cdum = 0;           // Data for a callback is unused here 
+
+ if (iw_pixelmen_sc_doc == (Widget)0)
+    {   // Create pixel menu widget first
+
+    iw_pixelmen_sc_doc  = wid_dialog(iw_win,iw_pixelmen_sc_doc,
+                             "pixel info options",20,20);
+
+    iw_rowcol           = wid_rowcol(iw_pixelmen_sc_doc,
+                                   'v',-1,-1);
+
+    iw_radius_sc_doc    = (Widget) 0;
+    iw_getscreen_sc_doc = (Widget) 0;
+    iw_docit_sc_doc     = (Widget) 0;
+    iw_doc_sc_doc       = (Widget) 0;   
+
+    iw_key_sc_doc       = (Widget) 0;   
+    iw_xreg_sc_doc      = (Widget) 0;
+    iw_yreg_sc_doc      = (Widget) 0;   
+    iw_sreg_sc_doc      = (Widget) 0;
+
+    iw_rowcol1          = (Widget) 0;
+    iw_pushc            = (Widget) 0;   
+    iw_pusha            = (Widget) 0;
+    iw_pushs            = (Widget) 0;   
+    }
+
+ /* Create text box for radius input  -------------------- radius */
+ sprintf(cval,"%4d",iradius_pix);
+ iw_radius_sc_doc = wid_textboxb(iw_rowcol,
+                                iw_radius_sc_doc,
+                                "Marker radius:",cval,4);
+
+ /* Create toggle box for getscreen -------------------- getscreen */
+ iw_getscreen_sc_doc = wid_toggleg(iw_rowcol,
+                                iw_getscreen_sc_doc,
+                                "Get screen value",
+                                getscreen_sc, pixelmen_sc_s,
+                                 "DOC",0,0);
+
+ /* Create toggle box for docit ---------------------------- docit */
+ iw_docit_sc_doc = wid_toggleg(iw_rowcol,iw_docit_sc_doc,
+                            "Save selections in doc. file",
+                            docit_sc, pixelmen_sc_d,
+                            "DOC",-1,-1);
+
+ /* Create text box for doc file name input  -------------- docnam */
+ iw_doc_sc_doc = wid_textboxb(iw_rowcol,
+                            iw_doc_sc_doc,
+                            "Doc. File:",docnam,12);
+
+ // Create text box for key number input  ------------------ ikey 
+ sprintf(cval,"%4d",ikey_sc);
+ iw_key_sc_doc = wid_textboxb(iw_rowcol,
+                              iw_key_sc_doc,
+                              "Key No.:",cval,4);
+
+ if (iw_rowcol1 == (Widget) 0)
+    { iw_rowcol1 = wid_rowcol(iw_rowcol,'h',-1,-1); } 
+
+ // Create text box for X register input  ----------------- ixreg 
+ sprintf(cval,"%4d",ixreg_pix);
+ iw_xreg_sc_doc = wid_textboxb(iw_rowcol1,
+                               iw_xreg_sc_doc,
+                               "X Reg.:",cval,4);
+      
+ // Create text box for Y register input  ----------------- iyreg 
+ sprintf(cval,"%4d",iyreg_pix);
+ iw_yreg_sc_doc = wid_textboxb(iw_rowcol1,
+                               iw_yreg_sc_doc,
+                               "Y Reg.:",cval,4);
+  
+ // Create text box for screen value register input ------- isreg 
+ sprintf(cval,"%4d",isreg_pix);
+ iw_sreg_sc_doc = wid_textboxb(iw_rowcol,
+                               iw_sreg_sc_doc,
+                               "Screen Value Reg.:",cval,4);
+
+ // Create accept boxes  ------------------------------------- Apply 
+ if (iw_dum == (Widget) 0) 
+    iw_dum = wid_stdbut(iw_rowcol, iw_pixelmen_sc_doc, 
+                        &iw_pushs, &iw_pushc, &iw_pusha, 
+                        "SA",
+                        pixelmen_sc_buts,
+                        fin_cb,
+                        pixelmen_sc_buta, "DOC");
+
+ XtManageChild(iw_pixelmen_sc_doc);
+ }
+
+ /************** pixelmen_sc_s (getscreen toggle callback) ***********/
+
+ void pixelmen_sc_s(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ if (!strcmp(data, "DOC"))
+    {
+    getscreen_sc = XmToggleButtonGadgetGetState(iw_getscreen_sc_doc);
+
+    /* Restart the pixel menu */                       
+    XtUnmanageChild(iw_pixelmen_sc_doc);                       
+    pixelmen_sc_doc(NULL, NULL, NULL);
+    }
+ else
+    {
+    getscreen_sc = XmToggleButtonGadgetGetState(iw_getscreen_sc_nod);
+
+    /* Restart the pixel menu */                       
+    XtUnmanageChild(iw_pixelmen_sc_nod);                       
+    pixelmen_sc_nod(NULL, NULL, NULL);
+    }
+ }
+
+ /************** pixelmen_sc_d (docit toggle callback) *************/
+
+ void pixelmen_sc_d(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char * stringt;
+ int    old_docit;
+
+ old_docit = docit_sc;   // Preserve
+
+ if (!strcmp(data, "DOC"))
+    {
+    //printf(" doc setting toggle %s \n",data);
+    docit_sc = XmToggleButtonGadgetGetState(iw_docit_sc_doc);
+    }
+ else
+    {
+    //printf(" non doc setting toggle \n");
+    docit_sc = XmToggleButtonGadgetGetState(iw_docit_sc_nod);
+    }
+                     
+ if (!old_docit && docit_sc) 
+    {  // Display docit menu instead
+    if( iw_pixelmen_sc_nod > 0) XtUnmanageChild(iw_pixelmen_sc_nod); 
+
+    pixelmen_sc_doc(NULL,NULL,NULL);
+    ikey_sc = 1;
+    }
+ else if (  old_docit && ! docit_sc)
+    {  // Display non-docit menu instead
+    if( iw_pixelmen_sc_doc > 0) XtUnmanageChild(iw_pixelmen_sc_doc); 
+
+    pixelmen_sc_nod(NULL,NULL,NULL);
+    ikey_sc = 1;
+    }
+ }
+
+
+ /************ Accept button callback *********************************/
+
+ void pixelmen_sc_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char * cdum;
+ int    iform, iplanes;
+ char * stringt;
+
+ /* If last doc file is opened, close it first */
+ if (fpdocpix_sc)
+    pixelmen_sc_buts(NULL,NULL,NULL);
+
+ if (getscreen_sc)
+    {
+    // Create new imagep 
+    // printf("%d %d   %d %d \n",ixulx,iyulx, iwidex, ihighx); 
+   
+    iplanes   = pow(2,16) - 1;
+    imagep_sc = XGetImage(idispl, imagsav, 0,0,
+                          iwidex, ihighx, iplanes, ZPixmap);
+    }
+ else
+    { /* Make sure image structure pointer is NULL */
+    imagep_sc = (XImage *) NULL;
+    }
+
+
+ if (docit_sc) 
+    {
+    stringt = XmTextGetString(iw_doc_sc_doc);
+    strcpy(docnam,stringt);
+    XtFree(stringt);
+
+    if (strlen(docnam) == 0) 
+       {spout("*** Must specify doc file name."); return;}
+
+    /* Get registers */
+    if (rdpriw(&ikey_sc, 1,INT_MAX, iw_key_sc_doc, 
+             "key",        cdum) == FALSE) return;
+
+    if (rdpriw(&ixreg_pix,1,MAXREGM1,iw_xreg_sc_doc,
+             "x register",cdum) == FALSE) return;
+    if (rdpriw(&iyreg_pix,1,MAXREGM1,iw_yreg_sc_doc,
+             "y register",cdum) == FALSE) return;
+    if (ixreg_pix == iyreg_pix) 
+           spout("Warning: X & Y registers are same");
+
+    if (getscreen_sc)
+       if (rdpriw(&isreg_pix,1,MAXREGM1,iw_sreg_sc_doc,
+           "screen value register",cdum) == FALSE) return;
+    }
+
+ /* Get radius for marker */
+ if (!strcmp(data, "DOC"))
+    { if (rdpriw(&iradius_pix,0,1000,iw_radius_sc_doc,
+                 "radius",cdum) == FALSE) return;}
+ else
+    { if (rdpriw(&iradius_pix,0,1000,iw_radius_sc_nod,
+                 "radius",cdum) == FALSE) return; }
+ leavit_sc = (iradius_pix > 0);              
+
+ if (iw_pixelmen_sc_nod && XtIsManaged(iw_pixelmen_sc_nod)) 
+                       XtUnmanageChild(iw_pixelmen_sc_nod);
+ if (iw_pixelmen_sc_doc && XtIsManaged(iw_pixelmen_sc_doc)) 
+                       XtUnmanageChild(iw_pixelmen_sc_doc);
+
+ // Query pixels with mouse  
+ pixel_sc();
+ }
+
+ /************ Stop button callback *********************************/
+
+ void pixelmen_sc_buts(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+
+ int    numdoc, nlet;
+
+ if (docit_sc) 
+     {  // Using a doc file 
+
+     if (strlen(docnam) != 0) 
+        {   /* Increment next doc file name */
+        filinc(docnam, docnam, &nlet, &numdoc);
+        }
+
+     // Close the doc file 
+     if (fpdocpix_sc != NULL) fclose(fpdocpix_sc); 
+     fpdocpix_sc = NULL;
+
+     // Set new starting key
+     ikey_sc     = 1; 
+     }
+
+ if (imagep_sc)
+   {    // Free up screen image storage  
+   XDestroyImage(imagep_sc);
+   imagep_sc = (XImage *) 0;
+   }
+
+ // Remove pixelmen menu
+ if (iw_pixelmen_sc_nod  && XtIsManaged(iw_pixelmen_sc_nod)) 
+            XtUnmanageChild(iw_pixelmen_sc_nod);
+ if (iw_pixelmen_sc_doc  && XtIsManaged(iw_pixelmen_sc_doc)) 
+            XtUnmanageChild(iw_pixelmen_sc_doc);
+
+ // Remove button assignments
+ XtUninstallTranslations(iw_win);
+
+ // Remove button assignment instructions 
+ // printf(" removing button assignment instructions \n");
+ showbutx("","","",TRUE);  
+ }
+
+@
+
+
+1.22
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/pixelmen.c,v 1.21 2007/11/09 14:21:15 leith Exp $*/
+d5 9
+a13 7
+C++*********************************************************************
+C
+C PIXELMEN -- CREATED MAY 91  CONVERTED TO C -- OCT 92      
+*               24 bit display bug fixed          11/8/07  ArDean Leith
+*               Pixel rewrite                     Jun 2011 ArDean Leith
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                             *
+d15 1
+a15 1
+ C=* Copyright (C) 1992-2007  Health Research Inc.                     *
+d37 10
+a46 10
+C **********************************************************************
+C
+C    pixelmen
+C
+C    PURPOSE:     Set various parameters relating to pixel reading
+C                 Not for pixels within a file
+C
+C    CALLED BY:   web_com
+C      
+C***********************************************************************
+@
+
+
+1.21
+log
+@24 bit display bug fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/pixelmen.c,v 1.20 2005/10/18 16:59:57 leith Exp $*/
+d8 2
+a9 1
+*               24 bit display bug fixed ArDean Leith         11/8/07
+d11 1
+a11 1
+C *  AUTHOR:  ArDean Leith                                                 *
+d37 1
+a37 1
+C    PIXELMEN
+d39 2
+a40 1
+C    PURPOSE:         SET VARIOUS PARAMETERS RELATING TO PIXEL READING
+d42 1
+a42 3
+C    VARIABLES:       
+C
+C    CALLED BY:       WEB_COM
+d55 35
+a89 24
+ /* internal functions */
+ void          pixelmen_buta(Widget, caddr_t, caddr_t);
+ void          pixelmen_buts(Widget, caddr_t, caddr_t);
+ void          pixelmen_l(Widget, caddr_t, caddr_t);
+ void          pixelmen_d(Widget, caddr_t, caddr_t);
+ void          pixelmen_sh(Widget, caddr_t, caddr_t);
+ void          pixelmen_s(Widget, caddr_t, caddr_t);
+ void          pixelmen_f(Widget, caddr_t, caddr_t);
+ void          pixelmen_i(Widget, caddr_t, caddr_t);
+
+ /* common variables */
+ XImage     *  imagep;
+ int           ixreg = 1, iyreg = 2;
+ int           isreg = 3, ivreg = 4;
+ Widget        iw_inimag, iw_leavit, iw_getfile, iw_getscreen, iw_key;
+ Widget        iw_xreg,   iw_yreg,   iw_vreg,    iw_sreg,      iw_docit;
+ Widget        iw_radius, iw_doc, iw_shimg;
+ int           pixelmen_showing = FALSE;
+ extern        FILE * fpdocpix;
+ FILEDATA      *filedatap;
+
+ /* file scope variables */
+ static Widget  iw_pixelmen = (Widget)0;
+ static int     shimg;
+d91 1
+a91 1
+ /************************* pixelmen **********************************/
+d93 1
+a93 1
+ void pixelmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d96 53
+a148 61
+ static   Widget   iw_rowcol, iw_rowcol1, iw_rowcol2;
+ static   Widget   iw_pushc,  iw_pusha,   iw_pushs,   iw_dum = 0;
+ char   * cdum = 0;    /* data for a callback is unused here */
+
+ if (iw_pixelmen == (Widget)0)
+    {   /* create pixel menu widget first */
+
+    iw_pixelmen = wid_dialog(iw_win,iw_pixelmen,
+                             "pixel information options",20,20);
+    iw_rowcol   = wid_rowcol(iw_pixelmen,'v',-1,-1);
+
+    iw_doc     = (Widget) 0;   iw_shimg   = (Widget) 0;
+    iw_inimag  = (Widget) 0;   iw_docit   = (Widget) 0;
+    iw_leavit  = (Widget) 0;   iw_getfile = (Widget) 0;
+    iw_key     = (Widget) 0;   iw_xreg    = (Widget) 0;
+    iw_yreg    = (Widget) 0;   iw_sreg    = (Widget) 0;
+    iw_vreg    = (Widget) 0;   iw_radius  = (Widget) 0;
+    iw_pushc   = (Widget) 0;   iw_pusha   = (Widget) 0;
+    iw_pushs   = (Widget) 0;   iw_rowcol1 = (Widget) 0;
+    iw_rowcol2 = (Widget) 0;
+    imagep     = (XImage *) 0;
+    ikey       = 1;
+    }
+
+if (strlen(filnow) == 0) inimag = FALSE;
+ /* create toggle box for docit ---------------------------- docit */
+ iw_docit = wid_toggleg(iw_rowcol,iw_docit,
+           "Save selections in doc. file",
+           docit,pixelmen_d,cdum,-1,-1);
+
+ /* create text box for doc file name input  -------------- docnam */
+ if (docit || iw_doc == (Widget) 0)
+    iw_doc = wid_textboxb(iw_rowcol,iw_doc,"Doc. File:",docnam,12);
+ if (!docit) XtUnmanageChild(XtParent(iw_doc));
+
+ /* create toggle box for shift image ---------------------- shimg */
+ iw_shimg = wid_pushg(iw_rowcol,iw_shimg,"Shift the last image",
+                         pixelmen_sh,(char *)iw_shimg,0,0);
+
+ /* create toggle box for inimag -------------------------- inimag */
+ iw_inimag = wid_toggleg(iw_rowcol,iw_inimag,"Inside last image",
+                         inimag,pixelmen_i,cdum,-1,-1);
+ if (strlen(filnow) <= 0)  XtUnmanageChild((iw_inimag));
+
+ /* create toggle box for leavit -------------------------- leavit */
+ iw_leavit = wid_toggleg(iw_rowcol,iw_leavit,"Leave marker",leavit,
+                         pixelmen_l,cdum,-1,-1);
+
+ /* create toggle box for getfile ------------------------ getfile */
+ if (inimag || iw_getfile == (Widget) 0)
+    iw_getfile = wid_toggleg(iw_rowcol,iw_getfile,"Get file value",
+                  getfile, pixelmen_f,cdum,-1,-1);
+ if (!inimag) XtUnmanageChild(iw_getfile);
+ 
+ /* create toggle box for getscreen ------------------- getscreen */
+ iw_getscreen = wid_toggleg(iw_rowcol,iw_getscreen,"Get screen value",
+                 getscreen,pixelmen_s,cdum,0,0);
+
+ /* create text box for key number input  ------------------ ikey */
+ sprintf(cval,"%4d",ikey);
+ iw_key = wid_textboxb(iw_rowcol,iw_key,"Key No.:",cval,4);
+d150 2
+a151 15
+ if (docit || iw_rowcol1 == 0)
+    {
+    if (iw_rowcol1 == 0) 
+        iw_rowcol1 = wid_rowcol(iw_rowcol,'h',-1,-1);
+     
+    /* create text box for X register input  -------------- ixreg */
+    sprintf(cval,"%4d",ixreg);
+    iw_xreg = wid_textboxb(iw_rowcol1,iw_xreg,"X Reg.:",cval,4);
+      
+    /* create text box for Y register input  -------------- iyreg */
+    sprintf(cval,"%4d",iyreg);
+    iw_yreg = wid_textboxb(iw_rowcol1,iw_yreg,"Y Reg.:",cval,4);
+  
+    if (iw_rowcol2 == 0) 
+        iw_rowcol2 = wid_rowcol(iw_rowcol,'h',-1,-1);
+a152 16
+    if (getfile || iw_vreg == (Widget) 0)
+       {
+       /* create text box for file value register input --- ivreg */
+       sprintf(cval,"%4d",ivreg);
+       iw_vreg = wid_textboxb(iw_rowcol2,iw_vreg,
+                              "File Value Reg.:",cval,4);
+       }
+
+    if (getscreen || iw_sreg == (Widget) 0)
+       {
+       /* create text box for screen value register input - isreg */
+       sprintf(cval,"%4d",isreg);
+       iw_sreg = wid_textboxb(iw_rowcol2,iw_sreg,
+                              "Screen Value Reg.:",cval,4);
+       }
+    }
+d154 1
+a154 7
+ if (!docit) 
+    {
+    XtUnmanageChild(XtParent(iw_key));
+    XtUnmanageChild(XtParent(iw_xreg));
+    XtUnmanageChild(XtParent(iw_yreg));
+    ikey = 1;
+    }
+d156 84
+a239 2
+ if (!docit || !getfile)   XtUnmanageChild(XtParent(iw_vreg));
+ if (!docit || !getscreen) XtUnmanageChild(XtParent(iw_sreg));
+d241 1
+a241 9
+ if (leavit || iw_radius == 0)
+    {    /* create text box for radius input  ------------ radius */
+    sprintf(cval,"%4d",iradius);
+    iw_radius = wid_textboxb(iw_rowcol,iw_radius,"Radius:",cval,4);
+    }
+ if (!leavit) XtUnmanageChild(XtParent(iw_radius));
+
+ /* create accept boxes  ---------------------------------- apply */
+ 
+d243 6
+a248 3
+    iw_dum   = wid_stdbut(iw_rowcol, iw_pixelmen, &iw_pushs, &iw_pushc, &iw_pusha, 
+                     "SA",pixelmen_buts,fin_cb,pixelmen_buta, NULL);
+
+d250 1
+a250 1
+ XtManageChild(iw_pixelmen);
+d253 1
+d255 1
+a255 3
+ /************** pixelmen_i (inimag toggle callback) **************/
+
+ void pixelmen_i(Widget iw_temp, caddr_t data, caddr_t call_data)
+d257 3
+a259 1
+ char * stringt;
+d261 5
+a265 3
+ inimag = XmToggleButtonGadgetGetState(iw_inimag);
+
+ if (docit) 
+d267 1
+a267 14
+    stringt = XmTextGetString(iw_doc);
+    strcpy(docnam,stringt);
+    XtFree(stringt);
+    }
+
+ XtUnmanageChild(iw_pixelmen);                       
+ pixelmen(NULL, NULL , NULL);  
+ }
+
+ /************** pixelmen_f (getfile toggle callback) **************/
+
+ void pixelmen_f(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+ char * stringt;
+d269 3
+a271 7
+ getfile = XmToggleButtonGadgetGetState(iw_getfile);
+
+ if (docit)
+    {
+    stringt = XmTextGetString(iw_doc);
+    strcpy(docnam,stringt);
+    XtFree(stringt);
+a272 3
+
+ XtUnmanageChild(iw_pixelmen);                       
+ pixelmen(NULL, NULL , NULL);  
+d275 1
+d277 1
+a277 3
+ /************** pixelmen_s (getscreen toggle callback) ***********/
+
+ void pixelmen_s(Widget iw_temp, caddr_t data, caddr_t call_data)
+d280 1
+d282 1
+a282 18
+ getscreen = XmToggleButtonGadgetGetState(iw_getscreen);
+ if (docit) 
+    {
+    stringt = XmTextGetString(iw_doc);
+    strcpy(docnam,stringt);
+    XtFree(stringt);
+    }
+
+ /* restart the pixel menu */                       
+ XtUnmanageChild(iw_pixelmen);                       
+ pixelmen(NULL, NULL, NULL);
+ }
+
+ /************** pixelmen_d (docit toggle callback) *************/
+
+ void pixelmen_d(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+ char * stringt;
+d284 1
+a284 3
+ docit = XmToggleButtonGadgetGetState(iw_docit);
+                       
+ if (docit) 
+d286 2
+a287 3
+    stringt = XmTextGetString(iw_doc);
+    strcpy(docnam,stringt);
+    XtFree(stringt);
+a289 9
+    ikey = 1;
+
+ XtUnmanageChild(iw_pixelmen);                       
+ pixelmen(NULL, NULL, NULL);
+ }
+
+ /************** pixelmen_sh (shimg toggle callback) *************/
+
+ void pixelmen_sh(Widget iw_temp, caddr_t data, caddr_t call_data)
+d291 2
+a292 9
+    if (inimag) 
+       {
+       XtUnmanageChild(iw_pixelmen);                       
+       shift(PIXEL);
+       }
+    else
+       {
+       spout(" Image can only be shifted when 'Inside last image' is active.");
+       }
+d294 11
+d306 2
+a307 13
+ /************** pixelmen_l (leavit toggle callback) *************/
+
+ void pixelmen_l(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+ char * stringt;
+
+ leavit = XmToggleButtonGadgetGetState(iw_leavit);
+                     
+ if (docit) 
+    {
+    stringt = XmTextGetString(iw_doc);
+    strcpy(docnam,stringt);
+    XtFree(stringt);
+d309 1
+a310 3
+ XtUnmanageChild(iw_pixelmen);                       
+ pixelmen(NULL, NULL, NULL);  
+ }
+d312 1
+a312 1
+ /************ accept button callback *********************************/
+d314 1
+a314 1
+ void pixelmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+a315 1
+
+d317 1
+a317 1
+ int iform, iplanes;
+d320 3
+a322 18
+ /* if last doc file is opened, close it first */
+ if(fpdocpix)
+    pixelmen_buts(NULL,NULL,NULL);
+
+ inimag = XmToggleButtonGadgetGetState(iw_inimag);
+ if (inimag && strlen(filnow) == 0)
+    {
+    spout("*** Must display image to find file value for pixel.");
+    return;
+    }
+
+ getscreen = XmToggleButtonGadgetGetState(iw_getscreen);
+ /* destroy any old image structure */
+ if (imagep) 
+    {
+    XDestroyImage(imagep);
+    imagep = NULL;
+    }
+d324 1
+a324 1
+ if (getscreen)
+d326 2
+a327 2
+    /* create new imagep */
+    /* printf("%d %d %d %d \n",ixulx,iyulx, iwidex, ihighx-iyulx); */
+d329 3
+a331 7
+   iplanes = pow(2,8) - 1;
+#ifdef WEB_24
+   iplanes = pow(2,16) - 1;
+#endif
+
+    imagep = XGetImage(idispl, imagsav, ixulx,iyulx,
+                       iwidex, ihighx-iyulx, iplanes, ZPixmap);
+d334 2
+a335 2
+    { /* make sure image structure pointer is NULL */
+    imagep    = (XImage *) NULL;
+d339 1
+a339 2
+ docit = XmToggleButtonGadgetGetState(iw_docit);                   
+ if (docit) 
+d341 1
+a341 1
+    stringt = XmTextGetString(iw_doc);
+d346 1
+a346 33
+       {
+       spout("*** Must specify document file name.");
+       return;
+       }
+
+    /* get registers */
+    if (rdpriw(&ixreg,1,MAXREGM1,iw_xreg,"x register",cdum) == FALSE) return;
+    if (rdpriw(&iyreg,1,MAXREGM1,iw_yreg,"y register",cdum) == FALSE) return;
+    if (rdpriw(&ikey, 1,INT_MAX, iw_key, "key",       cdum) == FALSE) return;
+    if (ixreg == iyreg) spout("Warning: X & Y registers are the same");
+    }
+
+ if (docit && getscreen)
+    {  /* get screen register */
+    if (rdpriw(&isreg,1,MAXREGM1,iw_sreg,"screen value register",cdum) == FALSE) return;
+    }
+
+ getfile = XmToggleButtonGadgetGetState(iw_getfile);
+ if (getfile)
+    {     /* open image file if necessary */
+     
+    if (strlen(filnow) == 0)
+       {
+       spout("*** Must display image to find file value for pixel.");
+       return;
+       }
+
+    if ((filedatap = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) 
+       ==  NULL) 
+        {
+        spout("*** Can not open image to find file value for pixel.");
+        return;
+        }
+d348 29
+a376 8
+    inimag = TRUE;   
+
+    if (docit)
+       {  /* get file value register */
+       if (rdpriw(&ivreg,1,MAXREGM1,iw_vreg,"file value register",cdum) 
+           == FALSE) return;
+       }
+    }
+d378 2
+a379 9
+ if (leavit)
+    {  /* get radius for marker */
+    if (rdpriw(&iradius,0,1000,iw_radius,"radius",cdum) == FALSE) return;
+    }
+               
+ XtUnmanageChild(iw_pixelmen);
+
+ pixelmen_showing = TRUE;                     
+ pixel();
+d382 1
+a382 1
+ /************ stop button callback *********************************/
+d384 1
+a384 1
+ void pixelmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+d389 3
+a391 4
+  if (docit) 
+     {   /* close the doc file */
+     fclose(fpdocpix); 
+     ikey = 1; 
+d393 1
+a393 1
+        {   /* increment next doc file name */
+d396 7
+d405 4
+a408 4
+ if (imagep)
+   {    /* free up image storage */
+   XDestroyImage(imagep);
+   imagep    = (XImage *) 0;
+d411 5
+a415 2
+ /* remove the pixelmen */
+ XtUnmanageChild(iw_pixelmen);  
+d417 1
+a417 3
+ /* close the image file, if opened here */
+ if (filedatap != NULL && filedatap->fp != NULL) closefilep(&filedatap); 
+ /* uninstall translations */
+d420 3
+a422 3
+ /* remove button assignment instructions */
+ if (pixelmen_showing) 
+    { showbutx("","","",TRUE);  pixelmen_showing = FALSE; }
+@
+
+
+1.20
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.19 1996/07/25 15:46:06 liy Exp $*/
+d7 2
+a8 2
+C PIXELMEN -- CREATED MAY 91
+C          -- CONVERTED TO C -- OCT 92      
+d12 1
+a12 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d328 1
+a328 1
+ int iform;
+d355 5
+d361 1
+a361 1
+                       iwidex, ihighx-iyulx, 255, ZPixmap);
+@
+
+
+1.19
+log
+@fixed the bug particles can not be saved after shifting
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.18 1996/03/22 16:52:41 leith Exp liy $*/
+d11 23
+a33 6
+C *  COPYRIGHT (C)1991,  WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+@
+
+
+1.18
+log
+@cosmetic, freed some stringt
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.17 1995/08/09 16:40:52 leith Exp leith $*/
+d313 4
+@
+
+
+1.17
+log
+@altered file handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.16 1995/08/08 20:54:24 leith Exp leith $*/
+a48 1
+ static Widget iw_pixelmen = (Widget)0;
+d52 2
+a53 2
+ Widget        iw_inimag, iw_leavit,  iw_getfile, iw_getscreen, iw_key;
+ Widget        iw_xreg,   iw_yreg,    iw_vreg,    iw_sreg,      iw_docit;
+d55 1
+a55 2
+ int           iwidei, pixelmen_showing = 0;
+ int	       shimg;
+d59 4
+d70 1
+a70 1
+ char   * cdum;
+d72 1
+a72 1
+ if (iw_pixelmen <= (Widget)0)
+d79 8
+a86 17
+    iw_doc     = (Widget) 0;
+    iw_shimg   = (Widget) 0;
+    iw_inimag  = (Widget) 0;
+    iw_docit   = (Widget) 0;
+    iw_leavit  = (Widget) 0;
+    iw_getfile = (Widget) 0;
+    iw_key     = (Widget) 0;
+    iw_xreg    = (Widget) 0;
+    iw_yreg    = (Widget) 0;
+    iw_sreg    = (Widget) 0;
+    iw_vreg    = (Widget) 0;
+    iw_radius  = (Widget) 0;
+
+    iw_pushc   = (Widget) 0;
+    iw_pusha   = (Widget) 0;
+    iw_pushs   = (Widget) 0;
+    iw_rowcol1 = (Widget) 0;
+d90 1
+a90 2
+
+ }
+d100 1
+a100 1
+ iw_doc = wid_textboxb(iw_rowcol,iw_doc,"Doc. File:",docnam,12);
+d103 1
+a103 1
+ /* create toggle box for shift image -------------------------- shimg */
+d132 2
+a133 1
+    if (iw_rowcol1 == 0) iw_rowcol1 = wid_rowcol(iw_rowcol,'h',-1,-1);
+d143 2
+a144 1
+    if (iw_rowcol2 == 0) iw_rowcol2 = wid_rowcol(iw_rowcol,'h',-1,-1);
+d183 1
+a183 1
+ if (iw_dum <= (Widget) 0) 
+d196 2
+d201 5
+a205 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d215 2
+d219 6
+a224 2
+ if (docit) 
+    strcpy(docnam,XmTextGetString(iw_doc));
+d235 2
+d239 5
+a243 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d254 2
+d259 5
+a263 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d276 4
+a279 4
+        {
+      	XtUnmanageChild(iw_pixelmen);                       
+    	shift(PIXEL);
+     	}
+d281 3
+a283 3
+        {
+	spout(" The image can only be shifted when 'Inside last image' is active.");
+        }
+d290 2
+d295 5
+a299 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d312 1
+d346 4
+a349 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d401 1
+a401 1
+ pixelmen_showing = 1;                     
+d417 3
+a419 3
+       {   /* increment next doc file name */
+       filinc(docnam, docnam, &nlet, &numdoc);
+       }
+d437 2
+a438 1
+ if(pixelmen_showing) { showbutx("","","",TRUE);  pixelmen_showing = 0; }
+@
+
+
+1.16
+log
+@removed filedata->fp test on openold
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.15 1995/07/21 20:15:42 liy Exp leith $*/
+d59 1
+d256 3
+a258 2
+ {
+    if (inimag) {
+d263 4
+a266 2
+	spout(" The image can only be shifted when 'Inside last image' is picked.\n");
+ }
+d298 5
+a302 1
+ if (imagep != (XImage *) NULL)  XDestroyImage(imagep);
+d350 1
+a350 1
+    if ((filedata = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) 
+d394 1
+a394 1
+ if (imagep != (XImage *) NULL)
+d403 2
+a404 2
+ /* close the image file, if open */
+ if (filedata != NULL && filedata->fp != NULL) closefile(filedata); 
+@
+
+
+1.15
+log
+@added shift image function
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.12 1995/02/02 16:55:59 liy Exp $*/
+d342 2
+a343 3
+    if ( (filedata->fp == NULL) &&
+         ((filedata = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) 
+       ==  NULL)) 
+@
+
+
+1.14
+log
+@delete extra = character
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.13 1995/07/11 17:28:14 mladjadj Exp mladjadj $*/
+d43 1
+d55 1
+a55 1
+ Widget        iw_radius, iw_doc;
+d57 1
+a57 1
+
+d77 1
+d110 4
+d250 12
+@
+
+
+1.13
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.12 1995/02/02 16:55:59 liy Exp mladjadj $*/
+d48 1
+a48 1
+ static Widget iw_pixelmen = = (Widget)0;
+@
+
+
+1.12
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixelmen.c,v 1.11 1995/01/26 20:20:51 liy Exp liy $*/
+d48 1
+a48 1
+ static Widget iw_pixelmen = 0;
+@
+
+
+1.11
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixelmen.c,v 1.10 1994/10/18 15:23:19 odesanya Exp liy $*/
+d68 1
+a68 1
+ if (iw_pixelmen <= (void *)0)
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixelmen.c,v 1.9 1994/09/28 14:37:22 odesanya Exp $*/
+d68 1
+a68 1
+ if ((int)iw_pixelmen <= 0)
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixelmen.c,v 1.8 94/09/12 17:24:23 leith Exp $*/
+d361 2
+a362 2
+     fclose(fpdocpix);
+     ikey = 1;
+@
+
+
+1.8
+log
+@fixed key and isreg bugs
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixelmen.c,v 1.7 94/09/12 10:02:48 leith Exp Locker: leith $*/
+d55 1
+a55 1
+ int           iwidei;
+d347 2
+a348 1
+                      
+d379 1
+a379 2
+ if (filedata->fp != NULL) closefile(filedata); 
+
+d384 1
+a384 1
+ showbutx("","","",TRUE);  
+@
+
+
+1.7
+log
+@reworked accept callback
+@
+text
+@d2 2
+a3 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixelmen.c,v 1.6 94/08/11 12:50:59 leith Exp $*/
+d5 1
+a5 1
+C++************************************************************************
+d9 1
+a9 1
+C **************************************************************************
+d17 1
+a17 1
+C **************************************************************************
+d45 1
+d48 8
+a55 8
+ Widget     iw_pixelmen = 0;
+ XImage     * imagep;
+ int        ixreg = 1, iyreg = 2;
+ int        isreg = 3, ivreg = 4;
+ Widget     iw_inimag, iw_leavit,  iw_getfile, iw_getscreen, iw_key;
+ Widget     iw_xreg,   iw_yreg,    iw_vreg,    iw_sreg,      iw_docit;
+ Widget     iw_radius, iw_doc;
+ int        iwidei;
+d57 1
+a57 1
+ extern     FILE * fpdocpix;
+d93 1
+a97 1
+
+d109 2
+a110 3
+ iw_inimag = wid_togglemen(iw_rowcol,iw_inimag,"Inside last image",
+                              inimag,0,0);
+
+d156 1
+a156 1
+       sprintf(cval,"%4d",ivreg);
+d167 1
+d186 1
+a186 1
+ 
+d191 13
+d210 3
+d223 2
+d237 5
+d252 3
+d361 1
+@
+
+
+1.6
+log
+@used routines.h 
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixelmen.c,v 1.5 94/07/13 18:36:26 odesanya Exp Locker: leith $*/
+a49 1
+ static     int        first = TRUE;
+d55 2
+a170 1
+
+d182 1
+a182 1
+                     "SCA",pixelmen_buts,fin_cb,pixelmen_buta, NULL);
+a192 2
+ int iform;
+
+a194 24
+ if (getfile && strlen(filnow) == 0)
+    {
+    spout("*** Must display image to find file value for pixel.");
+    return;
+    }
+
+ if (getfile)
+    {     /* open image file if necessary */
+     
+    if ( (filedata->fp == NULL) &&
+         ((filedata = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) 
+       ==  NULL)) return;
+
+    inimag = TRUE;   
+    }
+                      
+ inimag = XmToggleButtonGadgetGetState(iw_inimag);
+
+ if (docit) 
+    {
+    strcpy(docnam,XmTextGetString(iw_doc));
+    if (strlen(docnam) == 0) docit = FALSE;
+    } 
+
+a195 1
+
+a203 1
+
+a204 1
+ if (imagep != (XImage *) NULL)  XDestroyImage(imagep);
+a205 21
+ if (getscreen)
+    {
+    /* create new imagep */
+    /* printf("%d %d %d %d \n",ixulx,iyulx, iwidex, ihighx-iyulx); */
+   
+    imagep = XGetImage(idispl, imagsav, ixulx,iyulx,
+                       iwidex, ihighx-iyulx, 255, ZPixmap);
+    }
+ else
+    { /* make sure image pointer is NULL */
+    imagep    = (XImage *) NULL;
+    }
+
+ inimag = XmToggleButtonGadgetGetState(iw_inimag);
+
+ if (docit) 
+    {
+    strcpy(docnam,XmTextGetString(iw_doc));
+    if (strlen(docnam) == 0) docit = FALSE;
+    } 
+
+a226 8
+ inimag = XmToggleButtonGadgetGetState(iw_inimag);
+
+ if (docit) 
+    {
+    strcpy(docnam,XmTextGetString(iw_doc));
+    if (strlen(docnam) == 0) docit = FALSE;
+    } 
+
+d237 1
+d240 5
+d246 19
+d268 5
+a272 2
+    if (strlen(docnam) == 0) docit = FALSE;
+    } 
+d274 1
+a274 2
+ if (docit)
+    {  /* get registers */
+d280 1
+d286 25
+a310 3
+ if (docit && getfile)
+    {  /* get file value register */
+    if (rdpriw(&ivreg,1,MAXREGM1,iw_vreg,"file value register",cdum) == FALSE) return;
+d317 1
+a317 1
+                      
+d320 1
+a320 4
+/* if (first) */  pixel();
+
+ first = FALSE;
+    
+d330 8
+a337 4
+ if (docit && strlen(docnam) != 0) 
+    {
+    filinc(docnam, docnam, &nlet, &numdoc);
+    }
+d345 1
+d348 1
+d351 2
+a352 1
+ if(!first) showbutx("","","",TRUE);  
+d354 2
+a355 1
+ first = TRUE;
+d357 1
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/pixelmen.c,v 1.4 94/06/10 14:39:18 odesanya Exp $*/
+d30 2
+a36 22
+ /* function prototypes */
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                              char *, void (*)(), void (*)(), void (*)(),
+                              void (*)());
+ extern void   spout        (char *);
+ extern Widget wid_textboxb (Widget iw_parent, Widget iw_text, 
+                              char *prompt, char *string,  int icol);
+ extern Widget wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern int    strtoint     (Widget, char *, int *);
+ extern int    rdpriw       (int *, int, int, Widget, char *, char *);
+ extern int    filinc       (char *, char *, int *, int *);
+ extern Widget wid_toggleg  (Widget, Widget, char *, int, void (*)(),
+                              char *, int, int);
+ extern void   pixel        (void);
+ extern int    closefile    (FILEDATA *);
+ extern void   showbutx     (char *, char *, char *, int);
+ extern FILEDATA *  openold (char *, int *, int *, int *, int *, char *);
+
+
+a44 1
+
+d56 1
+a56 2
+
+ /************************************************************/
+@
+
+
+1.4
+log
+@fixed crashing and document writing problem
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/pixelmen.c,v 1.3 94/02/03 12:55:04 leith Exp $*/
+d218 1
+d228 2
+a229 2
+    if ((filedata == NULL) &&
+       ((filedata = openold(filnow,&nsam,&nrow,&nslice,&iform,"o")) 
+d231 1
+d376 1
+a376 1
+ if (filedata != NULL) closefile(filedata);
+@
+
+
+1.3
+log
+@fixed Xreg prompt
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/pixelmen.c,v 1.1 93/11/10 10:11:13 leith Exp Locker: leith $*/
+d51 1
+a51 1
+ extern void   pixel        ();
+d113 1
+a113 1
+    }
+d115 1
+a115 1
+ if (strlen(filnow) == 0) inimag = FALSE;
+d126 1
+a126 1
+ 
+d130 1
+d205 1
+d232 9
+a240 1
+                       
+d243 1
+a243 1
+ pixelmen(NULL, NULL , NULL);
+d268 8
+d296 9
+a304 1
+                      
+d306 1
+a306 1
+ pixelmen(NULL, NULL, NULL);
+d348 3
+a350 1
+ if (first)  pixel();
+d361 1
+a361 1
+ if (docit) 
+d372 1
+a372 1
+ XtUnmanageChild(iw_pixelmen);                       
+d375 2
+a376 1
+ showbutx("","","",TRUE);
+@
+
+
+1.2
+log
+@fixed doc file output
+@
+text
+@d160 1
+a160 1
+    iw_yreg = wid_textboxb(iw_rowcol1,iw_yreg,"X Reg.:",cval,4);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a28 2
+#include "x.h"
+#include "std.h"
+a240 1
+ int ixt,iyt,iwidet,ihit;
+d331 1
+a331 1
+ int    numwin, nlet;
+d335 1
+a335 3
+    /********** FUTURE close doc file
+    filinc(docnam, docnam, &nlet, &numwin);
+    olddoc = NULL;*******/
+@

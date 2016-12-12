@@ -1,0 +1,307 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2011.07.19.18.16.57;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.10.18.16.59.52;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.03.21.14.26.54;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.02.08.17.18.25;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.02.17.05.41;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.01.26.20.29.11;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.06.30.21.16.22;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.11;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@WEB_BGFGO
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/wid_dialog.c,v 1.7 2005/10/18 16:59:52 leith Exp leith $*/
+/*
+C **********************************************************************
+C
+C WID_DIALOG                        
+C               CONVERTED TO C -- JULY 92 al
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                 
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C  WID_DIALOG
+C
+C  PURPOSE:        CREATES A DIALOG WIDGET
+C
+C  PARAMETERS      IW_PARENT       PARENT WIDGET
+C                  IW_IT           DIALOG WIDGET
+C                  TITLE           WIDGET TITLE
+C                  IX,IY           POSITION (IN PIXELS)
+C
+C  CALLED BY:      imoptmen   montmen3   others
+C
+C--*********************************************************************
+*/
+
+#include<Xm/BulletinB.h>
+#include "common.h"
+
+#define MAX_ARGS 5
+
+ extern void  spout(char *);
+
+
+/************************************************************/
+
+ Widget wid_dialog(Widget iw_parent, Widget iw_dialog, char * title, 
+                   int ix, int iy)
+
+ { 
+ Arg           args[MAX_ARGS];   /* Arg list */
+ register      int  n;           /* Arg count */
+ Position      ixp,iyp;          /* Parent widget's position */
+
+ /* Need to find location relative to present position of top window */
+ XtSetArg(args[0], XmNx, &ixp);
+ XtSetArg(args[1], XmNy, &iyp);
+ XtGetValues(iw_top,args,2);
+ /*( printf ("getvalues on iw_top gave, ixp,iyp: %d %d \n",ixp,iyp);*/
+
+ if (ix < 0 || iy < 0)
+    {    /*  Use default placement for dialog box */
+    ix = 30;
+    iy = 30;
+    }
+
+ n = 0;
+#ifdef WEB_BGFGO
+ XtSetArg(args[n], XmNbackground,  icolorxmb); n++;
+#endif
+
+ XtSetArg(args[n], XmNx, (Position) ix+ixp); n++;
+ XtSetArg(args[n], XmNy, (Position) iy+iyp); n++;
+ XtSetArg(args[n], XmNdefaultPosition, False); n++;
+
+ if (iw_dialog == (Widget)0)
+    {   /* Create widget first */
+    iw_dialog = XmCreateBulletinBoardDialog(iw_parent,title,
+                                            args,n);
+    if (iw_dialog == (Widget)0)
+       {
+       spout("*** WID_DIALOG Cannot open dialog widget.");
+       return iw_dialog;
+       }
+    }
+ else
+    { 
+    XtSetValues(iw_dialog,args,n);
+    }
+ return iw_dialog;
+ }
+ 
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_dialog.c,v 1.6 1996/03/21 14:26:54 leith Exp $*/
+a48 1
+#include "x.h"
+a49 1
+#include "std.h"
+d63 3
+a65 3
+ Arg           args[MAX_ARGS];   /* arg list */
+ register      int  n;           /* arg count */
+ Position      ixp,iyp;          /* parent widget's position */
+d67 1
+a67 1
+ /* need to find location relative to present position of top window */
+d74 1
+a74 1
+    {    /*  use default placement for dialog box */
+d80 4
+d89 1
+a89 1
+    {   /* create widget first */
+@
+
+
+1.6
+log
+@Position
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_dialog.c,v 1.5 1995/02/08 17:18:25 liy Exp leith $*/
+d4 1
+a4 1
+C++************************************************************************* 
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH 			   *
+C **************************************************************************
+@
+
+
+1.5
+log
+@modified (int)structure for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_dialog.c,v 1.4 1995/02/02 17:05:41 liy Exp liy $*/
+d65 2
+a66 2
+ XtSetArg(args[n], XmNx, ix+ixp); n++;
+ XtSetArg(args[n], XmNy, iy+iyp); n++;
+d69 1
+a69 1
+ if (iw_dialog <= (Widget)0)
+d73 1
+a73 1
+    if (iw_dialog <= (Widget)0)
+d79 2
+a80 1
+ else 
+d82 1
+a82 1
+
+@
+
+
+1.4
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_dialog.c,v 1.3 1995/01/26 20:29:11 liy Exp liy $*/
+d73 1
+a73 1
+    if ((int) iw_dialog <= 0)
+@
+
+
+1.3
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_dialog.c,v 1.2 1994/06/30 21:16:22 odesanya Exp liy $*/
+d69 1
+a69 1
+ if (iw_dialog <= (void *)0)
+@
+
+
+1.2
+log
+@increased the MAX_ARGS to 5 to avoid crashing of the scrolling window request
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_dialog.c,v 1.1 1993/11/10 10:11:11 leith Exp odesanya $*/
+d69 1
+a69 1
+ if ((int)iw_dialog <= 0)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d37 1
+a37 1
+#define MAX_ARGS 3
+@

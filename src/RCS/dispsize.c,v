@@ -1,0 +1,263 @@
+head	1.7;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_surf_fromtop:1.7
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.7
+date	2005.10.18.17.00.03;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.08.21.15.36.38;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.08.16.17.50.41;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.08.16.17.37.22;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.08.15.19.32.57;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.12.09.11.07.21;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.12.09.10.58.19;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/dispsize.c,v 1.6 1995/08/21 15:36:38 leith Exp $*/
+
+/***********************************************************************
+ *
+ * dispsize.c
+ *
+ ***********************************************************************
+ * author : ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * dispsize()
+ * 
+ * PURPOSE:    finds size of subimage given window from original image
+ *
+ * RETURNS:    true or false
+ *
+ * PARAMETERS: 
+ *
+ ***********************************************************************
+*/
+
+ /****************************  dispsize  *****************************/
+ 
+#include <math.h>
+
+ void dispsize(int nsam1t,  int nsam2t, 
+               int nrow1t,  int nrow2t, 
+               int nslice1t,int nslice2t, int iskipt,
+               int * nsams, int * nrows, int * nslices)
+
+ { 
+ /* find number of rows in displayed image */
+ if (iskipt > 1) 
+    {
+    *nsams   = ceil((float)(nsam2t - nsam1t + 1) / (float) iskipt);
+    *nrows   = ceil((float)(nrow2t - nrow1t + 1) / (float) iskipt);
+    *nslices = (nslice2t - nslice1t + 1) ;
+    }
+ else if (iskipt < -1)
+    {
+    *nsams   = (nsam2t     - nsam1t + 1) * -iskipt;
+    *nrows   = (nrow2t     - nrow1t + 1) * -iskipt;
+    *nslices = (nslice2t - nslice1t + 1) ;
+    }
+ else
+    {
+    *nsams   = (nsam2t   - nsam1t   + 1);
+    *nrows   = (nrow2t   - nrow1t   + 1);
+    *nslices = (nslice2t - nslice1t + 1);
+    } 
+
+ return;
+}
+
+@
+
+
+1.6
+log
+@# not in first col (needed on vax)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/dispsize.c,v 1.5 1995/08/16 17:50:41 leith Exp leith $*/
+d10 23
+a32 6
+ * COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.5
+log
+@forgot math.h for ceil
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/dispsize.c,v 1.4 1995/08/16 17:37:22 leith Exp leith $*/
+d31 1
+a31 1
+ #include <math.h>
+@
+
+
+1.4
+log
+@buggy for iskip > 1 if size not divisible by iskip evenly (too small)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/dispsize.c,v 1.3 1995/08/15 19:32:57 leith Exp leith $*/
+d31 2
+@
+
+
+1.3
+log
+@removed iskip effect on nslices.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/dispsize.c,v 1.2 1993/12/09 11:07:21 leith Exp leith $*/
+d40 2
+a41 2
+    *nsams   = (nsam2t   - nsam1t   + 1) / iskipt;
+    *nrows   = (nrow2t   - nrow1t   + 1) / iskipt;
+@
+
+
+1.2
+log
+@added convolve
+added convolve
+added convolve
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/dispsize.c,v 1.1 93/12/09 10:58:19 leith Exp Locker: leith $*/
+d42 1
+a42 1
+    *nslices = (nslice2t - nslice1t + 1) / iskipt;
+d48 1
+a48 1
+    *nslices = (nslice2t - nslice1t + 1) * -iskipt;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d20 1
+a20 1
+ * PURPOSE:   
+a28 4
+#include "common.h"
+
+
+
+d31 3
+a33 3
+ void dispsize(int nsam1,  int nsam2, 
+               int nrow1,  int nrow2, 
+               int nslice1,int nslice2, int iskip,
+d38 1
+a38 1
+ if (iskip > 1) 
+d40 3
+a42 3
+    *nsams   = (nsam2   - nsam1   + 1) / iskip;
+    *nrows   = (nrow2   - nrow1   + 1) / iskip;
+    *nslices = (nslice2 - nslice1 + 1) / iskip;
+d44 1
+a44 1
+ else if (iskip < -1)
+d46 3
+a48 3
+    *nsams   = (nsam2     - nsam1   + 1) * -iskip;
+    *nrows   = (nrow2     - nrow1   + 1) * -iskip;
+    *nslices = (nslice2 - nslice1 + 1) * -iskip;
+d52 3
+a54 3
+    *nsams   = (nsam2   - nsam1   + 1);
+    *nrows   = (nrow2   - nrow1   + 1);
+    *nslices = (nslice2 - nslice1 + 1);
+a55 1
+
+@

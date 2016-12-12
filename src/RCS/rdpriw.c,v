@@ -1,0 +1,261 @@
+head	1.6;
+access;
+symbols
+	pre-tilt-improve:1.6
+	pre_surf_fromtop:1.6
+	pre_neednewmap:1.6
+	pre_apppluss_remove:1.6
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.6
+date	2005.10.18.16.59.41;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.05.16.17.34.41;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.02.16.56.45;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.01.26.20.21.31;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.03.11.25.04;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.29;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/rdpriw.c,v 1.5 1996/05/16 17:34:41 leith Exp $*/
+/*
+ * rdpriw.c
+ *
+ **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ **********************************************************************
+ *
+ * 
+ * 
+ * PURPOSE:	retrieves string from widget and converts to integer
+ *              checks to see if value of integer is within range
+ *
+ * RETURNS:	error flag (FALSE is error!)
+ * 
+ * PARAMETERS:  iw_it     widget to be interrogated
+ *              message   error message
+ *              ival      integer value (returned)
+ *              
+ * 
+ *
+ **********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+#include <Xm/TextF.h>
+#include <Xm/Text.h>
+
+ /* function prototypes */
+ extern void spout(char *);
+ extern void spouts(char *);
+ extern void spouti(int);
+
+ /*************************** rdpriw ******************************/
+ 
+ int rdpriw(int * ival, int ilow, int ihi, Widget iw_it, 
+              char * message, char * cdum)
+ {
+
+ char * string;
+
+ if (iw_it == (Widget) 0)
+    {
+    spout("iw_it not set, pgm. error in rdpriw caller");
+    return FALSE;
+    }
+
+ string = XmTextGetString(iw_it);
+
+ if (sscanf(string,"%d",ival) <= 0)  
+    {
+    spouts("*** Illegal value for: "); spout(message);
+    if (string) XtFree(string);
+    return FALSE;
+    } 
+
+ if (* ival < ilow || *ival > ihi)
+    {
+    spouts("*** "); spouts(message); spouts(" out of range: ");
+    spouti(ilow);   spouts("..."); spouti(ihi); spout(" "); 
+    if (string) XtFree(string);
+    return FALSE;
+    } 
+
+ XtFree(string);
+ return TRUE;
+ }
+
+@
+
+
+1.5
+log
+@fixed string stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/rdpriw.c,v 1.4 1995/02/02 16:56:45 liy Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.4
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/rdpriw.c,v 1.3 1995/01/26 20:21:31 liy Exp liy $*/
+d36 1
+a36 2
+
+/* function prototypes */
+d38 2
+a39 2
+
+
+d41 1
+a41 1
+ /******************************************************************/
+a44 1
+
+a47 3
+ char before[] = "*** Illegal value for$";
+ char rangeerr[80];
+ char cval[12];
+d49 1
+a49 1
+ if (iw_it <= (Widget)0)
+d51 1
+a51 1
+    spout("iw_it not set, program error in rdpriw caller");
+d59 2
+a60 2
+    spout(before); spout(message);
+    if (string) XmStringFree((unsigned char *) string);
+d66 3
+a68 6
+    strcpy(rangeerr,message); strcat(rangeerr," *** Out of range: ");
+    sprintf(cval,"%d",ilow); strcat(rangeerr,cval);
+    strcat(rangeerr,"...");
+    sprintf(cval,"%d",ihi); strcat(rangeerr,cval); 
+    spout(rangeerr);
+    if (string) XmStringFree((unsigned char *) string);
+d72 1
+a72 2
+
+ XmStringFree((unsigned char *) string);
+@
+
+
+1.3
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/rdpriw.c,v 1.2 1994/02/03 11:25:04 leith Exp liy $*/
+d54 1
+a54 1
+ if (iw_it <= (void *)0)
+@
+
+
+1.2
+log
+@fixed doc file output
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/rdpriw.c,v 1.1 93/11/10 10:11:29 leith Exp Locker: leith $*/
+d54 1
+a54 1
+ if ((int)iw_it <= 0)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d65 1
+a65 1
+    XmStringFree((unsigned char *) string);
+d75 2
+a76 2
+    spout(message);
+    XmStringFree((unsigned char *) string);
+@

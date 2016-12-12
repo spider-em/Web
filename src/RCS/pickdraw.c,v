@@ -1,0 +1,643 @@
+head	1.12;
+access;
+symbols
+	pre-tilt-improve:1.12
+	pre_surf_fromtop:1.12
+	pre_neednewmap:1.12
+	pre_apppluss_remove:1.12
+	pre_tiltpair_chng:1.11
+	pre_GPL:1.10;
+locks;
+comment	@ * @;
+
+
+1.12
+date	2011.06.22.19.10.53;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2005.10.18.16.59.46;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.05.06.16.23.45;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.04.24.15.15.30;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	96.03.25.14.43.09;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	96.03.21.19.43.55;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.09.06.16.24.10;	author mladjadj;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.11.18.11.11.52;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.04.19.11.52.31;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.04.05.16.47.01;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.03.28.12.23.19;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.16.15.30.04;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.12
+log
+@color
+@
+text
+@/*$Header: /usr8/web/new/RCS/pickdraw.c,v 1.11 2005/10/18 16:59:46 leith Exp $*/
+
+/*
+C++*********************************************************************
+C
+C pickdraw
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    pickdraw
+C
+C    PURPOSE:         Display points from recovered arrays
+C
+C    CALLED BY:       pickp, fitmen
+C
+C***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* External common variables */
+ extern int    ixull, iyull, ixulr, iyulr;
+ extern float  * xu0, * yu0;
+ extern float  * xs,  * ys;
+ extern float  * xs2, * ys2;
+ extern int    iradi;              /* Marker radius, set in pickp */
+
+ /************************  pickdraw *********************************/
+
+ void pickdraw(int leftside,  int ritside, 
+               int locations, int numbers,  int predicted, int iend)
+ {
+ char *  string = NULL;
+ int     ixi, iyi, i;
+
+ /* Set color to green */
+ wicolor(icontx,colorgo + 2);
+
+ /* Draw each of the points */
+ for (i= 0; i < iend; i++)
+    {
+    if (leftside)
+       {
+       if( xu0[i] > nsam1l && xu0[i] < nsam2l && yu0[i] > nrow1l 
+              && yu0[i] < nrow2l)
+          {  
+          ixi = xu0[i] + ixulli;
+          iyi = yu0[i] + iyulli;
+          if (locations)
+             {
+             /*   Draw a circle at this location */
+             xorc(iwin,   icontx,TRUE,ixi,iyi,iradi);
+             xorc(imagsav,icontx,TRUE,ixi,iyi,iradi);
+             }
+
+          if (numbers)
+             {
+             /*   Write marker number at this location */
+             string = itoa(i + 1);
+             witext(icontx, string, ixi, iyi, 1, 0, -1, 2, FALSE);
+             if(string) {free(string); string = (char *) NULL;}
+             }
+          }
+       }
+
+    if (ritside)
+       {
+       if( xs[i] > nsam1r && xs[i] < nsam2r && ys[i] > nrow1r 
+              && ys[i] < nrow2r)
+          {  
+          ixi = xs[i] + ixulri;
+          iyi = ys[i] + iyulri;
+          if ( locations )
+             {
+             /*   Draw a circle at this location */
+             xorc(iwin,icontx,   TRUE,ixi,iyi,iradi);
+             xorc(imagsav,icontx,TRUE,ixi,iyi,iradi);
+             }
+
+          if (numbers)
+             {
+             /* Write marker number at this location */
+             string = itoa(i + 1);
+             witext(icontx, string, ixi, iyi, 1, 0, -1, 2, FALSE);
+             if(string) {free(string); string = (char *) NULL;}
+             }
+          }
+       }
+
+    if (predicted)
+       {
+       if( xs2[i] > nsam1r && xs2[i] < nsam2r && ys2[i] > nrow1r 
+              && ys2[i] < nrow2r)
+          {  
+          ixi = xs2[i] + ixulri;
+          iyi = ys2[i] + iyulri;
+          if (locations)
+              {
+              /* Draw a box at this location */
+              xorbox(iwin,   icontx,TRUE,ixi-2,iyi-2, 5,5);
+              xorbox(imagsav,icontx,TRUE,ixi-2,iyi-2, 5,5);
+              }
+          if (numbers)
+              {
+              /* Write marker number at this location */
+              string = itoa(i + 1);
+              witext(icontx, string, ixi, iyi, 1, 0, -1, 2, FALSE);
+              if(string) {free(string); string = (char *) NULL;}
+              }
+           }
+       }
+    }
+
+ /*     Refresh screen  */
+ expos_cb(NULL,NULL,NULL);
+
+ }
+@
+
+
+1.11
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickdraw.c,v 1.10 1996/05/06 16:23:45 leith Exp $*/
+d37 1
+a37 1
+C    PURPOSE:         display points from recovered arrays
+d47 1
+a47 1
+ /* external common variables */
+d49 4
+a52 2
+ extern float  * xu0, * yu0, * xs, * ys, * xs2, * ys2, * xim;
+ extern int    iradi;   /* marker radius, set in pickp */
+d62 4
+a65 3
+ /* set color to green */
+ wicolor(icontx,colorgo + 29);
+ /* draw each of the points */
+d77 2
+a78 2
+             /*   draw a circle at this location */
+             xorc(iwin,icontx,   TRUE,ixi,iyi,iradi);
+d84 1
+a84 1
+             /*   write marker number at this location */
+d86 1
+a86 1
+             witext(icontx, string, ixi, iyi, 1, 0, 9, 2, FALSE);
+d99 1
+a99 1
+          if (locations)
+d101 1
+a101 1
+             /*   draw a circle at this location */
+d108 1
+a108 1
+             /* write marker number at this location */
+d110 1
+a110 1
+             witext(icontx, string, ixi, iyi, 1, 0, 9, 2, FALSE);
+d125 2
+a126 2
+              /* draw a box at this location */
+              xorbox(iwin,icontx,   TRUE,ixi-2,iyi-2, 5,5);
+d131 1
+a131 1
+              /* write marker number at this location */
+d133 1
+a133 1
+              witext(icontx, string, ixi, iyi, 1, 0, 9, 2, FALSE);
+d140 1
+a140 1
+ /*     refresh screen  */
+@
+
+
+1.10
+log
+@irad should have been iradi now.
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickdraw.c,v 1.9 1996/04/24 15:15:30 leith Exp $*/
+d10 23
+a32 6
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+@
+
+
+1.9
+log
+@made irad global (as it is no longer in gold)
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickdraw.c,v 1.8 1996/03/25 14:43:09 leith Exp leith $*/
+d33 1
+a34 2
+ int           irad;
+
+d58 2
+a59 2
+             xorc(iwin,icontx,   TRUE,ixi,iyi,irad);
+             xorc(imagsav,icontx,TRUE,ixi,iyi,irad);
+d82 2
+a83 2
+             xorc(iwin,icontx,   TRUE,ixi,iyi,irad);
+             xorc(imagsav,icontx,TRUE,ixi,iyi,irad);
+@
+
+
+1.8
+log
+@minor
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickdraw.c,v 1.7 1996/03/21 19:43:55 leith Exp leith $*/
+d31 1
+a31 1
+ extern int    ixull, iyull, ixulr, iyulr, irad;
+d33 2
+@
+
+
+1.7
+log
+@removed unused variables
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickdraw.c,v 1.6 1995/09/06 16:24:10 mladjadj Exp leith $*/
+d39 1
+a39 1
+ char *  string;
+@
+
+
+1.6
+log
+@remove XtUninstallTranslations
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pickdraw.c,v 1.5 94/11/18 11:11:52 leith Exp $*/
+d40 1
+a40 1
+ int     ixi, iyi, ix1, iy1, i;
+@
+
+
+1.5
+log
+@added color setting
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pickdraw.c,v 1.4 94/04/19 11:52:31 leith Exp Locker: leith $*/
+a43 1
+
+a53 1
+
+d66 1
+a66 1
+             free(string);
+a77 1
+
+d90 1
+a90 1
+             free(string);
+a101 1
+
+d113 1
+a113 1
+              free(string);
+@
+
+
+1.4
+log
+@restrict drawing of labels to present area
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/pickdraw.c,v 1.2 94/03/28 12:23:19 leith Exp $*/
+a29 2
+ /* internal function prototypes */
+
+a33 3
+ /* common variables used here */
+
+
+d36 1
+a36 1
+ void pickdraw( int leftside,  int ritside, 
+d42 3
+d47 1
+a47 1
+  {
+d49 1
+a49 1
+     {
+d52 1
+a52 1
+        {  
+d57 2
+a58 2
+           {
+          /*   draw a circle at this location */
+d61 2
+a62 1
+           }
+d64 9
+a72 8
+           {
+          /*   write marker number at this location */
+              string = itoa(i + 1);
+              witext(icontx, string, ixi, iyi, 1, 0, 9, 2, FALSE);
+              free(string);
+           }
+        }
+     }
+d74 1
+a74 1
+     {
+d77 1
+a77 1
+        {  
+d82 6
+a87 5
+           {
+          /*   draw a circle at this location */
+              xorc(iwin,icontx,   TRUE,ixi,iyi,irad);
+              xorc(imagsav,icontx,TRUE,ixi,iyi,irad);
+           }
+d89 8
+a96 8
+           {
+          /* write marker number at this location */
+              string = itoa(i + 1);
+              witext(icontx, string, ixi, iyi, 1, 0, 9, 2, FALSE);
+              free(string);
+           }
+        }
+     }
+d99 1
+a99 1
+     {
+d102 1
+a102 1
+        {  
+d107 2
+a108 2
+           {
+          /* draw a box at this location */
+d111 1
+a111 1
+           }
+d113 2
+a114 2
+           {
+          /* write marker number at this location */
+d118 1
+d120 2
+a121 4
+        }
+     }
+
+  }
+@
+
+
+1.3
+log
+@improved shifting
+@
+text
+@d34 1
+a34 1
+ extern float        * xu0, * yu0, * xs, * ys, * xs2, * ys2, * xim;
+d49 1
+a49 2
+    {
+
+d51 6
+a56 3
+       {
+       ixi = xu0[i] + ixulli;
+       iyi = yu0[i] + iyulli;
+d58 2
+a59 2
+       if (locations)
+          {
+d61 5
+a65 5
+          xorc(iwin,icontx,   TRUE,ixi,iyi,irad);
+          xorc(imagsav,icontx,TRUE,ixi,iyi,irad);
+          }
+       if (numbers)
+          {
+d67 6
+a72 5
+          string = itoa(i + 1);
+          witext(icontx, string, ixi, iyi, 1, 0, 9, 2, FALSE);
+          free(string);
+          }
+       }
+d74 6
+a79 3
+       {
+       ixi = xs[i] + ixulri;
+       iyi = ys[i] + iyulri;
+d81 2
+a82 2
+       if (locations)
+          {
+d84 12
+a95 11
+          xorc(iwin,icontx,   TRUE,ixi,iyi,irad);
+          xorc(imagsav,icontx,TRUE,ixi,iyi,irad);
+          }
+       if (numbers)
+          {
+          /*   write marker number at this location */
+          string = itoa(i + 1);
+          witext(icontx, string, ixi, iyi, 1, 0, 9, 2, FALSE);
+          free(string);
+          }
+       }
+d98 6
+a103 3
+       {
+       ixi = xs2[i] + ixulr;
+       iyi = ys2[i] + iyulr;
+d105 15
+a119 14
+       if (locations)
+          {
+          /*   draw a box at this location */
+          xorbox(iwin,icontx,   TRUE,ixi-2,iyi-2, 5,5);
+          xorbox(imagsav,icontx,TRUE,ixi-2,iyi-2, 5,5);
+          }
+       if (numbers)
+          {
+          /*   write marker number at this location */
+          string = itoa(i + 1);
+          witext(icontx, string, ixi, iyi, 1, 0, 9, 2, FALSE);
+          free(string);
+          }
+       }
+d121 1
+a121 1
+    }
+@
+
+
+1.2
+log
+@removed overlut use
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/pickdraw.c,v 1.1 93/11/16 15:30:04 leith Exp Locker: leith $*/
+d53 2
+a54 2
+       ixi = xu0[i] + ixull;
+       iyi = yu0[i] + iyull;
+d72 2
+a73 2
+       ixi = xs[i] + ixulr;
+       iyi = ys[i] + iyulr;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d4 1
+a4 1
+C++************************************************************************
+d8 1
+a8 1
+C **************************************************************************
+d16 1
+a16 1
+C **************************************************************************
+d28 1
+a29 10
+ /* function prototypes */		     
+ extern void   spout        (char *);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern void   xorc         (Window, GC, int, int, int, int);
+ extern int    wisetplanes  (Display *, GC, int);
+ extern char   * itoa	    (int);
+ extern void   witext       (GC, char *, int, int,int, int, 
+                               int, int, int);
+ extern void     xorbox     (Window, GC, int, int, int, int, int);
+
+d39 1
+a39 1
+ /***********  pickdraw *********************************/
+a46 3
+ /*  enable plane 8 only  for drawing */
+ wisetplanes(idispl,icontx,128);
+
+a110 3
+
+ /*  enable all planes for drawing */
+ wisetplanes(idispl,icontx,-1);
+@

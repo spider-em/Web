@@ -1,0 +1,521 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.3;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2011.06.10.12.14.22;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.10.18.16.59.57;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	96.08.21.16.15.18;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	96.08.13.15.35.44;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	95.11.28.16.45.05;	author liy;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@cosmetic?
+@
+text
+@/*
+ * distmen.c---- Converted from wid_distmen.for  by Yanhong Li
+ *
+ **********************************************************************
+ *  AUTHOR:  ArDean Leith                                                 *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ **********************************************************************
+
+    PURPOSE:         SET VARIOUS PARAMETERS RELATING TO DISTANCE MEASURING
+
+    VARIABLES:       
+
+    CALLED BY:       WEB_COM
+      
+ ***********************************************************************
+ */
+
+#include "common.h"
+#include "routines.h"
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+ /* Internal functions */
+ void          distmen_buta(Widget,XtPointer,XtPointer);
+ void          distmen_buts(Widget,XtPointer,XtPointer);
+ void          distmen_d   (Widget,XtPointer,XtPointer);
+
+ /* File scope variables */
+ static Widget iw_distmen    = (Widget)0,  iw_singledist = (Widget)0;
+ static Widget iw_docit      = (Widget)0,  iw_distdoc    = (Widget)0;
+ static Widget iw_distinimag = (Widget)0,  iw_distleavit = (Widget)0;
+ static Widget iw_distkey    = (Widget)0;
+
+ /* Global variables used here */
+ extern FILEDATA      *filedatap;
+ extern int           opendistdoc;
+ extern int           singledist;
+ extern int           dist_docit;
+ extern int           dist_inimag;
+ extern int           dist_leavit;
+
+ /* Global variables defined here */
+ FILE * 	      fpdocpix;
+
+ /************************* distmen **********************************/
+
+ void distmen(Widget iw_temp, XtPointer data,XtPointer call_data)
+ { 
+ char             cval[5];
+ static   Widget  iw_rowcol;
+ static   Widget  iw_pushc = 0, iw_pusha = 0, iw_pushs = 0, iw_dum = 0;
+ char             * cdum;
+
+ if (iw_distmen <= (Widget)0)
+    {   /* create dist menu widget first */
+    iw_distmen = wid_dialog(iw_win,iw_distmen,
+                             "Distance options",20,20);
+    iw_rowcol   = wid_rowcol(iw_distmen,'v',-1,-1);
+    }
+
+ if (strlen(filnow) == 0) dist_inimag = FALSE;
+ /* create toggle box for dist_docit -------------------- dist_docit */
+ iw_docit = wid_toggleg(iw_rowcol,iw_docit,
+            "Save distances in doc. file",
+            dist_docit,distmen_d,cdum,-1,-1);
+
+ /* create text box for doc file name input  ---------------- docnam */
+ if (dist_docit || iw_distdoc == (Widget) 0)
+ iw_distdoc = wid_textboxb(iw_rowcol,iw_distdoc,"Doc. File:",docnam,12);
+ if (!dist_docit) XtUnmanageChild(XtParent(iw_distdoc));
+
+ /* create toggle box for dist_inimag ------------------ dist_inimag */
+ iw_distinimag = wid_togmen(iw_rowcol,iw_distinimag,"Inside last image",
+                         dist_inimag,-1,-1);
+ if (strlen(filnow) <= 0)  XtUnmanageChild((iw_distinimag));
+
+ /* create toggle box for dist_leav--------------------- dist_leavit */
+ iw_distleavit = wid_togmen(iw_rowcol,iw_distleavit,"Leave lines",
+                            dist_leavit, -1,-1);
+
+ /* create text box for key number input  --------------------- ikey */
+ sprintf(cval,"%4d",ikey);
+ iw_distkey = wid_textboxb(iw_rowcol,iw_distkey,"Key No.:",cval,4);
+
+ /* create toggle box for singledist -------------------- singledist */
+ iw_singledist = wid_togmen(iw_rowcol,iw_singledist,"Single distance",
+                         singledist,-1,-1);
+ if (!dist_docit) 
+    { XtUnmanageChild(XtParent(iw_distkey)); }
+
+ /* create accept boxes  ------------------------------------- apply */
+ 
+ if (iw_dum <= (Widget) 0) 
+    iw_dum   = wid_stdbut(iw_rowcol, iw_distmen, &iw_pushs, &iw_pushc, &iw_pusha, 
+                     "SA",distmen_buts,fin_cb,distmen_buta, NULL);
+
+ XtManageChild(iw_distmen);
+ }
+
+ /************** distmen_d (dist_docit toggle callback) *************/
+
+ void distmen_d(Widget iw_temp,XtPointer data,XtPointer call_data)
+ {
+ dist_docit = XmToggleButtonGadgetGetState(iw_docit);
+                       
+ if (dist_docit) 
+    {strcpy(docnam,XmTextGetString(iw_distdoc));}
+
+ XtUnmanageChild(iw_distmen);                       
+ distmen(NULL, NULL, NULL);
+ }
+
+
+ /************ accept button callback *********************************/
+
+ void distmen_buta(Widget iw_temp,XtPointer data,XtPointer call_data)
+ {
+ char * cdum;
+
+ dist_inimag = XmToggleButtonGadgetGetState(iw_distinimag);
+ if (dist_inimag && strlen(filnow) == 0)
+    {
+    spout("*** Must display image first.");
+    XBell(idispl,50); return;
+    }
+
+ dist_docit = XmToggleButtonGadgetGetState(iw_docit);
+                   
+ if (dist_docit) 
+    {
+    strcpy(docnam,XmTextGetString(iw_distdoc));
+    if (strlen(docnam) == 0) 
+       {
+       spout("*** Must specify document file name.");
+       XBell(idispl,50); return;
+       }
+
+    /* get registers */
+    if (rdpriw(&ikey, 1,INT_MAX, iw_distkey, "key",cdum) == FALSE) return;
+
+    opendistdoc = TRUE;
+
+    }
+
+ singledist = XmToggleButtonGadgetGetState(iw_singledist);
+
+ XtUnmanageChild(iw_distmen);
+ 
+ dist();
+ }
+
+ /************ stop button callback *********************************/
+
+ void distmen_buts(Widget iw_temp,XtPointer data,XtPointer call_data)
+ {
+ int    numdoc, nlet;
+
+ if (dist_docit) 
+     {   /* close the doc file */
+     fclose(fpdocpix); 
+     ikey = 1; 
+     if (strlen(docnam) > 0) 
+        {   /* increment next doc file name */
+        filinc(docnam, docnam, &nlet, &numdoc);
+        }
+     }
+
+ /* remove distmen */
+ XtUnmanageChild(iw_distmen);  
+
+ /* uninstall translations */
+ XtUninstallTranslations(iw_win);
+
+ /* remove button assignment instructions */
+ showbutx("","","",TRUE);
+ }
+
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d46 1
+a46 1
+ /* internal functions */
+d51 1
+a51 1
+ /* file scope variables */
+d57 1
+a57 2
+ /* global variables used here */
+ extern FILE * 	      fpdocpix;
+d64 3
+@
+
+
+1.3
+log
+@added singledist
+@
+text
+@d6 23
+a28 6
+ *  COPYRIGHT (C)1991,  WADSWORTH CENTER FOR LABORATORIES AND             *
+ *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+ *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+ *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+ *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+ *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+@
+
+
+1.2
+log
+@opendoc fixed
+@
+text
+@d2 1
+a2 3
+ * distmen.c
+ *		---- Converted from wid_distmen.for
+ *		     by Yanhong Li
+a28 2
+#define  MAXREGM1 6
+
+d32 1
+a32 3
+ void          distmen_l(Widget,XtPointer,XtPointer);
+ void          distmen_d(Widget,XtPointer,XtPointer);
+ void          distmen_i(Widget,XtPointer,XtPointer);
+d35 4
+a38 1
+ static Widget iw_distmen = (Widget)0;
+a40 2
+ extern Widget        iw_inimag, iw_leavit,  iw_getfile, iw_key;
+ extern Widget        iw_docit, iw_doc;
+d44 4
+d53 4
+a56 4
+ char     cval[5];
+ static   Widget   iw_rowcol;
+ static   Widget   iw_pushc,  iw_pusha,   iw_pushs,   iw_dum = 0;
+ char   * cdum;
+a59 1
+
+d61 1
+a61 1
+                             "dist information options",20,20);
+a62 10
+
+    iw_doc     = (Widget) 0;
+    iw_inimag  = (Widget) 0;
+    iw_docit   = (Widget) 0;
+    iw_leavit  = (Widget) 0;
+    iw_key     = (Widget) 0;
+
+    iw_pushc   = (Widget) 0;
+    iw_pusha   = (Widget) 0;
+    iw_pushs   = (Widget) 0;
+d65 2
+a66 2
+ if (strlen(filnow) == 0) inimag = FALSE;
+ /* create toggle box for docit ---------------------------- docit */
+d68 2
+a69 2
+           "Save distances in doc. file",
+           docit,distmen_d,cdum,-1,-1);
+d71 13
+a83 13
+ /* create text box for doc file name input  -------------- docnam */
+ if (docit || iw_doc == (Widget) 0)
+ iw_doc = wid_textboxb(iw_rowcol,iw_doc,"Doc. File:",docnam,12);
+ if (!docit) XtUnmanageChild(XtParent(iw_doc));
+
+ /* create toggle box for inimag -------------------------- inimag */
+ iw_inimag = wid_toggleg(iw_rowcol,iw_inimag,"Inside last image",
+                         inimag,distmen_i,cdum,-1,-1);
+ if (strlen(filnow) <= 0)  XtUnmanageChild((iw_inimag));
+
+ /* create toggle box for leavit -------------------------- leavit */
+ iw_leavit = wid_toggleg(iw_rowcol,iw_leavit,"Leave lines",leavit,
+                         distmen_l,cdum,-1,-1);
+d85 1
+a85 1
+ /* create text box for key number input  ------------------ ikey */
+d87 1
+a87 1
+ iw_key = wid_textboxb(iw_rowcol,iw_key,"Key No.:",cval,4);
+d89 5
+a93 2
+ if (!docit) 
+    { XtUnmanageChild(XtParent(iw_key)); }
+d95 1
+a95 1
+ /* create accept boxes  ---------------------------------- apply */
+d104 1
+a104 12
+
+ /************** distmen_i (inimag toggle callback) **************/
+
+ void distmen_i(Widget iw_temp,XtPointer data,XtPointer call_data)
+ {
+ inimag = XmToggleButtonGadgetGetState(iw_inimag);
+
+ if (docit) 
+    {strcpy(docnam,XmTextGetString(iw_doc));}
+ }
+
+ /************** distmen_d (docit toggle callback) *************/
+d108 1
+a108 1
+ docit = XmToggleButtonGadgetGetState(iw_docit);
+d110 2
+a111 2
+ if (docit) 
+    {strcpy(docnam,XmTextGetString(iw_doc));}
+a116 1
+ /************** distmen_l (leavit toggle callback) *************/
+a117 8
+ void distmen_l(Widget iw_temp,XtPointer data,XtPointer call_data)
+ {
+ leavit = XmToggleButtonGadgetGetState(iw_leavit);
+                     
+ if (docit) 
+    {strcpy(docnam,XmTextGetString(iw_doc));}
+ }
+
+a122 1
+ int    iform;
+d124 2
+a125 2
+ inimag = XmToggleButtonGadgetGetState(iw_inimag);
+ if (inimag && strlen(filnow) == 0)
+d128 1
+a128 1
+    return;
+d131 3
+a133 2
+ docit = XmToggleButtonGadgetGetState(iw_docit);                   
+ if (docit) 
+d135 1
+a135 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d139 1
+a139 1
+       return;
+d143 1
+a143 1
+    if (rdpriw(&ikey, 1,INT_MAX, iw_key, "key",cdum) == FALSE) return;
+d146 1
+d149 2
+a159 1
+
+d162 1
+a162 1
+  if (docit) 
+d166 4
+a169 4
+     if (strlen(docnam) != 0) 
+       {   /* increment next doc file name */
+       filinc(docnam, docnam, &nlet, &numdoc);
+       }
+a174 4
+ /* close the image file, if opened here */
+ if (filedatap != NULL && filedatap->fp != NULL) 
+     closefilep(&filedatap); 
+
+d177 3
+@
+
+
+1.1
+log
+@initial revision
+@
+text
+@d34 5
+a38 5
+ void          distmen_buta(Widget, caddr_t, caddr_t);
+ void          distmen_buts(Widget, caddr_t, caddr_t);
+ void          distmen_l(Widget, caddr_t, caddr_t);
+ void          distmen_d(Widget, caddr_t, caddr_t);
+ void          distmen_i(Widget, caddr_t, caddr_t);
+d40 1
+a40 1
+ /* common variables */
+d42 2
+d48 1
+d52 1
+a52 1
+ void distmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d75 1
+a75 2
+
+ }
+d77 1
+a77 1
+if (strlen(filnow) == 0) inimag = FALSE;
+d102 1
+a102 3
+    {
+    XtUnmanageChild(XtParent(iw_key));
+    }
+a109 1
+
+d116 1
+a116 1
+ void distmen_i(Widget iw_temp, caddr_t data, caddr_t call_data)
+d121 1
+a121 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d126 1
+a126 1
+ void distmen_d(Widget iw_temp, caddr_t data, caddr_t call_data)
+d131 1
+a131 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d139 1
+a139 1
+ void distmen_l(Widget iw_temp, caddr_t data, caddr_t call_data)
+d144 1
+a144 1
+    strcpy(docnam,XmTextGetString(iw_doc));
+d149 1
+a149 1
+ void distmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+a150 1
+
+d152 1
+a152 1
+ int iform;
+d157 1
+a157 1
+    spout("*** Must display image to find file value for dist.");
+d172 3
+a174 1
+    if (rdpriw(&ikey, 1,INT_MAX, iw_key, "key",       cdum) == FALSE) return;
+d184 1
+a184 1
+ void distmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+d199 1
+a199 1
+ /* remove the distmen */
+d203 3
+a205 1
+ if (filedatap != NULL && filedatap->fp != NULL) closefilep(&filedatap); 
+@

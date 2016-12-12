@@ -1,0 +1,212 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.17.00.03;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2000.06.30.19.47.07;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2000.06.30.19.45.55;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2000.06.30.19.20.38;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	99.09.14.14.15.46;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@GPL
+@
+text
+@/*$Header: /net/ithaca/usr1/web/src/RCS/iskipadj.c,v 1.4 2000/06/30 19:47:07 leith Exp $*/
+/*
+C++**********************************************************************
+C
+C  iskipadj.c          Sept 99 
+C
+C **********************************************************************
+C    AUTHOR:  ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    iskipadj()
+C
+C    PURPOSE:     Converts screen coordinates to actual image
+C                 coordinates.  For use with images displayed at
+C                 different sizes using variable: iskip.
+C
+C    PARAMETERS: none   
+C
+C    CALLED BY:  catmen_buta     
+C
+C--*********************************************************************
+*/
+#include "common.h"
+
+
+ /************************  iskipadj   *******************************/
+
+ int iskipadj(int ixs,int iys, int nsam, int nrow, int iskip,
+              int* ixi, int *iyi)
+
+ {
+ if (iskip < -1)
+    {    /* magnified image */
+    *ixi  = (ixs  + 1) / -iskip ;
+    *iyi  = (iys  + 1) / -iskip ;
+    }
+ else if (iskip > 1)
+    {     /* shrunken image */
+    *ixi  = (ixs -1) * iskip + 1;
+    *iyi  = (iys -1) * iskip + 1;
+    }
+ else
+    {    /* regular scale image */
+    *ixi  = ixs;
+    *iyi  = iys;
+    }
+
+ if (*ixi < 1 || *ixi > nsam || *iyi < 1 || *iyi > nrow)
+    {    /* cursor is outside of image, only want inside */
+   return FALSE;
+    }
+ return TRUE;
+ }
+
+@
+
+
+1.4
+log
+@reordered lines
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/iskipadj.c,v 1.3 2000/06/30 19:45:55 leith Exp leith $*/
+d9 23
+a31 6
+C *  COPYRIGHT (C)1999, WADSWORTH CENTER FOR LABORATORIES AND          *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.  *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS *
+C *    OR USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN        *
+C *    APPROVAL OF THE CENTER FOR LABORATORIES AND RESEARCH            *
+@
+
+
+1.3
+log
+@rnamed variables
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/iskipadj.c,v 1.2 2000/06/30 19:20:38 leith Exp leith $*/
+d40 1
+a41 1
+    *ixi  = (ixs  + 1) / -iskip ;
+d45 1
+a46 1
+    *ixi  = (ixs -1) * iskip + 1;
+d50 1
+a51 1
+    *ixi  = ixs;
+@
+
+
+1.2
+log
+@comment added
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/iskipadj.c,v 1.1 1999/09/14 14:15:46 leith Exp leith $*/
+d17 1
+a17 1
+C    iskipadj(ixi,iyi,iya,iya)
+d34 2
+a35 2
+ int iskipadj(int ixi,int iyi, int nsam, int nrow, int iskip,
+              int* ixa, int *iya)
+d40 2
+a41 2
+    *iya  = (iyi  + 1) / -iskip ;
+    *ixa  = (ixi  + 1) / -iskip ;
+d45 2
+a46 2
+    *iya  = (iyi -1) * iskip + 1;
+    *ixa  = (ixi -1) * iskip + 1;
+d50 2
+a51 2
+    *iya  = iyi;
+    *ixa  = ixi;
+d54 1
+a54 1
+ if (*ixa < 1 || *ixa > nsam || *iya < 1 || *iya > nrow)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/cat.c,v 1.18 1999/08/03 14:02:58 leith Exp $*/
+d19 3
+a21 1
+C    PURPOSE:     category selecting program
+@

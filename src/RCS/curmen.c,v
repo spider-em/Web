@@ -1,0 +1,665 @@
+head	1.12;
+access;
+symbols
+	pre-tilt-improve:1.11
+	pre_surf_fromtop:1.11
+	pre_neednewmap:1.11
+	pre_apppluss_remove:1.11
+	pre_tiltpair_chng:1.11
+	pre_GPL:1.10;
+locks;
+comment	@ * @;
+
+
+1.12
+date	2015.09.01.17.52.51;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2005.10.18.17.00.01;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.07.11.17.28.10;	author mladjadj;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.02.07.19.48.46;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.02.01.22.01.00;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.01.26.19.59.20;	author liy;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.09.12.15.34.27;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.09.12.14.21.40;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.02.01.11.02.05;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.23.16.13.36;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.16.58.14;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.36;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@$2
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/curmen.c,v 1.11 2005/10/18 17:00:01 leith Exp $*/
+
+/*
+ C**********************************************************************
+ C
+ C wid_curmen.for     Created                              Mar   91 al
+ C curmen.c           Converted to C                       Nov   92 al 
+ C                    True color bug                       Jul 2015 al 
+ C                                                                   
+ C**********************************************************************
+ C * AUTHOR: A. LEITH                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C    CURMEN()
+ C
+ C    PARAMETERS:   iw_caller     Parent widget
+ C
+ C    PURPOSE:      Sets up a cursor selection super-widget
+ C
+ C    CALLED BY: 
+ C
+ C**********************************************************************
+*/
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+#include <Xm/PushB.h>
+
+#include "common.h"
+#include "routines.h"
+
+#define MAX_ARGS 10
+#define MAXCURS 77
+
+ /* Internal function prototypes */
+ void          curmen_but(Widget iw_temp, XtPointer, XtPointer);
+ 
+ /* Externally used common variables */
+
+ /* Internal common variables */
+ static Widget   iw_curmen = (Widget)0;
+ static Window   iwcurpal;
+ static int      ixd, iyd, nperrow;
+
+
+ /* USE A 16X16 GRID FOR CURSORS.  USE A ENDIAN NUMBERING SYSTEM
+    THAT STARTS WITH ONE AT LEFT END OF EACH BYTE!  */
+
+
+ /********************   curmen   ****************************/
+
+ void curmen(Widget iw_caller, XtPointer data, XtPointer call_data)
+
+ { 
+ Arg        args[MAX_ARGS];   /* arg list */
+
+ static Widget   iw_lab, iw_curpal;
+ GC              icontcc;
+ Pixmap          icursav;
+ XGCValues       gcval;
+ Font            ifontcur;
+
+ Widget          iw_pushf;
+ unsigned int    iwid, ihi;
+ int             ixulb, iyulb;
+ int             icur, ixt, idi, ioff;
+ char            it;
+ char            cit[1];
+
+ if (iw_curmen <= (Widget)0)
+    {   /* Create cursor choice menu widget first */
+
+    iw_curmen  = wid_dialog(iw_win, 0, "Cursor options", -1, -1);
+
+    /* Create label box for cursor palette  */
+    iw_lab  = wid_labelg(iw_curmen, 0, "CURSORS", 66, 4);
+
+    XtSetArg(args[0], XmNautoUnmanage, FALSE); 
+    XtSetValues(iw_curmen, args, 1);
+
+    /* Set size for overall pallate */
+    iwid    = 338;
+    ihi     = 282;
+
+    /* Set size for individual color boxes */
+    ixd     = 32;
+    iyd     = 32;
+    nperrow = iwid / ixd;
+
+    /* Need to create a new graphics context for use here */
+    icontcc = XCreateGC(idispl,iwin,0,&gcval);
+    XCopyGC(idispl,icontx,0,icontcc);
+
+    /*  Load X cursor font in server for char cursors */
+    ifontcur = XLoadFont(idispl,"cursor");
+
+    /* Associate X cursor font with graphics context */
+    XSetFont(idispl,icontcc,ifontcur);
+
+    icursav = XCreatePixmap(idispl,iroot, iwid,ihi,
+                          DefaultDepthOfScreen(iscreen));
+    if (icursav <= (Pixmap)0)  
+      {  spout("*** Can not create cursor pixmap!"); return; } 
+
+    /* Set color in icontcc to black, clear the cursor pixmap */
+    wicolor(icontcc,colorgo);
+    XFillRectangle(idispl,icursav,icontcc,0,0,iwid,ihi);
+
+    /*  Set color to white in icontcc */
+#ifdef WEB_TRUE
+    wicolor(icontcc,colorgo+7);
+#else
+    wicolor(icontcc,colorgo+10);
+#endif
+    
+    ixulb   = iwid;
+    iyulb   = -14;
+    icur    = 0;
+
+    for (icur = 0; icur < MAXCURS-1; icur++)
+       {
+       ixulb = ixulb + ixd;
+       if (ixulb > (iwid-ixd))
+          {   /*  Start new line of cursor  boxes */
+          ixulb = 4;
+          iyulb = iyulb + iyd;
+          }
+
+       /*   Set cursor for this box */
+       it     = icur * 2;
+       cit[0] = it;
+
+       /*  Write cursor text to screen */
+       /* witext(icontcc, cit, ixulb+12, iyulb+15, 1, 0, -1, 2, FALSE);*/
+       XDrawString(idispl,icursav,icontcc,ixulb+12,iyulb+15, cit,1);
+
+       }
+
+    /*  Special code for Radermacher's crosshair */
+    ixt   = 7;
+    ixulb = ixulb + ixd + ixt;
+    iyulb = iyulb + ixt;
+    idi   = 4;
+    ioff  = 16;
+    XDrawLine(idispl,icursav,icontcc,
+              ixulb,iyulb,ixulb+idi,iyulb+idi);
+    XDrawLine(idispl,icursav,icontcc,
+               ixulb+ioff,iyulb,ixulb+ioff-idi,iyulb+idi);
+    XDrawLine(idispl,icursav,icontcc,
+               ixulb,iyulb+ioff,ixulb+idi,iyulb+ioff-idi);
+    XDrawLine(idispl,icursav,icontcc,
+              ixulb+ioff,iyulb+ioff,ixulb+ioff-idi,iyulb+ioff-idi);
+
+    iw_curpal = wid_push(iw_curmen, 0,"", curmen_but,
+                        (char *) iw_curmen,  map, 5,32);
+    iwcurpal  = XtWindow(iw_curpal);
+
+     XtSetArg(args[0],XmNshadow,       FALSE);
+     XtSetArg(args[1],XmNmarginWidth,  0);
+     XtSetArg(args[2],XmNmarginHeight, 0);
+     XtSetArg(args[3],XmNborderWidth,  0);
+     XtSetArg(args[4],XmNwidth,        iwid);
+     XtSetArg(args[5],XmNheight,       ihi);
+     XtSetArg(args[6],XmNlabelType,    XmPIXMAP);
+     XtSetArg(args[7],XmNlabelPixmap,  icursav);
+     XtSetValues(iw_curpal,args,8);
+
+
+     /*  Create push button for finished */
+     iw_pushf = wid_pushg(iw_curmen, 0,"   FINISHED  ", fin_cb,
+                        (char *) iw_curmen,  180,iyulb + iyd + 50);
+
+     icursor = 0;
+
+     XtManageChild(iw_curmen);
+
+     iwcurpal = XtWindow(iw_curpal);
+     }
+ else
+     XtManageChild(iw_curmen);
+ }
+
+
+ /*********** Cursor changed button callback *************************/
+
+ void curmen_but(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ int          ix,iy, ixr,iyr, icursort;
+ Bool         onscreen;
+ Window       irootwin, iwinnow;
+ unsigned int idum;
+
+ /* find cursor location */
+ onscreen = XQueryPointer(idispl,iwcurpal, &irootwin, &iwinnow, 
+            &ixr, &iyr, &ix, &iy, &idum);
+
+ if (onscreen) 
+     {   
+     /*  Pointer is in the desired display and window */
+
+     /* Derive cursor number from position in the cursor pallete */
+     icursort = (((iy-12) / iyd)  * nperrow) + (ix / ixd);
+
+     /***** debug ***************
+     printf("ix,iy,nperrow: %d  %d %d icursort: %d \n",
+             ix,iy,nperrow,icursort); ***********/
+
+     if (icursort >= MAXCURS-1) 
+        {   /*  special code for Radermacher's x-hair */
+        icursort = MAXCURS-1;
+        }
+
+     /* Set cursor in iwin and color it */ 
+     setacursor(icursort, icolorcf, icolorcb);
+
+     /* Set cursor in cursor pallette area */
+     XDefineCursor(idispl,iwcurpal,icursorx);
+     }
+ }
+
+
+@
+
+
+1.11
+log
+@GPL
+@
+text
+@d2 2
+a3 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/curmen.c,v 1.10 1995/07/11 17:28:10 mladjadj Exp $*/
+d5 8
+a12 7
+C++*************************************************************************
+C
+C WID_CURMEN.FOR  -- CREATED MAR 91
+C CURMEN.C           CONVERTED TO C NOV 92 al 
+C                                                                   
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                      *
+d14 1
+a14 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d36 11
+a46 12
+C **********************************************************************
+C
+C    CURMEN()
+C
+C    PARAMETERS:   IW_PARENT   PARENT WIDGET
+C                  IXUL,IYUL   CORNERS OF WIDGET
+C
+C    PURPOSE:      SETS UP A CURSOR SELECTION SUPER-WIDGET
+C
+C    CALLED BY: 
+C
+C--*********************************************************************
+d59 2
+a60 2
+ /* internal function prototypes */
+ void          curmen_but(Widget iw_temp, caddr_t, caddr_t);
+d62 1
+a62 1
+ /* externally used common variables */
+d64 1
+a64 1
+ /* internal common variables */
+d70 2
+a71 4
+ /*  TO CALCULATE CURSOR APPEARANCE USE A 16X16 GRID.  USE A 
+      ENDIAN NUMBERING SYSTEM THAT STARTS WITH ONE AT LEFT END
+      OF EACH BYTE NOT AT THE USUAL RIGHT END!  */
+
+d76 1
+a76 1
+ void curmen(Widget iw_caller, caddr_t data, caddr_t call_data)
+d92 1
+a92 1
+ char            cit[2];
+d95 1
+a95 1
+    {   /* create cursor choice menu widget first */
+d99 1
+a99 1
+    /* create label box for cursor palette  */
+d105 1
+a105 1
+    /* set size for overall pallete */
+d109 1
+a109 1
+    /* set size for individual color boxes */
+d114 1
+a114 1
+    /* need to create a new graphics context for use here */
+d118 1
+a118 1
+    /*  load x cursor font in server for char cursors */
+d121 1
+a121 1
+    /* associate x cursor font with graphics context */
+d129 1
+a129 1
+    /* set color in icontcc to black, clear the cursor pixmap */
+d133 4
+a136 1
+    /*  set color to white in icontcc */
+d138 1
+d148 1
+a148 1
+          {   /*  start new line of cursor  boxes */
+d153 1
+a153 1
+       /*   set cursor for box */
+d157 4
+a160 3
+       /*            write text to screen */
+       XDrawString(idispl,icursav,icontcc,ixulb+12,iyulb+15,
+                   cit,1);
+d163 1
+a163 1
+    /*  special code for radermacher's crosshair */
+a177 1
+
+d193 1
+a193 1
+     /*  create push button for finished */
+d200 2
+a201 1
+     iwcurpal  = XtWindow(iw_curpal);
+a204 1
+
+d208 1
+a208 1
+ /*********** cursor changed button callback *************************/
+d210 1
+a210 1
+ void curmen_but(Widget iw_temp, caddr_t data, caddr_t call_data)
+d223 1
+a223 1
+     /*  pointer is in the desired display and window */
+d225 1
+a225 1
+     /* derive cursor number from position in the cursor pallete */
+d237 1
+a237 1
+     /* set cursor in iwin and color it */ 
+d240 1
+a240 1
+     /* set cursor in cursor pallete area */
+@
+
+
+1.10
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/curmen.c,v 1.9 1995/02/07 19:48:46 liy Exp mladjadj $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.9
+log
+@modified (int)structure for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/curmen.c,v 1.8 1995/02/01 22:01:00 liy Exp liy $*/
+d47 1
+a47 1
+ static Widget   iw_curmen;
+@
+
+
+1.8
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/curmen.c,v 1.7 1995/01/26 19:59:20 liy Exp liy $*/
+d110 1
+a110 1
+    if ((int) icursav <= 0)  
+@
+
+
+1.7
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/curmen.c,v 1.6 1994/09/12 15:34:27 leith Exp liy $*/
+d78 1
+a78 1
+ if (iw_curmen <= (void *)0)
+@
+
+
+1.6
+log
+@added common.h
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/curmen.c,v 1.5 94/09/12 14:21:40 leith Exp Locker: leith $*/
+d78 1
+a78 1
+ if ((int)iw_curmen <= 0)
+@
+
+
+1.5
+log
+@ reworked color assignments
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/curmen.c,v 1.4 94/02/01 11:02:05 leith Exp Locker: leith $*/
+d36 1
+@
+
+
+1.4
+log
+@removed icurrad (unused)
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/curmen.c,v 1.3 93/11/23 16:13:36 leith Exp Locker: leith $*/
+a30 1
+#include "common.h"
+d35 2
+a39 17
+ /* external function prototypes */
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*)(), 
+                              char *, int, int);
+ extern Widget wid_push     (Widget, Widget, char *, void (*)(), 
+                              char *, Colormap, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern void   spout        (char *);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern int    wicolor      (GC, int);
+ extern int    wimakecur    (Cursor *, char * , char *,
+                             XColor *, XColor *, int, int);
+ extern void   setacursor   (int, int, int);
+ extern void   radcur       (int);
+
+d113 1
+a113 1
+    wicolor(icontcc,1);
+d117 1
+a117 1
+    wicolor(icontcc,10);
+@
+
+
+1.3
+log
+@added radcur call
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/curmen.c,v 1.2 93/11/16 16:58:14 leith Exp Locker: leith $*/
+a59 1
+ Cursor   icurrad;
+@
+
+
+1.2
+log
+@/ in wrong place (lint)
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/curmen.c,v 1.1 93/11/10 10:11:36 leith Exp Locker: leith $*/
+d54 2
+a55 1
+ 
+a72 9
+ static char lfore[] = {
+      0X01, 0X80,   0X02, 0X40, 
+      0X04, 0X20,   0X08, 0X10, 
+      0X10, 0X08,   0X00, 0X00, 
+      0X00, 0X00,   0X00, 0X00, 
+      0X00, 0X00,   0X00, 0X00, 
+      0X00, 0X00,   0X10, 0X08, 
+      0X08, 0X10,   0X04, 0X20, 
+      0X02, 0X40,   0X01, 0X80 };
+a73 11
+ static char lback[] = {
+      0X03, 0XC0,   0X07, 0XE0, 
+      0X0E, 0X70,   0X1C, 0X38, 
+      0X18, 0X18,   0X00, 0X00, 
+      0X00, 0X00,   0X00, 0X00, 
+      0X00, 0X00,   0X00, 0X00, 
+      0X00, 0X00,   0X18, 0X18, 
+      0X1C, 0X38,   0X0E, 0X70, 
+      0X07, 0XE0,   0X03, 0XC0 };
+
+
+d87 1
+a87 1
+ Widget          iw_pushf, iw_temp;
+d90 1
+a90 1
+ int             n,  icur, ixt, idi, ioff;
+a101 1
+    n = 0;
+a230 3
+
+        wimakecur(&icurrad,lfore,lback,
+                      &colorcursf,&colorcursb, 8,8);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d107 2
+a108 1
+ int             iwid, ihi, ixulb, iyulb;
+d160 1
+a160 1
+    for (icur = 0; icur < MAXCURS-1; icur++)\
+@

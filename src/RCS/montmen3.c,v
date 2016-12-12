@@ -1,0 +1,810 @@
+head	1.16;
+access;
+symbols
+	pre-tilt-improve:1.16
+	pre_surf_fromtop:1.16
+	pre_neednewmap:1.16
+	pre_apppluss_remove:1.16
+	pre_tiltpair_chng:1.16
+	pre_GPL:1.15;
+locks;
+comment	@ * @;
+
+
+1.16
+date	2005.10.18.16.59.56;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	96.03.26.15.07.51;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.08.02.18.41.46;	author liy;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.03.30.17.04.10;	author mladjadj;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.02.02.16.48.19;	author liy;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.02.02.16.42.40;	author liy;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.01.27.16.13.22;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.01.26.20.18.13;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.01.23.10.00.15;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.08.19.11.16.57;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.08.10.10.01.57;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.06.17.11.33.44;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.06.16.16.41.35;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.12.12.40.25;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.14.10.23.36;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.20;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/montmen3.c,v 1.15 1996/03/26 15:07:51 leith Exp $*/
+/*
+C++************************************************************************
+C
+C MONTMEN3
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C MONTMEN3
+C
+C PURPOSE:         DISPLAY MONTAGE MENU
+C
+C VARIABLES:       NAMES      LOGICAL FLAG TO PRINT NAMES
+C                  IXUL,IYUL  UPPER LEFT CORNER FOR LAST IMAGE
+C                  MARX,MARY  X & Y MARGINS FOR MONTAGE
+C
+C CALLED BY:       
+C
+C**************************************************************************
+*/
+
+#include <Xm/Scale.h>
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+#include "common.h"
+#include "routines.h"
+
+#define MAX_ARGS 2
+
+ /* internal function prototypes */
+ void          montmen3_buta(Widget iw_temp, XtPointer, XtPointer);
+ void          montmen3_butc(Widget iw_temp, XtPointer, XtPointer);
+
+ /* file scope variables */
+ static Widget   iw_scales[6];
+ static Widget   iw_ixul, iw_iyul, iw_nprow;
+ static Widget   iw_montmen3 = 0, iw_pushc, iw_pusha, iw_numfil;
+ static Widget   iw_xaxis, iw_yaxis, iw_zaxis, iw_movie, iw_norm;
+
+ /* externally used variables */
+ int      endfile;           /* used in mont3 */
+
+ /*************************  montmen3 ********************************/
+
+ void montmen3(void)
+
+ { 
+ int    i;
+ Widget iw_rowcol1, iw_rowcol2, iw_rowcol3;
+ Widget iw_dums, iw_radio;
+ char   cval[9];
+ Arg    args[2];
+
+ if (iw_montmen3 == (Widget)0)
+    {   /* create 3-D montage menu widget first */
+
+    iw_montmen3 = wid_dialog(iw_win, 0, "montage options", -1, -1);
+    iw_rowcol1  = wid_rowcol(iw_montmen3, 'v', -1, -1);
+
+    /* create label box for axis -----------------------------  axis  */
+    iw_rowcol2  = wid_rowcol(iw_rowcol1,  'h', -1, -1);
+                  wid_labelg(iw_rowcol2, 0, "AXIS:   ", -1, -1);
+
+    /* create toggle boxes for axes */
+    iw_radio  = wid_rowcol(iw_rowcol2,  'h', -1, -1);
+    XtSetArg(args[0], XmNradioBehavior, TRUE);
+    XtSetValues(iw_radio, args, 1);
+
+    iw_xaxis = wid_togmen(iw_radio,iw_xaxis,"X  ",xaxis,-1,-1);
+    iw_yaxis = wid_togmen(iw_radio,iw_yaxis,"Y  ",yaxis,-1,-1);
+    iw_zaxis = wid_togmen(iw_radio,iw_zaxis,"Z  ",zaxis,-1,-1);
+
+    /* create text box for numfil input ---------------------- numfil */
+    strcpy(cval,"*");
+    iw_numfil = wid_textboxb(iw_rowcol1, 0, "LAST FILE NUMBER:", 
+                            cval, 6);
+
+    /* create label box for location ----------------------- location */
+    iw_rowcol3  = wid_rowcol(iw_rowcol1,'h',-1,-1);
+                  wid_labelg(iw_rowcol3,0, "LOCATION:",-1,-1);
+
+    /* create toggle box for movie ---------------------------- movie */
+    iw_movie = wid_togmen(iw_rowcol1,0,"MOVIE",movie,-1,-1);
+
+    /* create toggle box for normalize -------------------- normalize */
+    iw_norm = wid_togmen(iw_rowcol1,0,"NORM. BY SLICE",normit,-1,-1);
+ 
+
+    /* create text boxes for ixuln & iyuln -------------------- ixuln */
+    if (keepxy) 
+       { /* do not want to reset ixuln & iyuln */
+       sprintf(cval,"%4d",ixuln);
+       iw_ixul = wid_textboxb(iw_rowcol3,0,"X",cval,4);
+       sprintf(cval,"%4d",iyuln);
+       iw_iyul = wid_textboxb(iw_rowcol3,0,"Y",cval,4);
+       }
+    else
+       {
+       iw_ixul = wid_textboxb(iw_rowcol3,0,"X","*",4);
+       iw_iyul = wid_textboxb(iw_rowcol3,0,"Y","*",4);
+       }
+
+    /* create text box for pictures / row input --------------- nprow */
+    strcpy(cval,"*AS FITS");
+    iw_nprow = wid_textboxb(iw_rowcol1, 0, "FRAMES / ROW:", 
+                            cval,8);
+
+
+    /* create scale widgets for col, row & slice ------------- scales */
+    for (i=0; i < 6; iw_scales[i++]  = (Widget) 0)
+        ;
+    wid_win(iw_rowcol1, &iw_scales[0], nsam, nrow, nslice);
+
+
+    /* create box for apply ----------------------------------- apply */
+    wid_stdbut(iw_rowcol1, iw_montmen3, &iw_dums, &iw_pushc, &iw_pusha,
+               "CA", fin_cb, montmen3_butc, montmen3_buta, NULL);
+
+    }
+
+ else
+    {   /* montage menu widget already exists, update it */
+    /* update text boxes for ixuln & iyuln -------------------- ixuln */
+    if (keepxy) 
+       { /* do not want to reset ixuln & iyuln */
+       sprintf(cval,"%4d",ixuln);
+       iw_ixul = wid_textboxb(iw_rowcol3,iw_ixul,"X",cval,4);
+       sprintf(cval,"%4d",iyuln);
+       iw_iyul = wid_textboxb(iw_rowcol3,iw_iyul,"Y",cval,4);
+       }
+    else
+       {
+       iw_ixul = wid_textboxb(iw_rowcol3,iw_ixul,"X","*",4);
+       iw_iyul = wid_textboxb(iw_rowcol3,iw_iyul,"Y","*",4);
+       }
+
+    /* create text box for pictures / row input --------------- nprow */
+    if (samefile)  
+       sprintf(cval,"%4d",nprow);
+    else
+       strcpy(cval,"*AS FITS");
+    iw_nprow = wid_textboxb(iw_rowcol1, iw_nprow, "FRAMES / ROW:", 
+                            cval,8);
+
+ 
+    /* update scale widgets for col, row & slice ------------- scales */
+    wid_win(iw_rowcol1, &iw_scales[0], nsam, nrow, nslice);
+    }
+ XtManageChild(iw_montmen3);
+ }
+
+
+ /*********** accept button callback **********************************/
+
+ void montmen3_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char *string;
+ int  lastfilt;
+
+ if (getcorner(iw_ixul,iw_iyul,&ixuln,&iyuln) == FALSE) return;
+
+ /* get nsam1 & nsam2 */
+ XmScaleGetValue(iw_scales[0],&nsam1);
+ XmScaleGetValue(iw_scales[1],&nsam2);
+ if (nsam2 < nsam1)
+    {
+    spout("*** ENDING COL MUST BE > STARTING COL");
+    return;
+    }
+
+ /* get nrow1 & nrow2 */
+ XmScaleGetValue(iw_scales[2],&nrow1);
+ XmScaleGetValue(iw_scales[3],&nrow2);
+ if (nrow1 > nrow2)
+    {
+    spout("*** ENDING ROW MUST BE > STARTING ROW");
+    return;
+    }
+
+ /* get nslice1 & nslice2 */
+ XmScaleGetValue(iw_scales[4],&nslice1);
+ XmScaleGetValue(iw_scales[5],&nslice2);
+ if (nslice1 > nslice2)
+    {
+    spout("*** ENDING SLICE MUST BE > STARTING SLICE");
+    return;
+    }
+
+ movie = XmToggleButtonGadgetGetState(iw_movie);
+ 
+ if (iw_norm > (Widget)0)
+    normit = XmToggleButtonGadgetGetState(iw_norm);
+
+ if (nslice > 1) 
+   {
+   xaxis = XmToggleButtonGadgetGetState(iw_xaxis);
+   yaxis = XmToggleButtonGadgetGetState(iw_yaxis);
+   zaxis = XmToggleButtonGadgetGetState(iw_zaxis);
+   }
+
+ /* find file numbers wanted */
+ string = XmTextGetString(iw_numfil);
+
+ if(ioper == 2) 
+   {   /* 3D montage  */  
+   if (strncmp(string,"*",1) == 0)
+      {
+      /* want all files in this series until first missing file */
+      endfile = -1;
+      lastfilt = -1;
+      }
+   else
+      {
+      if (sscanf(string,"%d",&lastfilt) <= 0 || lastfilt < 0)
+         {   /* can not interpret lastfilt */
+         spout("*** Can not interpret number of last file in montage! ");
+          if (string) XtFree (string);  return;
+         }
+
+       endfile = lastfilt;
+       }
+     }
+  else 
+     {  /* 2D series of 3D volume  */
+     endfile = 0;
+     }
+ if (string) XtFree (string);
+
+ /* find nprow value */
+ string = XmTextGetString(iw_nprow);
+
+ XtUnmanageChild(iw_montmen3);
+ expos_cb(NULL,NULL,NULL);
+
+ if (xaxis) 
+    {   /* want x axis montage */
+    if (sscanf(string,"%d",&nprow) <= 0) 
+       {  /* use default for nprow */
+       if (iskip > 1)
+          nprow = (iwidex - marlef) /
+                  (((nrow2 - nrow1 + 1) / iskip) + marx);
+       else if (iskip < -1)
+          nprow = (iwidex - marlef) /
+                  (((nrow2 - nrow1 + 1) * -iskip) + marx);
+       else
+          nprow = (iwidex - marlef) /
+                  (((nrow2 - nrow1 + 1)        ) + marx);
+       
+       /* if nprow=0, reset nprow to 1 */
+       if (nprow == 0) nprow = 1;
+       }
+       axis = 'x';
+       mont3(filedata, imagego, imageend);
+    }
+ if (yaxis) 
+    {   /* want y axis montage */
+    if (sscanf(string,"%d",&nprow) <= 0) 
+       {  /* use default for nprow */
+       if (iskip > 1)
+          nprow = (iwidex - marlef) /
+                  (((nsam2 - nsam1 + 1) / iskip) + marx);
+       else if (iskip < -1)
+          nprow = (iwidex - marlef) /
+                  (((nsam2 - nsam1 + 1) * -iskip) + marx);
+       else
+          nprow = (iwidex - marlef) /
+                  (((nsam2 - nsam1 + 1)        ) + marx);
+       
+       /* if nprow=0, reset nprow to 1 */
+       if (nprow == 0) nprow = 1;
+       }
+       axis = 'y';
+       mont3(filedata, imagego, imageend);
+    }
+
+ if (zaxis) 
+    {   /* want z axis montage */
+    if (sscanf(string,"%d",&nprow) <= 0) 
+       {  /* use default for nprow */
+       if (iskip > 1)
+          nprow = (iwidex - marlef) /
+                  (((nsam2 - nsam1 + 1) / iskip) + marx);
+       else if (iskip < -1)
+          nprow = (iwidex - marlef) /
+                  (((nsam2 - nsam1 + 1) * -iskip) + marx);
+       else
+          nprow = (iwidex - marlef) /
+                  (((nsam2 - nsam1 + 1)        ) + marx);
+       
+       /* if nprow=0, reset nprow to 1 */
+       if (nprow == 0) nprow = 1;
+       }
+       axis = 'z';
+       mont3(filedata, imagego, imageend);
+    }
+ if (string) XtFree (string);
+ if(ioper == 16)
+   {
+   moviemen(TRUE);
+   }
+ }
+
+ /***********  montmen3_butc  (cancel button callback) ********/
+
+ void montmen3_butc(Widget iw_temp, XtPointer data, XtPointer call_data)
+
+ {
+ XtUnmanageChild(iw_montmen3);
+ closefile(filedata);
+ filedata = NULL;
+ }
+
+@
+
+
+1.15
+log
+@misc
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/montmen3.c,v 1.14 1995/08/02 18:41:46 liy Exp leith $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+@
+
+
+1.14
+log
+@fixed the bug to display a large 3D image(over 1200)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/montmen3.c,v 1.13 1995/03/30 17:04:10 mladjadj Exp liy $*/
+d41 2
+a42 1
+ void          montmen3_buta(Widget iw_temp, caddr_t, caddr_t );
+d44 5
+a48 5
+ /* external variables */
+ Widget   iw_scales[6];
+ Widget   iw_ixul, iw_iyul, iw_nprow;
+ Widget   iw_montmen3, iw_pushc, iw_pusha, iw_numfil;
+ Widget   iw_xaxis,iw_yaxis,iw_zaxis,iw_movie,iw_norm;
+d51 1
+a51 1
+ int      endfile;
+d59 1
+a59 1
+ Widget iw_lab0, iw_lab1, iw_dum, iw_rowcol1, iw_rowcol2, iw_rowcol3;
+d64 1
+a64 1
+ if (iw_montmen3 <= (Widget)0)
+d72 1
+a72 1
+    iw_lab0     = wid_labelg(iw_rowcol2, 0, "AXIS:   ", -1, -1);
+d85 1
+a85 1
+    iw_numfil = wid_textboxb(iw_rowcol1, iw_numfil, "LAST FILE NUMBER:", 
+d90 1
+a90 1
+    iw_lab1     = wid_labelg(iw_rowcol3,0, "LOCATION:",-1,-1);
+d103 1
+a103 1
+       iw_ixul = wid_textboxb(iw_rowcol3,0,"X","*",4);
+d105 1
+a105 1
+       iw_iyul = wid_textboxb(iw_rowcol3,0,"Y","*",4);
+d115 1
+a115 1
+    iw_nprow = wid_textboxb(iw_rowcol1, iw_nprow, "FRAMES / ROW:", 
+d122 1
+a122 1
+    iw_dum = wid_win(iw_rowcol1, &iw_scales[0], nsam, nrow, nslice);
+d126 2
+a127 2
+    iw_dum = wid_stdbut(iw_rowcol1, iw_montmen3, &iw_dums, &iw_pushc, &iw_pusha,  "CA",
+                        fin_cb,fin_cb ,montmen3_buta, NULL);
+d137 1
+a137 1
+       iw_ixul = wid_textboxb(iw_rowcol3,iw_ixul,"X","*",4);
+d139 1
+a139 1
+       iw_iyul = wid_textboxb(iw_rowcol3,iw_iyul,"Y","*",4);
+d157 1
+a157 1
+    iw_dum = wid_win(iw_rowcol1, &iw_scales[0], nsam, nrow, nslice);
+d165 1
+a165 1
+ void montmen3_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d227 1
+a227 1
+         return;
+d237 1
+d306 1
+d313 9
+@
+
+
+1.13
+log
+@added ioper=16 for movie command
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/montmen3.c,v 1.12 1995/02/02 16:48:19 liy Exp mladjadj $*/
+d256 3
+d276 3
+d297 3
+@
+
+
+1.12
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/montmen3.c,v 1.11 1995/02/02 16:42:40 liy Exp liy $*/
+d295 4
+@
+
+
+1.11
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/montmen3.c,v 1.10 1995/01/27 16:13:22 liy Exp liy $*/
+d200 1
+a200 1
+ if (iw_norm > (void *)0)
+@
+
+
+1.10
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/montmen3.c,v 1.9 1995/01/26 20:18:13 liy Exp $*/
+d63 1
+a63 1
+ if (iw_montmen3 <= (void *)0)
+@
+
+
+1.9
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/montmen3.c,v 1.8 1995/01/23 10:00:15 leith Exp liy $*/
+d200 1
+a200 1
+ if ((int) iw_norm > 0)
+@
+
+
+1.8
+log
+@shortened wid_togglemen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/montmen3.c,v 1.7 94/08/19 11:16:57 odesanya Exp Locker: leith $*/
+d63 1
+a63 1
+ if ((int)iw_montmen3 <= 0)
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/montmen3.c,v 1.6 94/08/10 10:01:57 leith Exp $*/
+d78 3
+a80 3
+    iw_xaxis = wid_togglemen(iw_radio,iw_xaxis,"X  ",xaxis,-1,-1);
+    iw_yaxis = wid_togglemen(iw_radio,iw_yaxis,"Y  ",yaxis,-1,-1);
+    iw_zaxis = wid_togglemen(iw_radio,iw_zaxis,"Z  ",zaxis,-1,-1);
+d92 1
+a92 1
+    iw_movie = wid_togglemen(iw_rowcol1,0,"MOVIE",movie,-1,-1);
+d95 1
+a95 1
+    iw_norm = wid_togglemen(iw_rowcol1,0,"NORM. BY SLICE",normit,-1,-1);
+@
+
+
+1.6
+log
+@bug in if clause
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/montmen3.c,v 1.5 94/06/17 11:33:44 odesanya Exp Locker: leith $*/
+d59 1
+a59 1
+ Widget iw_dums;
+d61 1
+d74 7
+a80 3
+    iw_xaxis = wid_togglemen(iw_rowcol2,iw_xaxis,"X  ",xaxis,-1,-1);
+    iw_yaxis = wid_togglemen(iw_rowcol2,iw_yaxis,"Y  ",yaxis,-1,-1);
+    iw_zaxis = wid_togglemen(iw_rowcol2,iw_zaxis,"Z  ",zaxis,-1,-1);
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/montmen3.c,v 1.4 94/06/16 16:41:35 odesanya Exp $*/
+d93 1
+a93 1
+    /* create text boxes for ixuln & iyuln ----------------------- ixuln */
+d171 1
+a171 1
+    spout("ENDING COL MUST BE > STARTING COL");
+d180 1
+a180 1
+    spout("ENDING ROW MUST BE > STARTING ROW");
+d189 1
+a189 1
+    spout("ENDING SLICE MUST BE > STARTING SLICE");
+d208 2
+a209 1
+ if(ioper == 2) /* 3D montage  */  
+d211 5
+a215 5
+    {
+    /* want all files in this series until first missing file */
+    endfile = -1;
+    lastfilt = -1;
+    }
+d217 8
+a224 5
+    {
+    if (sscanf(string,"%d",&lastfilt) <= 0 || lastfilt < 0)
+       {   /* can not interpret lastfilt */
+       spout("*** Can not interpret number of last file in montage! ");
+       return;
+d226 5
+a230 5
+
+    endfile = lastfilt;
+    }
+  else /* 2D series of 3D volume  */
+   endfile = 0;
+@
+
+
+1.4
+log
+@added loop to display multiple volumes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/montmen3.c,v 1.3 94/05/12 12:40:25 leith Exp $*/
+d208 2
+a209 1
+ if (strncmp(string,"*",1) == 0)
+d215 1
+a215 1
+ else
+d225 2
+@
+
+
+1.3
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/montmen3.c,v 1.2 94/02/14 10:23:36 leith Exp Locker: leith $*/
+d46 1
+a46 1
+ Widget   iw_montmen3, iw_pushc, iw_pusha;
+d49 3
+d77 5
+d162 1
+d204 20
+@
+
+
+1.2
+log
+@need toggle header
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/montmen3.c,v 1.1 93/11/10 10:11:20 leith Exp Locker: leith $*/
+d36 1
+d40 1
+a40 16
+ /* function prototypes */
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget wid_textboxb (Widget, Widget, char *, char *,  int);
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_win      (Widget, Widget iw_its[6], int, int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern void   spout        (char *);
+ extern int    getcorner    (Widget, Widget , int *, int *);
+ extern int    mont3        (FILEDATA *);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+
+d49 1
+a49 1
+ /************************************************************/
+a148 1
+
+d217 1
+a217 1
+       mont3(filedata);
+d234 1
+a234 1
+       mont3(filedata);
+d252 1
+a252 1
+       mont3(filedata);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a30 1
+#include "x.h"
+d33 1
+a34 1
+#include "std.h"
+a36 1
+
+a37 1
+
+@

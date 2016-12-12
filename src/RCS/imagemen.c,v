@@ -1,0 +1,4500 @@
+head	1.87;
+access;
+symbols
+	pre-tilt-improve:1.86
+	pre_surf_fromtop:1.82
+	pre_neednewmap:1.82
+	pre_apppluss_remove:1.82
+	pre_tiltpair_chng:1.82
+	pre_GPL:1.76;
+locks;
+comment	@ * @;
+
+
+1.87
+date	2015.09.08.18.16.07;	author leith;	state Exp;
+branches;
+next	1.86;
+
+1.86
+date	2015.06.16.15.36.08;	author leith;	state Exp;
+branches;
+next	1.85;
+
+1.85
+date	2012.11.28.15.01.35;	author leith;	state Exp;
+branches;
+next	1.84;
+
+1.84
+date	2012.11.27.19.13.38;	author leith;	state Exp;
+branches;
+next	1.83;
+
+1.83
+date	2012.04.17.18.25.30;	author leith;	state Exp;
+branches;
+next	1.82;
+
+1.82
+date	2011.06.10.12.14.45;	author leith;	state Exp;
+branches;
+next	1.81;
+
+1.81
+date	2011.05.17.17.30.56;	author leith;	state Exp;
+branches;
+next	1.80;
+
+1.80
+date	2011.05.05.12.05.27;	author leith;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	2007.11.28.16.18.26;	author leith;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	2005.10.18.16.59.43;	author leith;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	2002.04.10.18.48.27;	author leith;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	2001.09.12.14.43.30;	author leith;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	2001.09.04.15.08.13;	author leith;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	2001.08.10.19.22.43;	author leith;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2001.08.08.16.09.56;	author leith;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2001.08.08.13.51.10;	author leith;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2001.01.15.15.56.49;	author leith;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	99.10.04.14.40.54;	author leith;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	99.09.30.17.34.10;	author leith;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	99.08.04.16.53.58;	author leith;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	99.07.06.16.21.31;	author leith;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	99.07.06.16.12.05;	author leith;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	98.10.02.15.05.53;	author leith;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	98.02.05.22.20.48;	author liy;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	97.02.26.15.05.47;	author leith;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	96.08.02.18.01.44;	author leith;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	96.06.20.16.39.01;	author leith;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	96.06.13.18.47.26;	author leith;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	96.03.29.20.24.10;	author leith;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	96.03.29.17.23.09;	author leith;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	96.03.21.20.17.17;	author leith;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	96.03.21.19.50.07;	author leith;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	95.11.28.20.28.23;	author leith;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	95.10.05.14.53.50;	author liy;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	95.09.11.14.26.19;	author liy;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	95.09.07.16.18.36;	author liy;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	95.09.06.16.38.28;	author mladjadj;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	95.08.24.21.03.56;	author liy;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	95.08.17.14.16.58;	author leith;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	95.08.09.16.41.09;	author leith;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	95.08.08.21.08.42;	author leith;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	95.07.26.21.22.31;	author liy;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	95.07.21.20.14.32;	author liy;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	95.06.22.19.27.07;	author leith;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	95.06.21.16.11.46;	author leith;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	95.03.30.15.49.55;	author mladjadj;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	95.02.08.15.41.12;	author liy;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	95.01.23.10.21.53;	author leith;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	94.11.17.16.24.30;	author leith;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	94.11.08.09.21.25;	author leith;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	94.10.14.10.55.30;	author leith;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	94.10.11.15.15.05;	author leith;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	94.09.27.16.52.06;	author leith;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	94.09.12.11.22.19;	author leith;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	94.08.11.16.24.52;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	94.07.01.23.31.32;	author odesanya;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	94.05.24.18.06.55;	author odesanya;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	94.05.12.12.40.00;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	94.05.12.09.09.25;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	94.05.09.13.47.24;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	94.05.05.15.52.50;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	94.04.12.12.07.16;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	94.04.08.13.17.11;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	94.04.07.14.29.27;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	94.03.24.17.11.27;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	94.03.24.14.02.58;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	94.03.24.13.58.20;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	94.03.24.12.11.05;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	94.03.18.12.07.25;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	94.03.15.14.34.18;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	94.02.16.11.52.31;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	94.02.14.12.45.01;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	94.02.11.10.13.57;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	94.02.10.17.01.26;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.02.10.16.21.00;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.02.03.15.22.42;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.01.28.17.13.57;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.01.28.10.17.41;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	93.12.09.11.07.39;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	93.11.30.10.09.27;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	93.11.16.16.18.54;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	93.11.16.16.10.53;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.11.16.14.55.08;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.16.13.51.30;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.17.01.36;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.09;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.87
+log
+@Pixelmen_in docit_in set
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.86 2015/06/16 15:36:08 leith Exp $*/
+
+/*
+ C++********************************************************************
+ C
+ C imagemen.c                                   Nov 1992 
+ C             Added pixelmen_in call           Jun 2011  ArDean Leith                                                                    
+ C             Keep up image menu widget        Nov 2012  ArDean Leith                                                                    
+ C             Keep up more image menu widgets  Jun 2015  ArDean Leith                                                                    
+ C             Pixelmen_in docit                Sep 2015 ArDean Leith 
+ C
+ C *********************************************************************
+ C=* AUTHOR: A. LEITH 
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright 1985-2015  Health Research Inc.,                        *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but without any warranty; without even the implied warranty of    *
+ c=* merchantability or fitness for a particular purpose.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+ C=*                                                                   *
+ C *********************************************************************
+ C
+ C  imagemen(widget, data, call_data)
+ C
+ C  PARAMETERS:   iw_temp, data, call_data (usual callback data)
+ C
+ C  PURPOSE:      Makes a file widget, interrogates file widget and
+ c                calls image display routine
+ C
+ C  CALLED BY:    web_com
+ C
+ C--********************************************************************
+*/
+
+/* Common variables */
+#include <Xm/PushBG.h>
+#include <Xm/FileSB.h>
+
+#include <unistd.h>
+
+#include "common.h"
+#include "routines.h"
+
+ /* External function  prototypes */
+ extern void   dendromen  (char * );
+ extern void   ctfmen0    (char * );
+ extern void   showmovmen2(void);
+
+ /* Internal function  prototypes */
+ void          imagemen_cb    (Widget, XtPointer, XtPointer);
+ void          imagemennol_cb (Widget, XtPointer, XtPointer);
+ void          imagemen_cb_com(void);
+
+ /* Externally defined common variables */
+ extern char   outstr[80];
+ extern float  erodethresh;  /* Used in filtermen, erodemen */
+ extern int    docimgtotal;  /* From: docmontmen */
+ extern int    docit_in;     // From: pixelmen_in
+
+
+ /* Common variables defined here and used elsewhere */
+ FILEDATA *   filedatal = NULL; /* Used by backmen, pickback, pickmen */
+ FILEDATA *   filedatar = NULL; /* Used by backmen, pickback, pickmen */
+ float *      fimage = NULL;    /* Used by filtermen, pixelmen_in also */
+ char         filcolvol[81];    /* Name for color vol. file */
+
+ char *       cptrduml = NULL; /* Data used by image right &  left */
+ char *       cptrdumr = NULL; 
+ int          icattyp;
+
+ /* File scope variables used here */
+ static char   filnew[128];
+ static int    imnum = 1;
+ static char   ops[] = "123456789abcdefghijklmnop"; // 25 opers
+ static char * prompts[] = 
+      {
+      "Image",                       "First Image",   
+      "Volume",                      "Histogram",
+      "Image for Marker Picking",    "Image for Masking",
+      "Image for Profiling",         "Untilted Image",
+      "Image for Annotating",        "Image for Convolution",
+      "Image/Stack for Categorizing","Image with Reflections",
+      "Recorded Image",              "Dendrogram Doc File",
+      "Volume", 		     "Movie Montage",
+      "Volume",                      " ",
+      "Drill-n-fill Volume",         "Montage Doc File",
+      "Power Spectrum",              "CTF Doc File",
+      "Montage Doc File",	     "Movie Series",
+      "Image for Pixel"             // Last is: "p" = 25
+      };
+ /* Note: i is shift which does not get a prompt */
+
+
+/*************************  imagemen  ********************************/
+
+ void imagemen(Widget iw_temp, XtPointer data, 
+               XtPointer call_data)
+ { 
+
+ char   *oper;
+ char    pattern[86];
+ char   *filename;
+ char    ctemp[3];
+
+ oper = data;
+
+ if (filwant[0] != '\0')
+    { /* Use new file pattern */
+    strcpy(&pattern[0],&filwant[0]);
+
+    if (datexc[0] != '\0')
+       {
+       /* Set default file filter */
+       strcat(pattern,".");
+       strcat(pattern,&datexc[0]);
+       }
+    filwant[0] = '\0';
+    }
+ else
+    pattern[0] = '\0';
+
+ /* Convert first oper character to integer */
+ ioper = (int) (strchr(ops,*oper) - ops) + 1;
+
+ /* Set name for file */
+ filename = &filnow[0];
+
+
+ if (ioper == 8 && imnum == 2)
+    {      /*************************** Interactive particle picking */
+    if (!listfi) 
+       {
+       iw_filesnol = wid_text(iw_win, iw_filesnol, "Tilted image",
+                    filename, *imagemennol_cb, NULL, -1, -1);
+       }
+    else
+       {
+       /* Create a file selector box */
+       iw_files =  wid_file(iw_win, iw_files , "Tilted image",
+               filename, &pattern[0], *imagemen_cb, -1, -1);
+       }
+    } 
+
+ else if (ioper == 17  && imnum == 2)
+    {        /**************************** Surface color texture map */
+    filename = &filcolvol[0];
+    if (!listfi) 
+       {
+       iw_filesnol = wid_text(iw_win, iw_filesnol, "Color volume",
+                    filename, *imagemennol_cb, NULL, -1, -1);
+       }
+    else
+       {
+       /* Create a file selector box */
+       iw_files =  wid_file(iw_win, iw_files , "Color volume",
+               filename, &pattern[0], *imagemen_cb, -1, -1);
+       }
+    }
+
+ else if (ioper == 18)
+    {	 /********************************************* Shift image */
+    if (imagel)
+	shift(IMAGE);
+    else if (islice > 1) 
+	spout("*** Shift doesn't work for volumes.");
+    else 
+	spout("*** Current Image does not exist.");
+    } 
+
+ else
+    {   /************************************* All other operations */
+    if (!listfi) 
+       {
+       iw_filesnol = wid_text(iw_win, iw_filesnol, prompts[ioper-1],
+                    filename, *imagemennol_cb, NULL, -1, -1);
+       }
+    else
+       {
+       /* Create a file selector box */
+       iw_files =  wid_file(iw_win, iw_files , prompts[ioper-1],
+               filename, &pattern[0], *imagemen_cb, -1, -1);
+       }
+    }
+ }
+
+
+
+/******************** imagemen_cb ************************************/
+
+ void imagemen_cb(Widget iw_temp, XtPointer data,  
+                                  XtPointer call_data)
+  { 
+  char       dirnowt[128];
+  char  *    string;
+
+  XmFileSelectionBoxCallbackStruct *cbs = 
+    (XmFileSelectionBoxCallbackStruct *) call_data;
+
+  /* Get name of file returned from the file widget */
+  string = extractstr(cbs->value);
+  strcpy(filnew,string);
+  XtFree(string);
+
+  /* Get name of directory used in the file widget */
+  string = extractstr(cbs->dir);
+  strcpy(dirnowt,string);
+  XtFree(string);
+
+  if (strcmp(dirnow,dirnowt) != 0)
+     {    /* New directory wanted */
+     strcpy(dirnow,dirnowt);
+     chdir(dirnow);
+     }
+
+  imagemen_cb_com();
+  return;
+  }
+
+/******************** imagemennol_cb ************************************/
+
+/* Used if !listfi (when do not want file selction widget */
+
+ void imagemennol_cb(Widget iw_temp, XtPointer data,  
+                                     XtPointer call_data)
+  { 
+  char  *           string;
+
+  XmSelectionBoxCallbackStruct *cbs = 
+    (XmSelectionBoxCallbackStruct *) call_data;
+
+  /* Get name of file returned from the file widget */
+  string = extractstr(cbs -> value); 
+  strcpy(filnew,string);
+  XtFree(string);
+
+  imagemen_cb_com();
+
+  return;
+  }
+
+/******************** imagemen_cb_com *************************/
+
+ void imagemen_cb_com(void)
+  { 
+  int               sayrange;
+
+  if (!listfi)
+     XtUnmanageChild(iw_filesnol);
+  else if ((ioper != 1) && (ioper != 2) && (ioper != 3) )     // new Nov 2012 al
+     XtUnmanageChild(iw_files);
+
+  expos_cb(NULL,NULL,NULL);
+
+  sayrange = TRUE;
+  if (ioper == 4) sayrange = FALSE;
+
+  if (ioper == 20 ||       /* Display montage    from doc file menu */
+      ioper == 23)         /* Display categorize from doc file menu */
+    {  
+    docmontmen0(filnew);   /* Retrieve doc file info */
+    if (docimgtotal < 0)   /* Bad response  */
+       { 
+       spouts("*** Bad doc file: ");  spout(filnew);
+       return;
+       }
+   
+    docmontmen(filnew);    /* Show montage from doc menu */
+    return;
+    }
+  else if ( ioper == 14)
+    {                      /* Display dendrogram menu */
+    dendromen(filnew);
+    return;
+    }
+  else if ( ioper == 22)
+    {                      /* Display CTF menu */
+    ctfmen0(filnew);
+    return;
+    }
+
+  else if (ioper == 17 && imnum == 2)
+     {                    /* Display colored surface from volume */ 
+     imnum = 1;
+
+     strcpy(filcolvol,filnew);
+     /* printf("filcolvol: %s, filnewt: %s \n",filcolvol,filnew); */
+
+     /* Get menu for displaying the colored surface */   
+     surfmen(ioper == 15, FALSE, ioper == 17);
+     return;
+     }
+ 
+  imagemen1(filnew,sayrange);
+
+  return;
+  }
+
+ /******************************** imagemen1 *************************/
+
+ int imagemen1(char * filnewt, int sayrange)
+ { 
+
+  int         iform;
+  char*       cptrdum = NULL;
+  float*      fptrdum = NULL;
+  XRectangle  rect;
+  int         nsams, nrows;   /* Size of the image on screen*/
+
+  /* Set waitcursor */
+  waitcursor(iwin, TRUE, 79);
+
+  /* Open the new existing file */
+  filedata = openold(&filnewt[0],&nsam,&nrow,&nslice,&iform,"o");
+
+  if (filedata == (FILEDATA *) -1)
+     {  // Skip message
+     waitcursor(iwin, FALSE, 79);
+     if (ioper == 8)
+         if (filedatal) closefile(filedatal);
+     return FALSE;
+     }
+  else if (filedata == (FILEDATA *)FALSE)
+     {
+     spout("*** Unable to open image file");
+     waitcursor(iwin, FALSE, 79);
+     if (ioper == 8)
+         if (filedatal) closefile(filedatal);
+     return FALSE;
+     }
+   
+  if (((filedata->nstack == 0)    && 
+       (filedata->imami != 1)     && 
+       (norm(filedata) == FALSE)) ||
+
+      ((filedata->nstack > 0)     && 
+       (filedata->imginstack > 0) && 
+       (filedata->imami != 1)     && 
+       (norm(filedata) == FALSE)))     {    
+     spout("*** Normalization failed.");
+     closefile(filedata);
+     waitcursor(iwin, FALSE, 79);
+     return FALSE;
+     }
+  
+  if ((filedata->nstack > 0)     && 
+      (filedata->imginstack == 0))
+     {   /* Overall stack header referenced */ 
+     
+     fmin_spi = 0.0;
+     fmax_spi = 0.0;
+     }
+  else
+     { 
+     fmin_spi = filedata->fmin_spi;
+     fmax_spi = filedata->fmax_spi; 
+
+     if (sayrange)
+        {   /* List image range */
+        sprintf(&outstr[0],"Range: %f ... %f",
+                fmin_spi,fmax_spi);
+        spout(&outstr[0]);
+        }
+
+     if ((fmax_spi - fmin_spi) < 10e-10)
+        {     /* This is a blank image */
+        spout("*** BLANK IMAGE SKIPPED");
+        waitcursor(iwin, FALSE, 79);
+        closefile(filedata);
+        return FALSE;
+        }
+     }
+
+  /* Set flag if present image file same as previous file */
+  if (strcmp(&filnow[0],&filnewt[0]) == 0) 
+     samefile = TRUE;
+  else
+     {
+     samefile = FALSE;
+     gotsurf  = FALSE;
+     }
+
+  /* Set name of present displayed image */
+  strcpy(&filnow[0],&filnewt[0]);
+
+  /* set default display area to full slice */
+  ixullmin = marlef;      iyullmin = martop;
+  ixlrlmax = iwidex;      iylrlmax = ihighx;
+  ixulrmin = iwidex;      iyulrmin = martop;
+  ixlrrmax = iwidex;      iylrrmax = ihighx; 
+  if (ioper == 8)
+     {
+     ixlrlmax = iwidex/2;
+     ixulrmin = iwidex/2+1;
+     }
+
+  nsam1    = 1;    nrow1   = 1;   
+  nslice1  = 1;    nslice2 = 1;
+
+  if (iskip > 1)    
+    {                /* Shrink image by factor of iskip */ 
+     if( (nsam/iskip) < (ixlrlmax-ixullmin+1) )   /* Try to display  */
+        nsam2 = nsam;                             /* as much as the  */
+     else                                         /* window can view */
+        nsam2 = (ixlrlmax-ixullmin+1)*iskip;
+     if( (nrow/iskip) < (iylrlmax-iyullmin+1) ) 
+        nrow2 = nrow;
+     else 
+        nrow2 = (iylrlmax-iyullmin+1)*iskip;
+    }
+  else 
+    {  
+     nsam2   = MYMIN(nsam,ixlrlmax-ixullmin+1);
+     nrow2   = MYMIN(nrow,iylrlmax-iyullmin+1);
+    }
+
+  /* Reset the image size parameters */
+  dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, 
+            &nsams, &nrows, &islice);
+
+  /* Set image display range */
+  imagego    = mapgo;
+  imageend   = mapend;
+
+  //printf("In: imagemen1; ioper: %d, filedata->nstack: %d \n",ioper,filedata->nstack); 
+
+  if ((ioper == 1 || ioper == 2 || ioper == 11) && 
+      (filedata->nstack  > 0     && 
+       filedata->imginstack == 0)) 
+     {                /********************** Display   from stack file */
+                      /********************** Categorize from stack file */
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     /* Display stacked images selector */
+     stackmen(filedata);      
+     }
+
+  else if (ioper == 1  && nslice == 1 )
+     {                /************************* Display single image */
+
+     /* Set the full image size for image display */
+     nsam2 = nsam;   nrow2 = nrow;  islice = 1;      
+     dispsize(nsam1, nsam2, nrow1, nrow2, 1,1,iskip, 
+             &nsams, &nrows, &islice);
+
+     imagedis(filedata,TRUE,&imagel,
+              TRUE,FALSE,&fptrdum, 
+              imagego,imageend);
+
+     /* set the variables for image shifting */
+     ixullmin = ixul;	ixlrlmax = MYMIN(ixul+nsams,ixlrlmax);
+     iyullmin = iyul;	iylrlmax = MYMIN(iyul+nrows,iylrlmax);
+
+     nsam2 = nsams;  nrow2 = nrows;  islice = 1;
+
+     /* Record left image location and size */
+     nsaml  = nsams;  nrowl  = nrows;
+     nsam1l = nsam1;  nrow1l = nrow1;
+     nsam2l = MYMIN(nsams,ixlrlmax-ixullmin+1);  
+     nrow2l = MYMIN(nrows,iylrlmax-iyullmin+1);
+     ixull  = ixul;   iyull  = iyul;
+     ixulli = ixul;   iyulli = iyul;
+     ixuln  = ixul;   iyuln = iyul;
+
+     /* Free up the file descriptor */
+     closefile(filedata);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);     }
+
+  else if (ioper == 1 || 
+          (ioper == 2 && nslice > 1))
+     {                /***************** Display montage from volume */     
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     montmen3();     
+     }
+
+  else if (ioper ==  2 || 
+          (ioper == 11 && icattyp == 0))
+     {                 /* *********** Display montage from 2d volume */     
+                       /* *********** Categorize from seq. files     */     
+     montmen2();
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+     }
+
+  else if (ioper == 17 && imnum == 1)
+     {                /***************** Get color volume name first */
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+     imnum = 2; 
+     imagemen(NULL,"h",NULL);
+     }
+
+  else if (ioper ==  3  || ioper == 15)
+     {                /**************** Display surface from volume */ 
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+     imnum = 1;
+
+     if (nslice <=1)
+        {
+        spout("*** Can not show surfaces of 2-D images.");
+        closefile(filedata);
+        return FALSE;
+        } 
+     /* Display the surfaces or sird image of surface */   
+     surfmen(ioper == 15, FALSE, ioper == 17);
+     }
+
+  else if (ioper ==  4)
+     {            /*************************************** Histogram */ 
+     hist(filedata);
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+     /* Filedata is closed in hist-->his */
+     }
+
+  else if (ioper == 5 || ioper == 6)
+     {   /************************************************** Markers */
+         /************************************************** Mask    */
+     /* Locate markers from this image */ 
+     /* Display single image */
+
+     marker = 1;
+
+     /* Set the full image size for image display */
+     nsam2 = nsam;  nrow2 = nrow;  islice = 1;      
+     dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, 
+               &nsams, &nrows, &islice);
+
+     /* Keeps image in imagel */
+     imagedis(filedata,TRUE, &imagel,
+              TRUE,FALSE, &fptrdum, 
+              imagego,imageend);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     /* Record left image location and size */
+     ixullmin = ixul;	ixlrlmax=ixul+nsams;
+     iyullmin = iyul;	iylrlmax=iyul+nrows;
+
+     nsaml    = nsams;  nrowl  = nrows;
+     nsam1l   = nsam1;  nrow1l = nrow1;
+     nsam2l   = nsams;  
+     nrow2l   = nrows;
+     ixull    = ixul;   iyull  = iyul;
+     ixulli   = ixul;   iyulli = iyul;
+
+     if (ioper == 5)
+        /* Locate markers from this image */ 
+        {gold();}
+
+     else if (ioper == 6)
+        /* Mask this image */ 
+        {mask();}
+
+     /* Free up the file descriptor */
+     closefilep(&filedata);
+     }
+
+
+  else if (ioper == 7)
+     {         /******************************************** Profile */
+     islice = 1;
+
+     /* Display single image first*/
+     imagedis(filedata,FALSE,&imagel,
+              FALSE,FALSE, &fptrdum, 
+              imagego,imageend);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     /* Profile this image */
+     profile();
+
+     /* Filedata closed in profilemen_buts */
+     }
+
+  else if (ioper == 8)
+     {           /********************************* Particle picking */
+
+     /* Set upper left corner */
+     placed = TRUE;
+     islice = 1;
+
+     if (imnum == 1)  
+        {          /* display  left image */
+
+        /* Set left image visible display position */
+        nsam2 = nsam;  nrow2 = nrow;  islice = 1;
+
+        ixuln  = ixullmin;  iyuln  = iyullmin;  
+        rect.x = ixuln;     rect.y = iyuln;
+        rect.width  = ixlrlmax-ixullmin;
+        rect.height = iylrlmax-iyullmin;
+
+        XSetClipRectangles(idispl,icontx,0,0,&rect,1,Unsorted);
+
+        /* Do not save floating point buffer for future use */
+        showimage(filedata, TRUE,  &cptrduml, 
+                            TRUE,  &imagel, 
+                            FALSE, &fptrdum, TRUE,
+                            (float) (filedata->fmin_spi), 
+                            (float) (filedata->fmax_spi),
+                            imagego, imageend);
+
+        /* Save pointer to left filedata */
+        filedatal = filedata;
+
+        /* Record left image location and size */
+        nsaml  = nsam;   nrowl  = nrow;
+        nsam1l = nsam1;  nrow1l = nrow1;
+        nsam2l = MYMIN(nsam,ixlrlmax-ixullmin+1);  
+        nrow2l = MYMIN(nrow,iylrlmax-iyullmin+1);
+        ixull  = ixuln;  iyull  = iyuln;
+        ixulli = ixuln;  iyulli = iyuln;
+
+        rect.width  = ixlrrmax-ixullmin;
+        rect.height = iylrrmax-iyullmin;
+
+        XSetClipRectangles(idispl,icontx,0,0,&rect,1,Unsorted);
+
+        /* Cancel waitcursor */
+        waitcursor(iwin, FALSE, 79);
+        imnum = 2;
+
+        /* Display second image */
+        imagemen(NULL,"8",NULL);
+        }
+     else
+        {
+        /* Set right image visible display position */
+        ixuln  = ixulrmin; iyuln  = iyulrmin; 
+        nsam1  = 1;   nsam2   = nsam;
+        nrow1  = 1;   nrow2   = nrow;
+
+        islice = 1;
+
+        /* Do not save floating point buffer for future use */
+        showimage(filedata, TRUE,  &cptrdumr, 
+                            TRUE,  &imager, 
+                            FALSE, &fptrdum, TRUE,
+                            (float) (filedata->fmin_spi), 
+                            (float) (filedata->fmax_spi),
+                            imagego, imageend);
+                   
+        /* Save pointer to right filedata */
+        filedatar = filedata;
+
+        nsamr  = nsam;   nrowr  = nrow;
+        nsam1r = nsam1;  nrow1r = nrow1;
+        nsam2r = MYMIN(nsam,ixlrrmax-ixulrmin+1);  
+        nrow2r = MYMIN(nrow,iylrrmax-iyulrmin+1);
+        ixulr  = ixuln;  iyulr  = iyuln;
+        ixulri = ixuln;  iyulri = iyuln;
+
+        /* Cancel waitcursor */
+        waitcursor(iwin, FALSE, 79);
+        imnum = 1;
+
+        /* Retrieve existing doc files for this set of data */
+        fitdocmen(NULL,NULL,NULL);
+
+        /* Do not free up image file descriptors */
+        }
+     }
+ else if (ioper == 9)
+     {           /***************************************** Annotate */
+
+     islice = 1;
+     /* Display single image first*/
+     imagedis(filedata,FALSE,&imagel,
+              FALSE,FALSE, &fptrdum, 
+              imagego,imageend);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     /* Annotate this image */
+     annotemen();
+
+     }
+
+ else if (ioper == 10 || ioper == -10)
+     {          /******************************************** Filter */
+     islice = 1;
+
+     /* Display single image from file first, do not keep image */
+     /* Save floating point buffer for future use           */
+
+     showimage(filedata, FALSE, &cptrdum,
+                         FALSE, &imagel, 
+                         TRUE,  &fimage, TRUE,
+                         (float)filedata->fmin_spi, 
+                         (float)filedata->fmax_spi,
+                         imagego, imageend);
+          
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     if (ioper == 10)
+        {
+        erodethresh = filedata->fmax_spi;
+
+        /* Display filter selection menu */
+        filtermen();
+        }
+     else
+        {
+        /* Use previous filter type during repeat */
+        }
+     }
+
+  else if (ioper == 12)
+     {   /****************************************** Pick reflections */ 
+     /* Display single image */
+     islice = 1;
+     imagedis(filedata,FALSE, &imagel,
+              FALSE,FALSE, &fptrdum, 
+              imagego,imageend);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     reflmen();
+
+     /* Free up the file descriptor */
+     closefile(filedata);
+     }                  
+ 
+  else if (ioper == 13)
+     {   /****************************************** Show recording */ 
+
+     /* Display single recorded image */
+     islice = 1;
+     imagedis(filedata,FALSE, &imagel,
+              FALSE,FALSE, &fptrdum,
+              (int) filedata ->fmin_spi, 
+              (int)filedata ->fmax_spi);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     /* Free up the file descriptor */
+     closefile(filedata);
+     }                  
+   else if (ioper ==  16)
+     {   /************************************** Small Movie montage */
+     /* Start again at upper left origin */
+     ixul   = marlef;
+     iyul   = martop;
+     nbot   = -1;
+     if (nslice > 1)
+        {         /**************** Display montage from 3-d volume */    
+        montmen3();
+        }
+     else
+        {         /**************** Display montage from 2-d volume */     
+        montmen2();
+        }
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+     }
+  else if (ioper ==  19)
+     {                /******************* Drill-n-fill from volume */ 
+     /* cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     if (nslice <= 1)
+        {
+        spout("*** Can not drill or fill 2-D images.");
+        closefile(filedata);
+        return FALSE;
+        }
+ 
+     /* Drill or fill a  volume */   
+     dentmen();
+     } 
+
+  else if ((ioper ==  20 || ioper == 23) && 
+            filedata->nstack > 0) 
+     {           /***********  Montage    stack from doc file list */     
+                 /************ Categorize stack from doc file list */
+     stackdis(imagego, imageend);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+     }
+
+  else if (ioper ==  20 || ioper == 23)
+     {           /********** Montage    images from doc file list */     
+                 /********** Categorize images from doc file list */
+     mont2(imagego, imageend);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+     }
+
+  else if (ioper == 21)
+     {   /****************************************** Fourier mask */ 
+     /* Display single image */
+     islice = 1;
+     imagedis(filedata,FALSE, &imagel,
+              FALSE,FALSE,&fptrdum, 
+              imagego,imageend);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     foumen();
+
+     /* Free up the file descriptor */
+     closefile(filedata);
+     }
+                  
+   else if (ioper ==  24) 
+     {                 /*********************** Big Movie display */
+     if  (filedata->nstack > 0  && 
+          filedata->imginstack == 0) 
+        {       /* Display from stack file */
+
+        /* Display stacked images selector */
+        stackmen(filedata);      
+        }
+
+     else if (nslice > 1)
+        {showmovmen3();}
+     else
+        {showmovmen2();}
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+     }
+  
+  else if (ioper == 25 )
+     {   /************************************************** Pixel */
+
+    /* Set the full image size for image display */
+     nsam2 = nsam;  nrow2 = nrow;  islice = 1;      
+     dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, 
+               &nsams, &nrows, &islice);
+
+     /* Keeps image in imagel */
+     imagedis(filedata,TRUE, &imagel,
+              TRUE,TRUE, &fimage, 
+              imagego,imageend);
+
+     /* Cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     /* Record left image location and size */
+     ixullmin = ixul;	ixlrlmax=ixul+nsams;
+     iyullmin = iyul;	iylrlmax=iyul+nrows;
+
+     nsaml    = nsams;  nrowl  = nrows;
+     nsam1l   = nsam1;  nrow1l = nrow1;
+     nsam2l   = nsams;  
+     nrow2l   = nrows;
+     ixull    = ixul;   iyull  = iyul;
+     ixulli   = ixul;   iyulli = iyul;
+
+     // Query pixels from this image  
+     docit_in = FALSE;     // From: pixelmen
+     pixelmen_in_nod();
+
+     /* Free up the file descriptor */
+     closefilep(&filedata);
+     }
+  return TRUE;
+  }
+
+@
+
+
+1.86
+log
+@Keep up menu widgets for montage file
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.85 2012/11/28 15:01:35 leith Exp $*/
+d11 2
+d34 1
+a34 1
+ C  IMAGEMEN
+d56 3
+a58 3
+ extern void dendromen  (char * );
+ extern void ctfmen0    (char * );
+ extern void showmovmen2(void);
+d61 3
+a63 3
+ void       imagemen_cb    (Widget, XtPointer, XtPointer);
+ void       imagemennol_cb (Widget, XtPointer, XtPointer);
+ void       imagemen_cb_com(void);
+d66 5
+a70 3
+ extern char    outstr[80];
+ extern float   erodethresh;  /* Used in filtermen, erodemen */
+ extern int     docimgtotal;  /* From: docmontmen */
+d73 8
+a80 8
+ FILEDATA*  filedatal = NULL; /* Used by backmen, pickback, pickmen */
+ FILEDATA*  filedatar = NULL; /* Used by backmen, pickback, pickmen */
+ float*     fimage = NULL;    /* Used by filtermen, pixelmen_in also */
+ char       filcolvol[81];    /* Name for color vol. file */
+
+ char*      cptrduml = NULL; /* Data used by image right */
+ char*      cptrdumr = NULL; /* and left */
+ int        icattyp;
+d107 2
+a108 1
+ void imagemen(Widget iw_temp, XtPointer data, XtPointer call_data)
+d883 1
+@
+
+
+1.85
+log
+@skip error msg from openold if raw image size not set
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.84 2012/11/27 19:13:38 leith Exp leith $*/
+d8 3
+a10 2
+ C                  Added pixelmen_in call      Jun 2011  ArDean Leith                                                                    
+ C                  Keep up image menu widget   Nov 2012  ArDean Leith                                                                    
+d14 1
+a14 1
+ C=* Copyright 1985-2012  Health Research Inc.,                        *
+d255 1
+a255 1
+  else if (ioper != 1)     // new Nov 2012 al
+@
+
+
+1.84
+log
+@File list stays up after image selection.
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.83 2012/04/17 18:25:30 leith Exp $*/
+d320 8
+a327 1
+  if (filedata == (FILEDATA *)FALSE)
+@
+
+
+1.83
+log
+@docimgtotal < 0 trap
+if ((ioper == 1 || ioper == 2 || ioper == 11) stack category bug fix
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.82 2011/06/10 12:14:45 leith Exp $*/
+d5 7
+a11 6
+C++*********************************************************************
+C
+C imagemen.c                                     Nov 1992 
+C                    Added pixelmen_in call      Jun 2011  ArDean Leith                                                                    
+C **********************************************************************
+C * WEB.    AUTHOR: ARDEAN LEITH                                       *
+d13 2
+a14 5
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d23 2
+a24 2
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+a25 1
+ C=*                                                                   *
+d27 1
+a27 3
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+d29 12
+a40 12
+C **********************************************************************
+C
+C    IMAGEMEN
+C
+C    PARAMETERS:   iw_temp, data, call_data (usual callback data)
+C
+C    PURPOSE:      Makes a file widget, interrogates file widget and
+c                  calls image display routine
+C
+C    CALLED BY:    web_com
+C
+C--********************************************************************
+d73 3
+a75 3
+ char*       cptrduml = NULL; /* Data used by image right */
+ char*       cptrdumr = NULL; /* and left */
+ int         icattyp;
+d215 1
+a215 1
+     {    /* new directory wanted */
+d254 1
+a254 1
+  else
+d287 1
+a287 1
+     {                /************** Display colored surface from volume */ 
+@
+
+
+1.82
+log
+@pixel call
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/imagemen.c,v 1.81 2011/05/17 17:30:56 leith Exp $*/
+d70 1
+d88 12
+a99 12
+      "Image",                      "First Image",   
+      "Volume",                     "Histogram",
+      "Image for Marker Picking",   "Image for Masking",
+      "Image for Profiling",        "Untilted Image",
+      "Image for Annotating",       "Image for Convolution",
+      "Image for Categorizing",     "Image with Reflections",
+      "Recorded Image",             "Dendrogram Doc File",
+      "Volume", 		    "Movie Montage",
+      "Volume",                     " ",
+      "Drill-n-fill Volume",        "Montage Doc File",
+      "Power Spectrum",             "CTF Doc File",
+      "Montage Doc File",	    "Movie Series",
+d138 1
+d241 1
+a241 1
+  /* get name of file returned from the file widget */
+d271 6
+d302 1
+a302 1
+
+d427 3
+a429 1
+  if ((ioper == 1 || ioper == 2) && 
+d432 2
+a433 1
+     {                /********************** Display from stack file */
+d486 2
+a487 2
+     {                 /************ Display montage from 2d volume */     
+     /* Also used by categorize from seq. file     */     
+@
+
+
+1.81
+log
+@shift and other on-going
+@
+text
+@d2 1
+a2 1
+/*$Header: /local/valcour.usr10/user8-copy/web/new/RCS/imagemen.c,v 1.80 2011/05/05 12:05:27 leith Exp leith $*/
+d7 2
+a8 1
+C imagemen.c          Nov  92                                                                    
+d48 1
+a48 1
+/* common variables */
+d58 2
+a59 2
+ extern void dendromen( char * );
+ extern void ctfmen0( char * );
+d63 2
+a64 2
+ void       imagemen_cb   (Widget, XtPointer, XtPointer);
+ void       imagemennol_cb(Widget, XtPointer, XtPointer);
+d69 1
+a69 1
+ extern float   erodethresh;  /* used in filtermen, erodemen */
+d71 5
+a75 5
+ /* Common variables used elsewhere */
+ FILEDATA*  filedatal = NULL; /* used by backmen, pickback, pickmen */
+ FILEDATA*  filedatar = NULL; /* used by backmen, pickback, pickmen */
+ float*     fimage = NULL;    /* used by filtermen also */
+ char       filcolvol[81];    /* name for color vol. file */
+d77 1
+a77 1
+ char*       cptrduml = NULL; /* data used by image right */
+d84 1
+a84 1
+ static char   ops[] = "123456789abcdefghijklmno";
+d98 2
+a99 1
+      "Montage Doc File",	    "Movie Series"
+d110 1
+a110 1
+ char   pattern[86];
+d112 1
+a112 1
+ char   ctemp[3];
+d146 1
+a146 1
+       /* create a file selector box */
+d162 1
+a162 1
+       /* create a file selector box */
+d173 1
+a173 1
+	spout("*** Shift doesn't work for 3D image.");
+d187 1
+a187 1
+       /* create a file selector box */
+d228 1
+d232 1
+a232 1
+                                  XtPointer call_data)
+d273 1
+a273 1
+    {                       /* Display dendrogram menu */
+d278 1
+a278 1
+    {                       /* Display CTF menu */
+d284 1
+a284 1
+     {                /************** Display colored surface from 3-d volume */ 
+d309 1
+a309 1
+  int         nsams, nrows;        /*the size of the image on the screen*/
+d342 1
+a342 1
+     {   /* overall stack header referenced */ 
+d354 2
+a355 1
+        sprintf(&outstr[0],"Range: %f ... %f",fmin_spi,fmax_spi);
+d360 1
+a360 1
+        {     /* this is a blank image */
+d368 1
+a368 1
+  /* set flag if present image file same as previous file */
+d394 4
+a397 4
+  if (iskip > 1)         /* Shrink image by factor of iskip */ 
+    { 
+     if( (nsam/iskip) < (ixlrlmax-ixullmin+1) )   /* try to display  */
+       nsam2 = nsam;                              /* as much as the  */
+d399 1
+a399 1
+       nsam2 = (ixlrlmax-ixullmin+1)*iskip;
+d401 1
+a401 1
+       nrow2 = nrow;
+d412 2
+a413 1
+  dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &islice);
+d417 1
+a417 1
+  imageend   = 127;
+d420 3
+a422 2
+      (filedata->nstack > 0  && filedata->imginstack == 0)) 
+     {                /********************** display from stack file */
+d431 1
+a431 1
+     {                /************************* display single image */
+d433 4
+a436 3
+     /* set the full image size for image display */
+     nsam2 = nsam;  nrow2 = nrow;  islice = 1;      
+     dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &islice);
+d438 2
+a439 1
+     imagedis(filedata,TRUE,&imagel,TRUE,FALSE,&fptrdum,
+d443 2
+a444 2
+     ixullmin = ixul;	ixlrlmax=MYMIN(ixul+nsams,ixlrlmax);
+     iyullmin = iyul;	iylrlmax=MYMIN(iyul+nrows,iylrlmax);
+d448 2
+a449 2
+     /* record left image location and size */
+     nsaml  = nsams;   nrowl  = nrows;
+d453 3
+a455 3
+     ixull  = ixul;  iyull  = iyul;
+     ixulli = ixul;  iyulli = iyul;
+     ixuln = ixul;   iyuln = iyul;
+d457 1
+a457 1
+     /* free up the file descriptor */
+d460 1
+a460 1
+     /* cancel waitcursor */
+d463 3
+a465 2
+  else if (ioper == 1 || (ioper == 2 && nslice > 1))
+     {                /************* Display montage from 3-d volume */     
+d467 1
+a467 1
+     /* cancel waitcursor */
+d473 4
+a476 3
+  else if (ioper ==  2 || (ioper == 11 && icattyp == 0))
+     {                 /************ Display montage from 2-d volume */     
+                       /* also used by categorize from seq. file     */     
+d479 1
+a479 1
+     /* cancel waitcursor */
+d485 1
+a485 1
+     /* cancel waitcursor */
+d492 2
+a493 2
+     {                /************* Display surface from 3-d volume */ 
+     /* cancel waitcursor */
+d503 1
+a503 1
+     /* display the surfaces or sird image of surface */   
+d517 1
+a517 1
+         /************************************************** Mask  */
+d529 2
+a530 1
+     imagedis(filedata,TRUE, &imagel,TRUE,FALSE,&fptrdum,
+d565 2
+a566 1
+     imagedis(filedata,FALSE,&imagel,FALSE,FALSE,&fptrdum,
+d592 2
+a593 2
+        rect.x = ixuln; rect.y = iyuln;
+        rect.width = ixlrlmax-ixullmin;
+d598 1
+a598 1
+        /* Do not save the floating point buffer for future use */
+d602 2
+a603 1
+                            (float) (filedata->fmin_spi), (float) (filedata->fmax_spi),
+d617 1
+a617 1
+        rect.width = ixlrrmax-ixullmin;
+d638 1
+a638 1
+        /* Do not save the floating point buffer for future use */
+d642 2
+a643 1
+                            (float) (filedata->fmin_spi), (float) (filedata->fmax_spi),
+d663 1
+a663 1
+        /* Do not free up the image file descriptors */
+d667 1
+a667 1
+     {           /***************************************** annotate */
+d671 2
+a672 1
+     imagedis(filedata,FALSE,&imagel,FALSE,FALSE,&fptrdum,
+d684 1
+a684 1
+     {          /******************************************** filter */
+d688 1
+a688 1
+     /* Save the floating point buffer for future use           */
+d693 2
+a694 1
+                         (float)filedata->fmin_spi, (float)filedata->fmax_spi,
+d698 1
+a698 1
+     /* cancel waitcursor */
+d704 2
+a705 1
+        /* display filter selection menu */
+d710 1
+a710 1
+        /* use previous filter type during repeat */
+d718 2
+a719 1
+     imagedis(filedata,FALSE, &imagel,FALSE,FALSE,&fptrdum,
+d736 4
+a739 2
+     imagedis(filedata,FALSE, &imagel,FALSE,FALSE,&fptrdum,
+           (int) filedata ->fmin_spi, (int)filedata ->fmax_spi);
+d748 2
+a749 2
+     {   /*********************************** Small Movie montage */
+     /* Want to start again at upper left origin */
+d754 1
+a754 1
+        {         /************* Display montage from 3-d volume */    
+d758 1
+a758 1
+        {         /************* Display montage from 2-d volume */     
+d761 1
+d766 1
+a766 1
+     {                /**************** Drill-n-fill from volume */ 
+d781 2
+a782 1
+  else if ((ioper ==  20 || ioper == 23) && filedata->nstack > 0) 
+d787 1
+a787 1
+     /* cancel waitcursor */
+d796 1
+a796 1
+     /* cancel waitcursor */
+d804 2
+a805 1
+     imagedis(filedata,FALSE, &imagel,FALSE,FALSE,&fptrdum,
+d819 4
+a822 2
+     if  (filedata->nstack > 0  && filedata->imginstack == 0) 
+        {                /** display from stack file */
+d831 1
+d836 33
+@
+
+
+1.80
+log
+@-cmap_changes_etc
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.78 2007/11/01 19:33:45 leith Exp $*/
+d5 1
+a5 1
+C++*************************************************************************
+d39 2
+a40 2
+C    PURPOSE:      MAKES A FILE WIDGET, INTERROGATES FILE WIDGET AND
+C                  CALLS IMAGE DISPLAY ROUTINE
+d56 1
+d61 1
+a61 1
+ /* internal function  prototypes */
+d66 1
+a66 1
+ /* externally defined common variables */
+d70 1
+a70 1
+ /* common variables used elsewhere */
+d80 1
+a80 1
+ /* file scope variables used here */
+d92 1
+a92 1
+      "Recorded Image",             "Dendrogram Doc. File",
+d95 3
+a97 3
+      "Drill-n-fill Volume",        "Montage Doc. File",
+      "Power Spectrum",             "CTF Doc. File",
+      "Montage Doc. File",	    "Movie Series"
+d115 1
+a115 1
+    { /* use new file pattern */
+d120 1
+a120 1
+       /* set default file filter */
+d129 1
+a129 1
+ /* convert first oper character to integer */
+d132 1
+a132 1
+ /* set name for file */
+d136 1
+a136 1
+    {      /*************************** interactive particle picking */
+d151 1
+a151 1
+    {        /**************************** surface color texture map */
+d177 1
+a177 1
+    {   /************************************* all other operations */
+d205 1
+a205 1
+  /* get name of file returned from the file widget */
+d210 1
+a210 1
+  /* get name of directory used in the file widget */
+d226 1
+a226 1
+/* used if !listfi (when do not want file selction widget */
+d262 2
+a263 2
+  if (ioper == 20 ||       /* display montage    from doc file menu */
+      ioper == 23)         /* display categorize from doc file menu */
+d265 2
+a266 2
+    docmontmen0(filnew);   /* retrieve doc file info */
+    docmontmen(filnew);    /* show montage from doc menu */
+d270 1
+a270 1
+    {                       /* display dendrogram menu */
+d275 1
+a275 1
+    {                       /* display CTF menu */
+d281 1
+a281 1
+     {                /************** display colored surface from 3-d volume */ 
+d287 1
+a287 1
+     /* get menu for displaying the colored surface */   
+d308 1
+a308 1
+  /* set waitcursor */
+d311 1
+a311 1
+  /* open the new existing file */
+d350 1
+a350 1
+        {   /* list image range */
+d373 1
+a373 1
+  /* set name of present displayed image */
+d390 1
+a390 1
+  if (iskip > 1)         /* shrink image by factor of iskip */ 
+d407 1
+a407 1
+  /* reset the image size parameters */
+d410 1
+a410 1
+  /* set image display range */
+d417 1
+a417 1
+     /* cancel waitcursor */
+d420 1
+a420 1
+     /* display stacked images selector */
+d456 1
+a456 1
+     {                /************* display montage from 3-d volume */     
+d465 1
+a465 1
+     {                 /************ display montage from 2-d volume */     
+d474 1
+a474 1
+     {                /***************** get color volume name first */
+d482 1
+a482 1
+     {                /************* display surface from 3-d volume */ 
+d498 1
+a498 1
+     {            /*************************************** histogram */ 
+d500 1
+a500 1
+     /* cancel waitcursor */
+d502 1
+a502 1
+     /* filedata is closed in hist-->his */
+d506 4
+a509 4
+     {   /************************************************** markers */
+         /************************************************** mask  */
+     /* locate markers from this image */ 
+     /* display single image */
+d513 1
+a513 1
+     /* set the full image size for image display */
+d550 1
+a550 1
+     {         /******************************************** profile */
+d553 1
+a553 1
+     /* display single image first*/
+d557 1
+a557 1
+     /* cancel waitcursor */
+d560 1
+a560 1
+     /* profile this image */
+d563 1
+a563 1
+     /* filedata closed in profilemen_buts */
+d567 1
+a567 1
+     {           /********************************* particle picking */
+d569 1
+a569 1
+     /* set upper left corner */
+d576 1
+a576 1
+        /* set left image visible display position */
+d586 1
+a586 1
+        /* do not save the floating point buffer for future use */
+d593 1
+a593 1
+        /* save pointer to left filedata */
+d596 1
+a596 1
+        /* record left image location and size */
+d609 1
+a609 1
+        /* cancel waitcursor */
+d613 1
+a613 1
+        /* display second image */
+d618 1
+a618 1
+        /* set right image visible display position */
+d625 1
+a625 1
+        /* do not save the floating point buffer for future use */
+d632 1
+a632 1
+        /* save pointer to right filedata */
+d642 1
+a642 1
+        /* cancel waitcursor */
+d646 1
+a646 1
+        /* retrieve existing doc files for this set of data */
+d649 1
+a649 1
+        /* do not free up the image file descriptors */
+d656 1
+a656 1
+     /* display single image first*/
+d660 1
+a660 1
+     /* cancel waitcursor */
+d663 1
+a663 1
+     /* annotate this image */
+d672 2
+a673 2
+     /* display single image from file first, do not keep image */
+     /* save the floating point buffer for future use           */
+d698 2
+a699 2
+     {   /****************************************** pick reflections */ 
+     /* display single image */
+d704 1
+a704 1
+     /* cancel waitcursor */
+d709 1
+a709 1
+     /* free up the file descriptor */
+d716 1
+a716 1
+     /* display single recorded image */
+d721 1
+a721 1
+     /* cancel waitcursor */
+d724 1
+a724 1
+     /* free up the file descriptor */
+d729 1
+a729 1
+     /* want to start again at upper left origin */
+d734 1
+a734 1
+        {         /************* display montage from 3-d volume */    
+d738 1
+a738 1
+        {         /************* display montage from 2-d volume */     
+d741 1
+a741 1
+     /* cancel waitcursor */
+d745 1
+a745 1
+     {                /************* drill-n-fill from 3-d volume */ 
+d756 1
+a756 1
+     /* drill or fill a  volume */   
+d761 2
+a762 2
+     {           /*** montage    stack from doc file list */     
+                 /*** categorize stack from doc file list */
+d770 2
+a771 2
+     {           /*** montage    images from doc file list */     
+                 /*** categorize images from doc file list */
+d779 2
+a780 2
+     {   /****************************************** fourier mask */ 
+     /* display single image */
+d785 1
+a785 1
+     /* cancel waitcursor */
+d790 1
+a790 1
+     /* free up the file descriptor */
+d798 1
+a798 1
+        /* display stacked images selector */
+d806 1
+a806 1
+     /* cancel waitcursor */
+@
+
+
+1.79
+log
+@fmin
+@
+text
+@d504 1
+a504 1
+  else if (ioper == 5)
+d506 1
+d509 1
+d514 2
+a515 1
+     dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &islice);
+d517 1
+d521 1
+a521 1
+     /* cancel waitcursor */
+d524 1
+a524 1
+     /* record left image location and size */
+d528 14
+a541 8
+     nsaml  = nsams;   nrowl  = nrows;
+     nsam1l = nsam1;  nrow1l = nrow1;
+     nsam2l = nsams;  
+     nrow2l = nrows;
+     ixull  = ixul;  iyull  = iyul;
+     ixulli = ixul;  iyulli = iyul;
+
+     gold();
+d543 1
+a543 1
+     /* free up the file descriptor */
+a546 15
+  else if (ioper == 6)
+     {             /****************************************** mask  */
+     islice = 1;
+     imagedis(filedata,FALSE, &imagel,FALSE,FALSE,&fptrdum,
+              imagego,imageend);
+
+     /* cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     /* mask this image */ 
+     mask();
+
+     /* free up the file descriptor */
+     closefile(filedata);
+     }
+@
+
+
+1.78
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.77 2005/10/18 16:59:43 leith Exp $*/
+d594 1
+a594 1
+                            filedata->fmin_spi, filedata->fmax_spi,
+d633 1
+a633 1
+                            filedata->fmin_spi, filedata->fmax_spi,
+d682 1
+a682 1
+                         filedata->fmin_spi, filedata->fmax_spi,
+@
+
+
+1.77
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.76 2002/04/10 18:48:27 leith Exp $*/
+d340 2
+a341 2
+     fmin = 0.0;
+     fmax = 0.0;
+d345 2
+a346 2
+     fmin = filedata->fmin;
+     fmax = filedata->fmax; 
+d350 1
+a350 1
+        sprintf(&outstr[0],"Range: %f ... %f",fmin,fmax);
+d354 1
+a354 1
+     if ((fmax - fmin) < 10e-10)
+d594 1
+a594 1
+                            filedata->fmin, filedata->fmax,
+d633 1
+a633 1
+                            filedata->fmin, filedata->fmax,
+d682 1
+a682 1
+                         filedata->fmin, filedata->fmax,
+d691 1
+a691 1
+        erodethresh = filedata->fmax;
+d723 1
+a723 1
+           (int) filedata ->fmin, (int)filedata ->fmax);
+@
+
+
+1.76
+log
+@for movies of stacks
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.75 2001/09/12 14:43:30 leith Exp $*/
+d10 23
+a32 5
+C * COPYRIGHT (C)1992, 2001. HEALTH RESEARCH INCORPORATED (HRI),       *
+C * ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                   *
+C * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO HRI AND ARE NOT   *
+C * TO BE DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED *
+C * WITHOUT WRITTEN APPROVAL OF HRI.                                   *
+@
+
+
+1.75
+log
+@added volume movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.74 2001/09/04 15:08:13 leith Exp $*/
+d782 7
+a788 1
+     if (nslice > 1)
+@
+
+
+1.74
+log
+@big movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.73 2001/08/10 19:22:43 leith Exp $*/
+d8 8
+a15 9
+C **************************************************************************
+C *  AUTHOR: A. LEITH                                                      *
+C *  COPYRIGHT (C)1992,2001, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH	        		   *
+C **************************************************************************
+d783 1
+a783 1
+        {spout("*** Big Movie not implemented for 3D images.");}
+@
+
+
+1.73
+log
+@ransons norm bug jfixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.72 2001/08/08 16:09:56 leith Exp leith $*/
+d41 1
+d44 1
+a44 1
+ void       imagemen_cb(Widget, XtPointer, XtPointer);
+d65 1
+a65 1
+ static char   ops[] = "123456789abcdefghijklmn";
+d79 1
+a79 1
+      "Montage Doc. File"
+d715 1
+a715 1
+     {   /****************************************** Movie montage */
+d779 12
+a790 2
+     }                  
+ 
+@
+
+
+1.72
+log
+@stack support improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.70 2001/01/15 15:56:49 leith Exp $*/
+d303 9
+a311 3
+
+  if ((filedata->imami != 1) && (norm(filedata) == FALSE))
+     {    
+d317 7
+a323 8
+
+  fmin = filedata->fmin;
+  fmax = filedata->fmax; 
+
+  if (sayrange)
+     {   /* list image range */
+     sprintf(&outstr[0],"Range: %f ... %f",fmin,fmax);
+     spout(&outstr[0]);
+d325 18
+a342 7
+
+  if ((fmax - fmin) < 10e-10)
+     {     /* this is a blank image */
+     spout("*** BLANK IMAGE SKIPPED");
+     waitcursor(iwin, FALSE, 79);
+     closefile(filedata);
+     return FALSE;
+@
+
+
+1.71
+log
+@stack support improved
+@
+text
+@d64 1
+a64 3
+ /* operation "p" is for stack name for op: q (Categorize stack montage) */
+ /* operation "r" is for stack name for op: o (Categorize stack montage) */
+ static char   ops[] = "123456789abcdefghijklmnopqr";
+d78 1
+a78 3
+      "Montage Doc. File",          "Montage Stack Doc. File",
+      "Stack File",                 "Stack File"
+      "Stack File"
+a249 7
+  else if (ioper == 24 ||  /* display categorize from stack doc file menu */
+           ioper == 26)    /* display montage    from stack doc file menu*/
+    {  
+    docmontmen0(filnew);    /* retrieve doc file info */
+    docmontmen_stk();       /* show montage from stack doc menu */
+    return;
+    }
+d381 1
+a381 1
+     {                /************************** display stack file */
+a388 17
+  else if((ioper == 24  || ioper == 25  || ioper == 27) && 
+          (filedata->nstack > 0  && filedata->imginstack == 0)) 
+     {                /**** display    stack file from doc file list */     
+                      /**** categorize stack file from doc file list */
+     /* cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     /* display the montage, imagego set in imagemen */
+     stackdis(imagego,imageend);
+
+     if (ioper == 25)
+        {  /* categorize images from montage now */
+        catmen();
+        spout ("used new code");
+        }
+    }
+
+d730 9
+d740 2
+a741 2
+     {           /*** montage 2d from doc file list */     
+                 /*** categorize from doc file list */
+@
+
+
+1.70
+log
+@stack montage defaulted
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/imagemen.c,v 1.69 1999/10/04 14:40:54 leith Exp leith $*/
+d10 1
+a10 1
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+a33 4
+#ifdef VMS
+#include <unixlib.h>
+#include <unixio.h>
+#else
+a34 1
+#endif
+d64 3
+a66 1
+ static char   ops[] = "123456789abcdefghijklm";
+d79 4
+a82 1
+      "Power Spectrum",             "CTF Doc. File"
+a115 5
+ if (ioper == 11 && strlen(oper) > 1)
+    { /* categorize has two types */ 
+    strncpy(ctemp, (char*)data, 2); ctemp[2]= '\0';
+    icattyp = atoi(&ctemp[1]);
+    }
+a160 14
+ else if (ioper == 11 && icattyp == 1)
+    {   /********************************* categorize from doc file */
+    if (!listfi) 
+       {
+       iw_filesnol = wid_text(iw_win, iw_filesnol, prompts[19],
+                    filename, *imagemennol_cb, NULL, -1, -1);
+       }
+    else
+       {
+       /* create a file selector box */
+       iw_files =  wid_file(iw_win, iw_files , prompts[19],
+               filename, &pattern[0], *imagemen_cb, -1, -1);
+       }
+    }
+d247 5
+a251 3
+  if ( ioper == 20 || (ioper == 11 && icattyp == 1))
+    {   /* display montage or categorize from doc. file menu */
+    docmontmen0(filnew);
+d254 7
+d262 1
+a262 1
+    {   /* display dendrogram menu */
+d267 1
+a267 1
+    {   /* display CTF menu */
+d390 4
+a393 4
+  if ((ioper == 1 || ioper == 2) && filedata->nstack > 0  && 
+       filedata->imginstack == 0) 
+     {                  /*********************** display a stack file */
+      /* cancel waitcursor */
+d396 1
+d400 17
+d758 3
+a760 3
+  else if (ioper ==  20 || (ioper == 11 && icattyp == 1))
+     {           /*** use doc file to display montage from 2-d volume */     
+                 /*** also for categorize from doc file. list */
+@
+
+
+1.69
+log
+@stack support
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.68 1999/09/30 17:34:10 leith Exp leith $*/
+d400 2
+a401 1
+  if (ioper == 1 && filedata->nstack > 0  && filedata->imginstack == 0) 
+@
+
+
+1.68
+log
+@@@stack supported
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.67 1999/08/04 16:53:58 leith Exp leith $*/
+d313 1
+a313 1
+  /* open the new file */
+d397 2
+a398 2
+  imagego  = mapgo;
+  imageend = 127;
+d400 1
+a400 1
+  if (ioper == 1 && nstack > 0  && imginstack == 0) 
+d405 1
+a405 1
+     stackmen();      
+@
+
+
+1.67
+log
+@categorize menu changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.66 1999/07/06 16:21:31 leith Exp $*/
+d400 2
+a401 2
+  if (ioper == 1 && nstack > 0) {
+			/*********************** display a stack file */
+d406 2
+a407 1
+  }
+@
+
+
+1.66
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.65 1999/07/06 16:12:05 leith Exp leith $*/
+d268 1
+a268 1
+    docmontmen(filnew);
+d749 2
+a750 2
+     {                 /*** use doc file to display montage from 2-d volume */     
+                       /*** also for categorize from doc file. list */
+@
+
+
+1.65
+log
+@added ctfmen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.64 1998/10/02 15:05:53 leith Exp $*/
+d252 1
+a252 1
+ void imagemen_cb_com()
+@
+
+
+1.64
+log
+@added general filter (foumen) call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.63 1998/02/05 22:20:48 liy Exp $*/
+d45 1
+d69 1
+a69 1
+ static char   ops[] = "123456789abcdefghijkl";
+d82 1
+a82 1
+      "Power Spectrum"
+d274 5
+@
+
+
+1.63
+log
+@changes for stack files
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.62 1997/02/26 15:05:47 leith Exp $*/
+d68 1
+a68 1
+ static char   ops[] = "123456789abcdefghijk";
+d71 1
+a71 1
+      "Image",                      "First image",   
+d77 2
+a78 2
+      "Recorded image",             "Dendrogram Doc. File",
+      "Volume", 		    "Movie montage",
+d80 2
+a81 1
+      "Drill-n-fill Volume",        "Montage Doc. File"
+d751 15
+@
+
+
+1.62
+log
+@added categorize from doc file
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.61 1996/08/02 18:01:44 leith Exp leith $*/
+d328 1
+d393 8
+a400 1
+  if (ioper == 1  && nslice == 1)
+@
+
+
+1.61
+log
+@set erodethresh for filtermen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.60 1996/06/20 16:39:01 leith Exp leith $*/
+d63 2
+a64 1
+  
+d82 1
+a82 1
+ /* Note: i is shift which does not ge a prompt */
+d93 1
+d112 1
+a112 1
+ /* convert oper to integer */
+d114 5
+d124 1
+a124 1
+    {      /**************************** interactive particle picking */
+d139 1
+a139 1
+    {        /***************************** surface color texture map */
+d155 1
+a155 1
+    {	 /***************************************** Shift image */
+d164 14
+d179 1
+a179 1
+    {   /***************************************** other operation */
+d194 2
+d264 2
+a265 2
+  if ( ioper == 20)
+    {   /* display montage from doc. file menu */
+d432 1
+a432 1
+  else if (ioper ==  2 || ioper == 11)
+d434 1
+a669 17
+  else if (ioper == 11)
+     {   /*********************************************** categorize */ 
+
+     islice = 1;
+     /* display single image first*/
+     imagedis(filedata,FALSE,&imagel,FALSE,FALSE,&fptrdum,
+              imagego,imageend);
+
+     /* cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     catmen();
+
+     /* free up the file descriptor */
+     closefile(filedata);
+     }                  
+
+d733 1
+a733 1
+  else if (ioper ==  20 )
+d735 1
+@
+
+
+1.60
+log
+@added 2 parameters to imagedis call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.59 1996/06/13 18:47:26 leith Exp leith $*/
+d53 1
+d64 1
+a64 1
+ /* file variables used here */
+d636 1
+a636 1
+
+@
+
+
+1.59
+log
+@added doc montage
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.58 1996/03/29 20:24:10 leith Exp leith $*/
+d375 2
+a376 1
+     imagedis(filedata,TRUE,&imagel,TRUE,imagego,imageend);
+d458 2
+a459 1
+     imagedis(filedata,TRUE, &imagel,TRUE,imagego,imageend);
+d484 2
+a485 1
+     imagedis(filedata,FALSE, &imagel,FALSE,imagego,imageend);
+d502 2
+a503 1
+     imagedis(filedata,FALSE,&imagel,FALSE,imagego,imageend);
+d605 2
+a606 1
+     imagedis(filedata,FALSE,&imagel,FALSE,imagego,imageend);
+d650 2
+a651 1
+     imagedis(filedata,FALSE,&imagel,FALSE,imagego,imageend);
+d666 2
+a667 1
+     imagedis(filedata,FALSE, &imagel,FALSE,imagego,imageend);
+d683 1
+a683 1
+     imagedis(filedata,FALSE, &imagel,FALSE,
+@
+
+
+1.58
+log
+@needed separate callback for non-listing file selction widget
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.57 1996/03/29 17:23:09 leith Exp leith $*/
+d66 1
+a66 1
+ static char   ops[] = "123456789abcdefghij";
+d78 1
+a78 1
+      "Drill-n-fill Volume"
+d240 6
+a245 1
+  if ( ioper == 14)
+d717 10
+a726 1
+  
+@
+
+
+1.57
+log
+@altered iw_filesnol use
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.56 1996/03/21 20:17:17 leith Exp leith $*/
+d47 3
+a49 1
+ void               imagemen_cb(Widget, XtPointer, XtPointer);
+d64 1
+a64 1
+ static char*  filnew;
+d120 1
+a120 1
+                    filename, *imagemen_cb, NULL, -1, -1);
+d136 1
+a136 1
+                    filename, *imagemen_cb, NULL, -1, -1);
+d161 1
+a161 1
+                    filename, *imagemen_cb, NULL, -1, -1);
+d172 1
+a172 1
+/******************** imagemen_cb *************************/
+d177 2
+a178 2
+  int               sayrange;
+  char  *           dirnowt;
+d184 3
+a186 1
+  filnew = extractstr(cbs->value);
+d189 3
+a191 1
+  dirnowt = extractstr(cbs->dir);
+d198 27
+a224 1
+  if (dirnowt) free (dirnowt);
+d226 4
+a258 2
+
+  /*  if (filnew) free (filnew); */
+@
+
+
+1.56
+log
+@pointer used
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.55 1996/03/21 19:50:07 leith Exp leith $*/
+d83 1
+a83 1
+ void imagemen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d115 11
+a125 2
+    iw_files =  wid_file(iw_win, iw_files, "Tilted image",
+                 filename, &pattern[0], *imagemen_cb, 10, 10);
+d131 11
+a141 2
+    iw_files =  wid_file(iw_win, iw_files, "Color volume",
+                 filename, &pattern[0], *imagemen_cb, 10, 10);
+d155 12
+a166 4
+    {
+    /* create a file selector box with appropriate prompt*/
+    iw_files =  wid_file(iw_win, iw_files, prompts[ioper-1],
+                 filename, &pattern[0], *imagemen_cb, 10, 10);
+d194 5
+a198 1
+  XtUnmanageChild(iw_files);
+@
+
+
+1.55
+log
+@changed to XtPointer
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.54 1995/11/28 20:28:23 leith Exp leith $*/
+d47 1
+a47 1
+ void               imagemen_cb(Widget, caddr_t, caddr_t);
+@
+
+
+1.54
+log
+@added dentist call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.53 1995/10/05 14:53:50 liy Exp leith $*/
+d146 2
+a147 1
+ void imagemen_cb(Widget iw_temp, caddr_t data,  caddr_t call_data)
+@
+
+
+1.53
+log
+@fixed that Shift cannot display the whole image
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.52 1995/09/11 14:26:19 liy Exp liy $*/
+d64 1
+a64 1
+ static char   ops[] = "123456789abcdefghi";
+d75 2
+a76 1
+      "Volume"
+d631 5
+d637 9
+@
+
+
+1.52
+log
+@using dispsize() to resize the image
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.51 1995/09/07 16:18:36 liy Exp liy $*/
+d129 2
+d302 1
+d384 1
+@
+
+
+1.51
+log
+@fixed shifting image cut the large images
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.50 1995/09/06 16:38:28 mladjadj Exp liy $*/
+d289 1
+a289 15
+  if(iskip > 1)           /* Shrink the image by factor of iskip */
+    {
+     nsams = nsam/iskip;  
+     nrows = nrow/iskip;
+    }
+  else if(iskip < -1)     /* enlarge the image by factor of -iskip */
+    {
+     nsams = (-1)*nsam*iskip;  
+     nrows = (-1)*nrow*iskip;
+    }
+  else
+    {
+      nsams = nsam;
+      nrows = nrow;
+    }
+@
+
+
+1.50
+log
+@add cptrduml ptr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.49 1995/08/24 21:03:56 liy Exp $*/
+d311 4
+a314 2
+     
+     islice = 1;
+d392 4
+a395 1
+     islice = 1;
+@
+
+
+1.49
+log
+@modified for shifting the magnified images
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.48 1995/08/17 14:16:58 leith Exp liy $*/
+d58 3
+d465 1
+a465 1
+        showimage(filedata, TRUE,  &cptrdum, 
+d504 1
+a504 1
+        showimage(filedata, TRUE,  &cptrdum, 
+@
+
+
+1.48
+log
+@used imagedis instead of image
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.47 1995/08/09 16:41:09 leith Exp leith $*/
+d201 1
+d285 17
+d313 2
+a314 2
+     ixullmin = ixul;	ixlrlmax=MYMIN(ixul+nsam,ixlrlmax);
+     iyullmin = iyul;	iylrlmax=MYMIN(iyul+nrow,iylrlmax);
+d316 1
+a316 1
+     nsam2 = nsam;  nrow2 = nrow;  islice = 1;
+d319 1
+a319 1
+     nsaml  = nsam;   nrowl  = nrow;
+d321 2
+a322 2
+     nsam2l = MYMIN(nsam,ixlrlmax-ixullmin+1);  
+     nrow2l = MYMIN(nrow,iylrlmax-iyullmin+1);
+d394 2
+a395 2
+     ixullmin = ixul;	ixlrlmax=ixul+nsam;
+     iyullmin = iyul;	iylrlmax=iyul+nrow;
+d397 1
+a397 1
+     nsaml  = nsam;   nrowl  = nrow;
+d399 2
+a400 2
+     nsam2l = nsam;  
+     nrow2l = nrow;
+@
+
+
+1.47
+log
+@altered file handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.46 1995/08/08 21:08:42 leith Exp leith $*/
+d292 1
+a292 1
+     image(filedata,TRUE,&imagel,TRUE,imagego,imageend);
+d370 1
+a370 1
+     image(filedata,TRUE, &imagel,TRUE,imagego,imageend);
+d395 1
+a395 1
+     image(filedata,FALSE, &imagel,FALSE,imagego,imageend);
+d412 1
+a412 1
+     image(filedata,FALSE,&imagel,FALSE,imagego,imageend);
+d514 1
+a514 1
+     image(filedata,FALSE,&imagel,FALSE,imagego,imageend);
+d558 1
+a558 1
+     image(filedata,FALSE,&imagel,FALSE,imagego,imageend);
+d573 1
+a573 1
+     image(filedata,FALSE, &imagel,FALSE,imagego,imageend);
+d589 1
+a589 1
+     image(filedata,FALSE, &imagel,FALSE,
+@
+
+
+1.46
+log
+@changed image pointer handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.45 1995/07/26 21:22:31 liy Exp leith $*/
+d361 1
+d370 1
+a370 1
+     image(filedata,TRUE, &imagel,FALSE,imagego,imageend);
+d389 1
+a389 1
+     closefile(filedata);
+d420 1
+@
+
+
+1.45
+log
+@fixed the clean buffer problem
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.44 1995/07/21 20:14:32 liy Exp liy $*/
+d53 4
+a56 6
+ FILEDATA*  filedatal;       /* used by backmen, pickback, pickmen */
+ FILEDATA*  filedatar;       /* used by backmen, pickback, pickmen */
+ char*      cbufl  = NULL;   /* used by backmen, goldmen */
+ char*      cbufr  = NULL;   /* used by backmen also   */
+ float*     fimage = NULL;   /* used by filtermen also */
+ char       filcolvol[81];   /* name for color vol. file */
+d74 1
+d76 1
+d159 1
+d187 2
+d205 1
+d213 1
+a213 1
+      if (filedatal) closefile(filedatal);
+d292 1
+a292 1
+     image(filedata,IMAGE,&imagel,IMAGE,imagego,imageend);
+d325 1
+a325 1
+     {                 /************* display montage from 2-d volume */     
+d341 1
+a341 1
+     {                /************** display surface from 3-d volume */ 
+d364 2
+a365 1
+     {   /* locate markers from this image */ 
+d369 1
+a369 1
+     image(filedata,MARKER, &imagel,MARKER,imagego,imageend);
+d422 1
+a422 1
+     {           /********************************** particle picking */
+d442 1
+a442 1
+        showimage(filedata, TRUE,  &cbufl, 
+d481 1
+a481 1
+        showimage(filedata, TRUE,  &cbufr, 
+a486 1
+
+@
+
+
+1.44
+log
+@added shift image function
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.43 1995/06/22 19:27:07 leith Exp liy $*/
+d127 1
+a127 1
+	spout("*** Current Image is not existed.");
+d288 1
+a288 1
+     image(filedata,TRUE,&imagel,TRUE,imagego,imageend);
+d364 1
+a364 1
+     image(filedata,TRUE, &imagel,TRUE,imagego,imageend);
+@
+
+
+1.43
+log
+@surfcolor stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.42 1995/06/21 16:11:46 leith Exp leith $*/
+d63 1
+a63 1
+ static char   ops[] = "123456789abcdefgh";
+d121 9
+d288 1
+a288 1
+     image(filedata,FALSE,&imagel,FALSE,imagego,imageend);
+d290 15
+d362 1
+d368 11
+@
+
+
+1.42
+log
+@added surf.c
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.41 1995/03/30 15:49:55 mladjadj Exp leith $*/
+a50 1
+ extern char    filcolvol[81];
+d58 1
+@
+
+
+1.41
+log
+@added ioper=16 for movie command
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.40 1995/02/08 15:41:12 liy Exp mladjadj $*/
+d50 2
+a51 1
+ extern char              outstr[80];
+d62 2
+a63 2
+ static int    imnum = 0;
+ static char   ops[] = "123456789abcdefg";
+d73 2
+a74 1
+      "Volume", 		    "Movie montage"
+d84 1
+d103 2
+a104 1
+ /* create a file selector box */
+d106 2
+a107 1
+ ioper = (int) (strchr(ops,*oper) - ops) + 1;
+d109 11
+a119 14
+ if (ioper == 8)
+    {      /* interactive particle picking */
+    if (imnum != 1 ) 
+       {
+       iw_files =  wid_file(iw_win, iw_files , prompts[ioper-1],
+               filnext, &pattern[0], *imagemen_cb, -1, -1);
+       imnum = 1;
+       }
+    else
+       {
+       iw_files =  wid_file(iw_win, iw_files , "Tilted Image",
+               filnext, &pattern[0], *imagemen_cb, -1, -1);
+       imnum = 2;
+       }
+d122 4
+a125 3
+    {    /* all other image display operations */
+    iw_files =  wid_file(iw_win, iw_files , prompts[ioper-1],
+                 &filnow[0], &pattern[0], *imagemen_cb, 10, 10);
+a146 1
+
+d157 15
+a171 3
+  if( ioper == 14)
+   {
+     dendromen(filnew);
+d173 1
+a173 1
+   }
+d304 8
+d316 1
+d325 1
+a325 1
+     surfmen(ioper == 15, FALSE);
+d425 1
+d459 1
+@
+
+
+1.40
+log
+@modified (int)structure for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imagemen.c,v 1.39 1995/01/23 10:21:53 leith Exp liy $*/
+d62 1
+a62 1
+ static char   ops[] = "123456789abcdef";
+d72 1
+a72 1
+      "Volume"
+d531 19
+a549 1
+ 
+@
+
+
+1.39
+log
+@ shortened name of extractstring to extractstr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.38 94/11/17 16:24:30 leith Exp Locker: leith $*/
+d181 1
+a181 1
+  if ((int) filedata == FALSE)
+@
+
+
+1.38
+log
+@added sird
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.37 94/11/08 09:21:25 leith Exp Locker: leith $*/
+a129 1
+  char              *extractstring(XmString);
+d137 1
+a137 1
+  filnew = extractstring(cbs->value);
+d140 1
+a140 1
+  dirnowt = extractstring(cbs->dir);
+@
+
+
+1.37
+log
+@removed lastpush (undiefinded)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.36 94/10/14 10:55:30 leith Exp Locker: leith $*/
+d62 1
+a62 1
+ static char   ops[] = "123456789abcde";
+d71 2
+a72 1
+      "Recorded image",             "Dendrogram Doc. File"
+d291 1
+a291 1
+  else if (ioper ==  3)
+d302 2
+a303 2
+     /* display the surfaces */   
+     surfmen();
+@
+
+
+1.36
+log
+@changed repeat
+for filtermen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.35 94/10/11 15:15:05 leith Exp Locker: leith $*/
+a50 1
+ extern Widget            lastpush;
+@
+
+
+1.35
+log
+@fixed repetitive filter bug
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.34 94/09/27 16:52:06 leith Exp Locker: leith $*/
+d169 1
+a169 1
+ void imagemen1(char * filnewt, int sayrange)
+d186 3
+a188 3
+     if(ioper == 8)
+      if(filedatal) closefile(filedatal);
+     return;
+d196 1
+a196 1
+     return;
+d212 1
+a212 1
+     return;
+d300 1
+a300 1
+        return;
+d307 1
+a307 1
+     {            /***************************** histogram this image */ 
+d329 1
+a329 1
+     {             /********************************* mask an image  */
+d344 1
+a344 1
+     {         /***************************** profile across an image */
+d444 1
+a444 1
+     {           /********************************* annotate an image */
+d459 1
+a459 1
+     {          /************************************ filter an image */
+d476 3
+a478 1
+        /* select filter for this image */
+d480 1
+d483 1
+a483 2
+        /* use previous filter type */
+        XtCallCallbacks(lastpush,XmNactivateCallback,NULL);
+d488 1
+a488 1
+     {   /****************************************** categorize image */ 
+d533 1
+a533 1
+  return;
+@
+
+
+1.34
+log
+@??
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.33 94/09/12 11:22:19 leith Exp Locker: leith $*/
+d31 2
+a32 2
+#include "common.h"
+#include "routines.h"
+d41 2
+a42 1
+#include <Xm/FileSB.h>
+a43 1
+
+d51 1
+d53 6
+a58 8
+ /* common variables */
+ char*      filnew;
+ int        imnum = 0;
+ FILEDATA*  filedatal;
+ FILEDATA*  filedatar;
+ char*      cbufl  = NULL;
+ char*      cbufr  = NULL;
+ float*     fimage = NULL;
+d60 4
+a63 1
+ static char ops[] = "123456789abcde";
+d167 1
+a167 1
+ /******************** imagemen1 *************************/
+d172 4
+a175 5
+  int        iform;
+  char*      cptrdum = NULL;
+  float*     fptrdum = NULL;
+  XRectangle rect;
+  char       cblank = ' ';
+d238 2
+a239 2
+  nsam1    = 1;    nrow1    = 1;   
+  nslice1  = 1;   nslice2 = 1;
+d481 1
+a481 1
+        filter_but(NULL,&cblank,NULL);
+@
+
+
+1.33
+log
+@removed newline from range output
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.32 94/08/11 16:24:52 leith Exp Locker: leith $*/
+a47 1
+ void               imagemen1  (char *, int);
+d174 1
+d457 1
+a457 1
+ else if (ioper == 10)
+d474 8
+a481 3
+     /* select filter for this image */
+     filtermen();
+
+@
+
+
+1.32
+log
+@ioper wrong on sayrange false
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.31 94/07/01 23:31:32 odesanya Exp Locker: leith $*/
+d202 1
+a202 1
+     sprintf(&outstr[0],"Range: %f ... %f \n",fmin,fmax);
+@
+
+
+1.31
+log
+@added selection processing due to dendrogram
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imagemen.c,v 1.30 1994/05/24 18:06:55 odesanya Exp $*/
+d153 1
+a153 1
+  if (ioper == 5) sayrange = FALSE;
+@
+
+
+1.30
+log
+@fixed for mar location with TRUE & TRUE calls to image
+@
+text
+@d2 1
+a2 1
+/*$Header: /home/odesanya/web/imagemen.c,v 1.1 1994/05/24 18:02:23 odesanya Exp $*/
+d44 2
+d62 1
+a62 1
+ static char ops[] = "123456789abcd";
+d71 1
+a71 1
+      "Recorded image"
+d154 6
+@
+
+
+1.29
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/imagemen.c,v 1.28 94/05/12 09:09:25 leith Exp Locker: leith $*/
+d308 1
+a308 1
+     image(filedata,FALSE, &imagel,FALSE,imagego,imageend);
+@
+
+
+1.28
+log
+@lekans iskip factor sizizing
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.25 94/04/12 12:07:16 leith Exp $*/
+d60 1
+a60 1
+ static char ops[] = "123456789a";
+d67 3
+a69 1
+      "Image for Annotating",       "Image for Convolution"
+d72 1
+a72 1
+/********************  imagemen  ************************/
+a122 2
+
+
+d234 3
+a236 3
+     if( (nsam/iskip) < (ixlrlmax-ixullmin+1) )     /* try to display  */
+       nsam2 = nsam;                                /* as much as the  */
+     else                                           /* window can view */
+d249 4
+d257 1
+a257 1
+     image(filedata,FALSE,&imagel,FALSE);
+d308 1
+a308 1
+     image(filedata,FALSE, &imagel,FALSE);
+d322 1
+a322 1
+     image(filedata,FALSE, &imagel,FALSE);
+d339 1
+a339 1
+     image(filedata,FALSE,&imagel,FALSE);
+d373 2
+a374 1
+                            filedata->fmin, filedata->fmax);
+d411 3
+a413 1
+                            filedata->fmin, filedata->fmax);
+d436 1
+a437 1
+
+d439 1
+a439 1
+     image(filedata,FALSE,&imagel,FALSE);
+d459 3
+a461 1
+                         filedata->fmin, filedata->fmax);
+d471 46
+@
+
+
+1.27
+log
+@lekans file hndling change
+@
+text
+@d229 1
+a229 2
+  nsam1    = 1;   nsam2   = MYMIN(nsam,ixlrlmax-ixullmin+1);
+  nrow1    = 1;   nrow2   = MYMIN(nrow,iylrlmax-iyullmin+1);
+d231 17
+@
+
+
+1.26
+log
+@ml's fixes
+@
+text
+@d60 1
+a60 1
+ static char ops[] = "123456789abc";
+d67 1
+a67 2
+      "Image for Annotating",       "Image for Convolution",
+      "Image for Categorizing",     "Image for Reflections"
+d177 2
+a250 2
+     puts(" calling montmen3");
+
+d298 1
+a298 1
+  
+d444 1
+a444 6
+     }                  
+  else if (ioper == 13)
+     {   /* pick reflections from  this image */ 
+     /* display single image */
+     islice = 1;
+     image(filedata,FALSE, &imagel,FALSE);
+a445 23
+     /* cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     catmen();
+
+     /* free up the file descriptor */
+     closefile(filedata);
+     }                  
+  else if (ioper == 12)
+     {   /* pick reflections from  this image */ 
+     /* display single image */
+     islice = 1;
+     image(filedata,FALSE, &imagel,FALSE);
+
+     /* cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     reflmen();
+
+     /* free up the file descriptor */
+     closefile(filedata);
+     }                  
+  
+@
+
+
+1.25
+log
+@lekans changes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.22 94/03/24 17:11:27 leith Exp $*/
+d60 1
+a60 1
+ static char ops[] = "123456789a";
+d67 2
+a68 1
+      "Image for Annotating",       "Image for Convolution"
+d299 1
+a299 1
+
+d445 6
+a450 1
+     }
+d452 23
+@
+
+
+1.24
+log
+@marker islice set
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.23 94/04/07 14:29:27 leith Exp Locker: leith $*/
+d43 1
+d45 2
+a46 2
+ void   imagemen_cb(Widget, caddr_t, caddr_t);
+ void   imagemen1  (char *, int);
+d60 1
+a60 1
+ static char ops[] = "123456789abc";
+d67 1
+a67 2
+      "Image for Annotating",       "Image for Convolution",
+      "Images for Categorizing",    "Image for Reflections"
+a120 1
+/************************ imagemen_cb ********************************/
+d122 3
+d158 1
+a158 1
+ /************************** imagemen1 *******************************/
+d166 1
+d249 2
+d285 2
+a286 5
+     {   /**************************** locate markers from this image */ 
+
+     /* display single image from file first, keep image
+       buffer for future use           */
+
+d288 1
+a288 4
+     showimage(filedata, TRUE,  &cbufl,
+                         TRUE,  &imagel, 
+                         FALSE, &fimage,
+                         filedata->fmin, filedata->fmax);
+d290 1
+a290 1
+    /* cancel waitcursor */
+d326 1
+d340 2
+d343 3
+d347 1
+a347 1
+        islice = 1;
+d352 1
+a352 1
+                            FALSE, &fptrdum,
+d361 2
+a362 1
+        nsam2l = nsam2;  nrow2l = nrow2;
+d366 5
+d381 2
+a382 3
+ 
+        nsam1  = 1;   nsam2   = MYMIN(nsam,ixlrrmax-ixulrmin+1);
+        nrow1  = 1;   nrow2   = MYMIN(nrow,iylrrmax-iyulrmin+1);
+d389 1
+a389 1
+                            FALSE, &fptrdum,
+d397 2
+a398 1
+        nsam2r = nsam2;  nrow2r = nrow2;
+a410 1
+
+d423 1
+d435 1
+a435 1
+                         TRUE,  &fimage,
+a442 1
+     }
+a443 14
+  else if (ioper == 12)
+     {   /************************ locate reflections from this image */ 
+
+     /* display single image */
+     islice = 1;
+     image(filedata,FALSE, &imagel,FALSE);
+
+     /* cancel waitcursor */
+     waitcursor(iwin, FALSE, 79);
+
+     reflmen(NULL,NULL,NULL);
+
+     /* free up the file descriptor */
+     closefile(filedata);
+@
+
+
+1.23
+log
+@called reflmen
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.22 94/03/24 17:11:27 leith Exp Locker: leith $*/
+d281 4
+a284 1
+     /* display single image */
+d286 4
+a289 1
+     image(filedata,FALSE, &imagel,FALSE);
+d291 1
+a291 1
+     /* cancel waitcursor */
+@
+
+
+1.22
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.21 94/03/24 14:02:58 leith Exp Locker: leith $*/
+a42 1
+
+d44 2
+a45 2
+ void               imagemen_cb(Widget, caddr_t, caddr_t);
+ void               imagemen1  (char *, int);
+d59 1
+a59 1
+ static char ops[] = "123456789a";
+d66 2
+a67 1
+      "Image for Annotating",       "Image for Convolution"
+d121 1
+a122 3
+
+/******************** imagemen_cb *************************/
+
+d156 1
+a156 1
+ /******************** imagemen1 *************************/
+d280 1
+a280 1
+     {   /* locate markers from this image */ 
+a293 1
+
+a320 1
+
+d394 1
+a406 1
+
+d426 1
+d428 14
+@
+
+
+1.21
+log
+@used showimage instead of showimagen
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.20 94/03/24 13:58:20 leith Exp Locker: leith $*/
+d51 1
+a51 1
+ /* internal file variables */
+d56 4
+a59 3
+ char*      cbufl;
+ char*      cbufr;
+ 
+d344 3
+a346 3
+                             TRUE,  &imagel, 
+                             FALSE, &fptrdum,
+                             filedata->fmin, filedata->fmax);
+d376 3
+a378 3
+                             TRUE,  &imager, 
+                             FALSE, &fptrdum,
+                             filedata->fmin, filedata->fmax);
+d421 3
+a423 3
+                          FALSE, &imagel, 
+                          TRUE,  &fptrdum,
+                          filedata->fmin, filedata->fmax);
+@
+
+
+1.20
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.19 94/03/24 12:11:05 leith Exp $*/
+d342 1
+a342 1
+        showimagen(filedata, TRUE,  &cbufl, 
+d374 1
+a374 1
+        showimagen(filedata, TRUE,  &cbufr, 
+d419 1
+a419 1
+     showimagen(filedata, FALSE, &cptrdum,
+@
+
+
+1.19
+log
+@for backmen
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.18 94/03/18 12:07:25 leith Exp $*/
+d230 1
+a230 1
+     {                                      /* display single image */
+d242 1
+a242 1
+     {                             /* display montage from 3-d volume */     
+d251 1
+a251 1
+     {                             /* display montage from 2-d volume */     
+d259 1
+a259 1
+     {                             /* display surface from 3-d volume */ 
+d274 1
+a274 1
+     {                              /* put up histogram of this image */ 
+d297 1
+a297 1
+     {                                             /* mask an image  */
+d312 1
+a312 1
+     {                                    /* profile across an image */
+d327 1
+a327 1
+     {                                           /* particle picking */
+d398 1
+a398 1
+     {                                          /* annotate an image */
+d413 1
+a413 1
+     {                                            /* filter an image */
+@
+
+
+1.18
+log
+@deallocated cbuf as necessary
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.17 94/03/15 14:34:18 leith Exp $*/
+d52 7
+a58 3
+ char  *filnew;
+ int   imnum = 0;
+
+d162 3
+a164 1
+  int               iform;
+d195 1
+a195 1
+     {     /* this is a blank imge */
+d339 11
+a349 1
+        image(filedata,TRUE,&imagel,TRUE);
+a356 3
+        /* free up the first file descriptor */
+        closefile(filedata);
+
+d371 1
+a371 1
+        image(filedata,TRUE,&imager,TRUE);
+d373 9
+d394 1
+a394 2
+        /* free up the second image file descriptor */
+        closefile(filedata);
+d419 4
+a422 1
+     showimage(filedata, FALSE, FALSE, &imagel, TRUE);
+@
+
+
+1.17
+log
+@nulled out pattern for filter on wid-file
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.16 94/02/16 11:52:31 leith Exp $*/
+d32 1
+a42 22
+ /* external function  prototypes */
+ extern Widget      wid_file  (Widget, Widget,char *, char *, char *,
+                           void (*)(Widget, caddr_t, caddr_t),int, int);
+ extern char     *  extractstring(XmString);
+ extern void        spout     (char *message);
+ extern FILEDATA *  openold   (char *, int *, int *, int *, int *, char *);
+ extern int         norm      (FILEDATA *);
+ extern int         closefile (FILEDATA *);
+ extern void        image     (FILEDATA *, int, XImage **);
+ extern int         hist      (FILEDATA *);
+ extern void        waitcursor(Window, int, int);
+ extern void        expos_cb  (Widget, caddr_t, caddr_t);
+ extern void        montmen3  (void);
+ extern void        surfmen   (void);
+ extern void        montmen2  (void);
+ extern void        gold      (void);
+ extern void        mask      (void);
+ extern void        fitdocmen (Widget, caddr_t, caddr_t);
+ extern void        profile   (void);
+ extern void        annotemen (void);
+ extern int         showimage (FILEDATA *, int, int, XImage **, int);
+ extern void        filtermen (void);
+d227 1
+a227 1
+     image(filedata,FALSE,&imagel);
+d278 1
+a278 1
+     image(filedata,FALSE, &imagel);
+d293 1
+a293 1
+     image(filedata,FALSE, &imagel);
+d310 1
+a310 1
+     image(filedata,FALSE,&imagel);
+d333 1
+a333 1
+        image(filedata,TRUE,&imagel);
+d358 1
+a358 1
+        image(filedata,TRUE,&imager);
+d381 1
+a381 1
+     image(filedata,FALSE,&imagel);
+@
+
+
+1.16
+log
+@added proper VMS include libraries
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.15 94/02/14 12:45:01 leith Exp Locker: leith $*/
+d106 1
+a106 1
+    strcpy(&filwant[0],"\0");
+d108 2
+@
+
+
+1.15
+log
+@replaced MIN,MAX with MYMIN,MYMAX
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.14 94/02/11 10:13:57 leith Exp Locker: leith $*/
+d32 5
+a36 1
+#ifndef VMS
+d39 1
+@
+
+
+1.14
+log
+@added ifndef VMS for unistd include
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.13 94/02/10 17:01:26 leith Exp Locker: leith $*/
+d233 2
+a234 2
+  nsam1    = 1;   nsam2   = MIN(nsam,ixlrlmax-ixullmin+1);
+  nrow1    = 1;   nrow2   = MIN(nrow,iylrlmax-iyullmin+1);
+d369 2
+a370 2
+        nsam1  = 1;   nsam2   = MIN(nsam,ixlrrmax-ixulrmin+1);
+        nrow1  = 1;   nrow2   = MIN(nrow,iylrrmax-iyulrmin+1);
+@
+
+
+1.13
+log
+@added filwant setter
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.12 94/02/10 16:21:00 leith Exp Locker: leith $*/
+d32 1
+d34 1
+@
+
+
+1.12
+log
+@current directory handling improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.11 94/02/03 15:22:42 leith Exp Locker: leith $*/
+d85 1
+a85 1
+ char   pattern[5];
+d89 11
+a99 5
+ if (iw_files == 0 && datexc[0] != '\0')
+    {
+    /* set default file filter */
+    strcpy(&pattern[0],"*.");
+    strcpy(&pattern[2],&datexc[0]);
+a100 2
+ else
+    pattern[0] = '\0';
+@
+
+
+1.11
+log
+@full x range now shown
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.10 94/01/28 17:13:57 leith Exp Locker: leith $*/
+d32 1
+a32 1
+
+d132 1
+d137 1
+d139 10
+@
+
+
+1.10
+log
+@added cat.c
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.9 94/01/28 10:17:41 leith Exp Locker: leith $*/
+d62 2
+d69 10
+d89 1
+a89 1
+ if (iw_files == 0)
+d100 1
+a100 6
+ if (*oper == '1')
+    {   /* display image */
+    ioper    = 1;
+    iw_files =  wid_file(iw_win, iw_files , "Image",
+               &filnow[0], &pattern[0], *imagemen_cb, 10, 10);
+    }
+d102 1
+a102 45
+ else if (*oper == '2' || *oper == 'b')
+    {   /* display 2-D montage */
+    ioper    = 2;
+    if (*oper == 'b') ioper = 11;
+
+    iw_files =  wid_file(iw_win, iw_files , "First image",
+               &filnow[0], &pattern[0], *imagemen_cb, 10, 10);
+    }
+
+ else if (*oper == '3')
+    {  /* display volume surfaces */
+    ioper    = 3;
+    iw_files =  wid_file(iw_win, iw_files , "Volume",
+               filnow, &pattern[0], *imagemen_cb, -1, -1);
+    }
+
+ else if (*oper == '4')
+    {       /* histogram an image */
+    ioper    = 4;
+    iw_files =  wid_file(iw_win, iw_files , "Histogram",
+               filnow, &pattern[0], *imagemen_cb, -1, -1);
+    }
+
+  else if (*oper == '5')
+    {      /* gold marker selection */
+    ioper    = 5;
+    iw_files =  wid_file(iw_win, iw_files , "Image for Marker Picking",
+               filnext, &pattern[0], *imagemen_cb, -1, -1);
+    }
+
+  else if (*oper == '6')
+    {      /* masking of image */
+    ioper    = 6;
+    iw_files =  wid_file(iw_win, iw_files , "Image for Masking",
+               filnext, &pattern[0], *imagemen_cb, -1, -1);
+    }
+
+  else if (*oper == '7')
+    {      /* profiling of image */
+    ioper    = 7;
+    iw_files =  wid_file(iw_win, iw_files , "Image for Profiling",
+               filnext, &pattern[0], *imagemen_cb, -1, -1);
+    }
+
+  else if (*oper == '8')
+a103 1
+    ioper    = 8;
+d106 1
+a106 1
+       iw_files =  wid_file(iw_win, iw_files , "Untilted Image",
+d117 4
+a120 6
+
+  else if (*oper == '9')
+    {      /* annotate image */
+    ioper    = 9;
+    iw_files =  wid_file(iw_win, iw_files , "Image for Annotating",
+               filnext, &pattern[0], *imagemen_cb, -1, -1);
+a121 7
+
+  else if (*oper == 'a')
+    {      /* filter image */
+    ioper    = 10;
+    iw_files =  wid_file(iw_win, iw_files , "Image for Convolution",
+               filnext, &pattern[0], *imagemen_cb, -1, -1);
+    }
+a154 1
+  char              outstr[80];
+d180 1
+a180 1
+     sprintf(&outstr[0]," Range: %f ... %f \n",fmin,fmax);
+d206 2
+a207 3
+  ixlrlmax = iwidex/2;    iylrlmax = ihighx;
+
+  ixulrmin = iwidex/2+1;  iyulrmin = martop;
+d209 5
+@
+
+
+1.9
+log
+@comments
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.8 93/12/09 11:07:39 leith Exp Locker: leith $*/
+d95 1
+a95 1
+ else if (*oper == '2')
+d98 2
+d284 1
+a284 1
+  else if (ioper ==  2)
+@
+
+
+1.8
+log
+@added convolve
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.7 93/11/30 10:09:27 leith Exp Locker: leith $*/
+d329 1
+a329 1
+     {                                  /* display single image first */
+d344 1
+a344 1
+     {   
+d359 1
+a359 1
+     {                             /* display particle picking images */
+d415 1
+a415 1
+     {   
+d430 1
+a430 1
+     {   
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@a0 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.6 93/11/16 16:18:54 leith Exp Locker: leith $*/
+d2 2
+a6 1
+C IMAGEMEN -- CREATED July 92
+d55 2
+d160 7
+d426 17
+@
+
+
+1.6
+log
+@wrong call to imagemen in particle selection
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.5 93/11/16 16:10:53 leith Exp Locker: leith $*/
+a29 2
+#include <Xm/FileSB.h>
+
+d33 2
+d54 1
+d151 7
+d404 4
+d409 11
+a419 1
+      }
+@
+
+
+1.5
+log
+@profile call was wrong ioper
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.4 93/11/16 14:55:08 leith Exp Locker: leith $*/
+d369 1
+a369 1
+        imagemen(NULL,"7",NULL);
+@
+
+
+1.4
+log
+@image call altered
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.3 93/11/16 13:51:30 leith Exp Locker: leith $*/
+d128 7
+d136 1
+a136 1
+    ioper    = 7;
+@
+
+
+1.3
+log
+@added particles stuff
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+a58 8
+ /* externally defined file variables */
+ extern XImage *    imagel;
+ extern XImage *    imager;
+ extern int         nsaml, nrowl, nsamr, nrowr;
+ extern int         nsam1l,nrow1l,nsam2l,nrow2l;
+ extern int         nsam1r,nrow1r,nsam2r,nrow2r;
+ extern int         ixull,iyull,ixulr,iyulr;
+ extern int         ixulli,iyulli,ixulri,iyulri;
+a59 3
+ extern int         ixullmin,ixlrlmax,iyullmin,iylrlmax;
+ extern int         ixulrmin,ixlrrmax,iyulrmin,iylrrmax;
+
+d324 1
+a324 1
+     image(filedata);
+@
+
+
+1.2
+log
+@added profile
+@
+text
+@d1 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imagemen.c,v 1.1 93/11/10 10:11:09 leith Exp Locker: leith $*/
+a30 2
+#include "x.h"
+#include "std.h"
+d32 1
+a32 1
+ /* common variables */
+d42 3
+a45 1
+ extern int         closefile (FILEDATA *);
+a46 2
+
+ extern void        image     (FILEDATA *);
+a49 1
+ extern int         hist      (FILEDATA *);
+d52 1
+d59 12
+d73 1
+a74 1
+
+d125 1
+a125 1
+    {      /* gold marker picking */
+d132 1
+a132 1
+    {
+d139 1
+a139 1
+    {
+d141 3
+a143 1
+    iw_files =  wid_file(iw_win, iw_files , "Profile Image",
+d145 8
+d161 1
+a161 1
+ { 
+d183 1
+a183 1
+ void imagemen1(char * filnew, int sayrange)
+d192 1
+a192 1
+  filedata = openold(&filnew[0],&nsam,&nrow,&nslice,&iform,"o");
+d195 2
+a196 1
+     {   /* has error message in openold */
+d202 1
+a202 1
+     {    /* normalization failed */
+d204 1
+a204 1
+     fclose(filedata -> fp);
+d212 1
+a212 1
+     {
+d218 1
+a218 1
+     {     
+d221 1
+a221 1
+     fclose(filedata -> fp);
+d226 1
+a226 1
+  if (strcmp(&filnow[0],&filnew[0]) == 0) 
+d235 1
+a235 1
+  strcpy(&filnow[0],&filnew[0]);
+d237 11
+d249 2
+a250 2
+     {
+     /* display single image */
+d252 1
+a252 1
+     image(filedata);
+d261 1
+a261 1
+     {   /* display montage from 3-d volume */     
+d270 1
+a270 1
+     {   /* put up menu to display montage from 2-d volume */     
+d278 1
+a278 1
+     {   /* put up menu to display surface from 3-d volume */ 
+d293 1
+a293 1
+     {   /* put up histogram of this image */ 
+d303 1
+a303 1
+     image(filedata);
+d314 1
+d316 1
+a316 2
+     {   
+     /* display single image first*/
+d318 1
+a318 1
+     image(filedata);
+d330 1
+a330 1
+   else if (ioper == 7)
+d345 2
+a346 2
+  return;
+  }
+d348 3
+d352 2
+d355 2
+d358 7
+d366 2
+d369 2
+a370 1
+#ifdef NEVER
+d372 10
+a381 5
+       IF (.NOT. LISTFI) THEN       
+         CALL WID_WIDTEXTIN(IW_WIN,IW_DIAL,IW_PROMPT,IW_TEXTIN,
+     &            PROMPT(:6),FILNOW,40,40,40,WID_IMAGEMEN2)                 ELSE
+         CALL WID_WIDGETFILE(IW_WIN,IW_GETFILE,PROMPT,
+     &       FILNOW // DATEXC(:3),'*.'//DATEXC(:3),CALLGEN,10,10)
+d383 1
+a383 2
+       ENDIF
+C      ---------------------------------------------------------------------
+d385 5
+a389 16
+       SUBROUTINE WID_IMAGEMEN2(FILNEX,NLET,IRTFLG)
+       NDASH = INDEX(FILNEX,'-')
+       IF (NDASH .GT. 0) THEN
+C         EXTRACT LASTFIL FROM FILNEX
+          LASTFILT = LASTFIL
+          CALL RDPRIX(%LOC(LASTFIL),1,0,9999,FILNEX(NDASH+1:),
+     &         NULL,IRTFLG)
+          IF (IRTFLG .NE. 0) LASTFIL = LASTFILT
+          FILNEX(NDASH:) = NULL
+       ENDIF
+       LOCNULL = INDEX(FILNEX,NULL)
+       LENT    = LEN(FILNEX)
+       IF (INDEX(FILNEX,NULL) .EQ. 0 .AND. LEN(FILNEX) .GT. NLET) THEN
+C         FILCAN IN OPENF NEEDS NULL
+          FILNEX(NLET+1:) = NULL
+       ENDIF
+d391 2
+a392 18
+       ELSEIF (IOPER .EQ. 33) THEN
+C         NEED 3-D DENTIST DRILL MENU -------------------------------- WID_DENT
+          NLOGS  = 5 * NSAM * NROW
+          IF (NSLICE .LE. 1) THEN
+             CALL WID_OUTPUT(0,'*** NOT A 3-D VOLUME FILE.',0)
+             CALL WID_WAITCURSOR(IWIN,.FALSE.,79,IRTFLG)
+             CLOSE(LUNIMG)
+             RETURN
+          ELSEIF (NLOGS .GE. (MAXDIM*5)) THEN
+             MAXPIX = MAXDIM / 5
+             WRITE(OUTSTR,90) MAXPIX
+ 90          FORMAT('*** ERROR PGM LIMIT IN WID_DENT:',I7,' PIXELS')
+             CALL WID_OUTPUT(0,OUTSTR(1:46),0)
+             CALL WID_WAITCURSOR(IWIN,.FALSE.,79,IRTFLG)
+             CLOSE(LUNIMG)
+             RETURN
+          ENDIF 
+          CALL WID_DENTMEN(.TRUE.)
+d394 10
+a403 1
+#endif
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d55 1
+d127 7
+d297 16
+@

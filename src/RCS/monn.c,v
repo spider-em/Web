@@ -1,0 +1,748 @@
+head	1.12;
+access;
+symbols
+	pre-tilt-improve:1.12
+	pre_surf_fromtop:1.12
+	pre_neednewmap:1.12
+	pre_apppluss_remove:1.12
+	pre_tiltpair_chng:1.12
+	pre_GPL:1.11;
+locks;
+comment	@ * @;
+
+
+1.12
+date	2005.10.18.17.00.04;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2002.05.16.20.21.33;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2002.05.15.17.30.18;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.09.18.21.15.07;	author mladjadj;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.09.14.18.25.52;	author mladjadj;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.08.08.19.34.16;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.05.12.12.40.05;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.02.14.12.45.09;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.12.07.11.44.02;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.16.15.08.44;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.14.44.01;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.19;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@GPL
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/monn.c,v 1.11 2002/05/16 20:21:33 leith Exp $*/
+/*
+C++************************************************************************
+C
+C MONN -- CREATED JAN 90 FROM WKMONN.FOR
+C         SPEEDED UP APR 90
+C         CONVERTED TO C IN JULY 92 al
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    MONN
+C
+C    PURPOSE:       DISPLAY  MONTAGE FROM 3-D FILE SERIES. NORMALIZES
+C                   EACH SLICE OF THE MONTAGE SEPARATELY.
+C
+C    PARAMETERS:      
+C
+C    CALLED BY:       WID_MONT2    MONT3
+C
+C****************************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+#define  FLTZER 10e-10
+
+/****************************  monn **********************************/ 
+
+ int monn(GC icontxt, FILEDATA *fileptr,  int iwant,
+          int nsami, int nrowi, int ndum, int nmint, int nmaxt)
+
+ {   
+ float         *buf, *rbuf;
+ char          *cbuf;
+ float         fmint, fmaxt, fval, fn, fncon;
+ int           iloc, i, m;
+ int           isam, irow, iconz, irect, miskip, irec1;
+
+ buf = filedata -> buf;
+
+ /* allocate space for buffers */
+ if ((rbuf = (float *) malloc(nsami * nrowi * sizeof(float))) == 
+             (float *) 0)
+    {spout(" *** Can not allocate rbuf memory in monn."); return FALSE;}
+
+ /* zero slice min and maximum values */
+ fmint =  10e20;
+ fmaxt = -10e-20;
+
+ iloc  = -1;
+
+ if (axis == 'z')
+    {                      /*  Z SLICE WANTED (FASTEST SLICING AXIS) */
+
+    islice = iwant;
+    iconz  = (islice - 1) * nrow;
+
+    if (iskip == 1)
+       {    /* display z slice at full size */
+       for (irow=nrow1; irow <= nrow2; irow++)
+          {
+          irect = irow + iconz;
+ 
+          if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+             {free(rbuf); return FALSE;}
+
+          for (isam=nsam1-1; isam < nsam2; isam++)
+             {
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             rbuf[++iloc] = fval;
+             }
+          }
+       }
+
+    else if (iskip > 1)
+       {    /* display z slice at reduced size */
+
+       for (irow = nrow1; irow <= nrow2; irow+=iskip)
+          {
+          irect = irow + iconz;
+          if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+             {free(rbuf); return FALSE; }
+
+          for (isam=nsam1-1; isam < nsam2; isam+=iskip)
+             {
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             rbuf[++iloc] = fval;
+             }
+          }
+       }
+    
+    else if (iskip < -1)
+       {  /* display z slice at magnified size */
+       miskip   = -iskip;
+
+       for (irow = nrow1; irow <= nrow2; irow++)
+          { 
+          irect = irow + iconz;
+          if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+             {free(rbuf); return FALSE;}
+
+          iloc = (irow -1) * nsami * miskip;
+
+          for (isam=nsam1-1; isam < nsam2; isam++)
+             {     /* check all pixels for min and max values */
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             for (i = 0; i < miskip; i++)
+                {
+                for (m = 0; m < miskip; m++)
+                   rbuf[iloc + m * nsami] = fval;
+                iloc++;
+                }
+             }
+          }
+       }
+    }
+
+ else if (axis == 'y')
+    {                                            /* y axis slicing */
+
+    irow = iwant;
+
+    if (iskip == 1)
+       {   /* display y slice at normal size */
+       for (islice=nslice1; islice<=nslice2; islice++)
+          {
+          irect = (islice - 1) * nrow + irow;
+
+          if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+             {free(rbuf); return FALSE; }
+
+          for (isam=nsam1-1; isam < nsam2; isam++)
+             {
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             rbuf[++iloc] = fval;
+             }
+          }
+       }
+
+    else if (iskip > 1)
+       {   /* display y slice at reduced size */
+
+       for (islice = nslice1; islice <= nslice2; islice=islice+iskip)
+          {
+          irect = (islice -1) * nrow + irow;
+          if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+             {free(rbuf); return FALSE; }
+
+          for (isam=nsam1-1; isam < nsam2; isam+=iskip)
+             {
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             rbuf[++iloc] = fval;
+             }
+          }
+       }
+
+    else if (iskip < -1)
+       {  /* display y slice at magnified size */
+       miskip   = -iskip;
+
+       for (islice = nslice1; islice <= nslice2; islice++)
+          { 
+          irect = (islice - 1) * nrow + irow;
+          if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+             {free(rbuf); return FALSE; }
+
+          iloc = (islice - 1) * nsami * miskip;
+
+          for (isam=nsam1-1; isam < nsam1; isam++)
+             {   /* check all pixels for min and max values */
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             for (i = 0; i < miskip; i++)
+                {
+                for (m = 0; m < miskip; m++)
+                   rbuf[iloc + m * nsami] = fval;
+                iloc++;
+                }
+             }
+          }
+       }
+    }
+
+ else if (axis == 'x')
+    {                                      /* WANT X SLICE  (SLOW) */
+
+    isam = iwant -1;
+
+    if (iskip == 1)
+       {   /* display x slice at normal size */
+
+       for (islice=nslice1; islice<=nslice2; islice++)
+          {
+          irec1 = (islice - 1) * nrow;
+          for (irow=nrow1; irow <=nrow2; irow++)
+             {
+             irect = irec1 + irow;
+             if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+                {free(rbuf); return FALSE; }
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             rbuf[++iloc] = fval;
+             }
+          }
+       }
+
+    else if (iskip > 1)
+       {   /* display x slice at reduced size */
+
+       for (islice = nslice1; islice <= nslice2; islice=islice+iskip)
+          {
+          irec1 = (islice -1) * nrow;
+          for (irow=nrow1; irow<=nrow2; irow+=iskip)
+             {
+             irect = irec1 + irow;
+ 
+             if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+                {free(rbuf); return FALSE; }
+
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             rbuf[++iloc] = fval;
+             }
+          }       
+       }
+
+    else if (iskip < -1)
+       {  /* display x slice at magnified size */
+       miskip   = -iskip;
+
+       for (islice = nslice1; islice <= nslice2; islice++)
+          { 
+          irec1 = (islice - 1) * nrow;
+
+          iloc  = (islice - 1) * nsami * miskip;
+
+          for (irow=nrow1; irow<=nrow2; irow++)
+             {
+             irect = irec1 + irow;
+             if (redlin(fileptr,buf,nsam,irect) == FALSE) 
+                {free(rbuf); return FALSE; }
+
+             fval  = buf[isam];
+             fmaxt = MYMAX(fmaxt,fval);
+             fmint = MYMIN(fmint,fval);
+             for (i = 0; i < miskip; i++)
+                {
+                for (m = 0; m < miskip; m++)
+                   rbuf[iloc + m * nsami] = fval;
+                iloc++;
+                }
+             }
+          }
+       }
+    }
+ 
+ /* allocate space for cbuf */
+ if ((cbuf = (char *) malloc(nsami * nrowi * 
+                 sizeof(char))) == (char *) 0)
+     {      
+     spout(" *** Unable to allocate cbuf memory in monn.c");
+     if (rbuf) free(rbuf); return FALSE;
+     }
+
+ /* CHECK TO SEE IF THIS SLICE CAN BE NORMALIZED OK */
+ if (fabs(fmaxt - fmint) < FLTZER)
+    {    /* a blank slice */
+    fn    = 0.0;
+    fncon = nmint;
+    }
+ else
+    {
+    fn    = (float) (nmaxt - nmint) / (fmaxt - fmint);
+    fncon = -fmint * fn + nmint + 0.5;
+    }
+
+ /* normalize data and convert to 8 bits */
+ for (i=0; i < nsami*nrowi ; i++)
+    cbuf[i] = rbuf[i] * fn + fncon;
+
+ /* DISPLAY THIS IMAGE SLICE */
+ wipic(icontxt,cbuf, ixul, iyul, nsami, nrowi, TRUE, FALSE, &imagel);
+
+ if (rbuf) free(rbuf); rbuf = NULL;
+ if (cbuf) free(cbuf); cbuf = NULL;
+
+ return TRUE;
+ }
+@
+
+
+1.11
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/monn.c,v 1.10 2002/05/15 17:30:18 leith Exp leith $*/
+d10 1
+a10 1
+C **************************************************************************
+d12 24
+a35 7
+C *  COPYRIGHT (C)1992,  WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+@
+
+
+1.10
+log
+@isam++ bug
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/monn.c,v 1.9 1995/09/18 21:15:07 mladjadj Exp leith $*/
+d7 2
+a8 2
+C             SPEEDED UP APR 90
+C             CONVERTED TO C IN JULY 92 al
+d20 1
+a20 3
+C    MONN(ICONTX,LUNF,IXUL,IYUL,AXIS,IWANT,NSAM,NSAM1,NSAM2,NSAMS,
+C            NROW,NROW1,NROW2,NROWS,NSLICE,NSLICE1,NSLICE2,NSLICES,
+C            NMAX,MAXDIM,IRTFLG)
+d22 2
+a23 3
+C    PURPOSE:         DIPLAYING MONTAGE FROM 3-D FILE SERIES. NORMALIZES
+C                     EACH SLICE OF THE MONTAGE SEPARATELY. USE WIZTOXYN 
+C                     FOR INCORE NORMALIZATION IF POSSIBLE.
+d40 1
+a40 1
+          int nsami, int nrowi, int nslices, int nmint, int nmaxt)
+d47 1
+a47 3
+ int           isam, irow;
+ int           iconz, irect, nsamu, nrowu, nsliceu, miskip;
+ int           irec1;
+d63 1
+a63 1
+    {  /*   Z SLICE WANTED   (FASTEST SLICING AXIS) */
+d90 1
+a90 5
+       /* find upper end of col. and row series */
+       nsamu = nsam2 - ((nsam2-nsam1+1) % iskip) - iskip + 1;
+       nrowu = nrow2 - ((nrow2-nrow1+1) % iskip) - iskip + 1;
+
+       for (irow = nrow1; irow <= nrowu; irow=irow+iskip)
+d96 1
+a96 1
+          for (isam=nsam1-1; isam < nsamu; isam+=iskip)
+d116 1
+a116 1
+          iloc = (irow -1) * nsami;
+d135 1
+a135 1
+    {   /* y axis slicing */
+d161 1
+a161 5
+       /* find upper end of col. and slice series */
+       nsamu   = nsam2   - ((nsam2  -nsam1  +1) % iskip) - iskip + 1;
+       nsliceu = nslice2 - ((nslice2-nslice1+1) % iskip) - iskip + 1;
+
+       for (islice = nslice1; islice <= nsliceu; islice=islice+iskip)
+d167 1
+a167 1
+          for (isam=nsam1-1; isam < nsamu; isam=isam+iskip)
+d206 1
+a206 1
+    {   /* WANT X SLICE  (SLOW) */
+d232 1
+a232 5
+       /* find upper end of col. and slice series */
+       nrowu   = nrow2   - ((nrow2  -nrow1  +1) % iskip) - iskip + 1;
+       nsliceu = nslice2 - ((nslice2-nslice1+1) % iskip) - iskip + 1;
+
+       for (islice = nslice1; islice <= nsliceu; islice=islice+iskip)
+d235 1
+a235 1
+          for (irow=nrow1; irow<=nrowu; irow=irow+iskip)
+a279 1
+
+a299 1
+
+d301 1
+a301 1
+ for (i=0; i < iloc; i++)
+@
+
+
+1.9
+log
+@put back variable miskipm1
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/monn.c,v 1.7 1995/08/08 19:34:16 leith Exp $*/
+d49 1
+a49 1
+ int           iloc, i, m, npixpr;
+d51 1
+a51 1
+ int           iconz, irect, nsamu, nrowu, nsliceu, miskip, miskipm1;
+d105 1
+a105 1
+          for (isam=nsam1-1; isam < nsamu; isam=isam+iskip)
+a117 2
+       miskipm1 = miskip - 1;
+       npixpr   = nsami * miskip;
+d125 1
+a125 1
+          iloc = (irow -1) * npixpr;
+d127 1
+a127 1
+          for (isam=nsam1-1; isam < nsam2; isam=isam++)
+a192 1
+       miskipm1 = miskip - 1;
+d202 1
+a202 1
+          for (isam=nsam1-1; isam < nsam1; isam=isam++)
+a269 1
+       miskipm1 = miskip - 1;
+@
+
+
+1.8
+log
+@remove variable miskipm1
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/monn.c,v 1.7 1995/08/08 19:34:16 leith Exp mladjadj $*/
+d51 1
+a51 1
+ int           iconz, irect, nsamu, nrowu, nsliceu, miskip;
+@
+
+
+1.7
+log
+@set showit in wipic call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/monn.c,v 1.6 1994/05/12 12:40:05 leith Exp leith $*/
+d51 1
+a51 1
+ int           iconz, irect, nsamu, nrowu, nsliceu, miskip, miskipm1;
+@
+
+
+1.6
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/monn.c,v 1.5 94/02/14 12:45:09 leith Exp Locker: leith $*/
+d328 1
+a328 1
+ wipic(icontxt,cbuf, ixul, iyul, nsami, nrowi, FALSE, FALSE, &imagel);
+@
+
+
+1.5
+log
+@replaced MIN,MAX with MYMIN,MYMAX
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/monn.c,v 1.4 93/12/07 11:44:02 leith Exp Locker: leith $*/
+d36 2
+a39 7
+
+ /* function prototypes */
+ extern int  redlin  (FILEDATA *, float *, int, int);
+ extern void spout   (char *);
+ extern void wipic   (GC, unsigned char *, int, int, int, int, int, 
+                      int, XImage **);
+
+d42 2
+a43 2
+ int monn(GC icontx, FILEDATA *fileptr,  int iwant,
+          int nsami, int nrowi, int nslices, int nmaxt)
+d47 1
+a47 1
+ unsigned char *cbuf;
+d303 2
+a304 2
+ if ((cbuf = (unsigned char *) malloc(nsami * nrowi * 
+                 sizeof(unsigned char))) == (unsigned char *) 0)
+d314 1
+a314 1
+    fncon = mapgo;
+d318 2
+a319 2
+    fn    = (float) (nmaxt - mapgo) / (fmaxt - fmint);
+    fncon = -fmint * fn + mapgo + 0.5;
+d328 1
+a328 1
+ wipic(icontx,cbuf, ixul, iyul, nsami, nrowi, FALSE, FALSE, &imagel);
+@
+
+
+1.4
+log
+@removed uncbuf from wipic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/monn.c,v 1.3 93/11/16 15:08:44 leith Exp Locker: leith $*/
+d90 2
+a91 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+d113 2
+a114 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+d137 2
+a138 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+d167 2
+a168 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+d190 2
+a191 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+d213 2
+a214 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+d243 2
+a244 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+d268 2
+a269 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+d293 2
+a294 2
+             fmaxt = MAX(fmaxt,fval);
+             fmint = MIN(fmint,fval);
+@
+
+
+1.3
+log
+@wipic definition changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/monn.c,v 1.2 93/11/16 14:44:01 leith Exp Locker: leith $*/
+a44 1
+
+d311 2
+a312 2
+     spout(" *** Unable to allocate cbuf memory in monn.");
+     free(rbuf); return FALSE;
+a331 1
+
+d333 1
+a333 1
+ wipic(icontx,cbuf, ixul, iyul, nsami, nrowi, TRUE, FALSE, &imagel);
+d335 2
+a336 1
+ free(rbuf);
+@
+
+
+1.2
+log
+@altered wipic call
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/monn.c,v 1.1 93/11/10 10:11:19 leith Exp Locker: leith $*/
+d40 4
+a43 3
+ extern int  redlin(FILEDATA *, float *, int, int);
+ extern void spout(char *);
+ extern void wipic(GC, char *, int, int, int, int, int, int, XImage **);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a34 3
+
+#include "std.h"
+#include "x.h"
+d42 1
+a42 1
+ extern void wipic(GC , unsigned char * ,int, int, int, int, int);
+d45 1
+a45 1
+/**********************************************************/ 
+d334 1
+a334 1
+ wipic(icontx,cbuf, ixul, iyul, nsami, nrowi, TRUE);
+@

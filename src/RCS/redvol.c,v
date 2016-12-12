@@ -1,0 +1,1188 @@
+head	1.13;
+access;
+symbols
+	pre-tilt-improve:1.13
+	pre_surf_fromtop:1.13
+	pre_neednewmap:1.11
+	pre_apppluss_remove:1.10
+	pre_tiltpair_chng:1.10
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.13
+date	2011.09.27.17.13.55;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2011.09.27.13.37.09;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2011.09.16.12.03.47;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2005.10.18.16.59.50;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2002.04.29.15.24.52;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	99.07.29.15.05.02;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.01.22.21.20.29;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.01.22.20.27.31;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.08.17.14.17.10;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.12.12.40.29;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.03.24.13.41.30;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.12.09.10.58.28;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@removed dbug output
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/redvol.c,v 1.12 2011/09/27 13:37:09 leith Exp leith $*/
+
+/*
+C***********************************************************************
+C
+C   REDVOL.C  -- Created NOV 13 1993
+C             
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                              *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C  redvol(filedata,  want8, cptr, want32, fptr, nsam1, nsam2,   
+c         nrow1, nrow2,  nslice1, nslice2,  nmint, nmaxt,  
+c         fmin_spit fmax_spit, scal, offset)
+C           
+C
+C  PURPOSE:     Reads spider image into 8 / or 32 bit array normalized 
+C               from nmin to nmax.  Returns normaliztion constants also.
+C
+C  PARAMETERS:  filedatat
+c               want8, want32      Want 8 bit buffer, want 32 bit buffer
+c               cptr               Pointer to 8 bit volume    (sent/ret.)
+c               nsam1,nsam2        Sample range               (sent)
+c               nrow1,nrow2        Row range                  (sent)
+c               nslice1,nslice2    Slice range                (sent)
+c               nmint,nmaxt        Target normalization range (sent)
+c               fmint,fmaxt        Desired file range         (sent)
+c               scal, offset       Normalization paremeters   (returned)
+c               iskipt             Skip (mag. ) factor        (sent)
+c
+C  RETURNS:     TRUE or FALSE 
+C
+C  NOTE:        For char variables char = 128 is same as char = -128
+C               so no manipulation is necessary.
+C               The old if(char > 127) char = char - 256 is NOT needed.
+C
+C--*********************************************************************
+*/
+
+#include "files.h"
+#include "routines.h"
+
+ /* Externally defined variables */
+ extern int imagego, imageend;        /* Set norm. range for image */
+
+ /* Common variables used here */
+ int nsams, nrows, nslices;
+
+ /*************************   redvol   ****************************/
+
+ int redvol(FILEDATA *filedata, 
+            int want8,    char  ** cptr,
+            int want32,   float ** fptr,
+            int nsam1,    int nsam2,   
+            int nrow1,    int nrow2, 
+            int nslice1,  int nslice2, 
+            int nmint,    int nmaxt, 
+            float fmint,  float fmaxt, 
+            float * scal, float * offset,
+            int iskipt)
+ {
+ int         nsam, nrow, irec, j, m, npixlin, miskip, npixcol;
+ int         islice, irow, isam, ival, newmin, noff, nsamst, nrowst;
+ int         npixpimg;
+ float       *buf,  *fptrt,  *fptrtt, *fptrttt;
+ char        *cptrt, *cptrtt, *cptrttt;
+ float       buft;
+ int       ibug,ival1;
+
+ nsam    = filedata -> nsam;
+ nrow    = filedata -> nrow;
+
+ /* Find nsams, nrows in displayed image (do not expand nslices)*/
+ dispsize(nsam1,nsam2,nrow1,nrow2,nslice1,nslice2,iskipt,
+         &nsams, &nrows, &nslices);
+
+ /* Find buf for redlin */
+ buf    = filedata -> buf;
+
+ newmin = (fmint != filedata-> fmin_spi || 
+           fmaxt != filedata->fmax_spi) ;
+
+ if (want8)
+    {
+    /* Find normalization constants for 8 bit output data */
+    scale32to8(fmint, fmaxt, iskipt, imagego, imageend, scal, offset);
+
+    if (!(*cptr)) 
+       {
+        /* allocate cbuf space first */
+        if ((*cptr = (char *) malloc(nsams * nrows * nslices *
+                      sizeof(char))) ==  (char *) 0)
+            { 
+            spout(" *** Unable to allocate memory in redvol.");
+            return FALSE;
+            }
+       }
+    }
+
+ if (want32 && !(*fptr)) 
+    {
+    /* Allocate float space first */
+    nsamst = nsam2 - nsam1 + 1;
+    nrowst = nrow2 - nrow1 + 1;
+    if ((*fptr = (float *) malloc(nsamst * nrowst * nslices *
+                      sizeof(float))) == (float *) 0)
+        { 
+        spout(" *** Unable to allocate memory in redvol.");
+        return FALSE;
+        }
+    }
+
+ /* Set temporary data pointers */
+ fptrt = *fptr;  /* points to start of current slice */
+ cptrt = *cptr;  
+
+ if (want32 && nsam1 == 1 && nsam2 == nsam &&
+               nrow1 == 1 && nrow2 == nrow)
+    {  /* Provides much faster input than code below */
+    npixpimg = nsam * nrow;
+
+    /* Fill fptr vol with 32 bit data */
+    for (islice = nslice1; islice <= nslice2; islice++)
+       {  /* Reads whole image at a time! */
+       if (!redlin(filedata,fptrt,npixpimg,islice)) return FALSE;
+
+       if (want8)
+          {/* Also fill cptr volume with 8 bit data for this image */
+          scaleimg(fptrt, nsam, nrow, iskipt, newmin, 
+                   *scal, *offset, cptrt);
+          cptrt += npixpimg;
+          }
+       fptrt += npixpimg;
+       }                
+    return TRUE;
+    }
+
+
+ /* Fill cptr volume with 8 bit data and fptr vol with 32 bit data */
+
+ if (iskipt > -2 && iskipt < 2)
+    {    /************************************************* Full size */
+
+    for (islice = nslice1; islice <= nslice2; islice++)
+       {
+       for (irow = nrow1; irow <= nrow2; irow++)
+          {
+          irec = (islice - 1) * nrow + irow;
+          if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+        
+          if (newmin)
+             { /* Want to alter min & max  definition*/
+             if (want8 && want32)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   ival     = (int) (buf[isam] * *scal + *offset);
+                   *cptrt++ = MYMIN(MYMAX(ival,imagego),imageend);
+                   *fptrt++ = buf[isam];
+                   }  /* for isam           */
+                }     /* if want8 && want32 */
+
+             else 
+                {  /* Want8 (can not have want32 only and newmin) */
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   ival = (int) (buf[isam] * *scal + *offset);
+                   *cptrt++ = MYMIN(MYMAX(ival,imagego),imageend);
+
+//#ifdef WEB_TRUE
+//                   if (ival < 0 || ival > 255)
+//                      {
+//                      ibug  = MYMIN(MYMAX(ival,imagego),imageend);
+//                      ival1 = (int) (buf[isam] * *scal + *offset);
+//                      printf(" ival1: %d  cval: %d ibug: %d\n",
+//                             ival1,ival,ibug);
+//                      }
+//#endif
+
+                   }  /* For isam      */
+                }     /* Else  (want8) */
+             }        /* If newmin     */
+
+          else
+             {  /* Not newmin */
+             if (want8 && want32)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   *cptrt++ = (int) (buf[isam] * *scal + *offset);
+                   *fptrt++ = buf[isam];
+                   }  /* For isam   */
+                }     /* If want8 && want32 */
+
+             else if (want8)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   *cptrt++ = (int) (buf[isam] * *scal + *offset);
+                   }  /* For isam   */
+                }     /* if want8   */
+
+             else
+                {  /* want32 */
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   *fptrt++ = buf[isam];
+                   }  /* For isam   */
+                }     /* If want32  */
+             }        /* Not newmin */
+          }           /* For irow   */
+       }              /* For islice */
+    }                 /* If iskipt  */
+
+
+ else if (iskipt > 1)
+    {    /************************************** Reduced size image */
+    for (islice = nslice1; islice <= nslice2; islice++)
+        {
+       for (irow = nrow1; irow <= nrow2; irow += iskipt)
+          {
+          irec = (islice - 1) * nrow + irow;
+          if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+          
+          if (newmin)
+             { /* Want to alter min & max  definition*/
+             if (want8 && want32)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam += iskipt)
+                   {
+                   ival = (int)(int) (buf[isam] * *scal + *offset);
+                   ival = MYMIN(MYMAX(ival,imagego),imageend);
+                   *cptrt++ = ival;
+                   *fptrt++ = buf[isam];
+                   }  /* For isam           */
+                }     /* If want8 && want32 */
+
+             else if (want8)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam += iskipt)
+                   {
+                   ival = (int) (buf[isam] * *scal + *offset);
+                   ival = MYMIN(MYMAX(ival,imagego),imageend);
+                   *cptrt++ = ival;
+                   }  /* For isam   */
+                }     /* If want8   */
+             }        /* If newmin  */
+          else
+             {  /* Not newmin */
+             if (want8 && want32)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam += iskipt)
+                   {
+                   *cptrt++ = (int) (buf[isam] * *scal + *offset);
+                   *fptrt++ = buf[isam];
+                   }  /* For isam   */
+                }     /* If want8 && want32 */
+
+             else if (want8)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam += iskipt)
+                   {
+                   *cptrt++ = (int) (buf[isam] * *scal + *offset);
+                   }  /* For isam      */
+                }     /* If want8      */
+
+             else
+                { /* want32 only */ 
+                for (isam =nsam1-1; isam < nsam2; isam += iskipt)
+                   {
+                   *fptrt++ = buf[isam];
+                   }  /* For isam      */
+                }     /* Else (want32) */
+             }        /* Newmin        */
+          }           /* For irow      */
+       }              /* For islice    */
+    }                 /* If iskipt > 1 */
+   
+
+ else if (iskipt < -1)
+    {    /************************************* Magnified size image */
+    miskip  = -iskipt;
+    npixlin = 0;
+
+    for (islice = nslice1; islice <= nslice2; islice++)
+       {
+       for (irow = nrow1; irow <= nrow2; irow++)
+          {
+          irec = (islice - 1) * nrow + irow;
+          if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+          cptrtt  = cptrt + npixlin;
+          fptrtt  = fptrt + npixlin;
+
+          /* Npixlin & npixcol used to set corner of active image area*/
+          npixlin += miskip * nsams;
+          npixcol = 0; 
+
+          if (newmin)
+             { /* Want to alter min & max  definition*/
+             if (want8 && want32)
+                { 
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   buft    = buf[isam];
+                   ival    = (int) (buft * *scal + *offset);
+                   ival    = MYMIN(MYMAX(ival,imagego),imageend);
+                   cptrttt = cptrtt + npixcol - 1;
+                   fptrttt = fptrtt + npixcol - 1;
+                   npixcol += miskip;
+
+                   for (j=0; j < miskip; j++)
+                      {
+                      noff = 0;
+                      cptrttt++;
+                      fptrttt++;
+                      for (m=0; m < miskip; m++)
+                         {
+                         *(cptrttt + noff) = ival;
+                         *(fptrttt + noff) = buft;
+                         noff += nsams;
+                         }  /* For m              */
+                      }     /* For j              */
+                   }        /* For isam           */
+                }           /* If want8 && want32 */
+
+             else if (want8)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   ival    = (int) (buf[isam] * *scal + *offset);
+                   ival    = MYMIN(MYMAX(ival,imagego),imageend);
+                   cptrttt = cptrtt + npixcol - 1;
+                   npixcol += miskip;
+
+                   for (j=0; j < miskip; j++)
+                      {
+                      noff = 0;
+                      cptrttt++;
+                      for (m=0; m < miskip; m++)
+                         {
+                         *(cptrttt + noff) = ival;
+                         noff += nsams;
+                         }  /* for m      */
+                      }     /* for j      */
+                   }        /* for isam   */
+                }           /* for want8  */
+             }              /* if newmin  */
+
+          else
+             { /* Not newmin */
+             if (want8 && want32)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   buft    = buf[isam];
+                   ival    = (int) (buft * *scal + *offset);
+                   cptrttt = cptrtt + npixcol - 1;
+                   fptrttt = fptrtt + npixcol - 1;
+                   npixcol += miskip;
+
+                   for (j=0; j < miskip; j++)
+                      {
+                      noff = 0;
+                      cptrttt++;
+                      fptrttt++;
+                      for (m=0; m < miskip; m++)
+                         {
+                         *(cptrttt + noff) = ival;
+                         *(fptrttt + noff) = buft;
+                         noff += nsams;
+                         }  /* For m              */
+                      }     /* For j              */
+                   }        /* For isam           */
+                }           /* If want8 && want32 */
+
+             else if (want8)
+                {  
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   ival    = (int) (buf[isam] * *scal + *offset);
+                   cptrttt = cptrtt + npixcol - 1;
+                   npixcol += miskip;
+
+                   for (j=0; j < miskip; j++)
+                      {
+                      noff = 0;
+                      cptrttt++;
+                      for (m=0; m < miskip; m++)
+                         {
+                         *(cptrttt + noff) = ival;
+                         noff += nsams;
+                         }  /* For m      */
+                      }     /* For j      */
+                   }        /* For isam   */
+                }           /* For want8  */
+
+             else
+                {     /* Want32 only */
+                for (isam =nsam1-1; isam < nsam2; isam++)
+                   {
+                   buft    = buf[isam];
+                   fptrttt = fptrtt + npixcol -1;
+                   npixcol += miskip;
+
+                   for (j=0; j < miskip; j++)
+                      {
+                      noff = 0;
+                      fptrttt++;
+                      for (m=0; m < miskip; m++)
+                         {
+                         *(fptrttt + noff) = buft;
+                         noff += nsams;
+                         }  /* For m          */
+                      }     /* For j          */
+                   }        /* For isam       */
+                }           /* Else (want32)  */ 
+             }              /* Not newmin     */
+          }                 /* For irow       */
+       }                    /* For islice     */
+    }                       /* If iskipt      */
+
+ return TRUE;
+ }
+
+
+
+
+@
+
+
+1.12
+log
+@(char) --> (int) important for newmin case
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/redvol.c,v 1.11 2011/09/16 12:03:47 leith Exp leith $*/
+d167 1
+a167 4
+#ifdef WEB_TRUE
+    printf(" newmin: %d  want8: %d %d %d\n",
+           newmin,want8,imagego,imageend);
+#endif
+@
+
+
+1.11
+log
+@cosmetic.
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/redvol.c,v 1.10 2007/11/01 19:33:45 leith Exp $*/
+d7 1
+a7 1
+C   REDVOL.C  -- CREATED NOV 13 1993
+d10 1
+a10 1
+C *  AUTHOR: ArDean Leith                                                  *
+d36 3
+a38 3
+C  REDVOL(FILEDATA,  WANT8, CPTR, WANT32, FPTR, NSAM1, NSAM2,   
+C         NROW1, NROW2,  NSLICE1, NSLICE2,  NMINT, NMAXT,  
+C         fmin_spiT fmax_spiT, SCAL, OFFSET)
+d41 2
+a42 2
+C  PURPOSE:     READS SPIDER IMAGE INTO 8 / OR 32 BIT ARRAY NORMALIZED 
+                FROM NMIN TO NMAX.  RETURNS NORMALIZTION CONSTANTS ALSO.
+d44 12
+a55 10
+C  PARAMETERS:  FILEDATAT
+C               WANT8, WANT32      WANT 8 BIT BUFFER, WANT 32 BIT BUFFER
+C               CPTR               POINTER TO 8 BIT VOLUME    (SENT/RET.)
+C               NSAM1,NSAM2        SAMPLE RANGE               (SENT)
+C               NROW1,NROW2        ROW RANGE                  (SENT)
+C               NSLICE1,NSLICE2    SLICE RANGE                (SENT)
+C               NMINT,NMAXT        TARGET NORMALIZATION RANGE (SENT)
+C               FMINT,FMAXT        DESIRED FILE RANGE         (SENT)
+C               SCAL, OFFSET       NORMALIZATION PAREMETERS   (RETURNED)
+C               ISKIPT             SKIP (MAG. ) FACTOR        (SENT)
+d57 1
+a57 3
+C  RETURNS:     TRUE OR FALSE 
+C
+C  NOTE:        for char variables char = 128 is same as char = -128
+d68 1
+a68 1
+ extern int imagego, imageend;        /* set norm. range for image */
+d92 1
+d104 2
+a105 1
+ newmin = (fmint != filedata-> fmin_spi || fmaxt != filedata->fmax_spi) ;
+d126 1
+a126 1
+    /* allocate float space first */
+d137 1
+a137 1
+ /* set temporary data pointers */
+d143 1
+a143 1
+    {  /* provides much faster input than code below */
+d146 1
+a146 1
+    /* fill fptr vol with 32 bit data */
+d148 1
+a148 1
+       {  /* reads whole image at a time! */
+d152 1
+a152 1
+          {/* also fill cptr volume with 8 bit data for this image */
+d163 1
+a163 1
+ /* fill cptr volume with 8 bit data and fptr vol with 32 bit data */
+d166 5
+a170 1
+    {    /*************************************************full size */
+d179 1
+a179 1
+             { /* want to alter min & max  definition*/
+d184 1
+a184 1
+                   ival     = (char) (buf[isam] * *scal + *offset);
+d191 1
+a191 1
+                {  /* want8 (can not have want32 only and newmin) */
+d194 1
+a194 1
+                   ival = (char) (buf[isam] * *scal + *offset);
+d196 14
+a209 3
+                   }  /* for isam      */
+                }     /* else  (want8) */
+             }        /* if newmin     */
+d212 1
+a212 1
+             {  /* not newmin */
+d217 1
+a217 1
+                   *cptrt++ = (char) (buf[isam] * *scal + *offset);
+d219 2
+a220 2
+                   }  /* for isam   */
+                }     /* if want8 && want32 */
+d226 2
+a227 2
+                   *cptrt++ = (char) (buf[isam] * *scal + *offset);
+                   }  /* for isam   */
+d235 6
+a240 6
+                   }  /* for isam   */
+                }     /* if want32  */
+             }        /* not newmin */
+          }           /* for irow   */
+       }              /* for islice */
+    }                 /* if iskipt  */
+d244 1
+a244 1
+    {    /************************************** reduced size image */
+d253 1
+a253 1
+             { /* want to alter min & max  definition*/
+d258 1
+a258 1
+                   ival = (char) (buf[isam] * *scal + *offset);
+d262 2
+a263 2
+                   }  /* for isam           */
+                }     /* if want8 && want32 */
+d269 1
+a269 1
+                   ival = (char) (buf[isam] * *scal + *offset);
+d272 3
+a274 3
+                   }  /* for isam   */
+                }     /* if want8   */
+             }        /* if newmin  */
+d276 1
+a276 1
+             {  /* not newmin */
+d281 1
+a281 1
+                   *cptrt++ = (char) (buf[isam] * *scal + *offset);
+d283 2
+a284 2
+                   }  /* for isam   */
+                }     /* if want8 && want32 */
+d290 3
+a292 3
+                   *cptrt++ = (char) (buf[isam] * *scal + *offset);
+                   }  /* for isam      */
+                }     /* if want8      */
+d299 6
+a304 6
+                   }  /* for isam      */
+                }     /* else (want32) */
+             }        /* newmin        */
+          }           /* for irow      */
+       }              /* for islice    */
+    }                 /* if iskipt > 1 */
+d308 1
+a308 1
+    {    /************************************* magnified size image */
+d321 1
+a321 1
+          /* npixlin & npixcol used to set corner of active image area*/
+d326 1
+a326 1
+             { /* want to alter min & max  definition*/
+d332 1
+a332 1
+                   ival    = (char) (buft * *scal + *offset);
+d348 4
+a351 4
+                         }  /* for m              */
+                      }     /* for j              */
+                   }        /* for isam           */
+                }           /* if want8 && want32 */
+d357 1
+a357 1
+                   ival    = (char) (buf[isam] * *scal + *offset);
+d377 1
+a377 1
+             { /*not newmin*/
+d383 1
+a383 1
+                   ival    = (char) (buft * *scal + *offset);
+d398 4
+a401 4
+                         }  /* for m              */
+                      }     /* for j              */
+                   }        /* for isam           */
+                }           /* if want8 && want32 */
+d407 1
+a407 1
+                   ival    = (char) (buf[isam] * *scal + *offset);
+d419 4
+a422 4
+                         }  /* for m      */
+                      }     /* for j      */
+                   }        /* for isam   */
+                }           /* for want8  */
+d425 1
+a425 1
+                {     /* want32 only */
+d440 8
+a447 8
+                         }  /* for m          */
+                      }     /* for j          */
+                   }        /* for isam       */
+                }           /* else (want32)  */ 
+             }              /* not newmin     */
+          }                 /* for irow       */
+       }                    /* for islice     */
+    }                       /* if iskipt      */
+@
+
+
+1.10
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/redvol.c,v 1.9 2005/10/18 16:59:50 leith Exp $*/
+d50 2
+a51 2
+C               NMINT,NMAXT,       TARGET NORMALIZATION RANGE (SENT)
+C               fmin_spi,fmax_spi,         DESIRED FILE RANGE         (SENT)
+d67 1
+a67 1
+ /* externally defined variables */
+d70 1
+a70 3
+ /* static variables for use here */
+
+ /* common variables used here */
+d96 1
+a96 1
+ /* find nsams, nrows in displayed image (do not expand nslices)*/
+d100 1
+a100 1
+ /* find buf for redlin */
+d107 1
+a107 1
+    /* find normalization constants for 8 bit output data */
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/redvol.c,v 1.8 2002/04/29 15:24:52 leith Exp $*/
+d38 1
+a38 1
+C         FMINT FMAXT, SCAL, OFFSET)
+d51 1
+a51 1
+C               FMIN,FMAX,         DESIRED FILE RANGE         (SENT)
+d105 1
+a105 1
+ newmin = (fmint != filedata-> fmin || fmaxt != filedata->fmax) ;
+@
+
+
+1.8
+log
+@comment
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redvol.c,v 1.7 1999/07/29 15:05:02 leith Exp $*/
+d9 1
+a9 1
+C *****************************************************************************
+d11 23
+a33 6
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH     *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+@
+
+
+1.7
+log
+@added fast whole image read
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redvol.c,v 1.6 1996/01/22 21:20:29 leith Exp $*/
+d29 1
+@
+
+
+1.6
+log
+@left a mapgo in that is no longer used
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redvol.c,v 1.5 1996/01/22 20:27:31 leith Exp leith $*/
+a68 1
+
+d71 2
+a72 1
+ int         islice, irow, isam, ival, newmin, noff;
+d92 1
+a92 2
+    *scal    = (nmaxt - nmint) / (fmaxt - fmint);
+    *offset  = -fmint  * *scal + nmint + 0.5;
+d109 3
+a111 1
+    if ((*fptr = (float *) malloc(nsams * nrows * nslices *
+d120 23
+a142 3
+ fptrt    = *fptr;
+ cptrt    = *cptr;
+ irec     = 0;
+@
+
+
+1.5
+log
+@used imagego..imagenend instead of mapgo..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redvol.c,v 1.4 1995/08/17 14:17:10 leith Exp leith $*/
+d152 1
+a152 1
+                   *cptrt++ = MYMIN(MYMAX(ival,mapgo),imageend);
+@
+
+
+1.4
+log
+@can use iskip now, speeded up also
+@
+text
+@d2 1
+a2 1
+/*$Header: $*/
+d50 1
+a50 1
+ extern int mapgo, mapend;
+d142 1
+a142 1
+                   *cptrt++ = MYMIN(MYMAX(ival,mapgo),mapend);
+d152 1
+a152 1
+                   *cptrt++ = MYMIN(MYMAX(ival,mapgo),mapend);
+d205 1
+a205 1
+                   ival = MYMIN(MYMAX(ival,mapgo),mapend);
+d216 1
+a216 1
+                   ival = MYMIN(MYMAX(ival,mapgo),mapend);
+d279 1
+a279 1
+                   ival    = MYMIN(MYMAX(ival,mapgo),mapend);
+d304 1
+a304 1
+                   ival    = MYMIN(MYMAX(ival,mapgo),mapend);
+@
+
+
+1.3
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/redvol.c,v 1.2 94/03/24 13:41:30 leith Exp Locker: leith $*/
+d5 1
+a5 1
+C**************************************************************************
+d9 1
+a9 1
+C **************************************************************************
+d17 1
+a17 1
+C **************************************************************************
+d19 3
+a21 3
+C  REDVOL(filedata,  want8, cptr, want32, fptr, nsam1, nsam2,   
+C         nrow1, nrow2,  nslice1, nslice2,  nmint, nmaxt,  
+C         fmint fmaxt, scal, offset)
+d27 2
+a28 2
+C  PARAMETERS:  filedatat
+C               want8, want32      want 8 bit buffer, want 32 bit buffer
+d32 4
+a35 3
+C               nmint,nmaxt,       TARGET NORMALIZATION RANGE (SENT)
+C               fmin,fmax,         DESIRED FILE RANGE         (SENT)
+C               scal, offset       NORMALIZATION PAREMETERS (RETURNED)
+d39 4
+a46 1
+
+d60 5
+a64 5
+            int want8,   char  ** cptr,
+            int want32,  float ** fptr,
+            int nsam1,   int nsam2,   
+            int nrow1,   int nrow2, 
+            int nslice1, int nslice2, 
+d66 3
+a68 2
+            float fmint, float fmaxt, 
+            float * scal,  float * offset)
+d71 6
+a76 5
+ int          nsam, nrow, nslice,irec;
+ int          islice, irow, isam, ival, newmin;
+ float     *  buf, * fptrt;
+ char      *  cptrt;
+ 
+a78 1
+ nslice  = filedata -> nslice;
+d80 3
+a82 3
+ nsams   = (nsam2   - nsam1   + 1);
+ nrows   = (nrow2   - nrow1   + 1);
+ nslices = (nslice2 - nslice1 + 1);
+d92 1
+a92 1
+    *scal     = (nmaxt - nmint) / (fmaxt - fmint);
+d118 5
+d124 1
+a124 4
+ /* set temporary data pointers */
+ fptrt = *fptr;
+ cptrt = *cptr;
+ irec  = 0;
+d126 3
+a128 4
+ if (want8 && want32)
+    {
+    /* fill cptr volume with 8 bit data and fptr vol with 32 bit data */
+    if (newmin)
+d130 57
+d188 6
+a193 1
+       for (islice = nslice1; islice <= nslice2; islice++)
+d195 2
+a196 22
+          for (irow = nrow1; irow <= nrow2; irow++)
+             {
+             irec = (islice - 1) * nrow + irow;
+             if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+          
+             for (isam =nsam1-1; isam < nsam2; isam++)
+                {
+                ival = (char) (buf[isam] * *scal + *offset);
+                *cptrt++ = MYMIN(MYMAX(ival,mapgo),mapend);
+                *fptrt++ = buf[isam];
+                }
+             }
+          }
+       }
+    else
+       {  /* use file value of fmin and fmax */
+       for (islice = nslice1; islice <= nslice2; islice++)
+          {
+          for (irow = nrow1; irow <= nrow2; irow++)
+             {
+             irec = (islice - 1) * nrow + irow;
+             if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+d198 59
+a256 47
+             for (isam =nsam1-1; isam < nsam2; isam++)
+                {
+                *cptrt++ = (char) (buf[isam] * *scal + *offset);
+                *fptrt++ = buf[isam];
+                }
+             }
+          }
+       }
+    }
+ else if (want8)
+    {
+    /* fill cptr volume with 8 bit data */
+    if (newmin) 
+       {  /* use new values of fmin and fmax */
+       for (islice = nslice1; islice <= nslice2; islice++)
+          {
+          for (irow = nrow1; irow <= nrow2; irow++)
+             {
+             irec = (islice - 1) * nrow + irow;
+             if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+
+             for (isam =nsam1-1; isam < nsam2; isam++)
+                {
+                ival = (char) (buf[isam] * *scal + *offset);
+                *cptrt++ = MYMIN(MYMAX(ival,mapgo),mapend);
+                }
+             }
+          }
+       }
+    else
+       {  /* use file values of fmin and fmax */
+       for (islice = nslice1; islice <= nslice2; islice++)
+          {
+          for (irow = nrow1; irow <= nrow2; irow++)
+             {
+             irec = (islice - 1) * nrow + irow;
+             if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+
+             for (isam =nsam1-1; isam < nsam2; isam++)
+                *cptrt++ = (char) (buf[isam] * *scal + *offset);
+             }
+          }
+       }
+    }
+ else if (want32)
+    {
+    /* fill fptr volume with 32 bit data */
+d264 2
+d267 127
+a393 5
+          for (isam = nsam1-1; isam < nsam2; isam++)
+             *fptrt++ = buf[isam];
+          }
+       }
+    }
+@
+
+
+1.2
+log
+@added fmin fmaxt
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/redvol.c,v 1.1 93/12/09 10:58:28 leith Exp $*/
+d20 1
+a20 1
+C         nrow1, nrow2,  nslice1, nslice2,  nmin, nmax,  
+d32 1
+a32 1
+C               nmin,nmax,         TARGET NORMALIZATION RANGE (SENT)
+d61 1
+a61 1
+            int nmin,    int nmax, 
+d87 2
+a88 2
+    *scal     = (nmax - nmin) / (fmaxt - fmint);
+    *offset  = -fmint  * *scal + nmin + 0.5;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d20 2
+a21 1
+C         nrow1, nrow2,  nslice1, nslice2,  nmin, nmax,  scal, offset)
+d32 2
+a33 1
+C               nmin,nmax,         TARGET NORMAILATION RANGE  (SENT)
+d43 1
+a43 3
+ /* external function prototypes */
+ extern int   redlin    (FILEDATA *, float *, int, int);
+ extern void  spout     (char *);
+d46 2
+a47 1
+ 
+d62 1
+d67 1
+a67 1
+ int          islice, irow, isam ;
+d82 1
+d87 2
+a88 2
+    *scal     = (nmax - nmin) / ((filedata-> fmax) - (filedata -> fmin));
+    *offset  = -filedata->fmin  * *scal + nmin + 0.5;
+d122 2
+d125 1
+a125 3
+    for (islice = nslice1; islice <= nslice2; islice++)
+       {
+       for (irow = nrow1; irow <= nrow2; irow++)
+d127 1
+a127 4
+          irec = (islice - 1) * nrow + irow;
+          if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+
+          for (isam =nsam1-1; isam < nsam2; isam++)
+d129 9
+a137 2
+             *cptrt++ = (char) (buf[isam] * *scal + *offset);
+             *fptrt++ = buf[isam];
+d141 17
+d162 8
+d171 11
+a181 3
+    for (islice = nslice1; islice <= nslice2; islice++)
+       {
+       for (irow = nrow1; irow <= nrow2; irow++)
+d183 4
+a186 2
+          irec = (islice - 1) * nrow + irow;
+          if (!redlin(filedata,buf,nsam,irec)) return FALSE;
+d188 2
+a189 3
+          for (isam =nsam1-1; isam < nsam2; isam++)
+             {
+             *cptrt++ = (char) (buf[isam] * *scal + *offset);
+a193 1
+ 
+a205 1
+             {
+a206 1
+             }
+@

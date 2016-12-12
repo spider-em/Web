@@ -1,0 +1,449 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.16.59.57;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.04.01.17.23.43;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.24.17.07.36;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.30.10.09.23;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.30.08.53.15;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/annotemen.c,v 1.4 1996/04/01 17:23:43 leith Exp $*/
+
+/***********************************************************************
+ * annotemen.c                      7/93
+ *
+ * ported WID_ANNOTEMEN.FOR (VAX) to unix.
+ *
+ ***********************************************************************
+ * author : Mahieddine Ladjadj
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * annotemen()
+ *
+ * PURPOSE:    displays wid_annote menu.
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+#include <Xm/Text.h>
+
+
+  /* internal function prototypes */
+  void   annotemen_buta       (Widget, XtPointer, XtPointer);
+   
+  /* internal variables */
+  static Widget   iw_annotemen = (Widget) 0;
+  static Widget   iw_fdoc, iw_xregt, iw_yregt, iw_labreg, iw_tkey1,
+           iw_tkey2, iw_rad;
+  int      ix_reg, iy_reg, lab_reg, tkey1, tkey2, iarad ;
+
+/*********************  annotemen ************************************/
+
+void annotemen(void)
+  {
+  Widget   iw_buta, iw_butc, iw_buts;
+  Widget   iw_rowcol;
+  char     cval[5];
+
+
+  if (iw_annotemen == (Widget) 0)
+     /* annote menu widget does not exist, create it */
+     {
+     /* create a dialog box */
+     iw_annotemen = wid_dialog(iw_win,0,"Annote options",-1,-1);
+     iw_rowcol    = wid_rowcol(iw_annotemen,'v',-1,-1);
+   
+     /* set up rows and columns in the dialog widget */
+     ix_reg     = 1;
+     iy_reg     = 2;
+     lab_reg    = 0;
+     iarad      = 5;
+     tkey1      = 1;
+     tkey2      = 2000;
+
+    /* create a text box for doc file name input */
+    iw_fdoc = wid_textboxb(iw_rowcol,0, "Doc. File:   ", docnam,20);
+
+    /* create a box for first key # input */
+    sprintf(cval,"%4d",tkey1);
+    iw_tkey1 = wid_textboxb(iw_rowcol,0,"Starting Key:",cval,4);
+
+    /* create a box for last key # input */
+    sprintf(cval,"%4d",tkey2);
+    iw_tkey2 = wid_textboxb(iw_rowcol,0,"Ending Key:  ",cval,4);
+
+    /* create a box for ix_reg input */
+    sprintf(cval,"%4d",ix_reg);
+    iw_xregt = wid_textboxb(iw_rowcol,0,"X reg:       ",cval,4);
+
+    /* create a box for iy_reg input */
+    sprintf(cval,"%4d",iy_reg);
+    iw_yregt = wid_textboxb(iw_rowcol,0,"Y reg:       ",cval,4);
+
+    /* create a box for lab_reg input */
+    sprintf(cval,"%4d",lab_reg);
+    iw_labreg = wid_textboxb(iw_rowcol,0,"Label Reg:   ",cval,4);
+
+    /* create a box for marker radius input */
+    sprintf(cval,"%4d",iarad );
+    iw_rad =   wid_textboxb(iw_rowcol,0,"Marker Radius",cval,4);
+
+    /* create a push button for stop, cancel & apply */
+    wid_stdbut(iw_rowcol,iw_annotemen,
+               &iw_buts, &iw_butc, &iw_buta,"SCA",
+               fin_cb,fin_cb,annotemen_buta,NULL);
+    }
+  XtManageChild(iw_annotemen);
+  return;
+  }
+
+ /*******************  annotemen_buta ******************************/
+
+ void annotemen_buta(Widget iw_t, XtPointer itag, XtPointer callpar)
+  {
+  char  outstr[80];
+  char * string;
+
+  /* get docnam from text widget */
+  string = XmTextGetString(iw_fdoc);
+  if (strlen(string) == 0)
+     {
+     if (string) XtFree(string);
+     spout("*** No doc. file name entered");
+     return;
+     }
+  else
+     {    /* probably got a valid doc file name */
+     strcpy(docnam,string);
+     if (string) XtFree(string);
+     }
+
+  /* get first key number */
+  string = XmTextGetString(iw_tkey1);
+  tkey1  = atoi(string);
+  if (string) XtFree(string);
+
+  /* get last key number */
+  string = XmTextGetString(iw_tkey2);
+  tkey2  = atoi(string);
+  if (string) XtFree(string);
+
+  /* get x register */
+  string = XmTextGetString(iw_xregt);
+  ix_reg = atoi(string);
+  if (string) XtFree(string);
+
+  /* get y register */
+  string = XmTextGetString(iw_yregt);
+  iy_reg = atoi(string);
+  if (string) XtFree(string);
+
+  /* get label register */
+  string = XmTextGetString(iw_labreg);
+  lab_reg = atoi(string);
+  if (string) XtFree(string);
+
+  /* get radius */
+  string = XmTextGetString(iw_rad);
+  iarad  = atoi(string);
+  if (string) XtFree(string);
+
+  if( tkey2 < tkey1)
+     {
+     sprintf(outstr,"*** Key 2= %d < key1= %d \n", ix_reg, iy_reg);
+     spout(outstr);
+
+     /* redo it */
+     XtUnmanageChild(iw_annotemen);
+     annotemen();
+     return;
+     }
+  if (ix_reg == iy_reg || ix_reg == lab_reg || iy_reg == lab_reg)
+     {
+     sprintf(outstr,"WARNING: Using same registers: %d %d %d\n", 
+              ix_reg, iy_reg, lab_reg);
+     spout(outstr);
+     }
+
+  XtUnmanageChild(iw_annotemen);
+
+  /* start annote program */
+  annote(docnam);           
+  return;
+  }
+@
+
+
+1.4
+log
+@cosmetic, Xtpointer, statics
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/annotemen.c,v 1.3 1994/03/24 17:07:36 leith Exp leith $*/
+d11 23
+a33 6
+ * COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF
+ * THE CENTER FOR LABORATORIES AND RESEARCH
+@
+
+
+1.3
+log
+@crashed when reused bug fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/annotemen.c,v 1.2 93/11/30 10:09:23 leith Exp Locker: leith $*/
+d32 1
+a32 1
+  void   annotemen_buta       (Widget, caddr_t, caddr_t);
+d35 2
+a36 2
+  Widget   iw_annotemen = (Widget) 0;
+  Widget   iw_fdoc, iw_xregt, iw_yregt, iw_labreg, iw_tkey1,
+a37 1
+  Widget   iw_buta, iw_butc, iw_buts;
+d43 4
+a46 3
+{
+  Widget iw_dum, iw_rowcol;
+  char   cval[5];
+d53 1
+a53 1
+     iw_annotemen = wid_dialog(iw_win,iw_annotemen,"Annote options",-1,-1);
+a63 9
+     iw_fdoc    = (Widget) 0;
+     iw_tkey1   = (Widget) 0;
+     iw_tkey2   = (Widget) 0;
+     iw_xregt   = (Widget) 0;
+     iw_yregt   = (Widget) 0;
+     iw_labreg  = (Widget) 0;
+     iw_rad     = (Widget) 0;
+     iw_dum     = (Widget) 0;
+
+d65 1
+a65 1
+    iw_fdoc = wid_textboxb(iw_rowcol,iw_fdoc, "Doc. File:   ", docnam,20);
+d69 1
+a69 1
+    iw_tkey1 = wid_textboxb(iw_rowcol,iw_tkey1,"Starting Key:",cval,4);
+d73 1
+a73 1
+    iw_tkey2 = wid_textboxb(iw_rowcol,iw_tkey2,"Ending Key:  ",cval,4);
+d77 1
+a77 1
+    iw_xregt = wid_textboxb(iw_rowcol,iw_xregt,"X reg:       ",cval,4);
+d81 1
+a81 1
+    iw_yregt = wid_textboxb(iw_rowcol,iw_yregt,"Y reg:       ",cval,4);
+d85 1
+a85 1
+    iw_labreg = wid_textboxb(iw_rowcol,iw_labreg,"Label Reg:   ",cval,4);
+d89 1
+a89 1
+    iw_rad =   wid_textboxb(iw_rowcol,iw_rad,"Marker Radius",cval,4);
+d92 3
+a94 3
+    iw_dum = wid_stdbut(iw_rowcol,iw_annotemen,
+                         &iw_buts, &iw_butc, &iw_buta,"SCA",
+                           fin_cb,fin_cb,annotemen_buta,NULL);
+d98 1
+a98 1
+ }
+d102 2
+a103 2
+ void annotemen_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
+ {
+d112 1
+a112 1
+     spout("*** No doc file name entered");
+d173 1
+a173 1
+}
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/annotemen.c,v 1.1 93/11/30 08:53:15 leith Exp Locker: leith $*/
+d4 1
+a4 2
+/*
+ ***********************************************************************
+d11 1
+a11 1
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+d27 1
+a29 10
+  /* external function prototypes */
+  extern void     spout       (char *);
+  extern Widget   wid_dialog  (Widget, Widget, char *, int, int);
+  extern Widget   wid_rowcol  (Widget, char , int, int);
+  extern   void   fin_cb      (Widget, caddr_t, caddr_t);
+  extern Widget   wid_stdbut  (Widget, Widget, Widget*, Widget*, Widget*,
+                               char *, void (*)(), void (*)(), void (*)(),
+                               void (*)());
+  extern Widget   wid_textboxb(Widget, Widget,char *, char *,  int);
+  extern void     annote      (char *);
+a71 1
+     }
+d73 2
+a74 2
+  /* create a text box for doc file name input */
+  iw_fdoc = wid_textboxb(iw_rowcol,iw_fdoc, "Doc. File:   ", docnam,20);
+d76 3
+a78 3
+  /* create a box for first key # input */
+  sprintf(cval,"%4d",tkey1);
+  iw_tkey1 = wid_textboxb(iw_rowcol,iw_tkey1,"Starting Key:",cval,4);
+d80 3
+a82 3
+  /* create a box for last key # input */
+  sprintf(cval,"%4d",tkey2);
+  iw_tkey2 = wid_textboxb(iw_rowcol,iw_tkey2,"Ending Key:  ",cval,4);
+d84 3
+a86 3
+  /* create a box for ix_reg input */
+  sprintf(cval,"%4d",ix_reg);
+  iw_xregt = wid_textboxb(iw_rowcol,iw_xregt,"X reg:       ",cval,4);
+d88 3
+a90 3
+  /* create a box for iy_reg input */
+  sprintf(cval,"%4d",iy_reg);
+  iw_yregt = wid_textboxb(iw_rowcol,iw_yregt,"Y reg:       ",cval,4);
+d92 3
+a94 3
+  /* create a box for lab_reg input */
+  sprintf(cval,"%4d",lab_reg);
+  iw_labreg = wid_textboxb(iw_rowcol,iw_labreg,"Label Reg:   ",cval,4);
+d96 3
+a98 3
+  /* create a box for marker radius input */
+  sprintf(cval,"%4d",iarad );
+  iw_rad =   wid_textboxb(iw_rowcol,iw_rad,"Marker Radius",cval,4);
+d100 2
+a101 2
+  /* create a push button for stop, cancel & apply */
+  iw_dum = wid_stdbut(iw_rowcol,iw_annotemen,
+d104 1
+d107 1
+a107 1
+}
+d109 1
+a109 1
+/*******************  annotemen_buta ******************************/
+d111 2
+a112 2
+void annotemen_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
+{
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d46 1
+a46 1
+  Widget   iw_fdoc, iw_xreg, iw_yreg, iw_labreg, iw_tkey1,
+d70 1
+a70 1
+     iarad       = 5;
+d77 2
+a78 2
+     iw_xreg    = (Widget) 0;
+     iw_yreg    = (Widget) 0;
+d97 1
+a97 1
+  iw_xreg = wid_textboxb(iw_rowcol,iw_xreg,"X reg:       ",cval,4);
+d101 1
+a101 1
+  iw_yreg = wid_textboxb(iw_rowcol,iw_yreg,"Y reg:       ",cval,4);
+d151 1
+a151 1
+  string = XmTextGetString(iw_xreg);
+d156 1
+a156 1
+  string = XmTextGetString(iw_yreg);
+@

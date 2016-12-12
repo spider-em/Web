@@ -1,0 +1,1362 @@
+head	1.20;
+access;
+symbols
+	pre-tilt-improve:1.20
+	pre_surf_fromtop:1.19
+	pre_neednewmap:1.19
+	pre_apppluss_remove:1.18
+	pre_tiltpair_chng:1.18
+	pre_GPL:1.17;
+locks;
+comment	@ * @;
+
+
+1.20
+date	2012.04.17.18.35.31;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2011.08.01.15.49.32;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2005.10.18.16.59.43;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2004.07.21.16.25.47;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2004.07.20.19.56.23;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2001.08.08.16.10.04;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2001.08.08.13.51.12;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2000.02.17.19.55.30;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2000.01.03.18.34.22;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	99.09.21.17.42.09;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	99.09.20.13.59.02;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	99.08.04.16.54.06;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	97.02.26.15.05.36;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	97.02.24.17.23.59;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.11.21.14.21.27;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.08.01.19.14.44;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.07.11.15.22.30;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	96.06.20.16.38.40;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	96.06.13.19.49.34;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	96.06.13.19.46.53;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.20
+log
+@docimgtotal = -1  error return for unreadable doc file access
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/docmontmen.c,v 1.19 2011/08/01 15:49:32 leith Exp $*/
+/*
+C++*********************************************************************
+C
+C DOCMONTMEN -- CREATED JUNE 91 FROM WIMONT
+C            -- CONVERTED TO C  -- OCT 92 al
+C            -- ADDED MONTAGE RANGE SCALE SELECTORS, AUG 99 al
+C
+C **********************************************************************
+C * AUTHOR:  ArDean Leith                                              
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C DOCMONTMEN
+C
+C PURPOSE:         DISPLAY MONTAGE MENU FOR 2-D FILES
+C
+C VARIABLES:       NAMES      LOGICAL FLAG TO PRINT NAMES
+C                  IXUL,IYUL  UPPER LEFT CORNER FOR LAST IMAGE
+C                  MARX,MARY  X & Y MARGINS FOR MONTAGE
+C
+C CALLED BY:   
+C
+C web_com --> imagemen --> imagemen_cb --> imagemen_cb_com
+C                                               v
+C                                               v
+C  mont2 <-- imagemen1 <-- docmontmen_buta  <-- docmontmen
+C     v
+C     v (if average)
+C     v
+C  imagemen1 (sets ioper to: 1)
+C
+C**************************************************************************
+*/
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+#include <Xm/Scale.h>
+
+#include "common.h"
+#include "routines.h"
+
+ /* Internal function prototypes */
+ void     docmontmen_buta    (Widget, XtPointer, XtPointer);
+ void     docmontmen_buta_stk(Widget, XtPointer, XtPointer);
+ void     docmontmen_a       (Widget, XtPointer, XtPointer);
+ void     docmontmen_a_stk   (Widget, XtPointer, XtPointer);
+
+ /* File variables */
+ static Widget   iw_template, iw_nprow, iw_movie;
+ static Widget   iw_nprow_stk, iw_movie_stk;
+ static Widget   iw_average, iw_avgnam, iw_minfile, iw_maxfile;
+ static Widget   iw_average_stk, iw_avgnam_stk;
+ static Widget   iw_ixul, iw_iyul;
+ static Widget   iw_ixul_stk, iw_iyul_stk;
+ static Widget   iw_docmontmen = (Widget) 0,  iw_pusha;
+ static Widget   iw_docmontmen_stk = (Widget) 0,  iw_pusha_stk;
+ static int      regno = 1;  /* No longer variable, aug 99 al */
+ static char     *filnewdoc;
+ static char     filnewimg[128];
+ static int      maxvalfound;
+ static int      minvalfound;
+
+ /* Externally used variables (For use in mont2) */
+ int * docimgnums;
+ int   docimgtotal, numnext, numnextout;
+ int   montaverage = FALSE;
+ char  avgnam[128];
+
+ /* Externally defined variables (For use in mont2) */
+ extern int    lastfile;           
+ extern char   filego[81];     /* Name of first image in montage   */
+ extern int    minfile, maxfile;
+
+ /***********  docmontmen0  (called from imagemen) ********/
+
+ void docmontmen0(char * filnewt)
+ { 
+ int         maxreg, maxkeys, i, maxkeygot;
+ float       *dbuf = NULL;
+
+ /* Remember doc file name */
+ filnewdoc = filnewt;
+
+ /* Set size for dbuf array */
+ maxreg  = 1+1; 
+ maxkeys = 99999;
+
+ /* Recover doc file data */
+ if (getdoc((FILE *) NULL, filnewdoc, NULL, maxkeys, maxreg, 
+             &dbuf, &maxkeygot) > 0) 
+    {   /* Problem retrieving doc file data */
+    docimgtotal = -1;
+    //printf("getdoc BAD  maxkeygot: %d   \n",maxkeygot);  
+    
+    if (dbuf) free(dbuf); dbuf = NULL;
+    return;
+    }
+
+ /* Run time allocation of memory space for docimgnums */
+ if ((docimgnums = (int *) malloc(maxkeygot * sizeof(int))) == 
+     (int *) NULL)
+     {spout("*** Memory allocation failed in docmontmen!"); 
+     if (dbuf) free(dbuf); dbuf = NULL; return; }
+
+ /* Fill integer array for image numbers (docimgnums)*/
+ docimgtotal = 0;
+ maxvalfound = 0;
+ minvalfound = INT_MAX;
+
+ for (i=0; i < maxkeygot; i++)
+    {
+    if (*(dbuf + i * maxreg) > 0)
+       { /* This key in use in doc file */
+       docimgnums[docimgtotal] = * (dbuf + i * maxreg + regno);
+       minvalfound = MYMIN(minvalfound,docimgnums[docimgtotal]);
+       maxvalfound = MYMAX(maxvalfound,docimgnums[docimgtotal]);
+       docimgtotal++;
+       }
+    }
+
+ /* Set slider limits for file number selection */
+ minfile  = minvalfound;
+ maxfile  = maxvalfound;
+ lastfile = maxfile;
+
+ /* Dbuf no longer needed */
+ if (dbuf) free(dbuf); dbuf = NULL;
+
+ /* Cancel waitcursor */
+ waitcursor(iwin, FALSE, 79);
+ }
+
+ /**************************  docmontmen  **********************/
+
+ void docmontmen(char * filnewt)
+ {  /* Sets menu for document file based image montage */
+
+ Widget iw_rowcol, iw_rowcol3, iw_rowcolh;
+ Widget iw_dums;
+ char   cval[9];
+ char * cdum = 0;
+
+ if (iw_docmontmen == (Widget)0)
+    {   /* Create doc montage menu widget first */
+
+    iw_docmontmen = wid_dialog(iw_win, 0, "montage parameters", -1, -1);
+    iw_rowcol     = wid_rowcol(iw_docmontmen, 'v', -1, -1);
+
+    /* Create text box image file template ----------------- template */
+    strcpy(cval,"avgstk@@*");
+    iw_template = wid_textboxb(iw_rowcol, 0, 
+                 "Image file template:", cval,32);
+
+    /* Create horizontal rowcol for min & max    filenumber -------- */
+    iw_rowcolh = wid_rowcol(iw_rowcol, 'h', -1, -1);
+
+    /* Create scale widget for min filenumber --------------- minfile */
+    iw_minfile = wid_scale(iw_rowcolh, 0, "Min. filenumber: ",
+                 minvalfound,maxvalfound, minfile,200,50,-1,-1); 
+
+    /* Create scale widget for max filenumber --------------- maxfile */
+    iw_maxfile = wid_scale(iw_rowcolh, 0, "Max. filenumber: ",
+                 minvalfound,maxvalfound, maxfile,200,50,-1,-1); 
+
+    /* Create label box for location ----------------------- location */
+    iw_rowcol3  = wid_rowcol(iw_rowcol,'h',-1,-1);
+                  wid_labelg(iw_rowcol3,0, "LOCATION:",-1,-1);
+
+
+     /* Create text boxes for ixuln & iyuln -------------------- ixuln */
+    if (keepxy) 
+       { /* do not want to reset ixuln & iyuln */
+       sprintf(cval,"%4d",ixuln);
+       iw_ixul = wid_textboxb(iw_rowcol3,0,"X",cval,4);
+       sprintf(cval,"%4d",iyuln);
+       iw_iyul = wid_textboxb(iw_rowcol3,0,"Y",cval,4);
+       }
+    else
+       {
+       iw_ixul = wid_textboxb(iw_rowcol3,0,"X","*",4);
+       iw_iyul = wid_textboxb(iw_rowcol3,0,"Y","*",4);
+       }
+
+     /* Create text box for pictures / row input --------------- nprow */
+    strcpy(cval,"*AS FITS");
+    iw_nprow = wid_textboxb(iw_rowcol, 0, "Frames / Row:", cval,8);
+
+    /* Not relevant for categorize */
+    /* Create toggle box for movie ---------------------------- movie */
+    iw_movie = wid_togmen(iw_rowcol,0,"Movie",movie,-1,-1);
+
+    /* Create toggle box for average -------------------- montaverage */
+    iw_average = wid_toggleg(iw_rowcol,0,"Compute average",
+                         montaverage,docmontmen_a,cdum,-1,-1);
+
+    /* Create text box for doc file name input  -------------- avgnam */
+    iw_avgnam = wid_textboxb(iw_rowcol,0,"Average file:", avgnam,32);
+    XtSetSensitive(XtParent(iw_avgnam), montaverage);
+
+    /* Create box for apply ----------------------------------- apply */
+    wid_stdbut(iw_rowcol, iw_docmontmen, &iw_dums, &iw_dums, 
+                        &iw_pusha,  "CA",
+                        fin_cb, fin_cb ,docmontmen_buta, NULL);
+    }
+else
+    {   /* Montage menu widget already exists, update it */
+    /* update text boxes for ixuln & iyuln -------------------- ixuln */
+    if (keepxy) 
+       { /* Do not want to reset ixuln & iyuln */
+       sprintf(cval,"%4d",ixuln);
+       iw_ixul = wid_textboxb(iw_rowcol3,iw_ixul,"X",cval,4);
+       sprintf(cval,"%4d",iyuln);
+       iw_iyul = wid_textboxb(iw_rowcol3,iw_iyul,"Y",cval,4);
+       }
+    else
+       {
+       iw_ixul = wid_textboxb(iw_rowcol3,iw_ixul,"X","*",4);
+       iw_iyul = wid_textboxb(iw_rowcol3,iw_iyul,"Y","*",4);
+       }
+
+    /* Update scale widget for min filenumber --------------- minfile */
+    iw_minfile = wid_scale(iw_rowcolh, iw_minfile, "Min. filenumber: ",
+                       minvalfound,maxvalfound, minfile,200,50,-1,-1); 
+
+    /* Update scale widget for max filenumber --------------- maxfile */
+    iw_maxfile = wid_scale(iw_rowcolh, iw_maxfile, "Max. filenumber: ",
+                       minvalfound,maxvalfound, maxfile,200,50,-1,-1); 
+
+
+    /* Update text box for pictures / row input --------------- nprow */
+    if (samefile)  
+       sprintf(cval,"%4d",nprow);
+    else
+       strcpy(cval,"*AS FITS");
+       iw_nprow = wid_textboxb(iw_rowcol, iw_nprow, "FRAMES / ROW:", 
+                            cval,8);
+    }
+
+    if (ioper == 11 || ioper == 23)
+       {  /* Not relevant for categorize */
+       XtUnmanageChild(iw_movie);
+       XtUnmanageChild(iw_average);
+       XtUnmanageChild(iw_avgnam);
+       XtUnmanageChild(XtParent(iw_avgnam));
+       }
+    else
+       {
+       XtManageChild(iw_movie);
+       XtManageChild(iw_average);
+       XtManageChild(iw_avgnam);
+       }
+ XtManageChild(iw_docmontmen);
+ }
+
+
+ 
+
+
+ /************** docmontmen_a (montaverage toggle callback) ***********/
+
+ void docmontmen_a(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ montaverage = XmToggleButtonGadgetGetState(iw_average);
+ XtSetSensitive(XtParent(iw_avgnam),montaverage);
+ }
+
+
+ 
+/***********  docmontmen_buta  (accept button callback) ********/
+
+ void docmontmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char        *string   = NULL;
+ char        *template = NULL;
+ int         ifile;
+
+ /* Find image file name template, put it in filego for mont2 */
+ template = XmTextGetString(iw_template);
+ strcpy(filego,template);
+ if (!addext(filego, datexc, 81)) return;
+
+ /* Get minfile & maxfile */
+ XmScaleGetValue(iw_minfile,&minfile);
+ XmScaleGetValue(iw_maxfile,&maxfile);
+ if (minfile > maxfile)
+    { spout("*** ENDING FILE MUST BE > STARTING FILE"); return; }
+
+ /* find next image postion (if set)  */
+ if (getcorner(iw_ixul,iw_iyul,&ixuln,&iyuln) == FALSE) 
+    {   /* can not interpret image position */
+    spout("*** Can not interpret image location! ");
+    return;
+    }
+
+ if (ioper != 11 && ioper != 23)
+    {
+    /* Interrogate movie toggle (not for categorize operation) */
+    movie = XmToggleButtonGadgetGetState(iw_movie);
+    }
+
+ /* Find nprow value (number of images per row) */
+ string = XmTextGetString(iw_nprow);
+
+ if (sscanf(string,"%d",&nprow) <= 0 || nprow == 0) 
+    {  /* Use default for nprow, calcualte in mont2.c */
+    nprow = 0;
+    }
+
+ if (string) XtFree (string);
+
+ if (ioper != 11 && ioper != 23)
+    { /* Not relevant for categorize from doc file operation */
+    montaverage = XmToggleButtonGadgetGetState(iw_average);                   
+    if (montaverage) 
+       {
+       string = XmTextGetString(iw_avgnam);
+       if (strlen(string) <= 0) 
+          {
+          pop_errmsg("*** You must enter a filename.");
+          return;
+          }
+
+       else if (strlen(string) >= 128) 
+          {
+          pop_errmsg("*** File name too long.");
+          return;
+          }
+
+       strcpy(avgnam,string);
+       XtFree(string);
+       }
+    }
+
+ /* Remove the montage menu */
+ XtUnmanageChild(iw_docmontmen);
+ expos_cb(NULL,NULL,NULL);
+
+ /* Create file name for first file in series (filnew) */
+ numnextout = 0;
+
+ /* Update first filname in case < minfile .... */
+ for (numnext = 0 ; numnext < docimgtotal ; numnext++)
+    {  /* Search over all doc file entries */
+    ifile      = docimgnums[numnext];
+    if (ifile >= minfile && ifile <= maxfile)
+       {  /* Use this file number */
+       docimgnums[numnextout++] = ifile;
+       }
+    }
+ docimgtotal = numnextout;
+ numnextout  = 0;
+ numnext     = 1;
+ ifile       = docimgnums[0];
+
+ filget(template,filnewimg,127,ifile);
+ if (template) free(template);
+
+ if (!addext(filnewimg, datexc, 128))return;
+
+ /* Call imagemen1 to activate montage display */
+ imagemen1(filnewimg, FALSE);
+
+ /* Cancel waitcursor */
+ waitcursor(iwin, FALSE, 79);
+ }
+
+
+
+@
+
+
+1.19
+log
+@cosmetic & default file name changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/docmontmen.c,v 1.18 2005/10/18 16:59:43 leith Exp $*/
+d66 1
+a66 1
+ /* internal function prototypes */
+d72 1
+a72 1
+ /* file variables */
+d87 1
+a87 1
+ /* Externally used variables (for use in mont2) */
+d93 1
+a93 1
+ /* Externally defined variables (for use in mont2) */
+d95 1
+a95 1
+ extern char   filego[81];     /* name of first image in montage   */
+d116 3
+@
+
+
+1.18
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/docmontmen.c,v 1.17 2004/07/21 16:25:47 leith Exp $*/
+d67 1
+a67 1
+ void     docmontmen_buta(Widget, XtPointer, XtPointer);
+d69 2
+a70 2
+ void     docmontmen_a(Widget,    XtPointer, XtPointer);
+ void     docmontmen_a_stk(Widget,    XtPointer, XtPointer);
+d81 1
+a81 1
+ static int      regno = 1;  /* no longer variable, aug 99 al */
+d87 1
+a87 1
+ /* externally used variables (for use in mont2) */
+d93 1
+a93 1
+ /* externally defined variables (for use in mont2) */
+d105 1
+a105 1
+ /* remember doc file name */
+d108 1
+a108 1
+ /* set size for dbuf array */
+d112 1
+a112 1
+ /* recover doc file data */
+d115 1
+a115 1
+    {   /* problem retrieving doc file data */
+d120 1
+a120 1
+ /* run time allocation of memory space for docimgnums */
+d126 1
+a126 1
+ /* fill integer array for image numbers (docimgnums)*/
+d134 1
+a134 1
+       { /* this key in use in doc file */
+d142 1
+a142 1
+ /* set slider limits for file number selection */
+d147 1
+a147 1
+ /* dbuf no longer needed */
+d150 1
+a150 1
+ /* cancel waitcursor */
+d157 1
+a157 1
+ {  /* sets menu for document file based image montage */
+d165 1
+a165 1
+    {   /* create doc montage menu widget first */
+d170 2
+a171 2
+    /* create text box image file template ----------------- template */
+    strcpy(cval,"AVG***");
+d175 1
+a175 1
+    /* create horizontal rowcol for min & max    filenumber -------- */
+d178 1
+a178 1
+    /* create scale widget for min filenumber --------------- minfile */
+d182 1
+a182 1
+    /* create scale widget for max filenumber --------------- maxfile */
+d186 1
+a186 1
+    /* create label box for location ----------------------- location */
+d191 1
+a191 1
+     /* create text boxes for ixuln & iyuln -------------------- ixuln */
+d205 1
+a205 1
+     /* create text box for pictures / row input --------------- nprow */
+d209 2
+a210 2
+    /* not relevant for categorize */
+    /* create toggle box for movie ---------------------------- movie */
+d213 1
+a213 1
+    /* create toggle box for average -------------------- montaverage */
+d217 1
+a217 1
+    /* create text box for doc file name input  -------------- avgnam */
+d221 1
+a221 1
+    /* create box for apply ----------------------------------- apply */
+d227 1
+a227 1
+    {   /* montage menu widget already exists, update it */
+d230 1
+a230 1
+       { /* do not want to reset ixuln & iyuln */
+d242 1
+a242 1
+    /* update scale widget for min filenumber --------------- minfile */
+d246 1
+a246 1
+    /* update scale widget for max filenumber --------------- maxfile */
+d251 1
+a251 1
+    /* update text box for pictures / row input --------------- nprow */
+d261 1
+a261 1
+       {  /* not relevant for categorize */
+d298 1
+a298 1
+ /* find image file name template, put it in filego for mont2 */
+d303 1
+a303 1
+ /* get minfile & maxfile */
+d318 1
+a318 1
+    /* interrogate movie toggle (not for categorize operation) */
+d322 1
+a322 1
+ /* find nprow value (number of images per row) */
+d326 1
+a326 1
+    {  /* use default for nprow, calcualte in mont2.c */
+d333 1
+a333 1
+    { /* not relevant for categorize from doc file operation */
+d346 1
+a346 1
+          pop_errmsg("*** Average file name too long.");
+d355 1
+a355 1
+ /* remove the montage menu */
+d359 1
+a359 1
+ /* create file name for first file in series (filnew) */
+d362 1
+a362 1
+ /* update first filname in case < minfile .... */
+d364 1
+a364 1
+    {  /* search over all doc file entries */
+d367 1
+a367 1
+       {  /* use this file number */
+d381 1
+a381 1
+ /* call imagemen1 to activate montage display */
+d384 1
+a384 1
+ /* cancel waitcursor */
+@
+
+
+1.17
+log
+@bad numnext for mont2 use
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/docmontmen.c,v 1.16 2004/07/20 19:56:23 leith Exp leith $*/
+d12 23
+a34 5
+C * COPYRIGHT (C)1991, 2001. HEALTH RESEARCH INCORPORATED (HRI),       *
+C * ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                   *
+C * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO HRI AND ARE NOT   *
+C * TO BE DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED *
+C * WITHOUT WRITTEN APPROVAL OF HRI.                                   *
+@
+
+
+1.16
+log
+@stack montage from doc file bug
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/docmontmen.c,v 1.15 2001/08/08 16:10:04 leith Exp leith $*/
+d355 1
+@
+
+
+1.15
+log
+@stack support improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.13 2000/02/17 19:55:30 leith Exp $*/
+a341 1
+ numnext    = 0;
+a342 1
+ ifile      = docimgnums[numnext++]; 
+d344 12
+a355 6
+ while (numnext <= docimgtotal && 
+       (ifile < minfile || ifile > maxfile))
+   {  /* update first filname in case < minfile .... */
+   ifile = docimgnums[numnext++];
+   }
+ docimgnums[numnextout++] = ifile;
+@
+
+
+1.14
+log
+@stack support improved
+@
+text
+@d4 1
+a4 1
+C++************************************************************************
+d10 2
+a11 2
+C **************************************************************************
+C * AUTHOR:  ArDean Leith                                                 *
+d125 2
+a126 2
+ minfile = minvalfound;
+ maxfile = maxvalfound;
+d259 1
+a259 96
+ /**************************  docmontmen_stk **********************/
+
+ void docmontmen_stk()
+ {  /* sets menu for document file based stacked image montage */
+
+ Widget iw_rowcol, iw_rowcol3;
+ Widget iw_dums;
+ char   cval[9];
+ char * cdum = 0;
+
+ if (iw_docmontmen_stk == (Widget)0)
+    {   /* create doc montage menu widget first */
+
+    iw_docmontmen_stk = wid_dialog(iw_win, 0, "Montage parameters", -1, -1);
+    iw_rowcol  = wid_rowcol(iw_docmontmen_stk, 'v', -1, -1);
+
+    /* create label box for location ----------------------- location */
+    iw_rowcol3  = wid_rowcol(iw_rowcol,'h',-1,-1);
+                  wid_labelg(iw_rowcol3,0, "LOCATION:",-1,-1);
+
+     /* create text boxes for ixuln & iyuln -------------------- ixuln */
+    if (keepxy) 
+       { /* do not want to reset ixuln & iyuln */
+       sprintf(cval,"%4d",ixuln);
+       iw_ixul_stk = wid_textboxb(iw_rowcol3,0,"X",cval,4);
+       sprintf(cval,"%4d",iyuln);
+       iw_iyul_stk = wid_textboxb(iw_rowcol3,0,"Y",cval,4);
+       }
+    else
+       {
+       iw_ixul_stk = wid_textboxb(iw_rowcol3,0,"X","*",4);
+       iw_iyul_stk = wid_textboxb(iw_rowcol3,0,"Y","*",4);
+       }
+
+     /* create text box for pictures / row input --------------- nprow */
+    strcpy(cval,"*AS FITS");
+    iw_nprow_stk = wid_textboxb(iw_rowcol, 0, "Frames / Row:", cval,8);
+
+    /* not relevant for categorize */
+    /* create toggle box for movie ---------------------------- movie */
+    iw_movie_stk = wid_togmen(iw_rowcol,0,"Movie",movie,-1,-1);
+
+    /* create toggle box for average -------------------- montaverage */
+    iw_average_stk = wid_toggleg(iw_rowcol,0,"Compute average",
+                         montaverage,docmontmen_a_stk,cdum,-1,-1);
+
+    /* create text box for Average file name input  --------- avgnam */
+    iw_avgnam_stk = wid_textboxb(iw_rowcol,0,"Average file:", avgnam,32);
+    XtSetSensitive(XtParent(iw_avgnam_stk), montaverage);
+
+    /* create box for apply ----------------------------------- apply */
+    wid_stdbut(iw_rowcol, iw_docmontmen_stk, &iw_dums, &iw_dums, 
+                        &iw_pusha_stk,  "CA",
+                        fin_cb, fin_cb ,docmontmen_buta_stk, NULL);
+    }
+else
+    {   /* montage menu widget already exists, update it */
+    /* update text boxes for ixuln & iyuln -------------------- ixuln */
+    if (keepxy) 
+       { /* do not want to reset ixuln & iyuln */
+       sprintf(cval,"%4d",ixuln);
+       iw_ixul_stk = wid_textboxb(iw_rowcol3,iw_ixul_stk,"X",cval,4);
+       sprintf(cval,"%4d",iyuln);
+       iw_iyul_stk = wid_textboxb(iw_rowcol3,iw_iyul_stk,"Y",cval,4);
+       }
+    else
+       {
+       iw_ixul_stk = wid_textboxb(iw_rowcol3,iw_ixul_stk,"X","*",4);
+       iw_iyul_stk = wid_textboxb(iw_rowcol3,iw_iyul_stk,"Y","*",4);
+       }
+
+    /* update text box for pictures / row input --------------- nprow */
+    if (samefile)  
+       sprintf(cval,"%4d",nprow);
+    else
+       strcpy(cval,"*AS FITS");
+       iw_nprow_stk = wid_textboxb(iw_rowcol, iw_nprow_stk, "FRAMES / ROW:", 
+                            cval,8);
+    }
+
+    if (ioper == 11 || ioper == 23 || ioper == 26 || ioper == 25)
+       {  /* not relevant for categorize */
+       XtUnmanageChild(iw_movie_stk);
+       XtUnmanageChild(iw_average_stk);
+       XtUnmanageChild(iw_avgnam_stk);
+       XtUnmanageChild(XtParent(iw_avgnam_stk));
+       }
+    else
+       {
+       XtManageChild(iw_movie_stk);
+       XtManageChild(iw_average_stk);
+       XtManageChild(iw_avgnam_stk);
+       }
+ XtManageChild(iw_docmontmen_stk);
+ }
+
+a269 7
+ /************** docmontmen_a_stk (montaverage toggle callback) ***********/
+
+ void docmontmen_a_stk(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ montaverage = XmToggleButtonGadgetGetState(iw_average_stk);
+ XtSetSensitive(XtParent(iw_avgnam_stk),montaverage);
+ }
+d298 1
+a298 1
+ if (ioper != 11 && ioper != 23 && ioper != 26 && ioper != 25)
+d314 1
+a314 1
+ if (ioper != 11 && ioper != 23 && ioper != 26 && ioper != 25)
+a366 58
+/***********  docmontmen_buta_stk  (accept button callback) ********/
+
+ void docmontmen_buta_stk(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char        *string   = NULL;
+ int         ifile;
+
+ /* find next image postion (if set)  */
+ if (getcorner(iw_ixul_stk,iw_iyul_stk,&ixuln,&iyuln) == FALSE) 
+    {   /* can not interpret image position */
+    spout("*** Can not interpret image location! ");
+    return;
+    }
+ if (ioper != 26 && ioper != 25 )
+    {
+    /* interrogate movie toggle (not for categorize operation) */
+    movie = XmToggleButtonGadgetGetState(iw_movie_stk);
+    }
+
+ /* find nprow value (number of images per row) */
+ string = XmTextGetString(iw_nprow_stk);
+
+ if (sscanf(string,"%d",&nprow) <= 0 || nprow == 0) 
+    {  /* use default for nprow, calculate in mont2.c */
+    nprow = 0;
+    }
+ if (string) XtFree (string);
+
+ if (ioper != 26 && ioper != 25 )
+    { /* not relevant for categorize from doc file operation */
+    montaverage = XmToggleButtonGadgetGetState(iw_average_stk);                   
+    if (montaverage) 
+       {
+       string = XmTextGetString(iw_avgnam_stk);
+       if (strlen(string) <= 0) 
+          { pop_errmsg("*** You must enter a filename."); return; }
+
+       else if (strlen(string) >= 128) 
+          { pop_errmsg("*** Average file name too long."); return; }
+
+       strcpy(avgnam,string);
+       XtFree(string);
+       }
+    }
+
+ /* remove the montage from stack doc menu */
+ XtUnmanageChild(iw_docmontmen_stk);
+ expos_cb(NULL,NULL,NULL);
+
+ /* call imagemen to get widget for stack name */
+ if (ioper == 26)
+    { imagemen(NULL,"p",NULL); }   /* Categorize */
+ else if (ioper == 24)
+    { imagemen(NULL,"r",NULL); }   /* Plain montage display */
+
+ /* cancel waitcursor */
+ waitcursor(iwin, FALSE, 79);
+ }
+@
+
+
+1.13
+log
+@needed to set lastfile
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.12 2000/01/03 18:34:22 leith Exp $*/
+d11 7
+a17 8
+C *  AUTHOR:  ArDean Leith                                                 *
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+d50 1
+d52 1
+d56 1
+d58 1
+d60 1
+d62 1
+a131 3
+ /* call docmontmen to activate docmontmen menu display */
+ docmontmen(filnewimg);
+
+d242 1
+a242 1
+    if (ioper == 11)
+d247 1
+d259 97
+d365 8
+d380 1
+a380 2
+ int         maxreg, maxkeys, i, ifile;
+ float       *dbuf = NULL;
+d399 2
+a400 1
+ if (ioper != 11)
+a413 1
+
+d416 1
+a416 1
+ if (ioper != 11)
+d427 1
+d462 61
+@
+
+
+1.12
+log
+@docmontage image # wrong
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.11 1999/09/21 17:42:09 leith Exp $*/
+d37 1
+a37 1
+C  imagemen1
+d71 1
+d122 1
+@
+
+
+1.11
+log
+@nprow changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.10 1999/09/20 13:59:02 leith Exp $*/
+d66 1
+a66 1
+ int   docimgtotal, numnext;
+d334 3
+a336 2
+ numnext = 0;
+ ifile  = docimgnums[numnext++]; 
+d343 2
+a344 1
+ 
+@
+
+
+1.10
+log
+@ioper for doc mont wrong?
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.9 1999/08/04 16:54:06 leith Exp leith $*/
+d34 4
+d234 1
+a234 1
+    iw_nprow = wid_textboxb(iw_rowcol, iw_nprow, "FRAMES / ROW:", 
+a271 1
+ int         marlefo;
+d300 3
+a302 1
+    {  /* use default for nprow */
+a303 11
+    /* adjust marlefo for lef side position */
+    marlefo = marlef;
+    if (placed) marlefo = ixuln;
+
+    if (iskip > 1)
+       nprow = (iwidex - marlefo) / ((nsam / iskip)  + marx);
+    else if (iskip < -1)
+       nprow = (iwidex - marlefo) / ((nsam * -iskip) + marx);
+    else
+       nprow = (iwidex - marlefo) / ((nsam         ) + marx);
+    }
+@
+
+
+1.9
+log
+@menu changed with scale bars
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.8 1997/02/26 15:05:36 leith Exp $*/
+d287 1
+a287 1
+ if (ioper != 20)
+d289 1
+a289 1
+    /* interrogate movie toggle */
+d313 2
+a314 2
+ if (ioper != 20)
+    { /* not relevant for categorize operation */
+@
+
+
+1.8
+log
+@added categorize from doc file.
+added categorize from doc file
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.7 1997/02/24 17:23:59 leith Exp leith $*/
+d7 3
+a9 1
+C          -- CONVERTED TO C  -- OCT 92 al
+d40 1
+d50 2
+a51 2
+ static Widget   iw_regno, iw_template, iw_nprow, iw_movie;
+ static Widget   iw_average, iw_avgnam;
+d54 1
+a54 1
+ static int      regno = 1;
+d57 3
+a59 1
+ 
+d62 1
+a62 1
+ int   docimgtotal;
+d68 29
+d98 30
+d131 3
+a133 2
+ { 
+ Widget iw_rowcol, iw_rowcol3;
+a137 3
+ /* remember doc file name */
+ filnewdoc = filnewt;
+
+a143 3
+    sprintf(cval,"%2d",regno);
+    iw_regno = wid_textboxb(iw_rowcol,0,"Register number:",cval,2);
+
+d146 5
+a150 1
+    iw_template = wid_textboxb(iw_rowcol, 0, "Image file template:", cval,32);
+d152 8
+d183 1
+d216 9
+d234 13
+a246 1
+XtManageChild(iw_docmontmen);
+d249 2
+d259 2
+a260 1
+ /***********  docmontmen_buta  (accept button callback) ********/
+d266 1
+a266 1
+ int         maxreg, maxkeys, i;
+a269 10
+ /* find register number */
+ string = XmTextGetString(iw_regno);
+
+ if (sscanf(string,"%d",&regno) <= 0 || regno < 1 || regno > 6) 
+       {   /* invalid regno */
+       spout("*** Register number must be 1...6!! ");
+       if (string) XtFree (string); return;
+       }
+ if (string) XtFree (string);
+
+d275 6
+d287 5
+a292 3
+ /* interrogate movie toggle */
+ movie = XmToggleButtonGadgetGetState(iw_movie);
+ 
+d313 4
+a316 5
+ montaverage = XmToggleButtonGadgetGetState(iw_average);                   
+ if (montaverage) 
+    {
+    string = XmTextGetString(iw_avgnam);
+    if (strlen(string) <= 0) 
+d318 14
+a331 7
+       pop_errmsg("*** You must enter a filename.");
+       return;
+       }
+    else if (strlen(string) >= 128) 
+       {
+       pop_errmsg("*** Average file name too long.");
+       return;
+a332 3
+
+    strcpy(avgnam,string);
+    XtFree(string);
+d339 3
+a341 1
+ /* recover doc file data */
+d343 7
+a349 27
+ /* set size for dbuf array */
+ maxreg = regno+1; maxkeys = 9999;
+
+ if (getdoc((FILE *) NULL, filnewdoc, NULL, maxkeys, maxreg, 
+             &dbuf, &docimgtotal) > 0) 
+    {   /* problem retrieving doc file data */
+    if (dbuf) free(dbuf); dbuf = NULL;
+    return;
+    }
+
+ /* run time allocation of memory space for buf */
+ if ((docimgnums = (int *) malloc(docimgtotal * sizeof(int))) == 
+     (int *) NULL)
+     {spout("*** Memory allocation failed in docmontmen!"); 
+     if (dbuf) free(dbuf); dbuf = NULL; 
+     if (template) free(template); return; }
+
+ /* make integer array for image numbers */
+ for (i=0; i < docimgtotal; i++)
+    {
+    docimgnums[i] = * (dbuf + i * maxreg + regno);
+    }
+
+ if (dbuf) free(dbuf);
+
+ /* create file name for first file in series (filnew) */
+ filget(template,filnewimg,127,docimgnums[0]);
+a359 2
+
+
+@
+
+
+1.7
+log
+@handles docmont filenumber correct now
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.6 1996/11/21 14:21:27 leith Exp leith $*/
+d261 1
+a261 1
+ /* make integer arraw for image numbers */
+@
+
+
+1.6
+log
+@added end cursor use
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.5 1996/08/01 19:14:44 leith Exp leith $*/
+d61 3
+d184 1
+a184 1
+ /* find image file name template */
+d186 2
+d191 4
+a194 4
+       {   /* can not interpret image position */
+       spout("*** Can not interpret image location! ");
+       return;
+       }
+d273 1
+a273 11
+ if (* datexc)
+    { /* have extension on name */
+    if ((strlen(filnewimg) + strlen(datexc) + 1) >= (size_t) 128)
+       {
+       spouts("*** Filename too long in docmontmen:");
+       spout(filnewimg);
+       return;
+       }
+    strcat(filnewimg,".");
+    strcat(filnewimg,datexc);
+    }
+d280 1
+a280 1
+  }
+@
+
+
+1.5
+log
+@added error popup
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.4 1996/07/11 15:22:30 leith Exp leith $*/
+d282 4
+a285 1
+ }
+@
+
+
+1.4
+log
+@lengthened file name widget input areas
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.3 1996/06/20 16:38:40 leith Exp leith $*/
+d218 1
+a218 1
+    if (strlen(string) >= 128) 
+d220 6
+a225 1
+       spout("*** Average file name too long.");
+@
+
+
+1.3
+log
+@added average
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.2 1996/06/13 19:49:34 leith Exp $*/
+d84 1
+a84 1
+    iw_template = wid_textboxb(iw_rowcol, 0, "Image file template:", cval,11);
+d117 1
+a117 1
+    iw_avgnam = wid_textboxb(iw_rowcol,0,"Average file:", avgnam,12);
+@
+
+
+1.2
+log
+@added x header for toggle
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/docmontmen.c,v 1.1 1996/06/13 19:46:53 leith Exp leith $*/
+d43 2
+a44 1
+ void          docmontmen_buta(Widget iw_temp, XtPointer, XtPointer);
+d48 1
+d54 1
+a54 1
+
+d58 2
+d68 1
+d107 1
+a107 1
+    iw_nprow = wid_textboxb(iw_rowcol, 0, "FRAMES / ROW:", cval,8);
+d110 10
+a119 1
+    iw_movie = wid_togmen(iw_rowcol,0,"MOVIE",movie,-1,-1);
+a123 1
+
+d153 1
+d155 5
+a170 1
+
+d213 14
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header:  $*/
+d37 1
+@

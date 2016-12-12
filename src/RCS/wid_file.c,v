@@ -1,0 +1,740 @@
+head	1.15;
+access;
+symbols
+	pre-tilt-improve:1.15
+	pre_surf_fromtop:1.15
+	pre_neednewmap:1.15
+	pre_apppluss_remove:1.15
+	pre_tiltpair_chng:1.13
+	pre_GPL:1.12;
+locks;
+comment	@ * @;
+
+
+1.15
+date	2011.07.20.16.36.51;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2011.07.19.18.08.58;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2005.10.18.16.59.50;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.04.01.17.26.03;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.03.21.19.33.06;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.07.11.17.28.17;	author mladjadj;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.02.28.17.40.23;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.02.02.17.08.18;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.01.26.20.30.24;	author liy;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.07.05.15.34.34;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.03.25.16.00.12;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.02.14.12.14.23;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.14.10.33.02;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.10.16.15.39;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.09;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.15
+log
+@WEB_BGFGO subwidget id code added
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/wid_file.c,v 1.14 2011/07/19 18:08:58 leith Exp leith $*/
+
+/*
+C++*************************************************************************
+C
+C WID_FILE -- CREATED JUNE 91
+C                                                                     
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                      *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    WID_FILE
+C
+C    PARAMETERS:   IW_PARENT   PARENT WIDGET            READ
+C                  IW_FILE     WIDGET NUMBER            READ/WRITE
+C                  LABEL       WIDGET LABEL             READ
+C                  FILNAM      FILE NAME                READ
+C                  FILPATH     DIRECTORY PATH           READ
+C                  CB          CALLBACK ON ACCEPT       READ
+C                  IX,IY       UPPER LEFT CORNER        READ
+C
+C    PURPOSE:      MAKES A FILE WIDGET
+C
+C    CALLED BY:    WID_IMAGEMEN
+C
+C--********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+#include <Xm/FileSB.h>
+#include <Xm/SelectioB.h>
+
+ /* External common variables */
+ extern Widget         iw_top;            /* Top widget   */
+
+ /* File variables */
+
+ /********************  wid_file  ****************************/
+
+ Widget wid_file(Widget iw_parent, Widget iw_file, 
+               char *label, char *filnam, char *filpath,
+               void (*cb) (), int ix, int iy)
+
+ {
+ Arg           args[8];          /* Arg list */
+ register      int  n;           /* Arg count */
+ Position      ixp,iyp;          /* Parent widget's position */
+ XmString      str_filnam = 0,  str_label = 0,  str_filpath = 0;
+ XmString      str_prompt = 0;
+ Widget	       iw_temp;
+ Widget        widlist;
+
+ /* Need to find location relative to present position of top window */
+ XtSetArg(args[0], XmNx, &ixp);
+ XtSetArg(args[1], XmNy, &iyp);
+ XtGetValues(iw_top,args,2);
+
+ n = 0;
+#ifdef WEB_BGFGO
+ XtSetArg(args[n], XmNbackground,  icolorxmb); n++;      
+#endif
+
+ /* Set label for filename list in the widget */
+ str_label = XmStringCreate(label, XmSTRING_DEFAULT_CHARSET);
+ XtSetArg(args[n], XmNfileListLabelString, str_label); n++;
+
+ if (*filpath != '\0')
+    {
+    /* Set up dir search pattern */ 
+    str_filpath = XmStringCreate(filpath, XmSTRING_DEFAULT_CHARSET);
+    XtSetArg(args[n], XmNdirMask, str_filpath);    n++;
+    }
+
+ if (*filnam != '\0')
+    {
+    /* Set up file name listed in the selection box */
+    str_filnam = XmStringCreate(filnam, XmSTRING_DEFAULT_CHARSET); 
+    XtSetArg(args[n], XmNtextString, str_filnam);  n++;
+    }
+
+ if (iw_file == (Widget)0)
+    { /* Must create and manage new file widget */
+
+    XtSetArg(args[n], XmNdefaultPosition, False);  n++;
+
+    if (ix < 0 || iy < 0)
+       {    /*  Use default placement for dialog box */
+       ix = 20;
+       iy = 20;
+       }
+
+    XtSetArg(args[n], XmNx, (Position) ix+ixp);    n++;
+    XtSetArg(args[n], XmNy, (Position) iy+iyp);    n++;
+
+    iw_file = XmCreateFileSelectionDialog(iw_parent,"iw_file",args,n);
+	
+    XtAddCallback(iw_file,XmNokCallback,cb,NULL);
+    XtAddCallback(iw_file,XmNcancelCallback, (XtCallbackProc) fin_cb,
+                         (XtPointer)iw_file);
+
+    XtManageChild(iw_file);
+
+    /* Get rid of help button in widget */
+    XtUnmanageChild(XmFileSelectionBoxGetChild(
+                    iw_file,XmDIALOG_HELP_BUTTON));
+
+#ifdef WEB_BGFGO
+
+    XtSetArg(args[n], XmNbackground,  icolorxmb); n++;      
+    widlist = XtNameToWidget (iw_file, "DirListSW.VertScrollBar");
+    //printf("*VertScrollBar: %d \n",widlist);
+    XtSetValues(widlist,args,1);
+    widlist = XtNameToWidget (iw_file, "DirListSW.HorScrollBar");
+    XtSetValues(widlist,args,1);
+
+    XtSetArg(args[n], XmNbackground,  icolorxmb); n++;      
+    widlist = XtNameToWidget (iw_file, "ItemsListSW.VertScrollBar");
+    XtSetValues(widlist,args,1);
+    widlist = XtNameToWidget (iw_file, "ItemsListSW.HorScrollBar");
+    XtSetValues(widlist,args,1);
+
+    XtSetValues(XmFileSelectionBoxGetChild(
+                iw_file,XmDIALOG_FILTER_TEXT),args,1);
+    XtSetValues(XmFileSelectionBoxGetChild(
+                iw_file,XmDIALOG_DIR_LIST),args,1);
+    XtSetValues(XmFileSelectionBoxGetChild(
+                iw_file,XmDIALOG_LIST),args,1);
+    XtSetValues(XmFileSelectionBoxGetChild(
+                iw_file,XmDIALOG_TEXT),args,1);
+#endif
+
+    }
+
+ else 
+    { /* Can use existing widget */
+	
+    if ( ix > 0 || iy > 0)
+       {
+       XtSetArg(args[n], XmNx, (Position) ix+ixp); n++;
+       XtSetArg(args[n], XmNy, (Position) iy+iyp); n++;
+       }
+    XtSetValues(iw_file,args,n);
+
+    XtRemoveAllCallbacks(iw_file,XmNokCallback); 
+    XtAddCallback(iw_file,XmNokCallback,cb,NULL);
+    XtAddCallback(iw_file,XmNcancelCallback,(XtCallbackProc) fin_cb,
+                                   (XtPointer) iw_file);
+
+    XtManageChild(iw_file);
+
+    /* Remove the Help button */
+    if ((iw_temp = XmFileSelectionBoxGetChild(
+		   iw_file,XmDIALOG_HELP_BUTTON))!=NULL)
+         XtUnmanageChild(iw_temp);
+    }
+
+ if (str_label)   XmStringFree(str_label);
+ if (str_filpath) XmStringFree(str_filpath);
+ if (str_filnam)  XmStringFree(str_filnam);
+
+ return iw_file;
+
+ }
+ /********************  wid_fileset  ****************************/
+
+ void wid_fileset(Widget iw_file, char *filnam)
+
+ {
+ Arg           args[1];   
+ XmString      str_filnam;
+
+
+ if (*filnam != '\0')
+    {
+    /* Set up file name listed in the selection box */
+    str_filnam = XmStringCreate(filnam, XmSTRING_DEFAULT_CHARSET); 
+
+    XtSetArg(args[0], XmNtextString, str_filnam);    
+
+    XtSetValues(iw_file,args,1);
+    XmStringFree(str_filnam);
+    }
+ }
+
+@
+
+
+1.14
+log
+@WEB_BGFGO
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/wid_file.c,v 1.13 2005/10/18 16:59:50 leith Exp $*/
+d38 1
+a38 1
+C    PARAMETERS:   IW_PARENT   PAREN WIDGET             READ
+d59 1
+a59 1
+ extern Widget         iw_top;            /* top widget   */
+d76 1
+d112 1
+a112 1
+       {    /*  use default placement for dialog box */
+d133 14
+@
+
+
+1.13
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_file.c,v 1.12 1996/04/01 17:26:03 leith Exp $*/
+a52 2
+#include "x.h"
+#include "std.h"
+d58 1
+a58 1
+ /* external common variables */
+d61 1
+a61 1
+ /* file variables */
+d70 3
+a72 3
+ Arg           args[8];          /* arg list */
+ register      int  n;           /* arg count */
+ Position      ixp,iyp;          /* parent widget's position */
+d77 1
+a77 1
+ /* need to find location relative to present position of top window */
+d83 3
+d87 1
+a87 1
+ /* set label for filename list in the widget */
+d93 1
+a93 1
+    /* set up dir search pattern */ 
+d100 1
+a100 1
+    /* set up file name listed in the selection box */
+d106 1
+a106 1
+    { /* must create and manage new file widget */
+d127 1
+a127 1
+    /* get rid of help button in widget*/
+d129 13
+a141 1
+                  iw_file,XmDIALOG_HELP_BUTTON));
+d145 1
+a145 1
+    { /* can use existing widget */
+d161 1
+a161 1
+    /* remove the Help button */
+d185 1
+a185 1
+    /* set up file name listed in the selection box */
+@
+
+
+1.12
+log
+@?
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_file.c,v 1.11 1996/03/21 19:33:06 leith Exp leith $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH	        		   *
+C **************************************************************************
+@
+
+
+1.11
+log
+@fixed minor problems with freeing of strings, added Position casts
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_file.c,v 1.10 1995/07/11 17:28:17 mladjadj Exp leith $*/
+d22 1
+a22 1
+C                  IW_FILE     WIDGET NUMBER            WRITE
+a26 1
+C                  CALLGEN     WIDGET CALLBACK PARAM    READ
+a42 2
+#define MAX_ARGS 8
+
+a46 4
+ static char       label_string[] = "Enter the filename:"; 
+
+ /* the widgets for file scroller or input slot */ 
+ static Widget	   iw_file1 = (Widget) 0,  iw_file2 = (Widget) 0;
+d55 1
+a55 2
+
+ Arg           args[MAX_ARGS];   /* arg list */
+d84 1
+a84 1
+    XtSetArg(args[n], XmNtextString, str_filnam);    n++;
+d87 1
+a87 1
+ if (iw_file <= (Widget)0)
+d101 1
+a101 21
+    iw_file1 = XmCreateFileSelectionDialog(iw_parent,"iw_file",args,n);
+
+
+    /* create the input slot widget */
+    /* create a String label */
+    str_prompt = XmStringCreate(label_string, XmSTRING_DEFAULT_CHARSET);
+
+    n = 0;
+    XtSetArg(args[n], XmNselectionLabelString, str_prompt);  n++;
+    XtSetArg(args[n], XmNdefaultPosition, False);            n++;
+    XtSetArg(args[n], XmNx, (Position)ix+ixp);              n++;
+    XtSetArg(args[n], XmNy, (Position)iy+iyp);              n++;
+    
+    iw_file2 = XmCreatePromptDialog(iw_parent, "iw_text", args, n);
+    if (str_prompt)  XmStringFree(str_prompt);
+
+    /* select pop up the scroller or the input slot */
+    if (listfi) 
+      iw_file = iw_file1;
+    else
+      iw_file = iw_file2;
+a111 1
+
+a115 6
+
+    /* select pop up the scroller or the input slot */
+    if (listfi) 
+      iw_file = iw_file1;
+    else
+      iw_file = iw_file2;
+a136 1
+
+a148 1
+
+a164 21
+ /********************  wid_filedirset  ****************************/
+
+ void wid_filedirset(Widget iw_file, char *filpath)
+
+ {
+
+ Arg           args[1];   
+ XmString      str_filpath;
+
+
+ if (*filpath != '\0')
+    {
+    /* set up dir listed in the filter box */
+    str_filpath = XmStringCreate(filpath, XmSTRING_DEFAULT_CHARSET);
+ 
+    XtSetArg(args[0], XmNtextString, str_filpath);    
+
+    XtSetValues(iw_file,args,1);
+    XmStringFree(str_filpath);
+    }
+ }
+@
+
+
+1.10
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_file.c,v 1.9 1995/02/28 17:40:23 liy Exp mladjadj $*/
+d51 1
+d53 1
+a53 1
+ static Widget	   iw_file1 = (Widget) 0,iw_file2 = (Widget) 0;
+d66 2
+a67 2
+ XmString      str_filnam,  str_label,  str_filpath;
+ XmString      str_prompt, str_text;
+d106 2
+a107 2
+    XtSetArg(args[n], XmNx, ix+ixp);    n++;
+    XtSetArg(args[n], XmNy, iy+iyp);    n++;
+d111 1
+d117 4
+a120 4
+    XtSetArg(args[n], XmNselectionLabelString, str_prompt);      n++;
+    XtSetArg(args[n], XmNdefaultPosition, False);                n++;
+    XtSetArg(args[n], XmNx, ix+ixp);    n++;
+    XtSetArg(args[n], XmNy, iy+iyp);    n++;
+d123 1
+d154 2
+a155 2
+       XtSetArg(args[n], XmNx, ix+ixp); n++;
+       XtSetArg(args[n], XmNy, iy+iyp); n++;
+d169 1
+a169 1
+    XtUnmanageChild(iw_temp);
+d174 2
+a175 2
+ if (*filpath != '\0') XmStringFree(str_filpath);
+ if (*filnam  != '\0') XmStringFree(str_filnam);
+d186 1
+a186 2
+ Arg           args[MAX_ARGS];   /* arg list */
+ int           n;           /* arg count */
+a191 1
+     n = 0;
+d194 2
+a195 1
+    XtSetArg(args[n], XmNtextString, str_filnam);    n++;
+d197 1
+a197 1
+    XtSetValues(iw_file,args,n);
+d208 1
+a208 2
+ Arg           args[MAX_ARGS];   /* arg list */
+ int           n;           /* arg count */
+a213 1
+     n = 0;
+d215 3
+a217 2
+    str_filpath = XmStringCreate(filpath, XmSTRING_DEFAULT_CHARSET); 
+    XtSetArg(args[n], XmNtextString, str_filpath);    n++;
+d219 1
+a219 1
+    XtSetValues(iw_file,args,n);
+@
+
+
+1.9
+log
+@added the file input slot widget
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_file.c,v 1.8 1995/02/02 17:08:18 liy Exp liy $*/
+d50 3
+a52 3
+ static char       label_string[] = "Enter the filename:";  
+ static Widget	   iw_file1,iw_file2;     /* the widgets for file scroller */
+					  /* or input slot */
+@
+
+
+1.8
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_file.c,v 1.7 1995/01/26 20:30:24 liy Exp liy $*/
+d39 2
+d42 1
+a45 3
+ /* external subroutine prototypes */
+ void fin_cb(Widget iw_temp, caddr_t data, caddr_t call_data);
+
+d49 5
+d66 2
+d108 13
+a120 1
+    iw_file = XmCreateFileSelectionDialog(iw_parent,"iw_file",args,n);
+d122 6
+d143 6
+d162 5
+@
+
+
+1.7
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_file.c,v 1.6 1994/07/05 15:34:34 odesanya Exp liy $*/
+d87 1
+a87 1
+ if (iw_file <= (void *)0)
+@
+
+
+1.6
+log
+@,.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_file.c,v 1.5 1994/03/25 16:00:12 leith Exp odesanya $*/
+d87 1
+a87 1
+ if ((int)iw_file <= 0)
+@
+
+
+1.5
+log
+@added file setting routines
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/wid_file.c,v 1.4 94/02/14 12:14:23 leith Exp $*/
+d104 2
+a105 1
+    XtAddCallback(iw_file,XmNcancelCallback,fin_cb,(XtPointer)iw_file);
+d127 2
+a128 1
+    XtAddCallback(iw_file,XmNcancelCallback,fin_cb,(XtPointer) iw_file);
+@
+
+
+1.4
+log
+@inconsistent pointers
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/wid_file.c,v 1.3 94/02/14 10:33:02 leith Exp Locker: leith $*/
+a61 2
+ n = 0;
+
+a72 1
+ /* set up the file search pattern */ 
+d75 1
+d80 6
+a85 3
+ /* set up the file name listed in the selection box */
+ str_filnam = XmStringCreate(filnam, XmSTRING_DEFAULT_CHARSET); 
+ XtSetArg(args[n], XmNtextString, str_filnam);    n++;
+d131 1
+a131 1
+ if (str_filnam)  XmStringFree(str_filnam);
+d134 1
+d139 1
+d141 43
+@
+
+
+1.3
+log
+@(*filpath != null) cant be compared
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/wid_file.c,v 1.2 94/02/10 16:15:39 leith Exp Locker: leith $*/
+d132 1
+a132 1
+ if (*filpath != NULL) XmStringFree(str_filpath);
+@
+
+
+1.2
+log
+@better error traps added
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/wid_file.c,v 1.1 93/11/10 10:11:09 leith Exp $*/
+d76 1
+a76 1
+ if (*filpath != NULL)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a50 1
+
+d53 1
+a53 1
+               int (*cb) (), int ix, int iy)
+d71 1
+d75 1
+d82 1
+d103 1
+a103 1
+    XtAddCallback(iw_file,XmNcancelCallback,fin_cb,iw_file);
+d125 1
+d130 3
+a132 5
+ XmStringFree(str_filnam);
+ XmStringFree(str_label);
+
+ if (*filpath != NULL)
+      XmStringFree(str_filpath);
+@

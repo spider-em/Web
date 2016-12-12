@@ -1,0 +1,1236 @@
+head	1.12;
+access;
+symbols
+	pre-tilt-improve:1.12
+	pre_surf_fromtop:1.12
+	pre_neednewmap:1.12
+	pre_apppluss_remove:1.12
+	pre_tiltpair_chng:1.12
+	pre_GPL:1.12;
+locks;
+comment	@ * @;
+
+
+1.12
+date	96.05.06.16.24.37;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.04.16.14.28.20;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.04.15.13.15.17;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.04.12.16.59.59;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.11.28.20.29.34;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.07.05.16.11.35;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.06.22.10.50.05;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.06.02.12.48.52;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.11.22.16.38.37;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.22.13.13.04;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.19.14.41.08;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.16.14.13.44;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@rewritten with pointers for aval, allocates aval,xsfm, & ysfm.
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/willsq.c,v 1.11 1996/04/16 14:28:20 leith Exp $*/
+/*
+C   TRANSFERED FROM WILLSQ.FOR BY JING SU 8/31/93
+C 
+C++****************************************************************************
+C   PROGRAM TO CALCULATE A LINEAR LEAST SQUARE FIT TO DETERMINE
+C   THE DIRECTION OF THE TILT-AXIS, THE TILT ANGLE AND THE RELATIVE
+C   POSITION OF A TILT PAIR (0 DEG VERSUS TILTED)
+C 
+C   PARAMETERS:
+C   X         ARRAY  X-COORD. OF PARTICLES IN 0 DEG IMAGE     (SENT)
+C   Y         ARRAY  Y-COORD. OF PARTICLES IN 0 DEG IMAGE     (SENT)
+C   XS        ARRAY  X-COORD. OF PARTICLES IN TILTED IMAGE    (SENT)
+C   YS        ARRAY  Y-COORD. OF PARTICLES IN TILTED IMAGE    (SENT)
+C   XU0T,YU0T   LOCATION OF ORIGIN IN UNTILTED IMAGE          (SENT)   
+C   XS0T,YS0T LOCATION OF ORIGIN IN TILTED IMAGE       (SENT & RETURNED)
+C   PHI DIRECTION OF TILT AXIS IN TILTED IMAGE (RELATIVE TO Y)(RETURNED)
+C   GAM DIRECTION OF TILT AXIS IN UNTILTED IMAGE        (RETURNED)
+C   THE TILTANGLE THETA                                 (SENT)
+C   N   NUMBER OF MESUREMENTS                           (SENT)
+C   AVAL, BVAL   ARE ALLOCATED BUT NOT USED ELSEWHERE   (ADDRESS SENT)
+C   
+C   RETURNS:    0   OK
+C               1   LEAST SQUARE FIT IMPOSSIBLE OR FAILS
+C                   IF (FAILS GAMMA AND PHI NOT ALTERED)
+C
+C
+C   VARIABLES:
+C   EPS   ARRAY  ERROR E(1)->XS0, E(2)->YS0, E(3)->PHI, E(4)->THE
+C
+C   THE NORMAL EQUATIONS SOLVED ARE:
+C
+C      ( A   * A   + B  * B  ) D    =   A  (XS -FX ) +  B  (YS - FY )
+C         KI    IL    KI   IL   L        KI   I   I      KI   I    I
+C  
+C   WITH D = delta XS0, D = delta YS0, D =delta PHI, D =delta THE
+c         1              2              3             4
+c
+c   Fx := (X cos(gam)-Y sin(gam))cos(THE)cos(PHI) 
+c     i     i          i            
+c
+c         +(X sin(gam)+Y cos(gam))sin(phi) + XS0
+c            i          i
+c
+c   Fy := -(X cos(gam) - Y sin(gam))cos(the)sin(phi) 
+c            i            i
+c
+c        +(X sin(gam)+Y cos(gam))cos(phi) + YS0
+c           i          i 
+c
+c   A  = dFx /dXS0, A  = dFx /dYS0, A  = dFx /dPHI, A  = dFx /dGAM
+c    i1     i        i2     i        i3     i        i4     i
+c
+c   B  = dFy /dXS0, B  = dFy /dYS0, B  = dFy /dPHI, B  = dFy /dGAM
+c    i1     i        i2     i        i3     i        i4     i
+c
+c-*****************************************************************************
+*/
+
+#include "std.h"
+#include "common.h"
+#include "routines.h"
+
+extern int mircol(int n, int m, int mm, float a[4][5], 
+                    float eps, float x[]);
+
+extern float  xu0t, yu0t, xs0t, ys0t;
+extern FILE * resfp;
+
+/****************************** willsq ******************************/
+
+int willsq(float *x, float *y, float *xs, float *ys,
+	    int n, float thetaw, float * gammaw, float * phiw)
+ {
+ float            sqa[4][5], sqb[4][4], r[4];
+ float            rthe,rphi,rgam,cthe,cphi,cgam,sphi,sgam;
+ float            eps, check, qxsum,qysum, fx, fy;
+ int              i,it,k,l;
+ float            phi, gamma, theta;
+ float            * aval;
+ float            * xsmf, *ysmf;
+
+ const float pid = (3.1415927 / 180.0);
+ const float pud = (180.0 / 3.1415927);
+
+ if (n < 3)
+    {
+    spout(" *** Unable to fit angles: 3 or more points needed");
+    return 1;
+    }
+
+ /* allocate space for  arrays */
+ if (((aval= (float *) malloc(n * 4 * sizeof(float))) == (float *) NULL) || 
+     ((xsmf =(float *) malloc(n *     sizeof(float))) == (float *) NULL) ||
+     ((ysmf =(float *) malloc(n *     sizeof(float))) == (float *) NULL))
+    { spout("*** Unable to reallocate memory in willsq."); return 2; }
+
+
+ phi   = *phiw;
+ gamma = *gammaw;
+ theta = thetaw;
+
+ rthe = theta * pid;
+ rphi = phi   * pid;
+ rgam = gamma * pid;
+
+ cthe = cos(rthe);
+ cphi = cos(rphi);
+ cgam = cos(rgam);
+ sphi = sin(rphi);
+ sgam = sin(rgam);
+ it   = 0;
+
+ do {
+ it++;
+
+ if (it > 100)
+    {
+    spout("***Determination of fit angles failed at 100 iterations!");
+    return 1;
+    }
+
+ qxsum = 0;   qysum = 0;
+
+ /* Build system of normal equations build matrice A, calculate XSMF */
+
+ /* Build system of normal equations build matrice A, calculate XSMF */
+
+ /* Ai1:  */
+ for (i = 0; i < n; i++)
+     {
+     fx = ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthe * cphi
+        + ((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * sphi + xs0t;
+
+     xsmf[i]    = xs[i] - fx;
+     qxsum      = qxsum + xsmf[i] * xsmf[i];
+
+     aval[i*4] = 1.0;
+
+     /* Ai2: */
+     aval[i*4+1] = 0.0;
+
+     /* Ai3: */
+     aval[i*4+2] = 
+        - ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * sphi * cthe
+        + ((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * cphi;
+
+     /* Ai4: */
+     aval[i*4+3] =
+          (-(x[i] - xu0t) * sgam - (y[i] - yu0t) * cgam) * cthe * cphi
+         + ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * sphi;
+     }
+
+ /*  Calculate square matrice Aki * Ail	 */
+ for (l = 0; l < 4; l++)
+     {
+     for (k = 0; k < 4; k++)
+         {
+         sqa[k][l] = 0.0;
+	 for (i = 0; i < n; i++)
+             {
+	     sqa[k][l] =  sqa[k][l] + 
+                             aval[i*4+k] * aval[i*4+l];
+             }
+	 }
+     }
+
+ /* Calculate first part of left side of normal equation */
+ for (k = 0; k < 4; k++)
+     {
+     r[k] = 0.0;
+     for (i = 0; i < n; i++)
+	 r[k] = r[k] + aval[i*4+k] * xsmf[i];
+     }
+
+ /*  Build matrice B, calculate YSMF ------------------------------ */
+
+ /* Bil:   */
+
+ for (i = 0; i < n; i++)
+     {
+     fy = -((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthe * sphi
+          +((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * cphi + ys0t;
+
+     ysmf[i]      = ys[i] - fy;
+     qysum          = qysum + ysmf[i] * ysmf[i];
+     aval[i*4+0] = 0.0;
+
+     /*  Bi2   */
+     aval[i*4+1] = 1.0;
+
+     /*  Bi3   */
+     aval[i*4+2] = 
+         -((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cphi * cthe
+         -((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * sphi;
+
+     /* Bi4:				*/
+     aval[i*4+3] = 
+        -(-(x[i] - xu0t) * sgam - (y[i] - yu0t) * cgam) * cthe * sphi
+        + ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cphi;
+     }
+
+ /* Calculate square matrice Bki * Bil: */
+
+ for (l = 0; l < 4; l++)
+     {
+     for (k = 0; k < 4; k++)
+	{
+	sqb[k][l] = 0.0;
+	for (i = 0; i < n; i++)
+          sqb[k][l] = sqb[k][l] + aval[i*4+k] * aval[i*4+l];
+        }
+     }
+
+ /*  Calculate second part of left side of normal equation:  */
+
+ for (k = 0; k < 4; k++)
+     {
+     for (i = 0; i < n; i++)
+	 r[k] = r[k] + aval[i*4+k] * ysmf[i];
+     }
+
+ /*  Add SQA and SQB   */
+ for (k = 0; k < 4; k++)
+     {
+     for (l = 0; l < 4; l++)
+	 sqa[k][l] = sqa[k][l] + sqb[k][l];
+     }
+
+ eps = 0.0;
+ for (i = 0; i < 4; i++)
+     sqa[i][4] = r[i];
+
+ if (mircol(4,1,5, sqa, eps, r) != 0 )
+    {
+    spout("*** Least Square Fit failed!");
+    spout("*** Give more coordinates or better start values.");
+    XBell(idispl,50);  return 1;
+    }
+
+ xs0t    = xs0t + r[0];
+ ys0t    = ys0t + r[1];
+ rphi    = rphi + r[2];
+ rgam    = rgam + r[3];
+
+ phi    = rphi * pud;
+ gamma  = rgam * pud;
+
+ /* Determine accuracy of solution */
+ cphi   = cos(rphi);
+ sphi   = sin(rphi);
+ cgam   = cos(rgam);
+ sgam   = sin(rgam);
+
+ 
+ for (i = 0; i < n; i++)
+     {
+     fx = ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthe * cphi
+        + ((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * sphi + xs0t;
+
+     xsmf[i] = xs[i] - fx;
+     qxsum   = qxsum + xsmf[i] * xsmf[i];
+
+     fy = -((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthe * sphi
+          +((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * cphi + ys0t;
+
+     ysmf[i] = ys[i] - fy;
+     qysum   = qysum + ysmf[i] * ysmf[i];
+     }
+
+   if (resfp) fprintf(resfp,
+        "Itera: %4d  Phi: %7.2f, Gam: %7.2f, Orig:(%7.2f,%7.2f)",
+        it,phi,gamma, xs0t,ys0t);
+   if (resfp) fprintf(resfp, "Qxsum: %f  Qysum: %f\n",qxsum,qysum);
+
+  check = fabs(r[0]) + fabs(r[1]) + fabs(r[2]) + fabs(r[3]);
+
+ } while (check > 0.00005);
+
+ *phiw   = phi;
+ *gammaw = gamma;
+
+ if (aval) {free(aval); aval = (float *) NULL;}
+ if (xsmf) {free(xsmf); xsmf = (float *) NULL;}
+ if (ysmf) {free(ysmf); ysmf = (float *) NULL;}
+
+ return 0;
+ } 
+@
+
+
+1.11
+log
+@comments changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/willsq.c,v 1.10 1996/04/15 13:15:17 leith Exp leith $*/
+a68 1
+extern float  *xsmf, *ysmf;
+d74 1
+a74 2
+	    int n, float  aval[][4], float  bval[][4],
+            float thetaw, float * gammaw, float * phiw)
+d81 2
+a83 1
+
+d93 7
+d128 2
+d131 1
+a131 1
+ for (i = 1; i <= n; i++)
+d133 5
+a137 2
+     fx = ((x[i-1] - xu0t) * cgam - (y[i-1] - yu0t) * sgam) * cthe * cphi
+        + ((x[i-1] - xu0t) * sgam + (y[i-1] - yu0t) * cgam) * sphi + xs0t;
+d139 1
+a139 3
+     xsmf[i-1]      = xs[i-1] - fx;
+     qxsum          = qxsum + xsmf[i-1] * xsmf[i-1];
+     aval[i-1][1-1] = 1.0;
+d142 1
+a142 1
+     aval[i-1][2-1] = 0.0;
+d145 3
+a147 3
+     aval[i-1][3-1] = 
+        - ((x[i-1] - xu0t) * cgam - (y[i-1] - yu0t) * sgam) * sphi * cthe
+        + ((x[i-1] - xu0t) * sgam + (y[i-1] - yu0t) * cgam) * cphi;
+d150 3
+a152 3
+     aval[i-1][4-1] =
+          (-(x[i-1] - xu0t) * sgam - (y[i-1] - yu0t) * cgam) * cthe * cphi
+         + ((x[i-1] - xu0t) * cgam - (y[i-1] - yu0t) * sgam) * sphi;
+d156 1
+a156 1
+ for (l = 1; l <= 4; l++)
+d158 1
+a158 1
+     for (k = 1; k <= 4; k++)
+d160 2
+a161 2
+         sqa[k-1][l-1] = 0.0;
+	 for (i = 1; i <= n; i++)
+d163 2
+a164 2
+	     sqa[k-1][l-1] =  sqa[k-1][l-1] + 
+                             aval[i-1][k-1] * aval[i-1][l-1];
+d170 1
+a170 1
+ for (k = 1; k <= 4; k++)
+d172 3
+a174 3
+     r[k-1] = 0.0;
+     for (i = 1; i <= n; i++)
+	 r[k-1] = r[k-1] + aval[i-1][k-1] * xsmf[i-1];
+d177 1
+a177 1
+ /*  Build matrice B, ABD calculate YSMF	 */
+d181 1
+a181 1
+ for (i = 1; i <= n; i++)
+d183 2
+a184 2
+     fy = -((x[i-1] - xu0t) * cgam - (y[i-1] - yu0t) * sgam) * cthe * sphi
+          +((x[i-1] - xu0t) * sgam + (y[i-1] - yu0t) * cgam) * cphi + ys0t;
+d186 3
+a188 3
+     ysmf[i-1]      = ys[i-1] - fy;
+     qysum          = qysum + ysmf[i-1] * ysmf[i-1];
+     bval[i-1][1-1] = 0.0;
+d191 1
+a191 1
+     bval[i-1][2-1] = 1.0;
+d194 3
+a196 3
+     bval[i-1][3-1] = 
+         -((x[i-1] - xu0t) * cgam - (y[i-1] - yu0t) * sgam) * cphi * cthe
+         -((x[i-1] - xu0t) * sgam + (y[i-1] - yu0t) * cgam) * sphi;
+d199 3
+a201 3
+     bval[i-1][4-1] = 
+        -(-(x[i-1] - xu0t) * sgam - (y[i-1] - yu0t) * cgam) * cthe * sphi
+        + ((x[i-1] - xu0t) * cgam - (y[i-1] - yu0t) * sgam) * cphi;
+d206 1
+a206 1
+ for (l = 1; l <= 4; l++)
+d208 1
+a208 1
+     for (k = 1; k <= 4; k++)
+d210 3
+a212 3
+	sqb[k-1][l-1] = 0.0;
+	for (i = 1; i <= n; i++)
+          sqb[k-1][l-1] = sqb[k-1][l-1] + bval[i-1][k-1] * bval[i-1][l-1];
+d218 1
+a218 1
+ for (k = 1; k <= 4; k++)
+d220 2
+a221 2
+     for (i = 1; i <= n; i++)
+	 r[k-1] = r[k-1] + bval[i-1][k-1] * ysmf[i-1];
+d225 1
+a225 1
+ for (k = 1; k <= 4; k++)
+d227 2
+a228 2
+     for (l = 1; l <= 4; l++)
+	 sqa[k-1][l-1] = sqa[k-1][l-1] + sqb[k-1][l-1];
+d232 2
+a233 2
+ for (i = 1; i <= 4; i++)
+     sqa[i-1][4] = r[i-1];
+d257 1
+a257 1
+ for (i = 1; i <= n; i++)
+d259 2
+a260 2
+     fx = ((x[i-1] - xu0t) * cgam - (y[i-1] - yu0t) * sgam) * cthe * cphi
+        + ((x[i-1] - xu0t) * sgam + (y[i-1] - yu0t) * cgam) * sphi + xs0t;
+d262 2
+a263 2
+     xsmf[i-1] = xs[i-1] - fx;
+     qxsum     = qxsum + xsmf[i-1] * xsmf[i-1];
+d265 2
+a266 2
+     fy = -((x[i-1] - xu0t) * cgam - (y[i-1] - yu0t) * sgam) * cthe * sphi
+          +((x[i-1] - xu0t) * sgam + (y[i-1] - yu0t) * cgam) * cphi + ys0t;
+d268 2
+a269 2
+     ysmf[i-1] = ys[i-1] - fy;
+     qysum     = qysum + ysmf[i-1] * ysmf[i-1];
+d283 4
+@
+
+
+1.10
+log
+@added comments only
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/willsq.c,v 1.9 1996/04/12 16:59:59 leith Exp leith $*/
+d23 4
+a27 2
+C   ALSO RETURNS:
+C   FITTED   LOGICAL VARIABLE IF FIT SUCEEDED OR NOT
+a67 1
+extern float  thetaf, phif, gammaff;
+a68 1
+extern int    fitted;
+a69 2
+extern char    output[80];
+
+d74 3
+a76 2
+void willsq(float *x, float *y, float *xs, float *ys,
+	    int n, float  aval[][4], float  bval[][4])
+d82 2
+d88 13
+a100 3
+ rthe = thetaf * pid;
+ rphi = phif   * pid;
+ rgam = gammaff * pid;
+a113 2
+    fitted = FALSE;
+    XBell(idispl,50);
+d115 1
+a115 1
+    return;
+d230 1
+a230 1
+    XBell(idispl,50);  return;
+d233 4
+a236 4
+ xs0t   = xs0t + r[0];
+ ys0t   = ys0t + r[1];
+ rphi   = rphi + r[2];
+ rgam   = rgam + r[3];
+d238 2
+a239 2
+ phif   = rphi * pud;
+ gammaff = rgam * pud;
+d265 1
+a265 1
+        it,phif,gammaff, xs0t,ys0t);
+d272 4
+a275 2
+ fitted = TRUE;
+ return;
+@
+
+
+1.9
+log
+@removed results file opening / closing
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/willsq.c,v 1.8 1995/11/28 20:29:34 leith Exp leith $*/
+d11 12
+a22 11
+C   X   ARRAY CONTAINING X-COORD. OF PARTICLES IN 0 DEG IMAGE
+C   Y   ARRAY CONTAINING Y-COORD. OF PARTICLES IN 0 DEG IMAGE
+C   XS  ARRAY CONTAINING X-COORD. OF PARTICLES IN TILTED IMAGE
+C   YS  ARRAY CONTAINING Y-COORD. OF PARTICLES IN TILTED IMAGE
+C   XS0,YS0 LOCATION OF ORIGIN IN TILTED IMAGE    
+C   XU0,YU0   LOCATION OF ORIGIN IN UNTILTED IMAGE    
+C   PHI DIRECTION OF TILT AXIS IN TILTED IMAGE (RELATIVE TO Y)
+C   GAM DIRECTION OF TILT AXIS IN UNTILTED IMAGE
+C   THE TILTANGLE THETA (FIXED ANGLE IN RCTS)
+C   N   NUMBER OF MESUREMENTS
+C   E   ARRAY CONTAINING THE ERROR E(1)->XS0, E(2)->YS0, E(3)->PHI, E(4)->THE
+d24 6
+d31 4
+a34 4
+c
+c      ( A   * A   + B  * B  ) D    =   A  (XS -Fx ) +  B  (YS - Fy )
+c         ki    il    ki   il   l        ki   i   i      ki   i    i
+c  
+@
+
+
+1.8
+log
+@?
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/willsq.c,v 1.7 1994/07/05 16:11:35 odesanya Exp leith $*/
+d53 2
+d56 2
+a57 1
+#define NITER 100
+a58 5
+extern void   spout(char *);
+extern int    mircol(int, int, int, float [4][5], float, float []);
+extern void   pop_errmsg( char * );
+
+extern char   datexc[4];
+d63 1
+a63 2
+
+/* called by fitmen.c: willsq(xu0, yu0, xs, ys, maxpart, aval, bval); */
+d65 1
+a65 1
+/******************************* willsq ******************************/
+d67 1
+d70 2
+a71 4
+	    int n, float aval[][4], float bval[][4])
+{
+ static FILE    * resfp = NULL;
+ static char      resname[80];
+a75 1
+ char             output[80];
+a90 9
+ if (resfp == NULL)
+     { 
+     resname[0] = '\0';
+     strcpy(resname,"web_results.");
+     strcat(resname,datexc);
+     }
+ /* open for appending to end of file */
+ resfp = fopen(resname,"a");
+
+d94 2
+a95 2
+ if(it > NITER)
+  {
+d97 2
+a98 2
+    fclose( resfp );
+    pop_errmsg("***Determination of fitting angles failed!");
+d100 1
+a100 1
+  }
+d102 1
+a102 2
+ qxsum = 0;
+ qysum = 0;
+d104 1
+a104 2
+ /** Build system of normal equations 
+    build matrice A, calculate XSMF  **/
+d106 1
+a106 1
+ /** Ai1:  **/
+d116 1
+a116 1
+     /** Ai2:  **/
+d119 1
+a119 1
+     /** Ai3: **/
+d124 1
+a124 1
+     /** Ai4: **/
+d130 1
+a130 1
+ /** Calculate square matrice Aki * Ail	**/
+d144 1
+a144 1
+ /** Calculate first part of left side of normal equation **/
+d152 1
+a152 1
+ /** Build matrice B, ABD calculate YSMF	**/
+d154 1
+a154 1
+ /* Bil:  **/
+d165 1
+a165 1
+     /** Bi2  **/
+d168 1
+a168 1
+     /** Bi3  **/
+d173 1
+a173 1
+     /** Bi4:				**/
+d179 1
+a179 1
+ /** Calculate square matrice Bki * Bil: **/
+d191 1
+a191 1
+ /** Calculate second part of left side of normal equation: **/
+d199 1
+a199 1
+ /** Add SQA and SQB  **/
+d214 1
+a214 1
+    return;
+d225 1
+a225 1
+ /** Determine accuracy of solution **/
+a230 4
+ sprintf(output,
+     "Iteration: %d  Phi: %7.2f, Gamma: %7.2f, origin:(%7.2f,%7.2f)",
+     it,phif,gammaff, xs0t,ys0t);
+ spout(output);
+d247 4
+a250 1
+  fprintf(resfp,"%s\n qxsum = %f qysum = %f\n",output,qxsum,qysum);
+a256 1
+ fclose(resfp);
+d258 1
+a258 1
+} 
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/willsq.c,v 1.6 1994/06/22 10:50:05 odesanya Exp odesanya $*/
+d56 9
+a64 9
+extern void  spout(char *);
+extern int   mircol(int, int, int, float [4][5],float, float []);
+extern void  pop_errmsg( char * );
+
+extern char datexc[4];
+extern float thetaf, phif, gammaff;
+extern float xu0t, yu0t, xs0t, ys0t;
+extern int   fitted;
+extern float * xsmf, * ysmf;
+d75 1
+a75 1
+ static char      resname[4];
+d96 4
+a99 4
+ if (resfp==NULL)
+  { 
+     resname[0]='\0';
+     strcat(resname,"web_results.");
+d101 2
+a102 2
+  }
+/* open for appending to end of file */
+d112 1
+a112 1
+    pop_errmsg("Determination of fitting angles failed!");
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/willsq.c,v 1.5 94/06/02 12:48:52 odesanya Exp $*/
+d61 1
+a61 1
+extern float thetaf, phif, gammaf;
+d87 1
+a87 1
+ rgam = gammaf * pid;
+d239 1
+a239 1
+ gammaf = rgam * pud;
+d249 1
+a249 1
+     it,phif,gammaf, xs0t,ys0t);
+@
+
+
+1.5
+log
+@put in test for maximum iteration allowed before error pop up message
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/willsq.c,v 1.4 93/11/22 16:38:37 leith Exp $*/
+d54 1
+a54 1
+#define NITER 1000
+d60 1
+d74 7
+a80 6
+ float sqa[4][5], sqb[4][4];
+ float r[4];
+ float rthe,rphi,rgam,cthe,cphi,cgam,sphi,sgam;
+ float eps, check, qxsum,qysum, fx, fy;
+ int   i,it,k,l;
+ char  output[80];
+d96 9
+d111 1
+d267 1
+a267 1
+ check = abs(r[0]) + abs(r[1]) + abs(r[2]);
+d269 2
+d274 1
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/willsq.c,v 1.3 93/11/22 13:13:04 leith Exp Locker: leith $*/
+d54 2
+d58 1
+d96 8
+d239 1
+a239 1
+
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/willsq.c,v 1.2 93/11/19 14:41:08 leith Exp Locker: leith $*/
+d60 1
+d68 1
+a68 1
+	    int n, float aval[4][10], float bval[4][10])
+a71 1
+ float ysmf[500],xsmf[500];
+d105 3
+a107 3
+     xsmf[i-1] = xs[i-1] - fx;
+     qxsum   = qxsum + xsmf[i-1] * xsmf[i-1];
+     aval[1-1][i-1] = 1.0;
+d110 1
+a110 1
+     aval[2-1][i-1] = 0.0;
+d113 1
+a113 1
+     aval[3-1][i-1] = 
+d118 1
+a118 1
+     aval[4-1][i-1] =
+d132 1
+a132 1
+                             aval[k-1][i-1] * aval[l-1][i-1];
+d142 1
+a142 1
+	 r[k-1] = r[k-1] + aval[k-1][i-1] * xsmf[i-1];
+d154 3
+a156 2
+     ysmf[i-1] = ys[i-1] - fy;
+     qysum     = qysum + ysmf[i-1] * ysmf[i-1];
+a157 2
+     bval[1-1][i-1] = 0.0;
+
+d159 1
+a159 1
+     bval[2-1][i-1] = 1.0;
+d162 1
+a162 1
+     bval[3-1][i-1] = 
+d167 1
+a167 1
+     bval[4-1][i-1] = 
+d180 1
+a180 1
+          sqb[k-1][l-1] = sqb[k-1][l-1] + bval[k-1][i-1] * bval[l-1][i-1];
+d189 1
+a189 1
+	 r[k-1] = r[k-1] + bval[k-1][i-1] * ysmf[i-1];
+d240 2
+a241 2
+     ysmf[i] = ys[i-1] - fy;
+     qysum   = qysum + ysmf[i-1] * ysmf[i-1];
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 2
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/willsq.c,v 1.1 93/11/16 14:13:44 leith Exp Locker: leith $*/
+d59 1
+a59 1
+extern int   icn, fitted;
+d61 2
+a64 1
+/* call: fitmen.c: willsq(xu0, yu0, xs, ys, maxpart, aval, bval); */
+d67 1
+a67 1
+	    int n, float * a, float * b)
+a68 1
+ float * av, * bv, * avi, * bvi;
+d72 1
+a72 1
+ float rthe,rphi,rgam,cthe,cphi,cgam,sthe,sphi,sgam;
+d74 1
+a74 1
+ int   i,ia1,ia2,ia3,ia4,idgt,it,k,l;
+d77 2
+a78 1
+ const float pid = 1.0 / (180.0 * 3.1415927);
+a86 1
+ sthe = sin(rthe);
+a95 3
+ av    = a;
+ bv    = b;
+
+d100 1
+a100 1
+ for (i = 0; i < n; i++)
+d102 2
+a103 2
+     fx = ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthe * cphi
+          + ((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * sphi + xs0t;
+d105 3
+a107 4
+     xsmf[i] = xs[i] - fx;
+     qxsum   = qxsum + xsmf[i] * xsmf[i];
+     avi     = av + i * 4;
+     *avi    = 1.0;
+d110 1
+a110 1
+     *(avi + 1) = 0.0;
+d113 3
+a115 2
+     *(avi + 2) = - ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * sphi * cthe
+              + ((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * cphi;
+d118 3
+a120 2
+     *(avi + 3 ) = (-(x[i] - xu0t) * sgam - (y[i] - yu0t) * cgam) * cthe * cphi
+              + ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * sphi;
+d124 1
+a124 1
+ for (k = 0; k < 4; k++)
+d126 1
+a126 1
+     for (l = 0; l < 4; l++)
+d128 2
+a129 2
+         sqa[k][l] = 0;
+	 for (i = 0; i < n; i++)
+d131 2
+a132 2
+             avi = av + i * 4;
+	     sqa[k][l] = sqa[k][l] + (*(avi + k)) * (*(avi + l));
+d138 1
+a138 1
+ for (k = 0; k < 4; k++)
+d140 3
+a142 3
+     r[k] = 0;
+     for (i = 0; i < n; i++)
+	 r[k] = r[k] + (*(av + k + i * 4)) * xsmf[i];
+d145 1
+a145 2
+     /** Build matrice B, ABD calculate YSMF	**/
+     /* Bil:  **/
+d147 3
+a149 1
+ for (i = 0; i < n; i++)
+d151 2
+a152 2
+     fy = -((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthe * sphi
+          +((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * cphi + ys0t;
+d154 2
+a155 4
+     ysmf[i] = ys[i] - fy;
+     qysum   = qysum + ysmf[i] * ysmf[i];
+     bvi     = bv + i * 4;
+     *bvi    = -0.0;
+d157 1
+a157 2
+     /** Bi2:				**/
+     *(bvi + 1) = 1.0;
+d159 2
+a160 3
+     /** Bi3:				**/
+     *(bvi + 2) = -((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cphi * cthe
+   	       -((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * sphi;
+d162 5
+d168 3
+a170 2
+     *(bvi + 3) = -(-(x[i] - xu0t) * sgam - (y[i] - yu0t) * cgam) * cthe * sphi
+	      + ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cphi;
+d174 2
+a175 1
+ for (l = 0; l < 4; l++)
+d177 1
+a177 1
+     for (k = 0; k < 4; k++)
+d179 3
+a181 3
+	sqb[k][l] = 0;
+	for (i = 0; i < n; i++)
+        sqb[k][l] = sqb[k][l] + (*(bv+k+i*4)) * (*(bv+l+i*4));
+d186 2
+a187 1
+ for (k = 0; k < 4; k++)
+d189 2
+a190 2
+     for (l = 0; l < 4; l++)
+	 r[k] = r[k] + (*(bv+k+i*4)) * ysmf[i];
+d193 2
+a194 2
+ /** Add SQA and SQB:				**/
+ for (k = 0; k < 4; k++)
+d196 2
+a197 2
+     for (l = 0; l < 4; l++)
+	 sqa[k][l] = sqa[k][l] + sqb[k][l];
+a199 2
+ ia1 = 1;
+ ia4 = 4;
+d201 2
+a202 2
+ for (i = 0; i < 4; i++)
+     sqa[i][4] = r[i];
+d206 1
+a206 1
+    spout("*** Least Square Fit not successful!");
+d216 2
+a217 2
+ phif   = rphi * pid;
+ gammaf = rgam * pid;
+d226 2
+a227 2
+      "Iterations: %d  Phi: %7.2f, Gamma: %7.2f, XS: %7.2f, YS: %7.2f",
+      it,phif,gammaf, xs0t,ys0t);
+d230 1
+a230 1
+ for (i = 0; i < n; i++)
+d232 2
+a233 2
+     fx = ((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthe * cphi
+          + ((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * sphi + xs0t;
+d235 2
+a236 2
+     xsmf[i] = xs[i] - fx;
+     qxsum   = qxsum + xsmf[i] * xsmf[i];
+d238 2
+a239 2
+     fy = -((x[i] - xu0t) * cgam - (y[i] - yu0t) * sgam) * cthe * sphi
+          + ((x[i] - xu0t) * sgam + (y[i] - yu0t) * cgam) * cphi + ys0t;
+d241 2
+a242 2
+     ysmf[i] = ys[i] - fy;
+     qysum   = qysum + ysmf[i] * ysmf[i];
+d249 1
+a249 1
+ fitted = 1;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d54 6
+a59 10
+extern int   mircol(int,int,int,float [4][5],float,float []);
+extern float thetaf;
+extern float phif;
+extern float gammaf;
+extern float xu0t;
+extern float yu0t;
+extern float xs0t;
+extern float ys0t;
+extern int   icn;
+extern int   fitted;
+d62 2
+d68 1
+a68 2
+ float sqa[4][5];
+ float sqb[4][4];
+d73 1
+a73 1
+ int   i,ia1,ia2,ia3,ia4,idgt,ier,it,k,l;
+d76 1
+a76 1
+ const float pi = 3.1415927;
+d78 4
+a81 3
+ rthe = thetaf / 180 * pi;
+ rphi = phif / 180 * pi;
+ rgam = gammaf / 180 * pi;
+d88 2
+a89 1
+ it = 0;
+d91 1
+a91 1
+ it = it++;
+d95 2
+a96 2
+ av = a;
+ bv = b;
+d98 1
+a98 1
+/** Build system of normal equations 
+d101 1
+a101 1
+/** Ai1:                             **/
+d106 1
+d108 3
+a110 3
+     qxsum = qxsum + xsmf[i] * xsmf[i];
+     avi = av + i * 4;
+     *avi = 1.0;
+d112 1
+a112 1
+/** Ai2:                           **/
+d115 1
+a115 1
+/** Ai3:			   **/
+d119 1
+a119 1
+/** Ai4:			   **/
+d124 1
+a124 1
+/** Calculate square natrice Aki * Ail	**/
+d138 1
+a138 1
+/** Calculate first part of left side of normal equation:	**/
+d145 4
+a148 2
+/** Build matrice B, ABD calculate YSMF	**/
+/* Bil:					**/
+d153 1
+d155 3
+a157 3
+     qysum = qysum + ysmf[i] * ysmf[i];
+     bvi = bv + i * 4;
+     *bvi = -0.0;
+d159 1
+a159 1
+/** Bi2:				**/
+d162 1
+a162 1
+/** Bi3:				**/
+d166 1
+a166 1
+/** Bi4:				**/
+d171 1
+a171 1
+/** Calculate square matrice Bki * Bil:	**/
+d175 5
+a179 5
+	 {
+	 sqb[k][l] = 0;
+	 for (i = 0; i < n; i++)
+	     sqb[k][l] = sqb[k][l] + (*(bv+k+i*4)) * (*(bv+l+i*4));
+	 }
+d182 1
+a182 1
+/** Calculate second part of left side of normal equation:	**/
+d189 1
+a189 1
+/** Add SQA and SQB:				**/
+d201 2
+a202 1
+ if ((ier = mircol(4,1,5,sqa,eps,r)) != NULL )
+d204 2
+a205 2
+    spout("*** Least Square Fit is not successful. ");
+    spout("*** Give more coordinates or give better start values.");
+a207 6
+ xs0t = xs0t + r[0];
+ ys0t = ys0t + r[1];
+ rphi = rphi + r[2];
+ rgam = rgam + r[3];
+ phif = rphi / pi * 180.0;
+ gammaf = rgam / pi * 180.0;
+d209 4
+a212 5
+/** Determine accurcy of solution:		**/
+ cphi = cos(rphi);
+ sphi = sin(rphi);
+ cgam = cos(rgam);
+ sgam = sin(rgam);
+d214 12
+a225 1
+ sprintf(output," New values after %d iterations:",it);
+d227 1
+a227 2
+ sprintf(output," PHI = %f, GAMMA = %f, XS = %f, Ys = %f ", phif,gammaf,xs0t,ys0t);
+ spout(output);
+d232 1
+d234 2
+a235 1
+     qxsum = qxsum + xsmf[i] * xsmf[i];
+d238 1
+d240 1
+a240 1
+     qysum = qysum + ysmf[i] * ysmf[i];
+d242 1
+d244 1
+d246 1
+@

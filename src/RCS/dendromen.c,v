@@ -1,0 +1,1515 @@
+head	1.22;
+access;
+symbols
+	pre-tilt-improve:1.22
+	pre_surf_fromtop:1.19
+	pre_neednewmap:1.18
+	pre_apppluss_remove:1.16
+	pre_tiltpair_chng:1.16
+	pre_GPL:1.14;
+locks;
+comment	@ * @;
+
+
+1.22
+date	2013.03.28.18.52.43;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2013.03.28.18.22.26;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2013.01.28.18.32.17;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2011.09.21.13.25.51;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2011.09.15.19.52.59;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2011.09.14.17.57.52;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2007.11.28.16.17.43;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2004.12.01.15.26.38;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2001.08.10.12.57.17;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	99.07.19.17.45.48;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.08.13.19.22.52;	author mladjadj;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.06.17.19.51.24;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.06.13.18.46.57;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.08.08.19.34.01;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.07.11.17.28.10;	author mladjadj;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.02.02.15.46.20;	author liy;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.01.27.16.10.30;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.01.26.20.02.01;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.11.21.19.05.52;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.11.21.18.55.56;	author mladjadj;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.07.12.18.24.13;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@to do dendroplot
+@
+
+
+1.22
+log
+@instant cutoff slider display
+@
+text
+@
+/*
+C**********************************************************************
+C
+C dendromen.c -- Adapted from DENDRO2.FOR 27 JUN  94 Lekan Odesanya
+C                scale bar                   MAR  13 ArDean Leith
+C
+C**********************************************************************
+C FORMS A TRUNCATED SCREEN PLOT FOR DENDROGRAM
+C
+C BASED ON ARBRE.FOR,  A DENDROGRAM PGM BY - JEAN-PIERRE BRETAUDIERE 
+C UNIVERSITY OF TEXAS HEALTH SCIENCE CENTER AT HOUSTON MEDICAL SCHOOL - 
+C DEPARTMENT OF PATHOLOGY AND LABORATORY MEDICINE              
+C P.O. BOX 20708, HOUSTON, TX 77225.                                            
+C*--------------------------------------------------------------------*         
+*/      
+
+/* Common variables */
+#include "common.h"
+#include "routines.h"
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+ /* External global variables */
+ extern int    maxpart;
+
+ /* Internal function prototypes */
+ void      dendromen_buta(Widget iw_temp, XtPointer, XtPointer);
+ void      dendro_pop    (Widget, XEvent *, String *, Cardinal *);
+ void      dendromen_d   (Widget, XtPointer, XtPointer);
+
+ /* Internal common variables  */
+ int            icut;
+ int          * NUM,  newdoc, wantshow = FALSE;
+ float        * V, * YT, *buf, vmin, vmax;
+ char         * fname = NULL, * cbuf, filpat[81];
+ static Widget  iw_dendromen = (Widget)0, 
+                iw_patt      = (Widget)0, 
+                iw_rc        = (Widget)0,
+		iw_rowcolv   = (Widget)0, 
+                iw_cut       = (Widget)0,
+                iw_show      = (Widget)0;
+
+
+void dendromen( char * dfil)
+{
+ char     cval[50], * cdum;
+ int      maxreg, maxkeys;
+ int      k, doc_read;
+ float  * dbuf = NULL, *ptr;
+ float    plist[8], val;
+ Widget   iw_dums, iw_pusha, iw_pushc;
+ int      icut;
+
+ /* Set size for array pointed to by dbuf */
+ maxreg    = 3+1; 
+ maxkeys   = 9999;
+
+ /* Tell it to open the doc files each time */
+ doc_read = TRUE;
+
+ if (unsdal(dfil, &doc_read, 0, plist, 2, &dbuf, &maxpart, maxkeys, maxreg) > 0) 
+    {  /* Problem retrieving doc file, assume it does not exist */
+    if (dbuf) free(dbuf); dbuf = NULL; return;
+    }
+
+ /* Allocate array space */
+ if (((V =   (float *) realloc((void *) V,   maxpart * sizeof(float))) == 
+             (float *) NULL) ||
+     ((NUM = (int *)   realloc((void *) NUM, maxpart * sizeof(int))) == 
+             (int *)   NULL) ||
+     ((YT =  (float *) realloc((void *) YT,  maxpart * sizeof(float))) == 
+             (float *) NULL))
+   { spout("*** Unable to reallocate memory in dendromen."); return; }   
+
+ newdoc = TRUE;
+ ptr    = dbuf;
+ 
+ // Initialize min/max values 
+ NUM[0] = (int) *(ptr+3);                // Image id 
+ V[0]   = vmin = vmax = val = *(ptr+2);  // Leaf height 
+ ptr   += maxreg;
+
+ 
+ for (k=1; k<maxpart; k++)
+    {
+    NUM[k]  = (int) *(ptr+3);   // Image id
+    V[k]    = val = *(ptr+2);   // Leaf height
+      
+    if ( val < vmin ) vmin = val;
+    if ( val > vmax ) vmax = val;
+     
+    ptr  += maxreg; 
+    }
+
+/* Strip pathname from filename  */
+#ifdef SP_NT
+     fname = strrchr(dfil,'\\');
+#else
+     fname = strrchr(dfil,'/');
+#endif
+
+ /* Free dbuf */
+ if (dbuf) free(dbuf); dbuf = NULL;
+
+ if (iw_dendromen <= (Widget)0)
+    {  /* Create dendrogram menu widget first */
+
+    iw_dendromen = wid_dialog(iw_win, 0, "Dendrogram Cutoff", -1, -1);
+    iw_rowcolv   = wid_rowcol(iw_dendromen, 'v', -1, -1);
+
+    /* Create horizontal rowcol for cutoff -----------------------------  */
+    iw_rc  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    /* Create scale widget for cutoff  -------------------------- cutoff */
+    icut = 10;
+    iw_cut  = wid_scale(iw_rc, 0, "Cutoff(%)", 
+                        0,100,  icut, 180,50, -1,-1);
+    XtAddCallback(iw_cut,XmNvalueChangedCallback,
+                 (XtCallbackProc) dendromen_buta,"0");
+
+    /* Create toggle box for wantshow ---------------------------- wantshow */
+    iw_show = wid_toggleg(iw_rowcolv, iw_show, "Show Averaged Images",
+           wantshow,dendromen_d,cdum,-1,-1);
+
+    /* Create text box for file pattern input  -------------- filpat */
+    iw_patt = wid_textboxb(iw_rowcolv,iw_patt,"Template name of images:",filpat,12);
+
+    /* if (!wantshow) XtUnmanageChild(XtParent(iw_patt)); */
+
+    /* Create box for apply ----------------------------------- apply */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_dendromen, 
+                        &iw_dums, &iw_pushc, &iw_pusha,  "CA",
+                        fin_cb, fin_cb, dendromen_buta, NULL);
+   }
+
+ XtManageChild(iw_dendromen);
+    if (!wantshow) XtUnmanageChild(XtParent(iw_patt));
+
+}
+
+ /************** dendromen_d (wantshow toggle callback) *************/
+
+ void dendromen_d(Widget iw_temp, XtPointer data, XtPointer call_data)
+  { 
+  int showing;
+
+  showing  = wantshow;
+  wantshow = XmToggleButtonGadgetGetState(iw_show);
+
+  if (wantshow && !showing)
+     {
+     /* XtManageChild(XtParent(iw_patt)); */
+     XtManageChild(XtParent(iw_patt));
+     }
+  else if (!wantshow && showing)
+     {
+     /* XtUnmanageChild(XtParent(iw_patt)); */
+     XtUnmanageChild(XtParent(iw_patt));
+     }  
+  } 
+
+ /*********** Accept button callback **********************************/
+
+ void dendromen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ XImage  *image;
+ char    *string, str[5], filpatt[30];
+ int      npix, ival, irect, nsr;
+ float    fmint, fmaxt, scal, fm;
+ float    pmin, xdis, yscale, vdiv;
+ float    ypos, ylabel, ydiv, buffer[256];
+ int      ii, x0, x1, y1, x2, y2, nkla, obj;
+ int      i, j, k, yti, ytj, ht, wt, jgo, iform;
+ int      icoloro;
+ int      xll,yll, xul,yul,xlaboff, yoff ;
+
+
+ // Get cutoff value (0...100)
+ XmScaleGetValue(iw_cut, &icut);
+ pmin = icut;
+
+ if (wantshow) 
+    { // Want to show image averages at bottem
+    strcpy(filpat,XmTextGetString(iw_patt));
+    if (strlen(filpat) == 0) 
+       {spout("*** No file name template entered!");  return; }  
+    } 
+
+ /* Clear screen */
+ webclear( NULL, NULL, NULL); 
+
+ /* Show clock cursor (#79) */
+ waitcursor(iwin,TRUE,79);
+
+ if (wantshow)
+    { // Want to show image averages at bottem
+    strcpy(filpatt,filpat);
+    filget(filpat,filpat,81,NUM[0]);
+
+    /*  Add datexc (name extension ) to filpat if not already there  */
+    if (strstr(filpat,datexc) == 0)
+       {
+       if ((strlen(filpat) + strlen(datexc) + 1) > 80)
+          { spout("*** File name too long:"); spout(filpat); return;}  
+       strcat(strcat(filpat,"."),datexc);
+       }
+    //printf("opening first: %d : %s, \n",NUM[0],filpat);
+
+    /* Open the first one to get the dimensions of the images */
+    filedata = openold(filpat,&nsam,&nrow,&nslice,&iform,"o"); 
+    if (filedata == (void *)FALSE)
+      { spout("*** Unable to open image file"); waitcursor(iwin,FALSE,0);   return;}
+    closefile(filedata);
+
+    nsr =  nsam * nrow;
+
+    /* Allocate space for image arrays */
+    if (newdoc)
+       {
+       newdoc = FALSE;
+       if (((buf  = (float *) realloc((void *) buf, nsr * sizeof(float))) == 
+                    (float *) NULL) ||
+           ((cbuf = (char *) realloc((void *) cbuf, nsr * sizeof(char))) == 
+                    (char *) NULL))
+         { 
+         spout("*** Unable to reallocate memory in dendromen_buta."); 
+         waitcursor(iwin,FALSE,0); return; 
+         }   
+       }
+
+    /* Initialize buf to zero  */
+    for(i = 0; i < nsr; i++) *(buf+i) = 0.0;
+    }  // End of: wantshow
+
+  // Find window sizing:
+
+  xlaboff = 60;             // offset from left axis label
+
+  wt = 0.8 * iwidex - xlaboff -20 ;
+  ht = 0.8 * ihighx ;  
+  if (wantshow) ht = ht - nrow - 20; 
+
+  xul = (iwidex - wt) / 2 ; 
+  yul = (ihighx - ht) / 2 ;
+
+  xll = xul ; 
+  yll = yul + ht ;
+
+  //printf("xul,yul: %d,%d  %d,%d, %d,%d, \n",xul,yul, ht,wt, xll,yll);
+
+  /* Find y-scale for tree */
+  yscale = (float) ht / (vmax - pmin); 
+
+  /* Draw y-axis lines  */
+  XDrawLine(idispl, iwin,    icontx, xll,yll,   xul,yul);
+  XDrawLine(idispl, imagsav, icontx, xll,yll,   xul,yul);
+
+  /* Label y-axis line  */
+  ylabel  = pmin;  
+  ypos    = yll;
+  vdiv    = (vmax-pmin) / 5.0;  
+  ydiv    = ht / 5.0;
+
+  for (i = 0; i <= 5; i++)
+     {
+     XDrawLine(idispl, iwin,    icontx, xll,ypos,  xll+10,ypos);
+     XDrawLine(idispl, imagsav, icontx, xll,ypos,  xll+10,ypos);
+     sprintf(str,"%4.2f",ylabel);
+     witext(icontx, str,  xll+10, ypos+3,  0,0, -9,2, FALSE);
+
+     ylabel += vdiv;   
+     ypos   -= ydiv;
+     }
+
+  nkla = 0;
+  for( j = 0; j < maxpart; j++)
+    {
+    if (V[j] < pmin) continue;            /* Do not plot truncated lines */
+    YT[nkla++] = (V[j] - pmin) * yscale;  /* Find node height (YT)       */
+    }
+
+  /* Find horizontal distance between leaves  */
+  xdis = (float) wt / (nkla - 1.0);
+
+  /* Center filename at the top */
+  yoff = yul / 2; 
+  witext(icontx, fname + 1, iwidex/2-25,yoff,  0,0, -9, 2, FALSE);
+      
+  obj = 1; jgo = 0;
+
+  /* Start i sweep  */
+  for ( i = 0; i < nkla; i++)
+     {
+     yti = YT[i];
+     x0  = i * xdis + xlaboff;  // xlaboff is offset from left axis label
+     x1  = i * xdis + xlaboff;  
+     y1  = ht - yti;
+
+     /* Draw vertical line to (X(i),yti)  */
+     XDrawLine(idispl, iwin,    icontx, xul+x0, yul+ht,   xul+x1, yul+y1);
+     XDrawLine(idispl, imagsav, icontx, xul+x0, yul+ht,   xul+x1, yul+y1);
+
+     /* Determine and write # of objects for the tree node */
+     for(j = jgo; j < maxpart; j++)
+        {
+        if (V[j] < pmin ) 
+            obj++;
+        else
+           {
+           if ( obj <= 9) 
+              sprintf(str,"%1d",obj);
+           else
+              {
+              if ( obj > 99)
+                sprintf(str,"%3d",obj);
+              else
+                sprintf(str,"%2d",obj);
+              }
+              // Label for node
+              witext(icontx, str, xul+x0-15,yul+ht+15,   0,0, -9,2, FALSE);
+              obj = 1; 
+ 
+            if ( wantshow )
+              {              
+              for(k = jgo; k <= j; k++)    /* Add the images */
+                 {
+                 strcpy(filpat,filpatt);
+                 filget(filpat,filpat,81,NUM[k]);
+                 // printf("***  %s %s \n", filpatt,filpat);
+ 
+                 /*  Add datexc (name extension ) to filpat if needed  */
+                 if (strstr(filpat,datexc) == 0)
+                   {
+                   if ((strlen(filpat) + strlen(datexc) + 1) > 80)
+                     {spout("*** File name too long:"); spout(filpat); return; }  
+                   strcat(strcat(filpat,"."),datexc);
+                   }
+
+                /* Try to open the file */
+                filedata = openold(filpat,&nsam,&nrow,&nslice,&iform,"o"); 
+                if (filedata == (void *)FALSE)
+                  {
+                  spout("*** Unable to open image file");
+                  waitcursor(iwin,FALSE,0); return;
+                  }
+
+                npix = 0;  
+                for (irect = 1; irect <= nrow; irect++)
+                  {
+                  if (redlin(filedata,buffer,nsam,irect) != TRUE) 
+                      {
+                      free(cbuf); free(buf); 
+                      spout("redlin returned FALSE");
+                      waitcursor(iwin,FALSE,0); return;
+                      }
+
+                  for(ii = 0; ii < nsam; ii++)
+                     buf[npix++] += buffer[ii];
+                  }
+                 //printf("*** Summing k: %d  NUM: %d %s \n", k,NUM[k],filpat);
+                 closefile(filedata);
+                 }  /*  k  */
+
+
+              /* Determine max and min of all images */
+              fmint = fmaxt = buf[0] ;
+              for(npix = 1; npix < nsr; npix++)
+                 {
+                 if (buf[npix] < fmint) fmint = buf[npix];
+		 if (buf[npix] > fmaxt) fmaxt = buf[npix]; 
+                 }
+		 
+              /* Conversion factor from floating point to logical * 1 RANGE */
+              scal = (float) (imageend - imagego) / (fmaxt - fmint);
+              fm   = -fmint * scal + imagego + 0.5;
+
+              for(npix = 0; npix < nsr; npix++)
+               {
+                if (imageend < 128) 
+                  { /* No need to convert numbers > 128 */   
+                  ival = (*(buf + npix) * scal) + fm;
+                  *(cbuf + npix) = ival;
+                  }
+                else
+                  { /* Need to convert numbers > 128 */   
+                  ival = (*(buf + npix) * scal) + fm;
+
+                  /* convert 0..255  integers to -128...127 */
+                  if (ival > 127) ival = ival - 256;
+                     *(cbuf + npix) = ival;
+                  }
+               }
+
+               /* Display the aaverage image */
+               wipic(icontx,cbuf, xul+x0-nsam+15,yul+ht+40,  nsam,nrow,
+                     TRUE,FALSE,&image);
+
+               /* Initialize buf to zero  */
+               for(ii = 0; ii < nsr; ii++)
+                  *(buf+ii) = 0.0;
+
+              } /* wantshow  */
+             jgo = j + 1;  break;
+         } /* else  */
+      }  /*  for(j = jgo  */                               
+
+     if (i == (nkla-1) ) break;  
+
+   /* Find length of horizontal line   */
+   for ( j = i+1; j < nkla; j++)
+      {   
+      ytj   = YT[j];
+      if (ytj >= yti) 
+         {
+         /* Draw horizontal line to (X(j),yti)  */
+         x2 = j * xdis + xlaboff;  
+         y2 = ht - yti;
+         XDrawLine(idispl, iwin,    icontx, xul+x1, yul+y1, xul+x2, yul+y2);
+         XDrawLine(idispl, imagsav, icontx, xul+x1, yul+y1, xul+x2, yul+y2);
+         break;
+         }
+      } /* for(j = i+1 */
+
+  }  /*  i  */
+
+ neednewmap = TRUE;
+
+ /*  Remove clock cursor */
+ waitcursor(iwin,FALSE,0);
+
+ /* Display menu */
+ showbutx("Recalls Menu.", 
+          "Recalls Menu.",
+          "Stops dendrogram.",FALSE); 
+
+ /* Define buttons for menu retrieval or stop */
+ actions(iw_win, "dendro_pop", dendro_pop, "123");
+
+ }
+
+ /*********** dendro_pop **********************************/
+
+ void dendro_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+
+ if (!(strcmp(*params,"3")))            /* Button 3 pushed */ 
+    {
+
+    /* uninstall translations */
+    XtUninstallTranslations(iw_t);
+   /* unmanage information box */
+    showbutx("","","",TRUE);
+    }
+
+ else                                  /* Button 1 or 2 pushed */        
+    {                                       
+    XtManageChild(iw_dendromen);
+    }
+
+ }
+@
+
+
+1.21
+log
+@scaled better
+@
+text
+@d29 2
+a30 2
+ void      dendro_pop(Widget, XEvent *, String *, Cardinal *);
+ void      dendromen_d(Widget, XtPointer, XtPointer);
+d33 1
+d38 5
+a42 6
+                iw_thlev   = (Widget)0, 
+                iw_patt    = (Widget)0, 
+                iw_lab     = (Widget)0, 
+                iw_rc      = (Widget)0,
+		iw_rowcolv = (Widget)0, 
+                iw_show    = (Widget)0;
+d53 1
+d64 1
+a64 2
+    if (dbuf) free(dbuf); dbuf = NULL;
+    return;
+d76 2
+a77 2
+ newdoc  = TRUE;
+ ptr     = dbuf;
+d80 3
+a82 4
+ NUM[0]  = (int) *(ptr+3);                // Image id 
+ V[0]    = vmin = vmax = val = *(ptr+2);  // Leaf height 
+
+ ptr    += maxreg;
+d109 1
+a109 1
+    iw_dendromen = wid_dialog(iw_win, 0, "Dendrogram Threshold", -1, -1);
+d112 1
+a112 5
+    /* Create label box for threshold range ---------------------  range  */
+    sprintf(cval,"Range:     %5.2f ...%6.2f",vmin,vmax);
+    iw_lab  = wid_labelg(iw_rowcolv, 0, cval, -1, -1);
+
+    /* Create horizontal rowcol for threshold ---------------  */
+d115 6
+a120 4
+    /* Create text box  for threshold --------------------  threshold */
+    /* Set default threshold to 10% of range */
+    sprintf(cval,"%5.2f",(vmin+vmax)/10);
+    iw_thlev = wid_textboxb(iw_rc,0,"Threshold:",cval,10);
+a135 8
+ else
+   {   /* Dendrogram menu widget already exists, update it */
+
+    /* Create label box for thresh range ---------------------  range  */
+    sprintf(cval,"Range:     %5.2f ...%6.2f",vmin,vmax);
+    iw_lab  = wid_labelg(iw_rowcolv, iw_lab, cval, -1, -1);
+
+    }
+d176 2
+a177 1
+ int      xll,yll, xul,yul,xlaboff ;
+d179 3
+a181 6
+ /* Find threshold */
+ string = XmTextGetString(iw_thlev);
+ sscanf(string,"%f",&pmin);
+ if (pmin > vmax) pmin = vmax;
+ if (pmin < vmin) pmin = vmin;
+ if (string) free(string);
+d187 1
+a187 1
+       { spout("*** No file name template entered!");  return; }  
+a189 2
+ XtUnmanageChild(iw_dendromen);
+
+d287 2
+a288 1
+  witext(icontx, fname + 1, iwidex/2-25, yul-5,  0,0, -9, 2, FALSE);
+@
+
+
+1.20
+log
+@*** empty log message ***
+@
+text
+@d5 2
+a6 1
+C dendromen.c -- ADAPTED FROM DENDRO2.FOR 27 JUNE 94 Lekan Odesanya
+d9 1
+a9 1
+C FORMS A TRUNCATED SCREEN PLOT FOR THE DENDROGRAM
+d12 2
+a13 2
+C THE UNIVERSITY OF TEXAS HEALTH SCIENCE CENTER AT HOUSTON                      
+C MEDICAL SCHOOL - DEPARTMENT OF PATHOLOGY AND LABORATORY MEDICINE              
+d55 1
+a55 1
+ maxreg    = 3+1;
+d61 2
+a62 3
+ if (unsdal(dfil, &doc_read, 0, plist, 2, &dbuf, &maxpart,
+           maxkeys, maxreg) > 0) 
+    {   /* Problem retrieving doc file, assume it does not exist */
+d67 8
+a74 11
+ /* Allocate space for  arrays */
+ if (((V = (float *) realloc((void *) V, maxpart * sizeof(float))) == 
+               (float *) NULL) ||
+     ((NUM = (int *) realloc((void *) NUM, maxpart * sizeof(int))) == 
+               (int *) NULL) ||
+     ((YT = (float *) realloc((void *) YT, maxpart * sizeof(float))) == 
+               (float *) NULL))
+   { 
+     spout("*** Unable to reallocate memory in dendromen."); 
+     return; 
+   }   
+d79 6
+a84 3
+ NUM[0]  = (int) *(ptr+3);                // ID
+ V[0]    = vmin = vmax = val = *(ptr+2);  // HEIGHT
+ ptr    += maxreg; 
+d88 2
+a89 2
+    NUM[k]  = (int) *(ptr+3);   // ID
+    V[k]    = val = *(ptr+2);   // HEIGHT
+d91 2
+a92 2
+    if( val < vmin ) vmin = val;
+    if( val > vmax ) vmax = val;
+d108 1
+a108 1
+    {   /* create surface menu widget first */
+d110 2
+a111 2
+    iw_dendromen  = wid_dialog(iw_win, 0, "Dendrogram Threshold", -1, -1);
+    iw_rowcolv  = wid_rowcol(iw_dendromen, 'v', -1, -1);
+d114 1
+a114 1
+    sprintf(cval,"Thresh Range:  %f ...%f",vmin,vmax);
+d117 1
+a117 1
+    /* Create horizontal rowcol for threshold and scaling ---------------  */
+d121 2
+a122 2
+    /* SET DEFAULT THRESHOLD TO 50% OF RANGE */
+    sprintf(cval,"%f",(vmin+vmax)/2);
+d125 1
+a125 1
+   /* Create toggle box for wantshow ---------------------------- wantshow */
+d129 1
+a129 1
+   /* Create text box for file pattern input  -------------- filpat */
+d140 1
+a140 1
+   {   /* dendrogram menu widget already exists, update it */
+d143 1
+a143 1
+    sprintf(cval,"Range:     %f ...%f",vmin,vmax);
+d184 1
+a184 1
+ int      ii, x0, y0, x1, y1, x2, y2, nkla, obj;
+d187 1
+d197 1
+a197 1
+    {
+d200 1
+a200 4
+       { 
+       spout("*** No file name template entered!");  
+       return;
+       }  
+d205 1
+a205 1
+ /* Clear the screen be4 next display */
+d208 1
+a208 1
+ /* Make clock cursor (#79) */
+d211 50
+a260 4
+if (wantshow)
+ {
+  strcpy(filpatt,filpat);
+  filget(filpat,filpat,81,NUM[0]);
+d262 2
+a263 18
+  /*  Add datexc (name extension ) to filpat if not already there  */
+  if (strstr(filpat,datexc) == 0)
+      {
+      if ((strlen(filpat) + strlen(datexc) + 1) > 80)
+         { spout("*** File name too long:"); spout(filpat); 
+         return; }  
+      strcat(strcat(filpat,"."),datexc);
+      }
+
+  /* Open the first one to get the dimensions of the images */
+  filedata = openold(filpat,&nsam,&nrow,&nslice,&iform,"o"); 
+  if (filedata == (void *)FALSE)
+     {
+     spout("*** Unable to open image file");
+     waitcursor(iwin,FALSE,0);
+     return;
+     }
+  closefile(filedata);
+d265 1
+a265 19
+  nsr =  nsam * nrow;
+  /* Allocate space for image arrays */
+  if (newdoc)
+   {
+     newdoc = FALSE;
+     if (((buf = (float *) realloc((void *) buf, nsr * sizeof(float))) == 
+                 (float *) NULL) ||
+      ((cbuf = (char *) realloc((void *) cbuf, nsr * sizeof(char))) == 
+               (char *) NULL))
+     { 
+      spout("*** Unable to reallocate memory in dendromen_buta."); 
+      waitcursor(iwin,FALSE,0);
+      return; 
+     }   
+   }
+   /* Initialize buf to zero  */
+   for(i = 0; i < nsr; i++)
+     *(buf+i) = 0.0;
+ }
+d267 1
+a267 3
+  y0 = ht = ihighx - 150; wt = iwidex - 90;
+ 
+  /* Find y-scale for tree  */
+d270 9
+a278 3
+  /* Draw and label y-axis lines   */
+  XDrawLine(idispl, iwin, icontx, 5, y0+20, 5, 20);
+  XDrawLine(idispl, imagsav, icontx, 5, y0+20, 5, 20);
+a279 2
+  ylabel = pmin;  ypos = y0;
+  vdiv = (vmax-pmin)/5.0;  ydiv = (0.0 - y0)/5.0;
+d282 2
+a283 2
+     XDrawLine(idispl, iwin, icontx, 5, ypos+20, 10, ypos+20);
+     XDrawLine(idispl, imagsav, icontx, 5, ypos+20, 10, ypos+20);
+d285 4
+a288 2
+     witext(icontx, str, 10, ypos+23, 0, 0, -9, 2, FALSE);
+     ylabel += vdiv;   ypos += ydiv;
+d295 1
+a295 1
+    YT[nkla++] = (V[j] - pmin) * yscale;  /* Find node height (YT)  */
+d301 2
+a302 3
+   /* Put filename at the top ALWAYS!! */
+   if ( fname );
+   witext(icontx, fname + 1, iwidex/2 - 15, 15, 0, 0, -9, 2, FALSE);
+d309 4
+a312 2
+     yti     = YT[i];
+     x0 = x1 =  i * xdis + 70;  y1 = ht - yti + 20;
+d315 2
+a316 2
+     XDrawLine(idispl, iwin, icontx, x0, y0+20, x1, y1);
+     XDrawLine(idispl, imagsav, icontx, x0, y0+20, x1, y1);
+d318 1
+a318 1
+     /* Determine and write #. of objects for the tree node   */
+d320 1
+a320 1
+      {
+d325 1
+a325 1
+           if( obj <= 9) 
+d329 1
+a329 1
+              if( obj > 99)
+d334 2
+a335 1
+              witext(icontx, str, x0-15, y0+35, 0, 0, -9, 2, FALSE);
+d344 1
+a344 1
+                 //printf("***  %s %s \n", filpatt,filpat);
+d350 1
+a350 2
+                    { spout("*** File name too long:"); spout(filpat); 
+                      return; }  
+d357 1
+a357 1
+                 {
+d359 2
+a360 3
+                  waitcursor(iwin,FALSE,0);
+                  return;
+                 }
+d364 1
+a364 1
+                 {
+d366 2
+a367 1
+                   { free(cbuf); free(buf); 
+d369 6
+a374 4
+                     waitcursor(iwin,FALSE,0); return; }
+                   for(ii = 0; ii < nsam; ii++)
+                    buf[npix++] += buffer[ii];
+                 }
+d377 1
+a377 1
+               }  /*  k  */
+d384 2
+a385 2
+                 if(buf[npix] < fmint) fmint = buf[npix];
+		 if(buf[npix] > fmaxt) fmaxt = buf[npix]; 
+d388 1
+a388 1
+              /* CONVERSION FACTOR FROM FLOATING POINT TO LOGICAL * 1 RANGE */
+d395 4
+a398 4
+                 {   /* No need to convert numbers > 128 */   
+                    ival = (*(buf + npix) * scal) + fm;
+                    *(cbuf + npix) = ival;
+                 }
+d400 8
+a407 7
+                 {   /* Need to convert numbers > 128 */   
+                     ival = (*(buf + npix) * scal) + fm;
+                   /* convert 0..255  integers to -128...127 */
+                     if (ival > 127) ival = ival - 256;
+                    *(cbuf + npix) = ival;
+                 }
+              }
+d409 2
+a410 2
+               /* display the image */
+               wipic(icontx,cbuf,x0-nsam+15,y0+40,nsam,nrow,
+d413 1
+a413 1
+               /* initialize buf to zero  */
+d415 1
+a415 1
+                *(buf+ii) = 0.0;
+d424 3
+a426 3
+   /* find length of horizontal line   */
+   for( j = i+1; j < nkla; j++)
+    {   
+d429 6
+a434 5
+       {
+         /* draw horizontal line to (X(j),yti)  */
+         x2  =  j * xdis + 70;  y2 = ht - yti + 20;
+         XDrawLine(idispl, iwin, icontx, x1, y1, x2, y2);
+         XDrawLine(idispl, imagsav, icontx, x1, y1, x2, y2);
+d436 2
+a437 2
+       }
+    } /* for(j = i+1 */
+d443 1
+a443 1
+ /*  remove clock cursor */
+d446 1
+a446 1
+ /* display menu */
+d451 1
+a451 1
+ /* define buttons for menu retrieval or stop */
+d462 1
+a462 1
+ if (!(strcmp(*params,"3")))            /* button 3 pushed */ 
+d471 1
+a471 1
+ else                                  /* button 1 or 2 pushed */        
+d473 1
+a473 1
+     XtManageChild(iw_dendromen);
+@
+
+
+1.19
+log
+@neednewmap = TRUE;
+@
+text
+@d5 1
+a5 1
+C  dendromen.c -- ADAPTED FROM DENDRO2.FOR 27 JUNE 94 Lekan Odesanya
+d10 1
+a10 1
+C BASED ON ARBRE.FOR,    A DENDROGRAM PGM BY - JEAN-PIERRE BRETAUDIERE 
+d17 1
+a17 1
+/* common variables */
+d23 1
+a23 1
+ /* external global variables */
+d26 1
+a26 1
+ /* internal function prototypes */
+d31 1
+a31 1
+ /* internal common variables  */
+d53 2
+a54 2
+ /* set size for array pointed to by dbuf */
+ maxreg    = 2+1;
+d57 1
+a57 1
+ /* tell it to open the doc files each time */
+d62 1
+a62 1
+    {   /* problem retrieving doc file, assume it does not exist */
+d67 1
+a67 1
+ /* allocate space for  arrays */
+d79 2
+a80 2
+ newdoc = TRUE;
+ ptr = dbuf;
+d82 3
+a84 3
+ NUM[0]  = (int) *(ptr+1);
+ V[0]    = vmin = vmax = val = *(ptr+2);
+ ptr  += maxreg; 
+d88 2
+a89 2
+    NUM[k]  = (int) *(ptr+1);
+    V[k]    = val = *(ptr+2);
+d97 1
+a97 1
+/* strip pathname from filename  */
+d104 1
+a104 1
+ /* free dbuf */
+d113 1
+a113 1
+    /* create label box for threshold range ---------------------  range  */
+d117 1
+a117 1
+    /* create horizontal rowcol for threshold and scaling ---------------  */
+d120 1
+a120 1
+    /* create text box  for threshold --------------------  threshold */
+d125 1
+a125 1
+   /* create toggle box for wantshow ---------------------------- wantshow */
+d129 1
+a129 1
+   /* create text box for file pattern input  -------------- filpat */
+d134 1
+a134 1
+    /* create box for apply ----------------------------------- apply */
+d142 1
+a142 1
+    /* create label box for thresh range ---------------------  range  */
+d174 1
+a174 1
+ /*********** accept button callback **********************************/
+d188 1
+a188 1
+ /* find threshold */
+d207 1
+a207 1
+ /* clear the screen be4 next display */
+d210 1
+a210 1
+ /* make clock cursor (#79) */
+d217 1
+d226 2
+a227 1
+  /* open the first one to get the dimensions of the images */
+d238 2
+a239 2
+  /* allocate space for image arrays */
+  if(newdoc)
+d243 1
+a243 1
+               (float *) NULL) ||
+d252 1
+a252 1
+   /* initialize buf to zero  */
+d257 3
+a259 2
+  y0 = ht = ihighx - 150; wt = iwidex - 90; 
+  /* find y-scale for tree  */
+d262 1
+a262 1
+  /* draw and label y-axis lines   */
+d269 1
+a269 1
+   {
+d275 1
+a275 1
+   }
+d280 2
+a281 2
+      if (V[j] < pmin) continue;              /* do not plot truncated lines */
+      YT[nkla++]   = (V[j] - pmin) * yscale;  /* find node height (YT)  */
+d284 1
+a284 1
+  /* find horizontal distance between leaves  */
+d287 3
+a289 3
+   /* put filename at the top */
+   if( fname );
+     witext(icontx, fname + 1, iwidex/2 - 15, 15, 0, 0, -9, 2, FALSE);
+d293 3
+a295 3
+  /* start i sweep  */
+  for( i = 0; i < nkla; i++)
+   {
+d298 2
+a299 1
+     /* draw vertical line to (X(i),yti)  */
+d303 1
+a303 1
+     /* determine and write #. of objects for the tree node   */
+d309 2
+a310 2
+         {
+            if( obj <= 9) 
+d312 2
+a313 2
+            else
+             {
+d318 3
+a320 3
+             }
+            witext(icontx, str, x0-15, y0+35, 0, 0, -9, 2, FALSE);
+            obj = 1; 
+d324 1
+a324 1
+              for(k = jgo; k <= j; k++) /* add the images */
+d328 1
+d339 1
+a339 1
+           /* try to open the file */
+d358 1
+a358 1
+
+d363 1
+a363 1
+              /* determine max and min of all images */
+d378 1
+a378 1
+                 {   /* no need to convert numbers > 128 */   
+d383 1
+a383 1
+                 {   /* need to convert numbers > 128 */   
+@
+
+
+1.18
+log
+@wicolor wrong
+@
+text
+@a17 1
+#include "x.h"
+d416 2
+@
+
+
+1.17
+log
+@imagego & imageend no longer redefined here
+@
+text
+@d187 1
+d213 1
+a213 1
+  
+@
+
+
+1.16
+log
+@fmin changes
+@
+text
+@a53 4
+/* set image display range */
+imagego  = mapgo;
+imageend = 127;
+  
+@
+
+
+1.15
+log
+@fmin ->fmin_spi..
+@
+text
+@d186 1
+a186 1
+ float    fmin_spi, fmax_spi, scal, fm;
+d363 1
+a363 1
+              fmin_spi = fmax_spi = buf[0] ;
+d366 2
+a367 2
+                 if(buf[npix] < fmin_spi) fmin_spi = buf[npix];
+		 if(buf[npix] > fmax_spi) fmax_spi = buf[npix]; 
+d371 2
+a372 2
+              scal = (float) (imageend - imagego) / (fmax_spi - fmin_spi);
+              fm   = -fmin_spi * scal + imagego + 0.5;
+@
+
+
+1.14
+log
+@file template average window disappeared on linux sometimes
+@
+text
+@d186 1
+a186 1
+ float    fmin, fmax, scal, fm;
+d363 1
+a363 1
+              fmin = fmax = buf[0] ;
+d366 2
+a367 2
+                 if(buf[npix] < fmin) fmin = buf[npix];
+		 if(buf[npix] > fmax) fmax = buf[npix]; 
+d371 2
+a372 2
+              scal = (float) (imageend - imagego) / (fmax - fmin);
+              fm   = -fmin * scal + imagego + 0.5;
+@
+
+
+1.13
+log
+@vogans linux mods
+@
+text
+@d36 7
+a42 3
+ static Widget  iw_dendromen= (Widget)0, iw_thlev= (Widget)0, 
+                iw_patt= (Widget)0, iw_lab= (Widget)0, iw_rc= (Widget)0,
+		iw_rowcolv= (Widget)0, iw_show= (Widget)0;
+d44 1
+d136 2
+a137 1
+    if (!wantshow) XtUnmanageChild(XtParent(iw_patt));
+d154 1
+d168 2
+d171 1
+a171 1
+
+d173 4
+a176 1
+     XtUnmanageChild(XtParent(iw_patt));  
+@
+
+
+1.12
+log
+@trap for missing filename
+@
+text
+@d99 1
+a99 1
+     fname = strrchr(dfil,'\');
+@
+
+
+1.11
+log
+@set imagego to the right value
+@
+text
+@d28 1
+a28 1
+ void      dendromen_buta(Widget iw_temp, caddr_t, caddr_t);
+d30 1
+a30 1
+ void      dendromen_d(Widget, caddr_t, caddr_t);
+d98 2
+a99 2
+#ifdef VMS
+     fname = strrchr(dfil,']');
+d153 1
+a153 1
+ void dendromen_d(Widget iw_temp, caddr_t data, caddr_t call_data)
+d169 1
+a169 1
+ void dendromen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d190 5
+a194 1
+    if (strlen(filpat) == 0) wantshow = FALSE;
+d228 1
+a228 1
+ /* allocate space for image arrays */
+@
+
+
+1.10
+log
+@increased maxkey
+@
+text
+@d49 4
+d81 6
+a86 1
+ for (k=0; k<maxpart; k++)
+d90 4
+a93 6
+    if( k == 0) vmin = vmax = val;
+    else
+     {
+      if( val < vmin ) vmin = val;
+      if( val > vmax ) vmax = val;
+     }
+d130 1
+a130 1
+    iw_patt = wid_textboxb(iw_rowcolv,iw_patt,"File Template:",filpat,12);
+d345 1
+d347 8
+a354 10
+              for(npix = 0; npix < nsr; npix++)
+               {
+                 if(npix == 0)  fmin = fmax = buf[npix];
+                 else
+                  {
+                    if(buf[npix] < fmin) fmin = buf[npix];
+                    if(buf[npix] > fmax) fmax = buf[npix];
+                  }
+               }
+ /* CONVERSION FACTOR FROM FLOATING POINT TO LOGICAL * 1 RANGE */
+@
+
+
+1.9
+log
+@changed filget param
+@
+text
+@d51 1
+a51 1
+ maxkeys   = 1000;
+d147 1
+a147 1
+ { 
+d150 1
+a150 1
+  showing = wantshow;
+d155 1
+d158 1
+a158 2
+
+ } 
+d188 1
+a188 1
+/* clear the screen be4 next display */
+d191 1
+a191 1
+/* make clock cursor (#79) */
+d206 1
+a206 1
+/* open the first one to get the dimensions of the images */
+d231 1
+a231 1
+/* initialize buf to zero  */
+d237 1
+a237 1
+/* find y-scale for tree  */
+d240 1
+a240 1
+/* draw and label y-axis lines   */
+d262 1
+a262 1
+/* find horizontal distance between leaves  */
+d265 1
+a265 1
+/* put filename at the top */
+d271 1
+a271 1
+/* start i sweep  */
+d276 1
+a276 1
+/* draw vertical line to (X(i),yti)  */
+d280 1
+a280 1
+/* determine and write #. of objects for the tree node   */
+d338 1
+a338 1
+       /* determine max and min of all images */
+d368 1
+a368 1
+             /* display the image */
+d372 1
+a372 1
+             /* initialize buf to zero  */
+d383 1
+a383 1
+/* find length of horizontal line   */
+d389 1
+a389 1
+/* draw horizontal line to (X(j),yti)  */
+d399 1
+a399 1
+/*  remove clock cursor */
+@
+
+
+1.8
+log
+@set showit in wipic call
+@
+text
+@a23 1
+
+d194 1
+a194 1
+if(wantshow)
+d197 1
+a197 1
+  filget(filpat,filpat,NUM[0]);
+d299 2
+a300 2
+            if( wantshow )
+             {              
+d302 1
+a302 1
+               {
+d304 3
+a306 2
+                 filget(filpat,filpat,NUM[k]);
+       /*  Add datexc (name extension ) to filpat if not already there  */
+d308 1
+a308 1
+                  {
+d313 1
+a313 1
+                  }
+@
+
+
+1.7
+log
+@static Widget = (Widget)0
+@
+text
+@d369 2
+a370 1
+               wipic(icontx,cbuf,x0-nsam+15,y0+40,nsam,nrow,FALSE,FALSE,&image);
+@
+
+
+1.6
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d37 3
+a39 2
+ static Widget  iw_dendromen, iw_thlev, iw_patt;
+ static Widget  iw_lab, iw_rc, iw_rowcolv, iw_show;
+@
+
+
+1.5
+log
+@modified (int)widget for Onyx
+@
+text
+@d100 1
+a100 1
+ if (iw_dendromen <= (void *)0)
+@
+
+
+1.4
+log
+@modified (int)widget for Onyx
+@
+text
+@d208 1
+a208 1
+  if ((int) filedata == FALSE)
+d316 1
+a316 1
+                if ((int) filedata == FALSE)
+@
+
+
+1.3
+log
+@deleted previous change. not needed
+@
+text
+@d100 1
+a100 1
+ if ((int)iw_dendromen <= 0)
+@
+
+
+1.2
+log
+@fixed passing arg to wid_toggleg
+@
+text
+@d120 1
+a120 1
+           wantshow,dendromen_d,(caddr_t) &wantshow,-1,-1);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d120 1
+a120 1
+           wantshow,dendromen_d,cdum,-1,-1);
+@

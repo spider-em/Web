@@ -1,0 +1,205 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.16.59.50;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.07.11.20.19.05;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.07.11.17.28.08;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.01.23.10.21.39;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.02.10.16.53.49;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new routine 
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/changepat.c,v 1.4 1995/07/11 20:19:05 mladjadj Exp $*/
+
+/***********************************************************************
+ *
+ * changepat.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ * 
+ * PURPOSE:  Change current filename search pattern     
+ * 
+ * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
+ *		caddr_t		data		label text string
+ *		caddr_t		call_data	not used 
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/FileSB.h>
+#include "routines.h"
+
+
+ /* internal functions */
+ void            changepat_cb   (Widget, caddr_t, caddr_t);
+
+
+ /* file variables */
+ static char       label_string[] = "Enter new file search string";  
+ static Widget     iw_text = (Widget)0;
+ static int        ixtext = 0;      /* x coord for widget    */
+ static int        iytext = 0;      /* y coord for widget    */
+ 
+
+/************************  changepat  ***********************************/
+
+ void changepat(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+
+ /* create new directory input box */
+ iw_text = wid_text(iw_win, iw_text, label_string, filwant,
+                       *changepat_cb, NULL, ixtext, iytext);
+ }
+
+
+ /**********************  changepat_cb  *********************************/
+
+ void changepat_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+ XmString      txt_string;
+ Arg           args[1];   /* arg list */
+ XmString      str_dir;
+
+ XmSelectionBoxCallbackStruct *cbs =
+      (XmSelectionBoxCallbackStruct *) call_data;
+ 
+ strncpy(filwant,extractstr(cbs -> value),80);
+
+
+ }
+
+@
+
+
+1.4
+log
+@correct type fot iytest & ixtest
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/changepat.c,v 1.3 1995/07/11 17:28:08 mladjadj Exp mladjadj $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.3
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/changepat.c,v 1.2 1995/01/23 10:21:39 leith Exp mladjadj $*/
+d38 2
+a39 2
+ static int        ixtext = (Widget)0;      /* x coord for widget    */
+ static int        iytext = (Widget)0;      /* y coord for widget    */
+@
+
+
+1.2
+log
+@ shortened name of extractstring to extractstr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/changepat.c,v 1.1 94/02/10 16:53:49 leith Exp Locker: leith $*/
+d37 3
+a39 3
+ static Widget     iw_text;
+ static int        ixtext;           /* x coord for widget    */
+ static int        iytext;           /* y coord for widget    */
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d28 1
+a29 4
+ /* function prototypes */
+ extern Widget   wid_text   (Widget, Widget, char *, char *, 
+                             void (*)(),  caddr_t, int, int);
+ extern char *   extractstring (XmString);
+d64 1
+a64 1
+ strncpy(filwant,extractstring(cbs -> value),80);
+@

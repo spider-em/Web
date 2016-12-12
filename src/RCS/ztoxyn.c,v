@@ -1,0 +1,808 @@
+head	1.7;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_surf_fromtop:1.7
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.7
+date	2005.10.18.16.59.52;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2002.05.16.20.22.04;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2001.09.12.14.43.25;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.05.12.12.40.37;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.16.12.47.24;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.14.12.45.25;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.19;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@GPL
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/ztoxyn.c,v 1.6 2002/05/16 20:22:04 leith Exp $*/
+/*
+C++************************************************************************
+C
+C ZTOXYN -- CREATED MAR 90
+C           CONVERTED TO C, JULY 92 al
+C           ADDED Z AXIS SEPT 01 ArDean Leith
+C           SIMPLIFIED MAY 02 al
+C
+C **********************************************************************
+C * WEB.    AUTHOR: ARDEAN LEITH                                       *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C   ZTOXYN(LUNF,NSAM,NSAM1,NSAM2,NROW,NROW1,NROW2,
+C           NSLICE,NSLICE1,NSLICE2,AXIS,NMAX,IRTFLG)
+C
+C    PURPOSE:         DIPLAYING MONTAGE FROM FILE SERIES ON X WORKSTATION
+C                     NORMALIZED SLICE BY SLICE
+C
+C    CALLED BY:       MONT3
+C
+C    NOTES:
+C
+C     AXIS      NEW SECTION         NEW ROW            NEW SAMPLE
+C     ---        -----------     -----------------    --------------
+C      X       (ISAM-NSAM1+1)    (ISLICE-NSLICE1+1)   (IROW-NROW1+1)
+C
+C     LOC = (NEW SECTION-1)*NSAMS*NROWS + (NEW ROW-1)*NSAMS + NEW SAMPLE
+C
+C***********************************************************************
+*/
+
+#include "files.h"
+#include "routines.h"
+#include "common.h"
+
+/**************************  ztoxyn  ********************************/
+
+ int ztoxyn(FILEDATA *filedata, char *cbuf, char axis, int nmaxt, 
+            int iskip, int nmint)
+ {  
+   
+ int        nsamd, nrowd, nsliced;
+ int        locin, locout, i, npixpsl, icon, miskip;
+ int        iskipz, iskipr, icons, irect, ipane, iconr, iloc;
+ int        isam, irow, islice, l, m, ival, igo;
+ float      *buf, *rbuf, *fmint, *fmaxt, tmin, tmax;
+ float      fn, fncon, fval; 
+
+ /* set image size and window */
+
+ if (axis == 'z')
+     {        /* 3-d file with z slice */
+     dispsize(nsam1,nsam2,nrow1,nrow2,nslice1,nslice2,iskip, &nsamd, &nrowd, &nsliced);
+     }
+ else if (axis == 'y')
+     {        /* y slice */
+     dispsize(nsam1,nsam2,nslice1,nslice2,nrow1,nrow2,iskip, &nsamd, &nrowd, &nsliced);
+     }
+ else if (axis == 'x')
+     {        /* x slice */
+     dispsize(nrow1,nrow2,nslice1,nslice2,nsam1,nsam2,iskip, &nsamd, &nrowd, &nsliced);
+     }
+ else
+    { spout(" *** IN ZTOXYN: UNSUPORTED AXIS"); return FALSE; }
+
+ if (iskip > -1 && iskip < 1) iskip = 1;
+ miskip   = abs(iskip);
+ npixpsl  = nrowd * nsamd;
+
+ if (iskip >= 1)
+    {   /* display at full or reduced size */
+    if (axis == 'y')
+       icon = -nrow1 * npixpsl - nslice1 * nsamd / iskip - nsam1 / iskip;  
+    else if (axis == 'x')
+       icon = -nsam1 * npixpsl - nslice1 * nsamd / iskip - nrow1 / iskip;
+    }
+ else if (iskip < -1)
+    {   /* display magnified image */
+    if (axis == 'y')
+       icon = -nrow1 * npixpsl - nslice1 * miskip * nsamd - 1;
+    else
+       icon = -nsam1 * npixpsl - nslice1 * miskip * nsamd -
+               nrow1 * miskip;
+    }
+
+ /* find skip factors for y & z axis */
+ iskipz = MYMAX(1,iskip);
+
+ /* allocate space for range arrays */
+ if (((fmint = (float *) malloc(nsliced * sizeof(float))) == 
+           (float *) 0) ||
+     ((fmaxt = (float *) malloc(nsliced * sizeof(float))) == 
+           (float *) 0) ||
+     ((rbuf  = (float *) malloc(nsliced * nsamd * nrowd * sizeof(float))
+           ) ==  (float *) 0))
+    {  spout(" *** Unable to allocate memory ztoxyn."); return FALSE; }
+
+ /* set up lpointer to redlin array */
+ buf = filedata -> buf;
+
+ for (i=0; i< nsliced; i++)
+    {    /* zero the slice min/max values */
+    fmint[i] = 10e10;  fmaxt[i] = -10e10;
+    }
+
+ for (islice=nslice1; islice<=nslice2; islice+=iskipz)
+   {
+   if (axis == 'y')
+      {                                                          /* y axis slicing */
+      if (iskip < 0)
+         icons = islice * nsamd * miskip + icon;
+      else 
+         icons = islice * nsamd / iskip  + icon;
+
+      for (irow=nrow1; irow <= nrow2; irow+=iskipz)
+         {
+         irect = (islice - 1) * nrow + irow;
+         if (redlin(filedata,buf,nsam,irect) == FALSE) 
+             {free(rbuf); free(fmint); free(fmaxt);return FALSE;}
+
+         ipane = irow - nrow1;
+         tmin  = fmint[ipane];
+         tmax  = fmaxt[ipane];
+
+         if (iskip >= 1)
+            {  /* display full or reduced y slice */
+
+            iconr = irow * npixpsl + icons;
+            
+            for (isam=nsam1; isam <= nsam2; isam+=miskip)
+               {
+               fval       = buf[isam-1];
+               tmin       = MYMIN(fval,tmin);
+               tmax       = MYMAX(fval,tmax);
+
+               iloc       = isam / iskip + iconr;
+               rbuf[iloc] = fval;
+               }         
+            }
+
+         else if (iskip < -1) 
+            {   /*  magnified image y slice */
+
+            iloc = irow * npixpsl + icons;
+            
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               fval  = buf[isam-1];
+               tmin  = MYMIN(fval,tmin);
+               tmax  = MYMAX(fval,tmax);
+
+               for (l = 0; l < miskip; l++)
+                  {
+                  iloc++;
+                  for (m = 0; m < miskip; m++)
+                     rbuf[iloc + m * nsamd] = fval;
+                  }
+               }
+            }
+            fmint[ipane] = tmin;
+            fmaxt[ipane] = tmax;
+         }
+     }
+      
+   else if (axis == 'x')
+      {                                                      /* axis = x */
+      if (iskip >= 1)
+         {   /* full or reduced size x slice */
+         icons = islice * nsamd / iskip + icon;
+
+         for (irow=nrow1; irow <= nrow2; irow+=miskip)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE) 
+               {free(rbuf); free(fmint); free(fmaxt);return FALSE;}
+            iconr = irow / iskip + icons;
+
+            for (isam=nsam1; isam <= nsam2; isam+=miskip)
+               {
+               fval  = buf[isam];
+               ipane = isam - nsam1;
+               fmint[ipane]  = MYMIN(fval,fmint[ipane]);
+               fmaxt[ipane]  = MYMAX(fval,fmaxt[ipane]);
+
+               iloc = isam *npixpsl + iconr;
+               rbuf[iloc] = fval;
+               }         
+            }
+         }
+
+      else if (iskip < -1)
+         {   /* magnifed x slice */ 
+
+         icons = islice * nsamd * miskip + icon;
+
+         for (irow=nrow1; irow <= nrow2; irow++)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE) 
+               {free(rbuf); free(fmint); free(fmaxt);return FALSE;}
+
+            iconr = irow * miskip + icons;
+
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               fval  = buf[isam];
+               ipane = isam - nsam1;
+               fmint[ipane]  = MYMIN(fval,fmint[ipane]);
+               fmaxt[ipane]  = MYMAX(fval,fmaxt[ipane]);
+
+               iloc = isam * npixpsl + iconr;
+
+               for (l = 0; l < miskip; l++)
+                  {
+                  for (m = 0; m < miskip; m++)
+                     rbuf[iloc + m * nsamd] = fval;
+                  iloc++;
+                  }
+               }
+            }
+         }
+      }
+
+   else if (axis == 'z')
+      {                                                                 /* axis  z  */
+      iloc  = (islice - nslice1) * npixpsl;
+
+      ipane = islice - nslice1;
+
+      if (iskip >= 1)
+         {   /* full or reduced size z slice */
+
+         for (irow=nrow1; irow <= nrow2; irow+=miskip)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE) 
+               {free(rbuf); free(fmint); free(fmaxt);return FALSE;}
+
+            for (isam=nsam1; isam <= nsam2; isam+=miskip)
+               {
+               fval         = buf[isam];
+               fmint[ipane] = MYMIN(fval,fmint[ipane]);
+               fmaxt[ipane] = MYMAX(fval,fmaxt[ipane]);
+               rbuf[iloc++] = fval;
+               }
+            }
+         }
+
+      else if (iskip < -1)
+         {   /* magnifed z slice */ 
+
+         for (irow=nrow1; irow <= nrow2; irow++)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE) 
+               {free(rbuf); free(fmint); free(fmaxt);return FALSE;}
+
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               fval         = buf[isam];
+               ipane        = isam - nsam1;
+               fmint[ipane] = MYMIN(fval,fmint[ipane]);
+               fmaxt[ipane] = MYMAX(fval,fmaxt[ipane]);
+
+               for (l = 0; l < miskip; l++)
+                  {
+                  for (m = 0; m < miskip; m++)
+                     rbuf[iloc + m * nsamd] = fval;
+                  iloc++;
+                  }
+               }
+            iloc += nsamd * (miskip - 1);         
+            }
+         }
+      }
+   }
+
+ /* normalize the floating point montage by slice & convert to 8 bits */
+locout = 0;
+
+for (islice=0; islice<nsliced; islice++)
+    {
+    if (abs(fmaxt[islice] - fmint[islice]) < 10e-10)
+       {      /* blank slice */
+       fn    = 0.0;
+       fncon = nmint;
+       }
+    else
+       {      /* FIND SCALE FACTORS FOR IMAGE DENSITY 0...NMAX  */
+       fn    = (nmaxt - nmint) / (fmaxt[islice] - fmint[islice]);
+       fncon = -fn  * fmint[islice] + nmint + 0.5;
+       }
+
+    /* FIND STARTING POSITION IN STORED ARRAY FOR THIS SLICE */
+    igo   = islice * npixpsl;
+
+    if (nmaxt < 128)
+       {
+       for (locin = igo; locin < (igo+npixpsl); locin++)
+              cbuf[locout++] = rbuf[locin] * fn + fncon;
+       }
+    else
+       {
+       for (locin = igo; locin < (igo+npixpsl); locin++)
+          {
+          ival = rbuf[locin] * fn + fncon;
+          if  (ival > 127) ival = ival - 256;
+          cbuf[locout++] = ival;
+          }
+       }
+    }
+
+free(rbuf);
+free(fmint);
+free(fmaxt);
+
+return TRUE;
+}
+
+@
+
+
+1.6
+log
+@size bug fix & improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/ztoxyn.c,v 1.5 2001/09/12 14:43:25 leith Exp leith $*/
+d13 23
+a35 5
+C * COPYRIGHT (C)1990, 2001. HEALTH RESEARCH INCORPORATED (HRI),       *
+C * ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                   *
+C * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO HRI AND ARE NOT   *
+C * TO BE DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED *
+C * WITHOUT WRITTEN APPROVAL OF HRI.                                   *
+@
+
+
+1.5
+log
+@added volume movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/ztoxyn.c,v 1.4 94/05/12 12:40:37 leith Exp $*/
+d9 1
+d41 1
+d45 2
+a46 5
+ int ztoxyn(FILEDATA *filedata,       char *cbuf,
+             int nsam,   int nsam1,   int nsam2,
+             int nrow,   int nrow1,   int nrow2,
+             int nslice, int nslice1, int nslice2,
+             char axis,  int nmaxt,   int iskip, int nmint)
+d49 4
+a52 4
+ int        nsami, nrowi, nslices;
+ int        locin, locout, i, npixpsl, icon, nsamu, nrowu, miskip;
+ int        miskipm1, iskipz, icons, irect, ipane, iconr, iloc;
+ int        isam, irow, islice, l, m, nsliceu, ival, igo;
+d56 6
+a61 6
+ if (axis == 'x')
+    {
+    nsami   = nrow2 - nrow1 + 1;
+    nrowi   = nslice2 - nslice1 + 1;
+    nslices = nsam2 - nsam1 + 1;
+    }
+d63 7
+a69 11
+    {
+    nsami   = nsam2 - nsam1 + 1;
+    nrowi   = nslice2 - nslice1 + 1;
+    nslices = nrow2 - nrow1 + 1;
+    } 
+ else if (axis == 'z')
+    {
+    nsami   = nsam2 - nsam1 + 1;
+    nrowi   = nrow2 - nrow1 + 1;
+    nslices = nslice2 - nslice1 + 1;
+    }
+d73 3
+d77 2
+a78 3
+ if (iskip == 1)
+    {    /* display full size */
+    npixpsl = nrowi * nsami;
+d80 1
+a80 16
+       icon = -nrow1 * npixpsl - nslice1 * nsami - nsam1;
+    else 
+       icon = -nsam1 * npixpsl - nslice1 * nsami - nrow1;
+    }
+ else if (iskip > 1)
+    {   /* display at reduced size */
+    nsami = nsami / iskip;
+    nrowi = nrowi / iskip;
+    npixpsl = nrowi * nsami;
+
+    if (axis == 'y')
+       {
+       icon = -nrow1 * npixpsl - nslice1 * nsami / iskip - 
+               nsam1 / iskip;  
+       nsamu = nsam2 - (nsam2 - nsam1 + 1) % iskip - iskip;
+       }
+d82 1
+a82 5
+       {
+       icon = -nsam1 * npixpsl - nslice1 * nsami / iskip -
+               nrow1 / iskip;
+       nrowu = nrow2 - (nrow2-nrow1+1) % iskip - iskip + 1;
+       }
+a85 5
+    miskip  = -iskip;
+    miskipm1= miskip - 1;
+    nsami   = nsami * miskip;
+    nrowi   = nrowi * miskip;
+    npixpsl = nrowi * nsami;
+d87 1
+a87 1
+       icon = -nrow1 * npixpsl - nslice1 * miskip * nsami - 1;
+d89 1
+a89 1
+       icon = -nsam1 * npixpsl - nslice1 * miskip * nsami -
+a91 5
+ else
+    {
+    spout("*** Invalid iskip in ztoxyn");
+    return FALSE;
+    }
+d93 1
+a93 1
+ /* find skip factors for z axis */
+a94 6
+ 
+ /* find upper end of col. series */
+ if (iskip > 1)
+    nsliceu = nslice2 - (nslice2-nslice1+1) % iskip - iskip + 1;
+ else
+    nsliceu = nslice2;
+d97 1
+a97 1
+ if (((fmint = (float *) malloc(nslices * sizeof(float))) == 
+d99 1
+a99 1
+     ((fmaxt = (float *) malloc(nslices * sizeof(float))) == 
+d101 1
+a101 1
+     ((rbuf  = (float *) malloc(nslices * nsami * nrowi * sizeof(float))
+d108 1
+a108 1
+ for (i=0; i< nslices; i++)
+d113 1
+a113 1
+ for (islice=nslice1; islice<=nsliceu; islice=islice+iskipz)
+d116 1
+a116 1
+      {    /* y axis slicing */
+d118 3
+a120 5
+         icons = islice * nsami * miskip + icon;
+      else if (iskip > 1)
+         icons = islice * nsami / iskip  + icon;
+      else
+         icons = islice * nsami          + icon;
+d122 1
+a122 1
+      for (irow=nrow1; irow <= nrow2; irow++)
+d129 2
+a130 2
+         tmin = fmint[ipane];
+         tmax = fmaxt[ipane];
+d132 2
+a133 2
+         if (iskip == 1)
+            {  /* display full size y slice */
+a135 14
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               fval  = buf[isam-1];
+               tmin  = MYMIN(fval,tmin);
+               tmax  = MYMAX(fval,tmax);
+
+               iloc  = isam + iconr;
+               rbuf[iloc] = fval;
+               }         
+            }  
+ 
+         else if (iskip > 1) 
+            {   /* display reduced size image y slice */
+            iconr = irow * npixpsl + icons;
+d137 1
+a137 1
+            for (isam=nsam1; isam <= nsamu; isam=isam+iskip)
+d139 3
+a141 3
+               fval  = buf[isam-1];
+               tmin  = MYMIN(fval,tmin);
+               tmax  = MYMAX(fval,tmax);
+d143 1
+a143 1
+               iloc = isam / iskip + iconr;
+d149 1
+a149 1
+            {   /* display magnified image y slice */
+d159 1
+a159 1
+               for (l = 1; l <= miskip; l++)
+d162 2
+a163 2
+                  for (m = 0; m <= miskipm1; m++)
+                     rbuf[iloc + m * nsami] = fval;
+d173 4
+a176 28
+      { 
+      if (iskip ==1)
+         {   /* full size x slice */
+         icons = islice * nsami + icon;
+
+         for (irow=nrow1; irow <= nrow2; irow++)
+            {
+            irect = (islice - 1) * nrow + irow;
+            if (redlin(filedata,buf,nsam,irect) == FALSE) 
+               {free(rbuf); free(fmint);free(fmaxt);return FALSE;}
+
+            iconr = irow + icons;
+
+            for (isam=nsam1; isam <= nsam2; isam++)
+               {
+               fval  = buf[isam];
+               ipane = isam - nsam1;
+               fmint[ipane]  = MYMIN(fval,fmint[ipane]);
+               fmaxt[ipane]  = MYMAX(fval,fmaxt[ipane]);
+
+               iloc = isam *npixpsl + iconr;
+               rbuf[iloc] = fval;
+               }         
+            }  
+         }
+      else if (iskip > 1)
+         {   /* reduced size x slice */
+         icons = islice * nsami / iskip + icon;
+d178 1
+a178 1
+         for (irow=nrow1; irow <= nrowu; irow=irow+iskip)
+d185 1
+a185 1
+            for (isam=nsam1; isam <= nsam2; isam++)
+d201 1
+a201 1
+         icons = islice * nsami * miskip + icon;
+d220 1
+a220 1
+               for (l = 1; l <= miskip; l++)
+d222 2
+a223 2
+                  for (m = 0; m <= miskipm1; m++)
+                     rbuf[iloc + m * nsami] = fval;
+d232 1
+a232 1
+      {                                                  /*** z ***/
+d238 1
+a238 1
+         {   /* full or reduced size x slice */
+d240 1
+a240 1
+         for (irow=nrow1; irow <= nrow2; irow=irow+iskip)
+d246 1
+a246 1
+            for (isam=nsam1; isam <= nsam2; isam=isam+iskip)
+d252 1
+a252 1
+               }         
+d272 1
+a272 1
+               for (l = 1; l <= miskip; l++)
+d274 2
+a275 2
+                  for (m = 0; m <= miskipm1; m++)
+                     rbuf[iloc + m * nsami] = fval;
+d279 1
+d288 1
+a288 1
+for (islice=0; islice<nslices; islice++)
+@
+
+
+1.4
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/ztoxyn.c,v 1.3 94/02/16 12:47:24 leith Exp Locker: leith $*/
+d7 2
+a8 10
+C               CONVERTED TO C, JULY 92 al
+C **************************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+C *  COPYRIGHT (C)1990 , WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+d10 9
+a47 1
+
+d50 1
+a50 1
+ int        nsami, nrowi, nslices, iconx, icony, iconz;
+d166 1
+a166 2
+             {free(rbuf); 
+              free(fmint); free(fmaxt);return FALSE;}
+d236 1
+a236 2
+               {free(rbuf); 
+                free(fmint);free(fmaxt);return FALSE;}
+d260 1
+a260 2
+               {free(rbuf); free(fmint); 
+                free(fmaxt);return FALSE;}
+d285 1
+a285 2
+               {free(rbuf); free(fmint); 
+                free(fmaxt);return FALSE;}
+d297 52
+@
+
+
+1.3
+log
+@#include must be at left
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/ztoxyn.c,v 1.2 94/02/14 12:45:25 leith Exp Locker: leith $*/
+d38 1
+d40 1
+a40 1
+ /* function prototypes */
+a41 6
+ extern int   redlin(FILEDATA *, float *, int, int);
+ extern void  spout(char *);
+
+
+/**********************************************************/
+
+d46 1
+a46 1
+             char axis,  int nmax,    int iskip, int mapgo)
+d121 1
+a121 1
+    spout("*** invalid iskip in ztoxyn");
+d124 1
+d322 1
+a322 1
+       fncon = mapgo;
+d326 2
+a327 2
+       fn    = (nmax - mapgo) / (fmaxt[islice] - fmint[islice]);
+       fncon = -fn  * fmint[islice] + mapgo + 0.5;
+d333 1
+a333 1
+    if (nmax < 128)
+@
+
+
+1.2
+log
+@replaced MIN,MAX with MYMIN,MYMAX
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/ztoxyn.c,v 1.1 93/11/10 10:11:19 leith Exp Locker: leith $*/
+d37 1
+a37 1
+ #include "files.h"
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d130 1
+a130 1
+ iskipz = MAX(1,iskip);
+d184 2
+a185 2
+               tmin  = MIN(fval,tmin);
+               tmax  = MAX(fval,tmax);
+d199 2
+a200 2
+               tmin  = MIN(fval,tmin);
+               tmax  = MAX(fval,tmax);
+d215 2
+a216 2
+               tmin  = MIN(fval,tmin);
+               tmax  = MAX(fval,tmax);
+d250 2
+a251 2
+               fmint[ipane]  = MIN(fval,fmint[ipane]);
+               fmaxt[ipane]  = MAX(fval,fmaxt[ipane]);
+d274 2
+a275 2
+               fmint[ipane]  = MIN(fval,fmint[ipane]);
+               fmaxt[ipane]  = MAX(fval,fmaxt[ipane]);
+d301 2
+a302 2
+               fmint[ipane]  = MIN(fval,fmint[ipane]);
+               fmaxt[ipane]  = MAX(fval,fmaxt[ipane]);
+@

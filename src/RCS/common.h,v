@@ -1,0 +1,683 @@
+head	1.24;
+access;
+symbols
+	pre-tilt-improve:1.22
+	pre_neednewmap:1.20
+	pre_tiltpair_chng:1.19
+	pre_GPL:1.17;
+locks;
+comment	@ * @;
+
+
+1.24
+date	2015.09.01.17.51.23;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2015.09.01.16.18.43;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2011.09.26.13.16.58;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2011.09.21.13.45.40;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2011.07.26.14.26.51;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2011.05.27.13.39.41;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2007.11.01.19.32.23;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	99.09.30.13.29.46;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	98.02.05.22.21.05;	author liy;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	97.09.09.19.46.39;	author liy;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	97.04.16.17.53.18;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	96.07.26.17.27.35;	author mladjadj;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.03.29.17.22.44;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.01.25.20.27.49;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.10.24.20.23.31;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.07.21.20.15.53;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.09.12.14.24.38;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.05.12.12.39.45;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.03.02.12.09.57;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.02.16.10.34.04;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.02.10.16.34.22;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.12.31.13.31.20;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.14.46.03;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.15.42;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.24
+log
+@$2
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/common.h,v 1.22 2011/09/26 13:16:58 leith Exp $*/
+
+#include "std.h"
+#include "files.h"
+#include "x.h"
+
+#ifndef COMMONH
+#define COMMONH
+
+#define MAXCOL   256 
+#define MAXCOLSPI 8
+
+// Used for resetting buttons in shift.c
+#define TILT	1
+#define IMAGE	2
+#define MARKER 	3
+#define	PIXEL	4
+#define	MASK	5
+
+ extern Display        *idispl;           /* current display               */
+ extern Screen         *iscreen;          /* current screen                */ 
+
+ extern Widget         iw_top;            /* top widget                    */
+ extern Widget         iw_main ;          /* main box widget               */
+ extern Widget         iw_menub;          /* menu bar widget               */
+ extern Widget         iw_win;            /* image display widget          */
+ extern Widget         iw_files;          /* file selection widget         */      
+ extern Widget         iw_filesnol;       /* no list file widget           */      
+ extern Widget         iw_scroll;         /* scrolled output widget        */
+ extern Widget         iw_scrollpar;      /* parent scrolled output widget */
+
+ extern int            idepth;            /* display window depth          */
+ extern unsigned int   ihighx, iwidex;    /* display window X & Y dim      */
+ extern int            ixulx, iyulx;      /* display window location       */
+ extern GC             icontx;            /* usual graphics context        */
+ extern Window         iwin, iroot,iwtop; /* image, root & top windows     */
+ extern Pixmap         imagsav;           /* image backing store           */
+ extern Colormap       map;               /* current colormap              */
+ extern Visual         *visual;           /* visual                        */
+ extern int            mapgo,mapend;      /* start & end of colormap       */
+ extern int            ngo,nend;          /* image start & end in colormap */
+ extern int            colorgo,colorend;  /* color start & end in colormap */
+ extern int            nmax;              /* normalization range           */
+ extern int            imagego;           /* start normalization range     */
+ extern int            imageend;          /* end normalization range       */
+ extern int            icolor;            /* current color number          */
+ extern int            icolorx;           /* current x color number        */
+ extern int            icolorb;           /* current background            */
+ extern int            icolorxb;          /* current x background          */
+ extern int            icolorcf;          /* current curs. foreground      */
+ extern int            icolorxcf;         /* current x curs. foreground    */
+ extern int            icolorcb;          /* current curs. background      */
+ extern int            icolorxcb;         /* current x curs. background    */
+ extern int            icolorov;          /* current overlay color         */
+ extern int            icolorxov;         /* current x overlay color       */
+ extern unsigned long  icolorxmb;         /* current x menu background     */
+ extern unsigned long  icolorxmf;         /* current x menu foreground     */
+ extern unsigned long  ispicol[MAXCOL];   /* spider color array            */
+ extern int            ispicoln[MAXCOL];  /* spider color indices          */
+ extern int            ncolors;           /* number of defined colors      */
+ extern int            icursor;           /* current spider cursor         */
+ extern Cursor         icursorx;          /* current x cursor number       */
+ extern XColor         colorcursf;        /* cursor foreground color       */
+ extern XColor         colorcursb;        /* cursor background color       */
+
+ extern int            ioper;             /* current operation #           */
+    
+ extern char           dirnow[81];        /* current directory             */ 
+ extern char           lutdir[81];        /* lut directory                 */ 
+ extern char           datexc[4];         /* file extension                */
+ extern char           filwant[81];       /* file search pattern           */
+ extern char           filnow[81];        /* name of last image file       */ 
+ extern char           filnext[81];       /* name of next image file       */ 
+ extern char           winnam[81];        /* name of last window file      */ 
+ extern char           docnam[81];        /* name of last doc file         */ 
+ extern FILEDATA *     filedata;          /* current image file info       */
+ extern int            ixul,iyul;         /* upper left corner last image  */
+ extern int            ixuln,iyuln;       /* corner of next image          */
+ extern int            nsam,nrow,nslice;  /* current image size            */
+ extern float          scaleval;          /* current scaling value         */
+ extern double         fmin_spi,fmax_spi; /* image min & max               */
+ extern int            islice;            /* current slice                 */
+ extern float          param[102];        /* Spider registers              */
+
+ extern int            nsam1,nsam2;       /* column range                  */
+ extern int            nrow1,nrow2;       /* row range                     */
+ extern int            nslice1,nslice2;   /* slice range                   */
+ extern char           axis;              /* slice axis                    */
+ extern int            xaxis,yaxis,zaxis; /* axis selected                 */
+ extern int            nprow;             /* pictures / row                */
+ extern int            normit;            /* normalize by slice            */
+
+ extern int            ntop,nbot,nrit;    /* top, bottem & rit side        */
+ extern int            nstack;		  /* stack file indicator          */
+ extern int            inuse;		  /* stacked file inuse            */
+ extern int            maxim;		  /* max. imgage in stack file     */
+ extern int            imginstack;	  /* stacked image number          */
+ extern int	       marker;		  /* set marker flag 	           */
+ extern int            marlef,martop;     /* left and top window margins   */
+ extern int            marx,mary;         /* x & y image margins           */
+ extern int            newline,nuscrn;    /* new line & screen flags       */
+ extern int	       ntimg;		  /* start next image (marker      */
+ extern int            names;             /* print image names flag        */
+ extern int            names_height;      /* pixel height of image filename*/
+ extern int            iskip;             /* image mag. factor             */
+ extern int            lastskip;          /* last image mag. factor        */
+ extern int            movie;             /* image movie flag              */
+ extern int            placed;            /* image position sent flag      */
+ extern int            force;             /* force images / row flag       */
+ extern int            listfi;            /* list files in selector        */
+ extern int            trace_web;         /* make a web_results file       */
+ extern int            keepxy;            /* retain values of x & y        */
+ extern int            gotsurf;           /* surface in memory             */
+ extern int            samefile;          /* filnex == filnow              */
+ extern int            ixulw,iyulw;       /* window position               */
+ extern int            nsamw,nroww;       /* window size                   */
+ extern int            leavit,sayit;      /* window data flags             */
+ extern int            inimag;            /* inside image data only        */
+ extern int            getscreen;         /* get screen pixel value        */
+ extern int            getfile;           /* get file pixel value          */
+ extern int            docit;             /* store data in doc file        */
+ extern int            iradius;           /* location radius               */
+ extern int            ikey;              /* doc  file key                 */
+ extern int            ikeyc;             /* doc  file key for categorizing*/
+ extern int            drawing;           /* flag for xor drawing          */
+
+ extern float          refl, fct;         /* surface rendering param       */
+ extern int            shiftimg;          /* shift the image               */
+ extern XColor         colort[MAXCOL];    /* temporary color array         */
+
+ extern int            magsizx;           /* magnification size (x)        */
+ extern int            magsizy;           /* magnification size (y)        */
+ extern int            magfac;            /* magnification factor          */
+ extern int            nsam8,nrow8,nslice8; /* size of raw files           */
+ extern int	       show_num;	  /* show marker number            */
+
+ extern Boolean        neednewmap;        /* update vmap */
+
+ extern XImage  *      imagel, * imager;  /* image pointers */         
+ extern int            nsaml,nrowl,nsamr,nrowr;
+ extern int            nsam1l,nrow1l,nsam2l,nrow2l;
+ extern int            nsam1r,nrow1r,nsam2r,nrow2r;
+ extern int            ixull, iyull, ixulr, iyulr;
+ extern int            ixulli,iyulli,ixulri,iyulri;
+ extern int            ixullmin,ixlrlmax,iyullmin,iylrlmax;
+ extern int            ixulrmin,ixlrrmax,iyulrmin,iylrrmax;
+
+#endif
+@
+
+
+1.23
+log
+@cosmetic
+@
+text
+@d11 1
+a11 1
+#define MAXCOL   256
+@
+
+
+1.22
+log
+@added ngo,nend
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/common.h,v 1.21 2011/09/21 13:45:40 leith Exp leith $*/
+d15 1
+d140 1
+a140 1
+ extern XImage  *      imagel, * imager;  /* image pointers                */         
+@
+
+
+1.21
+log
+@added extern Boolean        neednewmap
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/common.h,v 1.20 2011/07/26 14:26:51 leith Exp leith $*/
+d40 2
+a41 1
+ extern int            mapgo,mapend;      /* image start & end in colormap */
+@
+
+
+1.20
+log
+@removed mapover
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/common.h,v 1.19 2011/05/27 13:39:41 leith Exp leith $*/
+d136 2
+@
+
+
+1.19
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header:  $*/
+a126 1
+ extern Colormap       mapover;           /* overlay colormap              */
+@
+
+
+1.18
+log
+@fmin -> fmin_spi
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/common.h,v 1.17 1999/09/30 13:29:46 leith Exp $*/
+d11 2
+a12 2
+#define MAXCOL  248
+#define MAXCOLS 255
+d14 1
+d18 1
+d20 2
+a21 2
+ extern Display        *idispl;           /* current display         */
+ extern Screen         *iscreen;          /* current screen          */ 
+d23 6
+a28 6
+ extern Widget         iw_top;            /* top widget              */
+ extern Widget         iw_main ;          /* main box widget         */
+ extern Widget         iw_menub;          /* menu bar widget         */
+ extern Widget         iw_win;            /* image display widget    */
+ extern Widget         iw_files;          /* file selection widget   */      
+ extern Widget         iw_filesnol;       /* no list file widget     */      
+d32 8
+a39 6
+ extern int            idepth;            /* display window depth    */
+ extern unsigned int   ihighx, iwidex;    /* display window X & Y dim*/
+ extern int            ixulx, iyulx;      /* display window location  */
+ extern GC             icontx;            /* usual graphics context   */
+ extern Window         iwin, iroot, iwtop; /* image, root & top windows */
+ extern Pixmap         imagsav;           /* image backing store      */
+d42 94
+a135 93
+ extern int            nmax;              /* normalization range      */
+ extern int            imagego;           /* start normalization range*/
+ extern int            imageend;          /* end normalization range  */
+ extern Colormap       map;               /* current colormap         */
+ extern Visual         *visual;           /* visual                   */
+ extern int            icolor;            /* current color number     */
+ extern int            icolorx;           /* current x color number   */
+ extern int            icolorb;           /* current background       */
+ extern int            icolorxb;          /* current x background     */
+ extern int            icolorcf;          /* current curs. foreground */
+ extern int            icolorxcf;         /* current x curs. foreground*/
+ extern int            icolorcb;          /* current curs. background */
+ extern int            icolorxcb;         /* current x curs. background*/
+ extern int            icolorov;          /* current overlay color    */
+ extern int            icolorxov;         /* current x overlay color  */
+ extern int            ispicol[MAXCOL];   /* spider color array       */
+ extern int            ncolors;           /* number of defined colors */
+ extern int            icursor;           /* current spider cursor    */
+ extern Cursor         icursorx;          /* current x cursor number  */
+ extern XColor         colorcursf;        /* cursor foreground color  */
+ extern XColor         colorcursb;        /* cursor background color  */
+
+ extern int            ioper;             /* current operation #      */
+ 
+ extern char           dirnow[81];        /* current directory        */ 
+ extern char           lutdir[81];        /* lut directory            */ 
+ extern char           datexc[4];         /* file extension           */
+ extern char           filwant[81];       /* file search pattern      */
+ extern char           filnow[81];        /* name of last image file  */ 
+ extern char           filnext[81];       /* name of next image file  */ 
+ extern char           winnam[81];        /* name of last window file */ 
+ extern char           docnam[81];        /* name of last doc file    */ 
+ extern FILEDATA *     filedata;          /* current image file info  */
+ extern int            ixul,iyul;         /* upper left corner last image */
+ extern int            ixuln,iyuln;       /* corner of next image     */
+ extern int            nsam,nrow,nslice;  /* current image size       */
+ extern float          scaleval;          /* current scaling value    */
+ extern double         fmin_spi,fmax_spi; /* image min & max          */
+ extern int            islice;            /* current slice            */
+ extern float          param[102];        /* Spider registers         */
+
+ extern int            nsam1,nsam2;       /* column range             */
+ extern int            nrow1,nrow2;       /* row range                */
+ extern int            nslice1,nslice2;   /* slice range              */
+ extern char           axis;              /* slice axis               */
+ extern int            xaxis,yaxis,zaxis; /* axis selected            */
+ extern int            nprow;             /* pictures / row           */
+ extern int            normit;            /* normalize by slice       */
+
+ extern int            ntop,nbot,nrit;    /* top, bottem & rit side   */
+ extern int            nstack;		  /* stack file indicator     */
+ extern int            inuse;		  /* stacked file inuse       */
+ extern int            maxim;		  /* max. imgage in stack file*/
+ extern int            imginstack;	  /* stacked image number      */
+ extern int	       marker;		  /* set marker flag 	      */
+ extern int            marlef,martop;     /* left and top window margins */
+ extern int            marx,mary;         /* x & y image margins      */
+ extern int            newline,nuscrn;    /* new line & screen flags  */
+ extern int	       ntimg;		  /* start next image (marker */
+ extern int            names;             /* print image names flag   */
+ extern int            names_height;      /* pixel height of image filename */
+ extern int            iskip;             /* image mag. factor        */
+ extern int            lastskip;          /* last image mag. factor   */
+ extern int            movie;             /* image movie flag         */
+ extern int            placed;            /* image position sent flag */
+ extern int            force;             /* force images / row flag  */
+ extern int            listfi;            /* list files in selector   */
+ extern int            trace_web;         /* make a web_results file  */
+ extern int            keepxy;            /* retain values of x & y   */
+ extern int            gotsurf;           /* surface in memory        */
+ extern int            samefile;          /* filnex == filnow         */
+ extern int            ixulw,iyulw;       /* window position          */
+ extern int            nsamw,nroww;       /* window size              */
+ extern int            leavit,sayit;      /* window data flags        */
+ extern int            inimag;            /* inside image data only   */
+ extern int            getscreen;         /* get screen pixel value   */
+ extern int            getfile;           /* get file pixel value     */
+ extern int            docit;             /* store data in doc file   */
+ extern int            iradius;           /* location radius          */
+ extern int            ikey;              /* document file key        */
+ extern int            ikeyc;             /* document file key for categorizing*/
+ extern int            drawing;           /* flag for xor drawing     */
+
+ extern float          refl, fct;         /* surface rendering param  */
+ extern Colormap       mapover;           /* overlay colormap         */
+ extern int            shiftimg;             /* shift the image          */
+ extern XColor         colort[MAXCOL];    /* temporary color array    */
+
+ extern int            magsizx;           /* magnification size (x)   */
+ extern int            magsizy;           /* magnification size (y)   */
+ extern int            magfac;            /* magnification factor     */
+ extern int            nsam8,nrow8,nslice8; /* size of raw files      */
+ extern int	       show_num;	  /* show marker number */
+d137 1
+a137 1
+ extern XImage  *      imagel, * imager;  /* image pointers           */         
+@
+
+
+1.17
+log
+@added imginstack
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/common.h,v 1.16 1998/02/05 22:21:05 liy Exp leith $*/
+d75 1
+a75 1
+ extern double         fmin,fmax;         /* image min & max          */
+@
+
+
+1.16
+log
+@changes for stack files
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/common.h,v 1.15 1997/09/09 19:46:39 liy Exp $*/
+d88 4
+a91 3
+ extern int            nstack;		/* vars for stack file   */
+ extern int            inuse;		/* vars for stack file   */
+ extern int            maxim;		/* vars for stack file   */
+@
+
+
+1.15
+log
+@added ikeyc for categorization to get accumulatedkey number
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/common.h,v 1.14 1997/04/16 17:53:18 leith Exp liy $*/
+d88 3
+@
+
+
+1.14
+log
+@aeed -trace to command line
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/common.h,v 1.13 1996/07/26 17:27:35 mladjadj Exp leith $*/
+d114 1
+@
+
+
+1.13
+log
+@added names_height for img name display
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/common.h,v 1.12 1996/03/29 17:22:44 leith Exp $*/
+d101 1
+@
+
+
+1.12
+log
+@added iw_filesnol
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/common.h,v 1.11 1996/01/25 20:27:49 leith Exp leith $*/
+d94 1
+@
+
+
+1.11
+log
+@for defaults and command lines
+@
+text
+@d2 1
+a2 1
+/*$Header: $*/
+d26 1
+@
+
+
+1.10
+log
+@added flags <ntimg> & <shownum> for marker program
+@
+text
+@d2 2
+d11 1
+a11 1
+#define MAXCOL 248
+d26 2
+@
+
+
+1.9
+log
+@added shift image function
+@
+text
+@d87 1
+d118 1
+@
+
+
+1.8
+log
+@added colorend,colorgo
+@
+text
+@d12 4
+d83 1
+d110 1
+@
+
+
+1.7
+log
+@ used imagego...imageend
+@
+text
+@d10 1
+d28 1
+@
+
+
+1.6
+log
+@added nsam8
+@
+text
+@d28 2
+@
+
+
+1.5
+log
+@removed color[] as it was unused
+@
+text
+@d106 1
+@
+
+
+1.4
+log
+@added filwant
+@
+text
+@a45 1
+ extern XColor         colors[MAXCOL];    /* default colormap colors  */
+@
+
+
+1.3
+log
+@added scalval
+@
+text
+@d50 2
+a51 1
+ extern char           lutdir[81];        /* lut directory    */ 
+d53 1
+@
+
+
+1.2
+log
+@added ixull etc
+@
+text
+@d60 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d105 9
+@

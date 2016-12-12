@@ -1,0 +1,266 @@
+head	1.4;
+access;
+symbols
+	pre-tilt-improve:1.4
+	pre_surf_fromtop:1.4
+	pre_neednewmap:1.4
+	pre_apppluss_remove:1.4
+	pre_tiltpair_chng:1.4
+	pre_GPL:1.2;
+locks;
+comment	@ * @;
+
+
+1.4
+date	2011.05.05.12.05.27;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.17.00.05;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.09.06.16.27.05;	author mladjadj;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.30;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@-cmap_changes_etc
+@
+text
+@
+/*$Header:  Exp $*/
+/*
+C***************************************************************************
+C
+C RUBBERLINE  -- CREATED DEC 89 as WID_RUBR.FOR
+C                ALTERED FOR WIDGETS MAR 91 al
+C                CONVERTED TO C OCT 92 al
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C RUBBERLINE
+C
+C PURPOSE:      Draws rubber band lines 
+C
+C PARAMETERS:   none
+C
+C CALLED BY:    web_com
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+ 
+ /* internal subroutines */
+ void rubber_pop(Widget, XEvent *, String *, Cardinal *);
+ 
+ /* global variables */
+ static int firstpt;
+ static int ix1, iy1, ix2, iy2;
+
+
+/*********************  rubberline  *******************************/
+
+ void rubberline(void)
+ {
+ 
+ /* open a message window with the following strings */
+ showbutx("Starts / sets line segment.", 
+          NULL, 
+          "Stop this routine.", FALSE);
+
+
+ /* set the actions for right, left, and center buttons */
+ actions(iw_win, "rubber_pop",rubber_pop,"M13");
+
+ /* set first point flag */
+ firstpt = TRUE;
+ }
+
+
+ /**************** rubber_pop  (draw rubber lines)  ***************/
+
+
+ void rubber_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+ if (!(strcmp(*params,"M")))                 /* cursor moved */
+    {
+    /* get mouse position ix2,iy2  */
+    getloc(event,'M',&ix2,&iy2);
+
+    if (!firstpt)
+       {
+       /* already have line, mouse moved, so erase and draw new line */
+       /* Copy backing store to image window & draw new line on screen */
+       wirubberline(iwin,icontx,TRUE,FALSE,ix1,iy1,ix2,iy2);
+       }
+    }
+
+ else if (!(strcmp(*params,"1")))            /* button 1 pushed */ 
+    {
+    /* get mouse position ix2,iy2  */
+    getloc(event,'M',&ix2,&iy2);
+
+    if (firstpt)
+       firstpt = FALSE;
+    else
+       {   /* draw permanent line to this location */
+       /* Draw permanent line to backing store and copy to screen */
+       wirubberline(iwin,icontx,TRUE,TRUE,ix1,iy1,ix2,iy2);
+       }
+    ix1 = ix2;
+    iy1 = iy2;
+    }
+ 
+ else if (!(strcmp(*params,"3")))          /* button 3 pushed */        
+    {                                       
+
+    /* Erase current bar from screen */
+    wirubberline(iwin,icontx,FALSE,FALSE,ix1,iy1,ix2,iy2);
+
+    /* uninstall translations */
+    XtUninstallTranslations(iw_t);
+ 
+    /* unmanage information box */
+    showbutx("","","",TRUE);
+
+    /* reset first point jflag */
+    firstpt = TRUE;
+
+    return;
+    }
+ }
+@
+
+
+1.3
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/rubberline.c,v 1.2 1995/09/06 16:27:05 mladjadj Exp $*/
+d38 1
+a38 1
+C PURPOSE:      DRAWS RUBBER BAND LINES 
+d40 1
+a40 1
+C PARAMETERS:   NONE
+d42 1
+a42 1
+C CALLED BY:    WEB_COM
+a46 2
+#include "std.h"
+#include "x.h"
+d48 1
+a48 7
+
+ /* external subroutines */
+ extern void     xorline    (Window, GC, int, int, int, int, int);
+ extern GC       setxor     (GC);
+ extern void     showbutx   (char *, char *, char *, int);
+ extern void     actions    (Widget, char *, void (*)(), char *);
+ extern void     getloc     (XEvent *, char, int *, int *);
+a53 1
+ static GC  icontxx;
+a57 1
+
+a71 3
+ /* turn on xor wiriting in icontxx */
+ icontxx = setxor(icontx);
+
+a82 1
+
+d91 2
+a92 1
+       xorline(iwin,icontxx,FALSE,ix1,iy1,ix2,iy2);
+d105 2
+a106 3
+       xorline(iwin,icontx,TRUE,ix1,iy1,ix2,iy2);
+       /* save line in backing store */
+       xorline(imagsav,icontx,TRUE,ix1,iy1,ix2,iy2);
+d115 2
+a116 4
+    /* erase old line and cancel this routine */
+    xorline(iwin,icontxx,TRUE,ix1,iy1,ix2,iy2);
+
+    XFreeGC(idispl,icontxx);
+@
+
+
+1.2
+log
+@remove XtUninstallTranslations
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/rubberline.c,v 1.1 93/11/10 10:11:30 leith Exp $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1989, WADWSWORTH CENTER FOR LABORATORIES AND RESEARCH,  *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a60 2
+ /* remove all translations from iw_win */
+ XtUninstallTranslations(iw_win);
+@

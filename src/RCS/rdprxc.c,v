@@ -1,0 +1,221 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.4
+	pre_neednewmap:1.4
+	pre_apppluss_remove:1.4
+	pre_tiltpair_chng:1.4
+	pre_GPL:1.3;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2015.08.03.18.50.32;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.10.18.16.59.43;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	96.05.14.15.48.06;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.02.08.16.41.26;	author liy;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.44;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@typo fixed
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/rdprxc.c,v 1.4 2005/10/18 16:59:43 leith Exp $*/
+/*
+C++************************************************************************
+C
+C RDPRXC
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C RDPRXC
+C
+C PURPOSE:         GET STRING VALUE FROM TEXT WIDGET 
+C
+C PARAMETERS:      
+C
+C CALLED BY:       
+C
+C***********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+#include <Xm/Text.h>
+
+extern void   spout         (char *);
+extern void   spouts        (char *);
+extern void   spouti        (int);
+
+
+ /******************  rdprxc  *******************************/
+
+ int rdprxc(Widget iw_t, char * astring, int slen)
+
+ {  
+ char * astringt;
+ size_t slent;
+
+ if (iw_t == (Widget) 0) 
+    {
+    spout("*** Pgm error, ivalid Widget in rdprxc!");
+    return 0;
+    }
+
+ astringt = XmTextGetString(iw_t);
+ slent    = strlen(astringt);
+
+ /* slen is available length including null for astring */
+ if (slent >= slen)
+    {
+    spouts("*** String length limited to: "); spouti(slen-1); spout(" ");
+    XtFree(astringt);
+    return 0;
+    }
+
+ strcpy(astring,astringt);
+
+ XtFree(astringt);
+ return (int) slent;
+ }
+ 
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/rdprxc.c,v 1.3 1996/05/14 15:48:06 leith Exp $*/
+d75 1
+a75 1
+    spouts("*** Sring length limited to: "); spouti(slen-1);
+@
+
+
+1.3
+log
+@changed rdprxc parameters
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/rdprxc.c,v 1.2 1995/02/08 16:41:26 liy Exp leith $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.2
+log
+@modified (int)structure for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/rdprxc.c,v 1.1 1993/11/10 10:11:44 leith Exp liy $*/
+d34 2
+d38 1
+a38 1
+ /******************  rdprx   *******************************/
+d40 1
+a40 1
+ int rdprxc(Widget iw_t, char * string)
+d43 2
+a44 2
+ 
+ char * stringt;
+d46 1
+a46 1
+ if (iw_t <= (Widget)0) 
+d48 1
+a48 1
+    spout("*** pgm error, ivalid Widget in rdprxc!");
+d52 2
+a53 2
+ stringt = XmTextGetString(iw_t);
+ strcpy(string,stringt);
+d55 12
+a66 2
+ XtFree(stringt);
+ return strlen(string);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d44 1
+a44 1
+ if ((int) iw_t <= 0) 
+@

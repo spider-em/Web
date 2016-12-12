@@ -1,0 +1,1828 @@
+head	1.32;
+access;
+symbols
+	pre-tilt-improve:1.31
+	pre_surf_fromtop:1.31
+	pre_neednewmap:1.29
+	pre_apppluss_remove:1.27
+	pre_tiltpair_chng:1.27
+	pre_GPL:1.24;
+locks;
+comment	@ * @;
+
+
+1.32
+date	2015.09.01.17.52.41;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2011.09.27.13.43.55;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2011.09.21.14.59.35;	author leith;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2011.09.16.12.18.15;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2011.09.14.17.55.37;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2007.11.28.16.18.48;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2007.11.01.19.24.52;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2005.10.18.16.59.58;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2001.08.10.12.56.41;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	96.03.25.14.43.17;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	96.03.18.14.46.54;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	96.01.22.20.20.25;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	95.09.12.17.01.07;	author mladjadj;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	95.09.07.15.22.50;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	95.09.07.14.10.40;	author mladjadj;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	95.09.06.16.38.55;	author mladjadj;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	95.08.08.20.47.47;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.08.08.20.40.51;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.07.11.16.41.29;	author mladjadj;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.02.01.21.22.48;	author liy;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.02.01.21.19.50;	author liy;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.01.26.14.58.23;	author liy;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.09.13.10.29.52;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.05.31.13.24.31;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.05.19.17.12.57;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.05.12.12.39.11;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.04.12.12.16.12;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.04.05.16.46.43;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.28.12.28.46;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.24.17.11.32;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.03.24.14.02.37;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.03.24.13.56.58;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new routine
+@
+
+
+1.32
+log
+@$2
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/backmen.c,v 1.31 2011/09/27 13:43:55 leith Exp $*/
+
+/*C++*******************************************************************
+ C                                                                     *
+ C backmen.c                                    Mar  1994 ArDean Leith *
+ C               Directcolor mods               Jul  2001 Erik Vogan   *
+ C               Truecolor mods                 Sep  2011 ArDean Leith *
+ C               Improved                       Aug  2015 ArDean Leith *
+ C                                                                     *
+ C**********************************************************************
+ C * AUTHOR: A. LEITH                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C  PARAMETERS:   
+ C
+ C  PURPOSE:      Sets image contast not using luts
+ C
+ C  CALLED BY:    fitdocmen -> backmen  -> showimage --> redvol
+ C                                             |           wipic
+ C                                             |-------------'
+ C                                           pickdisp
+ C
+ C
+ C              
+ C                backmen_buta -> showimage --> redvol
+ C                                    |         wipic
+ C                                    |----------'
+ C                                pickdisp
+ C
+ C  NOTE:  Could be speeded up by caching floating point data from file
+ C
+ C--********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+#include <Xm/Scale.h>
+
+ /* Internal function prototypes */
+ void                backmen_buta(Widget, XtPointer, XtPointer);
+ void                backmen_butm(Widget, XtPointer, XtPointer);
+
+ /* External function prototypes */
+ void                wid_contrast_but(Widget, XtPointer, XtPointer);
+
+ /* Externally defined global variables */
+ extern XImage     * imager;
+ extern XImage     * imagel;
+ extern FILEDATA   * filedatal;
+ extern FILEDATA   * filedatar;
+ extern char       * cptrduml;   // Data used by right image 
+ extern char       * cptrdumr;   // Data used by left  image  
+ extern int          vmap[256];  // Virtual colormap
+
+ /* Internal file variables */
+ static Widget       iw_backmen = (Widget) 0, iw_ngob, iw_nendb;
+ static int          leftside;
+
+ /************************   backmen   ********************************/
+
+ void backmen(int leftsidet)
+
+ { 
+ static Widget   iw_rowcolh;
+ Widget          iw_rowcolv;
+ Widget          iw_dums, iw_pushc, iw_pusha;
+ float         * fptrdum = NULL;
+
+ if (iw_backmen == (Widget)0)
+    {   /* Create background enhancing menu widget first */
+
+    iw_backmen  = wid_dialog(iw_win, 0, "Contrast options", -1,-1);
+    iw_rowcolv  = wid_rowcol(iw_backmen, 'v', -1,-1);
+
+    /* Create label for scales */
+    wid_labelg(iw_rowcolv, 0,
+               "Lower and upper end of ramp:", -1,-1);
+
+    /* Create a horizontal row-col widget for scales */
+    iw_rowcolh = wid_rowcol(iw_rowcolv, 'h', -1,-1);
+
+    /* Create scale widget for starting value ------------------ ngo */
+    iw_ngob  = wid_scale(iw_rowcolh, 0, "", 
+                         imagego,imageend,  ngo, 
+                         180,50, -1,-1);
+
+    /* Create scale widget for ending value -------------------- nend */
+    iw_nendb = wid_scale(iw_rowcolh, 0, "", 
+                         imagego,imageend,  nend, 
+                         180,50, -1,-1);
+
+    XtAddCallback(iw_ngob, XmNvalueChangedCallback, 
+                           (XtCallbackProc)backmen_butm,"0");
+    XtAddCallback(iw_nendb,XmNvalueChangedCallback, 
+                           (XtCallbackProc)backmen_butm,"0");
+
+    /* Create box for apply ----------------------------------- apply */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_backmen, 
+                        &iw_dums, &iw_pushc, &iw_pusha,  "CA",
+                        fin_cb,fin_cb ,backmen_buta, NULL);
+    }
+ else
+    {   /* Enhance menu widget already exists, update it */
+
+    /* Alter scale widget for starting value ------------------- ngo */
+    iw_ngob = wid_scale(iw_rowcolh, iw_ngob, "", 
+                       imagego,imageend,  ngo, 
+                       180,50, -1,-1);
+
+    /* Alter scale widget for ending value  -------------------- nend */
+    iw_nendb = wid_scale(iw_rowcolh, iw_nendb, "", 
+                       imagego,imageend,  nend, 
+                       180,50, -1,-1);
+    }
+
+ /* Set wait cursor */
+ waitcursor(iwin, TRUE, 79);
+
+ if (leftsidet)
+    {
+    /* Free up ximage buffer, before creating a new one */
+    if (imagel) 
+       { XFree((void *)imagel); imagel = NULL; } 
+
+    /* Show left image using original ramp */                 
+    nsam2 = nsaml; nrow2 = nrowl;
+    showimage(filedatal, TRUE,   &cptrduml, 
+                         TRUE,   &imagel,
+                         FALSE,  &fptrdum, FALSE,
+                         (float) filedatal->fmin_spi, 
+                         (float) filedatal->fmax_spi,
+                         imagego, imageend);    
+
+    /* Shift left image to shifted location & display */
+    pickdisp(TRUE, FALSE);
+    }
+ else
+    {
+    /* Show right image using original ramp */                       
+    nsam2 = nsamr; nrow2 = nrowr;
+
+    /* Free up ximage buffer, before creating a new one */
+    if (imager) 
+       { XFree((void *)imager); imager = NULL; } 
+
+    showimage(filedatar, TRUE,   &cptrdumr, 
+                         TRUE,   &imager,
+                         FALSE,  &fptrdum, FALSE,
+                         (float) filedatar->fmin_spi, 
+                         (float) filedatar->fmax_spi,   
+                         imagego, imageend);    
+
+    /* Shift right image to shifted location and display */      
+    pickdisp(FALSE, TRUE);
+    }
+
+ leftside = leftsidet;
+
+ /* Cancel waitcursor */
+ waitcursor(iwin, FALSE, 79);
+
+ XtManageChild(iw_backmen);
+
+ }
+
+
+/*********** Move scale  button callback *****************************/
+
+ void backmen_butm(Widget iw_temp, XtPointer data, 
+                                   XtPointer call_data)
+
+ {
+ int             nindex, ival, iflags, indx;  
+ float           fval,ft;
+ int             ngo_com, nend_com;  
+
+ /* Get new ngo & nend */
+ XmScaleGetValue(iw_ngob,  &ngo_com);
+ XmScaleGetValue(iw_nendb, &nend_com);
+
+ if (nend_com < ngo_com)
+    { spout("*** Upper value must be > lower value"); return;}
+ else if (ngo_com < imagego)                                            
+    { spout("*** Lower value outside of image ramp"); return;}
+ else if (nend_com > imageend)                                         
+    { spout("*** Upper value outside of image ramp"); return;}
+
+ // Use ngo to signal ramp info
+ ngo  = ngo_com;
+ nend = nend_com;
+ 
+#ifdef WEB_TRUE
+// WEB_TRUE ------------------------------------------- WEB_TRUE
+
+ // Uses virtual cmap
+ newvmap(ngo,nend,vmap);
+ neednewmap = TRUE;
+
+ // Applies virtual cmap
+ expos_cb(NULL,NULL,NULL);
+
+#else
+// WEB_24 --------------------------------------------- WEB_24
+
+
+ /* Set the colors in the image portion of the colormap, only */ 
+
+ iflags = DoRed | DoGreen | DoBlue; 
+ indx   = 0;
+ ft     = 65535.0 / ((float) (nend - ngo));
+
+ for (nindex = mapgo; nindex <= imageend; nindex++)
+    {
+    colort[indx].pixel = ispicol[nindex];
+    colort[indx].flags = iflags;
+
+    if (nindex <= ngo) 
+       { ival = 0; }     /* Set this color to black */
+    else if (nindex < nend)
+       {                 
+       /* Interpolate shade */
+       fval = (float)(nindex - ngo) * ft;
+       ival = fval;
+       }
+    else 
+       { ival = 65535; } /* Set this color to white */
+
+    colort[indx].red     = ival;
+    colort[indx].green   = ival;
+    colort[indx++].blue  = ival;
+    }
+ 
+ /* Put the colors in the desired colormap */
+ XStoreColors(idispl, map, colort, indx);
+
+// BOTH --------------------------------------------- BOTH
+#endif
+
+ XFlush(idispl);
+ return;
+ }
+
+
+
+ /*********** Accept  button callback *****************************/
+
+ void backmen_buta(Widget iw_temp, XtPointer data, 
+                                   XtPointer calldata)
+
+ {
+ float      fmint, fmaxt;
+ float      *fptrdum = NULL;
+
+ /* Remove menu */
+ XtUnmanageChild(iw_backmen);
+
+ /* Set wait cursor */
+ waitcursor(iwin, TRUE, 79);
+
+ /* Set location for images */ 
+ placed = TRUE;
+ if (leftside)
+    {
+    ixuln  = ixull;  iyuln = iyull;
+    nsam2 = nsaml; nrow2 = nrowl;
+
+    /* Find new displayed levels of fmin_spi and fmax_spi for left image */
+    fmint = (((float)(ngo - imagego) / (float)(imageend - imagego))) * 
+            (filedatal->fmax_spi - filedatal->fmin_spi) + filedatal->fmin_spi;
+
+    fmaxt = (((float)(nend - imagego) / (float)(imageend - imagego))) * 
+            (filedatal->fmax_spi - filedatal->fmin_spi)+ filedatal->fmin_spi;
+ 
+    /* Free up ximage buffer, before creating a new one */
+    if (imagel) 
+       { XFree((void *)imagel); imagel =  NULL;  } 
+
+    /* Show left image using new ramp */
+    showimage(filedatal, TRUE,  &cptrduml, 
+                         TRUE,  &imagel,
+                         FALSE, &fptrdum, FALSE,
+                         fmint, fmaxt, imagego, imageend);
+
+    /* Shift left image to shifted location and display */
+    pickdisp(TRUE, FALSE);
+    }
+ else
+    {
+    /* Set location for right images */ 
+    placed = TRUE;
+    ixuln  = ixulr;  iyuln = iyulr;
+    nsam2  = nsamr;  nrow2 = nrowr;
+
+    /* Find new displayed levels of fmin_spi and fmax_spi for right image */
+    fmint = (((float)(ngo - imagego) / (float)(imageend - imagego))) * 
+            (filedatar->fmax_spi - filedatar->fmin_spi) + filedatar->fmin_spi;
+
+    fmaxt = (((float)(nend - imagego) / (float)(imageend - imagego))) * 
+            (filedatar->fmax_spi - filedatar->fmin_spi) + filedatar->fmin_spi;
+
+    /* Free up ximage buffer, before creating a new one */
+    if (imager) 
+       {  XFree((void *)imager); imager = NULL;  } 
+   
+    /* Show right image using new ramp */
+    showimage(filedatar, TRUE,  &cptrdumr, 
+                         TRUE,  &imager, 
+                         FALSE, &fptrdum, FALSE,
+                         fmint, fmaxt, imagego, imageend);
+
+    /* Shift right image to shifted location and display */      
+    pickdisp(FALSE, TRUE);
+    }
+
+  //printf ("%d...%d   File Range: %7.2f ...%7.2f \n",imagego,imageend, 
+  //          filedatar->fmin_spi,filedatar->fmax_spi);
+  //printf ("%d...%d   Range: %7.2f ...%7.2f \n",ngo,nend, fmint,fmaxt);
+ 
+ /* Apply normal uncontrasted ramp to whole image */
+ ngo  = imagego;
+ nend = imageend;
+
+ XmScaleSetValue(iw_ngob,  ngo);
+ XmScaleSetValue(iw_nendb, nend);
+
+ /* Apply normal uncontrasted ramp to whole screen */
+ backmen_butm(NULL,NULL,NULL);
+
+ /* Cancel waitcursor */
+ waitcursor(iwin, FALSE, 79);
+
+ return; 
+ }
+
+
+
+@
+
+
+1.31
+log
+@mods for true color
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/backmen.c,v 1.30 2011/09/21 14:59:35 leith Exp leith $*/
+d5 8
+a12 7
+C                                                                      *
+C backmen.c                                     Mar  1994 ArDean Leith *
+C                Directcolor mods               Jul  2001 Erik Vogan   *
+C                Truecolor mods                 Sep  2011 ArDean Leith *
+C                                                                      *
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                  *
+d14 1
+a14 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d36 21
+a56 22
+C **********************************************************************
+C
+C    PARAMETERS:   
+C
+C    PURPOSE:      Sets image contast not using luts
+C
+C    CALLED BY:    fitdocmen -> backmen  -> showimage --> redvol
+C                                             |           wipic
+C                                             |-------------'
+C                                           pickdisp
+C
+C
+C              
+C                  backmen_buta -> showimage --> redvol
+C                                      |         wipic
+C                                      |----------'
+C                                  pickdisp
+C
+C    NOTE:  This routine could be speeded up by caching the floating 
+C           point data from the file
+C
+C--********************************************************************
+d65 2
+a66 2
+ void          backmen_buta(Widget, XtPointer, XtPointer);
+ void          backmen_butm(Widget, XtPointer, XtPointer);
+d69 1
+a69 1
+ void          wid_contrast_but(Widget, XtPointer, XtPointer);
+d92 1
+a92 1
+ float*          fptrdum = NULL;
+d108 3
+a110 2
+    iw_ngob  = wid_scale(iw_rowcolh, 0, "", imagego,imageend,  ngo, 
+                        180,50, -1,-1);
+d113 3
+a115 2
+    iw_nendb = wid_scale(iw_rowcolh, 0, "", imagego,imageend,  nend, 
+                       180,50, -1,-1);
+d122 1
+a122 1
+    /* Create box for apply ---------------------------------- apply */
+d148 1
+a148 1
+       {  XFree((void *)imagel); imagel =  NULL; } 
+d192 1
+a192 1
+/*********** movescale  button callback *****************************/
+d194 2
+a195 1
+ void backmen_butm(Widget iw_temp, XtPointer data, XtPointer call_data)
+d272 2
+a273 1
+ void backmen_buta(Widget iw_temp, XtPointer data , XtPointer calldata)
+@
+
+
+1.30
+log
+@ neednewmap = TRUE;
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/backmen.c,v 1.29 2011/09/16 12:18:15 leith Exp leith $*/
+d4 6
+a9 6
+/*C++*************************************************************************
+C
+C backmen.c                                     Mar. 1994 ArDean Leith *
+C                Directcolor mods               July 2001 Erik Vogan   *
+C                Truecolor mods                 July 2001 ArDean Leith *
+C                                                                  
+d11 1
+a11 1
+C *  AUTHOR: A. LEITH                                                      *
+d53 2
+a54 3
+C  Note:
+C  THis routine could be speeded up by caching the floating point 
+C       data from the file
+d64 8
+a71 5
+ /* internal function prototypes */
+ void          backmen_buta(Widget iw_temp, XtPointer, XtPointer);
+ void          backmen_butm(Widget iw_temp, XtPointer, XtPointer);
+ 
+ /* externally defined global variables */
+d76 7
+a82 7
+ extern char       * cptrduml; /* data used by image right */
+ extern char       * cptrdumr; /* and left */
+
+ /* internal file variables */
+ static Widget iw_backmen = (Widget) 0, iw_ngo, iw_nend;
+ static int    ngo, nend;
+ static int    leftside;
+a93 3
+ ngo      = imagego;
+ nend     = imageend;
+
+d107 2
+a108 2
+    /* Create scale widget for starting value ------------------- ngo */
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", imagego,imageend,  ngo, 
+d112 1
+a112 1
+    iw_nend = wid_scale(iw_rowcolh, 0, "", imagego,imageend,  nend, 
+d115 1
+a115 1
+    XtAddCallback(iw_ngo, XmNvalueChangedCallback, 
+d117 1
+a117 1
+    XtAddCallback(iw_nend,XmNvalueChangedCallback, 
+d120 1
+a120 1
+    /* Create box for apply ----------------------------------- apply */
+d126 1
+a126 1
+    {   /* contrast menu widget already exists, update it */
+d128 3
+a130 2
+    /* alter scale widget for starting value -------------------- ngo */
+    iw_ngo = wid_scale(iw_rowcolh, iw_ngo, "", imagego,imageend,  ngo, 
+d133 3
+a135 2
+    /* alter scale widget for ending value  -------------------- nend */
+    iw_nend = wid_scale(iw_rowcolh, iw_nend, "", imagego,imageend,  nend, 
+d139 1
+a139 1
+ /* set wait cursor */
+d150 5
+a154 4
+    showimage(filedatal, TRUE,  &cptrduml, 
+                         TRUE,  &imagel,
+                         FALSE, &fptrdum, FALSE,
+                         (float) filedatal->fmin_spi, (float) filedatal->fmax_spi,
+d169 5
+a173 4
+    showimage(filedatar, TRUE,  &cptrdumr, 
+                         TRUE,  &imager,
+                         FALSE, &fptrdum, FALSE,
+                         (float) filedatar->fmin_spi, (float) filedatar->fmax_spi,   
+d190 1
+a190 1
+ /*********** movescale  button callback *****************************/
+d197 1
+d200 2
+a201 5
+ XmScaleGetValue(iw_ngo,  &ngo);
+ XmScaleGetValue(iw_nend, &nend);
+
+ 
+#ifdef WEB_TRUE
+d203 1
+a203 1
+ if (nend < ngo)
+d205 1
+a205 1
+ else if (ngo < 0)                                            
+d207 1
+a207 1
+ else if (nend > 255)                                         
+d210 9
+a218 3
+ // Use mapgo to signal ramp info
+ mapgo      = ngo;
+ mapend     = nend;
+d221 1
+a223 4
+ XFlush(idispl);
+ return;
+ }
+
+d225 1
+a226 1
+// WEB_24
+d228 1
+a228 6
+ if (nend < ngo)
+    { spout("*** Upper value must be > lower value"); return;}
+ else if (ngo < 0)                                            
+    { spout("*** Lower value outside of image ramp"); return;}
+ else if (nend > 255)                                         
+    { spout("*** Upper value outside of image ramp"); return;}
+d231 2
+a233 4
+
+ /* Set the colors in the image portion of the colormap, only */ 
+ indx = 0;
+ ft = 65535.0 / ((float) (nend - ngo));
+d240 1
+a240 4
+       {
+       /* Set this color to black */
+       ival = 0;
+       }
+d242 1
+a242 1
+       {
+d248 1
+a248 4
+       {
+       /* Set this color to white */
+       ival = 65535;
+       }
+d258 3
+a263 1
+#endif
+a271 1
+
+d313 1
+a313 1
+    nsam2 = nsamr; nrow2 = nrowr;
+d336 4
+d344 2
+a345 2
+ XmScaleSetValue(iw_ngo,ngo);
+ XmScaleSetValue(iw_nend,nend);
+d347 1
+a349 2
+ neednewmap = TRUE;
+
+d356 2
+@
+
+
+1.29
+log
+@for WEB_TRUE also
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/backmen.c,v 1.28 2011/09/14 17:55:37 leith Exp leith $*/
+d210 3
+a212 2
+ mapgo  = ngo;
+ mapend = nend;
+d347 1
+d350 1
+d352 2
+@
+
+
+1.28
+log
+@127 set to imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/backmen.c,v 1.27 2007/11/28 16:18:48 leith Exp leith $*/
+d6 3
+a8 2
+C backmen.c      Mar. 94
+C                Directcolor mods by: Erik Vogan July 2001
+d39 1
+a39 1
+C    PURPOSE:      SETS IMAGE CONTAST NOT USING LUTS
+d96 1
+a96 1
+    {   /* create background enhancing menu widget first */
+d101 1
+a101 1
+    /* create label for scales */
+d105 1
+a105 1
+    /* create a horizontal row-col widget for scales */
+d108 1
+a108 1
+    /* create scale widget for starting value ------------------- ngo */
+d112 1
+a112 1
+    /* create scale widget for ending value -------------------- nend */
+d121 1
+a121 1
+    /* create box for apply ----------------------------------- apply */
+d143 1
+a143 1
+    /* free up ximage buffer, before creating a new one */
+d147 1
+a147 1
+    /* show left image using original ramp */                 
+d153 1
+a153 1
+                         imagego, 127);    
+d155 1
+a155 1
+    /* shift left image to shifted location & display */
+d160 1
+a160 1
+    /* show right image using original ramp */                       
+d163 1
+a163 1
+    /* free up ximage buffer, before creating a new one */
+d173 1
+a173 1
+    /* shift right image to shifted location and display */      
+d179 1
+a179 1
+ /* cancel waitcursor */
+d195 1
+a195 1
+ /* get new ngo & nend */
+d199 30
+a228 15
+ if (nend <= ngo)
+    {
+    spout("*** Upper value must be > lower value");
+    return;
+    }
+ else if (ngo < imagego)
+    {
+    spout("*** Lower value outside of image ramp");
+    return;
+    }
+ else if (nend > imageend)
+    {
+    spout("*** Upper value outside of image ramp");
+    return;
+    }
+d232 2
+a233 1
+ /* set the colors in the image portion of the colormap, only */ 
+a237 1
+#ifdef WEB_24
+a238 4
+#else
+    colort[indx].pixel = nindex;
+#endif
+
+d243 1
+a243 1
+       /* set this color to black */
+d248 1
+a248 1
+       /* interpolate shade */
+d254 1
+a254 1
+       /* set this color to white */
+d263 1
+a263 1
+ /* put the colors in the desired colormap */
+d269 2
+d273 1
+a273 1
+ /*********** accept  button callback *****************************/
+d282 1
+a282 1
+ /* remove menu */
+d285 1
+a285 1
+ /* set wait cursor */
+d288 1
+a288 1
+ /* set location for images */ 
+d295 1
+a295 1
+    /* find new displayed levels of fmin_spi and fmax_spi for left image */
+d302 1
+a302 1
+    /* free up ximage buffer, before creating a new one */
+d306 1
+a306 1
+    /* show left image using new ramp */
+d310 1
+a310 1
+                         fmint, fmaxt, imagego, 127);
+d312 1
+a312 1
+    /* shift left image to shifted location and display */
+d317 1
+a317 1
+    /* set location for right images */ 
+d322 1
+a322 1
+    /* find new displayed levels of fmin_spi and fmax_spi for right image */
+d329 1
+a329 1
+    /* free up ximage buffer, before creating a new one */
+d333 1
+a333 1
+    /* show right image using new ramp */
+d337 1
+a337 1
+                         fmint, fmaxt, imagego, 127);
+d339 1
+a339 1
+    /* shift right image to shifted location and display */      
+d343 1
+a343 1
+ /* apply normal uncontrasted ramp to whole image */
+d350 1
+a350 1
+ /* cancel waitcursor */
+@
+
+
+1.27
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/backmen.c,v 1.26 2007/11/01 19:24:52 leith Exp $*/
+d170 1
+a170 1
+                         imagego, 127);    
+@
+
+
+1.26
+log
+@fmin -> fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/backmen.c,v 1.25 2005/10/18 16:59:58 leith Exp $*/
+d151 1
+a151 1
+                         filedatal->fmin_spi, filedatal->fmax_spi,
+d169 1
+a169 1
+                         filedatar->fmin_spi, filedatar->fmax_spi,   
+@
+
+
+1.25
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/backmen.c,v 1.24 2001/08/10 12:56:41 leith Exp $*/
+d151 1
+a151 1
+                         filedatal->fmin, filedatal->fmax,
+d169 1
+a169 1
+                         filedatar->fmin, filedatar->fmax,   
+d281 1
+a281 1
+    /* find new displayed levels of fmin and fmax for left image */
+d283 1
+a283 1
+            (filedatal->fmax - filedatal->fmin) + filedatal->fmin;
+d286 1
+a286 1
+            (filedatal->fmax - filedatal->fmin)+ filedatal->fmin;
+d308 1
+a308 1
+    /* find new displayed levels of fmin and fmax for right image */
+d310 1
+a310 1
+            (filedatar->fmax - filedatar->fmin) + filedatar->fmin;
+d313 1
+a313 1
+            (filedatar->fmax - filedatar->fmin) + filedatar->fmin;
+@
+
+
+1.24
+log
+@vogans linux mods
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.23 1996/03/25 14:43:17 leith Exp $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1994, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.23
+log
+@minor
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.22 1996/03/18 14:46:54 leith Exp leith $*/
+d6 2
+a7 1
+C backmen.c             Mar. 94
+d204 3
+d208 2
+@
+
+
+1.22
+log
+@changed allocation stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.21 1996/01/22 20:20:25 leith Exp leith $*/
+d34 4
+d47 2
+a48 2
+ void          backmen_buta(Widget iw_temp, caddr_t, caddr_t);
+ void          backmen_butm(Widget iw_temp, caddr_t, caddr_t);
+d73 4
+a76 1
+  if (iw_backmen == (Widget)0)
+a89 1
+    ngo     = imagego;
+a93 1
+    nend    = imageend;
+a110 1
+    ngo    = imagego;
+a114 1
+    nend    = imageend;
+a118 3
+ ngo      = imagego;
+ nend     = imageend;
+
+d126 1
+a126 3
+       {
+       XFree((void *)imagel); imagel =  NULL;
+       } 
+d146 1
+a146 3
+       {
+       XFree((void *)imager); imager = NULL;
+       } 
+d170 1
+a170 1
+ void backmen_butm(Widget iw_temp, caddr_t data, caddr_t call_data)
+d238 1
+a238 1
+ void backmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d267 1
+a267 3
+       {
+       XFree((void *)imagel); imagel =  NULL;
+       } 
+d294 1
+a294 3
+       {
+       XFree((void *)imager); imager = NULL;
+       } 
+@
+
+
+1.21
+log
+@used imagego..imagenend instead of mapgo..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.20 1995/09/12 17:01:07 mladjadj Exp leith $*/
+d22 4
+a25 1
+C    CALLED BY:    fitdocmen 
+d27 7
+d47 6
+a52 6
+ extern XImage*    imager;
+ extern XImage*    imagel;
+ extern FILEDATA*  filedatal;
+ extern FILEDATA*  filedatar;
+ extern char*       cptrduml; /* data used by image right */
+ extern char*       cptrdumr; /* and left */
+a67 1
+ char*           cptrdum = NULL;
+d69 1
+a69 1
+  if (iw_backmen <= (Widget)0)
+a126 5
+       /* (*(imagel)).data =  NULL; */
+       /* XDestroyImage(imagel);
+       imagel = NULL;
+       */
+/*        free(cptrduml); */
+d138 1
+a138 1
+    /* shift left image to shifted location */
+a148 5
+       /* (*(imager)).data =  NULL; */
+       /* XDestroyImage(imager);
+       imager = NULL;
+       */
+ /*      free(cptrdumr); */
+d158 1
+a158 1
+    /* shift right image to shifted location*/      
+a247 1
+ char       *cptrdum = NULL;
+d272 1
+a272 5
+       /* (*(imagel)).data =  NULL; */
+       /* XDestroyImage(imagel);
+       imagel = NULL;
+       */
+       free(((*imagel)).data); XFree((void *)imagel); imagel =  NULL;
+d276 1
+a276 1
+    showimage(filedatal, TRUE,  &cptrdum, 
+d281 1
+a281 1
+    /* shift left image to shifted location */
+d301 1
+a301 5
+       /* (*imager).data =  NULL; */
+       /* XDestroyImage(imager);
+       imager = NULL;
+       */
+       free(((*imager)).data); XFree((void *)imager); imager = NULL;
+d305 1
+a305 1
+    showimage(filedatar, TRUE,  &cptrdum, 
+d310 1
+a310 1
+    /* shift right image to shifted location*/      
+@
+
+
+1.20
+log
+@rm free(cptrduml)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.19 1995/09/07 15:22:50 leith Exp $*/
+d74 2
+a75 2
+    ngo     = mapgo;
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", mapgo,mapend,  ngo, 
+d79 2
+a80 2
+    nend    = mapend;
+    iw_nend = wid_scale(iw_rowcolh, 0, "", mapgo,mapend,  nend, 
+d97 2
+a98 2
+    ngo    = mapgo;
+    iw_ngo = wid_scale(iw_rowcolh, iw_ngo, "", mapgo,mapend,  ngo, 
+d102 2
+a103 2
+    nend    = mapend;
+    iw_nend = wid_scale(iw_rowcolh, iw_nend, "", mapgo,mapend,  nend, 
+d107 2
+a108 2
+ ngo      = mapgo;
+ nend     = mapend;
+d132 1
+a132 1
+                         mapgo, 127);    
+d157 1
+a157 1
+                         mapgo, 127);    
+d190 1
+a190 1
+ else if (ngo < mapgo)
+d195 1
+a195 1
+ else if (nend > mapend)
+d206 1
+a206 1
+ for (nindex = mapgo; nindex <= mapend; nindex++)
+d265 1
+a265 1
+    fmint = (((float)(ngo - mapgo) / (float)(mapend - mapgo))) * 
+d268 1
+a268 1
+    fmaxt = (((float)(nend - mapgo) / (float)(mapend - mapgo))) * 
+d285 1
+a285 1
+                         fmint, fmaxt, mapgo, 127);
+d298 1
+a298 1
+    fmint = (((float)(ngo - mapgo) / (float)(mapend - mapgo))) * 
+d301 1
+a301 1
+    fmaxt = (((float)(nend - mapgo) / (float)(mapend - mapgo))) * 
+d318 1
+a318 1
+                         fmint, fmaxt, mapgo, 127);
+d325 2
+a326 2
+ ngo  = mapgo;
+ nend = mapend;
+@
+
+
+1.19
+log
+@used XFree with cast
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.18 1995/09/07 14:10:40 mladjadj Exp leith $*/
+d122 2
+a123 1
+       free(cptrduml); XFree((void *)imagel); imagel =  NULL;
+d149 2
+a150 1
+       free(cptrdumr); XFree((void *)imager); imager = NULL;
+@
+
+
+1.18
+log
+@XtFree instead of XFree
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.17 1995/09/06 16:38:55 mladjadj Exp mladjadj $*/
+d122 1
+a122 1
+       free(cptrduml); XtFree((char *)imagel);imagel=  NULL;
+d148 1
+a148 1
+       free(cptrdumr); XtFree((char *)imager);imager=  NULL;
+d276 1
+a276 1
+       free(((*imagel)).data); XtFree((char *)imagel);imagel=  NULL;
+d309 1
+a309 1
+       free(((*imager)).data); XtFree((char *)imager);imager=  NULL;
+@
+
+
+1.17
+log
+@add cptrduml ptr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.16 1995/08/08 20:47:47 leith Exp $*/
+d122 1
+a122 1
+       free(cptrduml); XFree(imagel);imagel=  NULL;
+d148 1
+a148 1
+       free(cptrdumr); XFree(imager);imager=  NULL;
+d276 1
+a276 1
+       free(((*imagel)).data); XFree(imagel);imagel=  NULL;
+d309 1
+a309 1
+       free(((*imager)).data); XFree(imager);imager=  NULL;
+@
+
+
+1.16
+log
+@removed unused iw_lab1 widget
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.15 1995/08/08 20:40:51 leith Exp leith $*/
+d41 2
+d119 1
+a119 1
+       XDestroyImage(imagel);
+d121 2
+d127 1
+a127 1
+    showimage(filedatal, TRUE,  &cptrdum, 
+d145 1
+a145 1
+       XDestroyImage(imager);
+d147 2
+d151 1
+a151 1
+    showimage(filedatar, TRUE,  &cptrdum, 
+d273 1
+a273 1
+       XDestroyImage(imagel);
+d275 2
+d306 1
+a306 1
+       XDestroyImage(imager);
+d308 2
+@
+
+
+1.15
+log
+@changed image pointers handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.14 1995/07/11 16:41:29 mladjadj Exp leith $*/
+d53 1
+a53 1
+ Widget          iw_lab1, iw_rowcolv;
+d65 2
+a66 2
+    iw_lab1 = wid_labelg(iw_rowcolv, 0,
+                         "Lower and upper end of ramp:", -1,-1);
+@
+
+
+1.14
+log
+@static Widget =(Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.13 1995/02/01 21:22:48 liy Exp mladjadj $*/
+a40 2
+ extern char*      cbufl;
+ extern char*      cbufr;
+d52 5
+a56 3
+ Widget     iw_lab1, iw_rowcolv, iw_rowcolh;
+ Widget     iw_dums, iw_pushc, iw_pusha;
+ float*     fptrdum;
+d113 8
+d123 1
+a123 1
+    showimage(filedatal, TRUE,  &cbufl, 
+d136 10
+a145 1
+    showimage(filedatar, TRUE,  &cbufr, 
+d177 1
+a177 1
+ if (nend < ngo)
+d240 2
+a241 1
+ float*     fptrdum;
+d263 8
+d272 1
+a272 1
+    showimage(filedatal, TRUE,  &cbufl, 
+d294 8
+d303 1
+a303 1
+    showimage(filedatar, TRUE,  &cbufr, 
+@
+
+
+1.13
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.12 1995/02/01 21:19:50 liy Exp liy $*/
+d45 1
+a45 1
+ static Widget iw_backmen, iw_ngo, iw_nend;
+@
+
+
+1.12
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/backmen.c,v 1.11 1995/01/26 14:58:23 liy Exp liy $*/
+d58 1
+a58 1
+  if (iw_backmen <= (Widgte)0)
+@
+
+
+1.11
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/backmen.c,v 1.10 1994/09/13 10:29:52 leith Exp liy $*/
+d58 1
+a58 1
+  if (iw_backmen <= (void *)0)
+@
+
+
+1.10
+log
+@used  (XtCallbackProc) in callback
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/backmen.c,v 1.9 94/05/31 13:24:31 odesanya Exp Locker: leith $*/
+d58 1
+a58 1
+  if ((int)iw_backmen <= 0)
+@
+
+
+1.9
+log
+@added wait cursor for long waits
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/backmen.c,v 1.8 94/05/19 17:12:57 leith Exp Locker: odesanya $*/
+d81 4
+a84 2
+    XtAddCallback(iw_ngo, XmNvalueChangedCallback,backmen_butm,"0");
+    XtAddCallback(iw_nend,XmNvalueChangedCallback,backmen_butm,"0");
+@
+
+
+1.8
+log
+@filedatal becomes filedatar in showimage call when showin rite image
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/backmen.c,v 1.7 94/05/12 12:39:11 leith Exp $*/
+a102 1
+ XtManageChild(iw_backmen);
+d106 2
+d137 5
+@
+
+
+1.7
+log
+@used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/backmen.c,v 1.6 94/04/12 12:16:12 leith Exp Locker: leith $*/
+d125 1
+a125 1
+    showimage(filedatal, TRUE,  &cbufr, 
+@
+
+
+1.6
+log
+@lekan's changes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/backmen.c,v 1.4 94/03/28 12:28:46 leith Exp $*/
+d10 1
+a10 1
+C *  COPYRIGHT (C)199$, WADSWORTH CENTER FOR LABORATORIES AND              *
+d115 2
+a116 1
+                         filedatal->fmin, filedatal->fmax);    
+d128 2
+a129 1
+                         filedatar->fmin, filedatar->fmax);    
+d241 1
+a241 1
+                         fmint, fmaxt);
+d264 1
+a264 1
+                         fmint, fmaxt);
+@
+
+
+1.5
+log
+@improved
+@
+text
+@a34 2
+ int           show_image (FILEDATA*, int, char**, int, XImage**,
+                                  int, float**, float, float);
+d112 1
+a112 1
+    show_image(filedatal, TRUE,  &cbufl, 
+d114 1
+a114 1
+                         FALSE, &fptrdum,
+d124 1
+a124 1
+    show_image(filedatal, TRUE,  &cbufr, 
+d126 1
+a126 1
+                         FALSE, &fptrdum,
+d236 1
+a236 1
+    show_image(filedatal, TRUE,  &cbufl, 
+d238 1
+a238 1
+                         FALSE, &fptrdum,
+d259 1
+a259 1
+    show_image(filedatar, TRUE,  &cbufr, 
+d261 1
+a261 1
+                         FALSE, &fptrdum,
+a278 52
+ }
+
+  
+int show_image(FILEDATA *filedatat, int keepcimage, char**   cimage,
+                                    int keepimage,  XImage** imaget, 
+                                    int keep32,     float**  fimage,
+                                    float fmint,    float   fmaxt)
+{   
+ int        nsams, nrows, nrowt, iytot=0;
+ float      fn, fncon;
+ int        idum;
+
+ /* find nsams, nrows in displayed image */
+ dispsize(1,nsam2,1,nrow2,idum,idum,iskip,
+         &nsams, &nrows, &idum);
+
+ if (placed) 
+    {  /* use location from ixuln, iyuln */
+    ixul = ixuln;
+    iyul = iyuln;
+    }
+
+ if (names) 
+    /* find y-offset needed for file name label */
+    {
+    /*  future wid_imglabeloc(filnow,iyline,iytot); !!!!!!!!!!!!*/
+    nrowt = nrows + iytot;
+    }
+
+ if (!movie)
+    {   /* find location for next image */
+    locc(&ixul, &iyul, nsams, nrows, 
+               &ntop, &nbot,  &nrit, marx, mary, marlef, martop,
+               iwidex, ihighx, placed , newline, &nuscrn, force);
+    }
+
+ /* load image from file into new 8 bit buffer and maybe float buffer */
+ if (!redvol(filedatat, TRUE, cimage, keep32, fimage, nsam1, nsam2,
+            nrow1, nrow2, islice, islice, mapgo, 127, fmint, fmaxt,
+            &fn,  &fncon)) return FALSE;
+
+ /* record magnification value for this image */
+ lastskip = iskip;
+
+ if (names)
+    {     /* print image file name below image */
+    /* future wid_imglabel(filnow,ixul,iyul+nrows+iyline) !!!!! */
+    }
+
+ placed = FALSE;
+ 
+ return TRUE;
+@
+
+
+1.4
+log
+@overlut removed
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/backmen.c,v 1.3 94/03/24 17:11:32 leith Exp Locker: leith $*/
+d35 2
+d109 1
+d112 3
+a114 2
+    /* show left image using original ramp */
+    showimage(filedatal, TRUE,  &cbufl, 
+d117 1
+a117 1
+                         filedatal->fmin, filedatal->fmax);
+d119 2
+a120 5
+    /* shift the images to shifted location */
+    XPutImage(idispl,iwin,   icontx,imagel, nsam1l-1,nrow1l-1,
+              ixull,iyull, nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+    XPutImage(idispl,imagsav,icontx,imagel, nsam1l,nrow1l,
+              ixull,iyull, nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+d124 3
+a126 2
+    /* show right image using original ramp */
+    showimage(filedatal, TRUE,  &cbufr, 
+d129 1
+a129 1
+                         filedatar->fmin, filedatar->fmax);
+d131 2
+a132 4
+    XPutImage(idispl,iwin,   icontx,imager, nsam1r-1,nrow1r-1,
+              ixulr,iyulr,nsam2r - nsam1r + 1, nrow2r - nrow1r + 1);
+    XPutImage(idispl,imagsav,icontx,imager, nsam1r,nrow1r,
+              ixulr,iyulr,nsam2r - nsam1r + 1, nrow2r - nrow1r + 1);
+d227 2
+a228 1
+    ixuln  = ixull, iyuln = iyull;
+d238 1
+a238 1
+    showimage(filedatal, TRUE,  &cbufl, 
+d250 2
+a251 1
+    ixuln  = ixulr, iyuln = iyulr;
+d261 1
+a261 1
+    showimage(filedatar, TRUE,  &cbufr, 
+d283 9
+d293 3
+d297 38
+a334 2
+   
+  
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/backmen.c,v 1.2 94/03/24 14:02:37 leith Exp Locker: leith $*/
+d29 1
+d36 1
+a36 1
+ /* external commmon variables */
+d44 1
+a44 1
+ /* internal common variables */
+d201 1
+a201 1
+ XStoreColors(idispl,mapover,colort,indx);
+d243 1
+a243 4
+    XPutImage(idispl,iwin,   icontx,imagel, nsam1l-1,nrow1l-1,
+              ixull,iyull, nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+    XPutImage(idispl,imagsav,icontx,imagel, nsam1l-1,nrow1l-1,
+              ixull,iyull, nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+d264 2
+a265 6
+    /* shift right image */      
+    /* display, window, gc, image, srcx, srcy destx, desty width height */
+    XPutImage(idispl,iwin,   icontx,imager, nsam1r-1,nrow1r-1,
+              ixulr,iyulr, nsam2r - nsam1r + 1,nrow2r - nrow1r + 1);
+    XPutImage(idispl,imagsav,icontx,imager, nsam1r,nrow1r,
+              ixulr,iyulr, nsam2r - nsam1r + 1,nrow2r - nrow1r + 1);
+@
+
+
+1.2
+log
+@file name showimagen change
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/backmen.c,v 1.1 94/03/24 13:56:58 leith Exp Locker: leith $*/
+d58 1
+a58 1
+    {   /* create backgound enhancing menu widget first */
+d61 1
+a61 1
+    iw_rowcolv      = wid_rowcol(iw_backmen, 'v', -1,-1);
+d105 2
+a106 1
+ if (leftside)
+d110 4
+a113 3
+                          TRUE,  &imagel,
+                          FALSE, &fptrdum,
+                          filedatal->fmin, filedatal->fmax);
+d115 4
+a118 4
+    XPutImage(idispl,iwin,   icontx,imagel,nsam1l,nrow1l,
+              ixull,iyull,nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+    XPutImage(idispl,imagsav,icontx,imagel,nsam1l,nrow1l,
+              ixull,iyull,nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+d124 8
+a131 7
+                          TRUE,  &imager,
+                          FALSE, &fptrdum,
+                          filedatar->fmin, filedatar->fmax);
+    XPutImage(idispl,iwin,   icontx,imager,nsam1r,nrow1r,
+              ixulr,iyulr,nsam2r - nsam1r + 1,nrow2r - nrow1r + 1);
+    XPutImage(idispl,imagsav,icontx,imager,nsam1r,nrow1r,
+              ixulr,iyulr,nsam2r - nsam1r + 1,nrow2r - nrow1r + 1);
+d237 9
+a245 8
+                          TRUE,  &imagel,
+                          FALSE, &fptrdum,
+                          fmint, fmaxt);
+    /* shift the images to shifted location */
+    XPutImage(idispl,iwin,   icontx,imagel,nsam1l,nrow1l,
+              ixull,iyull,nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+    XPutImage(idispl,imagsav,icontx,imagel,nsam1l,nrow1l,
+              ixull,iyull,nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+d262 10
+a271 7
+                          TRUE,  &imager, 
+                          FALSE, &fptrdum,
+                          fmint, fmaxt);
+    XPutImage(idispl,iwin,   icontx,imager,nsam1r,nrow1r,
+              ixulr,iyulr,nsam2r - nsam1r + 1,nrow2r - nrow1r + 1);
+    XPutImage(idispl,imagsav,icontx,imager,nsam1r,nrow1r,
+              ixulr,iyulr,nsam2r - nsam1r + 1,nrow2r - nrow1r + 1);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d6 2
+a7 1
+C backmen.c             DEC 92                                                                   
+d10 1
+a10 1
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+a17 2
+C    
+C
+d20 1
+a20 1
+C    PURPOSE:      SETS IMAGE CONTAST USING LUTS
+d108 1
+a108 1
+    showimagen(filedatal, TRUE,  &cbufl, 
+d121 1
+a121 1
+    showimagen(filedatal, TRUE,  &cbufr, 
+d233 1
+a233 1
+    showimagen(filedatal, TRUE,  &cbufl, 
+d257 1
+a257 1
+    showimagen(filedatar, TRUE,  &cbufr, 
+@

@@ -1,0 +1,374 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2011.09.14.15.37.50;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2011.07.20.12.52.14;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.18.16.59.57;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.03.21.15.47.49;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.02.18.31.10;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.01.26.20.35.31;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.06.02.14.11.49;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.15;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@Setbgfg & cosmetic
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/wid_text.c,v 1.7 2011/07/20 12:52:14 leith Exp leith $*/
+/*
+ * wid_text.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * wid_text(iw_parent, iw_text, prompt, text, cb(), cbdata, ix, iy)
+ * 
+ * PURPOSE:	Create a text input pop up dialog box
+ *
+ * RETURNS:	iw_text
+ * 
+ * PARAMETERS:  Widget	iw_parent	Parent widget
+ *		Widget  iw_text		Text input dialog box
+ *		char	*prompt		Prompt string
+ *		int	(*cb)()		OK callback
+ *		int	ix		X coord of ulh corner
+ *		int 	iy		Y coord of ulh corner
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/SelectioB.h>
+
+#define  MAX_ARGS 9
+
+ /* Function prototypes */
+ extern void fin_cb  (Widget, caddr_t, caddr_t);
+ extern void widpos  (int *, int *);
+
+ /**********************************************************************/
+
+ Widget wid_text(Widget iw_parent, Widget iw_text, char *prompt, 
+                 char * text,
+                void (*cb)(), caddr_t cbdata, int ix, int iy)
+ {
+   Arg           args[MAX_ARGS];              /* Arg list      */
+   Arg           arg1[MAX_ARGS] ;             /* Arg list      */
+   int           n,n1;                        /* Arg count     */
+   char          label[80];
+   XmString      str_prompt, str_text;        /* String prompt */
+
+   n  = 0;
+   n1 = 0;
+
+   /* Create a String prompt */
+   str_prompt = XmStringCreate(prompt, XmSTRING_DEFAULT_CHARSET);
+
+   XtSetArg(args[n], XmNselectionLabelString, str_prompt); n++;
+
+   if (text != (char *) NULL)
+      {
+      str_text = XmStringCreate(text, XmSTRING_DEFAULT_CHARSET);
+      XtSetArg(args[n], XmNtextString, str_text);      n++;
+      }
+
+   // For all widgets that are subclass of XmBulletinBoard, must set
+   // this argument = false, otherwise, positioning does not work the
+   // first time! 
+   XtSetArg(args[n], XmNdefaultPosition, False);    n++;
+
+
+   if (iw_text <= (Widget)0) 
+      {              /* Must create new widget */
+      Setbgfg(arg1, MAX_ARGS, &n1);  // Handles BGFG Args
+      iw_text = XmCreatePromptDialog(iw_parent, "iw_text", arg1, n1);
+
+      widpos(&ix,&iy);
+      XtSetArg(args[n], XmNx, (Position) ix);    n++;
+      XtSetArg(args[n], XmNy, (Position) iy);    n++;
+      XtSetValues(iw_text, args, n);
+
+      /* OK callback should be sent the text the user inserted */
+      XtAddCallback(iw_text,XmNokCallback,    cb,    cbdata);
+      XtAddCallback(iw_text,XmNcancelCallback, (XtCallbackProc) fin_cb,
+                              (XtPointer) iw_text);
+      }
+
+   else 
+      {             /* Can use existing widget */
+      if (ix > 0 || iy > 0)
+         {
+         widpos(&ix,&iy);
+         XtSetArg(args[n], XmNx, (Position) ix);     n++;
+         XtSetArg(args[n], XmNy, (Position) iy);     n++;
+         }
+      XtSetValues(iw_text, args, n);
+
+      XtRemoveAllCallbacks(iw_text,XmNokCallback); 
+      /* OK callback should be sent the text the user inserted */
+      XtAddCallback(iw_text,XmNokCallback, cb, cbdata);
+      }
+
+   XtManageChild(iw_text);
+
+   XtUnmanageChild(XmSelectionBoxGetChild
+                   (iw_text,XmDIALOG_HELP_BUTTON));
+
+   /* Free String storage */
+   XmStringFree(str_prompt);
+   if (text != (char *) NULL)
+       XmStringFree(str_text);
+
+   return (iw_text);
+ }
+@
+
+
+1.7
+log
+@WEB_BGFGO
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/wid_text.c,v 1.6 2005/10/18 16:59:57 leith Exp leith $*/
+d32 1
+d34 1
+a34 2
+ * 
+ * PURPOSE:	create a text input pop up dialog box
+d38 3
+a40 3
+ * PARAMETERS:  Widget	iw_parent	parent widget
+ *		Widget  iw_text		text input dialog box
+ *		char	*prompt		prompt string
+d42 2
+a43 2
+ *		int	ix		x coord of ulh corner
+ *		int 	iy		y coord of ulh corner
+d53 1
+a53 1
+ /* function prototypes */
+d63 3
+a65 3
+   Arg           args[MAX_ARGS];              /* arg list      */
+   Arg           arg1[MAX_ARGS] ;             /* arg list      */
+   register      int n;                       /* arg count     */
+d69 2
+a70 2
+
+   n = 0;
+d83 3
+a85 3
+   /* For all widgets that are subclass of XmBulletinBoard, must set
+      this argument = false, otherwise, positioning does not work the
+      first time! */
+d91 2
+a92 4
+#ifdef WEB_BGFGO
+      XtSetArg(arg1[0], XmNbackground,  icolorxmb);   
+#endif
+      iw_text = XmCreatePromptDialog(iw_parent, "iw_text", arg1, 1);
+a123 1
+
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_text.c,v 1.5 1996/03/21 15:47:49 leith Exp $*/
+d48 1
+a48 2
+#include "std.h"
+#include "x.h"
+d51 1
+a51 1
+#define  MAX_ARGS 7
+d64 1
+d70 3
+a72 1
+   /* create a String prompt */
+d75 1
+a75 2
+   n = 0;
+   XtSetArg(args[n], XmNselectionLabelString, str_prompt);      n++;
+d83 1
+a83 1
+   /* for all widgets that are subclass of XmBulletinBoard, must set
+d90 5
+a94 2
+      {              /* must create new widget */
+      iw_text = XmCreatePromptDialog(iw_parent, "iw_text", NULL, 0);
+d101 1
+a101 1
+      /* ok callback should be sent the text the user inserted */
+d108 1
+a108 1
+      {             /* can use existing widget */
+d118 1
+a118 1
+      /* ok callback should be sent the text the user inserted */
+d123 1
+d128 1
+a128 1
+   /* free String storage */
+@
+
+
+1.5
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_text.c,v 1.4 1995/02/02 18:31:10 liy Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.4
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_text.c,v 1.3 1995/01/26 20:35:31 liy Exp liy $*/
+d68 1
+a68 1
+   XtSetArg(args[n], XmNdefaultPosition, False);                n++;
+d76 2
+a77 2
+      XtSetArg(args[n], XmNx, ix);                              n++;
+      XtSetArg(args[n], XmNy, iy);                              n++;
+d91 2
+a92 2
+         XtSetArg(args[n], XmNx, ix);                           n++;
+         XtSetArg(args[n], XmNy, iy);                           n++;
+@
+
+
+1.3
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_text.c,v 1.2 1994/06/02 14:11:49 odesanya Exp liy $*/
+d71 1
+a71 1
+   if (iw_text <= (void *)0) 
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/wid_text.c,v 1.1 93/11/10 10:11:15 leith Exp $*/
+d71 1
+a71 1
+   if ((int)iw_text <= 0) 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d82 2
+a83 1
+      XtAddCallback(iw_text,XmNcancelCallback,fin_cb,iw_text);
+@

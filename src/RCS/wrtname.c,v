@@ -1,0 +1,203 @@
+head	1.4;
+access;
+symbols
+	pre-tilt-improve:1.4
+	pre_surf_fromtop:1.4
+	pre_neednewmap:1.4
+	pre_apppluss_remove:1.4
+	pre_tiltpair_chng:1.4
+	pre_GPL:1.3;
+locks;
+comment	@ * @;
+
+
+1.4
+date	2005.10.18.16.59.50;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2004.07.23.15.32.13;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.05.17.13.41.02;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.05.17.13.40.27;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@GPL
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/wrtname.c,v 1.3 2004/07/23 15:32:13 leith Exp $*/
+
+
+/*
+C++*********************************************************************
+C
+C WRTNAME.C -- CREATED MAY 2002 ArDean Leith
+C                no / no name bug Jul 04 ArDean Leith
+C
+C **********************************************************************
+C * WEB.    AUTHOR: ARDEAN LEITH                                       *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    WRTNAME
+C
+C    PURPOSE:    print names below images     
+C
+C    VARIABLES:       NAMES      LOGICAL FLAG TO PRINT NAMES
+C
+C***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* external variables used here */
+ 
+/******************************  wrtname *****************************/
+   
+ int  wrtname(int ix, int iy, char * name, int inum)
+ {   
+ char      label[] = "     ";
+ char       *s, *fname;
+ int       iypn;
+
+ if (ix < 0 && iy < 0) 
+    { /* query names_height */
+    return names_height + 2;
+    }
+
+
+ /* set background color */
+ wicolor(icontx, -1000000);
+
+ /* find y-offset needed for name label */
+ iypn = iy + names_height + 2;
+
+ if (inum >= 0) 
+    {
+    /* put slice number under each pane */
+
+    sprintf(label,"%5d",inum);
+    witext(icontx, label, ix, iypn, 1, 0, 9, 2, TRUE);
+    }
+
+ else
+    {     /* print image file name below image */
+
+     /* unix specific line follows */
+     s = strrchr(name,'/');
+
+    if (s) 
+      {    /* strip pathname from filename  */
+      s++;
+      fname = (char *) malloc(sizeof(char) * (strlen(s) + 1));
+      strcpy(fname,s);
+      fname = strtok(fname,".");
+
+      /* 7th parameter set to -1 to use currentforeground color */
+      witext(icontx, fname, ix, iypn, 1, 0, -1, 2, TRUE);
+      free(fname);
+      }
+
+    else 
+      {
+      /* 7th parameter set to -1 to use currentforeground color */
+      witext(icontx, name, ix, iypn, 1, 0, -1, 2, TRUE);
+      }
+   }
+ return names_height;
+ }
+@
+
+
+1.3
+log
+@no / no name bug fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/wrtname.c,v 1.2 2002/05/17 13:41:02 leith Exp leith $*/
+d13 23
+a35 5
+C * COPYRIGHT (C)1990, 2002. HEALTH RESEARCH INCORPORATED (HRI),       *
+C * ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                   *
+C * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO HRI AND ARE NOT   *
+C * TO BE DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED *
+C * WITHOUT WRITTEN APPROVAL OF HRI.                                   *
+@
+
+
+1.2
+log
+@height + 2
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/wrtname.c,v 1.1 2002/05/17 13:40:27 leith Exp leith $*/
+d9 1
+a64 2
+    /* strip pathname from filename  */
+
+d69 1
+a69 1
+      {
+d78 6
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont3.c,v 1.19 2002/04/10 18:48:10 leith Exp leith $*/
+d43 1
+a43 1
+    return names_height;
+d51 1
+a51 1
+ iypn = iy + names_height;
+@

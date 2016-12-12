@@ -1,0 +1,469 @@
+head	1.7;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_surf_fromtop:1.7
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.3;
+locks;
+comment	@ * @;
+
+
+1.7
+date	2011.05.19.15.52.12;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2007.11.20.20.45.53;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2007.11.20.20.32.33;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.10.18.16.59.56;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.11.21.18.52.53;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.11.08.21.19.20;	author mladjadj;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.26.14.06.38;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@built by mladjadj for corr-map
+@
+
+
+1.7
+log
+@//wisetplanes(id
+@
+text
+@/*
+************************************************************************
+** comapmen2.c		
+**
+** WID_COMAPMEN2.FOR ported to UNIX     8/93    Mahieddine Ladjadj
+** Altered menu                         Nov 07  ArDean Leith
+**
+C **********************************************************************
+** *   AUTHOR:  Mahieddine Ladjadj                                     *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2007  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+*/
+
+#include "common.h"
+#include "std.h"
+#include "x.h"
+#include "routines.h" 
+#include <Xm/ToggleBG.h>
+  
+ /* Internal functions */
+ void     comapmen2_but  (Widget, XtPointer, XtPointer);
+ void     comapmen2_buts (Widget, XtPointer, XtPointer);
+ void     ovrlap_cb      (Widget, XtPointer, XtPointer);
+
+ /* External variables */
+ extern GC     icontmx;
+ extern float  *bufx, *bufy;
+ extern int    *nkey;
+ Pixmap        msksav;
+ Widget        iw_comapmen2;
+ int           ovrlap;
+
+/********************** comapmen2 ***********************************/
+
+void comapmen2(void)
+  {
+  char   cval[15];
+  Widget iw_rowcol, iw_p1, iw_p2, iw_p3, iw_p4, iw_p5, iw_p6, iw_p7;
+
+  if (iw_comapmen2 == (Widget) 0) 
+      { /* Comap menu widget does not exist, create it */
+
+      /* Create dialog box */
+      iw_comapmen2 = wid_dialog(iw_win,(Widget) 0,"corr_map options",20,20);
+      iw_rowcol   = wid_rowcol(iw_comapmen2,'v',-1,-1);
+
+      /* Create push button for saving images in doc file */
+      iw_p1 = wid_pushg(iw_rowcol, (Widget)0,
+                   "Save Images in Doc File", comapmen3,"0",0,0);  
+
+      /* Create push button for displaying average image */
+      iw_p2 = wid_pushg(iw_rowcol, (Widget)0,
+                   " Display Averaged Image",comapmen2_but,"2",0,0);  
+
+      /* Create push button for saving averaged image */
+      iw_p3 = wid_pushg(iw_rowcol, (Widget)0,
+                   "   Store averaged Image", comapmen5,"0",0,0);  
+
+      /* Create push button for clearing mask */
+      iw_p4 = wid_pushg(iw_rowcol, (Widget)0,
+                   "            New Masking",comapmen2_but,"4",0,0);  
+
+      /* Create push button for clearing mask */
+      iw_p6 = wid_pushg(iw_rowcol, (Widget)0,
+                   "       Continue Masking",comapmen2_but,"5",0,0);  
+
+      /* create toggle box for overlaping image & mask */
+      ovrlap = TRUE;
+      iw_p7 = wid_toggleg(iw_rowcol,(Widget) 0,
+                              "Overlap Avg. Im. & Mask",
+                              ovrlap,ovrlap_cb,(XtPointer) &ovrlap,-1,-1);
+      
+      /* create push button for stop */
+      iw_p5 = wid_pushg(iw_rowcol, (Widget)0,
+                   "           Stop Mapping",comapmen2_buts,"0",0,0);
+      }
+
+  XtManageChild(iw_comapmen2);
+  
+  /* Enable all planes for drawing or replacing exposure */
+  //wisetplanes(idispl,icontx,-1);  // may 2011 al
+
+  /* Unassign buttons */
+  XtUninstallTranslations(iw_win);
+
+  /* Remove instructional message */
+  showbutx("","","",TRUE);
+  
+  return;
+} /* End of comapmen2 function */
+
+
+// ***************************** comapmen2_but ************************* 
+
+/* Display button */
+
+void comapmen2_but(Widget iw_t, XtPointer data, XtPointer callpar)
+  {  
+  char *oper;
+  int it;
+  char ops[] = "12345";
+
+  /* Remove menu widget */
+  XtUnmanageChild(iw_comapmen2);
+
+  /* Refresh screen */
+  expos_cb(NULL,NULL,NULL);
+
+  /* itag=2 calculates and displays averaged image
+     itag=4 do not clear masks, continue masking
+     itag=5 clears masks then continue masking */
+
+  oper = data;
+  it   = (int) (strchr(ops,*oper) - ops) + 1;
+  comapsav(it);
+
+  }  /* End of comapmen2_but */
+
+
+// *********************** overlap_cb ************  Overlap toggle  button 
+
+ void  ovrlap_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
+   {
+   ovrlap = XmToggleButtonGadgetGetState(iw_temp); 
+   }
+
+
+// ***************************** comapmen2_buts ************** Stop button 
+
+void comapmen2_buts(Widget iw_t, XtPointer itag, XtPointer callpar)
+  {      
+  /* Remove menu widget */
+  XtUnmanageChild(iw_comapmen2);
+
+  /* Flush buffer to reset the luts */
+  XFlush(idispl);
+ 
+  /* Free space used in comap.c */
+  free(bufx);
+  free(bufy);
+  free(nkey);
+  if (icontmx) XFreeGC(idispl,icontmx);
+  if (msksav) 
+      { XFreePixmap( idispl, msksav ); msksav = 0; }
+  
+  } /* End of comapmen2_buts */
+@
+
+
+1.6
+log
+@* missing
+@
+text
+@d2 1
+a2 1
+*****************************************************************************
+d9 1
+a9 1
+** *   AUTHOR:  Mahieddine Ladjadj                                          *
+d42 4
+a45 4
+ /* internal functions */
+ void     comapmen2_but  (Widget, caddr_t, caddr_t);
+ void     comapmen2_buts (Widget, caddr_t, caddr_t);
+ void     ovrlap_cb      (Widget, caddr_t, caddr_t);
+d47 1
+a47 1
+ /* external variables */
+d63 1
+a63 1
+      { /* comap menu widget does not exist, create it */
+d65 1
+a65 1
+      /* create a dialog box */
+d69 1
+a69 1
+      /* create a push button for saving images in doc file */
+d73 1
+a73 1
+      /* create a push button for displaying average image */
+d77 1
+a77 1
+      /* create a push button for saving averaged image */
+d81 1
+a81 1
+      /* create a push button for clearing mask */
+d85 1
+a85 1
+      /* create a push button for clearing mask */
+d89 1
+a89 1
+      /* create a toggle box for overlaping image & mask */
+d93 1
+a93 1
+                              ovrlap,ovrlap_cb,(caddr_t) &ovrlap,-1,-1);
+d95 1
+a95 1
+      /* create a push button for stop */
+d102 2
+a103 2
+  /* enable all planes for drawing or replacing exposure */
+  wisetplanes(idispl,icontx,-1);
+d105 1
+a105 1
+  /* unassign buttons */
+d108 1
+a108 1
+  /* remove instructional message */
+d112 1
+a112 1
+} /* end of comapmen2 function */
+d114 2
+a115 1
+/***************************** comapmen2_but *************************/
+d119 1
+a119 1
+void comapmen2_but(Widget iw_t, caddr_t data, caddr_t callpar)
+d125 1
+a125 1
+  /* remove menu widget */
+d128 1
+a128 1
+  /* refresh screen */
+d136 1
+a136 1
+  it = (int) (strchr(ops,*oper) - ops) + 1;
+d139 1
+a139 1
+  }  /* end of comapmen2_but */
+d142 1
+a142 2
+/***************************** ovrlap_cb *************************/
+/*  overlap toggle  button */
+d144 1
+a144 1
+ void  ovrlap_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+d150 1
+a150 2
+/***************************** comapmen2_buts *************************/
+/* Stop button */
+d152 1
+a152 1
+void comapmen2_buts(Widget iw_t, caddr_t itag, caddr_t callpar)
+d154 1
+a154 1
+  /* remove menu widget */
+d157 1
+a157 1
+  /* flush buffer to reset the luts */
+d160 1
+a160 1
+  /* free the space used in comap.c */
+d164 2
+a165 2
+  if(icontmx) XFreeGC(idispl,icontmx);
+  if(msksav) 
+d168 1
+a168 1
+  } /* end of comapmen2_buts */
+@
+
+
+1.5
+log
+@improved menu'
+@
+text
+@d116 1
+a116 1
+/* Display button /
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d3 1
+a3 1
+** comapmen2.c		8/93
+d5 2
+a6 1
+** WID_COMAPMEN2.FOR transported to UNIX
+d11 1
+a11 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+a33 2
+**
+*****************************************************************************
+d48 1
+a48 1
+ extern GC icontmx;
+d52 2
+a53 2
+ Widget iw_comapmen2;
+ int ovrlap;
+d71 1
+a71 1
+                   "Save Images in Doc File:", comapmen3,"0",0,0);  
+d75 1
+a75 1
+                   " Display Averaged Image:",comapmen2_but,"2",0,0);  
+d79 1
+a79 1
+                   "   Store averaged Image:", comapmen5,"0",0,0);  
+d83 1
+a83 1
+                   "            New Masking:",comapmen2_but,"4",0,0);  
+d87 1
+a87 1
+                   "       Continue Masking:",comapmen2_but,"5",0,0);  
+d92 1
+a92 1
+                              "Overlap Avg. Im. & Mask:",
+d97 1
+a97 1
+                   "           Stop Mapping:",comapmen2_buts,"0",0,0);
+d115 2
+a116 3
+/*
+**	Display button
+*/
+d133 1
+d140 1
+d142 1
+a142 3
+/*
+**	overlap toggle  button
+*/
+d145 1
+a145 1
+ {
+d147 1
+a147 1
+ }
+d149 1
+d151 1
+a151 3
+/*
+**	Stop button
+*/
+@
+
+
+1.3
+log
+@fixed passing arg to wid_toggleg
+@
+text
+@d7 1
+a7 1
+** **************************************************************************
+d9 24
+a32 7
+** *  COPYRIGHT (C)1990 , WADSWORTH CENTER FOR LABORATORIES AND             *
+** *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+** *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+** *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+** *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+** *    THE CENTER FOR LABORATORIES AND RESEARCH			    *
+** **************************************************************************
+@
+
+
+1.2
+log
+@correct spelling of text
+@
+text
+@a74 1
+      sprintf(cval,"%12d",ovrlap);
+d77 1
+a77 1
+                              ovrlap,ovrlap_cb,cval,-1,-1);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d125 1
+a125 1
+/***************************** comapmen2_buts *************************/
+@

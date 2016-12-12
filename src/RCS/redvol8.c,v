@@ -1,0 +1,238 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.3;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.10.18.16.59.52;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.07.12.19.44.28;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.05.12.12.40.45;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.33;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@fmin ->fmin_spi..
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/redvol8.c,v 1.4 2005/10/18 16:59:52 leith Exp $*/
+/*
+C**************************************************************************
+C
+C   REDVOL8.C  -- CREATED NOV 13 1992
+C             
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C  REDVOL8(FILEDATA,CVOL,NSAM1,NSAM2,NROW1,NROW2,NSLICE1,NSLICE2,
+C          FN,FNCON)
+C           
+C
+C  PURPOSE:     READS SPIDER IMAGE INTO 8BIT ARRAY NORMALIZED FROM
+C               NMIN TO NMAX.  RETURNS NORMALIZTION CONSTANTS ALSO.
+C
+C  PARAMETERS:  NSAM1,NSAM2     SAMPLE RANGE
+C               NROW1,NROW2     ROW RANGE
+C               NSLICE1,NSLICE2 SLICE RANGE
+
+C  RETURNS:     
+C
+C  CALLED BY:   SURF
+C
+C  NOTES:       
+C
+C--*********************************************************************
+*/
+
+#include "files.h"
+
+
+ /* external function prototypes */
+ extern int   closefile(FILEDATA *);
+ extern int   redlin    (FILEDATA *, float *, int, int);
+ extern void  spout     (char *);
+
+
+ /* externally defined variables */
+ 
+ /* static variables for use here */
+
+
+ /*************************   redvol8   ****************************/
+
+ int redvol8(FILEDATA *filedata, unsigned char  * cptr,
+         int nsam1, int nsam2, int nrow1, int nrow2, 
+         int nslice1, int nslice2, int nmint, int nmaxt, 
+         float * fn, float * fncon)
+
+ {
+ int             nsam, nrow, nslice, irec;
+ int             islice, irow, isam ;
+ float           * buf;
+ unsigned char * cptrt;
+
+ nsam   = filedata -> nsam;
+ nrow   = filedata -> nrow;
+ nslice = filedata -> nslice;
+
+ /* find buf for redlin */
+ buf    = filedata -> buf;
+
+ /* load volume data into 8 bit vol */
+
+ *fn     = (nmaxt - nmint ) / ((filedata-> fmax_spi) - (filedata -> fmin_spi));
+ *fncon  = (-filedata -> fmin_spi * *fn) + nmint;
+
+ /* fill volume with 8 bit data */
+ irec   = 0;
+
+ cptrt = cptr;
+
+ for (islice = 0; islice < nslice; islice++)
+    {
+    for (irow = 0; irow < nrow; irow++)
+       {
+       if (!redlin(filedata,buf,nsam,++irec))
+          return FALSE;
+
+       for (isam =0; isam < nsam; isam++)
+          {
+          *cptrt++ =  (unsigned char) (buf[isam] * *fn + *fncon);
+          }
+       }
+    }
+ return TRUE;
+ }
+
+
+
+
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/redvol8.c,v 1.3 1994/07/12 19:44:28 odesanya Exp $*/
+d91 2
+a92 2
+ *fn     = (nmaxt - nmint ) / ((filedata-> fmax) - (filedata -> fmin));
+ *fncon  = (-filedata -> fmin * *fn) + nmint;
+@
+
+
+1.3
+log
+@corrected the scaling equation
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/redvol8.c,v 1.2 94/05/12 12:40:45 leith Exp $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH     *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.2
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/redvol8.c,v 1.1 93/11/10 10:11:33 leith Exp Locker: leith $*/
+a46 1
+
+d74 1
+a74 1
+ *fn     = (nmaxt - nmint + 1) / ((filedata-> fmax) - (filedata -> fmin));
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d57 1
+a57 1
+         int nslice1, int nslice2, int nmin, int nmax, 
+d75 2
+a76 2
+ *fn     = (nmax - nmin + 1) / ((filedata-> fmax) - (filedata -> fmin));
+ *fncon  = (-filedata -> fmin * *fn) + nmin;
+@

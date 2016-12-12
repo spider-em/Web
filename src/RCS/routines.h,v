@@ -1,0 +1,2415 @@
+head	1.117;
+access;
+symbols
+	pre-tilt-improve:1.114
+	pre_neednewmap:1.111
+	pre_tiltpair_chng:1.105
+	pre_GPL:1.98;
+locks;
+comment	@ * @;
+
+
+1.117
+date	2015.09.22.14.20.54;	author leith;	state Exp;
+branches;
+next	1.116;
+
+1.116
+date	2015.09.18.16.23.27;	author leith;	state Exp;
+branches;
+next	1.115;
+
+1.115
+date	2015.09.01.17.51.52;	author leith;	state Exp;
+branches;
+next	1.114;
+
+1.114
+date	2015.06.11.13.31.05;	author leith;	state Exp;
+branches;
+next	1.113;
+
+1.113
+date	2011.09.22.12.07.58;	author leith;	state Exp;
+branches;
+next	1.112;
+
+1.112
+date	2011.09.21.13.53.50;	author leith;	state Exp;
+branches;
+next	1.111;
+
+1.111
+date	2011.09.16.13.16.56;	author leith;	state Exp;
+branches;
+next	1.110;
+
+1.110
+date	2011.09.15.16.21.25;	author leith;	state Exp;
+branches;
+next	1.109;
+
+1.109
+date	2011.09.15.16.09.54;	author leith;	state Exp;
+branches;
+next	1.108;
+
+1.108
+date	2011.06.22.19.27.28;	author leith;	state Exp;
+branches;
+next	1.107;
+
+1.107
+date	2011.06.22.19.03.48;	author leith;	state Exp;
+branches;
+next	1.106;
+
+1.106
+date	2011.06.22.19.00.52;	author leith;	state Exp;
+branches;
+next	1.105;
+
+1.105
+date	2011.06.10.16.13.45;	author leith;	state Exp;
+branches;
+next	1.104;
+
+1.104
+date	2011.06.10.14.07.45;	author leith;	state Exp;
+branches;
+next	1.103;
+
+1.103
+date	2011.06.10.12.31.27;	author leith;	state Exp;
+branches;
+next	1.102;
+
+1.102
+date	2011.05.27.17.35.31;	author leith;	state Exp;
+branches;
+next	1.101;
+
+1.101
+date	2011.05.27.13.39.37;	author leith;	state Exp;
+branches;
+next	1.100;
+
+1.100
+date	2011.05.05.14.29.22;	author leith;	state Exp;
+branches;
+next	1.99;
+
+1.99
+date	2007.05.17.16.02.24;	author leith;	state Exp;
+branches;
+next	1.98;
+
+1.98
+date	2002.05.17.13.06.56;	author leith;	state Exp;
+branches;
+next	1.97;
+
+1.97
+date	2002.05.17.13.03.26;	author leith;	state Exp;
+branches;
+next	1.96;
+
+1.96
+date	2002.05.16.19.58.45;	author leith;	state Exp;
+branches;
+next	1.95;
+
+1.95
+date	2002.05.16.15.28.30;	author leith;	state Exp;
+branches;
+next	1.94;
+
+1.94
+date	2000.06.30.19.59.20;	author leith;	state Exp;
+branches;
+next	1.93;
+
+1.93
+date	2000.06.30.19.49.49;	author leith;	state Exp;
+branches;
+next	1.92;
+
+1.92
+date	99.10.01.18.34.36;	author leith;	state Exp;
+branches;
+next	1.91;
+
+1.91
+date	99.09.30.17.09.01;	author leith;	state Exp;
+branches;
+next	1.90;
+
+1.90
+date	99.09.29.17.30.37;	author leith;	state Exp;
+branches;
+next	1.89;
+
+1.89
+date	99.09.14.13.36.34;	author leith;	state Exp;
+branches;
+next	1.88;
+
+1.88
+date	99.08.04.16.56.35;	author leith;	state Exp;
+branches;
+next	1.87;
+
+1.87
+date	99.07.29.15.11.58;	author leith;	state Exp;
+branches;
+next	1.86;
+
+1.86
+date	98.10.02.15.04.24;	author leith;	state Exp;
+branches;
+next	1.85;
+
+1.85
+date	98.02.05.22.21.14;	author liy;	state Exp;
+branches;
+next	1.84;
+
+1.84
+date	97.02.24.18.52.40;	author leith;	state Exp;
+branches;
+next	1.83;
+
+1.83
+date	97.02.24.16.32.49;	author leith;	state Exp;
+branches;
+next	1.82;
+
+1.82
+date	96.08.13.13.37.19;	author leith;	state Exp;
+branches;
+next	1.81;
+
+1.81
+date	96.08.01.19.21.34;	author leith;	state Exp;
+branches;
+next	1.80;
+
+1.80
+date	96.08.01.19.17.51;	author leith;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	96.06.20.16.39.32;	author leith;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	96.06.13.18.47.47;	author leith;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	96.05.14.15.47.43;	author leith;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	96.05.13.14.38.19;	author leith;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	96.05.10.14.53.42;	author leith;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	96.05.06.15.59.02;	author leith;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	96.05.01.16.13.58;	author leith;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	96.04.19.19.49.36;	author leith;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	96.04.16.14.27.51;	author leith;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	96.04.12.16.58.49;	author leith;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	96.04.05.15.55.25;	author leith;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	96.04.05.14.33.58;	author leith;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	96.03.29.17.22.57;	author leith;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	96.03.29.16.54.03;	author leith;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	96.03.26.17.14.01;	author leith;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	96.03.22.16.50.31;	author leith;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	96.01.22.14.58.42;	author liy;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	95.11.28.20.28.16;	author leith;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	95.11.28.16.23.30;	author liy;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	95.08.17.14.14.38;	author leith;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	95.08.09.13.08.08;	author leith;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	95.06.21.16.11.56;	author leith;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	95.06.19.20.57.35;	author leith;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	95.04.24.19.02.19;	author liy;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	95.01.23.10.23.22;	author leith;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	94.11.23.10.14.12;	author leith;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	94.11.17.16.23.42;	author leith;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	94.11.14.14.05.14;	author leith;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	94.10.14.10.37.35;	author leith;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	94.10.04.11.55.10;	author leith;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	94.09.28.09.46.13;	author leith;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	94.09.27.12.13.10;	author leith;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	94.09.26.17.13.07;	author leith;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	94.09.22.14.04.09;	author leith;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	94.09.22.14.02.42;	author leith;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	94.09.16.14.38.29;	author leith;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	94.09.12.15.55.48;	author leith;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	94.09.12.15.02.57;	author leith;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	94.09.12.13.24.14;	author leith;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	94.09.12.11.22.34;	author leith;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	94.09.12.10.51.11;	author leith;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	94.09.12.10.03.52;	author leith;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	94.09.09.10.27.35;	author leith;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	94.09.08.20.06.51;	author leith;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	94.08.25.16.10.42;	author odesanya;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	94.08.24.20.57.07;	author odesanya;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	94.08.23.17.12.13;	author odesanya;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	94.08.21.21.12.34;	author odesanya;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	94.08.18.12.24.07;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	94.08.11.15.58.46;	author leith;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	94.08.11.12.50.34;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	94.08.02.13.51.16;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	94.07.28.09.54.02;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	94.07.23.17.21.38;	author odesanya;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	94.07.22.09.43.50;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	94.07.20.21.14.24;	author odesanya;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	94.07.20.18.48.25;	author odesanya;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	94.05.26.14.18.13;	author odesanya;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	94.05.26.13.58.25;	author odesanya;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	94.05.24.18.13.09;	author odesanya;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	94.05.12.12.40.48;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	94.04.12.15.46.27;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	94.04.12.13.50.19;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	94.04.11.13.46.52;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	94.04.08.13.17.57;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	94.04.07.13.40.27;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	94.04.05.16.47.21;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.04.04.11.15.23;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.04.01.09.50.04;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.03.29.15.15.54;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.03.28.12.28.28;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.03.25.15.58.08;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.03.25.10.04.16;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.03.24.17.09.47;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.03.24.14.00.04;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.18.17.02.17;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.18.12.33.34;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.03.17.17.07.44;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.03.17.17.03.09;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.117
+log
+@fitdoc parameters changed
+@
+text
+@ /* routines.h */
+ /* Subroutine prototypes */
+
+#ifndef ROUTINESH
+#define ROUTINESH
+
+#include "x.h"
+#include "files.h"
+
+ extern void     action       (Widget, char *, char *, char *);
+ extern void     actions      (Widget, char*, void (*)(), char*);
+ extern int      addext       (char*, char*, int);
+ extern float    angle        (float);
+ extern int      annote       (char*);
+ extern void     annotemen    (void);
+ extern float    antiang      (float);
+ extern void     backmen      (int);
+ extern void     bar          (Widget, caddr_t, caddr_t);
+ extern void     bldr	      (float, float, float, float*);
+ extern float* 	 cald	      (float*, float*);
+ extern void     catmen       (void);
+ extern void     changedir    (Widget, XtPointer, XtPointer);
+ extern void     changepat    (Widget, caddr_t, caddr_t);
+ extern int      closefile    (FILEDATA*);
+ extern int      closefilep   (FILEDATA**);
+ extern void     colmen       (Widget, XtPointer, XtPointer);
+ extern Widget   contrastmen  (Widget, XtPointer, XtPointer);
+ extern void     curmen       (Widget, XtPointer, XtPointer);
+ extern void     comap        (void);
+ extern void     comapsav     (int);
+ extern void     comapmen2    (void);
+ extern void     comapmen5    (Widget, caddr_t, caddr_t);
+ extern void     comapmen     (void);
+ extern void     comapmen2_buts(Widget, XtPointer, XtPointer);
+ extern void     comapmen3    (Widget, caddr_t, caddr_t);
+ extern void     corr_mask    (int);
+ extern Colormap defluts      (int); 
+ extern Colormap defluts_true (int); 
+ extern void     dendromen    (char *);
+ extern void     dentmen      (void);
+ extern void     dispmen      (Widget, caddr_t, caddr_t);
+ extern void     dispsize     (int, int, int, int, int, int, int,
+                               int*, int*, int*);
+ extern void     dist         (void);
+ extern void     distmen      (Widget, XtPointer, XtPointer);
+ extern void     docmontmen   (char *);
+ extern void     docmontmen0  (char *);
+ extern void     eul_to_xyz   (float *, float *, float *);
+ extern void     exitexit     (Widget, caddr_t, caddr_t);
+ extern void     expos_cb     (Widget, XtPointer, XtPointer);
+ extern char  *  extractstr   (XmString);
+ extern int      fftmcf       (float *, float *, int, int, int, int *);
+ extern int      filget       (char *, char *, int, int);
+ extern int      filinc       (char*, char*, int*, int*);
+ extern int      filter       (float *, int, int, float *, int, int, 
+                               float *, float *, float *);
+ extern int      filtere      (float *, int, int, int, int, float, 
+                               float *, float *, float *);
+ extern int      filterv      (float *, int, int, float *, int, int, 
+                               float *, float *, float *);
+ extern void     filtermen    (void);
+ extern int      filterfill   (float *, int, int, 
+                               int, int, float, float, 
+                               float *, float *, float *, int);
+ extern void     filter_but   (Widget, XtPointer, XtPointer);
+ extern int      filterskel   (float *, int, int, 
+                               float *, float *, float *);
+ extern void     fin_cb       (Widget, caddr_t, caddr_t);
+ extern int      fitdoc       (Boolean,Boolean,Boolean,Boolean);
+ extern void     fitdocmen    (Widget, XtPointer, XtPointer);
+ extern void     fitmen_adv   (void);
+ extern void     fitsav       (int);
+ extern int      fmr_1        (float*, int, float *, int *);
+ extern int      fmr_2        (float*, int, int, int *);
+ extern void     fontmen      (Widget, caddr_t, caddr_t);
+ extern int      getcorner    (Widget, Widget , int *, int *);
+ extern int      getdoc       (FILE *, char *, char *,  
+                               int, int, float **, int *);
+ extern int      getdoc_f      (FILE *, char *, char *,  
+                               int, int, float **, int *,int);
+ extern void     get_imsiz    (void);
+ extern void     getloc       (XEvent *, char, int *, int *);
+ extern int      getoldstack  (FILEDATA*, int, int, int);
+ extern void     gold         (void);
+ extern void     goldmen      (void);
+ extern int      gongon       (float, float, float *, float *, float *);
+ extern int      his          (FILEDATA*, int*);
+ extern int      hist         (FILEDATA*);
+ extern void     imagedis     (FILEDATA *, int, XImage **,
+                               int, int, float **, int, int);
+ extern void     imagemen     (Widget, XtPointer, XtPointer);
+ extern int      imagemen1    (char *, int);
+ extern void     imoptmen     (Widget, caddr_t, caddr_t);
+ extern int      invert       (float *, int, int,float *, float *, 
+                               float *);
+ extern void     itex         (Widget, caddr_t, caddr_t);
+ extern char *   itoa         (int);
+ extern int      iskipadj     (int, int, int, int, int, int*, int *);
+ extern int      iskipundo    (int, int, int, int, int, int*, int *);
+ extern int      localareaeq  (float *,int, int, float *, float *,
+                               int, int, float *);
+ extern void     locc         (int*, int*, int, int, 
+                               int*, int*, int*, int, int, int, int, 
+                               int, int, int, int, int*, int);
+ extern int      lut          (char *, Colormap, int, int);
+ extern int      lut_info     (char *, Colormap, int, int, int);
+ extern void     lutmen       (Widget, XtPointer, XtPointer);
+ extern void     mag          (Widget, caddr_t, caddr_t);
+ extern void     mask         (void);
+ extern void     maskmen      (void);
+ extern int      monn         (GC, FILEDATA *, int, int, int, int, int, int);
+ extern void     mont2        (int, int);
+ extern int      mont3        (FILEDATA *, int, int);
+ extern void     montmen3     (void);
+ extern void     montmen2     (void);
+ extern void     movearea     (void);
+ extern void     movecur      (int, int);
+ extern void     moviemen     (int);
+ extern void     newext       (Widget,XtPointer, XtPointer );
+ extern void     newvmap      (int, int, int* );
+ extern int      norm         (FILEDATA*);
+ extern int      numdig       (int, int);
+ extern FILEDATA *opennew     (char*, int, int, int, int, char*);
+ extern FILEDATA *openold     (char*, int*, int*, int*, int*, char*);
+ extern void     pickback     (int);
+ extern void     pickbackmen  (void);
+ extern void     pickdisp     (int, int);
+ extern void     pickdraw     (int, int, int, int, int, int);
+ extern void     pickmen      (void);
+ extern void     pickp        (int);
+ extern void     pixel_in     (void);
+ extern void     pixel_sc     (void);
+ extern void     pixelmen_sc_nod(Widget, XtPointer, XtPointer);
+ extern void     pixelmen_sc_doc(Widget, XtPointer, XtPointer);
+ extern void     pixelmen_in_doc(Widget, XtPointer, XtPointer);
+ extern void     pixelmen_in_nod();
+ extern int      pixlen       (GC, char *);
+ extern unsigned long planeforcolor(int icolort);
+ extern void     pop_errmsg   (char *);
+ extern int      power        (float*, int, int);
+ extern void     profile      (void);
+ extern void     powermen     (void);
+ extern void     powermena    (void);
+ extern int      querylut     (Colormap, Visual *, int *, int * ,int *, int *);
+ extern void     radcur       (int);
+ extern void     rcaver       (FILEDATA*, int, int, int, 
+                               int, int, int, float *);
+ extern int      rdprx        (Widget, char, int *, float *);
+ extern int      rdpriw       (int *, int, int, Widget, char *, char *);
+ extern int      rdprxc       (Widget, char *, int);
+ extern int      redlin       (FILEDATA*, float*, int , int);
+ extern int      redlin8      (FILEDATA*, unsigned char*, int, int);
+ extern int      redvol       (FILEDATA*, int,  char  **, int, float **,
+                               int,  int, int, int, int, int, int, int, 
+                               float, float, 
+                               float*,  float*, int);
+ extern int      redvol8      (FILEDATA *, unsigned char  *,
+                               int, int, int, int,  int, int, int, int, 
+                               float *, float *);
+ extern void     reflmen      (void);
+ extern void     foumen       (void);
+ extern float    round_spi    (float);
+ extern float    roundang     (float);
+ extern void     rubberline   (void);
+ extern int      scale32to8   (float, float, int, int, int,
+                               float *, float *);
+ extern int      scaleimg     (float *, int, int, int, int,
+                               float, float, char *);
+ extern FILE   * savdn1       (char*, char*, FILE**, float*, 
+			       int, int*,int,int);
+ extern FILE   * savdnc       (char*, char*, FILE**, float*, 
+			       int, int*,int,int,  char *);
+ extern void     setacursor   (int,    int, int);
+ extern void     Setbgfg      (Arg *, int, int * );
+ extern void     setamap      (Colormap);
+ extern void     setline      (Widget, caddr_t, caddr_t);
+ extern void     setmag       (Widget, caddr_t, caddr_t);
+ extern GC       setxor       (GC);
+ extern int      showbimage   (float *, int, char**,
+                               int, XImage **, int, int,float, float);
+ extern int      showimage    (FILEDATA*, int, char**, 
+                               int, XImage**,
+                               int, float**, int, float, float, 
+                               int, int);
+ extern void     showbutx     (char*, char*, char*, int);
+ extern void     showbutxmes  (char*, char*, char*);
+ extern void     shift        (int);
+ extern int      sird         (float *, unsigned char *, int, 
+                               int, int, int);
+ extern void     spout        (char*);
+ extern void     spouts       (char*);
+ extern void     spouto       (char*);
+ extern void     spouti       (int);
+ extern int      spoutfile    (int);
+ extern void     stackmen     (FILEDATA*);
+ extern void     stackdis     (int, int);
+ extern int      strtoint     (Widget, char*, int*);
+ extern void     surfmen      (int, int, int);
+ extern void     surf         (int, int, int, int);
+ extern int      thresh       (float *, int, int, 
+                               float, float, float, float,
+                               float *, float *, float *);
+ extern int      tiltang      (float *, float *, float *, float *,
+	                       int, float *, int *, float, int);
+ extern   void   toggle2_cb   (Widget, caddr_t, caddr_t);
+ extern int      unsdal       (char *, int *, int, float *,
+                               int, float **, int *, int, int);
+ extern void     visual_info  (Display*, Visual*, int *, int *);
+ extern void     visuals      (Display*, int);
+ extern void     waitcursor   (Window, int, int);
+ extern void     webclear     (Widget, XtPointer, XtPointer);
+ extern void     web_com      (Widget);
+ extern void     web_info     (Widget, caddr_t, caddr_t);
+ extern void     web_man      (Widget, caddr_t, caddr_t);
+ extern int      wicolor      (GC, int);
+ extern Widget   widean       (Widget, Widget, char *, char *,
+                               int, int, int);
+ extern int      widisp       (GC, FILEDATA*, int, int, int, int, int, 
+                               double, double ,int, int, int, int, int,
+                               int, XImage**, int);
+ extern Widget   wid_angles   (Widget, Widget[3], int,int, int, int, int, int);
+ extern Widget   wid_contrast (Widget,  char*,  int, int);
+ extern Widget   wid_dialog   (Widget, Widget, char*, int, int);
+ extern Widget   wid_file     (Widget, Widget, char*, char*, char*,
+                               void (*)(), int, int);
+ extern void     wid_fileset  (Widget, char*);
+ extern void     wid_filedirset(Widget, char*);
+ extern void     wid_info     (void);
+ extern Widget   wid_labelg   (Widget, Widget, char*, int, int);
+ extern Widget   wid_label    (Widget, Widget, char*, Colormap,
+                               int, int);
+ extern int      wid_lutinfo  (Colormap, int);
+ extern Widget   wid_mess     (Widget, Widget, char*, int, int);
+ extern void     wid_movie    (void);
+ extern Widget   wid_menubar  (Widget); 
+ extern Widget   wid_posiz    (Widget, Widget, int, int, 
+                               int, int, char, void (* )());
+ extern int      wid_power    (int, int*);
+ extern Widget   wid_pulldown (Widget, char *, int);
+ extern Widget   wid_push     (Widget, Widget, char *, void (*)(),
+                               char *, Colormap, int, int);  //UNUSED??
+ extern Widget   wid_pushg    (Widget, Widget, char*, void (*) (), 
+                               char*,int, int); 
+ extern Widget   wid_rowcol   (Widget, char , int, int);
+ extern void     wid_sep      (Widget); 
+ extern Widget   wid_scale    (Widget, Widget, char*, 
+                               int, int, int,  int, int, int, int);
+ extern Widget   wid_skip     (Widget,  char*,  int, int);
+ extern Widget   wid_stdbut   (Widget, Widget,  Widget*, Widget*, Widget*, 
+                               char *, void (*)(), void (*)(), void (*)(),
+                               char *);
+ extern Widget   wid_stdbut_str(Widget, Widget,  Widget*, Widget*, Widget*, 
+                               char *,     char *,     char *,    
+                               char *, void (*)(), void (*)(), void (*)(),
+                               char *);
+ extern Widget   wid_text     (Widget, Widget, char*, char*,
+                               void (*)(), caddr_t, int, int);
+ extern Widget   wid_textboxb (Widget iw_parent, Widget iw_text, 
+                               char* prompt, char* string,  int icol);
+ extern Widget   wid_togmen   (Widget, Widget, char*, int, int, int);
+ extern Widget   wid_toggleg  (Widget, Widget, char *, int,
+                                void (*cb)(), char *, int, int);
+ extern Widget   wid_win      (Widget, Widget iw_its[6], int, int, int);
+ extern int      willsq       (float*, float*, float*, float*,
+                               int, float, float*, float*);
+ extern void     wirubberline (Drawable win, GC icontxt, 
+                               Boolean draw, Boolean perm,
+                               int ixs,  int iys, int ixe,   int iye);
+ extern void     winbox       (int);
+ extern void     windata      (int, int, int, int);
+ extern void     windowsp     (FILEDATA *, FILEDATA *, int, int, int,
+                               int, int, int, int,  int,  int, float);
+ extern void     winfile      (void);
+ extern void     winmov       (void);
+ extern void     winread      (void);
+ extern void     winread1     (char *,int, int, unsigned long);
+ extern void     winsel       (void);
+ extern void     winsiz       (Widget, XtPointer, XtPointer);
+ extern void     winsiz1      (void);
+ extern void     wipic        (GC, char*, int, int, int, int, int, int,
+                               XImage**);
+ extern void     witext       (GC, char*, int, int, 
+                                int, int, int, int, int);
+ extern void     witran       (float *, float *, float *, float *, int,
+			       float, float, float);
+ extern int      wrtlin       (FILEDATA *, float *, int, int);
+ extern int      wrtname      (int, int, char *, int);
+ extern int      wrtvol       (FILEDATA *,  float *);
+ extern void     xorc         (Window, GC, int, int, int, int);
+ extern void     xorbox       (Window, GC, int, int, int, int, int);
+ extern void     xorline      (Window, GC, int, int , int, int, int);
+ extern void     xorlin       (Window, GC, int, int, 
+                               int *, int *, int *, int *,
+                               int, int, int, int);
+ extern void 	 xyz_to_eul   (float *, float *, float *);
+ extern int      ztoxy        (FILEDATA *, char *, char, float, float, int);
+ extern int      ztoxyn       (FILEDATA *, char *, char, int, int, int);
+ extern int      setnprow     (int);
+#endif
+@
+
+
+1.116
+log
+@fitdoc parameters changed
+@
+text
+@d69 1
+a69 1
+ extern int      fitdoc       (Boolean,Boolean,Boolean);
+@
+
+
+1.115
+log
+@$2
+@
+text
+@d69 1
+a69 1
+ extern int      fitdoc       (int);
+@
+
+
+1.114
+log
+@added getdoc_f
+@
+text
+@d28 1
+a28 1
+ extern void     curmen       (Widget, caddr_t, caddr_t);
+d224 1
+a224 1
+ extern Widget   wid_file     (Widget, Widget,char*, char*, char*,
+d249 5
+a253 1
+ extern Widget   wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+@
+
+
+1.113
+log
+@contastmen return, newcmap added
+@
+text
+@d79 2
+d204 1
+a204 1
+	                       int, float *, int *, float);
+@
+
+
+1.112
+log
+@removed wilines
+@
+text
+@d27 1
+a27 1
+ extern void     contrastmen  (Widget, XtPointer, XtPointer);
+d50 1
+a50 1
+ extern void     expos_cb     (Widget, caddr_t, caddr_t);
+d118 1
+@
+
+
+1.111
+log
+@xtlpointer
+@
+text
+@d2 1
+a2 1
+ /* subroutine prototypes */
+a258 1
+ extern int      wilines      (GC, XPoint* , int, int, int, int);
+@
+
+
+1.110
+log
+@defluts_true
+@
+text
+@d27 1
+a27 1
+ extern void     contrastmen  (Widget, caddr_t, caddr_t);
+@
+
+
+1.109
+log
+@setbgfg
+@
+text
+@d38 1
+@
+
+
+1.108
+log
+@removed fitorigin
+@
+text
+@d170 1
+@
+
+
+1.107
+log
+@added fitmen_hid   (void)
+@
+text
+@d10 1
+a10 1
+ extern void     action        (Widget, char *, char *, char *);
+a69 1
+ extern void     fitorigin    (Widget, XtPointer, XtPointer);
+@
+
+
+1.106
+log
+@*** empty log message ***
+@
+text
+@a71 1
+ extern void     fitmen_hid   (void);
+@
+
+
+1.105
+log
+@added wid_contrast
+@
+text
+@d10 1
+a10 1
+ extern void     action(Widget iw_t, char *event, char *act_name, char *params);
+d71 2
+a72 1
+ extern void     fitmen       (void);
+d133 1
+a134 1
+ extern void     pixelmen_in_doc(Widget, XtPointer, XtPointer);
+@
+
+
+1.104
+log
+@newext       (Widget,XtPointer, XtPointer
+@
+text
+@d218 1
+@
+
+
+1.103
+log
+@pixel_
+@
+text
+@d117 1
+a117 1
+ extern void     newext       (Widget, caddr_t, caddr_t);
+@
+
+
+1.102
+log
+@clearover removed,
+@
+text
+@d128 6
+a133 3
+ extern void     pixel        (void);
+ extern void     pixelmen     (Widget, caddr_t, caddr_t);
+ extern void     pixelmen_buts(Widget, caddr_t, caddr_t);
+d168 2
+@
+
+
+1.101
+log
+@*** empty log message ***
+@
+text
+@a23 1
+ extern void     clearover    (Widget, caddr_t, caddr_t);
+d202 1
+a202 1
+ extern void     webclear     (Widget, caddr_t, caddr_t);
+@
+
+
+1.100
+log
+@new
+@
+text
+@a8 1
+#include "filescnt.h"
+a26 1
+ extern void     cntmen0      (Widget, XtPointer, XtPointer);
+a28 5
+ extern int      csget        (FILEDATACNT*, DATACNT*, int, 
+                               float*, int*);
+ extern int      csgettext    (FILEDATACNT*, DATACNT*, int, char*);
+ extern int      closefilecnt (FILEDATACNT*);
+ extern int      cntplot      (FILEDATACNT* );
+d35 1
+a35 1
+ extern void     comapmen2_buts(Widget, caddr_t, caddr_t);
+a122 2
+ extern FILEDATACNT *openoldcnt(char*, char*);
+ extern void     overlut      (void);
+d226 1
+d239 1
+a269 1
+ extern int      wisetplanes  (Display*, GC, int);
+@
+
+
+1.99
+log
+@round --> round_spi
+@
+text
+@a19 1
+ extern void     blackout     (Widget, caddr_t, caddr_t);
+d29 1
+a29 1
+ extern void     colmen       (Widget, caddr_t, caddr_t);
+d112 1
+d117 1
+a117 2
+ extern int      monn         (GC, FILEDATA *, int, int, int, 
+                               int, int, int);
+d142 1
+d148 1
+a148 1
+ extern int      querylut     (Colormap, int *, int * ,int *, int *);
+d168 1
+a168 1
+ extern void     rubberline   (Widget, caddr_t, caddr_t);
+d209 1
+a209 1
+ extern void     visual_info  (Display*, Visual*);
+d240 3
+a242 3
+                               char *, Colormap, int, int);
+  extern Widget   wid_pushg   (Widget, Widget, char*, void (*) (), 
+                               char*,int, int);
+d261 3
+d271 1
+a271 1
+ extern void     winread1     (char *,int, int);
+@
+
+
+1.98
+log
+@wrtname param
+@
+text
+@d166 1
+a166 1
+ extern float    round        (float);
+@
+
+
+1.97
+log
+@wrtnam
+@
+text
+@d280 1
+a280 1
+ extern void     wrtname      (int, int, char *, int);
+@
+
+
+1.96
+log
+@wrtname
+@
+text
+@d280 1
+a280 1
+ extern void     wrtname      (int , char *, int);
+@
+
+
+1.95
+log
+@ztoxy changed
+@
+text
+@d280 1
+@
+
+
+1.94
+log
+@iskipundo wrong
+@
+text
+@d288 3
+a290 7
+ extern int      ztoxy        (FILEDATA *, char *,
+                               int,  int,   int, int,  int,   int,
+                               int,  int,   int, char, float, float, int);
+ extern int      ztoxyn       (FILEDATA *, char *,
+                               int, int, int, int, int, int, 
+                               int, int, int,
+                               char, int, int, int);
+@
+
+
+1.93
+log
+@added iskipundo
+@
+text
+@d106 1
+a106 1
+ extern int      iskipundo    (int, int, int, int*, int *);
+@
+
+
+1.92
+log
+@param changed for stackmen
+@
+text
+@d105 2
+a106 2
+ extern int      iskipadj     (int ixi,int iyi, int nsam, int nrow, 
+                               int iskip, int* ixa, int *iya);
+@
+
+
+1.91
+log
+@added filedata to getoldstack parameters
+@
+text
+@d196 1
+a196 1
+ extern void     stackmen     (void);
+@
+
+
+1.90
+log
+@added getoldstack
+@
+text
+@d90 1
+a90 1
+ extern int      getoldstack  (int imgnum, int wantnext, int sayit);
+@
+
+
+1.89
+log
+@added iskipadj
+@
+text
+@d90 1
+@
+
+
+1.88
+log
+@*** empty log message ***
+@
+text
+@d104 2
+@
+
+
+1.87
+log
+@added scale32to8
+@
+text
+@d55 1
+@
+
+
+1.86
+log
+@added action, foumen
+@
+text
+@d165 4
+a168 2
+ extern int      scaleimg     (float*, int, int, int,   int, int, int,
+                               float, float, int,  int, int, char**);
+@
+
+
+1.85
+log
+@changes for stack files
+@
+text
+@d11 1
+d161 1
+@
+
+
+1.84
+log
+@*** empty log message ***
+@
+text
+@d188 2
+@
+
+
+1.83
+log
+@added addext.c
+@
+text
+@d12 1
+a12 1
+ extern void     addext       (char*, char*, int);
+@
+
+
+1.82
+log
+@distmen XtPointer
+@
+text
+@d12 1
+@
+
+
+1.81
+log
+@spelling ;
+@
+text
+@d51 1
+a51 1
+ extern void     distmen      (Widget, caddr_t, caddr_t);
+@
+
+
+1.80
+log
+@added pop-errmsg
+@
+text
+@d137 1
+a137 1
+ extern void     pop_errmsg   (char *)
+@
+
+
+1.79
+log
+@added 2 parameters to imagedis
+@
+text
+@d137 1
+@
+
+
+1.78
+log
+@added docmontmen
+@
+text
+@d92 2
+a93 1
+ extern void     imagedis     (FILEDATA*, int, XImage**, int, int, int);
+@
+
+
+1.77
+log
+@changed rdprxc
+@
+text
+@d52 1
+d58 1
+a58 1
+ extern int      filget       (char *, char *, int);
+@
+
+
+1.76
+log
+@changed changedir param
+@
+text
+@d145 1
+a145 1
+ extern int      rdprxc       (Widget, char *);
+@
+
+
+1.75
+log
+@added new spouts
+@
+text
+@d22 1
+a22 1
+ extern void     changedir    (Widget, caddr_t, caddr_t);
+@
+
+
+1.74
+log
+@added getdoc
+@
+text
+@d180 3
+@
+
+
+1.73
+log
+@altered savdn1 call
+@
+text
+@d82 2
+d241 2
+a242 3
+ extern int      willsq       (float*, float*, float*, float *,
+                               int, float[][4], float[][4],
+                               float, float *, float *);
+@
+
+
+1.72
+log
+@added denoisemen
+@
+text
+@d160 1
+a160 1
+			       int, int*,int);
+@
+
+
+1.71
+log
+@fitsav changed
+@
+text
+@d69 1
+a69 1
+ extern void     filter_but   (Widget, caddr_t, caddr_t);
+d95 1
+a95 1
+  extern void     itex         (Widget, caddr_t, caddr_t);
+@
+
+
+1.70
+log
+@changed willsq call
+@
+text
+@a58 2
+ extern void     fitdoc       (int, int);
+ extern void     fitdocmen    (Widget, caddr_t, caddr_t);
+d73 2
+a74 2
+ extern void     fitdoc       (int, int);
+ extern void     fitdocmen    (Widget, caddr_t, caddr_t);
+d77 1
+a77 1
+ extern void     fitsav       (void);
+d186 1
+a186 1
+	                       int, float *, int *);
+d239 3
+a241 2
+ extern void     willsq       (float*, float*, float*, float *,
+                               int, float[][4], float[][4]);
+@
+
+
+1.69
+log
+@fitorigin XtPointer
+@
+text
+@d242 1
+a242 1
+                               int, float*, float*);
+@
+
+
+1.68
+log
+@changed fitsav parameters
+@
+text
+@d77 1
+a77 1
+ extern void     fitorigin    (Widget, caddr_t, caddr_t);
+@
+
+
+1.67
+log
+@changed to XtPointer on imagemen
+@
+text
+@d79 1
+a79 1
+ extern void     fitsav       (int);
+@
+
+
+1.66
+log
+@changed a XtpOinter
+@
+text
+@d92 1
+a92 1
+ extern void     imagemen     (Widget, caddr_t, caddr_t);
+d105 1
+a105 1
+ extern void     lutmen       (Widget, caddr_t, caddr_t);
+@
+
+
+1.65
+log
+@changed winsiz caddr
+@
+text
+@d27 1
+a27 1
+ extern void     cntmen0      (Widget, caddr_t, caddr_t);
+@
+
+
+1.64
+log
+@removed parameters from wid_file () for callback function
+@
+text
+@d253 1
+a253 1
+ extern void     winsiz       (Widget, caddr_t, caddr_t);
+@
+
+
+1.63
+log
+@empty log message
+@
+text
+@d208 1
+a208 2
+                               void (*)(Widget, caddr_t, caddr_t),
+                               int, int);
+@
+
+
+1.62
+log
+@added dentmen
+@
+text
+@d19 2
+@
+
+
+1.61
+log
+@Added Distance operation
+@
+text
+@d44 1
+@
+
+
+1.60
+log
+@added imagedis instead of image
+@
+text
+@d47 2
+@
+
+
+1.59
+log
+@added closefilep
+@
+text
+@d86 1
+a86 1
+ extern void     image        (FILEDATA*, int, XImage**, int, int, int);
+d146 1
+a146 1
+                               float*,  float*);
+@
+
+
+1.58
+log
+@added surfcolor
+@
+text
+@d24 1
+@
+
+
+1.57
+log
+@changed surfmen call
+@
+text
+@d177 1
+a177 1
+ extern void     surf         (int, int, int);
+@
+
+
+1.56
+log
+@Added routine definations for euler and XYZ conversion
+@
+text
+@d176 1
+a176 1
+ extern void     surfmen      (int, int);
+@
+
+
+1.55
+log
+@shortened extractstring and wid_toggglemen
+@
+text
+@d12 1
+d15 1
+d46 1
+d101 1
+d111 1
+a111 1
+ extern void     mask         (void);
+d150 2
+d199 1
+a199 1
+ extern Widget   wid_angles   (Widget, Widget[3], int, int, int, int, int);
+d212 1
+d265 1
+@
+
+
+1.54
+log
+@changed filterfill parameters
+@
+text
+@d46 1
+a46 1
+ extern char  *  extractstring(XmString);
+d225 1
+a225 1
+ extern Widget   wid_togglemen(Widget, Widget, char*, int, int, int);
+@
+
+
+1.53
+log
+@added sird
+@
+text
+@d61 1
+a61 1
+                               float *, float *, float *);
+@
+
+
+1.52
+log
+@added wid_angles
+@
+text
+@d142 3
+d165 2
+d170 2
+a171 1
+ extern void     surfmen      (void);
+@
+
+
+1.51
+log
+@changed imagemen1 call
+@
+text
+@d187 1
+@
+
+
+1.50
+log
+@added thresh.c
+@
+text
+@d84 1
+a84 1
+ extern void     imagemen1    (char *, int);
+@
+
+
+1.49
+log
+@added filterskel
+@
+text
+@d166 3
+d173 1
+a173 2
+                               int, float **, int *,
+                               int, int);
+@
+
+
+1.48
+log
+@added invert
+@
+text
+@d63 2
+@
+
+
+1.47
+log
+@added filterfill
+@
+text
+@d84 3
+a86 1
+ extern void     itex         (Widget, caddr_t, caddr_t);
+@
+
+
+1.46
+log
+@added dendromen
+@
+text
+@d59 3
+@
+
+
+1.45
+log
+@added imagemen1
+@
+text
+@d40 1
+@
+
+
+1.44
+log
+@added localareaeq
+@
+text
+@d58 1
+d78 1
+@
+
+
+1.43
+log
+@added wid_sep
+@
+text
+@d80 2
+@
+
+
+1.42
+log
+@added windowsp, windata
+@
+text
+@d189 3
+a191 1
+ extern Widget   wid_pushg    (Widget, Widget, char*, void (*) (), 
+d194 1
+@
+
+
+1.41
+log
+@added radcur
+@
+text
+@d209 3
+@
+
+
+1.40
+log
+@aeeded routined
+@
+text
+@d118 1
+@
+
+
+1.39
+log
+@added winmov, etc.
+@
+text
+@d68 1
+@
+
+
+1.38
+log
+@added pixelmen_buts
+@
+text
+@d183 2
+d211 1
+d213 1
+@
+
+
+1.37
+log
+@changed wid_labelgt to wid_label
+@
+text
+@d110 1
+@
+
+
+1.36
+log
+@added xorlin
+@
+text
+@d178 2
+a179 1
+ extern Widget   wid_labelgt  (Widget, Widget, char*, int, int);
+@
+
+
+1.35
+log
+@*** empty log message ***
+@
+text
+@d220 3
+@
+
+
+1.34
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.33
+log
+@*** empty log message ***
+@
+text
+@d117 1
+a117 1
+                               int, int, int, int, float *);
+@
+
+
+1.32
+log
+@*** empty log message ***
+@
+text
+@d117 1
+a117 1
+                               int, int, int, float*);
+@
+
+
+1.31
+log
+@changed parmeters on csgettext call
+@
+text
+@d110 1
+d135 1
+@
+
+
+1.30
+log
+@*** empty log message ***
+@
+text
+@d27 1
+a27 2
+ extern int      csgettext    (FILEDATACNT*, DATACNT*, int, 
+                               char*, int*);
+@
+
+
+1.29
+log
+@added pixel
+@
+text
+@d73 1
+@
+
+
+1.28
+log
+@added power
+@
+text
+@a104 1
+ extern void     pickdisp     (int, int);
+d108 1
+d118 1
+a127 1
+ extern void     pixelmen     (Widget, caddr_t, caddr_t);
+@
+
+
+1.27
+log
+@added new stuff
+@
+text
+@d47 1
+d65 2
+d110 1
+d112 2
+d179 1
+@
+
+
+1.26
+log
+@*** empty log message ***
+@
+text
+@d82 1
+@
+
+
+1.25
+log
+@added localareaeq
+@
+text
+@a75 2
+ extern int      localareaeq  (float *,int,int,float,float,int,int,
+                               float **);
+d154 1
+a154 1
+ extern void     web_man      (char *);
+d180 1
+a180 1
+                               void (*)());
+@
+
+
+1.24
+log
+@include prototype for web_man
+@
+text
+@d76 2
+@
+
+
+1.23
+log
+@changed the prototype of web_info routine
+@
+text
+@d154 1
+@
+
+
+1.22
+log
+@Mladjadj forgot to declare the prototype for comapmen........ added it
+@
+text
+@d153 1
+a153 1
+ extern void     web_info     (void);
+@
+
+
+1.21
+log
+@added Mladjadj prototype for corr-map
+@
+text
+@d34 1
+d36 1
+a36 1
+ extern void     comapmen2    (void);
+@
+
+
+1.20
+log
+@added function prototype for fontmen
+@
+text
+@d32 7
+d194 1
+d203 1
+d207 1
+@
+
+
+1.19
+log
+@ used imagego...imageend
+@
+text
+@d56 1
+@
+
+
+1.18
+log
+@*** empty log message ***
+@
+text
+@d17 1
+d56 1
+d62 1
+a62 1
+ extern void     image        (FILEDATA*, int, XImage**, int);
+d73 4
+d84 1
+d109 1
+a109 1
+ extern void     reflmen      (Widget, caddr_t, caddr_t);
+d124 2
+a125 1
+                               int, float**, int, float, float);
+d150 1
+a150 1
+                               XImage**, int);
+d178 1
+d197 7
+a203 1
+
+@
+
+
+1.17
+log
+@added pickback stuff
+@
+text
+@d112 1
+@
+
+
+1.16
+log
+@added
+@
+text
+@d82 2
+d85 1
+d92 2
+d116 1
+a116 1
+                               int, float**, float, float);
+@
+
+
+1.15
+log
+@*** empty log message ***
+@
+text
+@d73 1
+d167 4
+@
+
+
+1.14
+log
+@*** empty log message ***
+@
+text
+@d57 2
+d89 1
+d131 2
+@
+
+
+1.13
+log
+@added some
+@
+text
+@d51 1
+a51 1
+ extern void      fitdocmen   (Widget, caddr_t, caddr_t);
+a55 1
+ void            getvals      (char *, char *, char *);
+a93 3
+ extern void     reflmen_buts (Widget, caddr_t, caddr_t);
+ extern void     refl0        (void);
+ extern void     refl1        (void);
+@
+
+
+1.12
+log
+@*** empty log message ***
+@
+text
+@d15 4
+d21 3
+d30 1
+d32 1
+d35 1
+d56 1
+d60 3
+d68 2
+a69 1
+ extern int      querylut     (Colormap, int *, int * ,int *, int *);
+d74 1
+d84 1
+d86 1
+d94 6
+d106 1
+d121 1
+d130 1
+d146 1
+d160 2
+d165 1
+@
+
+
+1.11
+log
+@added
+@
+text
+@d54 1
+a54 1
+ extern int      makedeflut   (int *, int * ,int *, int *);
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@a21 2
+ extern int      scaleimg     (float *, int, int, int,   int, int, int,
+                               float, float, int,  int, int, char**);
+d23 1
+d103 1
+d114 1
+@
+
+
+1.9
+log
+@added
+@
+text
+@d55 1
+d89 1
+d117 1
+d126 1
+a126 1
+ extern Widget   wid_text     (Widget, Widget, char *, char *,
+d131 2
+a132 2
+ extern void     willsq       (float *, float *, float *, float *,
+                               int, float *, float *);
+@
+
+
+1.8
+log
+@new stuff added
+@
+text
+@d11 1
+d42 1
+d46 1
+d57 1
+d63 2
+d66 2
+d95 3
+d102 1
+d140 1
+@
+
+
+1.7
+log
+@added some
+@
+text
+@d51 1
+d98 2
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d11 1
+d28 1
+d30 1
+d32 6
+d42 2
+d55 1
+d60 1
+d69 2
+d73 3
+a75 1
+ extern int      showimagen    (FILEDATA*, int, char**, 
+a77 1
+ extern int      showimage    (FILEDATA*, int, int, XImage**, int);
+d84 2
+d108 2
+d113 2
+d121 3
+@
+
+
+1.5
+log
+@added some
+@
+text
+@a28 6
+ extern int      filter       (float *, int, int, float *, int, int, 
+                               float *, float *, float *);
+ extern int      filtere      (float *, int, int, int, int, float, 
+                               float *, float *, float *);
+ extern int      filterv      (float *, int, int, float *, int, int, 
+                               float *, float *, float *);
+d44 1
+a44 2
+ extern FILEDATA* opennew     (char *, int, int, int, int, char *);
+ extern FILEDATA* openold     (char*, int*, int*, int*, int*, char*);
+d58 1
+a58 3
+ extern int      showbimage   (float *, int, int, XImage **, int, int,
+                               float, float);
+ extern int      showimage    (FILEDATA*, int, char**, 
+d61 1
+a89 2
+ extern Widget   wid_text     (Widget, Widget, char *, char *,
+                               void (*)(), caddr_t, int, int);
+a98 1
+ extern int      wrtvol       (FILEDATA *,  float *);
+@
+
+
+1.4
+log
+@added stuff
+@
+text
+@d11 14
+a24 11
+ extern void     spout        (char *);
+ extern void     visual_info  (Display *, Visual *);
+ extern int      wid_lutinfo  (Colormap, int);
+ extern void     visuals      (Display *, int);
+ extern void     setamap      (Colormap);
+ extern int      filinc       (char *, char *, int *, int *);
+ extern FILEDATA *openold     (char *, int *, int *, int *, int *, 
+                               char *);
+ extern int      norm         (FILEDATA *);
+ extern void     image        (FILEDATA *, int, XImage **, int);
+ extern int      closefile    (FILEDATA *);
+a25 3
+ extern Widget   wid_file     (Widget, Widget,char *, char *, char *,
+                               void (*)(Widget, caddr_t, caddr_t),
+                               int, int);
+d27 19
+a45 2
+ extern int      hist         (FILEDATA *);
+ extern void     waitcursor   (Window, int, int);
+a46 1
+ extern void     surfmen      (void);
+a47 1
+ extern void     gold         (void);
+d49 5
+a53 1
+ extern void     fitdocmen    (Widget, caddr_t, caddr_t);
+d55 26
+a80 4
+ extern void     annotemen    (void);
+ extern int      showimage    (FILEDATA *, int, int, XImage **, int);
+ extern void     filtermen    (void);
+ extern int      widisp       (GC, FILEDATA *, int, int, int, int, int, 
+d82 10
+a91 7
+                               XImage **, int);
+ extern void     locc         (int *, int *, int, int, 
+                               int *, int *, int *, int, int, int, int, 
+                               int, int, int, int, int *, int);
+ extern void     wipic        (GC, char *, int, int, int, int, int, int,
+                               XImage **);
+ extern int      redlin       (FILEDATA *, float *, int , int);
+d93 2
+d98 2
+d101 7
+a107 9
+                               char *prompt, char *string,  int icol);
+ extern Widget   wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget   wid_dialog   (Widget, Widget, char *, int, int);
+ extern void     fin_cb       (Widget, caddr_t, caddr_t);
+ extern int      strtoint     (Widget, char *, int *);
+ extern int      cntplot      (FILEDATACNT * );
+ extern FILEDATACNT *openoldcnt(char *, char *);
+ extern void     webclear     (Widget, caddr_t, caddr_t);
+ extern void     witext       (GC, char *, int, int, 
+d109 2
+a110 7
+ extern int      wilines      (GC, XPoint* , int, int, int, int);
+ extern int      csget        (FILEDATACNT*, DATACNT*, int, 
+                               float*, int*);
+ extern int      csgettext    (FILEDATACNT*, DATACNT*, int, 
+                               char*, int*);
+ extern int      closefilecnt (FILEDATACNT *);
+ extern int      redlin8      (FILEDATA *, unsigned char *, int, int);
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d9 1
+a28 1
+ extern void     expos_cb     (Widget, caddr_t, caddr_t);
+d48 22
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d8 1
+d10 39
+a48 6
+ extern void  visual_info  (Display *, Visual *);
+ extern int   wid_lutinfo  (Colormap, int);
+ extern void  visuals      (Display *, int);
+ extern void  spout        (char *);
+ extern void  setamap      (Colormap);
+ 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 6
+a9 1
+ extern void  visual_info  (Display*, Visual*);
+d11 2
+a12 2
+ extern void  visuals      (Display*, int);
+ extern void  spout        (char*);
+d15 1
+@

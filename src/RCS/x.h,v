@@ -1,0 +1,61 @@
+head	1.2;
+access;
+symbols
+	pre-tilt-improve:1.2
+	pre_neednewmap:1.2
+	pre_tiltpair_chng:1.2
+	pre_GPL:1.2;
+locks;
+comment	@ * @;
+
+
+1.2
+date	94.02.16.12.43.43;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.17.57;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removed gl stuff
+@
+text
+@
+#ifndef XH
+#define XH
+
+#include <Xm/Xm.h>
+
+#include <X11/StringDefs.h>
+#include <X11/keysym.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Intrinsic.h>
+#include <X11/IntrinsicP.h>
+#include <X11/CoreP.h>
+#include <X11/Shell.h>
+
+#endif
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a15 4
+#include <gl/gl.h>
+#include <gl/device.h>
+#include <gl/get.h>
+
+@

@@ -1,0 +1,164 @@
+head	1.7;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_neednewmap:1.7;
+locks;
+comment	@# @;
+
+
+1.7
+date	2011.05.27.11.56.02;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.20.18.29.28;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.12.14.20.33.28;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2004.11.29.19.50.42;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	97.03.21.20.47.35;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	97.03.13.16.46.39;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	97.03.13.16.37.53;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.7
+log
+@cosmetic
+@
+text
+@# 
+#  SOURCE: Makebody.inc
+#
+#  MAKEFILE body FOR GNU-Linux WEB  
+# 
+#  AUTHOR: ArDean Leith -- 13 MARCH 1997
+#          used ../bin dir   Oct 2005
+ 
+BINLOC = ../bin 
+
+../bin/$(PGM) :  $(LIB)
+	@@echo "        linking ../bin/$(PGM)"
+	cc  $(LF) $(LIB) -u main $(OTHERLIBS) -o ../bin/$(PGM)_tmp
+	@@chmod ug+w ../bin/$(PGM)_tmp
+	@@echo "Creating `Nextversion ../bin/$(PGM)`"
+	@@\cp ../bin/$(PGM)_tmp `Nextversion ../bin/$(PGM)`
+
+$(LIB) :  $(ELEMENTS)
+ 
+
+@
+
+
+1.6
+log
+@../bin dir
+@
+text
+@d2 1
+a2 1
+#  Makebody.inc
+d4 1
+a4 1
+#  MAKEFILE body FOR SGI & Linux WEB  
+d6 1
+a6 1
+#  Author: ArDean Leith -- 13 MARCH 1997
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d6 2
+a7 1
+#  ArDean Leith -- 13 MARCH 1997
+d9 8
+a16 7
+$(PGM) :  $(LIB)
+	@@echo "         linking $(PGM)"
+	#cc  $(LF) $(LIB) -lXm -lXt -lX11 -lPW -lm -o $(PGM)_tmp
+	cc  $(LF) $(LIB) -u main $(OTHERLIBS) -o $(PGM)_tmp
+	@@chmod ug+w $(PGM)_tmp
+	@@echo "Creating `Nextversion $(PGM)`"
+	@@\mv $(PGM)_tmp `Nextversion $(PGM)`
+@
+
+
+1.4
+log
+@OTHERLIBS used now
+@
+text
+@d4 1
+a4 1
+#  MAKEFILE body FOR SGI WEB  
+a6 1
+#
+@
+
+
+1.3
+log
+@added tmp suffix
+@
+text
+@d10 3
+a12 2
+	@@echo "         linking now --"
+	cc  $(LF) $(LIB) -lXm -lXt -lX11 -lPW -lm -o $(PGM)_tmp
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d11 2
+a12 2
+	cc  $(LF) $(LIB) -lXm -lXt -lX11 -lPW -lm -o $@@
+	@@chmod ug+w $(PGM)
+d14 1
+a14 1
+	@@\mv $(PGM) `Nextversion $(PGM)`
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d10 2
+a11 1
+	cc  $(LF) $(LIB) -u main -lXm -lXt -lX11 -lPW -lm -o $@@
+@

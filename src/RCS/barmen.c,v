@@ -1,0 +1,499 @@
+head	1.9;
+access;
+symbols
+	pre-tilt-improve:1.9
+	pre_surf_fromtop:1.9
+	pre_neednewmap:1.9
+	pre_apppluss_remove:1.9
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.9
+date	2011.07.19.18.35.44;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2011.05.05.12.00.31;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.10.18.17.00.01;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.07.11.20.59.19;	author mladjadj;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.07.11.17.28.07;	author mladjadj;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.01.21.22.57;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.01.26.14.59.52;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.07.05.15.35.06;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.38;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@WEB_BGFGO
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/barmen.c,v 1.8 2011/05/05 12:00:31 leith Exp leith $*/
+/* 
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    BARMEN
+C
+C    PARAMETERS:   
+C
+C    PURPOSE:      Makes super-widget to find bar length
+C
+C    CALLED BY:    WEB_MAIN
+C
+C--********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/Scale.h>
+#include <Xm/ToggleBG.h>
+
+#define MAX_ARGS 13
+
+ /* External function prototypes */
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern void   spout        (char *);
+ extern void   fin_cb       (Widget, XtPointer, XtPointer);
+ extern Widget wid_toggleg  (Widget, Widget, char *, int, void (*)(),
+                                char *, int, int);
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*)(), 
+                                char *,int,int);
+
+ /* internal function prototypes */
+ void          barmen_len_cb(Widget, XtPointer, XtPointer);
+ void          bar_fin_cb   (Widget, XtPointer, XtPointer);
+
+ /* Internal common variables */
+ static Widget        iw_hun, iw_ones, iw_or;
+ static int           vertical = TRUE;
+
+ /* Common variables for external use */
+ int                  idx = 50, idy = 0;
+ Widget               iw_barmen;
+
+
+ /********************   barmen   ****************************/
+
+ void barmen(Widget iw_temp, XtPointer data, XtPointer call_data)
+
+ {
+ Widget iw_labhun, iw_labones, iw_pushf;
+ int    iwid, ihi,inow,n;
+ Arg    args[MAX_ARGS];    
+
+
+ if (iw_barmen <= (Widget)0)
+    {   /* Create bar length menu widget first */
+
+    iw_barmen   = wid_dialog(iw_win, 0, "Bar length ", -1, -1);
+
+    /* Create label box for 100 lengths  */
+    iw_labhun  = wid_labelg(iw_barmen, 0,"length\n(100's)", 30, 5);
+
+    /* Create scale widget for 100 lengths */
+    iwid =  76;
+    ihi  = 224;
+
+    inow = idx;
+    if (inow <= 0) inow = idy;
+   
+    n = 0;
+#ifdef WEB_BGFGO
+    XtSetArg(args[n], XmNbackground,  icolorxmb);    n++;
+#endif
+ 
+    XtSetArg(args[n], XmNwidth,         iwid);    n++;                    
+    XtSetArg(args[n], XmNheight,        ihi);    n++;                
+    XtSetArg(args[n], XmNscaleWidth,    iwid-30);    n++;            
+    XtSetArg(args[n], XmNscaleHeight,   ihi-5);     n++;       
+    XtSetArg(args[n], XmNminimum,       0);    n++;                
+    XtSetArg(args[n], XmNmaximum,       15);    n++;             
+    XtSetArg(args[n], XmNdecimalPoints, 0);    n++;            
+    XtSetArg(args[n], XmNvalue,         0);    n++;                  
+    XtSetArg(args[n], XmNorientation,   XmVERTICAL);    n++;       
+    XtSetArg(args[n], XmNshowValue,     TRUE);    n++;           
+    XtSetArg(args[n],XmNx,             20);     n++;          
+    XtSetArg(args[n],XmNy,             56);    n++;           
+ 
+    iw_hun = XmCreateScale(iw_barmen, "iw_hun", args, n);
+    XtAddCallback(iw_hun,XmNvalueChangedCallback, 
+                   (XtCallbackProc) barmen_len_cb,"1");
+    XtManageChild(iw_hun);
+
+
+    /* Create label box for 1 lengths  */
+    iw_labones  = wid_labelg(iw_barmen, 0,"length\n(units)", 200, 5);
+
+    /* Create scale widget for 1 lengths */   
+    n = 0;
+#ifdef WEB_BGFGO
+    XtSetArg(args[n], XmNbackground,  icolorxmb);    n++;
+#endif
+    XtSetArg(args[n], XmNwidth,         iwid);    n++;                    
+    XtSetArg(args[n], XmNheight,        ihi);     n++;                
+    XtSetArg(args[n], XmNscaleWidth,    iwid-30); n++;            
+    XtSetArg(args[n], XmNscaleHeight,   ihi-5);   n++;       
+    XtSetArg(args[n], XmNminimum,       0);       n++;                
+    XtSetArg(args[n], XmNmaximum,       100);     n++;             
+    XtSetArg(args[n], XmNdecimalPoints, 0);       n++;            
+    XtSetArg(args[n], XmNvalue,         inow);    n++;                  
+    XtSetArg(args[n], XmNorientation,   XmVERTICAL);    n++;       
+    XtSetArg(args[n], XmNshowValue,     TRUE);    n++;           
+    XtSetArg(args[n], XmNx,             180);     n++;          
+    XtSetArg(args[n], XmNy,             56);      n++;           
+
+ 
+    iw_ones = XmCreateScale(iw_barmen, "iw_ones", args, n);
+    XtAddCallback(iw_ones,XmNvalueChangedCallback, 
+                    (XtCallbackProc) barmen_len_cb,"0");
+    XtManageChild(iw_ones);
+
+    /* Create toggle box for bar orientation  */
+    iw_or = wid_toggleg(iw_barmen,0,"Vertical bar",vertical,
+                        barmen_len_cb,NULL, 44,300);
+
+    /*  Create push button for finished */
+    iw_pushf = wid_pushg(iw_barmen, 0," FINISHED ", bar_fin_cb,
+                        (char *) iw_barmen,  180,350);
+    }
+
+ XtManageChild(iw_barmen);
+ }
+
+ /*********** length callback *************************/
+
+ void barmen_len_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
+
+ {
+ int     len100, len1;
+
+ XmScaleGetValue(iw_hun,  &len100);
+ XmScaleGetValue(iw_ones, &len1);
+
+ vertical = XmToggleButtonGadgetGetState(iw_or);
+
+ if (vertical)
+    {
+    idx = 0;
+    idy = len100 * 100 + len1;
+    }
+ else
+    {
+    idx = len100 * 100 + len1;
+    idy = 0;
+    }
+
+ }
+
+/*********** Finished callback *************************/
+
+ void bar_fin_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
+
+ {
+ int     len100, len1;
+
+ XtUnmanageChild((Widget) data);
+ 
+ }
+
+@
+
+
+1.8
+log
+@ci -t-cmap_changes_etc  colmen.c
+ci -t-cmap_changes_etc  defluts.c
+ci -t-cmap_changes_etc  defluts_new.c
+ci -t-cmap_changes_etc  expos_cb.c
+ci -t-cmap_changes_etc  imagemen.c
+ci -t-cmap_changes_etc  mask.c
+ci -t-cmap_changes_etc  maskmen.c
+ci -t-cmap_changes_etc  overlut.c
+ci -t-cmap_changes_etc  querylut.c
+ci -t-cmap_changes_etc  rubberline.c
+ci -t-cmap_changes_etc  setamap.c
+ci -t-cmap_changes_etc  shift.c
+ci -t-cmap_changes_etc  visual_info.c
+ci -t-cmap_changes_etc  web.c
+ci -t-cmap_changes_etc  web_com.c
+ci -t-cmap_changes_etc  web_info.c
+ci -t-cmap_changes_etc  web_main.c
+ci -t-cmap_changes_etc  wicolor.c
+ci -t-cmap_changes_etc  winread.c
+ci -t-cmap_changes_etc  wirubberline.c
+ci -t-cmap_changes_etc  wisetplanes.c
+@
+text
+@d2 1
+a2 1
+/*$Header:  $*/
+d46 1
+a46 1
+#define MAX_ARGS 12
+d48 1
+a48 1
+ /* external function prototypes */
+d62 1
+a62 1
+ /* internal common variables */
+d66 1
+a66 1
+ /* common variables for external use */
+d77 1
+a77 1
+ int    iwid, ihi,inow;
+d82 1
+a82 1
+    {   /* create bar length menu widget first */
+d86 1
+a86 1
+    /* create label box for 100 lengths  */
+d89 1
+a89 1
+    /* create scale widget for 100 lengths */
+d95 5
+a99 13
+    
+    XtSetArg(args[0], XmNwidth,         iwid);                    
+    XtSetArg(args[1], XmNheight,        ihi);                
+    XtSetArg(args[2], XmNscaleWidth,    iwid-30);            
+    XtSetArg(args[3], XmNscaleHeight,   ihi-5);        
+    XtSetArg(args[4], XmNminimum,       0);                
+    XtSetArg(args[5], XmNmaximum,       15);             
+    XtSetArg(args[6], XmNdecimalPoints, 0);            
+    XtSetArg(args[7], XmNvalue,         0);                  
+    XtSetArg(args[8], XmNorientation,   XmVERTICAL);       
+    XtSetArg(args[9], XmNshowValue,     TRUE);           
+    XtSetArg(args[10],XmNx,             20);           
+    XtSetArg(args[11],XmNy,             56);           
+d101 14
+a114 1
+    iw_hun = XmCreateScale(iw_barmen, "iw_hun", args, 12);
+d120 1
+a120 1
+    /* create label box for 1 lengths  */
+d123 18
+a140 5
+    /* create scale widget for 1 lengths */   
+    XtSetArg(args[4], XmNminimum,       0);                
+    XtSetArg(args[5], XmNmaximum,       100);             
+    XtSetArg(args[7], XmNvalue,         inow);                  
+    XtSetArg(args[10],XmNx,             180);           
+d142 1
+a142 1
+    iw_ones = XmCreateScale(iw_barmen, "iw_ones", args, 12);
+d147 1
+a147 1
+    /* create toggle box for bar orientation  */
+d151 1
+a151 1
+    /*  create push button for finished */
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/barmen.c,v 1.6 1995/07/11 20:59:19 mladjadj Exp $*/
+d5 1
+a5 1
+C *  AUTHOR: A. LEITH                                                      *
+d35 1
+a35 1
+C    PURPOSE:      MAKES SUPER-WIDGET TO FIND BAR LENGTH
+d52 1
+a52 1
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+d59 2
+a60 1
+ void          barmen_len_cb(Widget, caddr_t, caddr_t);
+d73 1
+a73 1
+ void barmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d134 1
+a134 1
+    iw_pushf = wid_pushg(iw_barmen, 0," FINISHED ", fin_cb,
+d143 1
+a143 1
+ void barmen_len_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+d164 11
+@
+
+
+1.6
+log
+@correct widget
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/barmen.c,v 1.4 1995/02/01 21:22:57 liy Exp $*/
+d4 1
+a4 1
+C **************************************************************************
+d6 24
+a29 7
+C *  COPYRIGHT (C)1990, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.5
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/barmen.c,v 1.4 1995/02/01 21:22:57 liy Exp mladjadj $*/
+a25 1
+#include "routines.h"
+d31 10
+d50 1
+a50 1
+ static Widget        iw_barmen = (Widget)0;
+@
+
+
+1.4
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/barmen.c,v 1.3 1995/01/26 14:59:52 liy Exp liy $*/
+d26 1
+a31 10
+ /* external function prototypes */
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern void   spout        (char *);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern Widget wid_toggleg  (Widget, Widget, char *, int, void (*)(),
+                                char *, int, int);
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*)(), 
+                                char *,int,int);
+
+d41 1
+a41 1
+ Widget               iw_barmen;
+@
+
+
+1.3
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/barmen.c,v 1.2 1994/07/05 15:35:06 odesanya Exp liy $*/
+d63 1
+a63 1
+ if (iw_barmen <= (void *)0)
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/barmen.c,v 1.1 1993/11/10 10:11:38 leith Exp odesanya $*/
+d63 1
+a63 1
+ if ((int)iw_barmen <= 0)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d92 2
+a93 1
+    XtAddCallback(iw_hun,XmNvalueChangedCallback,barmen_len_cb,"1");
+d107 2
+a108 1
+    XtAddCallback(iw_ones,XmNvalueChangedCallback,barmen_len_cb,"0");
+@

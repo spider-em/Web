@@ -1,0 +1,283 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.4
+	pre_GPL:1.2;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2011.07.19.18.06.32;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2011.06.10.16.02.34;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.17.00.04;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.01.26.20.34.39;	author liy;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.34;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@WEB_BGFGO
+@
+text
+@
+/*$Header: /usr8/web/new/RCS/wid_scale.c,v 1.3 2005/10/18 17:00:04 leith Exp $*/
+/*
+C++************************************************************************
+C
+C wid_scale
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C wid_scale
+C
+C PURPOSE:      Set up a scale widget 
+C
+C PARAMETERS:   iw_parent         parent widget         read
+c               iw_its            widget numbers        write
+c               label             label                 read
+c               imin,imax         scale min & max       read
+c               inow              current value         read
+c               iwid,ihi          scale size            read
+c               ixdum,iydum       unused
+c
+C CALLED BY:    surfmen, contrastmen, wid_contrast
+C
+C***********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/Scale.h>
+
+#define  MAX_ARGS 12
+
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ 
+/*****************  wid_scale  ***************************/
+
+ Widget wid_scale(Widget iw_parent, Widget iw_its, char * label,
+              int imin, int imax, int inow,  int iwid, int ihi,
+              int ixdum, int iydum)
+
+ {   
+ Arg          args[MAX_ARGS];    /* arg list  */
+ Widget       iw_lab;
+ Widget       iw_rowcolh;
+ int          n;
+
+ if (iw_its == (void *)0) 
+    {  /* Must create new widget  */
+
+    if (strlen(label) > 0)
+       {
+       /* Need rowcol widget to hold label and scale widget */
+       iw_rowcolh  = wid_rowcol(iw_parent,'h',-1,-1);
+
+       /* Create label widget*/
+       iw_lab      = wid_labelg(iw_rowcolh, 0, label, -1, -1);
+       }
+    else
+       iw_rowcolh = iw_parent; 
+
+    /* Create scale widget */
+    XtSetArg(args[0], XmNwidth,         iwid);                    
+    XtSetArg(args[1], XmNheight,        ihi);                
+    XtSetArg(args[2], XmNscaleWidth,    iwid-10);            
+    XtSetArg(args[3], XmNscaleHeight,   ihi/2);        
+    XtSetArg(args[4], XmNminimum,       imin);                
+    XtSetArg(args[5], XmNmaximum,       imax);             
+    XtSetArg(args[6], XmNdecimalPoints, 0);            
+    XtSetArg(args[7], XmNvalue,         inow);                  
+    XtSetArg(args[8], XmNorientation,   XmHORIZONTAL);       
+    XtSetArg(args[9], XmNshowValue,     TRUE);           
+    n = 10;
+      
+#ifdef WEB_BGFGO
+    XtSetArg(args[n], XmNbackground,  icolorxmb); 
+    n = 11;      
+#endif
+ 
+    iw_its = XmCreateScale(iw_rowcolh, "iw_scale", args, n);
+    }
+
+ else 
+    { /* Alter scale size in existing widget */
+
+    XtSetArg(args[0], XmNminimum, imin);       
+    XtSetArg(args[1], XmNmaximum, imax);       
+    XtSetArg(args[2], XmNvalue,   inow);
+       
+    XtSetValues(iw_its, args, 3);
+    }
+
+ XtManageChild(iw_its);
+ return iw_its;
+
+ }
+@
+
+
+1.4
+log
+@cosmetic
+@
+text
+@d52 1
+a52 2
+#include "std.h"
+#include "x.h"
+d55 1
+a55 1
+#define  MAX_ARGS 10
+d70 1
+d80 1
+a80 1
+       /* create label widget*/
+d97 6
+d104 1
+a104 1
+    iw_its = XmCreateScale(iw_rowcolh, "iw_scale", args, 10);
+@
+
+
+1.3
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_scale.c,v 1.2 1995/01/26 20:34:39 liy Exp $*/
+d6 1
+a6 1
+C WID_SCALE
+d35 1
+a35 1
+C WID_SCALE
+d37 1
+a37 1
+C PURPOSE:      SET UP A SCALE WIDGET 
+d39 9
+a47 9
+C PARAMETERS:   IW_PARENT         PARENT WIDGET         READ
+C               IW_ITS            WIDGET NUMBERS        WRITE
+C               LABEL             LABEL                 READ
+C               IMIN,IMAX         SCALE MIN & MAX       READ
+C               INOW              CURRENT VALUE         READ
+C               IWID,IHI          SCALE SIZE            READ
+C               IXDUM,IYDUM       UNUSED
+C
+C CALLED BY:    SURFMEN           CONTRASTMEN
+d73 1
+a73 1
+    {  /* must create new widget  */
+d77 1
+a77 1
+       /* need rowcol widget to hold label and scale widget */
+d86 7
+a92 7
+    /* create scale widget */
+    XtSetArg(args[0], XmNwidth, iwid);                    
+    XtSetArg(args[1], XmNheight, ihi);                
+    XtSetArg(args[2], XmNscaleWidth, iwid-10);            
+    XtSetArg(args[3], XmNscaleHeight, ihi/2);        
+    XtSetArg(args[4], XmNminimum, imin);                
+    XtSetArg(args[5], XmNmaximum, imax);             
+d94 3
+a96 3
+    XtSetArg(args[7], XmNvalue, inow);                  
+    XtSetArg(args[8], XmNorientation, XmHORIZONTAL);       
+    XtSetArg(args[9], XmNshowValue, TRUE);           
+d102 1
+a102 1
+    { /* alter scale size in existing widget */
+@
+
+
+1.2
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_scale.c,v 1.1 1993/11/10 10:11:34 leith Exp liy $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d55 1
+a55 1
+ if ((int)iw_its == 0) 
+@

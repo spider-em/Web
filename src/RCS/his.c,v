@@ -1,0 +1,417 @@
+head	1.10;
+access;
+symbols
+	pre-tilt-improve:1.10
+	pre_surf_fromtop:1.10
+	pre_neednewmap:1.10
+	pre_apppluss_remove:1.10
+	pre_tiltpair_chng:1.10
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.10
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2005.10.18.16.59.52;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2001.10.22.17.14.14;	author bbaxter;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2001.10.22.15.53.07;	author bbaxter;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2001.10.22.15.25.30;	author bbaxter;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2001.10.22.15.17.37;	author bbaxter;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2001.10.22.15.02.27;	author bbaxter;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2001.10.22.14.26.19;	author bbaxter;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.03.05.17.04.14;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.39;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@fmin ->fmin_spi..
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/his.c,v 1.9 2005/10/18 16:59:52 leith Exp $*/
+
+/*
+C++************************************************************************
+C
+C  WID_HIS.FOR 
+C  his.c                    NOV 92 al
+C
+C **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    HIS(filedata,jhist)
+C
+C    PURPOSE:    COMPUTE NHIST PLACE HISTOGRAM FROM IMAGE RECORDS, STORE 
+C                HISTOGRAM IN THE HISTOGRAM RECORDS
+C
+C    PARAMETERS:  filedata      file info
+C                 jhist         histogram data
+C
+C--*******************************************************************
+*/
+
+#include "files.h"
+#include "common.h"
+
+#define  NHIST 128
+
+ extern int   redlin     (FILEDATA *, float *, int, int);
+ extern void  spout      (char *);
+ extern int   closefile  (FILEDATA *);
+ extern int   setprm     (FILEDATA *, char *);
+
+/**************************  his   ***************************/
+
+ int his(FILEDATA *filedata, int * jhist)
+
+ {
+ float *   buf;
+ char      outstr[80];
+ float     hdiff, ff, b, av, hmin, sig, tmode, binsiz;
+ double    y, N, dav;
+ int       i, k, j, jhismax, nhist, irec;
+ int   *   iptr;
+
+ buf = filedata -> buf;
+
+ if (filedata -> iform <= 0 || filedata -> iform > 3) 
+    {
+    /* can not do histogram on fourier files */
+    spout("*** can not do histogram on this file format");
+    return FALSE;
+    }
+
+ else
+    {
+    /*  must calculate histogram from image data */
+
+    hdiff = filedata -> fmax_spi - filedata -> fmin_spi;
+    hmin  = filedata -> fmin_spi;
+    ff    = (NHIST - 1) / hdiff;
+
+    y     = 0.0;
+    dav    = 0.0;
+
+    /*  zero the histogram */
+    for ( iptr = jhist; iptr < jhist + NHIST; iptr++)
+       *iptr = 0;
+
+    for (irec = 1; irec <= nrow * nslice; irec++)
+       {
+       redlin(filedata, buf, nsam, irec);
+
+       for (k = 0; k < nsam; k++)
+          {
+          b  = buf[k];
+
+          dav = dav + b;
+          y  = y + b * b;
+
+          /* j is histogram bin */
+          j = (b - hmin) * ff + 1.5;
+
+          if (j < 0) 
+             /*  off histogram at bottem */
+             (*jhist)++;
+
+          else if (j >= NHIST) 
+             /* off histogram at top */
+             (*(jhist + NHIST-1))++;
+
+          else
+             (*(jhist+j))++;
+          }
+       }
+
+    /* update image statistics in the header of the file */
+    N = (double) (nsam * nrow * nslice);
+    sig = sqrt( (y - (dav*dav/N)) / (double)(N - 1.0) );
+
+    av  = dav / N;
+
+    filedata -> sig   = sig;
+    filedata -> av    = av;
+
+    setprm(filedata, "u");
+    }
+
+ /* find maximum frequency occuring in histogram (jhismax) and 
+    location of maximum frequency (j) */
+
+ jhismax = 0;
+ j       = 0;
+ for (iptr = jhist; iptr < jhist + NHIST; iptr++)
+    {
+    if (*iptr >= jhismax) 
+      {
+      jhismax = *iptr;
+      j  = (int) (iptr - jhist);
+      }
+    }
+
+
+ /* convert j to corresponding image intensity */
+ binsiz = hdiff / (NHIST - 1);
+ nhist  = NHIST;
+ tmode  = hmin + j * binsiz;
+
+ sprintf(outstr,"range: %f ... %f    bins: %d,   binsize: %f",
+                      fmin_spi,   fmax_spi,     nhist,       binsiz);
+ spout(outstr);
+
+ sprintf(outstr,"mean: %f   mode: %f    sd: %f", av, tmode, sig);
+ spout(outstr);
+
+ closefile(filedata);
+ return TRUE;
+ }
+
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/his.c,v 1.8 2001/10/22 17:14:14 bbaxter Exp $*/
+d82 2
+a83 2
+    hdiff = filedata -> fmax - filedata -> fmin;
+    hmin  = filedata -> fmin;
+d153 1
+a153 1
+                      fmin,   fmax,     nhist,       binsiz);
+@
+
+
+1.8
+log
+@corrected equation for std dev
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/his.c,v 1.7 2001/10/22 15:53:07 bbaxter Exp bbaxter $*/
+d10 25
+a34 9
+C **************************************************************************
+C *  SPIDER - MODULAR IMAGE PROCESSING SYSTEM.  AUTHOR: J.FRANK            *
+C *  COPYRIGHT (C)1981, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.7
+log
+@put back header update
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/his.c,v 1.6 2001/10/22 15:25:30 bbaxter Exp bbaxter $*/
+d106 1
+a106 2
+    sig = y - (dav*dav/N);
+    sig = sqrt( (y - (dav*dav/N)) / N - 1.0);
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/his.c,v 1.5 2001/10/22 15:17:37 bbaxter Exp bbaxter $*/
+d48 2
+a49 1
+ float     hdiff, ff, b, av, hmin, y, sig, tmode, binsiz, N;
+d71 1
+a71 1
+    av    = 0.0;
+d85 1
+a85 1
+          av = av + b;
+d105 3
+a107 3
+    N = (float) (nsam * nrow * nslice);
+    sig = y - (av*av/N);
+    sig = sqrt(sig / (double)N-1);
+d109 1
+a109 1
+    av  = av / N;
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/his.c,v 1.4 2001/10/22 15:02:27 bbaxter Exp bbaxter $*/
+d106 1
+a106 1
+    sig = sqrt(sig / N-1);
+@
+
+
+1.4
+log
+@Replaced the header updates after std dev calculation. BB
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/his.c,v 1.3 2001/10/22 14:26:19 bbaxter Exp bbaxter $*/
+d48 1
+a48 1
+ float     hdiff, ff, b, av, hmin, y, sig, tmode, binsiz;
+d104 5
+a108 2
+    sig = sqrt((y - av * av) / (float) (nsam * nrow * nslice));
+    av  = av / (float) (nsam * nrow * nslice);
+@
+
+
+1.3
+log
+@corrected equation for std dev, commented out header update of avg,stdev.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/his.c,v 1.2 1998/03/05 17:04:14 leith Exp bbaxter $*/
+a106 2
+/* updating was causing problems (incorrect Std dev)
+   commented out by BB Oct 22, 2001
+d109 1
+a109 1
+*/
+@
+
+
+1.2
+log
+@removed histogram storage stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/his.c,v 1.1 1993/11/10 10:11:39 leith Exp leith $*/
+d104 1
+a105 1
+    sig = sqrt((y - av * av) / (float) (nsam * nrow * nslice));
+d107 2
+d111 1
+a111 1
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a39 2
+ extern int   rhist      (FILEDATA *, int *);
+ extern int   whist      (FILEDATA *, int *);
+a60 11
+ else if (filedata -> ihist == 1) 
+    {
+    /* can get histogram from histogram records for the image */
+    if (! rhist(filedata, jhist)) return FALSE;
+
+    hdiff = filedata -> fmax - filedata -> fmin;
+    hmin  = filedata -> fmin;
+
+    sig   = filedata -> sig;
+    av    = filedata -> av;
+     }
+a108 4
+    filedata -> ihist = 1;
+
+    /* write histogram records into image file and set ihist to 1 */
+    whist(filedata, jhist);
+@

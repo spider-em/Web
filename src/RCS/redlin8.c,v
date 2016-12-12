@@ -1,0 +1,278 @@
+head	1.4;
+access;
+symbols
+	pre-tilt-improve:1.4
+	pre_surf_fromtop:1.3
+	pre_neednewmap:1.3
+	pre_apppluss_remove:1.3
+	pre_tiltpair_chng:1.3
+	pre_GPL:1.2;
+locks;
+comment	@ * @;
+
+
+1.4
+date	2012.11.27.19.13.15;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.17.00.03;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2000.07.05.12.46.19;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.03.18.16.22.00;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@MRC support
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/redlin8.c,v 1.3 2005/10/18 17:00:03 leith Exp $*/
+/*
+C***********************************************************************
+C
+C   REDLIN8.C  -- CREATED                                  MAR 4  1994
+C                 MRC                                      NOV 27 2012     
+C **********************************************************************
+ C=* AUTHOR: A. LEITH 
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright 1985-2012  Health Research Inc.,                        *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but without any warranty; without even the implied warranty of    *
+ c=* merchantability or fitness for a particular purpose.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+ C=*                                                                   *
+C **********************************************************************
+C
+c  redlin8(filedata,cbuf,nx,irec)
+c           
+C  PURPOSE:     Reads spider image into 8 bit array normalized from
+c               nmin to nmax.  Returns normaliztion constants also.
+c
+C  PARAMETERS:  nx 
+C
+C  RETURNS:     T/F    
+C
+C  CALLED BY:   surf
+C
+C  NOTES:       
+C
+C--*********************************************************************
+*/
+
+#include "files.h"
+
+ /* External function prototypes */
+ extern void  spout     (char *);
+
+ /* Externally defined variables */
+ 
+ /* Static variables for use here */
+
+
+ /*************************   redlin8   ****************************/
+
+ int redlin8(FILEDATA *fileptr, unsigned char *buf, int nx, int irec)
+ {
+
+ FILE      *fp;
+ int       ioff;
+ size_t    igot;
+
+if ((fileptr -> iform) > 99)
+    {    // MRC file should start at lower left) 
+    irec = ((fileptr -> nsam) * (fileptr -> nslice)) - irec + 1;
+    }
+
+ // Find number of header and record bytes to be skipped 
+ if (irec != 0) 
+    ioff  = fileptr -> offset + fileptr -> headbyt + (irec -1) * nx;
+ else
+    ioff  = fileptr -> offset;
+
+ // Find file pointer for this file 
+ fp    = fileptr -> fp;
+
+ if ((igot = fseek(fp,ioff,SEEK_SET)) != 0) 
+     {       // Offset seek failed 
+     printf("*** seek failed in redlin8: %d \n",igot);
+     printf(" igot: % d, ioff: %d ,nx: %d \n",igot,ioff,nx);
+     return FALSE;
+     }
+
+ // Offset seek was successful, read record number nx 
+ igot = fread(buf, sizeof(unsigned char), nx, fp);
+
+ if (feof(fp))
+      {
+      printf("*** End of file in redlin8 \n");
+      printf("igot: %d, ioff: %d ,nx: %d \n",igot,ioff,nx);
+      return FALSE;
+      }          
+
+ if (ferror(fp))
+      {
+      printf("*** Error reading input file in redlin8 \n");
+      return FALSE;
+      }
+
+ return TRUE;
+ }
+
+
+
+@
+
+
+1.3
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redlin8.c,v 1.2 2000/07/05 12:46:19 leith Exp $*/
+d4 1
+a4 1
+C**************************************************************************
+d6 2
+a7 2
+C   REDLIN8.C  -- CREATED MAR 4 1994
+C             
+d9 1
+a9 1
+C *  AUTHOR: ArDean Leith                                                  *
+d11 2
+a12 5
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d21 2
+a22 2
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+a23 1
+ C=*                                                                   *
+d25 1
+a25 3
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+d29 6
+a34 2
+C  REDLIN8(FILEDATA,CDATA,NSAM,IREC)
+C           
+d36 1
+a36 2
+C  PURPOSE:     READS SPIDER IMAGE INTO 8 BIT ARRAY NORMALIZED FROM
+C               NMIN TO NMAX.  RETURNS NORMALIZTION CONSTANTS ALSO.
+d38 1
+a38 5
+C  PARAMETERS:  NSAM1
+
+C  RETURNS:     
+C
+C  CALLED BY:   SURF
+d47 1
+a47 1
+ /* external function prototypes */
+d50 1
+a50 1
+ /* externally defined variables */
+d52 1
+a52 1
+ /* static variables for use here */
+d57 1
+a57 1
+ int redlin8(FILEDATA *fileptr, unsigned char *buf, int nsam, int irec)
+d64 6
+a69 1
+ /* find number of header and record bytes to be skipped */
+d71 1
+a71 1
+    ioff  = fileptr -> offset + fileptr -> headbyt + (irec -1) * nsam;
+d75 1
+a75 2
+
+ /* find file pointer for this file */
+d79 1
+a79 1
+     {       /* offset seek failed */
+d81 1
+a81 1
+     printf(" igot: % d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+d85 2
+a86 2
+ /* offset seek was successful, read record number nsam */
+ igot = fread(buf, sizeof(unsigned char), nsam, fp);
+d91 1
+a91 1
+      printf("igot: %d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+@
+
+
+1.2
+log
+@offset
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/redlin8.c,v 1.1 1994/03/18 16:22:00 leith Exp leith $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH     *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/redvol8.c,v 1.1 93/11/10 10:11:33 leith Exp $*/
+d56 1
+a56 1
+    ioff  = fileptr -> offset + (irec - 1) * nsam;
+d58 1
+a58 1
+    ioff  = 0;
+@

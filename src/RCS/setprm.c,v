@@ -1,0 +1,510 @@
+head	1.9;
+access;
+symbols
+	pre-tilt-improve:1.9
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.9
+date	2012.11.27.19.12.42;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.10.18.16.59.40;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2000.06.29.15.51.25;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.03.05.17.04.57;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.04.01.21.41.43;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.05.08.15.12.30;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.05.05.20.13.16;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.03;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@MRC support
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/setprm.c,v 1.8 2007/11/01 19:33:45 leith Exp $*/
+/*
+ C++********************************************************************
+ C
+ C SETPRM   VAX FORTRAN original                1/1/81
+ C          MRC support, remuved type set       Nov 2012  ArDean Leith  
+ C
+ C *********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright 1985-2012  Health Research Inc.,                        *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but without any warranty; without even the implied warranty of    *
+ c=* merchantability or fitness for a particular purpose.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+ C *********************************************************************
+ C
+ C  setprm(FILEDATA *fileptr, char *unused)
+ C
+ C  PURPOSE:  Set label parameters identifying 
+ C            normalization status of file, and to write label into file.
+ C 
+ C          First record of SPIDER format file contains following info: 
+ C          element # 5  flag indicating data type (=iform)
+ c                    6  imami = flag indicating if the image has 
+ c                       been searched for max and min. 
+ c                    7  fmax_spid = image maximum
+ c                    8  fmin_spid = image minimum
+ c                    9  avd       = image average
+ c                   10  sig       = std dev. (sq. root of var)
+ c
+ C--*******************************************************************
+*/
+
+#include "files.h"
+
+ /* External subroutines */
+ extern int    redlin (FILEDATA *, float *, int, int);
+ extern int    wrtlin (FILEDATA *, float *, int, int);
+ extern void   spout  (char *);
+
+ /********************** setprm  **********************************/
+
+ int setprm(FILEDATA *fileptr, char *unused)
+
+ {
+ float     buf[256];
+
+ // Retrieve header record
+ // Can not use filedata buffer as size may be too small! 
+
+ if (redlin(fileptr,buf,256,0) != TRUE)
+    {spout(" *** Unable to read header in setprm.");  return FALSE; }
+
+ if ((fileptr -> iform) > 99)
+    {  // MRC file 
+    buf[19] = fileptr -> fmin_spi;
+    buf[20] = fileptr -> fmax_spi;
+    buf[21] = fileptr -> av;
+    }
+
+ else
+    { // SPIDER file 
+    //   Set flag indicating whether fmax_spid & fmin_spid available or not
+    buf[5] = 1.0;
+    if (fileptr -> fmin_spi == fileptr -> fmax_spi) 
+       buf[5] = 0.0;
+
+    buf[6] = fileptr -> fmax_spi;
+    buf[7] = fileptr -> fmin_spi;
+    buf[8] = fileptr -> av;
+    buf[9] = fileptr -> sig;
+    }
+
+ // Write updated header into file
+ if (wrtlin(fileptr,buf,256,0) != TRUE)
+    { spout(" *** Unable to update header in setprm."); return FALSE;  }
+
+ return TRUE;
+ } 
+
+@
+
+
+1.8
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/setprm.c,v 1.7 2005/10/18 16:59:40 leith Exp $*/
+d4 1
+a4 1
+ C++************************************************************* 1/1/81 VAX
+d6 2
+a7 1
+ C SETPRM
+d9 1
+a9 1
+C **********************************************************************
+d11 2
+a12 5
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d21 2
+a22 2
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+a23 1
+ C=*                                                                   *
+d25 2
+a26 20
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+ C
+ C    SETPRM:   SET LABEL PARAMETERS IDENTIFYING TYPE,
+ C         NORMALIZATION STATUS OF FILE, AND TO WRITE LABEL INTO FILE.
+ C
+ C     SETPRM(FILEDATA *fileptr, char *type)
+ C
+ C      TYPE           CHAR. VARIABLE CONTAINING 1 OR TWO CHARACTERS 
+ C			 SYMBOLIZING THE DATA TYPE:
+ C			TYPE SYMBOL	DATA TYPE	IFORM
+ C			  R		 2-D REAL	 +1
+ C			  R3		 3-D REAL	 +3
+ C			  F		 2-D FOURIER	 -1
+ C			  F3		 3-D FOURIER  	 -3
+ C			  U		 UNCHANGED	 UNCHANGED	
+ C
+d28 1
+a28 10
+ C   THE FIRST RECORD OF THE FILE CONTAINS THE FOLLOWING INFO: 
+ C          ELEMENT # 5  FLAG INDICATING DATA TYPE (=IFORM)
+ C                    6  IMAMI = FLAG INDICATING IF THE IMAGE HAS 
+ C				BEEN SEARCHED FOR MAX AND MIN. 
+ C				IF fmax_spiD=fmin_spiD IN SETPRM ARGUMENTS THEN
+ C				IMAMI IS SET TO -1, OTHERWISE, TO +1.
+ C                    7  fmax_spiD = IMAGE MAXIMUM
+ C                    8  fmin_spiD = IMAGE MINIMUM
+ C                    9  AVD   = IMAGE AVERAGE
+ C                   10  SIG  = STANDARD DEVIATION (SQ. ROOT OF VARIANCE)
+d30 12
+d47 1
+a47 1
+ /* external subroutines */
+d54 1
+a54 1
+ int setprm(FILEDATA *fileptr, char *type)
+d59 2
+a60 1
+ /* can not use filedata buffer as size may be too small! */
+d63 1
+a63 1
+    {spout(" *** Unable to redlin in setprm.");  return FALSE; }
+d65 19
+a83 21
+ /*  SET FLAG INDICATING WHETHER fmax_spiD,fmin_spiD HAS BEEN COMPUTED OR NOT */
+ buf[5] = 1.0;
+ if (fileptr -> fmin_spi == fileptr -> fmax_spi) buf[5] = 0.0;
+
+ buf[6]  = fileptr -> fmax_spi;
+ buf[7]  = fileptr -> fmin_spi;
+ buf[8]  = fileptr -> av;
+ buf[9]  = fileptr -> sig;
+
+ if (strcmp(type,"u") != 0)
+    {
+    buf[4] = 1.0;
+    if ( strcmp(type + 1,"3"))
+       buf[4] = 3.0;
+    if ( strcmp(type,"F"))
+       {
+       buf[4] = -1.0;
+       if ( strcmp(type + 1,"3"))
+          buf[4] = -3.0;
+       }
+    } 
+d85 1
+d87 1
+a87 1
+    { spout(" *** Unable to wrtlin in setprm."); return FALSE;  }
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setprm.c,v 1.6 2000/06/29 15:51:25 leith Exp $*/
+d53 1
+a53 1
+ C				IF FMAXD=FMIND IN SETPRM ARGUMENTS THEN
+d55 2
+a56 2
+ C                    7  FMAXD = IMAGE MAXIMUM
+ C                    8  FMIND = IMAGE MINIMUM
+d82 1
+a82 1
+ /*  SET FLAG INDICATING WHETHER FMAXD,FMIND HAS BEEN COMPUTED OR NOT */
+d84 1
+a84 1
+ if (fileptr -> fmin == fileptr -> fmax) buf[5] = 0.0;
+d86 2
+a87 2
+ buf[6]  = fileptr -> fmax;
+ buf[7]  = fileptr -> fmin;
+@
+
+
+1.6
+log
+@simplified
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setprm.c,v 1.5 1998/03/05 17:04:57 leith Exp $*/
+d8 25
+a32 8
+ C **************************************************************************
+ C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+ C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+ C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+ C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+ C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+ C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+ C **************************************************************************
+@
+
+
+1.5
+log
+@removed ihist
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setprm.c,v 1.4 1996/04/01 21:41:43 mladjadj Exp leith $*/
+a26 2
+ C			  P		 2-D POLAR	 +2
+ C			  D		 NON-IMAGE DATA   0
+a41 3
+ C                   11  IHIST= FLAG INDICATING IF THE HISTOGRAM HAS
+ C                                   BEEN COMPUTED,AND STORED IN RECORDS
+ C                                   1+NROW+1 ETC.
+d58 1
+a58 2
+ float     *buf, * ptrf;
+ int k1,offset,tsam;
+a59 1
+ /* allocate space for buffer */
+d61 1
+a61 14
+ /* VAX does not like to write n items smaller than nsam in wrtlin.c */
+ /* see opennew.c explanations */
+#ifdef VMS
+ buf = (float *) malloc((fileptr -> nsam) * (fileptr -> reclen) * sizeof(float));
+#else
+ buf = (float *) malloc(256 * sizeof(float));
+#endif
+ 
+ if (buf == 0)
+    {     /* allocation was not successful */
+    spout(" *** Unable to allocate memory in SETPRM.");
+    return FALSE;
+    }
+   
+d63 1
+a63 5
+    {
+    spout(" *** Unable to redlin in SETPRM.");
+    if (buf) free(buf);
+    return FALSE;
+    }
+a73 1
+
+a84 4
+    if ( strcmp(type,"P"))
+          buf[4] = 2.0;
+    if ( strcmp(type,"D"))
+          buf[4] = 0.0;
+d87 2
+a88 21
+#ifdef VMS
+/* VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX */
+
+  offset = fileptr -> offset; /* should write record 0 for offset .NE. 0 */
+  fileptr -> offset = 0;      /* otherwise, put it back after this */
+  ptrf = buf;
+  for (k1=1; k1 <=  fileptr ->headrec ; k1++)
+       {
+       if (wrtlin(fileptr,ptrf,fileptr -> nsam,k1) != TRUE)
+          {
+          spout(" *** Unable to wrtlin in SETPRM.");
+          if (buf) free(buf);
+	  fileptr -> offset = offset;
+          return FALSE;
+          }
+       ptrf +=  fileptr -> nsam;  
+       }
+
+  fileptr -> offset = offset;  /* otherwise, put it back after this */
+  
+/* VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX VAX */
+a89 9
+#else
+ if (wrtlin(fileptr,buf,256,0) != TRUE)
+    {
+    spout(" *** Unable to wrtlin in SETPRM.");
+    if (buf) free(buf);
+    return FALSE;
+    }
+#endif
+ if (buf) free(buf);
+@
+
+
+1.4
+log
+@fixed the writing of image header for vax non-alpha
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setprm.c,v 1.3 1995/05/08 15:12:30 leith Exp $*/
+a96 1
+ buf[10] = fileptr -> ihist;
+@
+
+
+1.3
+log
+@added comment on buf use
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setprm.c,v 1.2 1995/05/05 20:13:16 leith Exp leith $*/
+d63 2
+a64 1
+ float     *buf;
+d68 5
+d74 2
+a75 1
+
+d117 23
+d146 1
+a146 1
+
+@
+
+
+1.2
+log
+@freed up buf, calloc-> malloc
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setprm.c,v 1.1 1993/11/10 10:11:03 leith Exp leith $*/
+d66 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d6 1
+a6 1
+ C SETPRM.FOR                       DATE LAST MODIFIED: 1/8/90 BY AL
+d9 1
+a9 2
+ C *  SPIDER - MODULAR IMAGE PROCESSING SYSTEM.  AUTHOR: J.FRANK            *
+ C *  COPYRIGHT (C)1981,1987, WADSWORTH CENTER FOR LABORATORIES AND         *
+d14 1
+a14 1
+ C *    THE CENTER FOR LABORATORIES AND RESEARCH 			   *
+d17 2
+d20 1
+a20 1
+ C    SETPRM:   SET LABEL PARAMETERS
+a21 9
+ C    THIS SUBROUTINE WILL SET LABEL PARAMETERS IDENTIFYING TYPE,
+ C    NORMALIZATION STATUS OF FILE, AND TO WRITE LABEL INTO FILE.
+ C
+ C    CALL SETPRM(LUN,NSAM,NROW,FMAXD,FMIND,AVD,TYPE)
+ C      LUN            LOGICAL UNIT NUMBER OF FILE TO BE LABELED
+ C      NSAM,NROW      NUMBER OF SAMPLES AND ROWS
+ C      FMIND,FMAXD    IF AVAILABLE, THE MINIMUM AND MAXIMUM OF THE
+ C                     IMAGE STORED IN THE FILE
+ C      AVD            AVERAGE VALUE
+d34 3
+a36 4
+ C    CODING:  THE FIRST RECORD OF THE FILE CONTAINS THE FOLLOWING 
+ C	INFORMATION:
+ C             ELEMENT # 5  FLAG INDICATING DATA TYPE (=IFORM)
+ C                       6  IMAMI = FLAG INDICATING IF THE IMAGE HAS 
+d40 7
+a46 9
+ C			   7  FMAXD = IMAGE MAXIMUM
+ C		           8  FMIND = IMAGE MINIMUM
+ C			   9  AVD   = IMAGE AVERAGE
+ C...                      10  SIG  = STANDARD DEVIATION (SQ. ROOT OF VARIANCE)
+ C...                      11  IHIST= FLAG INDICATING IF THE HISTOGRAM HAS
+ C...                                BEEN COMPUTED,AND STORED IN RECORDS
+ C...                                1+NROW+1 ETC.
+ C
+ C...    SUBROUTINE CALLS:    NONE
+a62 1
+
+d66 1
+a66 1
+ buf = (float *) calloc(256 , sizeof(float));
+d77 1
+d112 1
+d116 1
+@

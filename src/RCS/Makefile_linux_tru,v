@@ -1,0 +1,166 @@
+head	1.6;
+access;
+symbols
+	pre-tilt-improve:1.6;
+locks;
+comment	@# @;
+
+
+1.6
+date	2013.05.02.15.09.05;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2013.03.07.12.50.30;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2013.03.06.15.16.36;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2012.11.27.19.25.33;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2011.09.27.19.24.06;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2011.09.20.16.45.39;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@# 
+# PURPOSE:  MAKEFILE FOR Linux WEB Using 24 bit TrueColor Visual 
+#           Uses the GNU gcc compiler & X/Motif libraries
+#           Dynamic link with static link for Motif libraries: libXm.a libXp.a
+#
+# USAGE:    on patroon2
+#           sw  ; make -f Makefile_linux_tru
+#           swt ; clean ; $swb/web_linux_tru_tmp dat
+#
+# Use Gnu compiler
+CC = gcc
+
+#-mtune=generic  DID NOT WORK
+# Define compiler flags & header include locations
+# Define cpp variable WEB_BGFG to overcome KDE & Gnome WM focus bug
+# Define cpp variable WEB_24   to use Directcolor 24 visual
+# Define cpp variable WEB_TRUE to use Truecolor   24 visual
+
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DWEB_TRUE -DWEB_BGFG
+
+LF     = 
+
+PGM    = web_linux_tru
+
+LIB    = lib$(PGM).a
+
+# Links X dynamic and Motif static: libXm.a libXp.a
+ OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm    
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+../bin/$(PGM) :  $(LIB)
+	@@echo "        linking ../bin/$(PGM)"
+	gcc  $(LF) $(LIB) -u main $(OTHERLIBS) -o ../bin/$(PGM)_tmp
+	@@chmod ug+w ../bin/$(PGM)_tmp
+
+$(LIB) :  $(ELEMENTS)
+@
+
+
+1.5
+log
+@static
+@
+text
+@d4 1
+a4 1
+#           Static link for Motif libraries: libXm.a 
+d21 1
+a21 1
+LF     = -static
+d27 2
+a28 3
+# Static link for Motif libraries libXm.a 
+#OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm    ! links shared
+OTHERLIBS  = /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a /usr/X11R6/lib/libXt.a /usr/X11R6/lib/libX11.a /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libSM.a /usr/X11R6/lib/libICE.a /usr/X11R6/lib/libXext.a /usr/lib/libpthread.a -lm
+@
+
+
+1.4
+log
+@static Xm lib link...
+@
+text
+@d21 1
+a21 1
+LF     = 
+d29 1
+a29 1
+OTHERLIBS  = /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a /usr/X11R6/lib/libXt.a /usr/X11R6/lib/libX11.a /usr/X11R6/lib/libXmu.a /usr/X11R6/lib/libSM.a /usr/X11R6/lib/libICE.a /usr/X11R6/lib/libXext.a -lm
+@
+
+
+1.3
+log
+@makes _tmp
+@
+text
+@d28 2
+a29 1
+OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@a2 1
+#           Byteswaps images for compatibility with SGI 
+d6 3
+a8 2
+# USAGE:    sw  ; make -f Makefile_linux_tru
+#           swt ; clean ; /usr8/web/bin/web_linux_tru_tmp dat
+a14 1
+# Define cpp variable P_SGIOSF to use SGI byte-order images
+d19 1
+a19 1
+CFLAGS = -DFUNCPROTO -O2 -I/usr/X11R6/include -DP_SGIOSF -DWEB_TRUE -DWEB_BGFG
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d7 2
+a8 2
+# USAGE:    sw  ; make -f Makefile_linux_gnome
+#           swt ; clean ; /usr8/web/bin/web_linux_gnome_tmp dat
+d24 1
+a24 1
+PGM    = web_linux_gnome
+@

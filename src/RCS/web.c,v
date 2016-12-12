@@ -1,0 +1,2243 @@
+head	1.45;
+access;
+symbols
+	pre-tilt-improve:1.45
+	pre_surf_fromtop:1.44
+	pre_neednewmap:1.43
+	pre_apppluss_remove:1.39
+	pre_tiltpair_chng:1.39
+	pre_GPL:1.33;
+locks;
+comment	@ * @;
+
+
+1.45
+date	2012.11.27.19.12.20;	author leith;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2011.09.27.13.38.45;	author leith;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2011.09.15.19.00.20;	author leith;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2011.09.15.15.58.30;	author leith;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2011.07.26.15.46.48;	author leith;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2011.07.22.19.38.33;	author leith;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2011.05.27.13.40.31;	author leith;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2011.05.10.14.00.04;	author leith;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2011.05.09.14.37.33;	author leith;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2011.05.05.12.05.27;	author leith;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2005.10.18.16.59.51;	author leith;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2001.08.10.12.57.07;	author leith;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	99.09.30.15.13.20;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	99.09.30.15.09.56;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	98.03.05.19.24.35;	author liy;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	98.02.24.14.50.58;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	98.02.05.22.20.54;	author liy;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	97.09.09.19.46.47;	author liy;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	97.05.12.16.09.52;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	97.04.16.17.53.30;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	96.07.26.16.09.12;	author mladjadj;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	96.07.24.20.18.35;	author liy;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	96.06.20.14.06.50;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	96.04.02.16.59.59;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	96.03.29.17.23.40;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	96.03.26.16.52.48;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	96.01.25.21.33.48;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	96.01.25.21.02.09;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	96.01.25.20.28.02;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.11.07.20.01.51;	author mladjadj;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.11.02.22.46.02;	author mladjadj;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.08.10.18.30.48;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.08.02.20.20.51;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.02.08.22.17.01;	author liy;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.02.08.17.16.37;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.08.30.10.41.41;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.07.05.15.34.21;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.06.03.16.36.16;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.06.03.16.01.08;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.05.05.15.23.12;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.02.04.11.33.04;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.03.15.21.39;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.02.16.38.06;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.18.37;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.45
+log
+@raw 8 default
+@
+text
+@/*
+ C++********************************************************************
+ C                                                                     *
+ C    web.c -- C language version               May   92  ArDean Leith *
+ C             Web_true                         Sep 2011  ArDean Leith *
+ C             nsam8                            Nov 2012  ArDean Leith *
+ C                                                                     *
+ C *********************************************************************
+ C=* PACKAGE AUTHOR: A. LEITH                                          *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright 1985-2012  Health Research Inc.,                        *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but without any warranty; without even the implied warranty of    *
+ c=* merchantability or fitness for a particular purpose.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+ C=*                                                                   *
+ C *********************************************************************
+ C
+ C     PURPOSE: Main routine for web
+ C              Initializes X windows and starts web
+ C
+ C     PARAMETERS: argv 
+ C                 argc   
+ C
+ C--********************************************************************
+*/
+
+#include "x.h"
+#include "files.h"
+
+#ifdef app_plus
+#include "../AppPlusS/AppPlusS.h"
+#endif
+
+#define MAXCOLSPI 8
+#define MAXCOL    256
+#define XtNfontPath "fontPath"
+#define XtCFontPath "FontPath"
+
+ /* External function prototypes */
+ extern Widget        web_main(Widget);
+ 
+ /* Command line option recovery structure */
+ static XrmOptionDescRec options[] = {
+    {"-reduction", "*imageReduction",     XrmoptionSepArg, NULL},
+    {"-listfiles", "*listFiles",          XrmoptionNoArg, "FALSE"},
+    {"+names",     "*listNames",          XrmoptionNoArg, "TRUE"},
+    {"-nsam8",     "*nsam8",              XrmoptionSepArg, NULL},
+    {"-nrow8",     "*nrow8",              XrmoptionSepArg, NULL},
+    {"-nslice8",   "*nslice8",            XrmoptionSepArg, NULL},
+    {"-cursor",    "*cursor",             XrmoptionSepArg, NULL},
+    {"-wfg",       "*webForeground",      XrmoptionSepArg, NULL},
+    {"-wbg",       "*webBackground",      XrmoptionSepArg, NULL},
+    {"-marx",      "*imageXMargin",       XrmoptionSepArg, NULL},
+    {"-mary",      "*imageYMargin",       XrmoptionSepArg, NULL},
+    {"-marlef",    "*imageLeftMargin",    XrmoptionSepArg, NULL},
+    {"-martop",    "*imageTopMargin",     XrmoptionSepArg, NULL},
+    {"-cfg",       "*cursorForeground",   XrmoptionSepArg, NULL},
+    {"-cbg",       "*cursorBackground",   XrmoptionSepArg, NULL},
+    {"-lutdir",    "*lutDirectory",       XrmoptionSepArg, NULL},
+    {"-ext",       "*dataExt",            XrmoptionSepArg, NULL},
+    {"-trace",     "*traceWeb",           XrmoptionNoArg, "TRUE"},
+ };    
+
+
+
+ /* Resource recovery structure */
+ typedef struct {
+    char  *fontpath;
+    char  *geom;
+    int   iskip;
+    int   marx;    
+    int   mary;    
+    int   marlef;    
+    int   martop;   
+    Boolean   listfi;
+    Boolean   names;
+    Boolean   trace_web;
+    int   magsizx;
+    int   magsizy;
+    int   magfac;
+    int   nsam8;
+    int   nrow8;
+    int   nslice8;
+    int   iradius;
+    float scaleval;
+    float refl;
+    float fct;
+    int   icursor;
+    int   icolorcf;
+    int   icolorcb;
+    int   icolorov;
+    int   icolor;
+    int   icolorb;
+    char  *lutdir;
+    char  *datexc;
+    } ApplicationData, *ApplicationDataPtr;
+
+ 
+
+ /* Resource recovery structure DEFAULT COLORS AND CURSORS SET HERE!!! */
+ static XtResource resources[] = {
+    {XtNfontPath, XtCFontPath, XtRString, sizeof(char *),
+     XtOffset(ApplicationDataPtr, fontpath),
+              XtRString, "/usr/lib/X11/fonts"},
+
+    {"lutDirectory", "LutDirectory", XtRString, sizeof(char *),
+     XtOffset(ApplicationDataPtr, lutdir), XtRString, "none"},
+
+    {"dataExt", "DataExt", XtRString, sizeof(char *),
+     XtOffset(ApplicationDataPtr, datexc), XtRString, "~"},
+
+    {XtNgeometry,XtCGeometry , XmRString, sizeof(char *),
+     XtOffset(ApplicationDataPtr, geom), XmRString, "1280x1024+0+0"},
+
+    {"imageReduction","ImageReduction" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, iskip), XmRImmediate, (XtPointer) 1 },
+
+    {"imageXMargin","ImageXMargin" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, marx), XmRImmediate, (XtPointer) 1 },
+
+    {"imageYMargin","ImageYMargin" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, mary), XmRImmediate, (XtPointer) 1 },
+
+    {"imageLeftMargin","ImageLeftMargin" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, marlef), XmRImmediate, (XtPointer) 1 },
+
+    {"imageTopMargin","ImageTopMargin" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, martop), XmRImmediate, (XtPointer) 1 },
+
+    {"listFiles","ListFiles" , XtRBoolean, sizeof(Boolean),
+     XtOffset(ApplicationDataPtr, listfi), XmRImmediate, (XtPointer) True },
+
+    {"traceWeb","TraceWeb" , XtRBoolean, sizeof(Boolean),
+     XtOffset(ApplicationDataPtr, trace_web), XmRImmediate, (XtPointer) False },
+
+    {"listNames","ListNames" , XtRBoolean, sizeof(Boolean),
+     XtOffset(ApplicationDataPtr, names), XmRImmediate, (XtPointer) False },
+ 
+    {"magSizeX","magSizeX" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, magsizx), XmRImmediate, (XtPointer) 64 },
+
+    {"magSizeY","magSizeY" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, magsizy), XmRImmediate, (XtPointer) 64 },
+
+    {"nsam8","Nsam8" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, nsam8), XmRImmediate, (XtPointer) 0 },
+
+    {"nrow8","Nrow8" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, nrow8), XmRImmediate, (XtPointer) 0 },
+
+    {"nslice8","Nslice8" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, nslice8), XmRImmediate, (XtPointer) 1 },
+
+    {"markerRadius","MarkerRadius" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, iradius), XmRImmediate, (XtPointer) 5 },
+
+    {"scaleVal","ScaleVal" , XtRFloat, sizeof(float),
+     XtOffset(ApplicationDataPtr, scaleval), XmRString, "1.0" },
+
+    {"reflectionFactor","ReflectionFactor" , XtRFloat, sizeof(float),
+     XtOffset(ApplicationDataPtr, refl), XmRString, " 0.5" },
+
+    {"fct","Fct" , XtRFloat, sizeof(float),
+     XtOffset(ApplicationDataPtr, fct),  XmRString, "1.0" },
+
+    {"cursor","Cursor" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, icursor), XmRImmediate, (XtPointer) 22 },
+
+    {"cursorForeground","CursorForeground" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, icolorcf), XmRImmediate, (XtPointer) 7 },
+
+    {"cursorBackground","CursorBackground" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, icolorcb), XmRImmediate, (XtPointer) 0 },
+
+    {"overlayColor","OverlayColor" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, icolorov), XmRImmediate, (XtPointer) 3  },
+
+    {"webForeground","WebForeground" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, icolor), XmRImmediate, (XtPointer)   2 },
+
+    {"webBackground","WebBackground" , XtRInt, sizeof(int),
+     XtOffset(ApplicationDataPtr, icolorb), XmRImmediate, (XtPointer)  0 },
+    };
+
+ /* To use these variables include common.h in your source code    */ 
+
+ Display        *idispl;           /* Current display               */
+ Screen         *iscreen;          /* Current screen                */
+
+ Widget         iw_top;            /* Top widget                    */
+ Widget         iw_main ;          /* Main box widget               */
+ Widget         iw_menub;          /* Menu bar widget               */
+ Widget         iw_win;            /* Image display widget          */
+ Widget         iw_files  = 0;     /* File selection widget         */
+ Widget         iw_filesnol = 0;   /* File (no list) widget         */
+ Widget         iw_scroll;         /* Scrolled output widget        */
+ Widget         iw_scrollpar;      /* Parent scrolled output widget */
+
+ Window         iwin, iroot, iwtop;/* Image, root & top windows    */
+ Pixmap         imagsav;           /* Image backing store           */
+ int            idepth;            /* Display window depth          */
+ unsigned int   ihighx, iwidex;    /* Display window x & Y dimen.   */
+ int            ixulx, iyulx;      /* Display window location       */
+ GC             icontx;            /* Usual graphics context        */
+ GC             icontxb  = 0;      /* blanking graphics context     */
+ Colormap       map;               /* Current colormap              */
+ Visual         *visual;           /* Visual                        */
+ FILEDATA       *filedata;         /* Current image file info       */
+ XColor         colort[MAXCOL];    /* Temporary color setting array */
+ int            nsam,nrow,nslice;  /* Last image size               */
+ int            islice;            /* Current slice                 */
+ int            nsam1,nsam2;       /* Col. range                    */
+ int            nrow1,nrow2;       /* Row range                     */
+ int            nslice1,nslice2;   /* Slice range                   */
+ double         fmin_spi,fmax_spi; /* Last image range              */
+ int            ixulw,iyulw;       /* Window position               */
+ int            nsamw,nroww;       /* Window size                   */
+ int            ixul,iyul;         /* Upper left corner last image  */
+ int            ixuln,iyuln;       /* Corner of next image          */
+ int            nprow = 1;         /* Pictures per row              */
+ int            nbot,nrit;         /* Bottem & rit image position   */
+ char           axis;              /* Axis of slicing               */
+ XImage         *imagel = NULL;    /* Left image pointer            */
+ XImage         *imager = NULL;    /* Right image pointer           */
+ int            nsaml,nrowl;       /* Left image size               */
+ int            nsamr,nrowr;       /* Right image size              */
+ int            nsam1l,nrow1l;     /* Left image lower extent       */
+ int            nsam2l,nrow2l;     /* Left image upper extent       */
+ int            nsam1r,nrow1r;     /* Right image lower extent      */
+ int            nsam2r,nrow2r;     /* Right image upper extent      */
+ int            ixull, iyull;      /* left image position           */
+ int            ixulr, iyulr;      /* Left image position           */
+ int            ixulli,iyulli;     /* Right image position          */
+ int            ixulri,iyulri;     /* Right image position          */
+ int            ixullmin,ixlrlmax; /* Left image possible extent    */
+ int            iyullmin,iylrlmax; /* Left image possible extent    */
+ int            ixulrmin,ixlrrmax; /* Right image possible extent   */
+ int            iyulrmin,iylrrmax; /* Right image possible extent   */
+
+ unsigned long  ispicol[MAXCOL];   /* Web colormap values           */
+ int            ispicoln[MAXCOL];  /* Color indices (colmen needs)  */
+ Cursor         icursorx;          /* Current x cursor number       */
+ XColor         colorcursf;        /* Cursor foreground color       */
+ XColor         colorcursb;        /* Cursor background color       */
+ float          param[102];        /* Web registers (unused)        */ 
+ int            ioper    = 0;      /* Current operation number      */
+ char           filnow[81] = "\0"; /* Name of last image file       */ 
+ char           winnam[81] = "\0"; /* Name of last window file      */ 
+ char           docnam[81] = "\0"; /* Name of last doc    file      */ 
+ char           filnext[81]= "\0"; /* Name of next image file       */ 
+ char           dirnow[81] = "\0"; /* Name of current directory     */ 
+ int		ntimg     = FALSE; /* Start next image (marker)	    */
+ int            newline   = FALSE; /* New line flag                 */
+ int            nuscrn    = FALSE; /* New screen flag               */
+ int            gotsurf   = FALSE; /* Surface in memory now         */
+ int            samefile  = FALSE; /* Filnow == filnex              */
+ int            placed    = FALSE; /* Image position sent flag      */
+ int            drawing   = FALSE; /* Flag for xor drawing          */
+ int            force     = FALSE; /* Force images / row flag       */
+ int            ntop      = 0;     /* Top image position            */
+
+ int            mapgo      ;       /* Image start in colormap       */
+ int            colorend   ;       /* Colors end in colormap        */
+ int            colorgo    ;       /* Colors start in colormap      */
+ int            mapend     ;       /* Image  end in colormap        */
+#ifdef WEB_TRUE
+ int            imagego   =   0;   /* Image normalization range     */
+ int            imageend  = 255;   /* Image normalization range     */
+ int            ngo       =   0;   /* Map start range               */
+ int            nend      = 255;   /* Map end range                 */
+#else
+ int            imagego   =  64;   /* Image normalization range     */
+ int            imageend  = 127;   /* Image normalization range     */
+ int            ngo       =  64;   /* Map start range               */
+ int            nend      = 127;   /* Map end range                 */
+#endif
+
+ /* Following values do not seem to be used as initialized          */
+ int	        nstack    = 0;     /* Stack indicator */
+ int		inuse     = 0;     /* Stack file inused indicator   */
+ int		maxim     = 0;     /* Max num of files in stack     */
+ int		imginstack= 0;     /* Current img. number in stack  */
+ int            ncolors   = 128;   /* Number of defined colors      */
+
+ /* Following values appear no longer used!!!!!!!!                  */
+ int            lastskip  = 1;     /* Last image mag. factor        */
+
+ /* Following values accessible from defaults file                  */
+ int            iskip     = 1;     /* Image mag. factor             */
+ int            marx      = 1;     /* X image margin                */
+ int            mary      = 1;     /* Y image margin                */
+ int            marlef    = 0;     /* Left window margin            */
+ int            martop    = 0;     /* Top window margin             */
+ int            trace_web = FALSE; /* Does not make results file    */
+ int            listfi    = TRUE;  /* List files in selector flag   */
+ int            names     = FALSE; /* Print image names flag        */
+ int            names_height = 0;  /* Pixel height of image filename */
+ int            magsizx   = 64;    /* Magnification size (x)        */
+ int            magsizy   = 64;    /* MAgnification size (y)        */
+ int            magfac    = 4;     /* Magnification factor          */
+ int            nsam8     = 0;     /* Size for raw files            */
+ int            nrow8     = 0;     /* Size for raw files            */
+ int            nslice8   = 1;     /* Size for raw files            */
+ int            iradius   = 5;     /* Marker location radius        */
+ float          scaleval  = 1.0;   /* Surface magnification         */
+ float          refl      = 0.5;   /* Surface rendering reflection  */
+ float          fct       = 1.0;   /* Surface rendering attenuation */
+ int            icursor   =  22;   /* Web cursor number             */
+
+ int            icolor    =   2;      /* Current foreground color ABOVE */
+ int            icolorb   =   0;      /* Current background color ABOVE */
+ int            icolorov  =   3;      /* Overlay foreground color ABOVE */
+ int            icolorcf  =   7;      /* Cursor  foreground color ABOVE */
+ int            icolorcb  =   0;      /* Cursor  background color ABOVE */
+
+ unsigned long  icolorx   = 0x255;    /* Current x foreground          */
+ unsigned long  icolorxb  = 0x0;      /* Current x background          */
+ unsigned long  icolorxov = 0x80;     /* Current x overlay             */
+ unsigned long  icolorxcf = 0x808080; /* Current x cursor foreground   */
+ unsigned long  icolorxcb = 0x0;      /* Current x cursor background   */
+ 
+ unsigned long  icolorxmb;            /* Current x menu background     */
+ unsigned long  icolorxmf;            /* Current x menu foreground     */
+
+ char           datexc[]  = "DAT";    /* File extension                */ 
+ char           lutdir[81]= "\0"; 
+
+
+ /* Following values should be made accessible from defaults file?  */
+ char           filwant[81] = "*"; /* New file search pattern       */
+ int            movie    = FALSE;  /* Image movie flag              */
+ int            keepxy   = FALSE;  /* Retain values of x & y        */
+ int            normit   = FALSE;  /* Normalize each slice          */
+ int            xaxis    = FALSE;  /* X axis selected               */
+ int            yaxis    = FALSE;  /* Y axis selected               */
+ int            zaxis    = TRUE;   /* Z axis selected               */
+ int	        show_num = TRUE;   /* Set show marker number flag   */ 
+ int            leavit   = FALSE;  /* Leave window at position      */
+ int            sayit    = TRUE ;  /* Say window position           */
+ int            inimag   = FALSE;  /* Inside image data only        */
+ int            getscreen = FALSE; /* Get screen pixel value        */
+ int            getfile  = FALSE;  /* get file pixel value          */
+ int            docit    = FALSE;  /* Store data in doc file        */
+ int            ikey     = 1;      /* Doc. file key                 */
+ int            ikeyc    = 1;      /* Doc. file key for categorizing */
+ int            marker   = 0;      /* Set marker flag               */
+
+/* Variables used here */ 
+ static ApplicationData  AppData;
+
+ /* Also used by actions.c */
+ XtAppContext     app_context;
+
+
+/********************* main  ***********************/
+
+ int main(unsigned int argc, char **argv)
+ 
+ { 
+ int           i, n;
+ char          whichweb[6]; 
+
+ Arg           args[4];         /* Arg list */
+ XVisualInfo   visual_data;
+ Widget        iw_dummy;
+
+ if (argc > 1 && strcmp(argv[1],"help") == 0)
+   { 
+   printf(" Purpose: A spider image viewer and analyzer \n");
+   printf(" Usage:   web [options] file-extension \n");
+   printf(" Sample:  web DAT \n");
+   exit(1);
+   }
+
+ /************ debug **************  (removed) *****
+ printf("Initial argc: %d\n",argc);
+ for (i=0; i<argc; i++)
+    printf(" %s",argv[i]);
+    printf(" \n");
+    printf("names: %d listfi: %d \n",names,listfi);
+ *********** debug ****************/
+
+  /* XtOpenApplication calls XtToolkitInitialize,
+ followed by XtCreateApplicationContext, then calls
+ XtOpenDisplay with display_string NULL and application_name
+ NULL, and finally calls XtAppCreateShell with application_name
+ NULL, widget_class applicationShellWidgetClass, and the
+ specified args and num_args and returns the created shell.
+
+ The modified argc and argv returned by XtDisplayInitialize
+ are returned in argc_in_out and argv_in_out. If
+ app_context_return is not NULL, the created application
+ context is also returned. If the display specified by the
+ command line cannot be opened, an error message is issued
+ and XtOpenApplication terminates the application. If
+ fallback_resources is non-NULL, XtAppSetFallbackResources is
+ called with the value prior to calling XtOpenDisplay.  
+ */
+
+ // Open dummy widget to get visual info needed for non-default visual
+ iw_dummy = XtAppInitialize(&app_context,"Dummy", NULL, 0, (int *) &argc, argv,
+			   (String *) NULL, args, 0);
+
+ idispl = XtDisplay(iw_dummy);
+ if (!idispl)
+   { printf("%s: can't open display !  EXITING !", argv[0]); exit(0); }
+
+ /* Find default screen pointer */
+ if ((iscreen = DefaultScreenOfDisplay(idispl)) == 0)
+    {XtWarning("*** Web can not determine screen!"); exit (-1);}
+
+ /* Find depth of screen (number of bit planes) */
+ if ((idepth = DefaultDepthOfScreen(iscreen)) < idepth)
+    {XtWarning("*** Screen depth too shallow need24 bits!"); exit (-1); }
+
+
+#ifdef WEB_TRUE
+// WEB_TRUE -------------------------------------------------
+ strcpy(whichweb, "Web_24"); 
+
+ // Find visual for 24 bit TrueColor
+ if (!XMatchVisualInfo(idispl, XDefaultScreen(idispl), idepth,
+                       TrueColor, &visual_data))
+    {fprintf(stderr,"*** No %d bit, Truecolor visual!",idepth);  exit(2);  }
+
+ // Shared colormap used here 
+ map = defluts_true(TRUE);
+
+#else
+// WEB_24 -------------------------------------------------
+ strcpy(whichweb, "Web_24"); 
+
+ // Find visual for 24 bit DirectColor
+ if (!XMatchVisualInfo(idispl, XDefaultScreen(idispl), idepth,
+                       DirectColor, &visual_data))
+    {fprintf(stderr,"*** No %d bit, Directcolor visual!",idepth);  exit(2);  }
+
+ // Private colormap created here 
+ map = defluts(TRUE);
+
+#endif
+  
+ XtDestroyWidget (iw_dummy);  // Temp. widget no longer needed
+
+ // Open actual top widget
+ n = 0;
+ XtSetArg(args[n], XtNvisual,   visual_data.visual); n++;
+ XtSetArg(args[n], XtNdepth,    visual_data.depth);  n++;
+ XtSetArg(args[n], XtNcolormap, map);                n++;
+
+ iw_top = XtOpenApplication(&app_context, whichweb,options,
+                            XtNumber(options), (int *) &argc, argv, NULL, 
+                            applicationShellWidgetClass, args, n);
+
+ /* Cache the display pointer */ 
+ idispl  = XtDisplay(iw_top);
+ iscreen = DefaultScreenOfDisplay(idispl);
+
+ /* Find default graphics context */
+ icontx  = DefaultGCOfScreen(iscreen);
+
+ /* Check the application resources -------------------------------*/
+ XtGetApplicationResources(iw_top, &AppData, resources,
+                           XtNumber(resources), NULL, 0);
+
+#ifdef NEVER
+ /************ debug ********* (active) *****/
+ if (argc > 1)
+    {
+    printf(" after resources, argc: %d :",argc);
+    for (i=0; i<argc; i++)
+       printf(" %s",argv[i]);
+    printf(" \n");
+    /* printf("iskip: %d\n",AppData.iskip);    */
+    /* printf("geometry: %s\n",AppData.geom);  */
+    /* printf("appdata.names: %d listfi: %d \n", */
+    /*    AppData.names,AppData.listfi);         */
+    }
+ /**********************************************/
+#endif
+
+ /* Check iskip */
+ if (AppData.iskip == 0)
+   {
+   printf("In resources, Image_reduction: %d must be non-zero\n",
+          AppData.iskip);
+   AppData.iskip = iskip;
+   }
+ iskip =  AppData.iskip;
+
+
+ /* Check marx, mary */
+ if (AppData.marx < 0 || AppData.mary < 0)
+   {
+   printf("In resources, imageXMargin:%d &  ImageYMargin: %d must be > zero\n",
+          AppData.marx, AppData.mary);
+   AppData.marx = marx;
+   AppData.mary = mary;
+   }
+ marx =  AppData.marx;
+ mary =  AppData.mary;
+
+ /* Check marlef, martop */
+ if (AppData.marlef < 0 || AppData.martop < 0)
+   {
+   printf("In resources, ImageLeftMargin:%d &  ImageTopMargin: %d must be > zero\n",
+          AppData.marlef, AppData.martop);
+   AppData.marlef = marlef;
+   AppData.martop = martop;
+   }
+ marlef =  AppData.marlef;
+ martop =  AppData.martop;
+
+ /* Check magsizx, magsizy */
+ if (AppData.magsizx <= 0 || AppData.magsizy <= 0)
+   {
+   printf("In resources, magSizeX:%d &  magSizeY: %d must > zero\n",
+          AppData.magsizx, AppData.magsizy);
+   AppData.magsizx = marlef;
+   AppData.magsizy = magsizy;
+   }
+ magsizx =  AppData.magsizx;
+ magsizy =  AppData.magsizy;
+
+ /* Check nsam8, nrow8 nslice8*/
+ if (AppData.nsam8 < 0 || AppData.nrow8 < 0 || AppData.nslice8 < 0 )
+   {
+   printf("In resources, nsam8:%d , nrow8: %d & nslice8: %d must be >= zero\n",
+          AppData.nsam8, AppData.nrow8,AppData.nslice8);
+   AppData.nsam8   = nsam8;
+   AppData.nrow8   = nrow8;
+   AppData.nslice8 = nslice8;
+   }
+ nsam8   =  AppData.nsam8;
+ nrow8   =  AppData.nrow8;
+ nslice8 =  AppData.nslice8;
+
+ /* Check iradius */
+ if (AppData.iradius <= 0)
+   {
+   printf("In resources, MarkerRadius: %d must be > zero\n",
+          AppData.iradius);
+   AppData.iradius = iradius;
+   }
+ iradius =  AppData.iradius;
+
+ /* Check scaleval */
+ if (AppData.scaleval <= 0.0)
+   {
+   printf("In resources, ScaleVal: %d must be > zero\n",
+          AppData.scaleval);
+   AppData.scaleval = scaleval;
+   }
+ scaleval =  AppData.scaleval;
+
+ /* Check scaleval */
+ if (AppData.scaleval <= 0.0)
+   {
+   printf("In resources, ScaleVal: %d must be > zero\n",
+          AppData.scaleval);
+   AppData.scaleval = scaleval;
+   }
+ scaleval =  AppData.scaleval;
+
+ /* Check refl */
+ if (AppData.refl < 0.0)
+   {
+   printf("In resources, ReflectionFactor: %d must be >= zero.\n",
+          AppData.refl);
+   AppData.refl = refl;
+   }
+ refl =  AppData.refl;
+
+ /* Check fct */
+ if (AppData.fct < 0.0)
+   {
+   printf("In resources, Fct: %d must be >= zero.\n",
+          AppData.fct);
+   AppData.fct = fct;
+   }
+ fct =  AppData.fct;
+
+ /* Check icursor */
+ icursor =  AppData.icursor;
+
+ /* Check icolorcf, icolorcb */
+ if (AppData.icolorcf < 0 || AppData.icolorcb < 0)
+   {
+   printf("In resources, cursorForeground:%d &  cursorBackground: %d must >= zero\n",
+          AppData.icolorcf, AppData.icolorcb);
+   AppData.icolorcf = icolorcf;
+   AppData.icolorcb = icolorcb;
+   }
+ icolorcf =  AppData.icolorcf;
+ icolorcb =  AppData.icolorcb;
+
+ /* Check icolor, icolorb */
+ if (AppData.icolor < 0 || AppData.icolorcb < 0)
+   {
+   printf("In resources, webcolor:%d &  webBackground: %d must >= zero\n",
+          AppData.icolor, AppData.icolorb);
+   AppData.icolor  = icolor;
+   AppData.icolorb = icolorb;
+   }
+ icolor   = AppData.icolor;
+ icolorb  = AppData.icolorb;
+ icolorx  = icolor;   
+ icolorxb = icolorb;   
+
+ /* Check icolorov */
+ if (AppData.icolorov < 0.0)
+   {
+   printf("In resources, overlayColor: %d must be >= zero.\n",
+          AppData.icolorov);
+   AppData.icolorov = icolorov;
+   }
+ icolorov = AppData.icolorov;
+
+ /* Check iradius */
+
+ if (*AppData.lutdir != 'n')
+   {   /* lutdir is provided by resouces or command line */
+   strncpy(lutdir,AppData.lutdir,80);
+   }
+
+ if (*(AppData.datexc) != '~')
+   {   /* datexc is provided by resources or command line */
+   strncpy(datexc,AppData.datexc,3);
+   }
+
+ if (argc > 1 && *argv[argc-1] != '-')
+   {  /* Last arguement is datexc if does not begin with - */
+   strncpy(datexc,argv[argc-1],3);
+   }
+
+ /* printf(" geometry: %s: %d \n", AppData.geom,iskip); */
+
+ listfi    = AppData.listfi;
+ names     = AppData.names;
+ trace_web = AppData.trace_web;
+
+ /* Start the application ------------------------------------ */
+ web_main(iw_top);
+ printf(" Data files:         %s \n", datexc);
+
+ /* Loop to get events until exit is requested */
+ XtAppMainLoop(app_context);
+
+ return TRUE;
+
+ }
+
+@
+
+
+1.44
+log
+@intializations for ngo,nend,imagego.... cosmetic
+@
+text
+@d6 1
+d9 1
+d11 2
+a12 5
+ C=* Copyright (C) 1992-2011  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d21 2
+a22 2
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+a23 1
+ C=*                                                                   *
+d25 1
+a25 3
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+d157 1
+a157 1
+     XtOffset(ApplicationDataPtr, nsam8), XmRImmediate, (XtPointer) 940 },
+d160 1
+a160 1
+     XtOffset(ApplicationDataPtr, nrow8), XmRImmediate, (XtPointer) 940 },
+d312 2
+a313 2
+ int            nsam8     = 940;   /* Size for raw files            */
+ int            nrow8     = 940;   /* Size for raw files            */
+d537 1
+a537 1
+ if (AppData.nsam8 <= 0 || AppData.nrow8 <= 0 || AppData.nslice8 <= 0 )
+d539 1
+a539 1
+   printf("In resources, nsam8:%d , nrow8: %d & nslice8: %d must be > zero\n",
+@
+
+
+1.43
+log
+@imagego   =  64;
+@
+text
+@a275 2
+ int            imagego   =  64;   /* normalization range           */
+ int            imageend  = 127;   /* Colormap normalization range  */
+a276 1
+ /* Following values do not seem to be used as initialized          */
+d281 13
+d298 1
+a298 1
+
+a301 1
+ int            ncolors   = 128;   /* Number of defined colors      */
+d398 1
+a398 3
+ strcpy(whichweb, "Web_24"); 
+
+ /* XtOpenApplication calls XtToolkitInitialize,
+d433 2
+d436 1
+a436 1
+ // Find visual for 24 bit DirectColor
+d439 1
+a439 1
+    {fprintf(stderr,"*** No %d bit, directcolor visual!",idepth);  exit(2);  }
+d441 1
+a441 1
+ // Shared colormap used here -------------------------------
+d443 1
+d445 2
+d451 1
+a451 1
+    {fprintf(stderr,"*** No %d bit, directcolor visual!",idepth);  exit(2);  }
+d453 1
+a453 1
+ // Private colormap created here -------------------------------
+d458 1
+a458 1
+ XtDestroyWidget (iw_dummy);  // No longer needed
+a476 2
+
+
+@
+
+
+1.42
+log
+@Web_true defluts call
+@
+text
+@d182 1
+a182 1
+     XtOffset(ApplicationDataPtr, icursor), XmRImmediate, (XtPointer)  22 },
+d276 1
+a276 1
+ int            imagego   =   0;   /* normalization range           */
+@
+
+
+1.41
+log
+@apppluss removed!
+@
+text
+@d3 4
+a6 5
+ C
+ C    web.c -- CREATED May 92 (C language version)
+ C
+ C    Author:  ArDean Leith
+ C
+d115 1
+a115 1
+ /* Resource recovery structure */
+d185 1
+a185 1
+     XtOffset(ApplicationDataPtr, icolorcf), XmRImmediate, (XtPointer) 135 },
+d191 1
+a191 1
+     XtOffset(ApplicationDataPtr, icolorov), XmRImmediate, (XtPointer) 132  },
+d194 1
+a194 1
+     XtOffset(ApplicationDataPtr, icolor), XmRImmediate, (XtPointer)   135 },
+a199 2
+
+
+d276 1
+a276 1
+ int            imagego   =   0;   /* UNUSED??(=0) colormap normalization range  */
+d280 4
+a283 4
+ int            mapgo     = 64;    /* Image start in colormap       */
+ int            colorend  = 256;   /* Colors end in colormap        */
+ int            colorgo   = 128;   /* Colors start in colormap      */
+ int            mapend    = 127;   /* Image  end in colormap        */
+d316 1
+a316 1
+ int            icolor    =   0;      /* Current foreground color ABOVE */
+d318 2
+a319 2
+ int            icolorov  =   0;      /* Overlay foreground color ABOVE */
+ int            icolorcf  =   0;      /* Cursor  foreground color ABOVE */
+d334 1
+a334 1
+ 
+d424 12
+d440 1
+a440 1
+  
+d444 2
+@
+
+
+1.40
+log
+@added non-AppplusS initialization,  moved defluts to here, etc
+@
+text
+@d183 1
+a183 1
+     XtOffset(ApplicationDataPtr, icursor), XmRImmediate, (XtPointer)   22 },
+d189 1
+a189 1
+     XtOffset(ApplicationDataPtr, icolorcb), XmRImmediate, (XtPointer)   0 },
+d192 1
+a192 1
+     XtOffset(ApplicationDataPtr, icolorov), XmRImmediate, (XtPointer) 132 },
+d198 1
+a198 1
+     XtOffset(ApplicationDataPtr, icolorb), XmRImmediate, (XtPointer)    0 },
+d203 1
+a203 1
+ /* to use these variables include common.h in your source code    */ 
+d205 2
+a206 2
+ Display        *idispl;           /* current display               */
+ Screen         *iscreen;          /* current screen                */
+d208 15
+a222 15
+ Widget         iw_top;            /* top widget                    */
+ Widget         iw_main ;          /* main box widget               */
+ Widget         iw_menub;          /* menu bar widget               */
+ Widget         iw_win;            /* image display widget          */
+ Widget         iw_files  = 0;     /* file selection widget         */
+ Widget         iw_filesnol = 0;   /* file (no list) widget         */
+ Widget         iw_scroll;         /* scrolled output widget        */
+ Widget         iw_scrollpar;      /* parent scrolled output widget */
+
+ Window         iwin, iroot, iwtop; /* image, root & top windows    */
+ Pixmap         imagsav;           /* image backing store           */
+ int            idepth;            /* display window depth          */
+ unsigned int   ihighx, iwidex;    /* display window x & Y dimen.   */
+ int            ixulx, iyulx;      /* display window location       */
+ GC             icontx;            /* usual graphics context        */
+d224 25
+a248 26
+ Colormap       map;               /* current colormap              */
+ Colormap       mapover;           /* overlay colormap              */
+ Visual         *visual;           /* visual                        */
+ FILEDATA       *filedata;         /* current image file info       */
+ XColor         colort[MAXCOL];    /* temporary color setting array */
+ int            nsam,nrow,nslice;  /* last image size               */
+ int            islice;            /* current slice                 */
+ int            nsam1,nsam2;       /* col. range                    */
+ int            nrow1,nrow2;       /* row range                     */
+ int            nslice1,nslice2;   /* slice range                   */
+ double         fmin_spi,fmax_spi;         /* last image range              */
+ int            ixulw,iyulw;       /* window position               */
+ int            nsamw,nroww;       /* window size                   */
+ int            ixul,iyul;         /* upper left corner last image  */
+ int            ixuln,iyuln;       /* corner of next image          */
+ int            nprow = 1;         /* pictures per row              */
+ int            nbot,nrit;         /* bottem & rit image position   */
+ char           axis;              /* axis of slicing               */
+ XImage         *imagel = NULL;    /* left image pointer            */
+ XImage         *imager = NULL;    /* right image pointer           */
+ int            nsaml,nrowl;       /* left image size               */
+ int            nsamr,nrowr;       /* right image size              */
+ int            nsam1l,nrow1l;     /* left image lower extent       */
+ int            nsam2l,nrow2l;     /* left image upper extent       */
+ int            nsam1r,nrow1r;     /* right image lower extent      */
+ int            nsam2r,nrow2r;     /* right image upper extent      */
+d250 13
+a262 13
+ int            ixulr, iyulr;      /* left image position           */
+ int            ixulli,iyulli;     /* right image position          */
+ int            ixulri,iyulri;     /* right image position          */
+ int            ixullmin,ixlrlmax; /* left image possible extent    */
+ int            iyullmin,iylrlmax; /* left image possible extent    */
+ int            ixulrmin,ixlrrmax; /* right image possible extent   */
+ int            iyulrmin,iylrrmax; /* right image possible extent   */
+
+ unsigned long  ispicol[MAXCOL];   /* web colormap values           */
+ int            ispicoln[MAXCOL];  /* color indices (colmen needs)  */
+ Cursor         icursorx;          /* current x cursor number       */
+ XColor         colorcursf;        /* cursor foreground color       */
+ XColor         colorcursb;        /* cursor background color       */
+d264 15
+a278 15
+ int            ioper    = 0;      /* current operation number      */
+ char           filnow[81] = "\0"; /* name of last image file       */ 
+ char           winnam[81] = "\0"; /* name of last window file      */ 
+ char           docnam[81] = "\0"; /* name of last doc    file      */ 
+ char           filnext[81]= "\0"; /* name of next image file       */ 
+ char           dirnow[81] = "\0"; /* name of current directory     */ 
+ int		ntimg     = FALSE; /* start next image (marker)	    */
+ int            newline   = FALSE; /* new line flag                 */
+ int            nuscrn    = FALSE; /* new screen flag               */
+ int            gotsurf   = FALSE; /* surface in memory now         */
+ int            samefile  = FALSE; /* filnow == filnex              */
+ int            placed    = FALSE; /* image position sent flag      */
+ int            drawing   = FALSE; /* flag for xor drawing          */
+ int            force     = FALSE; /* force images / row flag       */
+ int            ntop      = 0;     /* top image position            */
+d280 1
+a280 1
+ int            imageend  = 127;   /* colormap normalization range  */
+d283 8
+a290 8
+ int            mapgo     = 64;    /* image start in colormap       */
+ int            colorend  = 256;   /* colors end in colormap        */
+ int            colorgo   = 128;   /* colors start in colormap      */
+ int            mapend    = 127;   /* image  end in colormap        */
+ int	        nstack    = 0;     /* stack indicator */
+ int		inuse     = 0;     /* stack file inused indicator   */
+ int		maxim     = 0;     /* max num of files in stack     */
+ int		imginstack= 0;     /* current img. number in stack  */
+d339 4
+a342 4
+ char           filwant[81] = "*"; /* new file search pattern       */
+ int            movie    = FALSE;  /* image movie flag              */
+ int            keepxy   = FALSE;  /* retain values of x & y        */
+ int            normit   = FALSE;  /* normalize each slice          */
+d346 5
+a350 5
+ int	        show_num = TRUE;   /* set show marker number flag   */ 
+ int            leavit   = FALSE;  /* leave window at position      */
+ int            sayit    = TRUE ;  /* say window position           */
+ int            inimag   = FALSE;  /* inside image data only        */
+ int            getscreen = FALSE; /* get screen pixel value        */
+d352 4
+a355 4
+ int            docit    = FALSE;  /* store data in doc file        */
+ int            ikey     = 1;      /* doc. file key                 */
+ int            ikeyc    = 1;      /* doc. file key for categorizing */
+ int            marker   = 0;      /* set marker flag               */
+a393 29
+#if defined(app_plus)
+ /* Modifications by: Erik Vogan July 2001 */
+
+ XtToolkitInitialize();
+ app_context = XtCreateApplicationContext();
+
+ idispl = XtOpenDisplay(app_context, NULL, NULL, whichweb, NULL,
+                        0, &argc, argv);
+ if (!idispl)
+   { printf("%s: can't open display !  EXITING !", argv[0]); exit(0); }
+
+ /* Find default screen pointer */
+ if ((iscreen = DefaultScreenOfDisplay(idispl)) == 0)
+    {XtWarning("*** Web can not determine screen!"); exit (-1);}
+
+ /* Find depth of screen (number of bit planes) */
+ if ((idepth = DefaultDepthOfScreen(iscreen)) < 8)
+    {XtWarning("*** Screen depth too shallow need >= 8 bits!"); exit (-1); }
+
+ iw_top = XtAppCreateShell(NULL, whichweb, appPlusShellWidgetClass,
+          idispl, NULL, 0);
+
+ /* End of mods by: Erik Vogan  */
+
+ // Create private colormap -------------------------------- 
+ map = defluts(TRUE);
+
+#else
+
+d412 4
+a415 3
+ iw_dummy = XtAppInitialize (&app_context,"Dummy", NULL, 0, &argc, argv,
+			  (String *) NULL, args, 0);
+ idispl = XtDisplay (iw_dummy);
+d424 2
+a425 2
+ if ((idepth = DefaultDepthOfScreen(iscreen)) < 8)
+    {XtWarning("*** Screen depth too shallow need >= 8 bits!"); exit (-1); }
+d427 1
+d432 1
+a432 1
+ // Private colormap created here
+d439 3
+a441 3
+ XtSetArg (args[n], XtNvisual,   visual_data.visual); n++;
+ XtSetArg (args[n], XtNdepth,    visual_data.depth);  n++;
+ XtSetArg (args[n], XtNcolormap, map);                n++;
+d444 2
+a445 2
+                      XtNumber(options), (int *) &argc, argv, NULL, 
+                      applicationShellWidgetClass, args, n);
+d451 3
+a453 1
+#endif
+a454 2
+ /* Find default graphics context */
+ icontx = DefaultGCOfScreen(iscreen);
+a629 1
+ printf(" %s --> Data file extension: %s \n", AppData.datexc, datexc);
+d638 1
+@
+
+
+1.39
+log
+@*** empty log message ***
+@
+text
+@d370 6
+a375 3
+ int      i, nn;
+ Display  *theDisplay;
+ char     whichweb[6] = "Web_24"; 
+d386 1
+a386 1
+ printf("initial argc: %d\n",argc);
+a394 1
+
+a396 1
+ /* Do this by hand, just to make certain we can control it */
+d402 1
+a402 1
+              0, &argc, argv);
+d405 9
+d417 4
+a420 1
+ /* there, that ought to do it (end of mods by: Erik Vogan)  */
+d424 46
+a469 31
+   /* XtOpenApplication calls XtToolkitInitialize,
+   followed by XtCreateApplicationContext, then calls
+   XtOpenDisplay with display_string NULL and application_name
+   NULL, and finally calls XtAppCreateShell with application_name
+   NULL, widget_class applicationShellWidgetClass, and the
+   specified args and num_args and returns the created shell.
+
+   The modified argc and argv returned by XtDisplayInitialize
+   are returned in argc_in_out and argv_in_out. If
+   app_context_return is not NULL, the created application
+   context is also returned. If the display specified by the
+   command line cannot be opened, an error message is issued
+   and XtOpenApplication terminates the application. If
+   fallback_resources is non-NULL, XtAppSetFallbackResources is
+   called with the value prior to calling XtOpenDisplay.  
+
+   Widget XtOpenApplication(app_context_return,
+          application_class, options, num_options, argc_in_out,
+          argv_in_out, fallback_resources, widget_class, args,
+          num_args)
+                XtAppContext app_context_return;
+                String application_class;
+                XrmOptionDescRec* options;
+                Cardinal num_options;
+                int* argc_in_out;
+                String* argv_in_out;
+                String* fallback_resources;
+                WidgetClass widget_class;
+                ArgList args;
+                Cardinal num_args;
+   */
+d472 6
+a477 2
+           XtNumber(options), (int *) &argc, argv, NULL, 
+           applicationShellWidgetClass, NULL, 0);
+a478 2
+ /* cache the display pointer */ 
+ idispl = XtDisplay(iw_top);
+d481 4
+a484 1
+ /* check the application resources -------------------------------*/
+@
+
+
+1.38
+log
+@*** empty log message ***
+@
+text
+@d34 2
+a35 2
+ C     PURPOSE: MAIN ROUTINE FOR WEB
+ C              INITIALIZES X WINDOWS AND STARTS WEB
+d37 2
+a38 2
+ C     PARAMETERS: ARGV 
+ C                 ARGC   
+a42 1
+#include "std.h"
+a49 1
+//#define MAXCOLSPI 64
+d55 1
+a55 1
+ /* external function prototypes */
+d58 1
+a58 1
+ /* command line option recovery structure */
+d82 1
+a82 1
+ /* resource recovery structure */
+d116 1
+a116 1
+ /* resource recovery structure */
+d295 2
+a296 2
+ int            lastskip  = 1;     /* last image mag. factor        */
+ int            ncolors   = 128;   /* number of defined colors      */
+d299 32
+a330 32
+ int            iskip     = 1;     /* image mag. factor             */
+ int            marx      = 1;     /* x image margin                */
+ int            mary      = 1;     /* y image margin                */
+ int            marlef    = 0;     /* left window margin            */
+ int            martop    = 0;     /* top window margin             */
+ int            trace_web = FALSE; /* does not make results file    */
+ int            listfi    = TRUE;  /* list files in selector flag   */
+ int            names     = FALSE; /* print image names flag        */
+ int            names_height = 0;  /* pixel height of image filename */
+ int            magsizx   = 64;    /* magnification size (x)        */
+ int            magsizy   = 64;    /* magnification size (y)        */
+ int            magfac    = 4;     /* magnification factor          */
+ int            nsam8     = 940;   /* size for raw files            */
+ int            nrow8     = 940;   /* size for raw files            */
+ int            nslice8   = 1;     /* size for raw files            */
+ int            iradius   = 5;     /* marker location radius        */
+ float          scaleval  = 1.0;   /* surface magnification         */
+ float          refl      = 0.5;   /* surface rendering reflection  */
+ float          fct       = 1.0;   /* surface rendering attenuation */
+ int            icursor   =  22;   /* web cursor number             */
+
+ int            icolor    =   0;      /* current foreground color ABOVE */
+ int            icolorb   =   0;      /* current background color ABOVE */
+ int            icolorov  =   0;      /* overlay foreground color ABOVE */
+ int            icolorcf  =   0;      /* cursor  foreground color ABOVE */
+ int            icolorcb  =   0;      /* cursor  background color ABOVE */
+
+ unsigned long  icolorx   = 0x255;    /* current x foreground          */
+ unsigned long  icolorxb  = 0x0;      /* current x background          */
+ unsigned long  icolorxov = 0x80;     /* current x overlay             */
+ unsigned long  icolorxcf = 0x808080; /* current x cursor foreground   */
+ unsigned long  icolorxcb = 0x0;      /* current x cursor background   */
+d332 2
+a333 2
+ unsigned long  icolorxmb;            /* current x menu background     */
+ unsigned long  icolorxmf;            /* current x menu foreground     */
+d335 1
+a335 1
+ char           datexc[]  = "DAT";    /* file extension                */ 
+d471 1
+a471 1
+ /* check iskip */
+d481 1
+a481 1
+ /* check marx, mary */
+d492 1
+a492 1
+ /* check marlef, martop */
+d503 1
+a503 1
+ /* check magsizx, magsizy */
+d514 1
+a514 1
+ /* check nsam8, nrow8 nslice8*/
+d527 1
+a527 1
+ /* check iradius */
+d536 1
+a536 1
+ /* check scaleval */
+d545 1
+a545 1
+ /* check scaleval */
+d554 1
+a554 1
+ /* check refl */
+d563 1
+a563 1
+ /* check fct */
+d572 1
+a572 1
+ /* check icursor */
+d575 1
+a575 1
+ /* check icolorcf, icolorcb */
+d586 1
+a586 1
+ /* check icolor, icolorb */
+d599 1
+a599 1
+ /* check icolorov */
+d608 1
+a608 1
+ /* check iradius */
+d621 1
+a621 1
+   {  /* last arguement is datexc if does not begin with - */
+@
+
+
+1.37
+log
+@icolorxmb ..
+@
+text
+@d349 1
+a349 1
+ int	        show_num = TRUE;  /* set show marker number flag   */ 
+d396 2
+a397 2
+ /* modifications by: Erik Vogan July 2001 */
+ /* we'll do this all by hand, just to make certain we can control it */
+d402 1
+a402 1
+ theDisplay = XtOpenDisplay(app_context, NULL, NULL, whichweb, NULL,
+d404 1
+a404 1
+ if (!theDisplay)
+d407 1
+a407 1
+          theDisplay, NULL, 0);
+a447 2
+#endif
+
+d451 1
+a451 1
+
+d455 1
+a455 1
+             XtNumber(resources), NULL, 0);
+@
+
+
+1.36
+log
+@-cmap_changes_etc
+@
+text
+@d322 5
+a326 5
+ int            icolor    =   0;   /* current foreground color ABOVE */
+ int            icolorb   =   0;   /* current background color ABOVE */
+ int            icolorov  =   0;   /* overlay foreground color ABOVE */
+ int            icolorcf  =   0;   /* cursor  foreground color ABOVE */
+ int            icolorcb  =   0;   /* cursor  background color ABOVE */
+d328 8
+a335 5
+ unsigned long  icolorx   = 0x255; /* current x foreground          */
+ unsigned long  icolorxb  = 0x0;   /* current x background          */
+ unsigned long  icolorxov = 0x80;  /* current x overlay             */
+ unsigned long  icolorxcf = 0x808080;/* current x cursor foreground   */
+ unsigned long  icolorxcb = 0x0;   /* current x cursor background   */
+d337 1
+a337 1
+ char           datexc[]  = "DAT"; /* file extension                */ 
+@
+
+
+1.35
+log
+@fmin ->fmin_spi..
+@
+text
+@d10 1
+a10 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d51 3
+a53 1
+#define MAXCOL 256
+d62 18
+a79 18
+    {"-reduction", "*imageReduction",         XrmoptionSepArg, NULL},
+    {"-listfiles", "*listFiles",              XrmoptionNoArg, "FALSE"},
+    {"+names",     "*listNames",              XrmoptionNoArg, "TRUE"},
+    {"-nsam8",     "*nsam8",                  XrmoptionSepArg, NULL},
+    {"-nrow8",     "*nrow8",                  XrmoptionSepArg, NULL},
+    {"-nslice8",   "*nslice8",                XrmoptionSepArg, NULL},
+    {"-cursor",    "*cursor",                 XrmoptionSepArg, NULL},
+    {"-wfg",       "*webForeground",          XrmoptionSepArg, NULL},
+    {"-wbg",       "*webBackground",          XrmoptionSepArg, NULL},
+    {"-marx",      "*imageXMargin",           XrmoptionSepArg, NULL},
+    {"-mary",      "*imageYMargin",           XrmoptionSepArg, NULL},
+    {"-marlef",    "*imageLeftMargin",        XrmoptionSepArg, NULL},
+    {"-martop",    "*imageTopMargin",         XrmoptionSepArg, NULL},
+    {"-cfg",       "*cursorForeground",       XrmoptionSepArg, NULL},
+    {"-cbg",       "*cursorBackground",       XrmoptionSepArg, NULL},
+    {"-lutdir",    "*lutDirectory",           XrmoptionSepArg, NULL},
+    {"-ext",       "*dataExt",                XrmoptionSepArg, NULL},
+    {"-trace",     "*traceWeb",               XrmoptionNoArg, "TRUE"},
+d185 1
+a185 1
+     XtOffset(ApplicationDataPtr, icursor), XmRImmediate, (XtPointer) 22 },
+d188 1
+a188 1
+     XtOffset(ApplicationDataPtr, icolorcf), XmRImmediate, (XtPointer) 147 },
+d191 1
+a191 1
+     XtOffset(ApplicationDataPtr, icolorcb), XmRImmediate, (XtPointer) 137 },
+d194 1
+a194 1
+     XtOffset(ApplicationDataPtr, icolorov), XmRImmediate, (XtPointer) 157 },
+d197 1
+a197 1
+     XtOffset(ApplicationDataPtr, icolor), XmRImmediate, (XtPointer) 137 },
+d200 1
+a200 1
+     XtOffset(ApplicationDataPtr, icolorb), XmRImmediate, (XtPointer) 0 },
+d227 1
+a229 1
+ Colormap       mapover;           /* overlay colormap              */
+d261 2
+a262 1
+ int            ispicol[MAXCOL];   /* web colormap values           */
+d282 1
+a282 1
+ int            imagego   =   0;   /* (=0) colormap normalization range  */
+d285 2
+a286 6
+ /* following values do not seem to be used as initialized          */
+#ifdef VMS
+ int            mapgo     = 20;    /* image start in colormap       */
+ int            colorend  = 238;   /* colors end in colormap        */
+#else
+ int            mapgo     = 48;    /* image start in colormap       */
+a287 1
+#endif
+d296 1
+a296 2
+ /* following values appear no longer used!!!!!!!!                  */
+ /* int            nmax      = 127; */  /* colormap normalization range  */
+d300 1
+a300 1
+ /* following values accessible from defaults file                  */
+d321 13
+a333 7
+ int            icolorcf  = 147;   /* cursor foreground             */
+ int            icolorcb  = 137;   /* cursor background             */
+ int            icolorov  = 157;   /* overlay color                 */
+ int            icolor    = 137;   /* current web color             */
+ int            icolorx   = 137;   /* current x color               */
+ int            icolorb   =   0;   /* current background            */
+ int            icolorxb  =   0;   /* current x background color    */
+d335 1
+a335 1
+ char           lutdir[81]  = "\0"; 
+d338 1
+a338 1
+ /* following values should be made accessible from defaults file?  */
+d357 1
+a357 1
+/* variables used here */ 
+d360 1
+a360 1
+ /* also used by actions.c */
+d369 3
+a371 4
+ int i, nn;
+#ifdef app_plus
+ Display *theDisplay;
+#endif
+d380 2
+a381 18
+#ifdef NEVER
+  if (argc == 1)
+     {
+     printf("Enter file extension:");
+     scanf("%s",datexc);
+     }
+
+   /* vms has only uppercase filenames */
+   nn = 0;
+   while (datexc[nn])
+       { /* is char in the range a-z ? */
+       if (toascii((int) datexc[nn]) >= 97 && 
+           toascii((int) datexc[nn]) <= 122 ) 
+	      datexc[nn] = (char) toupper((int) datexc[nn]);
+       nn++;
+       }
+#endif
+ /************ debug **************  (removed) ************************
+d389 3
+d399 1
+a399 5
+#ifdef WEB_24
+ theDisplay = XtOpenDisplay(app_context, NULL, NULL, "Web_24", NULL,
+              0, &argc, argv);
+#else
+ theDisplay = XtOpenDisplay(app_context, NULL, NULL, "Web", NULL,
+a400 2
+#endif
+
+d402 2
+a403 10
+    {
+    printf("%s: can't open display !  EXITING !", argv[0]);
+    exit(0);
+    }
+
+#ifdef WEB_24
+ iw_top = XtAppCreateShell(NULL, "Web_24", appPlusShellWidgetClass,
+          theDisplay, NULL, 0);
+#else
+ iw_top = XtAppCreateShell(NULL, "Web", appPlusShellWidgetClass,
+a404 1
+#endif
+a407 6
+#elif defined (__osf__)  || defined (SP_NT)
+ iw_top = XtAppInitialize(&app_context, "Web", 
+                          options,XtNumber(options),
+                         (int *)&argc, argv,  
+                          NULL,NULL, 0);
+
+d442 1
+a442 2
+#ifdef WEB_24
+ iw_top = XtOpenApplication(&app_context, "Web_24",options,
+a444 5
+#else
+ iw_top = XtOpenApplication(&app_context, "Web",options,
+           XtNumber(options), (int *) &argc, argv, NULL, 
+           applicationShellWidgetClass, NULL, 0);
+#endif
+d576 1
+a576 1
+ /* check icolorcf, magicolorcbsizy */
+d592 1
+a592 1
+   AppData.icolor = icolor;
+d607 2
+a608 1
+ icolorov =  AppData.icolorov;
+d626 1
+a626 1
+ printf(" %s --> Data file extension: %s\n", AppData.datexc, datexc);
+d633 1
+a633 1
+ /* start the application ------------------------------------ */
+d636 1
+a636 1
+ /* loop to get events until exit is requested */
+@
+
+
+1.34
+log
+@GPL
+@
+text
+@d234 1
+a234 1
+ double         fmin,fmax;         /* last image range              */
+@
+
+
+1.33
+log
+@vogans linux mods
+@
+text
+@a0 1
+  
+d9 23
+a31 5
+ C *  COPYRIGHT (C)1992,1996  HEALTH RESEARCH INC, EMPIRE STATE PLAZA, *
+ C *    ALBANY, NY 12201.  THE CONTENTS OF THIS DOCUMENT ARE           *
+ C *    PROPRIETARY TO HEALTH RESEARCH INC., AND ARE NOT TO BE         *
+ C *    DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED   *
+ C *    WITHOUT WRITTEN APPROVAL OF HEALTH RESEARCH INC.               *
+a331 3
+#ifdef VMS
+ char           lutdir[81]  = "RGB_LOC:*.RGB"; /* lut directory     */ 
+#else
+a332 1
+#endif
+d410 4
+d416 2
+d424 4
+d430 1
+d474 5
+d482 1
+@
+
+
+1.32
+log
+@bad imginuse
+@
+text
+@d30 4
+d354 3
+d390 21
+a410 1
+#if defined(__osf__) || defined (VMS) || defined(SP_FIVE2 )|| defined (SP_NT)
+@
+
+
+1.31
+log
+@added imginstack
+@
+text
+@d274 1
+a274 1
+ int		imginuse  = 0;     /* current img. number           */
+@
+
+
+1.30
+log
+@*** empty log message ***
+@
+text
+@d271 4
+a274 3
+ int	        nstack = 0;	   /* stack indicator */
+ int		inuse = 0;	   /* stack file inused indicator */
+ int		maxim = 0;	   /* max num of files in stack */
+@
+
+
+1.29
+log
+@NT specific changes
+@
+text
+@d271 3
+a273 1
+
+@
+
+
+1.28
+log
+@changes for stack files
+@
+text
+@a259 3
+ int	        nstack = 0;	   /* stack indicator */
+ int		inuse = 0;	   /* stack file inused indicator */
+ int		maxim = 0;	   /* max num of files in stack */
+d380 1
+a380 1
+#if defined(__osf__) || defined (VMS) || defined(SP_FIVE2 )
+d420 1
+a420 1
+ iw_top = XtOpenApplication(&app_context, "Web", options,
+@
+
+
+1.27
+log
+@added ikeyc for categorization to get accumulatedkey number
+@
+text
+@d260 3
+@
+
+
+1.26
+log
+@added code for IRIX5.2
+@
+text
+@d331 1
+@
+
+
+1.25
+log
+@added -trace to command line
+@
+text
+@d379 1
+a379 1
+#if defined(__osf__) || defined(VMS)
+@
+
+
+1.24
+log
+@define names_height
+@
+text
+@d56 1
+d72 1
+d128 3
+a251 1
+ int            trace_web = FALSE; /* does not make results file    */
+d285 1
+d605 3
+a607 2
+ listfi   = AppData.listfi;
+ names    = AppData.names;
+@
+
+
+1.23
+log
+@change show_num value
+@
+text
+@d283 1
+@
+
+
+1.22
+log
+@needed coded for osf for appinitialixe
+@
+text
+@d317 1
+a317 1
+ int	        show_num = FALSE;  /* set show marker number flag   */ 
+@
+
+
+1.21
+log
+@added comment
+@
+text
+@d372 2
+a373 1
+#ifdef VMS
+@
+
+
+1.20
+log
+@added iw_filesnol initialization
+@
+text
+@d394 1
+a394 1
+   called with the value prior to calling XtOpenDisplay.  */
+d396 16
+d413 1
+a413 1
+           XtNumber(options), (int *)&argc, argv, NULL, 
+@
+
+
+1.19
+log
+@removed unused variable
+@
+text
+@d187 1
+@
+
+
+1.18
+log
+@removed code for VMS to solicit extension
+@
+text
+@d338 1
+a338 2
+ int i,nn;
+ Boolean gotcomdatexc = False;
+@
+
+
+1.17
+log
+@bad options for some colors fixed
+@
+text
+@d338 1
+a338 1
+ int i;
+d348 3
+a350 3
+#ifdef VMS
+  if(argc == 1)
+   {
+d353 2
+a354 1
+   }
+d356 2
+a357 2
+   n = 0;
+   while(datexc[n])
+d359 4
+a362 4
+       if( toascii((int) datexc[n]) >= 97 && 
+          toascii((int) datexc[n]) <= 122 ) 
+	  datexc[n] = (char) toupper((int) datexc[n]);
+       n++;
+@
+
+
+1.16
+log
+@ for defaults and command lines
+@
+text
+@d47 1
+a47 1
+    {"-wbg",       "*webBackground ",         XrmoptionSepArg, NULL},
+d52 2
+a53 2
+    {"-cfg",       "*cursorForeground ",      XrmoptionSepArg, NULL},
+    {"-cbg",       "*cursorBackground ",      XrmoptionSepArg, NULL},
+d578 1
+a578 1
+ printf(" %s:Data file extension: %s\n", AppData.datexc, datexc);
+@
+
+
+1.15
+log
+@remove printf
+@
+text
+@d1 1
+a1 1
+
+d3 3
+a5 1
+ C++*************************************************************************
+d7 1
+a7 1
+ C    web.c -- CREATED May 92 ArDean Leith
+d9 7
+a15 8
+ C **************************************************************************
+ C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+ C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+ C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+ C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+ C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+ C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+ C **************************************************************************
+d17 2
+a18 1
+ C     PURPOSE: INITIALIZE X WINDOWS START-UP
+d20 2
+a21 1
+ C     PARAMETERS:    
+d23 1
+a23 1
+ C--*********************************************************************
+d28 1
+a28 1
+#define MAX_ARGS 20
+d30 1
+d34 27
+d62 27
+a88 1
+    char *fontpath;
+d91 1
+a91 1
+ ApplicationData  AppData;
+d93 1
+d95 1
+a95 1
+    { XtNfontPath, XtCFontPath, XmRString, sizeof(String),
+d97 76
+a172 1
+              XmRString, "/usr/lib/X11/fonts"}
+d176 155
+a330 4
+ extern Widget        web_main (Widget);
+ extern Display       *idispl;
+ extern Widget        iw_top;
+ extern char          datexc[]; 
+a331 1
+ XtAppContext  app_context;
+d335 1
+a335 1
+ int main( int argc, char **argv)
+d338 2
+a339 2
+ Widget   iw_main;
+ int      n;
+d344 2
+a345 2
+   printf(" Usage:   web file-extension \n");
+   printf(" Sample:  windit DAT \n");
+a347 2
+ if (argc > 1) strncpy(datexc,argv[1],3);
+
+d364 36
+d401 2
+a402 1
+ XtToolkitInitialize();
+a403 1
+ app_context = XtCreateApplicationContext();
+d405 18
+a422 8
+#ifdef WEB_IRIX4
+ if ((idispl = XtOpenDisplay(app_context, NULL, argv[0], 
+              "WEB", NULL, 0, (unsigned int *) & argc, argv)) == NULL)
+    { XtWarning("*** Web can not open display! "); exit (-1); }
+#else
+ if ((idispl = XtOpenDisplay(app_context, NULL, argv[0], 
+              "WEB", NULL, 0, & argc, argv)) == NULL)
+    { XtWarning("*** Web can not open display! "); exit (-1); }
+d425 152
+a576 2
+ iw_top = XtAppCreateShell(argv[0], "Web", 
+             applicationShellWidgetClass, idispl, NULL, 0);
+d578 5
+a582 2
+ XtGetApplicationResources(iw_top, (char *) &AppData, resources,
+             XtNumber(resources), NULL, 0);
+d584 2
+a585 1
+ iw_main = web_main(iw_top);
+d591 1
+a592 3
+
+
+
+@
+
+
+1.14
+log
+@uppercase datexc for VAX
+@
+text
+@a76 5
+   
+          printf(" WEB.C: n = %d datexc[n] = %c toascii() = %d toupper() %c \n",
+                n, datexc[n],
+                toascii((int) datexc[n]),toupper((int) datexc[n]) );
+
+@
+
+
+1.13
+log
+@added ifdef ..IRIX4 for incompatible call
+@
+text
+@d73 14
+@
+
+
+1.12
+log
+@changed argc value (failed on alpha!!)
+@
+text
+@d79 1
+d81 4
+d87 1
+@
+
+
+1.11
+log
+@modified array type for compiling
+@
+text
+@d52 1
+a52 1
+ int main(unsigned int argc, char **argv)
+d80 1
+a80 1
+              "WEB", NULL, 0, (void *) &argc, argv)) == NULL)
+@
+
+
+1.10
+log
+@modified pointer type for compiler
+@
+text
+@d80 1
+a80 1
+              "WEB", NULL, 0, (int *) &argc, argv)) == NULL)
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d80 1
+a80 1
+              "WEB", NULL, 0, (Cardinal *) &argc, argv)) == NULL)
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d68 5
+a72 2
+   printf("Enter file extension:");
+   scanf("%s",datexc);
+@
+
+
+1.7
+log
+@took out the request for file extension on the unix
+@
+text
+@d77 1
+a77 1
+              "WEB", NULL, 0, &argc, argv)) == NULL)
+@
+
+
+1.6
+log
+@force the request of data extension right from the beginning
+@
+text
+@d67 4
+a70 2
+ printf("Enter file extension:");
+ scanf("%s",datexc);
+@
+
+
+1.5
+log
+@fixed pointer, returned int
+@
+text
+@d67 2
+a68 4
+#ifdef VMS
+    printf("Enter file extension:");
+    scanf("%s",datexc);
+#endif
+@
+
+
+1.4
+log
+@added datexc input for vax
+@
+text
+@d83 1
+a83 1
+ XtGetApplicationResources(iw_top, &AppData, resources,
+d91 1
+@
+
+
+1.3
+log
+@returns int now
+@
+text
+@d67 5
+@
+
+
+1.2
+log
+@added datexc setting from command line
+@
+text
+@d52 1
+a52 1
+ void main(unsigned int argc, char **argv)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d46 1
+d57 9
+@

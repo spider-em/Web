@@ -1,0 +1,946 @@
+head	1.18;
+access;
+symbols
+	pre-tilt-improve:1.18
+	pre_surf_fromtop:1.18
+	pre_neednewmap:1.14
+	pre_apppluss_remove:1.13
+	pre_tiltpair_chng:1.13
+	pre_GPL:1.11;
+locks;
+comment	@ * @;
+
+
+1.18
+date	2011.09.27.13.45.31;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2011.09.22.19.41.05;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2011.09.22.12.07.23;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2011.09.21.13.55.55;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2011.09.16.18.56.03;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2011.06.10.16.16.48;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2005.10.18.16.59.54;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2001.08.10.12.57.24;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.01.22.20.18.27;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.07.11.17.28.10;	author mladjadj;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.02.01.21.58.48;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.01.26.19.57.24;	author liy;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.01.23.09.59.04;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.07.05.15.35.21;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.24.14.58.32;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.24.12.07.59;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.03.21.09.32.29;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.48;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.18
+log
+@mods for ngo...nend
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/contrastmen.c,v 1.17 2011/09/22 19:41:05 leith Exp leith $*/
+
+/*C++*******************************************************************
+C                                                                      *
+C contrastmen.c     New                        ArDean Leith  Dec  1992 *
+C                   Directcolor mods           Erik Vogan    Jul  2001 *
+C                   Truecolor mods             ArDean Leith  Sep  2011 *
+C                                                                      *
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    FILE:         contrastmen
+C
+C    PARAMETERS:   
+C
+C    PURPOSE:      Sets image contast using luts
+C
+C    CALLED BY:    web_com
+C
+C    NOTE:         Maybe this should work over imagego...imagend 
+C                  instead of mapgo... mapend??
+C
+C--********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+
+#ifdef WEB_TRUE 
+//     WEB_TRUE ------------------------------------------------------
+
+ // Internal function prototypes 
+ void          contrastmen_buta(Widget, XtPointer, XtPointer);
+
+ // File scope static variables 
+static Widget  iw_contrastmen = (Widget)0;
+static Widget  iw_ngo, iw_nend;
+
+// Common variables used here
+extern int     vmap[256];          // Virtual colormap
+
+ /**********************   contrastmen   ******************************/
+
+ Widget contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+
+ { 
+ Widget iw_lab1, iw_rowcolv, iw_rowcolh;
+ Widget iw_dums, iw_pushc, iw_pusha;
+
+
+  if (iw_contrastmen <= (Widget)0)
+    {   /* Create contrast menu widget first */
+
+    iw_contrastmen = wid_dialog(iw_win, 0, "Contrast options", -1,-1);
+    iw_rowcolv     = wid_rowcol(iw_contrastmen, 'v', -1,-1);
+
+    /* Create label for scales */
+    iw_lab1 = wid_labelg(iw_rowcolv, 0,
+                         "Lower and upper end of ramp:", -1,-1);
+
+    /* Create a horizontal row-col widget for scales */
+    iw_rowcolh = wid_rowcol(iw_rowcolv, 'h', -1,-1);
+
+    /* Create scale widget for starting value ------------------- ngo */
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", ngo,nend,  ngo, 
+                        180,50, -1,-1);
+
+    /* Create scale widget for ending value -------------------- nend */
+    iw_nend = wid_scale(iw_rowcolh, 0, "", ngo,nend,  nend, 
+                       180,50, -1,-1);
+
+    XtAddCallback(iw_ngo,XmNvalueChangedCallback,
+                           (XtCallbackProc) contrastmen_buta,"0");
+    XtAddCallback(iw_nend,XmNvalueChangedCallback,
+                           (XtCallbackProc) contrastmen_buta,"0");
+
+    /* Create box for cancel --------------------------------- cancel */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_contrastmen, 
+                        &iw_dums, &iw_pushc, &iw_pusha,  "C",
+                        fin_cb,fin_cb ,fin_cb, NULL);
+    }
+ 
+ else
+    {   /* Contrast menu widget already exists, update it */
+
+    /* Alter scale widget for starting value ------------------ ngo */
+    iw_ngo = wid_scale(iw_rowcolh, iw_ngo, "", ngo,nend,  ngo, 
+                       180,50, -1,-1);
+
+    /* Alter scale widget for ending value  ------------------ nend */
+    iw_nend = wid_scale(iw_rowcolh, iw_nend, "", ngo,nend,  nend, 
+                       180,50, -1,-1);
+    }
+ XtManageChild(iw_contrastmen);
+
+ return iw_contrastmen;
+}
+
+ /************* Contrast changed callback ********************************/
+
+ void contrastmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+
+ {
+ int    ngo_com, nend_com;
+
+ XmScaleGetValue(iw_ngo,  &ngo_com);
+ XmScaleGetValue(iw_nend, &nend_com);
+
+ if (nend_com <= ngo_com)
+    { spout("*** Upper value must be > lower value"); return;}
+ else if (ngo_com < 0)
+    { spout("*** Lower value outside of image ramp"); return;}
+ else if (nend_com > 255)
+    { spout("*** Upper value outside of image ramp"); return;}
+
+ // Use mapgo to signal ramp info
+ ngo  = ngo_com;  
+ nend = nend_com;
+
+ // Create new vmap
+ newvmap(ngo,nend,vmap);
+
+ // Flag for vmap changed
+ neednewmap = TRUE;
+
+ // Update display using new vmap.
+ expos_cb(NULL,NULL,NULL);
+
+ return;
+ }
+
+
+
+#else
+// WEB_24 --------------------------------------------------------------
+
+#include <Xm/Scale.h>
+#include <Xm/ToggleBG.h>
+
+ /* Internal function prototypes */
+ void          contrastmen_buta(Widget iw_temp, XtPointer, XtPointer);
+
+ /* Internal common variables */
+ static Widget  iw_contrastmen= (Widget)0, iw_red, iw_blue, iw_green;
+ static Widget  iw_ngo, iw_nend;
+ static int     redit, greenit, blueit;
+
+ // Common variables used here
+
+ /**********************   contrastmen   ******************************/
+
+ Widget contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+
+ { 
+ Widget iw_lab1, iw_rowcolv, iw_rowcolh;
+ Widget iw_dums, iw_pushc, iw_pusha;
+
+  if (iw_contrastmen <= (Widget)0)
+    {   /* Create contrast menu widget first */
+
+    iw_contrastmen  = wid_dialog(iw_win, 0, "Contrast options", -1,-1);
+    iw_rowcolv      = wid_rowcol(iw_contrastmen, 'v', -1,-1);
+
+    /* Create label for scales */
+    iw_lab1 = wid_labelg(iw_rowcolv, 0,
+                         "Lower and upper end of ramp:", -1,-1);
+
+    /* Create a horizontal row-col widget for scales */
+    iw_rowcolh = wid_rowcol(iw_rowcolv, 'h', -1,-1);
+
+    /* Create scale widget for starting value ------------------- ngo  */
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", mapgo,mapend,  ngo , 
+                        180,50, -1,-1);
+
+    /* create scale widget for ending value -------------------- nend  */
+    iw_nend = wid_scale(iw_rowcolh, 0, "", mapgo,mapend,  nend , 
+                       180,50, -1,-1);
+
+    XtAddCallback(iw_ngo,XmNvalueChangedCallback,
+                           (XtCallbackProc) contrastmen_buta,"0");
+    XtAddCallback(iw_nend,XmNvalueChangedCallback,
+                           (XtCallbackProc) contrastmen_buta,"0");
+
+    /* Create toggle boxes for red, greeen & blue colors */
+    redit   = TRUE;
+    greenit = TRUE;
+    blueit  = TRUE;
+
+    iw_red   = wid_togmen(iw_rowcolv, 0, "Red  ", redit,   -1,-1);
+    iw_green = wid_togmen(iw_rowcolv, 0, "Green", greenit, -1,-1);
+    iw_blue  = wid_togmen(iw_rowcolv, 0, "Blue ", blueit,  -1,-1);
+
+    /* Create box for cancel --------------------------------- cancel */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_contrastmen, 
+                        &iw_dums, &iw_pushc, &iw_pusha,  "C",
+                        fin_cb,fin_cb ,fin_cb, NULL);
+    }
+ else
+    {   /* Contrast menu widget already exists, update it */
+
+    /* Alter scale widget for starting value -------------------- ngo  */
+    iw_ngo = wid_scale(iw_rowcolh, iw_ngo, "", mapgo,mapend,  ngo , 
+                       180,50, -1,-1);
+
+    /* Alter scale widget for ending value  -------------------- nend  */
+    iw_nend = wid_scale(iw_rowcolh, iw_nend, "", mapgo,mapend,  nend , 
+                       180,50, -1,-1);
+    }
+
+ XtManageChild(iw_contrastmen);
+
+ return iw_contrastmen;
+ }
+
+
+ /************* Accept button callback ********************************/
+
+ void contrastmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+
+ {
+ int             nindex, ival, iflags, indx;  
+ float           fval;
+ int             ngo_com, nend_com;
+
+ /* Get ngo_com & nend_com */
+ XmScaleGetValue(iw_ngo, &ngo_com);
+ XmScaleGetValue(iw_nend,&nend_com);
+
+ if (nend_com < ngo_com)
+    { spout("*** Upper value must be > lower value"); return;  }
+ else if (ngo_com < mapgo)
+    { spout("*** Lower value outside of image ramp"); return; }
+ else if (nend_com > mapend)
+    { spout("*** Upper value outside of image ramp"); return;  }
+
+ ngo     = ngo_com;
+ nend    = nend_com;
+
+ redit   = XmToggleButtonGadgetGetState(iw_red);
+ blueit  = XmToggleButtonGadgetGetState(iw_green);
+ greenit = XmToggleButtonGadgetGetState(iw_blue);
+
+ iflags = 0;
+ if (redit)   iflags = DoRed; 
+ if (greenit) iflags = iflags | DoGreen ;
+ if (blueit)  iflags = iflags | DoBlue;
+                                                                                 
+ /* Set colors in the image portion of the colormap, only */ 
+ indx = 0;
+ for (nindex = mapgo; nindex <= mapend; nindex++)
+    {
+    colort[indx].pixel = ispicol[nindex];
+    colort[indx].flags = iflags;
+
+    if (nindex <= ngo) 
+       {
+       /* Set this color to black */
+       ival = 0;
+       }
+    else if (nindex < nend)
+       {
+       /* Interpolate shade */
+       fval = 65535.0 * (float)(nindex - ngo) / (float) (nend - ngo);
+       ival = fval;
+       }
+    else 
+       {
+       /* Set this color to white */
+       ival = 65535;
+       }
+
+    colort[indx].red    = ival;
+    colort[indx].green  = ival;
+    colort[indx++].blue = ival;
+    }
+ 
+ /* Put the colors in the desired colormap */
+ XStoreColors(idispl,map,colort,indx);
+
+ XFlush(idispl);
+ return;
+ }
+
+#endif
+
+
+
+
+   
+  
+@
+
+
+1.17
+log
+@widget returned
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/contrastmen.c,v 1.16 2011/09/22 12:07:23 leith Exp leith $*/
+d5 1
+a5 1
+C
+d9 1
+a9 1
+C                                                                  
+d11 1
+a11 1
+C *  AUTHOR: A. LEITH                                                      *
+d66 1
+a66 2
+extern int     ngo_com, nend_com;
+extern int   vmap[256];          // Virtual colormap
+d76 1
+d90 2
+a91 2
+    /* Create scale widget for starting value ------------------- ngo_com */
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", 0,255,  ngo_com, 
+d94 2
+a95 2
+    /* Create scale widget for ending value -------------------- nend_com */
+    iw_nend = wid_scale(iw_rowcolh, 0, "", 0,255,  nend_com, 
+d112 2
+a113 2
+    /* Alter scale widget for starting value -------------------- ngo_com */
+    iw_ngo = wid_scale(iw_rowcolh, iw_ngo, "", 0,255,  ngo_com, 
+d116 2
+a117 2
+    /* Alter scale widget for ending value  -------------------- nend_com */
+    iw_nend = wid_scale(iw_rowcolh, iw_nend, "", 0,255,  nend_com, 
+d130 2
+d143 2
+a144 2
+ mapgo  = ngo_com;  
+ mapend = nend_com;
+d147 1
+a147 1
+ newvmap(mapgo,mapend,vmap);
+a174 1
+ extern int    ngo_com, nend_com;
+d197 2
+a198 2
+    /* Create scale widget for starting value ------------------- ngo_com */
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", mapgo,mapend,  ngo_com, 
+d201 2
+a202 2
+    /* create scale widget for ending value -------------------- nend_com */
+    iw_nend = wid_scale(iw_rowcolh, 0, "", mapgo,mapend,  nend_com, 
+d227 2
+a228 2
+    /* Alter scale widget for starting value -------------------- ngo_com */
+    iw_ngo = wid_scale(iw_rowcolh, iw_ngo, "", mapgo,mapend,  ngo_com, 
+d231 2
+a232 2
+    /* Alter scale widget for ending value  -------------------- nend_com */
+    iw_nend = wid_scale(iw_rowcolh, iw_nend, "", mapgo,mapend,  nend_com, 
+d242 1
+a242 1
+ /************* accept button callback ********************************/
+d249 1
+d251 1
+a251 1
+ /* get ngo_com & nend_com */
+d258 1
+a258 1
+    { spout("*** Lower value outside of image ramp");  return; }
+d262 2
+d281 1
+a281 1
+    if (nindex <= ngo_com) 
+d286 1
+a286 1
+    else if (nindex < nend_com)
+d289 1
+a289 1
+       fval = 65535.0 * (float)(nindex - ngo_com) / (float) (nend_com - ngo_com);
+a309 1
+
+@
+
+
+1.16
+log
+@newvmap used
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/contrastmen.c,v 1.15 2011/09/21 13:55:55 leith Exp leith $*/
+d177 1
+a177 1
+ void contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+d237 1
+@
+
+
+1.15
+log
+@ neednewmap = TRUE;
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/contrastmen.c,v 1.14 2011/09/16 18:56:03 leith Exp leith $*/
+d66 2
+a67 1
+extern int    ngo_com, nend_com;
+d71 1
+a71 1
+ void contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+d141 5
+a145 2
+ mapgo      = ngo_com;  
+ mapend     = nend_com;
+d147 1
+d150 1
+@
+
+
+1.14
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/contrastmen.c,v 1.13 2011/06/10 16:16:48 leith Exp $*/
+d140 4
+a143 2
+ mapgo  = ngo_com;  
+ mapend = nend_com;
+@
+
+
+1.13
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/contrastmen.c,v 1.12 2005/10/18 16:59:54 leith Exp $*/
+d6 3
+a8 2
+C contrastmen.c     New                         ArDean Leith Dec    92 
+C                   Directcolor mods            Erik Vogan   Jul  2001
+d37 1
+a37 1
+C    contrastmen
+d54 99
+d157 1
+a157 1
+ void          contrastmen_buta(Widget iw_temp, caddr_t, caddr_t);
+d160 6
+a165 3
+ static Widget iw_contrastmen= (Widget)0, iw_red, iw_blue, iw_green;
+ static Widget iw_ngo, iw_nend;
+ static int    ngo, nend, redit, greenit, blueit;
+d169 1
+a169 1
+ void contrastmen(Widget iw_caller, caddr_t data, caddr_t call_data)
+d188 2
+a189 3
+    /* Create scale widget for starting value ------------------- ngo */
+    ngo     = mapgo;
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", mapgo,mapend,  ngo, 
+d192 2
+a193 3
+    /* create scale widget for ending value -------------------- nend */
+    nend    = mapend;
+    iw_nend = wid_scale(iw_rowcolh, 0, "", mapgo,mapend,  nend, 
+d218 2
+a219 2
+    /* alter scale widget for starting value -------------------- ngo */
+    iw_ngo = wid_scale(iw_rowcolh, iw_ngo, "", mapgo,mapend,  ngo, 
+d222 2
+a223 2
+    /* alter scale widget for ending value  -------------------- nend */
+    iw_nend = wid_scale(iw_rowcolh, iw_nend, "", mapgo,mapend,  nend, 
+d234 1
+a234 1
+ void contrastmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d240 10
+a249 18
+ /* get ngo & nend */
+ XmScaleGetValue(iw_ngo, &ngo);
+ XmScaleGetValue(iw_nend,&nend);
+ if (nend < ngo)
+    {
+    spout("*** Upper value must be > lower value");
+    return;
+    }
+ else if (ngo < mapgo)
+    {
+    spout("*** Lower value outside of image ramp");
+    return;
+    }
+ else if (nend > mapend)
+    {
+    spout("*** Upper value outside of image ramp");
+    return;
+    }
+a260 1
+
+d268 1
+a268 1
+    if (nindex <= ngo) 
+d273 1
+a273 1
+    else if (nindex < nend)
+d276 1
+a276 1
+       fval = 65535.0 * (float)(nindex - ngo) / (float) (nend - ngo);
+d296 3
+@
+
+
+1.12
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/contrastmen.c,v 1.11 2001/08/10 12:57:24 leith Exp $*/
+d4 1
+a4 1
+/*C++*************************************************************************
+d6 2
+a7 2
+C contrastmen.c             DEC 92 
+C                   Directcolor mods by: Erik Vogan July 2001
+d40 1
+a40 1
+C    PURPOSE:      SETS IMAGE CONTAST USING LUTS
+d44 1
+a44 1
+C    NOTE:         maybe this should work over imagego...imagend 
+d56 1
+a56 1
+ /* internal function prototypes */
+d59 1
+a59 1
+ /* internal common variables */
+d73 1
+a73 1
+    {   /* create contrast menu widget first */
+d78 1
+a78 1
+    /* create label for scales */
+d82 1
+a82 1
+    /* create a horizontal row-col widget for scales */
+d85 1
+a85 1
+    /* create scale widget for starting value ------------------- ngo */
+d100 1
+a100 1
+    /* create toggle boxes for red, greeen & blue colors */
+d109 1
+a109 1
+    /* create box for cancel --------------------------------- cancel */
+d115 1
+a115 1
+    {   /* contrast menu widget already exists, update it */
+d169 1
+a169 1
+ /* set the colors in the image portion of the colormap, only */ 
+a172 1
+#ifdef WEB_24
+d174 1
+a174 5
+#else
+    colort[indx].pixel = nindex ;
+#endif
+
+    colort[indx].flags   = iflags;
+d178 1
+a178 1
+       /* set this color to black */
+d183 1
+a183 1
+       /* interpolate shade */
+d189 1
+a189 1
+       /* set this color to white */
+d193 3
+a195 3
+    colort[indx].red   = ival;
+    colort[indx].green = ival;
+    colort[indx++].blue  = ival;
+d198 1
+a198 1
+ /* put the colors in the desired colormap */
+@
+
+
+1.11
+log
+@vogans linux mods
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/contrastmen.c,v 1.10 1996/01/22 20:18:27 leith Exp $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.10
+log
+@added comment about imageend.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/contrastmen.c,v 1.9 1995/07/11 17:28:10 mladjadj Exp leith $*/
+d7 1
+d156 6
+a161 1
+    colort[indx].pixel = nindex;
+@
+
+
+1.9
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/contrastmen.c,v 1.8 1995/02/01 21:58:48 liy Exp mladjadj $*/
+d25 3
+@
+
+
+1.8
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/contrastmen.c,v 1.7 1995/01/26 19:57:24 liy Exp liy $*/
+d39 1
+a39 1
+ static Widget iw_contrastmen, iw_red, iw_blue, iw_green;
+@
+
+
+1.7
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/contrastmen.c,v 1.6 1995/01/23 09:59:04 leith Exp liy $*/
+d51 1
+a51 1
+  if (iw_contrastmen <= (void *)0)
+@
+
+
+1.6
+log
+@shortened wid_togglemen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/contrastmen.c,v 1.5 94/07/05 15:35:21 odesanya Exp Locker: leith $*/
+d51 1
+a51 1
+  if ((int)iw_contrastmen <= 0)
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/contrastmen.c,v 1.4 1994/03/24 14:58:32 leith Exp odesanya $*/
+d84 3
+a86 3
+    iw_red   = wid_togglemen(iw_rowcolv, 0, "Red  ", redit,   -1,-1);
+    iw_green = wid_togglemen(iw_rowcolv, 0, "Green", greenit, -1,-1);
+    iw_blue  = wid_togglemen(iw_rowcolv, 0, "Blue ", blueit,  -1,-1);
+@
+
+
+1.4
+log
+@removed accept button
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/contrastmen.c,v 1.3 94/03/24 12:07:59 leith Exp Locker: leith $*/
+d74 4
+a77 2
+    XtAddCallback(iw_ngo,XmNvalueChangedCallback,contrastmen_buta,"0");
+    XtAddCallback(iw_nend,XmNvalueChangedCallback,contrastmen_buta,"0");
+@
+
+
+1.3
+log
+@dont change ngo nend each time
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/contrastmen.c,v 1.2 94/03/21 09:32:29 leith Exp Locker: leith $*/
+d86 1
+a86 1
+    /* create box for apply ----------------------------------- apply */
+d88 2
+a89 2
+                        &iw_dums, &iw_pushc, &iw_pusha,  "CA",
+                        fin_cb,fin_cb ,contrastmen_buta, NULL);
+@
+
+
+1.2
+log
+@immediate change upon button relase for scales
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/contrastmen.c,v 1.1 93/11/10 10:11:48 leith Exp $*/
+d6 2
+a7 2
+C WID_TABLE.FOR  -- CREATED NOVEMBER 91
+C contrastmen.c             DEC 92                                                                   
+d30 2
+a34 16
+ /* function prototypes */
+ extern Widget wid_scale    (Widget, Widget, char *, 
+                             int, int, int,  int, int, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern void   spout        (char *);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+
+ extern Widget wid_labelgt   (Widget, Widget, char *, int, int);
+
+d43 1
+a43 1
+ /********************   contrastmen   ****************************/
+d64 1
+a64 1
+    /* create scale widget for starting value ----------------- ngo */
+d69 1
+a69 1
+    /* create scale widget for ending value ----------------- nend */
+d86 1
+a86 2
+
+    /* create box for apply ---------------------------------- apply */
+d94 1
+a94 2
+    /* alter scale widget for starting value ----------------- ngo */
+    ngo    = mapgo;
+d98 1
+a98 2
+    /* alter scale widget for ending value  ----------------- nend */
+    nend    = mapend;
+d108 1
+a108 1
+ /*********** accept button callback ********************************/
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d88 3
+d121 1
+@

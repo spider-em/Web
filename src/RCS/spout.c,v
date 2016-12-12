@@ -1,0 +1,448 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.7;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2005.10.18.17.00.05;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	96.05.13.14.39.47;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.05.10.15.17.10;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.02.16.12.42.15;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.11.24.13.54.21;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.24.12.12.29;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.09.10.33;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.06;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/spout.c,v 1.7 1996/05/13 14:39:47 leith Exp $*/
+
+/*
+ ***********************************************************************
+ *
+ * spout.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * spout(message)
+ * 
+ * PURPOSE:   prints out a message in message area of web
+ *
+ * VARIATIONS:
+ *            spout :   next message goes on new line
+ *            spouts:   next message does not start new line 
+ *            spouto:   next message overwrites this line 
+ *            spouti:   put out integer, next message does not 
+ *                      start new line 
+ *
+ * RETURNS:   void 
+ * 
+ * PARAMETERS:     
+ *
+ ***********************************************************************
+ */
+
+#include "std.h"
+#include "x.h"
+#include "routines.h"
+#include <Xm/Text.h>
+
+ /* externally defined global variables */
+ extern FILE      * resfp;           /* web_results file */
+ extern Widget    iw_scroll;         /* scroll window widget */
+ extern int       trace_web;
+
+ /* internal static variables */
+ static XmTextPosition igo  = 0; 
+ static XmTextPosition iend = 0;
+
+ /**************************** spout **********************************/
+
+ void spout (char *message)
+   {
+   /* add the text after the last position */
+
+   if (strcspn(message,"$")  == strlen(message) -1)
+      {   /*  $ in last position is flag for overwrite with next line */
+
+      /* put line in scrolling window */
+      /* to insert text the values for from and to should be equal */
+      XmTextReplace(iw_scroll, igo, iend, message);
+
+      /* remember position of end of this line */
+      iend = XmTextGetLastPosition(iw_scroll);
+
+      /* remove the $ */
+      XmTextReplace(iw_scroll, iend-1, iend, " ");
+
+      XmTextSetInsertionPosition(iw_scroll, igo);
+      /* next line start position same as start position of this one */
+      }
+
+   else
+      {
+      /* put line in scrolling window */
+
+      XmTextReplace(iw_scroll, igo, iend, message);
+
+      /* add a newline to the string */
+      XmTextInsert(iw_scroll, XmTextGetLastPosition(iw_scroll), "\n");
+
+      /* move cursor so XmNmotionVerifyCallback gets called */
+      XmTextSetInsertionPosition(iw_scroll, XmTextGetLastPosition
+                                        (iw_scroll)-1);
+
+      /* update next line starting position */ 
+      igo = XmTextGetLastPosition(iw_scroll);
+
+      /* remember position of end of this line */
+      iend = igo;
+
+      if (trace_web) 
+         {
+         /* print message in file */
+         fprintf(resfp,"%s\n",message);
+         fflush(resfp);
+         }
+      }
+  }
+
+ /**************************** spouts *********************************/
+
+ void spouts (char *message)
+   {
+   /* put line in scrolling window, do not add newline!!! */
+   XmTextReplace(iw_scroll, igo, iend, message);
+
+   /* move cursor so XmNmotionVerifyCallback gets called */
+   XmTextSetInsertionPosition(iw_scroll, XmTextGetLastPosition
+                                        (iw_scroll)-1);
+
+   /* update next line starting position */ 
+   igo = XmTextGetLastPosition(iw_scroll);
+
+   /* remember position of end of this line */
+   iend = igo;
+
+   if (trace_web) 
+      {
+      /* print message in file */
+      fprintf(resfp,"%s",message);
+      /* no flush as line is not finished yet */
+      }
+  }
+ /**************************** spouti *********************************/
+
+ void spouti (int nval)
+   {
+   char * cval;
+
+   /* put integer in scrolling window */
+
+   /* convert nval to char string */
+   if (!(cval = itoa(nval))) return;
+
+   XmTextReplace(iw_scroll, igo, iend, cval);
+
+   /* move cursor so XmNmotionVerifyCallback gets called */
+   XmTextSetInsertionPosition(iw_scroll, XmTextGetLastPosition
+                                        (iw_scroll)-1);
+
+   /* update starting position */ 
+   igo = XmTextGetLastPosition(iw_scroll);
+
+   /* remember position of end of this line */
+   iend = igo;
+
+   if (trace_web) 
+      {
+      /* print message in file */
+      fprintf(resfp,"%s",cval);
+      /* no flush as line is not finished yet */
+      }
+
+   if (cval) free(cval);
+   }
+
+ /**************************** spouto *********************************/
+
+ void spouto (char *message)
+   {
+   /* overwrite this text line with next incoming text line*/
+
+   /* put line in scrolling window */
+   /* to insert text the values for from and to should be equal */
+   XmTextReplace(iw_scroll, igo, iend, message);
+
+   /* remember position of end of this line */
+   iend = XmTextGetLastPosition(iw_scroll);
+
+   /* next line start position same as start position of this line */
+   XmTextSetInsertionPosition(iw_scroll, igo);
+   }
+
+
+ 
+@
+
+
+1.7
+log
+@added comment
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/spout.c,v 1.6 1996/05/10 15:17:10 leith Exp leith $*/
+d10 23
+a32 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.6
+log
+@removed strdup (bad strlen calc.), added spouts
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/spout.c,v 1.5 1994/02/16 12:42:15 leith Exp leith $*/
+d25 1
+a25 1
+ *            spouts:   next message overwrites this line 
+@
+
+
+1.5
+log
+@used VMS version
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/spout.c,v 1.4 93/11/24 13:54:21 leith Exp $*/
+d22 7
+d38 1
+d41 2
+a42 5
+#ifdef VMS
+#define strdup(msg)  (strcpy( (char *) malloc(strlen(msg)), msg))
+#endif
+
+ /* external common variables */
+a43 1
+ extern char      datexc[4];         /* file extension  */
+a45 2
+ /* common variables */
+
+a49 2
+ extern FILE * resfp;
+
+d54 1
+a54 4
+   int     ilen,lens;
+   char *  dup;
+
+   /* insert the text after the last position */
+d56 2
+a57 2
+   ilen    = (int) (strrchr(message,'$') - (int) message + 1);
+   lens    = strlen(message);
+a58 11
+   if (ilen  == lens)
+      {   /*  $ in last position is flag for no newline char */
+
+      /* remove $ char from message */
+      if(!(dup = strdup(message)))
+       {
+         puts("*** Unable to allocate memory in spout.c ***");
+         return;
+       }
+      *(strrchr(dup,'$')) = ' ';
+
+d61 1
+a61 2
+      XmTextReplace(iw_scroll, igo, iend, dup);
+      free(dup);
+d66 3
+d70 1
+a70 1
+      /* next line start position same as this one */
+d84 1
+a84 1
+                                        (iw_scroll));
+d99 1
+d101 23
+d125 49
+@
+
+
+1.4
+log
+@added results file output
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/spout.c,v 1.3 93/11/24 12:12:29 leith Exp Locker: leith $*/
+d33 4
+d66 5
+a70 1
+      dup = strdup(message);
+@
+
+
+1.3
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/spout.c,v 1.2 93/11/16 09:10:33 leith Exp Locker: leith $*/
+d95 7
+a103 6
+  if (trace_web) 
+      {
+      /* print message in file */
+      fprintf(resfp,"%s\n",message);
+      fflush(resfp);
+      }
+@
+
+
+1.2
+log
+@$ handling improved
+@
+text
+@a0 1
+/*$Header$*/
+d2 2
+d34 3
+a36 1
+ extern Widget iw_scroll;     /* scroll window widget */
+d38 2
+d44 1
+a44 1
+ /********************** spout **********************************/
+d46 2
+d50 2
+a51 2
+   int    ilen,lens;
+   char * dup;
+d97 6
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+d4 2
+d19 1
+a19 1
+ * PURPOSE:   prints out a message  
+d35 1
+a35 1
+ 
+d43 3
+a45 1
+   int ilen;
+d48 2
+d51 2
+a52 2
+   if (((int) (strrchr(message,'$') - message + 1))  == strlen(message))
+      {   /*  $ in last postion is flag for no newline char */
+d54 3
+a56 2
+      /* remove $ char */
+      *(strrchr(message,'$')) = ' ';
+d59 3
+a61 1
+      XmTextReplace(iw_scroll, igo, iend, message);
+d74 1
+a74 1
+      XmTextInsert(iw_scroll, igo, message);
+@

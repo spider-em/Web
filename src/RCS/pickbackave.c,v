@@ -1,0 +1,469 @@
+head	1.9;
+access;
+symbols
+	pre-tilt-improve:1.7
+	pre_surf_fromtop:1.7
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.9
+date	2015.09.01.18.24.15;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2015.09.01.17.53.27;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.10.18.17.00.04;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.05.13.14.40.04;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.04.05.19.12.32;	author mladjadj;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.04.05.18.20.24;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	96.04.05.17.33.43;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	96.04.05.17.25.04;	author mladjadj;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.04.18.11.09.16;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@lekans bug fixes
+@
+
+
+1.9
+log
+@maxregp1 = 7
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/pickbackave.c,v 1.8 2015/09/01 17:53:27 leith Exp leith $*/
+
+/*
+ C++********************************************************************
+ C
+ C  pickbackave.c
+ C
+ C**********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C  pickbackave
+ C
+ C  PURPOSE:    Add average to background averge docfile (dfil)
+ C
+ C  CALLED BY:  pickbackmen.c 
+ C
+ C*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /********************   pickbackave   ****************************/
+
+ int pickbackave(char dfil[])
+
+ { 
+ int      ncount, k,maxback;
+ float *  ptr;
+ float    sum, avg, dlist[7];
+ float *  dbuf     = NULL;
+ FILE  *  fp       = NULL;
+ char     strwin[] = " Overall-window-avg     #windows"; 
+ int      maxregp1 = 6+1;     /* Size for array pointed to by dbuf */
+ int      maxkeys  = 1001;    /* Size for array pointed to by dbuf */
+ int      openit   = TRUE;
+
+ /* Retrieve window averages from dfil */
+ 
+ if (getdoc((FILE *) NULL, dfil, datexc, maxkeys, maxregp1, &dbuf, &maxback) > 0) 
+    {   /* Problem retrieving doc file, assume it does not exist */
+    if (dbuf) free(dbuf); dbuf = NULL;
+    spouts("*** Unable to read doc file: "); spout(dfil); 
+    return -1;
+    }
+
+ ptr    = dbuf;
+ sum    = 0.0;
+ ncount = 0;
+
+ /* Sum window averages from dfil */
+ for (k = 0; k < maxback; k++)
+    {
+    if (*ptr != 0.0) 
+       { ncount++; sum += *(ptr+1); }
+    ptr += maxregp1; 
+    }
+
+ if (dbuf) free(dbuf);  dbuf = NULL;
+
+ if (ncount < 1)
+   {
+   spouts("*** No windows for averaging in doc file: "); spout(dfil);
+   XBell(idispl,50);
+   return 0;
+   }
+
+ /* Find average */
+ avg      = sum / ncount;
+ dlist[0] = 999; 
+ dlist[1] = avg;
+ dlist[2] = ncount; 
+ dlist[3] = 0.0; 
+ dlist[4] = 0.0; 
+ dlist[5] = 0.0;
+ dlist[6] = 0.0;
+ 
+ /* Save average in doc file  */
+
+ if (!(fp = savdnc(dfil, datexc, &fp, dlist, 7, &openit, TRUE, FALSE, strwin))) 
+    { /* Unable to open the doc file!! */
+    XBell(idispl,50); XBell(idispl,50); return 0;
+    }
+
+ fclose(fp); fp = NULL;
+    
+ return ncount;
+ }
+
+@
+
+
+1.8
+log
+@$2
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/pickbackave.c,v 1.7 2005/10/18 17:00:04 leith Exp $*/
+d58 1
+a58 1
+ int      maxregp1 = 5+1;     /* Size for array pointed to by dbuf */
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackave.c,v 1.6 1996/05/13 14:40:04 leith Exp $*/
+d5 5
+a9 5
+C++*************************************************************************
+C
+C    pickbackave
+C
+C **********************************************************************
+d11 1
+a11 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d33 9
+a41 9
+C **********************************************************************
+C
+C    pickbackave
+C
+C    PURPOSE:    add average to background averge docfile (dfil)
+C
+C    CALLED BY:  pickbackmen.c 
+C
+C **********************************************************************
+d49 1
+a49 1
+ void pickbackave(char dfil[])
+d52 9
+a60 8
+ int      ncount, k, maxregp1, maxkeys, openit, maxback;
+ float  * dbuf = NULL, * ptr;
+ float    sum, dlist[6];
+ FILE   * fp = NULL;
+
+ /* set size for array pointed to by dbuf */
+ maxregp1 = 5+1;
+ maxkeys  = 1001;
+d62 1
+a62 1
+ /* retrieve data from dfil1 for untilted points */
+d64 2
+a65 3
+ if (getdoc((FILE *) NULL, dfil, datexc, maxkeys, maxregp1, 
+           &dbuf, &maxback) > 0) 
+    {   /* problem retrieving doc file, assume it does not exist */
+d67 2
+a68 2
+    spouts("*** Unable to read doc. file: "); spout(dfil); 
+    return;
+d75 1
+d79 2
+a80 2
+        { ncount++; sum += *(ptr+1);  }
+    ptr  += maxregp1; 
+d83 2
+d87 1
+a87 1
+   spouts("*** No windows for averaging from doc. file: ");spout(dfil);
+d89 1
+a89 1
+   return;
+d92 9
+a100 4
+ /* find average */
+ sum = sum / ncount;
+ dlist[0] = 999; dlist[1] = sum;
+ dlist[2] = 0.0; dlist[3] = 0.0; dlist[4] = 0.0; dlist[5] = 0.0;
+d102 5
+a106 5
+ /* save info in doc file  */
+ openit = TRUE;  
+ if (!(fp = savdn1(dfil, datexc, &fp, dlist, 6, &openit, TRUE, TRUE))) 
+    { /* unable to open the doc file!! */
+    XBell(idispl,50); XBell(idispl,50); return;
+d109 4
+a112 4
+ fclose(fp);     
+ return;
+
+}
+@
+
+
+1.6
+log
+@used getdoc & savdn1 instead of hard coded doc file handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackave.c,v 1.5 1996/04/05 19:12:32 mladjadj Exp leith $*/
+d9 25
+a33 8
+C **************************************************************************
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+d41 1
+a41 1
+C **************************************************************************
+@
+
+
+1.5
+log
+@add common.h
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackave.c,v 1.4 1996/04/05 18:20:24 mladjadj Exp mladjadj $*/
+d20 1
+a20 2
+C    PURPOSE:    input point locations from doc files for background averages
+C                calculations
+a27 2
+#include "std.h"
+#include "x.h"
+d30 1
+a30 3
+ /* external global variables */
+ extern int    maxpart;
+ extern char   datexc[4];         /* file extension  */
+d32 1
+a32 1
+ /********************   fitdoc   ****************************/
+a33 2
+ void pickbackave( char dfil[] )
+
+d35 1
+a35 3
+ int      ncount, k, maxreg, maxkeys;
+ int      doc_read;
+ float    plist[8], sum;
+d37 2
+a38 2
+ char     docname[81];
+ FILE   * fp;
+d41 2
+a42 2
+ maxreg    = 5+1;
+ maxkeys   = 1000;
+d44 1
+a44 2
+ /* tell it to open the doc files each time */
+ doc_read = TRUE;
+d46 2
+a47 2
+ if (unsdal(dfil, &doc_read, 0, plist, 5, &dbuf, &maxpart,
+           maxkeys, maxreg) > 0) 
+d50 1
+d54 2
+a55 2
+ ptr = dbuf;
+ sum = 0.0;
+d57 25
+a81 28
+ for (k = 1; k <= maxpart; k++)
+  {
+     if(*ptr != 0.0) 
+        { ncount++; sum  += *(ptr+1);  }
+     ptr  += maxreg; 
+  }
+
+/* save info in doc file  */  
+ /* add datexc to docnam if not already there */
+    strcpy(docname,dfil);
+    if (strstr(docname,datexc) == 0)
+     {
+       if ((strlen(docname) + strlen(datexc) + 1) > 80)
+          {
+          spout("*** Doc. file name too long: $"); spout(docname);
+          XBell(idispl,50); return;
+          }  
+       strcat(docname,".");
+       strcat(docname,datexc);
+     }
+
+ /* open for appending to end of file */
+  fp = fopen(docname,"a+");
+
+  if (fp ==  (FILE *) NULL)
+    {    /* file can not be opened */
+      spout("*** Unable to open: $"); spout(docname);
+      XBell(idispl,50);   return;
+d83 3
+a85 7
+  if(ncount)
+     fprintf(fp,"  999 1%12.6f\n",sum/ncount);
+  else
+    {spout("*** No windows averaging done (ncout=0) from this file $");
+     spout(docname); XBell(idispl,50);  }
+  fflush(fp); 
+  fclose(fp);     
+@
+
+
+1.4
+log
+@adding a bell
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackave.c,v 1.3 1996/04/05 17:33:43 mladjadj Exp mladjadj $*/
+d28 1
+@
+
+
+1.3
+log
+@change <> to !=
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackave.c,v 1.2 1996/04/05 17:25:04 mladjadj Exp mladjadj $*/
+d80 1
+a80 1
+          return;
+d91 2
+a92 1
+      spout("*** Unable to open: $"); spout(docname);   return;
+d97 2
+a98 1
+    {spout("*** No windows averaging done (ncout=0) from this file $"); spout(docname); }
+@
+
+
+1.2
+log
+@corrected the for loop to get *ptr values
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackave.c,v 1.1 1994/04/18 11:09:16 leith Exp mladjadj $*/
+d67 1
+a67 1
+     if(*ptr <> 0.0) 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitdoc.c,v 1.9 94/03/28 12:22:53 leith Exp $*/
+d67 2
+a68 3
+     if(*ptr == 0.0) continue;
+     ncount++;
+     sum  += *(ptr+1);
+d93 4
+a96 2
+
+  fprintf(fp,"  999 1%12.6f\n",sum/ncount);
+@

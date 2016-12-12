@@ -1,0 +1,555 @@
+head	1.16;
+access;
+symbols
+	pre-tilt-improve:1.16
+	pre_surf_fromtop:1.16
+	pre_neednewmap:1.15
+	pre_apppluss_remove:1.14
+	pre_tiltpair_chng:1.14
+	pre_GPL:1.13;
+locks;
+comment	@ * @;
+
+
+1.16
+date	2011.09.21.13.42.19;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2011.09.14.15.41.52;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2005.10.18.16.59.40;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2001.08.10.12.57.31;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.03.21.15.29.23;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.03.21.15.23.46;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.08.08.21.08.55;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.07.26.21.21.37;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.07.25.20.07.39;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.07.21.20.15.16;	author liy;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	93.12.07.11.44.34;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	93.12.06.15.57.39;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.12.02.11.25.58;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.30.09.43.56;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.14.45.11;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.05;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@neednewmap
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/wipic.c,v 1.15 2011/09/14 15:41:52 leith Exp leith $*/
+
+/***********************************************************************
+ *
+ * wipic.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * wipic(icontx, cbuf,  ixul,iyul, nsam,nrow, showit, keepimage, image)
+ * 
+ * PURPOSE:    Displays an image 
+ *
+ * RETURNS:    
+ * 
+ * PARAMETERS:  keepimage  deallocate XImage structure if false.   
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+
+ /* Common variables used here */
+ extern Display       *idispl;
+ extern Screen        *iscreen;
+ extern Visual        *visual;
+ extern Window        iwin;
+ extern Pixmap        imagsav;
+
+ /*******************  wipic   **************************/
+
+ void wipic(GC icontx, unsigned char * cbuf, 
+              int ixul, int iyul, int nsam, int nrow, int showit,
+              int keepimage, XImage ** imaget)
+ { 
+ XImage * image;
+
+ int   i, j, k, Bpp;
+ char  *excbuf;
+
+ Bpp = (int) pow(2, (DefaultDepthOfScreen(iscreen) / 8) - 1);
+ //Bpp = (int) pow(2, 2);
+ //Bpp = 4;
+
+ excbuf = calloc(nsam * nrow * Bpp, sizeof(char));
+
+ for (i=0; i<nrow; i++)
+
+    for (j=0; j<nsam; j++)
+
+      for (k=0; k<Bpp; k++)
+
+         if (k == 3)
+            excbuf[((i*nsam) + j)*Bpp + k] = 0;
+         else
+            excbuf[((i*nsam) + j)*Bpp + k] = cbuf[(i*nsam) + j];
+
+ image = XCreateImage(idispl,visual,DefaultDepthOfScreen(iscreen),
+            ZPixmap, 0, (char *) excbuf,
+            (unsigned int) nsam, (unsigned int) nrow, Bpp*4, nsam*Bpp);
+
+ if (showit)
+    {
+    XPutImage(idispl,iwin,   icontx,image,0,0,ixul,iyul,
+              (unsigned int)nsam, (unsigned int)nrow); 
+
+    XPutImage(idispl,imagsav,icontx,image,0,0,ixul,iyul,
+              (unsigned int)nsam, (unsigned int)nrow); 
+    }
+
+ if (!keepimage) 
+    {
+    /* Do not deallocate data memory ever!! XDestroyImage will!! */
+    if (image) XFree((void *)image); 
+    image = NULL;  
+    }
+
+ neednewmap = TRUE;
+
+ *imaget = image;
+ }
+
+@
+
+
+1.15
+log
+@WEB_24 now   web_8 removed
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/wipic.c,v 1.14 2005/10/18 16:59:40 leith Exp $*/
+d34 1
+a34 2
+ * wipic(icontx, cbuf,  ixul, iyul, nsam, nrow, showit, keepimage
+ *       XImage * image)
+d36 1
+a36 1
+ * PURPOSE:    displays an image 
+d47 1
+a47 1
+ /* Common variables */
+d101 2
+@
+
+
+1.14
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/wipic.c,v 1.13 2001/08/10 12:57:31 leith Exp $*/
+d48 1
+a48 1
+ /* common variables */
+d63 12
+a74 5
+#ifdef WEB_24
+ if (DefaultDepthOfScreen(iscreen) != 8)
+    {
+    int i, j, k, Bpp;
+    char *excbuf;
+d76 1
+a76 1
+    Bpp = (int) pow(2, (DefaultDepthOfScreen(iscreen) / 8) - 1);
+d78 4
+a81 8
+    excbuf = calloc(nsam * nrow * Bpp, sizeof(char));
+    for (i=0; i<nrow; i++)
+       for (j=0; j<nsam; j++)
+         for (k=0; k<Bpp; k++)
+            if (k == 3)
+               excbuf[((i*nsam) + j)*Bpp + k] = 0;
+            else
+               excbuf[((i*nsam) + j)*Bpp + k] = cbuf[(i*nsam) + j];
+d83 1
+a83 1
+    image = XCreateImage(idispl,visual,DefaultDepthOfScreen(iscreen),
+a85 8
+    }  
+ else
+#endif
+    {
+    image  = XCreateImage(idispl,visual,DefaultDepthOfScreen(iscreen),
+             ZPixmap, 0, (char *) cbuf,
+             (unsigned int) nsam, (unsigned int) nrow, 8, nsam);
+    }
+d98 1
+a98 1
+    /* do not deallocate data memory ever!! XDestroyImage will!! */
+d100 1
+a100 1
+    image = NULL;
+@
+
+
+1.13
+log
+@vogans linux mods
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wipic.c,v 1.12 1996/03/21 15:29:23 leith Exp $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.12
+log
+@bad & in if
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wipic.c,v 1.11 1996/03/21 15:23:46 leith Exp leith $*/
+a28 1
+#include "std.h"
+a29 1
+#include "x.h"
+d46 28
+a73 3
+ image  = XCreateImage(idispl,visual,DefaultDepthOfScreen(iscreen),
+          ZPixmap, 0, (char *) cbuf,
+          (unsigned int) nsam, (unsigned int) nrow, 8, nsam);
+@
+
+
+1.11
+log
+@added some casts, used XFree instead of XDestroyImage
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wipic.c,v 1.10 1995/08/08 21:08:55 leith Exp leith $*/
+d61 1
+a61 1
+ if (!keepimage & image) 
+d64 1
+a64 1
+    XFree((void *)image); 
+@
+
+
+1.10
+log
+@changed image pointer handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wipic.c,v 1.9 1995/07/26 21:21:37 liy Exp leith $*/
+d54 2
+a55 1
+    XPutImage(idispl,iwin,   icontx,image,0,0,ixul,iyul,nsam,nrow); 
+d57 2
+a58 1
+    XPutImage(idispl,imagsav,icontx,image,0,0,ixul,iyul,nsam,nrow); 
+d61 1
+a61 2
+ /* Warning,  XDestroyImage frees cbuf  */
+ if (!keepimage) 
+d63 3
+a65 4
+    /* do not deallocate data memory ever!! */
+    (*(image)).data = (char *) 0;
+    XDestroyImage(image);
+    image = NULL; 
+@
+
+
+1.9
+log
+@display program clears the prior image buffer only when Image, Pixel & Markers
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wipic.c,v 1.8 1995/07/25 20:07:39 liy Exp liy $*/
+d17 1
+a17 1
+ * wipic(icontx, cbuf,  ixul, iyul, nsam, nrow, unused, keepimage
+d24 1
+a24 1
+ * PARAMETERS:     
+a39 3
+ XImage 	*imgtmp;
+ static int	keepimg=0;
+
+d43 1
+a43 1
+              int ixul, int iyul, int nsam, int nrow, int unused,
+a47 3
+ if( imgtmp != NULL && keepimg>=IMAGE && keepimg<=PIXEL ) 
+    free(imgtmp);
+
+d52 3
+a54 1
+ XPutImage(idispl,iwin,   icontx,image,0,0,ixul,iyul,nsam,nrow); 
+d56 2
+a57 2
+ XPutImage(idispl,imagsav,icontx,image,0,0,ixul,iyul,nsam,nrow); 
+
+d64 2
+a65 6
+    XDestroyImage(image); 
+    imgtmp = NULL;
+    }
+  else {
+    keepimg = keepimage;
+    imgtmp = image;
+@
+
+
+1.8
+log
+@fixed the image display crash problem
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wipic.c,v 1.7 1995/07/21 20:15:16 liy Exp liy $*/
+d30 1
+d41 1
+d51 1
+a51 1
+ if( imgtmp != NULL ) 
+d71 2
+a72 1
+  else 
+d74 1
+@
+
+
+1.7
+log
+@added shift image function
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/wipic.c,v 1.6 93/12/07 11:44:34 leith Exp $*/
+a65 1
+
+d67 1
+@
+
+
+1.6
+log
+@ removed uncbuf from wipic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/wipic.c,v 1.5 93/12/06 15:57:39 leith Exp Locker: leith $*/
+d39 2
+d49 3
+d69 2
+@
+
+
+1.5
+log
+@set cbuf to null if not keepimage
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/wipic.c,v 1.4 93/12/02 11:25:58 leith Exp Locker: leith $*/
+d17 1
+a17 1
+ * wipic(icontx, cbuf,  ixul, iyul, nsam, nrow, uncbuf, int keepimage
+d42 1
+a42 1
+              int ixul, int iyul, int nsam, int nrow, int uncbuf,
+a54 3
+ /* do not deallocate data memory if uncbuf is false */
+ if (!uncbuf)
+    (*(image)).data = (char *) 0;
+d56 1
+a56 1
+ /* Warning, this deallocates cbuf also!!!!!!!! */
+d59 3
+a62 1
+    cbuf = NULL;
+@
+
+
+1.4
+log
+@comment changes
+@
+text
+@a0 1
+/*$Header: /alwyn/usr1/web//RCS/wipic.c,v 1.3 93/11/30 09:43:56 leith Exp Locker: leith $*/
+d2 4
+a5 1
+/*
+d60 5
+a64 1
+ if (!keepimage) XDestroyImage(image); 
+@
+
+
+1.3
+log
+@cast cbuf to (char *) for prottype correspondence
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/wipic.c,v 1.2 93/11/16 14:45:11 leith Exp Locker: leith $*/
+d57 1
+@
+
+
+1.2
+log
+@added image in call
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d46 1
+a46 1
+          ZPixmap, 0, cbuf,
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+d15 2
+a16 1
+ * wipic(icontx, cbuf,  ixul, iyul, nsam, nrow, uncbuf)
+d37 1
+a37 2
+ 
+/*******************  wipic   **************************/
+d40 2
+a41 1
+              int ixul, int iyul, int nsam, int nrow, int uncbuf)
+d43 1
+a43 1
+ XImage        *image;
+d57 1
+a57 1
+ XDestroyImage(image); 
+d59 1
+@

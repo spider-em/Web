@@ -1,0 +1,809 @@
+head	1.15;
+access;
+symbols
+	pre-tilt-improve:1.15
+	pre_surf_fromtop:1.15
+	pre_neednewmap:1.15
+	pre_apppluss_remove:1.15
+	pre_tiltpair_chng:1.15
+	pre_GPL:1.13;
+locks;
+comment	@ * @;
+
+
+1.15
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2005.10.18.16.59.53;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	97.03.13.17.41.45;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.07.11.17.28.16;	author mladjadj;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.06.22.19.26.41;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.02.02.17.03.23;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.01.26.20.26.36;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.01.23.10.00.23;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.11.18.16.43.50;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.10.12.17.30.46;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.10.12.17.20.15;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.10.03.09.03.16;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.10.01.20.28.38;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.09.30.23.27.42;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.09.30.16.53.52;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@creates movie sequences for surface settings
+@
+
+
+1.15
+log
+@fmin ->fmin_spi..
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/surfmovie.c,v 1.14 2005/10/18 16:59:53 leith Exp $*/
+/*
+C**************************************************************************
+C
+C   surfmovie.c    
+C             
+C **********************************************************************
+C *  AUTHOR: Lekan Odesanya                                                *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C SURFMOVIE(CANROTATE)
+C
+C  PURPOSE:     CREATES MOVIE SEQUENCES OF 2-D 
+C               REFLECTION IMAGES OF DIFFERENT ORIENTATIONS
+C
+C  RETURNS:     VOID
+C
+C  CALLED BY:   SURFMEN
+C
+C  NOTES:       FOR EACH PIXEL, THE PREVIOUS PIXEL ON THE ROW AND THE
+C               PIXEL ONE COL. DOWN ARE USED TO FORM A TRIANGULAR TILE
+C               THE TILE IS SHADED ACCORDING TO ITS ORIENTATION ACROSS
+C               THE X AXIS AND ITS DISTANCE ALONG THE X AXIS FROM THE
+C               LEFT END OF THE FILE.
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+
+ extern void   surf_pop     (Widget, XEvent *, String *, Cardinal *);
+
+ /* externally defined variables used here */
+ extern float            phi, theta, psi, thlev;
+ extern unsigned char  * refmap;
+
+ /* internal function prototypes */
+ void          surfmovie_buta(Widget iw_temp, caddr_t, caddr_t);
+ void          surfmovie_buts(Widget iw_temp, caddr_t, caddr_t);
+ void          surfmovie_next(Widget iw_temp, caddr_t, caddr_t);
+
+
+ /* internal common variables */
+ static float    jslope, kslope;
+        enum     SEQTYPE {Thresh, Phi, Theta, Psi};
+ static int      seqcount = 1, read_ok, rotate, nsams, nrows;
+ static Widget   iw_thresh, iw_phi, iw_theta, iw_psi;
+ static Widget   iw_sval, iw_eval, iw_nfrm, iw_seq, iw_rowcolv;
+ static Widget   iw_pushc, iw_pusha, iw_doc, iw_rch2;
+ static Widget   iw_surfmovie = (Widget) 0;
+
+
+ /**************************   surfmovie   ****************************/
+
+ void surfmovie(int canrotate)
+ {
+   Widget iw_dums, iw_radio, iw_rch, iw_rcv;
+   Arg    args[2];
+
+
+    rotate = canrotate; 
+
+ /* find reflection image size */
+    jslope = (1.0 - nrow*scaleval)/(1.0 - nrow);
+    kslope = (1.0 - nslice*scaleval)/(1.0 - nslice);
+    nsams  = (nrow2 - nrow1)*jslope + 1;
+    nrows  = (nslice2 - nslice1)*kslope + 1;
+
+    if (iw_surfmovie <= (Widget)0)
+     { /* create surface movie menu widget first */
+      iw_surfmovie  = wid_dialog(iw_win, 0, "Surface Movie Options", -1, -1);
+      iw_rowcolv  = wid_rowcol(iw_surfmovie, 'v', -1, -1);
+
+      iw_doc = wid_textboxb(iw_rowcolv,0,"First Output File:",docnam, 12);
+
+    /* create toggle boxes for sequence type */
+      iw_rcv  = wid_rowcol(iw_rowcolv, 'v', -1, -1);
+
+      (void) wid_labelg(iw_rcv, 0, "Build sequences on:   ", -1, -1);
+
+      iw_radio  = wid_rowcol(iw_rcv,  'h', -1, -1);
+      XtSetArg(args[0], XmNradioBehavior, TRUE);
+      XtSetValues(iw_radio, args, 1);
+
+      iw_thresh = wid_togmen(iw_radio,0,"Thresh",True,-1,-1);
+      iw_phi = wid_togmen(iw_radio,0,"Phi",False,-1,-1);
+      iw_theta = wid_togmen(iw_radio,0,"Theta",False,-1,-1);
+      iw_psi = wid_togmen(iw_radio,0,"Psi",False,-1,-1);
+
+    /* create text box for start and end values input ------------- values */
+      iw_rch  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+      iw_sval = wid_textboxb(iw_rch, 0, "Start Value:", "", 6);
+      iw_eval = wid_textboxb(iw_rch, 0, "End Value:", "", 6);
+      iw_nfrm = wid_textboxb(iw_rowcolv, 0, "No. of Frames:", "1", 6);
+
+    /* create label box for Sequences ---------------------------- Sequence  */
+      iw_rch2  = wid_rowcol(iw_rowcolv,  'h', -1, -1);
+      iw_seq  = wid_labelg(iw_rch2, 0, "Sequence: 1", -1, -1);
+      (void) wid_labelg(iw_rch2, 0, "         ", -1, -1);
+      (void) wid_pushg(iw_rch2, 0,"Next Sequence",surfmovie_next,"0",0,0);
+
+    /* create box for apply ----------------------------------- apply */
+      iw_dums = wid_stdbut(iw_rowcolv, iw_surfmovie, 
+                        &iw_dums, &iw_pushc, &iw_pusha,  "SA",
+                        fin_cb, surfmovie_buts, surfmovie_buta, NULL);
+     }
+   else
+     {
+       if(seqcount == 1)
+        { 
+          iw_doc = wid_textboxb(iw_rowcolv,iw_doc,"First File:",docnam, 12);
+          XtManageChild( XtParent(iw_doc) );
+          iw_seq  = wid_labelg(iw_rch2, iw_seq, "Sequence: 1", -1, -1);
+        }
+     }
+ 
+   XtManageChild(iw_surfmovie);
+     
+ }
+
+ /************ next button callback *********************************/
+
+ void surfmovie_next(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+   int          nframes;
+   Arg          args[2];
+   char         label[100], *string;
+   float        val1, val2, ndiv, val, *buft;
+   int          i, j, k, kk, nlet, numfil, irec;
+   FILEDATA     *filedatat;
+   enum         SEQTYPE type;
+   XmString     str;
+
+   read_ok = 0;
+
+   if (XtIsManaged(XtParent(iw_doc))) 
+    {
+     strcpy(docnam,XmTextGetString(iw_doc));
+     if (strlen(docnam) == 0) 
+       {
+       spout("*** Must specify name for first file.");
+       return;
+       }
+
+ /* add datexc to docnam if not already there */
+      if (strstr(docnam,datexc) == 0)
+       {
+        strcat(docnam,".");
+        strcat(docnam,datexc);
+       }                      
+         
+     XtUnmanageChild(XtParent(iw_doc));
+    }
+
+   if(XmToggleButtonGadgetGetState(iw_thresh)) type = Thresh;
+   else
+    if(XmToggleButtonGadgetGetState(iw_phi)) type = Phi;
+    else
+     if(XmToggleButtonGadgetGetState(iw_theta)) type = Theta;
+     else
+      if(XmToggleButtonGadgetGetState(iw_psi)) type = Psi;
+
+ /* get minimum value */
+    string = XmTextGetString(iw_sval);
+    if (sscanf(string,"%f",&val1) <= 0 )
+     {   /* can not interpret val1 */
+      spout("*** Can not interpret Start value entry in surfmovie! ");
+      if (string) free(string);
+      return;
+     }
+
+ /* get maximum value */
+    string = XmTextGetString(iw_eval);
+    if (sscanf(string,"%f",&val2) <= 0 )
+     {   /* can not interpret val2 */
+      spout("*** Can not interpret End value entry in surfmovie! ");
+      if (string) free(string);
+      return;
+     }
+
+ /* get number of frames */
+    string = XmTextGetString(iw_nfrm);
+    if (sscanf(string,"%d",&nframes) <= 0 )
+     {   /* can not interpret nframes */
+      spout("*** Can not interpret No. of frames entry in surfmovie! ");
+      if (string) free(string);
+      return;
+     }
+
+ if (string) free(string);
+
+   if(type == Thresh)
+    {
+      if (val1 > filedata -> fmax_spi || val1 < filedata -> fmin_spi) 
+       {
+        sprintf(label,"*** Start value must be between %f and %f in surfmovie",
+               filedata -> fmin_spi,filedata -> fmax_spi);
+        spout(label);
+        return;
+       }
+      if (val2 > filedata -> fmax_spi || val2 < filedata -> fmin_spi) 
+       {
+        sprintf(label,"*** End value must be between %f and %f in surfmovie",
+               filedata -> fmin_spi,filedata -> fmax_spi);
+        spout(label);
+        return;
+       }
+    }
+   else
+    {
+      if (val1 > 360.0 || val1 < 0.0) 
+       {
+        spout("*** Start value must be between 0 and 360!");
+        return;
+       }
+      if (val2 > 360.0 || val2 < 0.0) 
+       {
+        spout("*** End value must be between 0 and 360!");
+        return;
+       }
+    }
+
+   if(val2 <= val1)
+   {
+    spout("*** End value must be greater than Start value in surfmovie!");
+    return;
+   }
+
+   read_ok = 1;
+
+   if((buft = (float *) malloc(sizeof(float)*nsams)) == NULL)
+    {
+      spout("*** Allocation failed for writing to file in surfmovie!");
+      return;
+    }
+
+   XtUnmanageChild(iw_surfmovie);
+
+   val  = val1;
+   ndiv = (val2 - val1)/(nframes-1);
+
+   for(j = 0; j < nframes; j++)
+    {
+         switch(type)
+          {
+            case Thresh: thlev = val; break;
+            case Phi:    phi   = val; break;
+            case Theta:  theta = val; break;
+            case Psi:    psi   = val; break;
+          }
+
+         val += ndiv;
+         surf(rotate, FALSE, FALSE, ioper == 17);
+
+ /* open new output file */
+      filedatat = opennew(docnam, nsams, nrows, 1, 1, "u");  
+
+ /* put newimage in output file */
+        kk = 0;
+        for (irec = 1; irec <= nrows; irec++)
+         {
+           for(k = 0; k < nsams; k++) buft[k] = (float) refmap[kk++];
+
+           if (!wrtlin(filedatat, buft, nsams, irec)) 
+               { spout("*** Error writing to file in surfmovie!");
+                 closefile(filedatat); free(buft); return;
+               }
+         }
+
+         closefile(filedatat);     
+ /* increment file name */
+         filinc(docnam,filnext,&nlet,&numfil);
+         strcpy(docnam,filnext);   
+    }
+   
+   free(buft);
+
+   seqcount++;
+   sprintf(label,"Sequence: %d",seqcount);
+   str = XmStringCreateLtoR(label,XmSTRING_DEFAULT_CHARSET);
+   XtSetArg(args[0], XmNlabelString, str); 
+   XtSetValues( iw_seq, args, 1);
+   XmStringFree(str);
+
+   XtManageChild(iw_surfmovie);
+ } 
+
+/************ accept button callback *********************************/
+
+ void surfmovie_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+
+   surfmovie_next( NULL, NULL, NULL );
+   if(!read_ok) return;
+  
+   XtUnmanageChild(iw_surfmovie);
+
+   seqcount = 1;
+
+   /* display menu */
+   showbutx("Recalls Menu.", 
+          "Recalls Menu.",
+          "Stop surfacing.",FALSE); 
+
+   /* define buttons for menu retrieval or stop */
+    actions(iw_win, "surf_pop", surf_pop, "123");
+
+ }
+
+ /************ cancel button callback *********************************/
+
+ void surfmovie_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+  XtUnmanageChild(iw_surfmovie);
+  seqcount = 1;
+ }
+@
+
+
+1.14
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/surfmovie.c,v 1.13 1997/03/13 17:41:45 leith Exp $*/
+d223 1
+a223 1
+      if (val1 > filedata -> fmax || val1 < filedata -> fmin) 
+d226 1
+a226 1
+               filedata -> fmin,filedata -> fmax);
+d230 1
+a230 1
+      if (val2 > filedata -> fmax || val2 < filedata -> fmin) 
+d233 1
+a233 1
+               filedata -> fmin,filedata -> fmax);
+@
+
+
+1.13
+log
+@static not allowed on enum variables
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/surfmovie.c,v 1.12 1995/07/11 17:28:16 mladjadj Exp leith $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH     *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.12
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/surfmovie.c,v 1.11 1995/06/22 19:26:41 leith Exp mladjadj $*/
+d57 1
+a57 1
+ static enum     SEQTYPE {Thresh, Phi, Theta, Psi};
+@
+
+
+1.11
+log
+@surfcolor stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/surfmovie.c,v 1.10 1995/02/02 17:03:23 liy Exp leith $*/
+d61 2
+a62 1
+ static Widget   iw_surfmovie, iw_pushc, iw_pusha, iw_doc, iw_rch2;
+@
+
+
+1.10
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/surfmovie.c,v 1.9 1995/01/26 20:26:36 liy Exp liy $*/
+d264 1
+a264 1
+         surf(rotate, FALSE, FALSE);
+@
+
+
+1.9
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surfmovie.c,v 1.8 1995/01/23 10:00:23 leith Exp liy $*/
+d80 1
+a80 1
+    if (iw_surfmovie <= (void *)0)
+@
+
+
+1.8
+log
+@shortened wid_togglemen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surfmovie.c,v 1.7 94/11/18 16:43:50 leith Exp Locker: leith $*/
+d80 1
+a80 1
+    if ((int)iw_surfmovie <= 0)
+@
+
+
+1.7
+log
+@changed surf call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surfmovie.c,v 1.6 94/10/12 17:30:46 odesanya Exp Locker: leith $*/
+d96 4
+a99 4
+      iw_thresh = wid_togglemen(iw_radio,0,"Thresh",True,-1,-1);
+      iw_phi = wid_togglemen(iw_radio,0,"Phi",False,-1,-1);
+      iw_theta = wid_togglemen(iw_radio,0,"Theta",False,-1,-1);
+      iw_psi = wid_togglemen(iw_radio,0,"Psi",False,-1,-1);
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/surfmovie.c,v 1.5 94/10/12 17:20:15 odesanya Exp Locker: odesanya $*/
+a42 1
+ extern void   surf         (int);
+d264 1
+a264 1
+         surf(rotate);
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/surfmovie.c,v 1.4 94/10/03 09:03:16 odesanya Exp Locker: odesanya $*/
+d86 1
+a86 1
+      iw_doc = wid_textboxb(iw_rowcolv,0,"First File:",docnam, 12);
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr1/web/src/RCS/surfmovie.c,v 1.3 94/10/01 20:28:38 odesanya Exp Locker: odesanya $*/
+d249 2
+d297 1
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr1/web/src/RCS/surf.c,v 1.1 94/10/01 08:06:00 odesanya Exp $*/
+d52 1
+a52 1
+ void          surfmovie_butc(Widget iw_temp, caddr_t, caddr_t);
+d116 2
+a117 2
+                        &iw_dums, &iw_pushc, &iw_pusha,  "CA",
+                        fin_cb, surfmovie_butc, surfmovie_buta, NULL);
+d321 1
+a321 1
+ void surfmovie_butc(Widget iw_temp, caddr_t data, caddr_t call_data)
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 2
+a3 1
+*
+a41 1
+ enum SEQTYPE {Thresh, Phi, Theta, Psi};
+a42 8
+ typedef struct _SEQ {
+        enum SEQTYPE   type;
+        int            nframes;
+        float          val1;
+        float          val2;
+        } SEQ;
+
+
+d47 1
+a48 1
+ extern float phi, theta, psi, thlev;
+a55 1
+
+d57 3
+a59 2
+ static SEQ      *seq, *seqt;
+ static int      seqcount = 1, read_ok, rotate, mem_ok;
+a71 5
+    if(seqcount == 1)
+      if( (seq = (SEQ *) malloc(sizeof(SEQ))) == NULL )
+       { spout("Unable to allocate memory for `sequence' in surfmovie");
+         return;
+       }
+d73 1
+a73 1
+    rotate = canrotate; mem_ok = 1;
+d75 6
+d137 1
+a137 1
+   int          ii, nframes;
+d140 4
+a143 2
+   float        val1, val2;
+   enum SEQTYPE type;
+d146 2
+d156 8
+d165 1
+a165 1
+   }
+a174 2
+   read_ok = 0;
+
+a241 17
+   if(seqcount > 1 && mem_ok)
+    {
+     seqt = (SEQ *) realloc(seq, sizeof(SEQ)*(1+seqcount) );
+     if(seqt == NULL)
+      {
+        spout("*** Memory exhaustion in surfmovie!");
+        mem_ok = 0;
+        return;
+      }
+     seq = seqt;
+    }
+   
+   ii = seqcount - 1;
+   seq[ii].type = type;
+   seq[ii].nframes = nframes;
+   seq[ii].val1 = val1;
+   seq[ii].val2 = val2;
+a242 40
+   seqcount++;
+   sprintf(label,"Sequence: %d",seqcount);
+   str = XmStringCreateLtoR(label,XmSTRING_DEFAULT_CHARSET);
+   XtSetArg(args[0], XmNlabelString, str); 
+   XtSetValues( iw_seq, args, 1);
+   XmStringFree(str);
+
+ } 
+
+/************ accept button callback *********************************/
+
+ void surfmovie_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+   float      ndiv, val, jslope, kslope, *buft, fmin, fmax;
+   int        i, j, k, kk, nlet, numfil, nsams, nrows, irec;
+   FILEDATA   *filedatat;
+
+   if (XtIsManaged(XtParent(iw_doc))) 
+    {
+     strcpy(docnam,XmTextGetString(iw_doc));
+     if (strlen(docnam) == 0) 
+       {
+       spout("*** Must specify name for first file.");
+       return;
+       }
+
+     XtUnmanageChild(XtParent(iw_doc));
+    }
+
+   if(mem_ok) surfmovie_next( NULL, NULL, NULL );
+   if(!read_ok) return;
+  
+   XtUnmanageChild(iw_surfmovie);
+
+ /* find reflection image size */
+   jslope = (1.0 - nrow*scaleval)/(1.0 - nrow);
+   kslope = (1.0 - nslice*scaleval)/(1.0 - nslice);
+   nsams  = (nrow2 - nrow1)*jslope + 1;
+   nrows  = (nslice2 - nslice1)*kslope + 1;
+
+d246 1
+a246 1
+      goto done;
+d249 4
+a252 1
+   for(i = 0; i < seqcount-1; i++)
+d254 1
+a254 13
+      val  = seq[i].val1;
+      ndiv = (seq[i].val2 - seq[i].val1)/(seq[i].nframes-1);
+
+ /* add datexc to docnam if not already there */
+      if (strstr(docnam,datexc) == 0)
+       {
+        strcat(docnam,".");
+        strcat(docnam,datexc);
+       }                               
+
+      for(j = 0; j < seq[i].nframes; j++)
+       {
+         switch(seq[i].type)
+d276 1
+a276 1
+                 closefile(filedatat); free(buft); goto done;
+a283 1
+       }
+d287 17
+d305 1
+a305 1
+ done:
+d307 1
+a307 1
+   free(seq); seqcount = 1;
+d324 1
+a324 1
+  free(seq); seqcount = 1;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d271 1
+a271 1
+   int        i, j, k, kk, nlet, numfil, nsams, nrows, iloc, irec;
+d332 1
+a332 1
+        iloc  = kk = 0;
+a340 1
+           iloc += nsams;
+@

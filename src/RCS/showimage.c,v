@@ -1,0 +1,521 @@
+head	1.13;
+access;
+symbols
+	pre-tilt-improve:1.13
+	pre_surf_fromtop:1.13
+	pre_neednewmap:1.13
+	pre_apppluss_remove:1.13
+	pre_tiltpair_chng:1.13
+	pre_GPL:1.12;
+locks;
+comment	@ * @;
+
+
+1.13
+date	2005.10.18.16.59.50;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2002.05.17.13.33.16;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2002.05.16.20.21.46;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.07.26.15.21.16;	author mladjadj;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.03.18.14.33.54;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.10.12.14.46.44;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.08.17.14.19.15;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.08.08.20.41.16;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.05.12.12.40.55;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.04.12.14.36.44;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.04.12.12.11.23;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.03.24.13.55.46;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.12.09.10.58.35;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@GPL
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/showimage.c,v 1.12 2002/05/17 13:33:16 leith Exp $*/
+
+/***********************************************************************
+ *
+ * showimage.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * showimage(
+ * 
+ * PURPOSE:    displays an image from a file
+ *
+ * RETURNS:    true if successfull
+ * 
+ * PARAMETERS:  
+ *
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+extern int nsami,nrowi,nslicei; /* from mont3.c */
+
+/***********************  showimage **********************************/
+
+int showimage(FILEDATA *filedatat, int keepcimage, char** cimage,
+                               int keepimage,  XImage** imaget, 
+                               int keep32,     float**  fimage,
+                               int showimaget, float fmint, float fmaxt,
+                               int nmint,      int nmaxt)
+{   
+ float      fn, fncon;
+ char       *s, *fname;
+
+ /* find nsami, nrowi in displayed image */
+ dispsize(nsam1,nsam2,nrow1,nrow2,1,1,iskip,&nsami, &nrowi, &nslicei);
+
+ if (placed) 
+    {  /* use location from ixuln, iyuln */
+    ixul = ixuln;
+    iyul = iyuln;
+    }
+
+ if (!movie)
+    {   /* find location for next image */
+    if (names)
+       locc(&ixul, &iyul, nsami, nrowi+names_height, 
+         &ntop, &nbot,  &nrit, marx, mary, marlef, martop,
+         iwidex, ihighx, placed , newline, &nuscrn, force);
+    else
+       locc(&ixul, &iyul, nsami, nrowi, 
+         &ntop, &nbot,  &nrit, marx, mary, marlef, martop,
+         iwidex, ihighx, placed , newline, &nuscrn, force);
+    }
+
+ /* load image from file into new 8 bit buffer and maybe float buffer */
+ if (!redvol(filedatat, TRUE, cimage, keep32, fimage, nsam1, nsam2,
+            nrow1, nrow2, islice, islice, nmint, nmaxt, fmint, fmaxt,
+            &fn,  &fncon, iskip)) 
+            return FALSE;
+
+ /* display image at ixul, iyul; deallocate imaget if !keepimage) */
+ wipic(icontx,*cimage,ixul,iyul,nsami,nrowi,showimaget,
+                     keepimage,imaget);
+
+ if ((!keepcimage) && *cimage)
+    {  /* free the char array for the image */
+    free(*cimage);
+    *cimage = NULL;
+    } 
+
+ /* record cbuf and ximage for possible later reference */
+ filedatat -> ximage = *imaget;
+       
+ /* record magnification value for this image */
+ lastskip = iskip;
+
+ if (names)
+    {     /* print image file name below image */
+    wrtname(ixul, iyul+nrowi, filnow, -1);
+    }
+ placed = FALSE;
+ 
+ return TRUE;
+ }
+
+ 
+@
+
+
+1.12
+log
+@wrtname
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/showimage.c,v 1.11 2002/05/16 20:21:46 leith Exp leith $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.11
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showimage.c,v 1.10 1996/07/26 15:21:16 mladjadj Exp $*/
+d90 2
+a91 20
+
+    /* strip pathname from filename  */
+
+     /* unix specific line follows */
+     s = strrchr(filnow,'/');
+
+    if (s) 
+      {
+      s++;
+      fname = (char *) malloc(sizeof(char) * (strlen(s) + 1));
+      strcpy(fname,s);
+      fname = strtok(fname,".");
+
+      /* The 7th parameter is set to -1 to use the current 
+          foreground color */
+      witext(icontx, fname, ixul, iyul+nrowi+names_height,
+                 1, 0, -1, 2, FALSE);
+      free( fname );
+      }
+   }
+@
+
+
+1.10
+log
+@correct space added for img name display
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showimage.c,v 1.9 1996/03/18 14:33:54 leith Exp $*/
+d32 2
+a41 1
+ int        nsams, nrows;
+a42 1
+ int        idum;
+d45 2
+a46 3
+ /* find nsams, nrows in displayed image */
+ dispsize(nsam1,nsam2,nrow1,nrow2,idum,idum,iskip,
+          &nsams, &nrows, &idum);
+d57 1
+a57 1
+       locc(&ixul, &iyul, nsams, nrows+names_height, 
+d61 1
+a61 1
+       locc(&ixul, &iyul, nsams, nrows, 
+d73 1
+a73 1
+ wipic(icontx,*cimage,ixul,iyul,nsams,nrows,showimaget,
+d92 1
+a92 4
+#ifdef VMS
+    /* vms specific line follows */
+     s = strrchr(filnow,']');
+#else
+a94 1
+#endif
+d105 1
+a105 1
+      witext(icontx, fname, ixul, iyul+nrows+names_height,
+@
+
+
+1.9
+log
+@if ((!keepcimage) && *cimage) used now
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showimage.c,v 1.8 1995/10/12 14:46:44 liy Exp leith $*/
+d58 1
+a58 1
+       locc(&ixul, &iyul, nsams, nrows+10, 
+d110 2
+a111 1
+      witext(icontx, fname, ixul, iyul+nrows+12, 1, 0, -1, 2, FALSE);
+@
+
+
+1.8
+log
+@modified for displaying filename at the correct position
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showimage.c,v 1.7 1995/08/17 14:19:15 leith Exp liy $*/
+d77 1
+a77 1
+ if ((!keepcimage) && cimage)
+@
+
+
+1.7
+log
+@added name capability
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showimage.c,v 1.6 1995/08/08 20:41:16 leith Exp $*/
+d57 2
+a58 1
+    locc(&ixul, &iyul, nsams, nrows, 
+d61 4
+d110 1
+a110 1
+      witext(icontx, fname, ixul, iyul+nrows+2, 1, 0, -1, 2, FALSE);
+@
+
+
+1.6
+log
+@changed image pointers handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showimage.c,v 1.5 1994/05/12 12:40:55 leith Exp leith $*/
+a24 2
+ * NOTES:      unlike image-->widisp-->wipic this can not handle iskip
+ *             also, it does not handle filenames.   
+d38 1
+a38 1
+                               int nmint,       int nmaxt)
+d40 1
+a40 1
+ int        nsams, nrows, iytot=0;
+d43 1
+d47 1
+a47 1
+         &nsams, &nrows, &idum);
+a54 7
+ if (names) 
+    /* find y-offset needed for file name label */
+    {
+    /*  future wid_imglabeloc(filnow,iyline,iytot); !!!!!!!!!!!!*/
+    /*  nrowt = nrows + iytot; */
+    }
+
+d58 2
+a59 2
+               &ntop, &nbot,  &nrit, marx, mary, marlef, martop,
+               iwidex, ihighx, placed , newline, &nuscrn, force);
+d65 2
+a66 1
+            &fn,  &fncon)) return FALSE;
+a85 2
+    /* future wid_imglabel(filnow,ixul,iyul+nrows+iyline) !!!!! */
+    }
+d87 22
+@
+
+
+1.5
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/showimage.c,v 1.4 94/04/12 14:36:44 leith Exp Locker: leith $*/
+d23 1
+a23 1
+ * PARAMETERS:     
+d25 3
+d36 1
+a36 1
+int showimage(FILEDATA *filedatat, int keepcimage, char**   cimage,
+d42 1
+a42 1
+ int        nsams, nrows, nrowt, iytot=0;
+d60 1
+a60 1
+    nrowt = nrows + iytot;
+d76 1
+a76 1
+ if (showimaget) wipic(icontx,*cimage,ixul,iyul,nsams,nrows,idum,
+d80 1
+a80 1
+    {
+d84 3
+@
+
+
+1.4
+log
+@renamed showimage variable
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/showimage.c,v 1.3 94/04/12 12:11:23 leith Exp Locker: leith $*/
+d36 2
+a37 1
+                               int showimaget, float fmint, float   fmaxt)
+d69 1
+a69 1
+            nrow1, nrow2, islice, islice, mapgo, 127, fmint, fmaxt,
+@
+
+
+1.3
+log
+@lekan's changes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/showimage.c,v 1.2 94/03/24 13:55:46 leith Exp $*/
+d36 1
+a36 1
+                               int showimage, float fmint, float   fmaxt)
+d72 1
+a72 1
+ if (showimage) wipic(icontx,*cimage,ixul,iyul,nsams,nrows,idum,
+@
+
+
+1.2
+log
+@added enhancement ability for pickp use
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/showimage.c,v 1.1 93/12/09 10:58:35 leith Exp $*/
+d34 3
+a36 3
+                                    int keepimage,  XImage** imaget, 
+                                    int keep32,     float**  fimage,
+                                    float fmint,    float   fmaxt)
+d72 2
+a73 1
+ wipic(icontx,*cimage,ixul,iyul,nsams,nrows,idum,keepimage,imaget);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d29 1
+d31 1
+a31 13
+/* external function prototypes */
+ extern void locc     (int *, int *, int, int, 
+                       int *, int *, int *, int, int, int, int, int,   
+                       int, int, int, int *, int);
+ extern int redvol    (FILEDATA *, int,  char  **, int, float **,
+                       int,  int, int, int, int, int, int, int, 
+                       float *,  float *);
+ extern void wipic    (GC, char *, int, int, int, int, int, int, XImage **);
+ extern void spout    (char *);
+ extern int  scaleimg (float *, int, int, int,   int, int, int,
+                       float, float, int,  int, int, char **);
+ extern void dispsize (int,  int, int,  int, int, int, int,
+                       int *, int *, int *);
+d33 4
+a36 9
+
+ /* for use elsewhere */
+ float    * fimage = NULL;
+ char     * cimage = NULL;
+ 
+/************************************************************/
+
+int showimage(FILEDATA *filedatat, int keepcimage, int keepimage, 
+              XImage ** imaget, int save32)
+d67 2
+a68 2
+ if (!redvol(filedatat, TRUE, &cimage, save32, &fimage, nsam1, nsam2,
+            nrow1, nrow2, islice, islice, mapgo, 127,
+d72 1
+a72 1
+ wipic(icontx,cimage,ixul,iyul,nsams,nrows,idum,keepimage,imaget);
+d76 2
+a77 2
+    free(cimage);
+    cimage = NULL;
+@

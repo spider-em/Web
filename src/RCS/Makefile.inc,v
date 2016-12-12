@@ -1,0 +1,798 @@
+head	1.18;
+access;
+symbols
+	pre-tilt-improve:1.18
+	pre_neednewmap:1.14;
+locks;
+comment	@# @;
+
+
+1.18
+date	2011.10.25.19.02.24;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2011.09.27.14.29.27;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2011.09.22.16.16.54;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2011.09.21.13.58.23;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2011.09.15.16.22.46;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2011.09.14.15.36.48;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2011.06.22.19.27.44;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2011.06.10.16.15.25;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2011.06.10.14.07.18;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2011.06.10.13.15.33;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2011.05.31.12.24.28;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2011.05.27.17.45.46;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2011.05.27.13.38.51;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.05.16.19.55.23;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2001.06.28.14.56.26;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	99.08.03.14.53.31;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	99.07.06.16.16.15;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.10.02.15.45.18;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@newly put in RCS
+@
+
+
+1.18
+log
+@added redvol8_reform
+@
+text
+@# 
+# ------ MAKEFILE FILE LISTING UNIX WEB -----------
+# 
+ELEMENTS =  \
+ $(LIB)(action.o)     \
+ $(LIB)(actions.o)    \
+ $(LIB)(addext.o)     \
+ $(LIB)(annote.o)     \
+ $(LIB)(annotemen.o)  \
+ $(LIB)(average.o)    \
+ $(LIB)(backmen.o)    \
+ $(LIB)(bar.o)        \
+ $(LIB)(barmen.o)     \
+ $(LIB)(bldr.o)       \
+ $(LIB)(cald.o)       \
+ $(LIB)(cantrot.o)    \
+ $(LIB)(cat.o)        \
+ $(LIB)(catmen.o)     \
+ $(LIB)(changedir.o)  \
+ $(LIB)(changepat.o)  \
+ $(LIB)(checkcom.o)   \
+ $(LIB)(closefile.o)  \
+ $(LIB)(closefilep.o) \
+ $(LIB)(colmen.o)     \
+ $(LIB)(comap.o)      \
+ $(LIB)(comapmen.o)   \
+ $(LIB)(comapmen2.o)  \
+ $(LIB)(comapmen3.o)  \
+ $(LIB)(comapmen5.o)  \
+ $(LIB)(comapsav.o)   \
+ $(LIB)(contrastmen.o)\
+ $(LIB)(copyarea.o)   \
+ $(LIB)(corr_mask.o)  \
+ $(LIB)(ctfmen.o)     \
+ $(LIB)(curmen.o)     \
+ $(LIB)(defluts.o)    \
+ $(LIB)(defluts_true.o) \
+ $(LIB)(dendromen.o)  \
+ $(LIB)(denoisemen.o) \
+ $(LIB)(dent.o)       \
+ $(LIB)(dentmen.o)    \
+ $(LIB)(dentmen2.o)   \
+ $(LIB)(dispmen.o)    \
+ $(LIB)(dispsize.o)   \
+ $(LIB)(dist.o)       \
+ $(LIB)(distmen.o)    \
+ $(LIB)(distoref.o)   \
+ $(LIB)(docmontmen.o) \
+ $(LIB)(erodemen.o)   \
+ $(LIB)(eul_to_xyz.o) \
+ $(LIB)(exitexit.o)   \
+ $(LIB)(expos_cb.o)   \
+ $(LIB)(extractstr.o) \
+ $(LIB)(fftmcf.o)     \
+ $(LIB)(filget.o)     \
+ $(LIB)(filinc.o)     \
+ $(LIB)(fillmen.o)    \
+ $(LIB)(filter.o)     \
+ $(LIB)(filtere.o)    \
+ $(LIB)(filterfill.o) \
+ $(LIB)(filtermen.o)  \
+ $(LIB)(filterskel.o) \
+ $(LIB)(filterv.o)    \
+ $(LIB)(filtestb.o)   \
+ $(LIB)(fin_cb.o)     \
+ $(LIB)(fitdoc.o)     \
+ $(LIB)(fitdocmen.o)  \
+ $(LIB)(fitmen.o)     \
+ $(LIB)(fitsav.o)     \
+ $(LIB)(fmr_1.o)      \
+ $(LIB)(fmr_2.o)      \
+ $(LIB)(fontmen.o)    \
+ $(LIB)(foumen.o)     \
+ $(LIB)(get_imsiz.o)  \
+ $(LIB)(getoldstack.o)\
+ $(LIB)(getcorner.o)  \
+ $(LIB)(getdoc.o)     \
+ $(LIB)(getloc.o)     \
+ $(LIB)(gold.o)       \
+ $(LIB)(goldmen.o)    \
+ $(LIB)(gongon.o)     \
+ $(LIB)(his.o)        \
+ $(LIB)(hist.o)       \
+ $(LIB)(imagedis.o)   \
+ $(LIB)(imagemen.o)   \
+ $(LIB)(imoptmen.o)   \
+ $(LIB)(invert.o)     \
+ $(LIB)(iskipadj.o)   \
+ $(LIB)(iskipundo.o)  \
+ $(LIB)(itex.o)       \
+ $(LIB)(itoa.o)       \
+ $(LIB)(lahemen.o)    \
+ $(LIB)(localareaeq.o)\
+ $(LIB)(locc.o)       \
+ $(LIB)(lut.o)        \
+ $(LIB)(lutmen.o)     \
+ $(LIB)(mag.o)        \
+ $(LIB)(mask.o)       \
+ $(LIB)(maskmen.o)    \
+ $(LIB)(mircol.o)     \
+ $(LIB)(monn.o)       \
+ $(LIB)(mont2.o)      \
+ $(LIB)(mont3.o)      \
+ $(LIB)(montmen2.o)   \
+ $(LIB)(montmen3.o)   \
+ $(LIB)(movearea.o)   \
+ $(LIB)(movecur.o)    \
+ $(LIB)(moviemen.o)   \
+ $(LIB)(newcursor.o)  \
+ $(LIB)(newext.o)     \
+ $(LIB)(newvmap.o)    \
+ $(LIB)(norm.o)       \
+ $(LIB)(numdig.o)     \
+ $(LIB)(opennew.o)    \
+ $(LIB)(openold.o)    \
+ $(LIB)(pickback.o)   \
+ $(LIB)(pickbackave.o)\
+ $(LIB)(pickbackmen.o)\
+ $(LIB)(pickdisp.o)   \
+ $(LIB)(pickdraw.o)   \
+ $(LIB)(pickmen.o)    \
+ $(LIB)(pickp.o)      \
+ $(LIB)(pixel_in.o)   \
+ $(LIB)(pixel_sc.o)   \
+ $(LIB)(pixelmen_in.o)\
+ $(LIB)(pixelmen_sc.o)\
+ $(LIB)(pixlen.o)     \
+ $(LIB)(planeforcolor.o) \
+ $(LIB)(pop_errmsg.o) \
+ $(LIB)(power.o)      \
+ $(LIB)(powermen.o)   \
+ $(LIB)(profile.o)    \
+ $(LIB)(profilemen.o) \
+ $(LIB)(querylut.o)   \
+ $(LIB)(radcur.o)     \
+ $(LIB)(rcaver.o)     \
+ $(LIB)(rdpriw.o)     \
+ $(LIB)(rdprx.o)      \
+ $(LIB)(rdprxc.o)     \
+ $(LIB)(redlin.o)     \
+ $(LIB)(redlin8.o)    \
+ $(LIB)(redlin8f.o)   \
+ $(LIB)(redlin16f.o)  \
+ $(LIB)(redvol.o)     \
+ $(LIB)(redvol8.o)    \
+ $(LIB)(redvol8_reform.o) \
+ $(LIB)(reflmen.o)    \
+ $(LIB)(rubberline.o) \
+ $(LIB)(savdn1.o)     \
+ $(LIB)(scaleimg.o)   \
+ $(LIB)(scale32to8.o) \
+ $(LIB)(setacursor.o) \
+ $(LIB)(setamap.o)    \
+ $(LIB)(setbgfg.o)    \
+ $(LIB)(setline.o)    \
+ $(LIB)(setmag.o)     \
+ $(LIB)(setmen.o)     \
+ $(LIB)(setnprow.o)   \
+ $(LIB)(setprm.o)     \
+ $(LIB)(setxor.o)     \
+ $(LIB)(shift.o)      \
+ $(LIB)(showbimage.o) \
+ $(LIB)(showbutx.o)   \
+ $(LIB)(showimage.o)  \
+ $(LIB)(showmovie.o)  \
+ $(LIB)(showmoviemen.o)  \
+ $(LIB)(stackmen.o)   \
+ $(LIB)(stackdis.o)   \
+ $(LIB)(sird.o)       \
+ $(LIB)(spout.o)      \
+ $(LIB)(spoutfile.o)  \
+ $(LIB)(strtoint.o)   \
+ $(LIB)(surf.o)       \
+ $(LIB)(surfcolor.o)  \
+ $(LIB)(surfmen.o)    \
+ $(LIB)(surfmovie.o)  \
+ $(LIB)(surfrot.o)    \
+ $(LIB)(tfd.o)        \
+ $(LIB)(thresh.o)     \
+ $(LIB)(threshmen.o)  \
+ $(LIB)(tiltang.o)    \
+ $(LIB)(toggle2_cb.o) \
+ $(LIB)(toggle_cb.o)  \
+ $(LIB)(unsdal.o)     \
+ $(LIB)(visual_info.o)\
+ $(LIB)(visuals.o)    \
+ $(LIB)(waitcursor.o) \
+ $(LIB)(web.o)        \
+ $(LIB)(web_com.o)    \
+ $(LIB)(web_info.o)   \
+ $(LIB)(web_main.o)   \
+ $(LIB)(web_man.o)    \
+ $(LIB)(webclear.o)   \
+ $(LIB)(wicolor.o)    \
+ $(LIB)(wid_angles.o) \
+ $(LIB)(wid_contrast.o) \
+ $(LIB)(wid_dialog.o) \
+ $(LIB)(wid_file.o)   \
+ $(LIB)(wid_label.o)  \
+ $(LIB)(wid_labelg.o) \
+ $(LIB)(wid_lutinfo.o)\
+ $(LIB)(wid_menubar.o)\
+ $(LIB)(wid_mess.o)   \
+ $(LIB)(wid_movie.o)  \
+ $(LIB)(wid_optmenu.o)\
+ $(LIB)(wid_posiz.o)  \
+ $(LIB)(wid_power.o)  \
+ $(LIB)(wid_pulldown.o)  \
+ $(LIB)(wid_push.o)   \
+ $(LIB)(wid_pushg.o)  \
+ $(LIB)(wid_rowcol.o) \
+ $(LIB)(wid_scale.o)  \
+ $(LIB)(wid_sep.o)    \
+ $(LIB)(wid_seper.o)  \
+ $(LIB)(wid_stdbut.o) \
+ $(LIB)(wid_skip.o)   \
+ $(LIB)(wid_text.o)   \
+ $(LIB)(wid_textboxb.o)  \
+ $(LIB)(wid_toggleg.o)   \
+ $(LIB)(wid_togmen.o) \
+ $(LIB)(wid_win.o)    \
+ $(LIB)(widean.o)     \
+ $(LIB)(widisp.o)     \
+ $(LIB)(widpos.o)     \
+ $(LIB)(willsq.o)     \
+ $(LIB)(wimakecur.o)  \
+ $(LIB)(winbox.o)     \
+ $(LIB)(windata.o)    \
+ $(LIB)(windowsp.o)   \
+ $(LIB)(winfile.o)    \
+ $(LIB)(winmov.o)     \
+ $(LIB)(winread.o)    \
+ $(LIB)(wirubberline.o)  \
+ $(LIB)(winsel.o)     \
+ $(LIB)(winsiz.o)     \
+ $(LIB)(wipic.o)      \
+ $(LIB)(witext.o)     \
+ $(LIB)(witran.o)     \
+ $(LIB)(wrtlin.o)     \
+ $(LIB)(wrtname.o)    \
+ $(LIB)(wrtvol.o)     \
+ $(LIB)(xorbox.o)     \
+ $(LIB)(xorc.o)       \
+ $(LIB)(xorlin.o)     \
+ $(LIB)(xorline.o)    \
+ $(LIB)(xyz_to_eul.o) \
+ $(LIB)(ztoxy.o)      \
+ $(LIB)(ztoxyn.o) 
+
+@
+
+
+1.17
+log
+@added copyarea
+@
+text
+@d146 1
+@
+
+
+1.16
+log
+@newvmap
+@
+text
+@d32 1
+@
+
+
+1.15
+log
+@removed wiline, wilines (unused)
+@
+text
+@d110 1
+@
+
+
+1.14
+log
+@defluts_true
+@
+text
+@a221 2
+ $(LIB)(wiline.o)     \
+ $(LIB)(wilines.o)    \
+@
+
+
+1.13
+log
+@added setbgfg
+@
+text
+@d36 1
+@
+
+
+1.12
+log
+@removed fitorigin
+@
+text
+@d150 1
+@
+
+
+1.11
+log
+@added wid_contrast.c
+@
+text
+@a66 1
+ $(LIB)(fitorigin.o)  \
+@
+
+
+1.10
+log
+@planeforcolor added
+@
+text
+@d192 1
+@
+
+
+1.9
+log
+@pixel_
+@
+text
+@d126 1
+@
+
+
+1.8
+log
+@added wid_seper
+@
+text
+@d5 4
+a8 4
+ $(LIB)(action.o)  \
+ $(LIB)(actions.o)  \
+ $(LIB)(addext.o)  \
+ $(LIB)(annote.o)  \
+d10 9
+a18 9
+ $(LIB)(average.o)  \
+ $(LIB)(backmen.o)  \
+ $(LIB)(bar.o)  \
+ $(LIB)(barmen.o)  \
+ $(LIB)(bldr.o)  \
+ $(LIB)(cald.o)  \
+ $(LIB)(cantrot.o)  \
+ $(LIB)(cat.o)  \
+ $(LIB)(catmen.o)  \
+d21 1
+a21 1
+ $(LIB)(checkcom.o)  \
+d23 4
+a26 4
+ $(LIB)(closefilep.o)  \
+ $(LIB)(colmen.o)  \
+ $(LIB)(comap.o)  \
+ $(LIB)(comapmen.o)  \
+d30 2
+a31 2
+ $(LIB)(comapsav.o)  \
+ $(LIB)(contrastmen.o)  \
+d33 3
+a35 3
+ $(LIB)(ctfmen.o)  \
+ $(LIB)(curmen.o)  \
+ $(LIB)(defluts.o)  \
+d37 22
+a58 22
+ $(LIB)(denoisemen.o)  \
+ $(LIB)(dent.o)  \
+ $(LIB)(dentmen.o)  \
+ $(LIB)(dentmen2.o)  \
+ $(LIB)(dispmen.o)  \
+ $(LIB)(dispsize.o)  \
+ $(LIB)(dist.o)  \
+ $(LIB)(distmen.o)  \
+ $(LIB)(distoref.o)  \
+ $(LIB)(docmontmen.o)  \
+ $(LIB)(erodemen.o)  \
+ $(LIB)(eul_to_xyz.o)  \
+ $(LIB)(exitexit.o)  \
+ $(LIB)(expos_cb.o)  \
+ $(LIB)(extractstr.o)  \
+ $(LIB)(fftmcf.o)  \
+ $(LIB)(filget.o)  \
+ $(LIB)(filinc.o)  \
+ $(LIB)(fillmen.o)  \
+ $(LIB)(filter.o)  \
+ $(LIB)(filtere.o)  \
+ $(LIB)(filterfill.o)  \
+d60 5
+a64 5
+ $(LIB)(filterskel.o)  \
+ $(LIB)(filterv.o)  \
+ $(LIB)(filtestb.o)  \
+ $(LIB)(fin_cb.o)  \
+ $(LIB)(fitdoc.o)  \
+d66 1
+a66 1
+ $(LIB)(fitmen.o)  \
+d68 5
+a72 5
+ $(LIB)(fitsav.o)  \
+ $(LIB)(fmr_1.o)  \
+ $(LIB)(fmr_2.o)  \
+ $(LIB)(fontmen.o)  \
+ $(LIB)(foumen.o)  \
+d74 1
+a74 1
+ $(LIB)(getoldstack.o)  \
+d76 12
+a87 12
+ $(LIB)(getdoc.o)  \
+ $(LIB)(getloc.o)  \
+ $(LIB)(gold.o)  \
+ $(LIB)(goldmen.o)  \
+ $(LIB)(gongon.o)  \
+ $(LIB)(his.o)  \
+ $(LIB)(hist.o)  \
+ $(LIB)(imagedis.o)  \
+ $(LIB)(imagemen.o)  \
+ $(LIB)(imoptmen.o)  \
+ $(LIB)(invert.o)  \
+ $(LIB)(iskipadj.o)  \
+d89 19
+a107 19
+ $(LIB)(itex.o)  \
+ $(LIB)(itoa.o)  \
+ $(LIB)(lahemen.o)  \
+ $(LIB)(localareaeq.o)  \
+ $(LIB)(locc.o)  \
+ $(LIB)(lut.o)  \
+ $(LIB)(lutmen.o)  \
+ $(LIB)(mag.o)  \
+ $(LIB)(mask.o)  \
+ $(LIB)(maskmen.o)  \
+ $(LIB)(mircol.o)  \
+ $(LIB)(monn.o)  \
+ $(LIB)(mont2.o)  \
+ $(LIB)(mont3.o)  \
+ $(LIB)(montmen2.o)  \
+ $(LIB)(montmen3.o)  \
+ $(LIB)(movearea.o)  \
+ $(LIB)(movecur.o)  \
+ $(LIB)(moviemen.o)  \
+d109 31
+a139 29
+ $(LIB)(newext.o)  \
+ $(LIB)(norm.o)  \
+ $(LIB)(numdig.o)  \
+ $(LIB)(opennew.o)  \
+ $(LIB)(openold.o)  \
+ $(LIB)(pickback.o)  \
+ $(LIB)(pickbackave.o)  \
+ $(LIB)(pickbackmen.o)  \
+ $(LIB)(pickdisp.o)  \
+ $(LIB)(pickdraw.o)  \
+ $(LIB)(pickmen.o)  \
+ $(LIB)(pickp.o)  \
+ $(LIB)(pixel.o)  \
+ $(LIB)(pixelmen.o)  \
+ $(LIB)(pixlen.o)  \
+ $(LIB)(pop_errmsg.o)  \
+ $(LIB)(power.o)  \
+ $(LIB)(powermen.o)  \
+ $(LIB)(profile.o)  \
+ $(LIB)(profilemen.o)  \
+ $(LIB)(querylut.o)  \
+ $(LIB)(radcur.o)  \
+ $(LIB)(rcaver.o)  \
+ $(LIB)(rdpriw.o)  \
+ $(LIB)(rdprx.o)  \
+ $(LIB)(rdprxc.o)  \
+ $(LIB)(redlin.o)  \
+ $(LIB)(redlin8.o)  \
+ $(LIB)(redlin8f.o)  \
+d141 18
+a158 18
+ $(LIB)(redvol.o)  \
+ $(LIB)(redvol8.o)  \
+ $(LIB)(reflmen.o)  \
+ $(LIB)(rubberline.o)  \
+ $(LIB)(savdn1.o)  \
+ $(LIB)(scaleimg.o)  \
+ $(LIB)(scale32to8.o)  \
+ $(LIB)(setacursor.o)  \
+ $(LIB)(setamap.o)  \
+ $(LIB)(setline.o)  \
+ $(LIB)(setmag.o)  \
+ $(LIB)(setmen.o)  \
+ $(LIB)(setnprow.o)  \
+ $(LIB)(setprm.o)  \
+ $(LIB)(setxor.o)  \
+ $(LIB)(shift.o)  \
+ $(LIB)(showbimage.o)  \
+ $(LIB)(showbutx.o)  \
+d162 4
+a165 4
+ $(LIB)(stackmen.o)  \
+ $(LIB)(stackdis.o)  \
+ $(LIB)(sird.o)  \
+ $(LIB)(spout.o)  \
+d167 2
+a168 2
+ $(LIB)(strtoint.o)  \
+ $(LIB)(surf.o)  \
+d170 1
+a170 1
+ $(LIB)(surfmen.o)  \
+d172 3
+a174 3
+ $(LIB)(surfrot.o)  \
+ $(LIB)(tfd.o)  \
+ $(LIB)(thresh.o)  \
+d176 2
+a177 2
+ $(LIB)(tiltang.o)  \
+ $(LIB)(toggle2_cb.o)  \
+d179 14
+a192 14
+ $(LIB)(unsdal.o)  \
+ $(LIB)(visual_info.o)  \
+ $(LIB)(visuals.o)  \
+ $(LIB)(waitcursor.o)  \
+ $(LIB)(web.o)  \
+ $(LIB)(web_com.o)  \
+ $(LIB)(web_info.o)  \
+ $(LIB)(web_main.o)  \
+ $(LIB)(web_man.o)  \
+ $(LIB)(webclear.o)  \
+ $(LIB)(wicolor.o)  \
+ $(LIB)(wid_angles.o)  \
+ $(LIB)(wid_dialog.o)  \
+ $(LIB)(wid_file.o)  \
+d194 4
+a197 4
+ $(LIB)(wid_labelg.o)  \
+ $(LIB)(wid_lutinfo.o)  \
+ $(LIB)(wid_menubar.o)  \
+ $(LIB)(wid_mess.o)  \
+d199 1
+a199 1
+ $(LIB)(wid_optmenu.o)  \
+d203 1
+a203 1
+ $(LIB)(wid_push.o)  \
+d205 1
+a205 1
+ $(LIB)(wid_rowcol.o)  \
+d207 1
+a207 1
+ $(LIB)(wid_sep.o)  \
+d209 3
+a211 3
+ $(LIB)(wid_stdbut.o)  \
+ $(LIB)(wid_skip.o)  \
+ $(LIB)(wid_text.o)  \
+d213 9
+a221 9
+ $(LIB)(wid_toggleg.o)  \
+ $(LIB)(wid_togmen.o)  \
+ $(LIB)(wid_win.o)  \
+ $(LIB)(widean.o)  \
+ $(LIB)(widisp.o)  \
+ $(LIB)(widpos.o)  \
+ $(LIB)(wiline.o)  \
+ $(LIB)(wilines.o)  \
+ $(LIB)(willsq.o)  \
+d223 6
+a228 6
+ $(LIB)(winbox.o)  \
+ $(LIB)(windata.o)  \
+ $(LIB)(windowsp.o)  \
+ $(LIB)(winfile.o)  \
+ $(LIB)(winmov.o)  \
+ $(LIB)(winread.o)  \
+d230 14
+a243 14
+ $(LIB)(winsel.o)  \
+ $(LIB)(winsiz.o)  \
+ $(LIB)(wipic.o)  \
+ $(LIB)(witext.o)  \
+ $(LIB)(witran.o)  \
+ $(LIB)(wrtlin.o)  \
+ $(LIB)(wrtname.o)  \
+ $(LIB)(wrtvol.o)  \
+ $(LIB)(xorbox.o)  \
+ $(LIB)(xorc.o)  \
+ $(LIB)(xorlin.o)  \
+ $(LIB)(xorline.o)  \
+ $(LIB)(xyz_to_eul.o)  \
+ $(LIB)(ztoxy.o)  \
+@
+
+
+1.7
+log
+@removed clearover
+@
+text
+@d206 1
+@
+
+
+1.6
+log
+@removed cnt & cs files
+@
+text
+@a21 1
+ $(LIB)(clearover.o)  \
+@
+
+
+1.5
+log
+@showmovie & wrtnam
+@
+text
+@a13 1
+ $(LIB)(blackout.o)  \
+a23 1
+ $(LIB)(closefilecnt.o)  \
+a24 2
+ $(LIB)(cntmen.o)  \
+ $(LIB)(cntplot.o)  \
+a33 2
+ $(LIB)(csget.o)  \
+ $(LIB)(csgettext.o)  \
+a114 2
+ $(LIB)(openoldcnt.o)  \
+ $(LIB)(overlut.o)  \
+d195 1
+d208 1
+d227 1
+a230 1
+ $(LIB)(wisetplanes.o)  \
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d160 1
+d167 2
+d240 1
+@
+
+
+1.3
+log
+@scale32to8
+@
+text
+@d81 1
+d94 2
+@
+
+
+1.2
+log
+@addec ctfmen & tfd
+@
+text
+@d151 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d40 1
+d173 1
+@

@@ -1,0 +1,484 @@
+head	1.10;
+access;
+symbols
+	pre-tilt-improve:1.10
+	pre_surf_fromtop:1.10
+	pre_neednewmap:1.9
+	pre_apppluss_remove:1.9
+	pre_tiltpair_chng:1.9
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.10
+date	2011.09.28.12.25.06;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2005.10.18.16.59.48;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2001.08.10.12.57.20;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.09.12.14.27.31;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.09.09.16.04.00;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.02.07.09.35.12;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.02.01.12.03.58;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.23.16.14.17;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.23.10.52.22;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.21;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@comments
+@
+text
+@ 
+/*$Header: /usr8/web/new/RCS/setacursor.c,v 1.9 2005/10/18 16:59:48 leith Exp $*/
+/*
+
+C++*********************************************************************
+C
+C SETCURSOR.FOR  -- CREATED APRIL 92
+C                   CONVERTED TO C -- SEPT 92 al
+C                                                           
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                      *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    SETCURSOR(
+C
+C    PARAMETERS:   ICURSOR            SPIDER CURSOR NUMBER  (READ)
+C                  ICOLORF            SPIDER COLOR NUMBER   (READ)
+C                  ICOLORB            SPIDER COLOR NUMBER   (READ)
+C
+C    PURPOSE:      SETS UP A CURSOR FOR WEB USE
+C
+C    CALLED BY:    web_main   curmen_but 
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+
+#define MAXCURSOR 75
+
+ /* External function prototypes */
+ extern Cursor newcursor (int, int);
+
+ /* Internal static variables */
+ static int first = TRUE;
+
+ /********************  setacursor  *****************************/
+
+ void setacursor(int icursort, int forecolor, int backcolor)
+
+ {
+
+ if (icursort < 0)
+    {   /* Icursort is X-window cursor pointer not spider cursor number */
+     
+    icursor  = 0;
+    icursorx = -icursort;
+    XDefineCursor(idispl,iwin,icursorx);
+    }
+
+ else if (first || (icursor != icursort && icursort <= MAXCURSOR))
+    {    
+    /* Want a new spider cursor by number */
+    first   = FALSE;
+    icursor = icursort;
+
+    /* Use default cursor if icursort is zero */
+    if (icursor == 0) icursor = 34;
+     
+    icursorx = XCreateFontCursor(idispl,icursor*2);  
+    XDefineCursor(idispl,iwin,icursorx);
+    }
+
+ else if  (icursor  != icursort    && 
+           icursort >= MAXCURSOR+1 &&
+           icursor  <= MAXCURSOR +4)
+    {  
+    /* Special code for Rademachers cross-hair cursor and other */ 
+    /* locally defined cursors */
+ 
+    first    = FALSE;
+
+    /* Define the cursor shape (if necessary) */
+    icursorx = newcursor(icursort, MAXCURSOR);
+    icursor  = icursort;
+
+    XDefineCursor(idispl,iwin,icursorx);
+    }
+
+ if (forecolor >= 0)
+    {
+    /* Query  color definition for this color number */
+    colorcursf.pixel = (unsigned long) ispicol[forecolor];
+    colorcursf.flags = DoRed|DoGreen|DoBlue; 
+    XQueryColor(idispl,map,&colorcursf);
+    }
+
+ if (backcolor >= 0)
+    {
+    /* Query  color definition for this color number */
+    colorcursb.pixel = (unsigned long) ispicol[backcolor];
+    colorcursb.flags = DoRed|DoGreen|DoBlue; 
+    XQueryColor(idispl,map,&colorcursb);
+    }
+
+
+ XFlush(idispl);
+
+ // If (forecolor or backcolor is <0 then color is not altered
+ /* Set cursor colors */
+ XRecolorCursor(idispl,icursorx,&colorcursf,&colorcursb);
+ XFlush(idispl);
+
+ return;
+ }
+
+
+/*******************************************************************
+C      #(1)  /'cw                  '/#(2)  /'cursor_shape        '/
+C      #(3)  /'num_glyphs          '/#(4)  /'X                   '/
+C      #(5)  /'arrow               '/#(6)  /'based_arrow_down    '/
+C      #(7)  /'based_arrow_up      '/#(8)  /'boat                '/
+C      #(9)  /'bogosity            '/#(10) /'bottom_left_corner  '/
+C      #(11) /'bottom_right_corner '/#(12) /'bottom_side         '/
+C      #(13) /'bottom_tee          '/#(14) /'box_sprial          '/
+C      #(15) /'center_ptr          '/#(16) /'circle              '/
+C      #(17) /'clock               '/#(18) /'coffee_mug          '/
+C      #(19) /'cross               '/#(20) /'cross_reverse       '/
+C      #(21) /'cross_hair          '/#(22) /'diamond_cross       '/
+C      #(23) /'dot                 '/#(24) /'dot_box             '/
+C      #(25) /'double_arrow        '/#(26) /'draft_large         '/
+C      #(27) /'draft_small         '/#(28) /'draped_box          '/
+C      #(29) /'exchange            '/#(30) /'fleur               '/
+C      #(31) /'gobbler             '/#(32) /'gumby               '/
+C      #(33) /'hand                '/#(34) /'hand1               '/
+C      #(35) /'heart               '/#(36) /'icon                '/
+C      #(37) /'iron_cross          '/#(38) /'left_ptr            '/
+C      #(39) /'left_side           '/#(40) /'left_tee            '/
+C      #(41) /'left_button         '/#(42) /'ll_angle            '/
+C      #(43) /'lr_angle            '/#(44) /'man                 '/
+C      #(45) /'middle_button       '/#(46) /'mouse               '/
+C      #(47) /'pencil              '/#(48) /'pirate              '/
+C      #(49) /'plus                '/#(50) /'question_arrow      '/
+C      #(51) /'right_ptr           '/#(52) /'right_side          '/
+C      #(53) /'right_tee           '/#(54) /'right_button        '/
+C      #(55) /'rtl_logo            '/#(56) /'sailboat            '/
+C      #(57) /'sb_down_arrow       '/#(58) /'sb_h_double_arrow   '/
+C      #(59) /'sb_left_arrow       '/#(60) /'sb_right_arrow      '/
+C      #(61) /'sb_up_arrow         '/#(62) /'sb_v_double_arrow   '/
+C      #(63) /'shuttle             '/#(64) /'sizing              '/
+C      #(65) /'spider              '/#(66) /'spraycan            '/
+C      #(67) /'star                '/#(68) /'target              '/
+C      #(69) /'t_cross             '/#(70) /'top_left_arrow      '/
+C      #(71) /'top_left_corner     '/#(72) /'top_right_corner    '/
+C      #(73) /'top_side            '/#(74) /'top_tee             '/
+C      #(75) /'trek                '/#(76) /'ul_angle            '/
+C      #(77) /'umbrella            '/#(78) /'ur_angle            '/
+C      #(79) /'watch               '/#(80) /'xterm               '/
+C      #(81) /'select              '/#(82) /'leftselect          '/
+C      #(83) /'help_select         '/#(84) /'wait                '/
+C      #(85) /'inactive            '/#(86) /'resize              '/
+C      #(87) /'vpane               '/#(88) /'hpane               '/
+C      #(89) /'text_insertion      '/#(90) /'text_insertion_bl   '/
+C      #(91) /'cross_hair          '/#(92) /'draw                '/
+C      #(93) /'pencil              '/#(94) /'rpencil             '/
+C      #(95) /'center              '/#(96) /'rightselect         '/
+C      #(97) /'wselect             '/#(98) /'eselect             '/
+C      #(99) /'x                   '/#(100) /'circle             '/
+C      #(101) /'mouse_c            '/#(102) /'lpencil            '/
+C      #(103) /'leftgrab           '/#(104) /'grabhand           '/
+C      #(105) /'rightgrab          '/#(106) /'leftpointing       '/
+C      #(107) /'uppointing         '/#(108) /'rightpointing      '/
+C      #(109) /'check               '/
+*******************************************************************/
+
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/setacursor.c,v 1.8 2001/08/10 12:57:20 leith Exp $*/
+d54 1
+a54 1
+ /* external function prototypes */
+d57 1
+a57 1
+ /* internal static variables */
+a59 1
+
+d67 1
+a67 1
+    {   /* icursort is X-window cursor pointer not spider cursor number */
+a73 1
+   
+d76 1
+a76 1
+    /* want a new spider cursor by number */
+d80 1
+a80 1
+    /* use default cursor if icursort is zero */
+d87 3
+a89 2
+ else if  (icursor != icursort && icursort >= MAXCURSOR+1 &&
+           icursor <= MAXCURSOR +4)
+d91 1
+a91 1
+    /* special code for Rademachers cross-hair cursor and other */ 
+d96 1
+a96 1
+    /* define the cursor shape (if necessary) */
+d105 1
+a105 2
+    /* query  color definition for this color number */
+#ifdef WEB_24
+a106 3
+#else
+    colorcursf.pixel =  ispicol[forecolor];
+#endif
+d113 1
+a113 2
+    /* query  color definition for this color number */
+#ifdef WEB_24
+a114 3
+#else
+    colorcursb.pixel = ispicol[backcolor];
+#endif
+d119 1
+d121 3
+a123 1
+ /* set cursor colors */
+@
+
+
+1.8
+log
+@vogans linux mods
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/setacursor.c,v 1.7 94/09/12 14:27:31 leith Exp $*/
+d12 23
+a34 6
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH	        		   *
+@
+
+
+1.7
+log
+@altered color assignments
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/setacursor.c,v 1.6 94/09/09 16:04:00 leith Exp Locker: leith $*/
+d90 5
+a94 1
+    colorcursf.pixel = ispicol[forecolor];
+d102 3
+d106 1
+@
+
+
+1.6
+log
+@altered cursor color setting
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/setacursor.c,v 1.5 94/02/07 09:35:12 leith Exp Locker: leith $*/
+d5 1
+a5 1
+C++*************************************************************************
+d10 1
+a10 1
+C **************************************************************************
+d18 1
+a18 1
+C **************************************************************************
+d90 1
+a90 1
+    colorcursf.pixel = ispicol[mapend + forecolor];
+d98 1
+a98 1
+    colorcursb.pixel = ispicol[mapend + backcolor];
+d162 5
+a166 5
+C      #(99) /'x                   '/#(100) /'circle              '/
+C      #(101) /'mouse_c             '/#(102) /'lpencil             '/
+C      #(103) /'leftgrab            '/#(104) /'grabhand            '/
+C      #(105) /'rightgrab           '/#(106) /'leftpointing        '/
+C      #(107) /'uppointing          '/#(108) /'rightpointing       '/
+@
+
+
+1.5
+log
+@no change
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/setacursor.c,v 1.4 94/02/01 12:03:58 leith Exp Locker: leith $*/
+a42 1
+ /* external common variables */
+a43 1
+
+d90 1
+a90 1
+    colorcursf.pixel = ispicol[mapend + forecolor + 1];
+d98 1
+a98 1
+    colorcursb.pixel = ispicol[mapend + backcolor + 1];
+@
+
+
+1.4
+log
+@added new cursors
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/setacursor.c,v 1.3 93/11/23 16:14:17 leith Exp $*/
+d74 1
+a74 1
+ else if  (icursor != icursort && icursort > MAXCURSOR+1 &&
+@
+
+
+1.3
+log
+@added radcur call
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/setacursor.c,v 1.2 93/11/23 10:52:22 leith Exp Locker: leith $*/
+d38 1
+a38 1
+ extern void radcur (int);
+a43 1
+ extern Cursor  icurrad;
+d74 2
+a75 1
+ else if  (icursor != icursort && icursort == MAXCURSOR+1)
+d77 3
+a79 1
+    /* special code for Rademachers cross-hair cursor */  
+d83 1
+a83 1
+    radcur(icursort);
+a84 1
+    icursorx = icurrad;  
+@
+
+
+1.2
+log
+@default cursor wrong
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/setacursor.c,v 1.1 93/11/10 10:11:21 leith Exp Locker: leith $*/
+d37 3
+d76 2
+a77 1
+    {    
+d79 3
+d84 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d4 1
+d66 1
+a66 1
+    if (icursor == 0) icursor = 35;
+@

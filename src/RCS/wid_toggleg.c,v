@@ -1,0 +1,239 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.16.59.45;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.03.26.13.59.40;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.03.02.20.35.01;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.02.28.20.50.42;	author liy;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.31;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_toggleg.c,v 1.4 1996/03/26 13:59:40 leith Exp $*/
+/*
+ * wid_toggleg.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * wid_toggleg(iw_parent, iw_toggleg, label,value,callback, data, ix, iy)
+ * 
+ * PURPOSE:    creates a toggle button gadget with callback 
+ *
+ * RETURNS:    iw_toggleg      toggle widget 
+ * 
+ * PARAMETERS:     
+ *
+ ***********************************************************************
+*/
+
+
+#include "x.h"
+#include <Xm/ToggleBG.h>
+#include "std.h"
+
+/******************  wid_toggleg  ******************************/
+
+ Widget wid_toggleg(Widget iw_parent, Widget iw_toggleg, 
+               char *label, int value,
+               void (*cb)(), char *data, int ix, int iy)
+ { 
+ Arg           args[6];   /* arg list */
+ register      int  n;           /* arg count */
+ XmString      str_temp;
+
+ n = 0;
+
+ if (ix > 0 || iy > 0)
+    {
+    XtSetArg(args[n], XmNx, (Position) ix); n++;
+    XtSetArg(args[n], XmNy, (Position) iy); n++;
+    }
+
+ /* set the color to red */
+ XtSetArg(args[n], XmNselectColor, 147); n++;
+	
+ str_temp =  XmStringCreate(label, XmSTRING_DEFAULT_CHARSET); 
+ XtSetArg(args[n], XmNlabelString,  str_temp); n++;
+
+ if ( iw_toggleg == (Widget) 0)
+    {   
+    /* create widget first time */
+    iw_toggleg = XmCreateToggleButtonGadget(iw_parent,"iw_tog",args,n);
+    }
+
+ else 
+    {   /* update callbacks in case they are changed */
+    XtRemoveAllCallbacks(iw_toggleg, XmNvalueChangedCallback);
+
+    /* set label & position */ 
+    XtSetValues(iw_toggleg,args,n);
+    }
+
+ /* can free the string now */
+ XmStringFree(str_temp);
+
+ /* add call back */
+ XtAddCallback(iw_toggleg,XmNvalueChangedCallback,cb,data);
+
+ /* set the toggle, do not notify other toggles */
+ XmToggleButtonGadgetSetState(iw_toggleg,value,FALSE);
+
+ XtManageChild(iw_toggleg);
+
+ return iw_toggleg;
+ }
+ 
+@
+
+
+1.4
+log
+@position used , cleaned up code
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_toggleg.c,v 1.3 1995/03/02 20:35:01 liy Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.3
+log
+@change the size of args
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_toggleg.c,v 1.2 1995/02/28 20:50:42 liy Exp liy $*/
+a30 3
+#define MAX_ARGS 8
+
+
+a32 1
+
+d37 1
+a37 2
+
+ Arg           args[MAX_ARGS];   /* arg list */
+d39 1
+a39 1
+
+d45 2
+a46 2
+    XtSetArg(args[n], XmNx, ix); n++;
+    XtSetArg(args[n], XmNy, iy); n++;
+d49 9
+a57 7
+ XtSetArg(args[n], XmNset,TRUE);     n++;
+ XtSetArg(args[n], XmNselectColor, 147); n++;	/* set the color to red */
+ XtSetArg(args[n], XmNlabelString, XmStringCreate(label,
+                              XmSTRING_DEFAULT_CHARSET)); n++;
+
+ if ( iw_toggleg <= (Widget) 0)
+    {   /* create widget first */
+a58 2
+
+    XtAddCallback(iw_toggleg,XmNvalueChangedCallback,cb,data);
+d63 3
+a65 1
+    XtRemoveAllCallbacks(iw_toggleg,XmNvalueChangedCallback); 
+a66 1
+    XtAddCallback(iw_toggleg,XmNvalueChangedCallback,cb,data);
+d69 7
+@
+
+
+1.2
+log
+@change the color of toggle buttons
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_toggleg.c,v 1.1 1993/11/10 10:11:31 leith Exp liy $*/
+d31 1
+a31 1
+#define MAX_ARGS 4
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d55 1
+@

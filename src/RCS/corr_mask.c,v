@@ -1,0 +1,595 @@
+head	1.10;
+access;
+symbols
+	pre-tilt-improve:1.10
+	pre_surf_fromtop:1.10
+	pre_neednewmap:1.9
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.10
+date	2011.09.21.13.24.30;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2011.09.15.18.34.05;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2011.09.15.16.56.19;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2011.05.10.15.29.39;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.18.17.00.02;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	97.08.15.15.27.50;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.09.06.16.06.36;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.11.08.21.22.23;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.09.12.14.21.23;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.26.14.07.32;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@built by mladjadj for corr-map
+@
+
+
+1.10
+log
+@          neednewmap = TRUE;
+@
+text
+@/*
+C***************************************************************************
+C  corr_mask.c                   8/93
+c
+C  WID_MASK.FOR (VAX) transported to UNIX
+C  made into mask.c, & corr_mask.c
+C                                                              
+C **********************************************************************
+ C=* AUTHOR: Mahieddine Ladjadj                                       *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    CORR_MASK
+C
+C    PURPOSE:      Creates mask by drawing around areas with mouse
+C
+C    PARAMETERS:   
+C
+C    CALLED BY:    MASKMEN
+C
+C    COLORS:       black,  blue,    green,  blue_green, 
+c                  red,    magenta, yellow, white
+C 
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ void   corr_mask_pop  (Widget, XEvent *, String *, Cardinal *);
+
+ /* Externally defined common variables */
+ extern Pixmap  msksav;
+
+ /* Internal common variables */
+ GC             icontmx;
+ static int     masks, gotpt, ipts=0;
+
+/************************ corr_mask   *******************************/
+
+void corr_mask(int itag)
+  {
+  /* Set number of masked polygons made so far to zero */
+  if (itag == 0 || itag == 1)
+      masks  = 0;
+  /* else if (itag==2) continue showing all masks */
+
+  /* Set number of points on current polygon of this mask */
+  gotpt = FALSE;
+
+  /* Interactive correspondance map masking */
+  showbutx("Starts / sets line segment.",
+           "Close Polygon / Call Menu.",
+           "Stop routine.",FALSE);
+
+  actions(iw_win, "corr_mask_pop", corr_mask_pop, "M123");
+
+  /* Update the screen */
+  XFlush(idispl);
+  expos_cb(NULL,NULL,NULL); 
+
+  /* Set up a xor graphics context */
+  icontmx = setxor(icontx);
+  }
+
+
+/****************** corr_mask_pop  ************************************/
+
+void corr_mask_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+  {
+  static XPoint *points;
+  static int    icoloro, ix2, iy2, ix1, iy1, ix0, iy0, nsize = 10;
+
+  /* Save and reset color */
+  icoloro = icolor;
+  wicolor(icontx,colorgo+icolorov);
+
+  if (!(strcmp(*params,"M")))                 /* cursor moved */
+      {  /* Get mouse position ix2,iy2  */
+      getloc(event,'M',&ix2,&iy2);
+
+      if (gotpt)
+         /* Already have line, mouse moved, so erase and draw new line */
+         xorline(iwin,icontmx,FALSE,ix1,iy1,ix2,iy2);
+      }
+  else if (!(strcmp(*params,"1")))            /* button 1 pushed */ 
+      { 
+      /* Get mouse position ix2,iy2  */
+      getloc(event,'M',&ix2,&iy2);
+
+      /* Left button, end a line segment of the polygon */
+      if (!gotpt)
+          {
+          gotpt = TRUE;
+          ix0     = ix2;
+          iy0     = iy2;
+          ipts    = 0;
+          }
+      else
+          {   /* Draw permanent line to this location */
+
+          /* Draw line and save line in backing store */
+          xorline(iwin,   icontx,TRUE,ix1,iy1,ix2,iy2);
+          xorline(imagsav,icontx,TRUE,ix1,iy1,ix2,iy2);
+          }
+      if (ipts == 0)
+          {
+          if ((points = (XPoint *) calloc(nsize, sizeof(XPoint)))
+                      ==(XPoint *) NULL )
+              { spout("***  Can't allocate: points"); return; }
+          }
+      else if (ipts >= nsize)
+          {
+          nsize += 10;
+          if((points = (XPoint *) realloc(points, nsize * sizeof(XPoint)))
+                     ==(XPoint *) NULL )                                  {
+              spout("*** Unable to realloc points array in corr_mask.c.");
+              ipts = nsize - 2;                                           }
+          }
+      ix1              = ix2;
+      iy1              = iy2;
+      points[ipts].x   = ix2;
+      points[ipts++].y = iy2;
+      }
+ 
+  else if (!(strcmp(*params,"2")))          /* button 2 pushed */ 
+      { /*   Finished with this mask polygon */
+
+      /* Clear any stuff in overlay planes (any previous masks) */
+      if (ipts > 3)
+          {
+          /* Close the mask */
+          points[ipts].x   = ix0;
+          points[ipts++].y = iy0;
+
+          /* Save orig color & Set fill color to white */
+          icoloro = icolor;
+          wicolor(icontx,colorgo+icolorov);
+          //printf(" colorgo:: %d , icolorov: %d\n",colorgo,icolorov);
+ 
+          /* Draw filled mask on the image and save in backing store */
+          XFillPolygon(idispl,iwin,icontx,points,ipts,
+                       Complex,CoordModeOrigin);
+          XFillPolygon(idispl,imagsav,icontx,points,ipts,
+                       Complex,CoordModeOrigin);
+ 
+          neednewmap = TRUE;
+
+          /* May have multiple masks on the screen, but only
+             interested in last one */
+
+          /* Create a pixmap for the new mask*/
+          msksav = XCreatePixmap(idispl,iwin,iwidex,ihighx,idepth);
+          if (msksav <= 0)  
+             { spout(" *** WARNING: Can not create a pixmap for new mask.");
+               spout(" The average image will be wrong !!!!!");
+             } 
+
+	  /* Clear mask buffer with black--0 */
+#ifdef WEB_TRUE
+          wicolor(icontx,0);
+#else
+          wicolor(icontx,-1);
+#endif
+	  XFillRectangle(idispl,msksav,icontx, 0,0,iwidex,ihighx);
+
+	  /* Draw white polygon */
+          wicolor(icontx,colorgo+icolorov);    // White
+          XFillPolygon(idispl,msksav,icontx,points,ipts,
+                       Complex,CoordModeOrigin);
+ 
+          /* Reset original color in icontx*/
+          wicolor(icontx,icoloro);
+
+          masks++;
+          if (points) free(points);
+          ipts   = 0;
+          points =  (XPoint *) NULL;
+          gotpt  = FALSE;
+          nsize  = 10;
+          }
+      else
+          { spout(" Not enough points for a mask!"); }
+
+      /* Reset original color in icontx*/
+      wicolor(icontx,icoloro);
+
+      /* Cancel button assignments */  
+      XtUninstallTranslations(iw_t);
+
+      /* Remove instructional message */
+      showbutx("","","",TRUE); 
+ 
+      XFlush(idispl);
+   
+      // Halt correspondence map masking, get 2nd map menu
+      // for storing data or averaging images from map /
+      comapmen2();          
+      }
+  else if (!(strcmp(*params,"3")))          /* Button 3 pushed */        
+      {   /* Stop the correspondance map */
+
+      /* Reset original color in icontx*/
+      wicolor(icontx,icoloro);
+
+      /* Cancel button assignments */  
+      XtUninstallTranslations(iw_t);
+
+      /* Remove instructional message */
+      showbutx("","","",TRUE);
+      }
+  return;
+  }
+@
+
+
+1.9
+log
+@wicolor & getimage for TRUE changes
+@
+text
+@d170 2
+@
+
+
+1.8
+log
+@used icolorov
+@
+text
+@d97 4
+d159 1
+a160 1
+          /* Set fill color to white */
+d162 1
+d180 4
+a183 1
+	  /* Clear the mask buffer with black--0, then draw polygon in it */
+d185 1
+d187 3
+a189 1
+          wicolor(icontx,colorgo+9);
+d193 1
+a193 1
+          /* Reset current color */
+d206 3
+d223 3
+@
+
+
+1.7
+log
+@colors and no overlut now
+@
+text
+@d157 1
+a157 1
+          wicolor(icontx,colorgo+7);
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d9 1
+a9 1
+C *  AUTHOR: Mahieddine Ladjadj                                            *
+d35 1
+a35 1
+C    MASK
+d37 1
+a37 1
+C    PURPOSE:      CREATES A MASK BY DRAWING AROUND AREAS WITH MOUSE
+d43 3
+d52 1
+a52 2
+ void  corr_mask_pop    (Widget, XEvent *, String *, Cardinal *);
+ extern Pixmap        msksav;
+d54 6
+a59 3
+ /* internal common variables */
+ GC            icontmx;
+ static int    masks, gotpt, filler, ipts=0;
+d65 1
+a65 1
+  /* set number of masked polygons made so far to zero */
+d70 1
+a70 1
+  /* set number of points on current polygon of this mask */
+a71 1
+  filler = TRUE;
+d73 1
+a73 1
+  /* interactive correspondance map masking */
+d80 1
+a80 2
+
+  /* update the screen */
+d84 1
+a84 7
+  /* set new lut for all correct use with x-or */
+  overlut();
+
+  /* set mask so image in first 7 planes and mask in overlay plane 8 */
+  wisetplanes(idispl, icontx, 128);
+ 
+  /* set up a xor graphics context */
+d98 1
+a98 1
+      {  /* get mouse position ix2,iy2  */
+d102 1
+a102 1
+         /* already have line, mouse moved, so erase and draw new line */
+d106 2
+a107 1
+      { /* get mouse position ix2,iy2  */
+d110 1
+a110 1
+      /* left button, end a line segment of the polygon */
+d119 1
+a119 4
+          {   /* draw permanent line to this location */
+
+          /* set to draw in overlay planes */
+          wisetplanes(idispl,icontx,128);
+d121 1
+a121 1
+          /* draw line and save line in backing store */
+a123 3
+
+          /* set to draw in all planes */
+          wisetplanes(idispl,icontx,-1);
+d129 1
+a129 2
+              { spout("***  CALLOC() CAN'T ALLOCATE HEAP MEMORY SPACE");
+              return; }
+d139 2
+a140 2
+      ix1 = ix2;
+      iy1 = iy2;
+d146 1
+a146 5
+      { /*   finished with this mask polygon */
+
+      /* clear any stuff in overlay planes (any previous masks) */
+      if (masks == 0) 
+           { clearover(NULL,NULL,NULL);  XFlush(idispl); }
+d148 1
+d151 1
+a151 4
+          /* set to draw in the overlay */
+          wisetplanes(idispl,icontx,128);
+
+          /* close the mask */
+d156 2
+a157 6
+          if (filler) 
+              /*  set fill color to white (depends on overlut) */
+              wicolor(icontx,colorgo+9);
+          else
+              /* set fill color to black */
+              wicolor(icontx,-1);
+d159 1
+a159 2
+          /* draw the filled mask on the image and
+             save it in backing store  */
+d165 4
+a168 3
+          /* we may have multiple masks on the screen. but we are only
+             interested in the Last one */
+          /* create a pixmap for the new mask*/
+d171 2
+a172 2
+             { spout(" *** WARNING: can not create a pixmap for new mask");
+               spout(" the average image will  be wrong !!!!!");
+d175 1
+a175 1
+	  /* clear the mask buffer with black--0, then draw polygon in it */
+d182 1
+a182 1
+          /* reset current color */
+d187 1
+a187 1
+          ipts    = 0;
+d189 2
+a190 2
+          gotpt = FALSE;
+          nsize = 10;
+d193 1
+a193 3
+          {
+          spout(" Not enough points for a MASK !.");
+          }
+d195 1
+a195 1
+      /* cancel button assignments */  
+d198 1
+a198 1
+      /* remove instructional message */
+a200 7
+      /* set to draw in all planes */
+      wisetplanes(idispl,icontx,-1);
+
+      /* restore default lut */
+      /* defluts(TRUE); */   
+      setamap(map);
+
+d203 2
+a204 2
+      /* halt correspondence map masking, get 2nd map menu
+         for storing data or averaging images from map */
+d207 4
+a210 3
+  else if (!(strcmp(*params,"3")))          /* button 3 pushed */        
+      { /* stop the correspondance map */
+      /* cancel button assignments */  
+d213 1
+a213 1
+      /* remove instructional message */
+a214 7
+
+      /* enable all planes for drawing */
+      wisetplanes(idispl,icontx,-1);
+
+      /* restore default lut */
+      /* defluts(TRUE); */   
+      setamap(map);
+@
+
+
+1.5
+log
+@fixed corr_map remembering the previous result on Alpha machine
+@
+text
+@d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1990, WADWSWORTH CENTER FOR LABORATORIES AND RESEARCH,   *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.4
+log
+@remove XtUninstallTranslations
+@
+text
+@d176 5
+@
+
+
+1.3
+log
+@use setamap instead of defluts to reset the colormap
+@
+text
+@a56 3
+  /* remove all translations from iw_win */
+  XtUninstallTranslations(iw_win);
+
+d204 1
+d225 1
+@
+
+
+1.2
+log
+@ reworked color assignments
+@
+text
+@d207 1
+a207 1
+      defluts(TRUE);
+d227 1
+a227 1
+      defluts(TRUE);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d159 1
+a159 1
+              wicolor(icontx,10);
+@

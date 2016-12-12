@@ -1,0 +1,900 @@
+head	1.11;
+access;
+symbols
+	pre-tilt-improve:1.10
+	pre_surf_fromtop:1.9
+	pre_neednewmap:1.9
+	pre_apppluss_remove:1.9
+	pre_tiltpair_chng:1.9
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.11
+date	2015.09.18.16.22.28;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2015.06.11.13.31.27;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2005.10.18.16.59.47;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.02.03.15.22.17;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.02.03.15.20.05;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.07.01.18.14.04;	author mladjadj;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.05.10.15.34.32;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.05.10.14.57.19;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	96.05.07.16.20.05;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	96.05.07.15.20.08;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	96.05.06.16.25.25;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new replacement (simpler) for unsdal.c
+@
+
+
+1.11
+log
+@Cosmetic
+@
+text
+@/*$Header: /usr8/web/src/RCS/getdoc.c,v 1.10 2015/06/11 13:31:27 leith Exp $*/
+/*
+ C**********************************************************************
+ C    getdoc.c
+ C            New doc. file format                        Feb  2004 al
+ C            No complain if can not open new file        Jun  2015 al
+ C            Cosmetic                                    Sep  2015 al
+ C
+ C**********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C *********************************************************************
+ C
+ C    PURPOSE:  RECOVERS DOCUMENT FILE INFO.
+ C
+ C    PARAMETERS:
+ C         FPDOC         DOC. FILE FILE POINTER               (SENT)
+ C         DOCNAM        DOC. FILE NAME                       (SENT)
+ C         DOCEXT        DOC. FILE EXTENSION                  (SENT)
+ C         MAXKEY        NUMBER OF ROWS IN DBUF               (SENT)
+ C         MAXREG        NUMBER OF COLUMNS IN DBUF            (SENT)
+ C         DBUF          BUFFER OF RETRIEVAL FROM DOC. FILE   (RETURNED)
+ C         LASTKEY       NUMBER OF HIGHEST KEY FOUND IN FILE  (RETURNED)
+ C         WANTFILEMSG   WANT VERBOSE FILE INFO               (SENT)
+ C
+ C    RETURNS:
+ C         LERR          ERROR FLAG (  0 IS NORMAL)           
+ C
+ C                       -5   EXCESSIVE REGISTERS FOR >= ONE KEY
+ C                       -4   KEY > MAXKEY FOR >= ONE KEY
+ C                        1   LACK SUFFICIENT REGISTER FOR >= ONE KEY
+ C                       20   MEMORY ALLOCATION FAILED
+ C                       21   NEW DOC FILE NAME TOO LONG
+ C                       10   NEW DOC FILE CAN NOT BE OPENED
+ C                       22   ERROR READING DOC FILE LINE
+ C                       30   MAXREGP1 TOO LARGE
+ C
+ C    TYPICAL DOC FILE LINE:
+ C    COL: 123456789 123456789 123456789 123456789 123456789 1234565789
+ C           1 4   20.070000   17.000000   17.000000   17.000000
+ C         KEY #REGS/LINE    VALUES ........
+ C
+ C    WHEN RETRIEVED THIS LINE IS PLACED IN DBUF STARTING AT 
+ C    [(KEY -1)*MAXREG].  THE VALUES PLACED THERE ARE THE NUMBER OF
+ C    REGISTERS RETIVED FOR THAT KEY, FOLLOWED BY VALUES OF THE
+ C    REGISTERS.  THUS FOR THE ABOVE SAMPLE AT DBUF[0] WE HAVE
+ C    2, 20, 17, 17, 17.
+ C
+ C    TO USE DBUF, COMPUTE ADDRESS OF EACH ENTRY BY USING POINTERS:
+ C
+ C    FOR J REG IN  KEY3 :    PT = DBUF + (KEY3 - 1) * MAXREG + J;
+ C
+ C***************************************************************************
+*/
+
+#include "std.h"
+#include "routines.h"
+
+ /***************************  getdoc_f    *******************************/
+
+ int getdoc_f(FILE * fpdoc, char *docnam, char * docext,  
+            int maxkeys, int maxregp1, float **buf, int * lastkeygot,
+            int wantfilemsg)
+  {
+  char        outstr[109], docname[81], reclin[180];
+  FILE  *     ptrdoc;
+  float *     dbuf;
+  float *     lptr;
+  int         regsonline, items, message1,  message2, lerr, keygot, i;
+  float       regis[12];
+  int         message0;
+
+  if (maxregp1 > 12)
+     {spout("*** Web can only read 12 registers from doc. file"); return 30; }  
+
+  *lastkeygot = 0;
+  message0    = TRUE;
+  message1    = TRUE;
+  message2    = TRUE;
+  lerr        = 0;     
+
+  /*  Add datexc (name extension ) to docnam if not already there  */
+  if (strlen(docnam) > (size_t) 81)
+     {spouts("*** Doc. file name too long: "); spout(docnam); return 21;}
+  
+  strcpy(docname,docnam);
+
+  if (docext)
+     {
+     if ((strlen(docname) + strlen(docext) + 1) > (size_t) 80)
+        {spouts("*** Doc. file name too long: "); spout(docname);  return 21; }  
+     strcat(strcat(docname,"."),docext);
+     }
+
+  /* Open a new file if fpdoc is NULL, close it upon return */
+  ptrdoc = fpdoc;
+  if (!ptrdoc && ((ptrdoc = fopen(docname,"r")) == NULL))
+     { 
+     if (wantfilemsg) // 2015
+        { spouts("*** Unable to open docfile: "); spout(docname); }
+     return 10;
+     }
+  else
+     { /* Already have open doc file */
+     rewind(ptrdoc);
+     }
+ 
+  /* Print document file name */
+  if (wantfilemsg) // 2015
+     { spouts("Reading docfile: "); spout(docname);}
+
+  /* Run time allocation of memory space for buf */
+  if ((dbuf = (float *) calloc(maxkeys * maxregp1, sizeof(float)))
+           == (float *) NULL)
+     {spout("*** Memory allocation failed in getdoc!"); 
+      fclose(ptrdoc); return 20; }
+
+
+  /* Read next line (until end-of-line or 180 char) from doc file */
+  while ((fgets(reclin,180,ptrdoc)) != (char *) NULL)
+     {
+     if (ferror(ptrdoc))
+        { /*  Fatal error */
+        spouts("*** Error reading docfile line: "); spout(reclin);
+        fclose(ptrdoc); return 22;
+        }
+
+     if ((strstr(reclin,";")) == (char *) NULL)
+        { /* Skips any  comment line */
+ 
+        items = sscanf(reclin,
+                "%d %d %f %f %f %f %f %f %f %f %f %f %f %f",
+                &keygot, &regsonline, &regis[0],&regis[1],&regis[2],
+                                      &regis[3],&regis[4],&regis[5],
+                                      &regis[6],&regis[7],&regis[8],
+                                      &regis[9],&regis[10],&regis[11]);
+        /**************
+        printf(" items: %d, key: %5d regs: %d %f %f %f \n",
+                 items,keygot,regsonline, 
+                 regis[0],regis[1],regis[2]);
+        ****************/
+
+        if (items <= 0) 
+	{   /* Try old format */
+        items = sscanf(reclin,"%d %1d%12f%12f%12f%12f%12f%12f",
+                &keygot, &regsonline, &regis[0],&regis[1],&regis[2],
+                                     &regis[3],&regis[4],&regis[5]);
+        }
+
+        if(items > 0) 
+	{
+	if (items < 3 || regsonline < maxregp1 - 1 && message0) 
+           {
+           /* Not enough registers on this line, possible error */
+           sprintf(outstr, 
+              "*** Lacks registers for one or more key, e.g. key: %d",
+                        keygot);
+           spout(outstr); lerr = 1; message0 = FALSE;       
+           } 
+
+        if (keygot > maxkeys) 
+           {
+           if (message1)
+              {
+              /* This key can not be stored in array, possible error */
+              sprintf(outstr,"*** Doc file key: %d > max keys: %d",
+                      keygot,maxkeys);
+              spout(outstr); lerr = -4; message1 = FALSE; 
+              }
+           keygot = 0;      
+           } 
+
+        if (regsonline > (maxregp1 - 1))  
+           {  /* Doc file has more registers than are retrieved */
+           if (message2)
+              {
+              sprintf(outstr, 
+              "*** Unused registers on one or more key, e.g. key: %d",
+                        keygot);
+              spout(outstr);  lerr = -5; message2 = FALSE;
+              }
+           /* Even though regsonline was >= maxregp1, continue */
+           regsonline = maxregp1 - 1;
+           }
+   
+        if (keygot > 0)
+           {  /* Put key contents in dbuf */ 
+
+           /* Find pointer into dbuf */
+           lptr = dbuf + (keygot - 1) * maxregp1;
+
+           /* store number of registers for key in dbuf */
+           *(lptr++) = regsonline;
+
+           for (i = 0; i < regsonline; i++)
+              {
+              /* Read the register entries */
+              *(lptr++) = regis[i]; 
+              }
+               
+           *lastkeygot = MYMAX(*lastkeygot, keygot);
+           } /* (keygot > 0)                        */
+	   } /* eof, blank line etc...      ML      */
+        }    /* End of      if ((strstr(reclin..... */
+     }       /* While (read next line of doc file)  */
+
+  /* Close the doc file  */
+  if (!fpdoc) 
+     {fclose(ptrdoc);}
+  else
+     { /* Position file at end for append */
+     fseek(fpdoc,0L,SEEK_END);
+     }
+
+  /* The doc file has been successfully read */
+  *buf  = dbuf;
+
+  return lerr;
+  }
+
+
+/***************************  getdoc    *******************************/
+
+ int getdoc(FILE * fpdoc, char *docnam, char * docext,  
+            int maxkeys, int maxregp1, float **buf, int * lastkeygot)
+ {
+  char        outstr[109], docname[81], reclin[180];
+  FILE      * ptrdoc;
+  float     * dbuf, *lptr;
+  int         regsonline, items, message1,  message2, lerr, keygot, i;
+  float       regis[12];
+  int         message0;
+
+  if (maxregp1 > 12)
+     {spout("*** Web can only read 12 registers from doc. file"); 
+     return 30; }  
+
+  *lastkeygot = 0;
+  message0    = TRUE;
+  message1    = TRUE;
+  message2    = TRUE;
+  lerr        = 0;     
+
+  /*  Add datexc (name extension ) to docnam if not already there  */
+  if (strlen(docnam) > (size_t) 81)
+     {spouts("*** Doc. file name too long: "); spout(docnam); return 21;}
+  
+  strcpy(docname,docnam);
+
+  if (docext)
+     {
+     if ((strlen(docname) + strlen(docext) + 1) > (size_t) 80)
+        {spouts("*** Doc. file name too long: "); spout(docname); 
+        return 21; }  
+     strcat(strcat(docname,"."),docext);
+     }
+
+  /* Open a new file if fpdoc is NULL, close it upon return */
+  ptrdoc = fpdoc;
+  if (!ptrdoc && ((ptrdoc = fopen(docname,"r")) == NULL))
+     { return 10;}  // 2015
+     //{spouts("*** Unable to open docfile: "); spout(docname); return 10;}
+  else
+     { /* Already have open doc file */
+     rewind(ptrdoc);
+     }
+ 
+  /* Print document file name */
+  spouts("Reading docfile: "); spout(docname);
+
+  /* run time allocation of memory space for buf */
+  if ((dbuf = (float *) calloc(maxkeys * maxregp1, sizeof(float)))
+           == (float *) NULL)
+     {spout("*** Memory allocation failed in getdoc!"); 
+      fclose(ptrdoc); return 20; }
+
+
+  /* Read next line (until end-of-line or 180 char) from doc file */
+  while ((fgets(reclin,180,ptrdoc)) != (char *) NULL)
+     {
+     if (ferror(ptrdoc))
+        { /*  Fatal error */
+        spouts("*** Error reading docfile line: "); spout(reclin);
+        fclose(ptrdoc); return 22;
+        }
+
+     if ((strstr(reclin,";")) == (char *) NULL)
+        { /* Skips any  comment line */
+ 
+        items = sscanf(reclin,
+                "%d %d %f %f %f %f %f %f %f %f %f %f %f %f",
+                &keygot, &regsonline, &regis[0],&regis[1],&regis[2],
+                                      &regis[3],&regis[4],&regis[5],
+                                      &regis[6],&regis[7],&regis[8],
+                                      &regis[9],&regis[10],&regis[11]);
+        /**************
+        printf(" items: %d, key: %5d regs: %d %f %f %f \n",
+                 items,keygot,regsonline, 
+                 regis[0],regis[1],regis[2]);
+        ****************/
+
+        if(items <= 0) 
+	{   /* Try old format */
+        items = sscanf(reclin,"%d %1d%12f%12f%12f%12f%12f%12f",
+                &keygot, &regsonline, &regis[0],&regis[1],&regis[2],
+                                     &regis[3],&regis[4],&regis[5]);
+        }
+
+        if(items > 0) 
+	{
+	if (items < 3 || regsonline < maxregp1 - 1 && message0) 
+           {
+           /* Not enough registers on this line, possible error */
+           sprintf(outstr, 
+              "*** Lacks registers for one or more key, e.g. key: %d",
+                        keygot);
+           spout(outstr); lerr = 1; message0 = FALSE;       
+           } 
+
+        if (keygot > maxkeys) 
+           {
+           if (message1)
+              {
+              /* This key can not be stored in array, possible error */
+              sprintf(outstr,"*** Doc file key: %d > max keys: %d",
+                      keygot,maxkeys);
+              spout(outstr); lerr = -4; message1 = FALSE; 
+              }
+           keygot = 0;      
+           } 
+
+        if (regsonline > (maxregp1 - 1))  
+           {  /* Doc file has more registers than are retrieved */
+           if (message2)
+              {
+              sprintf(outstr, 
+              "*** Unused registers on one or more key, e.g. key: %d",
+                        keygot);
+              spout(outstr);  lerr = -5; message2 = FALSE;
+              }
+           /* Even though regsonline was >= maxregp1, continue */
+           regsonline = maxregp1 - 1;
+           }
+   
+        if (keygot > 0)
+           {  /* Put key contents in dbuf */ 
+
+           /* Find pointer into dbuf */
+           lptr = dbuf + (keygot - 1) * maxregp1;
+
+           /* store number of registers for key in dbuf */
+           *(lptr++) = regsonline;
+
+           for (i = 0; i < regsonline; i++)
+              {
+              /* Read the register entries */
+              *(lptr++) = regis[i]; 
+              }
+               
+           *lastkeygot = MYMAX(*lastkeygot, keygot);
+           } /* (keygot > 0)                        */
+	   } /* eof, blank line etc...      ML      */
+        }    /* End of      if ((strstr(reclin..... */
+     }       /* While (read next line of doc file)  */
+
+  /* Close the doc file  */
+  if (!fpdoc) 
+     {fclose(ptrdoc);}
+  else
+     { /* Position file at end for append */
+     fseek(fpdoc,0L,SEEK_END);
+     }
+
+  /* Doc file has been successfully read */
+  *buf  = dbuf;
+
+  return lerr;
+  }
+
+
+
+
+
+@
+
+
+1.10
+log
+@added getdoc_f.c  ,  cosmetic   ,  formatting
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/getdoc.c,v 1.9 2005/10/18 16:59:47 leith Exp $*/
+d3 7
+a9 7
+*****************************************************************************
+**    getdoc.c
+**                 New doc. file format                   Feb. 2004 al
+**                 No complain if can not open new file   June 2015 al
+**
+C **********************************************************************
+** *  SPIDER - MODULAR IMAGE PROCESSING SYSTEM.  AUTHOR: J.FRANK            *
+d33 42
+a74 43
+C **********************************************************************
+**
+**    PURPOSE:  RECOVERS DOCUMENT FILE INFO.
+**
+**    PARAMETERS:
+**         FPDOC         DOC. FILE FILE POINTER               (SENT)
+**         DOCNAM        DOC. FILE NAME                       (SENT)
+**         DOCEXT        DOC. FILE EXTENSION                  (SENT)
+**         MAXKEY        NUMBER OF ROWS IN DBUF               (SENT)
+**         MAXREG        NUMBER OF COLUMNS IN DBUF            (SENT)
+**         DBUF          BUFFER OF RETRIEVAL FROM DOC. FILE   (RETURNED)
+**         LASTKEY       NUMBER OF HIGHEST KEY FOUND IN FILE  (RETURNED)
+**         WANTFILEMSG   WANT VERBOSE FILE INFO               (SENT)
+**
+**    RETURNS:
+**
+**         LERR          ERROR FLAG (  0 IS NORMAL)           
+**
+**                       -5   EXCESSIVE REGISTERS FOR >= ONE KEY
+**                       -4   KEY > MAXKEY FOR >= ONE KEY
+**                        1   LACK SUFFICIENT REGISTER FOR >= ONE KEY
+**                       20   MEMORY ALLOCATION FAILED
+**                       21   NEW DOC FILE NAME TOO LONG
+**                       10   NEW DOC FILE CAN NOT BE OPENED
+**                       22   ERROR READING DOC FILE LINE
+**                       30   MAXREGP1 TOO LARGE
+**
+**    TYPICAL DOC FILE LINE:
+**    COL: 123456789 123456789 123456789 123456789 123456789 1234565789
+**           1 4   20.070000   17.000000   17.000000   17.000000
+**         KEY #REGS/LINE    VALUES ........
+**
+**    WHEN RETRIEVED THIS LINE IS PLACED IN DBUF STARTING AT 
+**    [(KEY -1)*MAXREG].  THE VALUES PLACED THERE ARE THE NUMBER OF
+**    REGISTERS RETIVED FOR THAT KEY, FOLLOWED BY VALUES OF THE
+**    REGISTERS.  THUS FOR THE ABOVE SAMPLE AT DBUF[0] WE HAVE
+**    2, 20, 17, 17, 17.
+**
+**    TO USE DBUF, COMPUTE ADDRESS OF EACH ENTRY BY USING POINTERS:
+**
+**    FOR J REG IN  KEY3 :    PT = DBUF + (KEY3 - 1) * MAXREG + J;
+**
+*****************************************************************************
+d80 1
+a80 1
+/***************************  getdoc_f    *******************************/
+d85 1
+a85 1
+ {
+d87 3
+a89 2
+  FILE      * ptrdoc;
+  float     * dbuf, *lptr;
+d95 1
+a95 2
+     {spout("*** Web can only read 12 registers from doc. file"); 
+     return 30; }  
+d112 1
+a112 2
+        {spouts("*** Doc. file name too long: "); spout(docname); 
+        return 21; }  
+d133 1
+a133 1
+  /* run time allocation of memory space for buf */
+d164 1
+a164 1
+        if(items <= 0) 
+d395 1
+a395 1
+  /* The doc file has been successfully read */
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/getdoc.c,v 1.8 2004/02/03 15:22:17 leith Exp $*/
+d5 2
+a6 1
+**                 New doc. file format   Feb. 2004 al
+d11 1
+a11 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d45 1
+d81 164
+d281 1
+a281 1
+  /* open a new file if fpdoc is NULL, close it upon return */
+d284 2
+a285 1
+     {spouts("*** Unable to open docfile: "); spout(docname); return 10;}
+d287 1
+a287 1
+     { /* already have open doc file */
+d291 1
+a291 1
+  /* print document file name */
+d301 1
+a301 1
+  /* read next line (until end-of-line or 180 char) from doc file */
+d305 1
+a305 1
+        { /*  fatal error */
+d311 1
+a311 1
+        { /* skips any  comment line */
+d326 1
+a326 1
+	{   /* try old format */
+d336 1
+a336 1
+           /* not enough registers on this line, possible error */
+d347 1
+a347 1
+              /* this key can not be stored in array, possible error */
+d356 1
+a356 1
+           {  /* doc file has more registers than are retrieved */
+d364 1
+a364 1
+           /* even though regsonline was >= maxregp1, continue */
+d369 1
+a369 1
+           {  /* put key contents in dbuf */ 
+d371 1
+a371 1
+           /* find pointer into dbuf */
+d379 1
+a379 1
+              /* read the register entries */
+d386 2
+a387 2
+        }    /* end of      if ((strstr(reclin..... */
+     }       /* while (read next line of doc file)  */
+d389 1
+a389 1
+  /* close the doc file  */
+d393 1
+a393 1
+     { /* poition file at end for append */
+d397 1
+a397 1
+  /* the doc file has been successfully read */
+d402 4
+@
+
+
+1.8
+log
+@typo
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/getdoc.c,v 1.7 2004/02/03 15:20:05 leith Exp leith $*/
+d7 1
+a7 1
+** **************************************************************************
+d9 24
+a32 7
+** *  COPYRIGHT (C)1981,1993, WADSWORTH CENTER FOR LABORATORIES AND         *
+** *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+** *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+** *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+** *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+** *    THE CENTER FOR LABORATORIES AND RESEARCH 			    *
+** **************************************************************************
+@
+
+
+1.7
+log
+@new doc file format
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/getdoc.c,v 1.6 1996/07/01 18:14:04 mladjadj Exp leith $*/
+d132 2
+a133 2
+                                      &regis[3],&regis[4],&regis[5]);
+                                      &regis[6],&regis[7],&regis[8]);
+d145 1
+a145 1
+                                    &regis[3],&regis[4],&regis[5]);
+@
+
+
+1.6
+log
+@skip blank line
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/getdoc.c,v 1.5 1996/05/10 15:34:32 leith Exp $*/
+d5 1
+d67 1
+a67 1
+  char        outstr[109], docname[81], reclin[101];
+d71 1
+a71 1
+  float       regis[6];
+d74 3
+a76 2
+  if (maxregp1 > 7)
+     {spout("*** Pgm. error in getdoc usage"); return 30; }  
+d117 2
+a118 2
+  /* read next line (until end-of-line or 80 char) from doc file */
+  while ((fgets(reclin,100,ptrdoc)) != (char *) NULL)
+d127 4
+a130 2
+        { /* skip any  comment line */ 
+        items = sscanf(reclin,"%d %1d%12f%12f%12f%12f%12f%12f",
+d132 3
+a134 1
+                                    &regis[3],&regis[4],&regis[5]);
+d140 7
+@
+
+
+1.5
+log
+@missing )
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/getdoc.c,v 1.4 1996/05/10 14:57:19 leith Exp leith $*/
+d135 3
+a137 1
+        if (items < 3 || regsonline < maxregp1 - 1 && message0) 
+d188 1
+@
+
+
+1.4
+log
+@used spouts
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/getdoc.c,v 1.3 1996/05/07 16:20:05 leith Exp leith $*/
+d99 1
+a99 1
+     {spouts("*** Unable to open docfile: "; spout(docname); return 10;}
+@
+
+
+1.3
+log
+@changed outputs
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/getdoc.c,v 1.1 1996/05/06 16:25:25 leith Exp leith $*/
+a60 1
+
+d74 1
+a74 1
+     {spout("*** Pgm. error in getdoc use"); return 30; }  
+d84 1
+a84 1
+     {spout("*** Doc. file name too long: $"); spout(docnam); return 21;}
+d91 1
+a91 1
+        {spout("*** Doc. file name too long: $"); spout(docname); 
+d99 1
+a99 1
+     {spout("*** Unable to open docfile: $"; spout(docname); return 10;}
+d106 1
+a106 1
+  spout("Reading docfile: $"); spout(docname);
+d111 1
+a111 1
+     {spout("*** Memory allocation failed in getdoc"); 
+d120 1
+a120 1
+        spout("*** Error reading docfile line:"); spout(reclin);
+@
+
+
+1.2
+log
+@error handling improved.
+@
+text
+@d84 2
+a85 2
+  if (strlen(docnam) > strlen(docname))
+     {spout("*** Doc. file name too long: "); spout(docnam);return 21;}
+d88 1
+d92 1
+a92 1
+        { spout("*** Doc. file name too long:"); spout(docname); 
+d99 2
+a100 7
+  if (!ptrdoc)
+     {  
+     /* must open the document file first */
+     if ((ptrdoc = fopen(docname,"r")) == NULL)
+        { sprintf(outstr,"*** Unable to open docfile: %s",docname);
+        spout(outstr); return 10; }
+     }
+d107 1
+a107 1
+  sprintf(outstr,"Reading docfile: %s",docname); spout(outstr);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/unsdal.c,v 1.9 1996/04/23 17:54:40 leith Exp $*/
+d33 1
+d38 1
+a38 1
+**                        1   LACK SUFFICIENT REGISTER FOR >= ONE KEY
+d42 1
+a42 1
+**           1 4   20.070000   17.379999   17.379999   17.379999
+d45 5
+a49 3
+**    WHEN RETRIEVED THIS LINE IS PLACED IN LINE 1 (KEY) OF DBUF AND
+**    THE FIRST VALUE ON LINE ONE IS THE KEY: 1 AND THE SECOND VALUE
+**    OF LINE ONE IN DBUF IS: 20.07
+d51 1
+a51 1
+**    SO COMPUTE ADDRESS OF EACH ENTRY BY USING POINTERS
+d65 1
+a65 1
+            int maxkeys, int maxreg, float **buf, int * lastkeygot)
+d74 3
+d84 3
+d114 1
+a114 1
+  if ((dbuf = (float *) calloc(maxkeys * maxreg, sizeof(float)))
+d140 1
+a140 1
+        if (items < 3 || regsonline < maxreg - 1 && message0) 
+a146 1
+           lerr = 1;       
+d149 1
+a149 1
+        if (keygot > maxkeys && message1) 
+d151 4
+a154 2
+           /* this key can not be stored in array, possible error */
+           sprintf(outstr,"*** Doc file key: %d > max keys: %d",
+d156 3
+a158 1
+           spout(outstr); lerr = -4; message1 = FALSE;       
+d161 1
+a161 1
+        if (regsonline > (maxreg - 1) &&  message2)
+d163 3
+a165 1
+           sprintf(outstr, 
+d168 4
+a171 16
+           spout(outstr);  lerr = -5; message2 = FALSE;
+           }
+    
+        /* even though regsonline was > maxreg, can still continue */
+        regsonline = MYMIN(regsonline, (maxreg - 1));
+
+        /* find pointer into dbuf */
+        lptr = dbuf + (keygot - 1) * maxreg;
+
+        /* store number of registers for key in dbuf */
+        *(lptr++) = regsonline;
+
+        for (i = 0; i < regsonline; i++)
+           {
+           /* read the register entries */
+           *(lptr++) = regis[i]; 
+d173 15
+d189 4
+a192 4
+        *lastkeygot = MYMAX(*lastkeygot, keygot);
+
+        }    /* end of      if ((strstr(reclin.....  */
+     }       /* while (read next line of doc file) */
+@

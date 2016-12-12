@@ -1,0 +1,642 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2011.05.10.15.29.22;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.10.18.17.00.01;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2000.11.06.20.32.35;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2000.11.02.21.35.10;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	97.04.04.16.46.35;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	97.03.27.15.18.46;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.09.12.14.20.58;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.26.14.05.21;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@built by mladjadj for corr-map
+@
+
+
+1.8
+log
+@colors & no overlut
+@
+text
+@
+/*
+***************************************************************************
+** comap.c 			7/28/93
+** WID_COMAP.FOR (VAX) ported to UNIX
+**
+C **********************************************************************
+** *  AUTHOR:  Mahieddine Ladjadj                                           *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+**
+**    WID_COMAP
+**
+**    PURPOSE:   Displays correlation map, user can outline variable
+**               shaped window from map,  store the image ids that
+**               are located inside window in a doc file, find and
+**               display average of images located within window
+**
+*****************************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+  /* Externally definied variables */
+  extern    char      docxnam[81];
+  extern    int       sayno, itrad, key1, key2, itxreg, ityreg;
+  extern    float     stndrt;
+  double              factxa, factxb,factya, factyb;
+  float               *bufx, *bufy;
+  int                 *nkey;
+
+  int    nline, ixmar, iymar, ixsize, iysize, gotbin, gotav, gotavim,
+         nowbin;
+
+/******************************** comap () ********************************/
+
+void comap(void)
+{
+  int     k;
+  int     maxkeys, icolort,
+          maxreg, ix, iy, numtot, numcor, lastkey,
+          doc_read, pkey;
+  float   *plist, *ptr, *dbuf, xt, yt;
+  double  davx, davx2, davy, davy2, bx, by, xmin, xmax, ymin, ymax, xr, yr,
+          sigx, sigy, xrange, yrange;
+  char    outstr[81];
+     
+  /* Set wait cursor */
+  waitcursor(iwin, TRUE, 79);                                  
+  
+  /* 
+  Recover all the lines from the doc file and store in the dbuf array.
+  column 1 is the key, following columns are registers. correspondence
+  analysis may have up to 24 registers. */
+
+  doc_read = TRUE;
+  pkey     = 0;
+  maxkeys  = MYMAX(key1,key2) + 1;
+  maxreg   = MYMAX(itxreg,ityreg) + 1;
+  dbuf     = (float *) NULL;
+  if (unsdal(docxnam, &doc_read, pkey, plist, maxreg, &dbuf, &lastkey,
+                   maxkeys,maxreg) > 0)
+      {
+      /* Problem retrieving doc file, assume it does not exist */
+      if (dbuf) free(dbuf);
+      sprintf(outstr," Could not read document file: %s",docxnam);
+      spout(outstr);
+
+      /* unset wait cursor */
+      waitcursor(iwin, FALSE, 0);                                  
+      return;
+      }
+  
+  if (lastkey < MYMIN(key1,key2))
+      {
+      if (dbuf) free(dbuf);
+      sprintf(outstr," both keys needed %d & %d > lastkey = %d",
+         key1,key2,lastkey);
+      spout(outstr);
+
+      /* unset wait cursor */
+      waitcursor(iwin, FALSE, 0);                                  
+      return;
+      } 
+      
+  /* Determine maximum/minimum x and y coordinates, avg, etc; */
+  xmin = ymin = FLT_MAX;
+  xmax = ymax = -xmin;
+
+  davx = davx2 = davy = davy2 = 0; 
+
+  /* Run time allocate of memory space for nkey[], bufx, bufy */
+  if ( (nkey = (int *) calloc((key1 * key2), sizeof(float)) )
+             == (int *) NULL)                                       {
+     spout(" *** Could not allocate memory");
+     waitcursor(iwin, FALSE, 0);  return;                           }
+  if ( (bufx = (float *) calloc((key1 * key2), sizeof(float)) )
+             == (float *) NULL)                                     {
+     spout(" *** Could not allocate memory");
+     waitcursor(iwin, FALSE, 0);  return;                           }
+  if ( (bufy = (float *) calloc((key1 * key2), sizeof(float)) )
+             == (float *) NULL)                                     {
+     spout(" ***Could not allocate memory");
+     waitcursor(iwin, FALSE, 0);  return;                           }
+
+  /* Remember current color in icontx */
+  icolort = icolor;
+
+  /* Set current color to image almost white */
+  wicolor(icontx,colorgo+2);
+
+  /* Clear the screen */
+  //clearover(NULL,NULL,NULL);
+
+  ptr   = dbuf + (key1-1) * maxreg;
+  nline = 0;
+
+  for (k = key1; k <= key2; k++)
+      {
+      /* Check that the key has some registers. */
+      if ( (*ptr) > 0.0) 
+          {
+          nkey[nline] = k;          /*  image number      */
+          bx = *(ptr + itxreg);     /*  dbuf[k][itxreg]   */
+          by = *(ptr + ityreg);     /*  dbuf[k][ityreg]   */
+
+          /* Record bx & by */
+          bufx[nline] = bx;
+          bufy[nline] = by;
+          nline++;
+    
+          /* Record max and min for bx & by   */
+          xmin = MYMIN(bx,xmin);
+          xmax = MYMAX(bx,xmax);
+          ymin = MYMIN(by,ymin);
+          ymax = MYMAX(by,ymax);
+
+          /* record average and standard deviation for bx & by */
+          davx  += bx;
+          davx2 += (double)(bx * bx);
+          davy  += by;
+          davy2 += (double)( by * by);
+          }
+      ptr += maxreg;
+      }        /*   for (pkey = key1; pkey <= key2; pkey++)  */
+
+  /* Calculate sigma and average */
+  davx  /= (float) nline;
+  davy  /= (float) nline;
+
+  sigx   = sqrt((davx2 - (davx * davx / (float) nline)) / (double) (nline - 1));
+  sigy   = sqrt((davy2 - (davy * davy / (float) nline)) / (double) (nline - 1));
+
+  xt     = 2.0 * stndrt * sigx;
+  yt     = 2.0 * stndrt * sigy;
+
+  xr     = xmax - xmin;
+  yr     = ymax - ymin;
+
+  xrange = MYMIN(xt, xr);
+  yrange = MYMIN(yt, yr);
+
+  /* Set plot size */
+  ixsize = iwidex - 2;
+  iysize = ihighx - 2;
+  ixmar  = iymar = 1;
+  numtot = numcor = 0;
+
+  /* Find scale factors */
+  factxa = (float) (ixsize -1) / xrange;
+  factxb = - (xmin * factxa) + ixmar + 0.5;
+
+  factya = (float) (iysize-1) / yrange;
+  factyb = - (ymin * factya) + iymar + 0.5;
+
+  for (k = 0; k < nline; k++)
+    {
+      ix = (bufx[k] - xmin) * factxa + ixmar + 0.5;
+      iy = (bufy[k] - ymin) * factya + iymar + 0.5;
+
+      if (ix >= ixmar && ix <= ixsize && iy >= iymar && iy <= iysize)
+          { /* Image is inside the plot extent; find the label number */
+
+          if (sayno)
+              {  /* write image number at this location on plot */
+              sprintf(outstr,"%d",nkey[k]);
+              //           itsize,just,  inten,ipen,  overprint
+              witext(icontx,outstr,ix,iy, 0,0, -9,2,  FALSE);
+              }
+          else
+              { 
+              /* Draw a permanent circle at this position */
+              xorc(iwin,    icontx, TRUE, ix, iy, itrad);
+              xorc(imagsav, icontx, TRUE, ix, iy, itrad);
+              }
+
+          /* Increment total number of images within plot extent */
+          numcor += 1;
+          }
+      else
+        {
+        /* Image is outside of plot extent */
+        nkey[k] = - nkey[k];
+        }
+
+    numtot += 1;   /* Increment total number of images */
+    }
+  sprintf(outstr," Images: %d   Images within plot: %d",numtot,numcor);
+  spout(outstr);
+     
+  /* Replace current color in icontx */
+  wicolor(icontx,icolort);
+
+  /* Initialize bin counter for this map */
+  nowbin = 0;
+
+  /* Set flag for each bin mask */
+  gotbin = gotavim = gotav = FALSE;
+
+  /* Cancel wait cursor */
+  waitcursor(iwin, FALSE, 0);
+
+  /* Start masking of correspondence map */
+  corr_mask(0);
+}
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d5 1
+a5 1
+** WID_COMAP.FOR (VAX) transported to UNIX
+d36 4
+a39 4
+**    PURPOSE:        DISPLAYS CORRELATION MAP, USER CAN OUTLINE VARIABLE
+**                    SHAPED WINDOW FROM MAP,  STORE THE IMAGE IDS THAT
+**                    ARE LOCATED INSIDE WINDOW IN A DOC FILE, FIND AND
+**                    DISPLAY AVERAGE OF IMAGES LOCATED WITHIN WINDOW
+a44 2
+#include "files.h"
+#include "std.h"
+d47 1
+a47 1
+/* external variables */
+d62 1
+a62 1
+  register int k;
+d71 1
+a71 1
+  /* set wait cursor */
+d74 4
+a77 3
+  /* recover all the lines from the doc file and store in the dbuf array.
+  ** column 1 is the key, following columns are registers. correspondence
+  ** analysis may have up to 24 registers. */
+d87 1
+a87 1
+      /* problem retrieving doc file, assume it does not exist */
+d109 1
+a109 1
+  /* determine maximum/minimum x and y coordinates, avg, etc; */
+d115 1
+a115 1
+  /* run time allocate of memory space for nkey[], bufx, bufy */
+d129 1
+a129 1
+  /* remember current color in icontx */
+d132 2
+a133 2
+  /* set current color to image almost white */
+  wicolor(icontx,-126);
+d135 2
+a136 2
+  /* clear the screen */
+  clearover(NULL,NULL,NULL);
+d138 1
+a138 1
+  ptr = dbuf + (key1-1) * maxreg;
+d143 1
+a143 1
+      /* check that the key has some registers. */
+d146 3
+a148 3
+          nkey[nline] = k;          /* image number      */
+          bx = *(ptr + itxreg);     /*  dbuf[k][itxreg]  */
+          by = *(ptr + ityreg);     /*  dbuf[k][ityreg]  */
+d150 1
+a150 1
+          /* record bx & by */
+d155 1
+a155 1
+          /* record max and min for bx & by   */
+d170 1
+a170 1
+  /* calculate sigma and average */
+d186 1
+a186 1
+  /* set plot size */
+d192 1
+a192 1
+  /* find scale factors */
+d205 1
+a205 1
+          { /* image is inside the plot extent; find the label number */
+d210 2
+a211 1
+              witext(icontx,outstr,ix,iy,0,0,-9,2,FALSE);
+d215 1
+a215 1
+              /* draw a permanent circle at this position */
+d220 1
+a220 1
+          /* increment total number of images within plot extent */
+d225 2
+a226 2
+          /* image is outside of plot extent */
+          nkey[k] = - nkey[k];
+d229 1
+a229 2
+      /* increment total number of images */
+      numtot += 1;
+d234 1
+a234 1
+  /* replace current color in icontx */
+d237 1
+a237 1
+  /* initialize bin counter for this map */
+d240 1
+a240 1
+  /* set flag for each bin mask */
+d243 1
+a243 1
+  /* cancel wait cursor */
+d246 1
+a246 1
+  /* start masking of correspondence map */
+@
+
+
+1.6
+log
+@fixed scaling
+@
+text
+@d7 1
+a7 1
+** **************************************************************************
+d9 24
+a32 7
+** *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND              *
+** *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+** *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+** *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+** *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+** *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+** **************************************************************************
+@
+
+
+1.5
+log
+@xmin & xmax not initialized right!
+@
+text
+@d51 1
+a51 1
+  float   *plist, *ptr, *dbuf;
+d53 1
+a53 1
+          sigx, sigy, xrange, yrange, xdev, ydev, tlx, tly;
+d93 1
+a93 1
+  /* determine maximun/minimum x and y coordinates, avg, etc; */
+d96 1
+d113 9
+d130 3
+a132 3
+          nkey[nline] = k;          /* image number     */
+          bx = *(ptr + itxreg);      /*  dbuf[k][itxreg]  */
+          by = *(ptr + ityreg);      /*  dbuf[k][ityreg]  */
+d146 1
+a146 1
+          davx += bx;
+d148 1
+a148 1
+          davy += by;
+a153 3
+  xr = xmax - xmin;
+  yr = ymax - ymin;
+
+d155 2
+a156 2
+  davx /= (float) nline;
+  davy /= (float) nline;
+d158 2
+a159 2
+  sigx = sqrt((davx2 - (davx * davx / (float) nline)) / (double) (nline - 1));
+  sigy = sqrt((davy2 - (davy * davy / (float) nline)) / (double) (nline - 1));
+d161 2
+a162 2
+  xrange = MYMIN(2 * stndrt * sigx, xr);
+  yrange = MYMIN(2 * stndrt * sigy, yr);
+d164 2
+a165 2
+  xdev = xrange / 2;
+  ydev = yrange / 2;
+d167 2
+a168 2
+  tlx = davx - xdev;
+  tly = davy - ydev;
+d173 1
+a173 1
+  ixmar = iymar = 1;
+d176 3
+a178 8
+  /* remember current color in icontx */
+  icolort = icolor;
+
+  /* set current color to image almost white */
+  wicolor(icontx,-126);
+
+  /* clear the screen */
+  clearover(NULL,NULL,NULL);
+d180 2
+a181 5
+  /* find scale factors */
+  factxa =  (float) ixsize / xrange;
+  factxb = - (tlx * factxa) + ixmar + 0.5;
+  factya = (float) iysize / yrange;
+  factyb = - (tly * factya) + iymar + 0.5;
+d185 5
+a189 10
+      ix = bufx[k] * factxa + factxb;
+      iy = bufy[k] * factya + factyb;
+/**
+      if (ix >= ixmar && ix <= (ixsize + ixmar) && 
+          iy >= iymar && iy <= (iysize + iymar))
+**/
+      if (ix > ixmar && ix < (ixsize ) && 
+          iy > iymar && iy < (iysize ))
+          {
+          /* the image is inside the plot extent; find the label number */
+d215 1
+a215 1
+  sprintf(outstr," Images: %d images within plot: %d",numtot,numcor);
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d94 2
+a95 1
+  xmin = xmax = ymin = ymax = 0;
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@a160 2
+  tux = davx + xdev;
+  tuy = davy + ydev;
+@
+
+
+1.2
+log
+@reworked color assignments
+@
+text
+@d48 2
+a49 2
+  int     firstl, maxkeys, icolorxt, icolort,
+          maxreg, ix, iy, numtot, numcor, nchar, lastkey,
+d53 1
+a53 1
+          sigx, sigy, xrange, yrange, xdev, ydev, tlx, tly, tux, tuy;
+d61 2
+a62 2
+  ** analysis may have up to 24 registers.
+  */
+d64 5
+a68 5
+  pkey = 0;
+  maxkeys = MYMAX(key1,key2) + 1;
+  maxreg = MYMAX(itxreg,ityreg) + 1;
+  dbuf = (float *) NULL;
+  if(unsdal(docxnam, &doc_read, pkey, plist, maxreg, &dbuf, &lastkey,
+d73 1
+a73 1
+      sprintf(outstr," Could not read document file  %s",docxnam);
+d81 1
+a81 1
+  if(lastkey < MYMIN(key1,key2))
+a92 2
+  firstl = TRUE;
+
+d100 1
+a100 1
+     spout(" *** WARNING: MALLOC() CAN'T ALLOCATE HEAP MEMORY SPACE");
+d104 1
+a104 1
+     spout(" *** WARNING: MALLOC() CAN'T ALLOCATE HEAP MEMORY SPACE");
+d108 1
+a108 1
+     spout(" *** WARNING: MALLOC() CAN'T ALLOCATE HEAP MEMORY SPACE");
+a171 1
+  icolorxt = icolorx;
+d195 2
+a196 4
+        {
+          /* the image is inside the plot extent;
+             find the label number */
+          nchar = numdig(nkey[k],1);
+d198 1
+a198 1
+          if (sayno && nchar <= 4)
+d203 2
+a204 6
+          else 
+              { if (sayno && firstl)
+                   {  /* write a warning one time */
+                   spout(" *** IMAGE LABEL(S) > 4 DIGITS ");
+                   firstl =  FALSE;
+                   }
+d206 1
+a206 1
+              xorc(iwin, icontx, TRUE, ix, iy, itrad);
+d212 1
+a212 1
+        }
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+d235 1
+a235 3
+  icolor = icolort;
+  icolorx = icolorxt;
+  wicolor(icontx,icolor);
+@

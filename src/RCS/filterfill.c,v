@@ -1,0 +1,363 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.17.00.02;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.07.31.19.51.18;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.11.23.10.13.29;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.09.28.11.52.40;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.09.26.15.22.19;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/filterfill.c,v 1.4 1996/07/31 19:51:18 leith Exp $*/
+
+/***********************************************************************
+ *
+ * filterfill.c
+ *
+ ***********************************************************************
+ * author : ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * filterfill()
+ * 
+ * PURPOSE:    seed fill
+ *
+ * RETURNS:    true or false
+ *
+ * PARAMETERS: 
+ *
+ ***********************************************************************
+*/
+
+#include "std.h"
+#ifndef VMS
+#include "float.h"
+#endif
+#include "routines.h"
+ 
+ void flood (int);
+
+ static int     nsamtt, connect8;
+ static float   thresht, fvalt;
+ static float * newimaget;
+ static float * oldimaget;
+ static int   * visited;
+
+ /**************************  filterfill *****************************/
+
+ int filterfill(float * oldimage, int nsamt, int nrowt, 
+             int ixseed, int iyseed, float thresh, float fval, 
+             float * newimage, float * fmint, float * fmaxt,
+             int connectivity)
+ {
+ int     nrowkd2, nsamkd2;
+ float * endimage;
+ int   * endimagei;
+ float * fptr;
+ int     ip, it, iloc;
+
+ /* set border size */
+ nrowkd2 = 1;
+ nsamkd2 = 1;
+
+ thresht   = thresh;
+ fvalt     = fval;
+ newimaget = newimage;
+ oldimaget = oldimage;
+ nsamtt    = nsamt;
+ connect8  = TRUE;
+ if (connectivity == 4) connect8 = FALSE;
+
+ /* copy oldimage to newimage */
+ memcpy((void *) newimage,(void *) oldimage, nsamt*nrowt*4);
+ 
+ /* allocate visited space */
+ if ((visited = (int *) calloc(nsamt * nrowt ,
+                      sizeof(int))) == (int *) 0)
+    {spout("*** Unable to allocate visited in filterfill."); 
+     return FALSE;}
+
+ /* fill top and bottem borders of visited to prevent going out */
+ /* borders of the image */
+
+ endimagei = visited + nsamt * nrowt - 1;
+
+ for(ip = 0; ip < nsamt * nrowkd2; ip++)
+     {
+     *(visited   + ip) = TRUE;
+     *(endimagei - ip) = TRUE;
+     }
+
+ /* fill left and right borders */
+ for(it = 0; it < nsamkd2; it++)
+     {    
+     for(ip = it; ip < nsamt*nrowt; ip=ip+nsamt)
+        {
+        *(visited   + ip) = TRUE; 
+        *(endimagei - ip) = TRUE;
+        }
+     }
+
+ /* do a flood fill around seed location */
+
+ iloc = (iyseed-1) * nrowt + ixseed - 1;
+ flood(iloc);
+
+ /* fill in border with fval value */
+ endimage = newimage + nsamt * nrowt - 1;
+
+ /* fill top and bottem borders */
+ for(ip = 0; ip < nsamt * nrowkd2; ip++)
+     {
+     *(newimage + ip) = fvalt;
+     *(endimage - ip) = fvalt;
+     }
+
+ /* fill left and right borders */
+ for(it = 0; it < nsamkd2; it++)
+     {    
+     for(ip = it; ip < nsamt*nrowt; ip=ip+nsamt)
+        {
+        *(newimage + ip) = fvalt; 
+        *(endimage - ip) = fvalt;
+        }
+     }
+
+ /* check min and max on final image */
+ for (fptr= newimage; fptr < newimage + nsamt * nrowt; fptr++)
+      {
+      if (*fptr < *fmint) *fmint = *fptr;
+      if (*fptr > *fmaxt) *fmaxt = *fptr;
+      }
+
+ if (visited) 
+     {free(visited); visited = NULL; }
+
+ return TRUE;
+ }
+
+ /**************************  flood *****************************/
+
+ void flood (int iloc)
+ {
+
+ if (!visited[iloc] && oldimaget[iloc] < thresht)
+    {
+    /* set pixel to visited */
+    visited[iloc] = TRUE;
+
+    /* set this pixel to fval */
+    newimaget[iloc]  = fvalt;
+
+    /* call flood on all 8 bordering pixels */
+    flood(iloc - 1     );
+    flood(iloc - nsamtt);
+    flood(iloc + 1     );
+    flood(iloc + nsamtt);
+
+    if (connect8)
+       {   /* use 8 fold connectivity */
+       flood(iloc - nsamtt - 1);
+       flood(iloc - nsamtt + 1);
+       flood(iloc + nsamtt + 1);
+       flood(iloc + nsamtt - 1);
+       }
+    }
+ else
+    {
+    /* set pixel to visited */
+    visited[iloc] = TRUE;
+    }
+ return;
+ }
+
+
+@
+
+
+1.4
+log
+@purpose changed in notes
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filterfill.c,v 1.3 1994/11/23 10:13:29 leith Exp leith $*/
+d10 23
+a32 6
+ * COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.3
+log
+@added 8 fold fill
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filterfill.c,v 1.2 94/09/28 11:52:40 leith Exp Locker: leith $*/
+d20 1
+a20 3
+ * PURPOSE:    convolves an floating point image with a kernal 
+ *             performing an erosion or dilation at specified
+ *             connectivity and threshold.
+@
+
+
+1.2
+log
+@fixed 
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filterfill.c,v 1.1 94/09/26 15:22:19 leith Exp $*/
+d39 1
+a39 1
+ static int     nsamtt;
+d49 2
+a50 1
+             float * newimage, float * fmint, float * fmaxt)
+d67 2
+d125 1
+a125 1
+ /* check main and max on final image */
+d152 12
+a163 8
+    flood(iloc - 1        );
+    flood(iloc - nsamtt - 1);
+    flood(iloc - nsamtt    );
+    flood(iloc - nsamtt + 1);
+    flood(iloc + 1        );
+    flood(iloc + nsamtt + 1);
+    flood(iloc + nsamtt    );
+    flood(iloc + nsamtt - 1);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d35 1
+d39 5
+a43 4
+ int     nsamtt;
+ float   thresht, fvalt;
+ float * newimaget;
+ float * oldimaget;
+d53 1
+d55 1
+a55 1
+ int     ip, it;
+d61 1
+a61 1
+ thresh    = thresht;
+d68 1
+a68 1
+ memcpy((void *) oldimage,(void *) newimage, nsamt*nrowt*4);
+d70 5
+a74 2
+ /* fill top and bottem borders with thresh to prevent going outside */
+ /* borders of the image  without testing */
+d76 2
+a77 1
+ endimage = newimage + nsamt * nrowt - 1;
+d79 2
+d83 2
+a84 2
+     *(newimage + ip) = thresh;
+     *(endimage - ip) = thresh;
+d92 2
+a93 2
+        *(newimage + ip) = thresh; 
+        *(endimage - ip) = thresh;
+a97 1
+ flood(iyseed * nrowt + ixseed);
+d99 3
+d129 3
+d139 2
+a140 1
+ if (oldimaget[iloc] < thresht)
+d142 6
+a156 3
+
+    /* set this pixel to fval */
+    newimaget[iloc] = fvalt;
+d158 6
+a163 1
+  return;
+@

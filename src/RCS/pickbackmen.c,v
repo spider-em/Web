@@ -1,0 +1,682 @@
+head	1.11;
+access;
+symbols
+	pre-tilt-improve:1.10
+	pre_surf_fromtop:1.10
+	pre_neednewmap:1.9
+	pre_apppluss_remove:1.9
+	pre_tiltpair_chng:1.9
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.11
+date	2015.09.01.17.53.27;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2011.09.23.19.46.07;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2005.10.18.16.59.44;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.08.16.18.16.23;	author mladjadj;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.07.11.17.28.14;	author mladjadj;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.02.02.16.50.13;	author liy;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.01.26.20.19.03;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.09.12.14.22.00;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.04.18.11.08.46;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.04.12.15.46.21;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.04.12.14.26.51;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.11
+log
+@$2
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/pickbackmen.c,v 1.10 2011/09/23 19:46:07 leith Exp $*/
+
+/*
+ C**********************************************************************
+ C
+ C  pickbackmen.c      Ported                      May 93 ArDean Leith
+ C                     Improved                    Aug 15 ArDean Leith
+ C
+ C**********************************************************************
+ C   AUTHOR:  ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C  pickbackmen()
+ C
+ C  PURPOSE:    Displays background window menu
+ C
+ C  PARAMETERS: None   
+ C
+ C  CALLED BY:  pickmen pickback    
+ C
+ C*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+#include <Xm/Text.h>
+
+ /* External function prototypes */
+ int            pickbackave (char *);
+
+ /* Internal function prototypes */
+ void           pickbackmen_buts (Widget, XtPointer, XtPointer);
+ void           pickbackmen_buta (Widget, XtPointer, XtPointer);
+ void           pickbackmen_butcl(Widget, XtPointer, XtPointer);
+  
+ /* Externally defined global variables */
+ extern char    dfil4[12], dfil5[12];
+ extern int     back_win_now;
+ extern int     openit1, openit2;
+ extern FILE *  fpdoc4 ;
+ extern FILE *  fpdoc5;
+
+ /* Internally defined global variables */
+ int            firstback;      /* Set by fitdoc */
+ GC             icontxor = 0;
+
+ /* Internal file scope variables */
+ static Widget  iw_pickbackmen = (Widget)0;
+ static Widget  iw_winkey;
+ static Widget  iw_winsiz;
+ 
+ /***********************   pickbackmen   ********************************/
+
+ void pickbackmen(void)
+
+ {
+ static Widget  iw_rowcolv;
+ Widget         iw_pushs, iw_pushc, iw_pusha, iw_dums; 
+ Widget         iw_buter;
+
+ char           cval[10];
+
+ if (iw_pickbackmen <= (Widget)0)
+    {   /* Create background windowing menu first */
+
+    iw_pickbackmen = wid_dialog(iw_win, 0, "Background windowing menu", -1, -1);
+    iw_rowcolv = wid_rowcol(iw_pickbackmen, 'v', -1, -1);
+
+    /* Create text box for window size   */
+    nsamw = 15; 
+    nroww = 15;
+    sprintf(cval,"%2d",nsamw);
+    iw_winsiz   = wid_textboxb(iw_rowcolv,0,"Window size:",cval,3);
+
+    /* Create text box for window number  */
+    if (back_win_now < 1) back_win_now = 1;
+    sprintf(cval,"%4d",back_win_now);
+    iw_winkey   = wid_textboxb(iw_rowcolv,0,"Next window number:",
+                               cval,4);
+
+    /* Create pushbutton for erasing windows */
+    iw_buter = wid_pushg(iw_rowcolv, 0, "Erase window display",
+                         pickbackmen_butcl, NULL, -1,-1);
+
+    /* Create box for stop & start  */
+    iw_dums = wid_stdbut_str(iw_rowcolv, iw_pickbackmen, 
+                         &iw_pushs, &iw_pushc, &iw_pusha, "SA",
+                         "STOP WINDOWING", "", "START WINDOWING",
+                         pickbackmen_buts, NULL,
+                         pickbackmen_buta, NULL);
+    }
+ else
+    {   /* Update background windowing menu */ 
+
+    /* Update text box for window key number */
+    sprintf(cval,"%4d",back_win_now);
+    iw_winkey   = wid_textboxb(iw_rowcolv,iw_winkey,
+                                "Window number:",cval,4);
+    }
+
+ XtManageChild(iw_pickbackmen);
+ }
+
+
+/*********** Start button callback **********************************/
+
+ void pickbackmen_buta(Widget iw_temp, XtPointer data, 
+                                       XtPointer call_data)
+ {
+ char * string;
+
+ /* Find window size */
+ string = XmTextGetString(iw_winsiz);
+ sscanf(string,"%d",&nsamw);
+ if (string) free(string);
+
+ if (nsamw <= 0) 
+    { spout("*** Window size must be > 0"); XBell(idispl,50); return; }
+ nroww = nsamw;
+
+ /* Find next window key */
+ string = XmTextGetString(iw_winkey);
+ sscanf(string,"%d",&back_win_now);
+ if (string) free(string);
+
+ //printf(" pickbackmen: back_win_now %d\n",back_win_now);
+ 
+ if (back_win_now <= 0) 
+    {back_win_now = 1;}
+
+ /* Set default cursor */
+ setacursor(0, -1, -1);
+
+ /* Create an xor graphics context if not currently valid */
+ if (!icontxor) icontxor = setxor(icontx);
+
+ /* Set default color in xor GC */
+ wicolor(icontxor,colorgo+icolorov);
+
+ /* Start background window picking */
+ pickback(firstback);
+
+ }
+
+/************ Erase button callback **********************************/
+
+ void pickbackmen_butcl(Widget iw_temp, XtPointer data, 
+                                        XtPointer call_data)
+ {
+ /* Redisplay original images at current shifted location */
+ pickdisp(TRUE,TRUE);
+ }
+
+/************ Stop windowing, resume picking particles ***************/
+
+ void pickbackmen_buts(Widget iw_temp, XtPointer data, 
+                                       XtPointer call_data)
+ {
+ /*  Remove  pickbackmen menu */
+ XtUnmanageChild(iw_pickbackmen);
+
+ /*  Remove button message */
+ showbutx("","","",TRUE); 
+
+ /* Remove any current boxes */
+ xorboxt(imagsav, icontxor, TRUE, FALSE, TRUE, 1, 1, nsamw, nroww);
+
+ /* Save overall averages in doc files */
+ if (fpdoc4) 
+    {
+    fclose(fpdoc4); 
+    fpdoc4 = NULL;
+    pickbackave(dfil4);
+    openit1 = TRUE;
+    }
+ if (fpdoc5) 
+    {
+    fclose(fpdoc5); 
+    fpdoc5 = NULL;
+    pickbackave(dfil5);
+    openit2 = TRUE;
+    }
+ 
+ /* Free the xor context if currently valid */
+ if (icontxor) XFreeGC(idispl,icontxor); 
+ icontxor = 0;
+
+ /* Reset x-hairs cursor */
+ setacursor(76,-1,-1);
+
+ /* Restart particle picker */
+ pickp(FALSE);
+ }
+
+
+@
+
+
+1.10
+log
+@wicolor(icontxor,colorgo+ico
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/pickbackmen.c,v 1.9 2005/10/18 16:59:44 leith Exp leith $*/
+d5 7
+a11 6
+C++*************************************************************************
+C
+C  pickbackmen.c          May 93 al
+C
+C **********************************************************************
+C    AUTHOR:  ArDean Leith
+d13 1
+a13 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d35 11
+a45 11
+C **********************************************************************
+C
+C    PICKBACKMEN()
+C
+C    PURPOSE:    displays background picking selecting menu
+C
+C    PARAMETERS: none   
+C
+C    CALLed BY:  pickmen pickback    
+C
+C--*********************************************************************
+d53 2
+a54 2
+ /* external function prototypes */
+ void          pickbackave (char *);
+d56 4
+a59 4
+ /* internal function prototypes */
+ void          pickbackmen_buts (Widget, caddr_t, caddr_t);
+ void          pickbackmen_buta (Widget, caddr_t, caddr_t);
+ void          pickbackmen_butcl(Widget, caddr_t, caddr_t);
+d61 15
+a75 11
+ /* externally defined global variables */
+ extern char       dfil4[12], dfil5[12];
+ extern int        numb, openitl, openitr;
+ extern FILE*      fpdoc4, * fpdoc5;
+
+ /* internally defined global variables */
+ int           firstback;    /* set by fitdoc */
+ GC            icontxor = 0;
+
+ /* internal file scope variables */
+ static Widget        iw_pickbackmen=(Widget)0, iw_winkey, iw_winsiz;
+d83 2
+a84 2
+ Widget  iw_pushs, iw_pushc, iw_pusha, iw_dums; 
+ Widget  iw_buter;
+d86 1
+a86 1
+ char    cval[10];
+d89 1
+a89 1
+    {   /* create  background windowing menu first */
+d94 3
+a96 2
+    /* create text box for particle key  */
+    nsamw = 15; nroww = 15;
+d100 4
+a103 3
+    /* create text box for particle key  */
+    sprintf(cval,"%4d",numb);
+    iw_winkey   = wid_textboxb(iw_rowcolv,0,"Window number:",
+d106 9
+a114 8
+    /* create pushbutton for erasing locations and numbers */
+    iw_buter = wid_pushg(iw_rowcolv, 0, "Erase windows",
+                  pickbackmen_butcl, NULL, -1,-1);
+
+    /* create box for apply  */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_pickbackmen, 
+                         &iw_pushs, &iw_pushc, &iw_pusha, "SCA",
+                         pickbackmen_buts,  pickbackmen_buts,
+d118 4
+a121 3
+    {
+    /* create text box for particle key  */
+    sprintf(cval,"%4d",numb);
+d125 1
+d130 1
+a130 1
+/*********** accept button callback **********************************/
+d132 2
+a133 1
+ void pickbackmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d137 1
+a137 1
+ /* find window size */
+d140 1
+a140 1
+ if(string) free(string);
+d142 2
+a143 2
+ if (nsamw < 0) 
+    { spout("*** Window size must be >= 0"); return; }
+d146 1
+a146 1
+ /* find next window key */
+d148 2
+a149 2
+ sscanf(string,"%d",&numb);
+ if(string) free(string);
+d151 1
+a151 1
+ printf(" pickbackmen: window key numb %d\n",numb);
+d153 2
+a154 5
+ if (numb < 0) 
+    { spout("*** Window number must be >= 0"); return; }
+
+ /*  remove  pickback menu */
+ XtUnmanageChild(iw_pickbackmen);
+d156 1
+a156 1
+ /* set default cursor */
+d159 1
+a159 1
+ /* create an xor graphics context if not currently valid */
+d162 2
+a163 2
+  /* set default color in xor GC */
+  wicolor(icontxor,colorgo+icolorov);
+d165 1
+a165 1
+ /* start window background picking */
+d170 1
+a170 1
+/************ erase button callback **********************************/
+d172 2
+a173 1
+ void pickbackmen_butcl(Widget iw_temp, caddr_t data, caddr_t call_data)
+d175 1
+a175 5
+
+ /*  remove  pickbackmen menu 
+ XtUnmanageChild(iw_pickbackmen);  */
+
+ /* redisplay original images at current shifted location */
+d179 1
+a179 1
+/************ stop windowing, continue picking callback ***************/
+d181 2
+a182 1
+ void pickbackmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+d184 2
+d187 5
+a191 2
+ /*  remove  pickbackmen menu */
+ XtUnmanageChild(iw_pickbackmen);
+d193 1
+d196 4
+a199 3
+     fclose(fpdoc4); 
+     pickbackave(dfil4);
+     openitl = TRUE;
+d203 4
+a206 3
+     fclose(fpdoc5); 
+     pickbackave(dfil5);
+     openitr = TRUE;
+d209 1
+a209 1
+ /* free the xor context if currently valid */
+d213 1
+a213 1
+/* set x-hairs cursor */
+d216 1
+a216 1
+ /* restart the particle picker again */
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackmen.c,v 1.8 1995/08/16 18:16:23 mladjadj Exp $*/
+d155 1
+a155 1
+  wicolor(icontxor,icolorov);
+@
+
+
+1.8
+log
+@clean up
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackmen.c,v 1.6 1995/02/02 16:50:13 liy Exp $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.7
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackmen.c,v 1.6 1995/02/02 16:50:13 liy Exp mladjadj $*/
+d53 1
+a53 1
+ static Widget        iw_pickbackmen= (Widget)0, iw_winkey, iw_winsiz;
+d60 2
+a61 1
+ Widget  iw_rowcolv, iw_pushs, iw_pushc, iw_pusha, iw_dums; 
+d112 1
+a112 1
+ free(string);
+d121 1
+a121 1
+ free(string);
+d123 2
+@
+
+
+1.6
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickbackmen.c,v 1.5 1995/01/26 20:19:03 liy Exp liy $*/
+d53 1
+a53 1
+ static Widget        iw_pickbackmen, iw_winkey, iw_winsiz;
+@
+
+
+1.5
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pickbackmen.c,v 1.4 1994/09/12 14:22:00 leith Exp liy $*/
+d65 1
+a65 1
+ if (iw_pickbackmen <= (void *)0)
+@
+
+
+1.4
+log
+@ reworked color assignments
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pickbackmen.c,v 1.3 94/04/18 11:08:46 leith Exp Locker: leith $*/
+d65 1
+a65 1
+ if ((int)iw_pickbackmen <= 0)
+@
+
+
+1.3
+log
+@lekans fixes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/pickbackmen.c,v 1.1 94/04/12 14:26:51 leith Exp Locker: leith $*/
+a130 1
+ wicolor( icontx, 30 );   /*   use green color  */
+d132 1
+a132 1
+ if(!icontxor) icontxor = setxor(icontx);
+d134 3
+d176 1
+a176 1
+ if(icontxor) XFreeGC(idispl,icontxor); 
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d35 3
+d44 1
+a46 1
+ extern GC         icontxor;
+d50 1
+d88 2
+a89 2
+                         pickbackmen_buts, fin_cb , pickbackmen_buta, 
+                         NULL);
+d128 8
+a135 1
+ /* start window picking */
+d145 2
+a146 2
+ /*  remove  pickbackmen menu */
+ XtUnmanageChild(iw_pickbackmen);
+a159 3
+ /* free the xor context */
+ XFreeGC(idispl,icontxor);
+
+d161 5
+a165 1
+    {fclose(fpdoc4); openitl = TRUE;}
+d167 5
+a171 1
+    {fclose(fpdoc5); openitr = TRUE;}
+d173 7
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/pickbackmen.c,v 1.6 94/04/05 16:47:10 leith Exp Locker: leith $*/
+d43 1
+d45 3
+d50 1
+a50 1
+
+d69 1
+a69 1
+    sprintf(cval,"%4d",nsamw);
+d74 1
+a74 1
+    iw_winkey   = wid_textboxb(iw_rowcolv,0,"Next window number:",
+d92 1
+a92 1
+                                "Particle number:",cval,4);
+a93 1
+
+a122 1
+}
+d124 5
+d141 1
+a141 1
+/************ stop windowing callback ********************************/
+d146 6
+a151 1
+ /****************
+d156 3
+a158 3
+ ********************/
+
+
+@

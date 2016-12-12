@@ -1,0 +1,149 @@
+head	1.2;
+access;
+symbols
+	pre-tilt-improve:1.2
+	pre_surf_fromtop:1.2
+	pre_neednewmap:1.2
+	pre_apppluss_remove:1.2
+	pre_tiltpair_chng:1.2
+	pre_GPL:1.2;
+locks;
+comment	@ * @;
+
+
+1.2
+date	94.02.14.10.07.57;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.08;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@proint wrong to free
+@
+text
+@
+/*$Header: /alwyn/usr1/web//RCS/visuals.c,v 1.1 93/11/10 10:11:08 leith Exp Locker: leith $*/
+#include "std.h"
+#include "x.h"
+
+ void visuals(Display *idispl, int iscreen)
+ {
+
+ XVisualInfo   vTemplate;
+ XVisualInfo   *visualList;
+ int           visualsMatched;
+ int           class, i, number;
+
+
+ vTemplate.screen = iscreen;
+
+ visualList = XGetVisualInfo(idispl,VisualScreenMask,&vTemplate,
+                             &visualsMatched);
+ if (visualsMatched == 0)
+     {
+     printf("no matching visuals \n");
+     return;
+     }
+
+ printf("For screen: %d   Matching visuals: %d ------- \n",
+         iscreen,visualsMatched);
+
+ for (i=0; i<visualsMatched; i++)
+   {
+   class  = visualList[i].class;
+
+   if (class == DirectColor)
+      {
+      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+        class, visualList[i].depth, visualList[i].colormap_size,
+        visualList[i].visual);
+      }
+   else if (class == GrayScale)
+      {
+      printf("GreyScale    %3d, Depth: %3d,  Map: %5d  %8d \n",
+        class, visualList[i].depth ,visualList[i].colormap_size,
+        visualList[i].visual);
+      }
+   else if (class == PseudoColor)
+      {
+      printf("PseudoColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+         class, visualList[i].depth ,visualList[i].colormap_size,
+         visualList[i].visual);;
+      }
+   else if (class == StaticColor)
+      {
+      printf("StaticColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+         class, visualList[i].depth, visualList[i].colormap_size,
+         visualList[i].visual);
+      }
+   else if (class == StaticGray)
+      {
+      printf("StaticGray:  %3d, Depth: %3d,  Map: %5d  %8d \n",
+         class, visualList[i].depth, visualList[i].colormap_size,
+         visualList[i].visual);
+      }
+   else if (class == TrueColor)
+      {
+      printf("TrueColor:   %3d, Depth: %3d,  Map: %5d  %8d \n",
+         class, visualList[i].depth, visualList[i].colormap_size,
+         visualList[i].visual);
+      }
+   else if (class == GrayScale)
+      {
+      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+         class, visualList[i].depth ,visualList[i].colormap_size,
+         visualList[i].visual);
+      }
+   else if (class == GrayScale)
+      {
+      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+         class, visualList[i].depth ,visualList[i].colormap_size,
+         visualList[i].visual);
+      }
+
+   }
+ XFree((char *)visualList);
+
+ vTemplate.visual = XDefaultVisual(idispl,iscreen);
+ vTemplate.screen = iscreen;
+
+ visualList = XGetVisualInfo(idispl,VisualScreenMask | VisualNoMask,
+                             &vTemplate, &visualsMatched);
+ 
+ class = visualList[0].class;
+
+ printf("Default    : %3d, Depth: %3d,  Map: %5d %8d\n ",
+         class, visualList[0].depth, visualList[0].colormap_size,
+         visualList[i].visual);
+ XFree((char *) visualList);
+
+}
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d82 1
+a82 1
+ XFree(visualList);
+d95 1
+a95 1
+ XFree(visualList);
+@

@@ -1,0 +1,1208 @@
+head	1.21;
+access;
+symbols
+	pre-tilt-improve:1.20
+	pre_surf_fromtop:1.19
+	pre_neednewmap:1.19
+	pre_apppluss_remove:1.19
+	pre_tiltpair_chng:1.19
+	pre_GPL:1.16;
+locks;
+comment	@ * @;
+
+
+1.21
+date	2015.09.08.18.09.02;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2015.07.27.16.24.17;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2011.06.10.12.15.07;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2011.05.17.17.50.08;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2005.10.18.16.59.51;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	99.09.14.14.15.31;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	96.07.25.15.46.00;	author liy;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	96.05.01.16.13.49;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	96.03.22.16.52.32;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.09.06.16.25.51;	author mladjadj;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.08.09.16.41.55;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.07.21.20.15.22;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.10.18.15.26.04;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.10.18.15.23.28;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.09.12.10.03.31;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.09.07.12.43.43;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.08.11.12.50.43;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.07.13.18.36.19;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.06.10.14.38.30;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.03.11.24.43;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.29;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.21
+log
+@XBell, cosmetic, formatting
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.20 2015/07/27 16:24:17 leith Exp $*/
+
+/*
+ C**********************************************************************
+ C pixel_in.c
+ C              Pixel rewrite                   Jun 2011 ArDean Leith
+ C              Doc file close bug              Jul 2015 ArDean Leith
+ C              Bell                            Sep 2015 ArDean Leith
+ C
+ C**********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C PURPOSE:  Find location of pixel inside image     
+ C           Optionally save location in doc file
+ C
+ C**********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* Internal function prototypes */
+ void              pixel_in_pop   (Widget, XEvent *, String *, Cardinal *);
+
+ // Externally defined common variables 
+ extern char       outstr[80];
+ extern FILEDATA * filedatap;
+
+ extern int        ixreg_pix, iyreg_pix;    // From: pixelmen_sc
+ extern int        isreg_pix, ivreg_pix;    // From: pixelmen_sc
+ extern int        iradius_pix;             // From: pixelmen_sc 
+ 
+ extern XImage *   imagep_in;               // From: pixelmen_in
+ extern int        docit_in;                // From: pixelmen_in 
+ extern int        getscreen_in;            // From: pixelmen_in 
+ extern int        leavit_in;               // From: pixelmen_in 
+ extern int        ikey_in;                 // From: pixelmen_in 
+
+ extern float *    fimage;                  // From: imagemen 
+
+ /* Internally defined common  variables */
+ FILE *            fpdocpix_in = NULL;
+ int *             pixellist;
+ int	           pixelnum;
+
+ /* Static variables */
+ static int        openitp   = TRUE;
+ static int	   bufsiz    = 0;
+ static char       comment[] = "                X            Y       Screen         File"; 
+
+/***************************  pixel_in  *********************************/
+
+ void pixel_in(void)
+ {
+ 
+ openitp  = TRUE;
+ pixelnum = 0;
+
+ /* Open message window with the following prompts  */
+ showbutx("Query location.", 
+          "Show menu.", 
+          "Stop this routine.", FALSE);
+
+ /* Set actions for right, left, and center buttons */
+ actions(iw_win, "pixel_in_pop", pixel_in_pop,"M123");
+ }
+
+
+ /************************* pixel_in_pop ********************************/
+
+ void pixel_in_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+ int   ixi, iyi, ixs, iys, ipix, irect, i, savdocit, inside;
+ int   iloc;
+ float fpix;
+ float dlist[7];
+
+ getloc(event,'m',&ixs,&iys);
+ 
+ /* Find location relative to last displayed image */
+ ixi    = ixs - ixul + 1;
+ iyi    = iys - iyul + 1;
+ inside = iskipadj(ixi,iyi,nsam,nrow,iskip,&ixi,&iyi);
+
+ if ( inside ) 
+    {    // Inside image,  query file value 
+    iloc = (islice -1)*nrow*nsam + (iyi-1)*nrow + ixi -1;
+    fpix = fimage[iloc];
+    }
+
+ if (getscreen_in  && (iys < ihighx ) ) 
+    {    /* Query screen value */
+    ipix = XGetPixel(imagep_in, ixs, iys);
+    if (inside) 
+        ipix = (ipix * 255 / 65535) - imagego ;
+    else
+        ipix = (ipix * 255 / 65535) ;
+
+    }
+
+ if (!(strcmp(*params, "M")))
+    {                           /* List location ------- mouse moved */
+
+    if (!inside && getscreen_in && (iys < ihighx) )
+       {       /* Cursor outside of image, only want inside */
+       sprintf(outstr,"Outside: (%d,%d) = %d$",ixi,iyi,ipix);          
+       }
+
+    else if (inside && getscreen_in )
+       {      /* Cursor inside image and want screen value */     
+       sprintf(outstr,"Location: (%d,%d) = %d  Image value: %f At: %d$",
+                         ixi,iyi,ipix,fpix,iloc);  
+       }
+
+    else if ( inside )
+       {     /* Want position relative to image*/
+       sprintf(outstr,"Location in image: (%d,%d)  Image value: %f At: %d$", 
+                       ixi,iyi,fpix,iloc);
+       }
+    spout(outstr);
+    } 
+
+ else if (!(strcmp(*params, "1")))
+    {                     /*  List location -------- button 1 pushed */
+
+    //printf("Screen location: (%d,%d) \n", ixs,iys);
+    //printf("location ii: (%d,%d) \n", ixi,iyi);
+
+    if (!inside)
+       {    /* Cursor is outside of image, only want inside */
+       sprintf(outstr,"*** Outside image: (%d,%d)", ixi,iyi);
+       spout(outstr);
+       XBell(idispl,50);
+       }
+
+    else 
+       {   /* Inside.  Want to record location, etc */
+
+       if (getscreen_in && (iys < ihighx) )
+          {      /* Record location, screen and file values */
+          sprintf(outstr,"Key: %d  (%d,%d) = %d  Image value: %f",
+                            ikey_in,ixi,iyi,ipix,fpix);
+          }
+       else 
+          {      /* Record location only */
+          sprintf(outstr,"Key:%d  (%d,%d)",
+                          ikey_in,ixi,iyi);
+          }
+      spout(outstr);
+
+      if (docit_in)
+          {  /* Save info in doc file */ 
+
+          for (i=1; i <=6; i++) dlist[i] = 0.0;
+
+          /*     Put this marker in the file */
+          dlist[0]         = ikey_in;
+          dlist[ixreg_pix] = ixi;
+          dlist[iyreg_pix] = iyi;
+          dlist[ivreg_pix] = fpix;  
+          if (getscreen_in) dlist[isreg_pix] = ipix;
+
+          if (openitp)
+
+             fpdocpix_in = savdnc(docnam, datexc, 
+                               &fpdocpix_in, dlist, 7, 
+                               &openitp, TRUE, TRUE, 
+                               comment);
+          else
+             fpdocpix_in = savdn1(docnam, datexc, 
+                               &fpdocpix_in, dlist, 7, 
+                               &openitp, TRUE, TRUE);
+          }
+
+      if (leavit_in)
+          {
+	  /* Check pixel buffer size, if not enough add more */
+ 	  if (pixelnum >= (bufsiz-1) )
+             {
+             if ((pixellist = (int *) realloc(pixellist, (bufsiz+400)*
+                    	sizeof(int))) == NULL)
+                {
+                spout("*** Unable to realloc pixelbuf in pixel.c");
+                XBell(idispl,50);  return;
+                }
+	     bufsiz = bufsiz + 400;
+	     }
+	     
+	  /* Record the pixel number */
+	  pixellist[pixelnum] = ixi;    pixelnum++;
+	  pixellist[pixelnum] = iyi;    pixelnum++;
+
+	  /* Leave permanent circle at this location */
+          xorc(iwin,    icontx, TRUE, ixs, iys, iradius_pix);
+          xorc(imagsav, icontx, TRUE, ixs, iys, iradius_pix);
+          }
+       }
+       ikey_in++;
+    }
+
+ else if (!(strcmp(*params, "2")))
+    {                    /* Show menu ------------  Button 2 pushed */
+    /* Kludge to prevent file name incrementing */
+    if (docit_in)
+       pixelmen_in_doc(NULL, NULL, NULL);
+    else
+       pixelmen_in_nod();
+    }
+
+ else if (!(strcmp(*params, "3")))
+    {                    /* Stop routine ---------  Button 3 pushed */
+    pixelmen_in_buts(NULL,NULL,NULL);
+    pixelnum = 0;
+
+    if (fimage)
+        { free(fimage); fimage = NULL; }
+    }
+ }
+@
+
+
+1.20
+log
+@Doc file close bug
+@
+text
+@d2 2
+a3 1
+/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.19 2011/06/10 12:15:07 leith Exp $*/
+d5 1
+d9 1
+d38 2
+a39 1
+ C 
+d47 1
+a47 1
+ void    pixel_in_pop (Widget, XEvent *, String *, Cardinal *);
+d51 1
+a51 1
+ extern FILEDATA   *filedatap;
+d57 1
+a57 1
+ extern XImage  *  imagep_in;               // From: pixelmen_in
+d63 1
+a63 1
+ extern float  *   fimage;                  // From: imagemen 
+d66 2
+a67 2
+ FILE             *fpdocpix_in = NULL;
+ int		  *pixellist;
+d70 4
+a73 4
+ /* Static varables */
+ static int       openitp = TRUE;
+ static int	  bufsiz  = 0;
+ static char      comment[] = "                X            Y       Screen         File"; 
+d85 1
+a85 1
+          "Menu.", 
+d136 1
+a136 1
+       sprintf(outstr,"Location: (%d,%d) = %d From: %f At: %d$",
+d141 2
+a142 2
+       {/* Want position relative to image*/
+       sprintf(outstr,"Location in image: (%d,%d)  From: %f At: %d$", 
+d158 1
+d165 2
+a166 2
+          {/* Record location, screen and file values */
+          sprintf(outstr,"Key:%d  (%d,%d) = %d From: %f",
+d170 1
+a170 1
+          { /* Record location only */
+d209 1
+a209 1
+                return;
+d232 1
+a232 1
+       pixelmen_in_nod(NULL, NULL, NULL);
+@
+
+
+1.19
+log
+@new
+@
+text
+@d2 1
+a2 1
+/*$Header:  $*/
+d4 5
+a8 4
+ * pixel_in.c
+ *              Pixel rewrite                     Jun 2011 ArDean Leith
+ *
+ ***********************************************************************
+d10 1
+a10 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d32 5
+a36 5
+ ***********************************************************************
+ *
+ * PURPOSE:  Find location of pixel inside image     
+ * 
+ ***********************************************************************
+d62 1
+a62 1
+ FILE             *fpdocpix_in = 0;
+@
+
+
+1.18
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header:  Exp leith $*/
+d4 2
+a5 1
+ * pixel.c
+d33 1
+a33 1
+ * PURPOSE:  Find location of pixel      
+d41 2
+a42 2
+ /* Internal functions */
+ void    pixel_pop (Widget, XEvent *, String *, Cardinal *);
+d44 1
+a44 2
+ /* External variables */
+ extern XImage  *  imagep;
+a45 2
+ extern int        ixreg, iyreg, isreg, ivreg;
+ extern int        pixelmen_showing;
+d48 14
+a61 2
+ /* Internal common variables */
+ FILE             *fpdocpix = 0;
+d63 1
+a63 1
+ int	          pixelnum;
+d68 1
+d70 1
+a70 1
+/***************************  pixel  *********************************/
+d72 1
+a72 1
+ void pixel(void)
+d78 1
+a78 1
+ /* Open message window with the following strings  */
+d84 1
+a84 2
+ actions(iw_win, "pixel_pop", pixel_pop,"M123");
+
+d88 1
+a88 1
+ /************************* pixel_pop ********************************/
+d90 2
+a91 2
+ void pixel_pop(Widget iw_t, XEvent *event, String *params,
+               Cardinal *num_params)
+d94 2
+a95 1
+ float fval;
+d98 23
+a122 14
+    getloc(event,'m',&ixs,&iys);
+    if (inimag) 
+       {     /* Find location relative to last image */
+       ixi    = ixs - ixul + 1;
+       iyi    = iys - iyul + 1;
+       inside = iskipadj(ixi,iyi,nsam,nrow,iskip,&ixi,&iyi);
+       }
+    else
+       {
+       ixi    = ixs;
+       iyi    = iys;
+       }
+       
+
+d124 3
+a126 17
+    if (inimag && !inside)
+       {    /* Cursor is outside of image, only want inside */
+       if (getscreen)
+          {      /* List location and screen value anyway */
+          if (iys > (ihighx - iyulx))
+             {
+             sprintf(outstr,"*** Outside: (%d,%d) = (off screen)$",
+                    ixi,iyi);
+             }
+          else
+             {
+             ipix = XGetPixel(imagep,ixs-ixulx,iys-iyulx);
+             sprintf(outstr,"Outside: (%d,%d) = %d$",ixi,iyi,ipix);
+             }          
+          }
+       else
+          sprintf(outstr,"*** Outside: (%d,%d)$", ixi,iyi);
+d129 1
+a129 1
+    else if (getscreen)
+d131 2
+a132 7
+       if (iys > (ihighx - iyulx))
+          sprintf(outstr,"Location: (%d,%d) = (off screen)$",ixi,iyi);
+       else
+          {
+          ipix = XGetPixel(imagep,ixs-ixulx,iys-iyulx);
+          sprintf(outstr,"Location: (%d,%d) = %d$",ixi,iyi,ipix);
+          }
+d135 5
+a139 8
+    else if (inimag)
+       /* Want position relative to image*/
+       sprintf(outstr,"Location in image: (%d,%d)$", ixi,iyi);
+
+    else
+       /* Cursor inside image*/
+       sprintf(outstr,"Screen location: (%d,%d)$", ixi,iyi);
+
+a144 2
+    //printf("gettinglocation: \n");
+    getloc(event,'B',&ixs,&iys);
+a146 12
+
+    if (inimag) 
+       {     /* Find location relative to last image */
+       ixi    = ixs - ixul + 1;
+       iyi    = iys - iyul + 1;
+       inside = iskipadj(ixi,iyi,nsam,nrow,iskip,&ixi,&iyi);
+       }
+    else
+       {
+       ixi    = ixs;
+       iyi    = iys;
+       }
+d149 1
+a149 1
+    if (inimag && !inside)
+d156 1
+a156 1
+       {   /* Want to record this location */
+d158 9
+a166 6
+       if (getfile)
+          {    /* want value in image at this location */
+          irect = (islice -1) * nrow + iyi -1;
+
+          if (redlin(filedatap,filedatap -> buf,nsam,irect) == FALSE) return;
+          fval = filedatap -> buf[ixi -1];
+a167 37
+
+       if (getfile && getscreen)
+          /* Record location, screen and file values */
+          {
+          if (iys > (ihighx - iyulx))
+             {
+             sprintf(outstr,"Key:%d  (%d,%d) = (off screen) from:%f",
+                      ikey,ixi,iyi,fval);
+             }
+          else
+             {
+             ipix = XGetPixel(imagep,ixs-ixulx,iys-iyulx);
+             sprintf(outstr,"Key:%d  (%d,%d) = %d from:%f",
+                            ikey,ixi,iyi,ipix,fval);
+             } 
+          }
+
+      else if (getfile)
+          /* Record location and file values */
+          sprintf(outstr,"Key:%d  (%d,%d)   from:%f",ikey,ixi,iyi,fval);
+
+      else if (getscreen)
+          /* Record location and  screen values */
+         if (iys > (ihighx - iyulx))
+             {
+             sprintf(outstr,"Key:%d  (%d,%d) = (off screen)",
+                     ikey,ixi,iyi);
+             }
+          else
+             {
+             ipix = XGetPixel(imagep,ixs-ixulx,iys-iyulx);
+             sprintf(outstr,"Key:%d  (%d,%d) = %d", ikey,ixi,iyi,ipix);
+             }
+      else 
+          /* Record location */
+          sprintf(outstr,"Key:%d  (%d,%d)",ikey,ixi,iyi);
+
+d170 1
+a170 1
+       if (docit)
+a172 1
+          /*     put this marker in the file */
+d175 17
+a191 7
+          dlist[0] = ikey;
+          dlist[ixreg] = ixi;
+          dlist[iyreg] = iyi;
+          if (getscreen) dlist[isreg] = ipix;
+          if (getfile)   dlist[ivreg] = fval;  
+          fpdocpix    = savdn1(docnam, datexc, &fpdocpix, dlist, 7, 
+                     &openitp, TRUE, TRUE);
+d194 1
+a194 1
+       if (leavit)
+d197 2
+a198 1
+ 	  if (pixelnum >= bufsiz-1) {
+d201 4
+a204 4
+             {
+             spout("*** Unable to reallocate pixelbuf memory in pixel.c");
+             return;
+             }
+d206 1
+a206 1
+	  }
+d209 2
+a210 2
+	  pixellist[pixelnum] = ixi;		pixelnum++;
+	  pixellist[pixelnum] = iyi;		pixelnum++;
+d213 2
+a214 2
+          xorc(iwin,    icontx, TRUE, ixs, iys, iradius);
+          xorc(imagsav, icontx, TRUE, ixs, iys, iradius);
+d217 1
+a217 1
+       ikey++;
+d221 1
+a221 1
+    {                    /* Show menu --------       Button 2 pushed */
+d223 4
+a226 4
+    savdocit         = docit; docit = FALSE; 
+    pixelmen_showing = TRUE;
+    docit            = savdocit;
+    pixelmen(NULL, NULL, NULL); 
+d230 2
+a231 3
+    {                    /* Stop routine -------    Button 3 pushed */
+    pixelmen_showing = TRUE;
+    pixelmen_buts(NULL,NULL,NULL);
+d233 3
+@
+
+
+1.17
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixel.c,v 1.16 1999/09/14 14:15:31 leith Exp $*/
+d32 1
+a33 7
+ * 
+ * PURPOSE:     Find location of pixel      
+ * 
+ * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
+ *		caddr_t		data		label text string
+ *		caddr_t		call_data	not used 
+ *
+d40 1
+a40 1
+ /* internal functions */
+d43 6
+a48 6
+ /* external variables */
+ extern XImage  * imagep;
+ extern char      outstr[80];
+ extern int       ixreg, iyreg, isreg, ivreg;
+ extern int       pixelmen_showing;
+ extern FILEDATA  *filedatap;
+d50 1
+a50 1
+ /* internal common variables */
+d55 1
+a55 1
+ /* static viarables */
+d67 1
+a67 1
+ /* open a message window with the following strings  */
+d72 1
+a72 1
+ /* set the actions for right, left, and center buttons */
+d91 1
+a91 1
+       {     /* find location relative to last image */
+d98 2
+a99 2
+       ixi = ixs;
+       iyi = iys;
+d101 2
+d105 1
+a105 1
+       {    /* cursor is outside of image, only want inside */
+d107 1
+a107 1
+          {      /* list location and screen value anyway */
+d124 1
+a124 1
+       {      /* cursor inside image and want screen value */     
+d135 1
+a135 1
+       /* want position relative to image*/
+d139 1
+a139 1
+       /* cursor inside image*/
+d147 1
+d150 2
+d153 1
+a153 1
+       {     /* find location relative to last image */
+d160 2
+a161 2
+       ixi = ixs;
+       iyi = iys;
+d163 1
+d166 1
+a166 1
+       {    /* cursor is outside of image, only want inside */
+d172 1
+a172 1
+       {   /* want to record this location */
+d183 1
+a183 1
+          /* record location, screen and file values */
+d199 1
+a199 1
+          /* record location and file values */
+d203 1
+a203 1
+          /* record location and  screenvalues */
+d215 1
+a215 1
+          /* record location */
+d221 1
+a221 1
+          {  /* save info in doc file */ 
+d237 1
+a237 2
+	  /* check the pixel buffer size, if the size is not enough to the new */
+	  /* pixel, add more */
+d245 1
+a245 1
+	     bufsiz = bufsiz+400;
+d248 1
+a248 1
+	  /* record the pixel number */
+d252 1
+a252 1
+	  /* leave permanent circle at this location */
+d261 2
+a262 2
+    {                    /* show menu --------       button 2 pushed */
+    /* kludge to prevent file name incrementing */
+d270 1
+a270 1
+    {                    /* stop routine -------    button 3 pushed */
+@
+
+
+1.16
+log
+@added iskipadj
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixel.c,v 1.15 1996/07/25 15:46:00 liy Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.  
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.15
+log
+@fixed the bug particles can not be saved after shifting
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixel.c,v 1.14 1996/05/01 16:13:49 leith Exp liy $*/
+d72 1
+a72 1
+ int   ixi, iyi, ixs, iys, ipix, irect, i, savdocit;
+d81 3
+a83 2
+       ixi = ixs - ixul + 1;
+       iyi = iys - iyul + 1;
+d91 1
+a91 2
+    if (inimag && (ixi < 1 || ixi > nsam ||
+                   iyi < 1 || iyi > nrow))
+d138 3
+a140 2
+       ixi = ixs - ixul + 1;
+       iyi = iys - iyul + 1;
+d148 1
+a148 2
+    if (inimag && ( ixi < 1 || ixi > nsam ||
+                    iyi < 1 || iyi > nrow))
+d247 1
+a247 1
+    savdocit = docit; docit = FALSE; 
+d249 1
+a249 1
+    docit   = savdocit;
+@
+
+
+1.14
+log
+@altered savdn1 call.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixel.c,v 1.13 1996/03/22 16:52:32 leith Exp leith $*/
+d247 1
+a247 1
+    savdocit = docit; docit = FALSE; fclose(fpdocpix); 
+a248 1
+    pixelmen_buts(NULL,NULL,NULL);
+@
+
+
+1.13
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixel.c,v 1.12 1995/09/06 16:25:51 mladjadj Exp leith $*/
+d215 1
+a215 1
+                     &openitp, TRUE);
+@
+
+
+1.12
+log
+@remove XtUninstallTranslations
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixel.c,v 1.11 1995/08/09 16:41:55 leith Exp $*/
+d53 1
+a53 1
+ openitp = TRUE;
+d72 1
+a72 1
+ int ixi, iyi, ixs, iys, ipix, irect, i, savdocit;
+d229 1
+a229 1
+	     bufsiz=bufsiz+400;
+d248 1
+a248 1
+    pixelmen_showing = 1;
+d250 1
+a250 1
+    docit = savdocit;
+d256 1
+a256 1
+    pixelmen_showing = 1;
+@
+
+
+1.11
+log
+@?
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pixel.c,v 1.10 1995/07/21 20:15:22 liy Exp $*/
+a59 3
+
+ /* remove all translations from iw_win */
+ XtUninstallTranslations(iw_win);
+@
+
+
+1.10
+log
+@added shift image function
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr1/web/src/RCS/pixel.c,v 1.9 94/10/18 15:26:04 odesanya Exp $*/
+d37 1
+d164 2
+a165 2
+          if (redlin(filedata,filedata -> buf,nsam,irect) == FALSE) return;
+          fval = filedata -> buf[ixi -1];
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixel.c,v 1.7 94/09/12 10:03:31 leith Exp $*/
+d36 1
+a38 1
+ static int       openitp = TRUE;
+d40 2
+d43 3
+d53 1
+d221 18
+a238 1
+          {   /* leave permanent circle at this location */
+d250 1
+d258 1
+d260 1
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@a209 3
+
+          printf("ikey: %d openitp: %d\n",ikey,openitp);
+
+@
+
+
+1.7
+log
+@reworked accept callback
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr1/web/src/RCS/pixel.c,v 1.6 94/09/07 12:43:43 odesanya Exp $*/
+d210 3
+d229 1
+a229 1
+    savdocit = docit; docit = FALSE;
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixel.c,v 1.5 94/08/11 12:50:43 leith Exp $*/
+a28 1
+ 
+d38 2
+a39 1
+ static int           openitp = TRUE;
+d68 1
+a68 2
+ int    numdoc, nlet;
+ int ixi, iyi, ixs, iys, ipix, irect, i;
+a70 1
+ static FILE *fpdoc;
+d210 1
+a210 1
+          fpdoc    = savdn1(docnam, datexc, &fpdoc, dlist, 7, 
+d225 5
+a229 1
+    pixelmen(NULL,NULL,NULL);
+d234 1
+a234 6
+    /* uninstall translations */
+    XtUninstallTranslations(iw_win);
+
+ if (docit  && strlen(docnam) != 0) 
+    {
+    filinc(docnam, docnam, &nlet, &numdoc);
+a235 10
+
+ /* unmanage information box */
+ showbutx("","","",TRUE);
+
+ if (strlen(filnow) != 0 && filedata->fp != NULL) closefile(filedata); 
+
+ /*     close doc file */
+ if (docit) fclose(fpdoc);
+
+ }
+@
+
+
+1.5
+log
+@used routines.h changed savdn1 to append
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/pixel.c,v 1.4 94/07/13 18:36:19 odesanya Exp Locker: leith $*/
+d233 1
+a233 1
+    XtUninstallTranslations(iw_t);
+d243 1
+a243 1
+ if (filedata->fp != NULL) closefile(filedata); 
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/pixel.c,v 1.3 94/06/10 14:38:30 odesanya Exp $*/
+d27 1
+a28 13
+
+ /* external function prototypes */
+ extern void    showbutx  (char *, char *, char *, int);
+ extern void    actions   (Widget, char *, void (*)(), char*);
+ extern void    spout     (char *);
+ extern int     filinc    (char *, char *, int *, int *);
+ extern void    xorc      (Window, GC, int, int, int, int);
+ extern void    getloc    (XEvent *, char, int *, int *);
+ extern int     redlin    (FILEDATA *, float *, int, int);
+ extern void    pixelmen  (Widget, caddr_t, caddr_t);
+ extern FILE *  savdn1    (char *, char *, FILE **, float *, 
+                           int,int *,int);
+
+d42 1
+a42 1
+/************************  pixel  ******************************/
+a46 1
+
+d63 1
+a63 1
+ /************************* pixel_pop **************************/
+d75 1
+a75 1
+    {                           /* List location  */
+d131 1
+a131 1
+    {                     /*  List location -- button 1 pushed */
+d213 1
+a213 1
+                     &openitp, FALSE);
+d226 1
+a226 1
+    {                    /* show menu --       button 2 pushed */
+d231 1
+a231 1
+    {                    /* stop routine --    button 3 pushed */
+d240 2
+a241 2
+    /* unmanage information box */
+    showbutx("","","",TRUE);
+d243 1
+a243 1
+    if (filedata->fp != NULL) closefile(filedata); 
+d245 2
+a246 2
+    /*     close doc file */
+    if (docit) fclose(fpdoc);
+d248 1
+a248 1
+    }
+@
+
+
+1.3
+log
+@fixed crashing and document writing problem
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/pixel.c,v 1.2 94/02/03 11:24:43 leith Exp $*/
+d255 2
+@
+
+
+1.2
+log
+@fixed doc file output
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/pixel.c,v 1.1 93/11/10 10:11:29 leith Exp Locker: leith $*/
+d33 1
+d59 3
+d81 1
+d224 1
+a224 1
+          if (getfile)   dlist[ivreg] = fval;
+d247 5
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a25 2
+#include "std.h"
+#include "x.h"
+d37 2
+d46 2
+d49 2
+a51 1
+/*******************************************************************/
+d53 2
+d77 1
+a77 1
+ int ixi, iyi, ixs, iys, ipix, irect;
+d79 2
+a80 1
+ char outstr[60];
+a161 1
+       ikey++;
+d210 1
+a210 2
+          {  /* save info in doc file  FUTURE !!!!!!!!!!!*/        
+          }
+d212 2
+d215 8
+d230 1
+d245 4
+@

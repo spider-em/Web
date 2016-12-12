@@ -1,0 +1,555 @@
+head	1.6;
+access;
+symbols
+	pre-tilt-improve:1.6
+	pre_surf_fromtop:1.6
+	pre_neednewmap:1.6
+	pre_apppluss_remove:1.6
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.6
+date	2005.10.18.16.59.53;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.08.21.18.54.55;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.08.21.16.15.01;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	96.08.13.15.35.35;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	96.05.01.16.13.39;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	95.11.29.20.04.49;	author liy;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@GPL
+@
+text
+@/*
+ * dist.c
+ *		---- Converted from wid_dist.for
+ *		     by Yanhong Li
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ * 
+ * PURPOSE:     Find the distance between pixels      
+ * 
+ * PARAMETERS:  None 
+ *
+ * Called by:   distmen
+ *
+ ***********************************************************************
+ */
+
+#include "common.h"
+#include "routines.h"
+
+#define  MAXREG	7
+
+ /* external  functions */
+ extern void distmen_buts(Widget , XtPointer, XtPointer);
+
+ /* internal functions */
+ void    dist_pop (Widget, XEvent *, String *, Cardinal *);
+
+ /* external global variables */
+ extern FILE    *fpdocpix;
+
+ /* global variables used elsewhere (distmen.c) */
+ int     opendistdoc = TRUE;
+ int     singledist  = TRUE;
+ int     dist_docit  = TRUE;
+ int     dist_inimag = TRUE;
+ int     dist_leavit = TRUE;
+
+ /* file scope variables */
+ static GC     icontxx;
+ static int    ix0, iy0, ix1, iy1;     /* starting and ending point */
+ static float  dlist[MAXREG];
+ static int    ndist;			/* The starting point flag */
+ static float  distance;		/* the distance between two points */
+
+/***************************  dist  *********************************/
+
+ void dist()
+ {
+ ndist = -1;
+  
+ /* turn on xor writing in icontxx */
+ icontxx = setxor(icontx);
+
+ /* open a message window with the following strings  */
+ if (singledist)
+    {
+    showbutx("Set the starting point/ending point.", 
+             "Menu .", 
+             "Set new starting point.", FALSE);
+    }
+ else
+    {
+    showbutx("Set the starting point/ending point.", 
+             "Menu.", 
+             "Stop this starting point.", FALSE);
+    }
+ /* set the actions for right, left, and center buttons */
+ actions(iw_win, "dist_pop", dist_pop,"M123");
+ }
+
+ /************************* dist_pop ********************************/
+
+ void dist_pop(Widget iw_t, XEvent *event, String *params,
+               Cardinal *num_params)
+ {
+ int   dx, dy;	       /* the distance for x-y axis */
+ int   ixi, iyi;
+ char  outstr[80];     /* print out string */
+
+ if (!(strcmp(*params, "M")))
+    {                           /* List location ---- mouse moved */
+    getloc(event,'m',&ix1,&iy1);
+    if (dist_inimag) 
+       {     /* find location relative to last image */
+       ixi = ix1 - ixul + 1;     iyi = iy1 - iyul + 1;
+       }
+
+    if (ndist < 0)  	/* the starting point flag */
+       /* haven't got the starting point yet */
+       return;
+
+    else if (dist_inimag && (ixi < 1 || ixi > nsam ||
+                             iyi < 1 || iyi > nrow))
+       {    /* cursor is outside of image, only want inside */
+       sprintf(outstr,"*** Outside: (%d,%d)$", ixi,iyi);
+       spout(outstr);
+
+       /* draw line */
+       xorline(iwin, icontxx, FALSE, ix0, iy0, ix1, iy1);
+       }
+
+    else 
+       {      /* report the distance, don't save it */     
+       dx = ix1 - ix0;    dy = iy1 - iy0;
+       distance = sqrt((float)(dx*dx + dy*dy));
+       sprintf(outstr,"*** Distance: %f ****$", distance);
+       spout(outstr);
+
+       xorline(iwin, icontxx, FALSE, ix0, iy0, ix1, iy1);
+       }
+    }
+
+ else if (!(strcmp(*params, "1")))
+    {                     /*  List location -------- button 1 pushed */
+    getloc(event,'B',&ix1,&iy1);
+
+    if (dist_inimag) 
+       {     /* find location relative to last image */
+       ixi = ix1 - ixul + 1;     iyi = iy1 - iyul + 1;
+       }
+
+    if (ndist < 0)	  
+       {   /* set starting point for distance listing */
+       ndist = 0;
+       ix0   = ix1;     iy0   = iy1;
+       return;
+       }
+
+    else if (dist_inimag && ( ixi < 1 || ixi > nsam ||
+                              iyi < 1 || iyi > nrow))
+       {    /* cursor is outside of image, only want inside */
+       sprintf(outstr,"*** Outside image: (%d,%d)", ixi,iyi);
+       spout(outstr);
+       }
+
+    else {
+       /* record the distance */
+
+       if (dist_leavit) 
+	  { 	/* draw a permanent line along the distance */
+	  xorline(iwin,    icontxx, TRUE, ix0, iy0, ix1, iy1);
+	  xorline(iwin,    icontxx, TRUE, ix0, iy0, ix1, iy1);
+	  xorline(imagsav, icontxx, TRUE, ix0, iy0, ix1, iy1);
+	  }
+ 
+       ndist++;
+
+       if (dist_docit)
+	  {	/* want to save this distance for doc file */
+
+	  if (ndist > MAXREG )
+	     {	/* too many distances from this starting point for doc file */
+       	     spout("*** Document key is full, maximum line # is 7");
+	     ndist = MAXREG;
+	     }
+
+	  else 
+	     {	/* save the location for entry in doc file */
+	     dlist[ndist] = distance;
+       	     sprintf(outstr,"*** Selected: #%d: %d  %f", ikey, 
+                            ndist - 1, distance);
+       	     spout(outstr);
+             if (singledist) 
+                {    /* only want one distance from this start */
+                if (dist_docit > 0)
+                   {      /* save the current distance line */
+                   dlist[0] = ikey++;
+                   dlist[2] = ix0;
+                   dlist[3] = iy0;
+                   dlist[4] = ix1;
+                   dlist[5] = iy1;
+                   fpdocpix = savdn1(docnam, datexc, &fpdocpix, 
+                            dlist, 6, &opendistdoc, 
+                            TRUE, TRUE);
+                   }
+                ndist    = 0;
+                ix0      = ix1;     iy0   = iy1;
+                distance = 0;
+                }
+	     }
+	  }
+       }
+    }
+
+ else if (!(strcmp(*params, "2")))
+    {                     /*  display the dist_menu */
+    /* remove current actions */
+    XtUninstallTranslations(iw_win);
+    xorline(iwin, icontxx, TRUE, ix0, iy0, ix1, iy1);
+
+    /* show menu */
+    showbutx(NULL, NULL, NULL, TRUE);
+    distmen(NULL, NULL, NULL);
+    }
+
+ else if (!(strcmp(*params, "3")))
+    {                     /*  set a new starting point */
+    if (ndist > 0) 
+       /* remove the current line */
+       xorline(iwin, icontxx, TRUE, ix0, iy0, ix1, iy1);
+
+    if ( !singledist) 
+       {     
+       if (dist_docit > 0 && ndist > 0)
+          {      /* first save the current distance line */
+          dlist[0] = ikey;
+          fpdocpix    = savdn1(docnam, datexc, &fpdocpix, dlist, ndist+1, 
+                            &opendistdoc, TRUE, TRUE);
+          ikey++;
+          }
+       }
+    ndist = -1;
+    }
+ }
+ 
+
+       
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.  
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH                       
+@
+
+
+1.4
+log
+@added sigledist
+added singledist
+@
+text
+@d65 2
+a66 2
+             "Menu.", 
+             "Stop finding distances.", FALSE);
+d175 4
+d180 1
+a180 1
+                            dlist, ndist+1, &opendistdoc, 
+d183 3
+a185 1
+                ndist = -1;
+d209 1
+a209 6
+    if (singledist) 
+       {
+       distmen_buts(NULL,NULL,NULL);
+       ndist = -1;
+       }
+    else
+a210 1
+
+a217 1
+       ndist = -1;
+d219 1
+@
+
+
+1.3
+log
+@opendoc fixed
+@
+text
+@d19 1
+a19 1
+ * Called by:   web_com()
+d29 3
+d38 1
+a38 4
+ /* global variables */
+ int	 ndist;			/* The starting point flag */
+ float   distance;		/* the distance between two points */
+ float   dlist[7];
+d40 4
+d46 5
+a50 2
+ static GC  icontxx;
+ static int   ix0, iy0, ix1, iy1;     /* starting and ending point */
+d58 1
+a58 1
+ /* turn on xor wiriting in icontxx */
+d62 12
+a73 4
+ showbutx("Set the starting point/ending point.", 
+          "Menu.", 
+          "Stop this starting point.", FALSE);
+
+d83 3
+a85 4
+ int   dx, dy;				/* the distance for x-y axis */
+ int   ixi, iyi, i;
+ char  outstr[80];			/* print out string */
+ int   ntemp;
+d88 1
+a88 1
+    {                           /* List location ------- mouse moved */
+d90 1
+a90 1
+    if (inimag) 
+d92 1
+a92 7
+       ixi = ix1 - ixul + 1;
+       iyi = iy1 - iyul + 1;
+       }
+    else
+       {
+       ixi = ix1;
+       iyi = iy1;
+d95 1
+a95 1
+    if (ndist < 0)  		/* the starting point flag */
+d99 2
+a100 2
+    else if (inimag && (ixi < 1 || ixi > nsam ||
+                        iyi < 1 || iyi > nrow))
+d102 2
+a103 2
+          sprintf(outstr,"*** Outside: (%d,%d)$", ixi,iyi);
+	  spout(outstr);
+d105 2
+a106 2
+	  /* draw line */
+	  xorline(iwin, icontxx, FALSE, ix0, iy0, ix1, iy1);
+d110 2
+a111 4
+       {      /* report the distance, do not save it till button 3 */     
+       dx = ix1 - ix0;
+       dy = iy1 - iy0;
+
+d124 1
+a124 1
+    if (inimag) 
+d126 1
+a126 2
+       ixi = ix1 - ixul + 1;
+       iyi = iy1 - iyul + 1;
+a127 5
+    else
+       {
+       ixi = ix1;
+       iyi = iy1;
+       }
+d129 2
+a130 2
+    if (ndist < 0)		/* set starting point for distance listing */
+       {   
+d132 1
+a132 2
+       ix0   = ix1;
+       iy0   = iy1;
+d136 2
+a137 2
+    else if (inimag && ( ixi < 1 || ixi > nsam ||
+                         iyi < 1 || iyi > nrow))
+d144 1
+a144 1
+       /* record the distance into Doc. file */
+d146 1
+a146 1
+       if (leavit) 
+d155 2
+a156 2
+       if (docit)
+	  {	/* want to select this distance for doc file */
+d159 1
+a159 1
+	     {	/* too many distance from this starting point for doc file */
+d167 2
+a168 3
+	     ntemp = ndist - 1;
+
+       	     sprintf(outstr,"*** Selected: #%d: %d  %f", ikey, ntemp, distance);
+d170 11
+d182 1
+a182 1
+	 }
+a187 1
+
+a198 1
+
+d203 7
+a209 2
+    if (docit > 0 && ndist > 0)
+       {	/* first save the current distance line */
+d211 4
+a214 2
+       dlist[0] = ikey;
+       fpdocpix    = savdn1(docnam, datexc, &fpdocpix, dlist, ndist+1, 
+d216 3
+a218 1
+       ikey++;
+a219 1
+    ndist = -1;
+@
+
+
+1.2
+log
+@altered savdn1 call
+@
+text
+@a14 1
+ * 
+d32 1
+a32 1
+ /* external common variables */
+d35 1
+a35 1
+ /* internal common variables */
+d38 2
+a39 1
+ float dlist[7];
+d41 1
+a41 1
+ /* global variables */
+d43 1
+a43 2
+ static int       openitp = TRUE;
+ static int   ix0, iy0, ix1, iy1;	/* starting and ending point */
+a60 1
+
+d69 1
+a69 2
+ int   ixi, iyi, ipix, irect, i, savdocit;
+ float fval;
+d102 3
+a104 3
+       {      /* cursor inside image and report the distance */     
+          dx = ix1 - ix0;
+	  dy = iy1 - iy0;
+d106 3
+a108 3
+	  distance = sqrt( (float)(dx*dx + dy*dy));
+          sprintf(outstr,"*** Distance: %f ****$", distance);
+	  spout(outstr);
+d110 2
+a111 2
+	  xorline(iwin, icontxx, FALSE, ix0, iy0, ix1, iy1);
+	  }
+d132 2
+a133 2
+       ix0 = ix1;
+       iy0 = iy1;
+d149 2
+a150 2
+	  xorline(iwin, icontxx, TRUE, ix0, iy0, ix1, iy1);
+	  xorline(iwin, icontxx, TRUE, ix0, iy0, ix1, iy1);
+d161 1
+a161 3
+       	     sprintf(outstr,"*** Document file is full, maximum line # is 7");
+       	     spout(outstr);
+	
+d201 1
+a201 1
+                     &openitp, TRUE, TRUE);
+@
+
+
+1.1
+log
+@initial revision
+@
+text
+@d206 1
+a206 1
+                     &openitp, TRUE);
+@

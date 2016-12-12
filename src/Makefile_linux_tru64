@@ -4,7 +4,7 @@
 #           Dynamic linking, Links X dynamic and Motif dynamic
 #
 # USAGE:    on lumpur!!!!!
-#           sw  ; make -f Makefile_linux_tru64
+#           sw  ; make -f Makefile_linux_tru64   mv $swb/web_linux_tru64_tmp $swb/web_linux_tru64.61
 #           swt ; clean ; $swb/web_linux_tru64_tmp dat
 #
 
@@ -41,3 +41,22 @@ include Makefile.inc
 
 $(LIB) :  $(ELEMENTS)
 	@echo " Linking: $(PGM)    now ----"
+
+
+# lumpur        
+0       /usr/lib/libX11-xcb.so.1       
+0       /usr/lib/libXext.so.6          
+0       /usr/lib/libXau.so.6           
+0       /usr/lib/libX11.so.6 
+
+
+0       /usr/lib/libX11.so.6
+0       /usr/lib64/libXt.so
+0       /usr/lib64/libX11.so
+0       /usr/lib64/libXmu.so
+  
+send/web/bin:        
+linux_dir    dynamic  flashes
+linux_dirs   static   flashes
+linux_tru    dynamic
+linux_trus   static   

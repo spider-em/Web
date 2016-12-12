@@ -1,0 +1,462 @@
+head	1.10;
+access;
+symbols
+	pre-tilt-improve:1.10
+	pre_surf_fromtop:1.10
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.10
+date	2011.09.23.19.07.53;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2011.09.22.19.35.21;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2011.09.22.16.38.41;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2011.05.18.18.22.51;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.18.17.00.02;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.08.29.18.41.45;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.09.12.14.22.55;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.09.12.11.21.47;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.23.10.52.33;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.26;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@expos_cb(NULL,NULL,NULL);  // Shortens delay,
+wicolor(icontxx,colorgo+icolorov)
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/winmov.c,v 1.9 2011/09/22 19:35:21 leith Exp $*/
+
+/*
+C++*************************************************************************
+C
+C WID_WINMOV.FOR -- CREATED JAN 90 al
+C                   WIDGETIZED APRIL 91 al
+C WINMOV.C          CONVERTED TO C -- SEPT 92 al
+C **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C winmov
+C
+C PURPOSE:       Positions a determined size of window on screen
+C
+C CALLED BY:     winsiz
+C
+C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
+C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
+C                     \ wid_posiz  --> winsiz3    /
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ void           winmov_pop (Widget, XEvent *, String *, Cardinal *);
+
+ static GC      icontxx;
+
+ /**************************************************************/
+
+ void winmov(void)
+ {
+
+ /* Make a xor graphics context */
+ icontxx = setxor(icontx);
+ wicolor(icontxx,colorgo+icolorov);
+
+ /* Set up action procedure to set window location */
+ actions(iw_win, "winmov_pop", winmov_pop, "M123");
+
+ showbutx("Sets window location.",
+          "Changes window size.",
+          "Stops this routine.", FALSE);
+ } 
+
+
+ /**************** Set window position ***************/
+
+
+ void winmov_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+
+ if (!(strcmp(*params,"M")))                 /* Cursor moved */
+    {
+    /* Get mouse position ix,iy  */
+    getloc(event,'M',&ixulw,&iyulw);
+
+    /* Mouse moved so erase old box and draw new box */
+    xorbox(iwin,icontxx,FALSE,ixulw,iyulw,nsamw,nroww);
+    } 
+
+ else if (!(strcmp(*params,"1")))            /* Button 1 pushed */
+    {
+    /* Erase old box */
+    xorbox(iwin,icontxx,TRUE,ixulw,iyulw,nsamw,nroww);
+
+    /* If 'record the last file', keep the window */
+    if (ioper == 4)	
+    	xorbox(imagsav,icontx,TRUE,ixulw,iyulw,nsamw,nroww);
+
+    XFreeGC(idispl,icontxx);
+
+    /* Uninstall translations */
+    XtUninstallTranslations(iw_t);
+ 
+    /* Unmanage information box */
+    showbutx("","","",TRUE);
+
+    winsel();
+    return;
+    }
+
+ else if (!(strcmp(*params,"2")))            /* Button 2 pushed */
+    {
+    /* Erase old box and use winsiz to change box size */
+    xorbox(iwin,icontxx,TRUE,ixulw,iyulw,nsamw,nroww);
+
+    /* Uninstall translations */
+    XtUninstallTranslations(iw_t);
+ 
+    /* Unmanage information box */
+    showbutx("","","",TRUE);
+
+    winsiz(NULL, NULL,NULL);
+    return;
+    }
+
+ else if (!(strcmp(*params,"3")))          /* Button 3 pushed */        
+    {                                       
+    /* Erase old box and cancel this routine */
+    xorbox(iwin,icontxx,TRUE,ixulw,iyulw,nsamw,nroww);
+
+    XFreeGC(idispl,icontxx);
+
+    /* Uninstall translations */
+    XtUninstallTranslations(iw_t);
+ 
+    /* Unmanage information box */
+    showbutx("","","",TRUE);
+
+    return;
+    }
+ }
+
+@
+
+
+1.9
+log
+@removed debug output
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/winmov.c,v 1.8 2011/09/22 16:38:41 leith Exp leith $*/
+d36 1
+a36 1
+C WINMOV
+d63 1
+a63 1
+ wicolor(icontxx,icolorov);
+a67 2
+ expos_cb(NULL,NULL,NULL);  // Shortens delay
+
+d110 1
+d125 1
+@
+
+
+1.8
+log
+@expos_cb(NULL,NULL,NULL);  // Shortens delay
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/winmov.c,v 1.7 2011/05/18 18:22:51 leith Exp $*/
+a72 1
+   printf(" avter showbutx:\n");
+@
+
+
+1.7
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/winmov.c,v 1.6 2005/10/18 17:00:02 leith Exp leith $*/
+d68 2
+d73 1
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winmov.c,v 1.5 1995/08/29 18:41:45 liy Exp $*/
+d38 1
+a38 1
+C PURPOSE:       POSITIONS A DETERMINED SIZE OF WINDOW ON SCREEN
+d40 1
+a40 1
+C CALLED BY:     WINSIZ
+d61 1
+a61 1
+ /* make a xor graphics context */
+d65 1
+a65 1
+ /* set up action procedure to set window location */
+d74 1
+a74 1
+ /**************** set window position ***************/
+d81 1
+a81 1
+ if (!(strcmp(*params,"M")))                 /* cursor moved */
+d83 1
+a83 1
+    /* get mouse position ix,iy  */
+d86 1
+a86 1
+    /* mouse moved so erase old box and draw new box */
+d90 1
+a90 1
+ else if (!(strcmp(*params,"1")))            /* button 1 pushed */
+d92 1
+a92 1
+    /* erase old box */
+d95 1
+a95 1
+    /* if 'record the last file', keep the window */
+d101 1
+a101 1
+    /* uninstall translations */
+d104 1
+a104 1
+    /* unmanage information box */
+d110 1
+a110 1
+ else if (!(strcmp(*params,"2")))            /* button 2 pushed */
+d112 1
+a112 1
+    /* erase old box and use winsiz to change box size */
+d115 1
+a115 1
+    /* uninstall translations */
+d118 1
+a118 1
+    /* unmanage information box */
+d124 1
+a124 1
+ else if (!(strcmp(*params,"3")))          /* button 3 pushed */        
+d126 1
+a126 1
+    /* erase old box and cancel this routine */
+d131 1
+a131 1
+    /* uninstall translations */
+d134 1
+a134 1
+    /* unmanage information box */
+@
+
+
+1.5
+log
+@modified for leaving the box when window the last file
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winmov.c,v 1.4 1994/09/12 14:22:55 leith Exp liy $*/
+d10 25
+a34 8
+C **************************************************************************
+C *  COPYRIGHT (C)1990, WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.4
+log
+@ reworked color assignments
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winmov.c,v 1.3 94/09/12 11:21:47 leith Exp Locker: leith $*/
+d77 4
+@
+
+
+1.3
+log
+@used routines.h
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winmov.c,v 1.2 93/11/23 10:52:33 leith Exp Locker: leith $*/
+d46 1
+a46 1
+ wicolor(icontxx,29);
+@
+
+
+1.2
+log
+@after move loopback added
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/winmov.c,v 1.1 93/11/10 10:11:26 leith Exp Locker: leith $*/
+a22 2
+C PARAMETERS:    
+C
+d25 4
+d31 1
+d33 1
+d35 1
+a35 9
+ extern void     showbutx   (char *, char *, char *, int);
+ extern void     xorbox     (Window, GC, int, int, int, int, int);
+ extern void     actions    (Widget, char *, void (*)(), char *);
+ extern GC       setxor     (GC);
+ extern int      wicolor    (GC, int);
+ extern void     getloc     (XEvent *, char, int *, int *);
+ extern void     winsel     (void);
+ extern void     winsiz     (Widget, caddr_t, caddr_t);
+ extern void     winsiz1    (void);
+a36 5
+
+ void            winmov_pop (Widget, XEvent *, String *, Cardinal *);
+ void            winmov     (void);
+
+ extern int     iwintyp;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 2
+a3 1
+/*$Header$*/
+d7 3
+a9 3
+C WINMOV.FOR -- CREATED JAN 90 al
+C               WIDGETIZED APRIL 91 al
+C               CONVERTED TO C -- SEPT 92 al
+d19 1
+a19 1
+C WID_WINMOV
+a28 2
+#include "x.h"
+#include "std.h"
+d30 1
+d37 1
+a37 1
+ extern void     winsel     ();
+d39 1
+d43 1
+a43 1
+ 
+d45 2
+a46 1
+ static GC     icontxx;
+d50 1
+a50 1
+ void winmov()
+a71 1
+ int ix,iy,ixul,iyul;
+d114 1
+a114 1
+    /* erase old box ansj cancel this routine */
+d124 1
+@

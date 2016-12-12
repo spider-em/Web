@@ -1,0 +1,1283 @@
+head	1.18;
+access;
+symbols
+	pre-tilt-improve:1.18
+	pre_surf_fromtop:1.18
+	pre_neednewmap:1.17
+	pre_apppluss_remove:1.17
+	pre_tiltpair_chng:1.17
+	pre_GPL:1.15;
+locks;
+comment	@ * @;
+
+
+1.18
+date	2011.09.21.13.28.10;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2011.05.17.17.29.28;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2005.10.18.16.59.58;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	96.07.24.20.18.08;	author liy;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	96.05.02.15.47.46;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	96.04.24.15.12.59;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.04.24.15.07.59;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.04.19.14.00.10;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.11.30.15.50.44;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.10.24.20.21.04;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.09.19.15.07.01;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.08.09.13.26.38;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.08.08.17.57.39;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.07.21.20.14.59;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.02.16.25.43;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.01.26.20.14.57;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.04.08.13.17.03;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.42;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.18
+log
+@neednewmap = TRUE;
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/goldmen.c,v 1.17 2011/05/17 17:29:28 leith Exp leith $*/
+/*
+C++*********************************************************************
+C
+C  WID_GOLDMEN.FOR -- CREATED MAY 91
+C  goldmen.c          NOV 92
+C
+C **********************************************************************
+C    AUTHOR:  ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    GOLDMEN()
+C
+C    PURPOSE:    Displays gold marker selecting menu
+C
+C    PARAMETERS: None   
+C
+C    CALLed BY:  web_com      
+C
+C--*********************************************************************
+*/
+#include "common.h"
+#include "routines.h"
+
+#include <Xm/ToggleBG.h>
+
+ /* Internal function prototypes */
+ void          goldmen_buts  (Widget, XtPointer, XtPointer);
+ void          goldmen_butshf(Widget, XtPointer, XtPointer);
+ void          goldmen_butm  (Widget, XtPointer, XtPointer);
+ void          goldmen_butum (Widget, XtPointer, XtPointer);
+ int           goldmen_mark  (void);
+ void          goldmen_tgcb(Widget,caddr_t,caddr_t);
+  
+ /* External common variables */
+ extern Widget   iw_dean;
+ extern Widget   iw_gold;
+ extern FILE *   fpdocg;
+ extern char     docnamg[81];
+ extern int      markg;
+ extern int      iradg;
+
+ /* Internal common variables */
+ static Widget iw_goldmen = NULL;
+ static Widget iw_num     = NULL;
+
+ /***************************   goldmen   ****************************/
+
+ void goldmen(void)
+
+ {
+ Widget  iw_rowcolv, iw_pushs, iw_pushc; 
+
+ if (iw_goldmen == (Widget) 0)
+    {   /* Create marker picking menu first */
+
+    iw_goldmen = wid_dialog(iw_win, 0, "Marker picking menu", -1, -1);
+    iw_rowcolv = wid_rowcol(iw_goldmen, 'v', -1, -1);
+
+    wid_pushg(iw_rowcolv, 0, "Shift the image",
+                  goldmen_butshf, NULL, -1,-1);
+
+    wid_pushg(iw_rowcolv, 0, "Show current markers",
+                  goldmen_butm, NULL, -1,-1);
+
+    iw_num = wid_toggleg (iw_rowcolv,0,"Show marker numbers",
+                             show_num,goldmen_tgcb,NULL,0,0);
+
+    wid_pushg(iw_rowcolv, 0, "Erase markers",
+                  goldmen_butum, NULL, -1,-1);
+
+    /* Create box for stop or cancel  */
+    wid_stdbut(iw_rowcolv, iw_goldmen, 
+               &iw_pushs, &iw_pushc, &iw_pushc, "SC",
+               goldmen_buts, fin_cb ,fin_cb, NULL);
+    }
+ XtManageChild(iw_goldmen);
+ }
+
+/************** Goldmen_tgcb ************************************/
+
+void goldmen_tgcb(Widget iw_temp,caddr_t data,caddr_t call_data)
+  {
+  if (iw_num)
+    show_num = XmToggleButtonGadgetGetState(iw_num);
+  }
+
+/***********  Shift button callback  *********************************/
+
+ void goldmen_butshf(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ /*  Remove message */
+ showbutx("","","",TRUE);
+
+ /*  Remove the menu widget */
+ XtUnmanageChild(iw_goldmen);
+
+ /*  Cancel buttons */
+ XtUninstallTranslations(iw_win);
+
+ /* Check translations setting in shift??? */
+ shift(MARKER);
+ }
+
+/***********  Markit button callback *********************************/
+
+ void goldmen_butm(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ float   plist[1];
+ int     unused;
+ int     openit = TRUE;
+
+/* Close doc file, recover and display markers from doc file */
+ goldmen_mark();
+
+ /* Reopen the doc file for output again */
+ fpdocg = savdn1(&docnamg[0], datexc, &fpdocg, plist, 0, 
+            &openit, TRUE, FALSE);
+ }
+
+
+/***********  goldmen_mark *********************************/
+
+ int goldmen_mark(void)
+ {
+ char *  string;
+ int     ixi, iyi, ix1, iy1, i;
+ float * ptr;
+ int     maxkeys = 9999, maxreg = 3;
+ float   plist[1];
+ int     unused;
+ float * dbuf = NULL;
+ int     markdoc;
+
+ /* Vax does not like file opened twice */
+ if (fpdocg) fclose(fpdocg); fpdocg = NULL;
+
+ /* retrieve marker locations from doc file */
+ if (unsdal(&docnamg[0], &unused, 0, plist, 0, &dbuf, &markdoc,
+           maxkeys, maxreg) > 0) 
+    {   /* Problem retrieving doc file, assume it does not exist */
+    if (dbuf) free(dbuf); dbuf = NULL; XBell(idispl,50);
+    spout("*** Unable to read marker doc. file.");
+    return 0;
+    }
+
+ //printf(" maxkeys: %d   maxreg: %d   Markdoc: %d \n",maxkeys,maxreg,markdoc);
+
+ /* Add markers to display*/
+ ptr = dbuf;
+
+ for (i= 0; i < markdoc; i++)
+     {
+     if ((*ptr) > 0) 
+        {
+        /*     This marker is in use now, display it */
+        ixi = *(ptr+1);
+        iyi = *(ptr+2);
+
+        /*     Find location relative to screen */
+        ix1 = ixi + ixul - 1;
+        iy1 = iyi + iyul - 1;
+
+
+        /*    Draw circle at this location if inside image area*/
+        if (ix1 >= ixullmin && ix1 < ixullmin+nsam  && 
+               iy1 >= iyullmin && iy1 < iyullmin+nrow)
+           {
+           xorc(iwin,   icontx,TRUE,ix1,iy1,iradg);
+           xorc(imagsav,icontx,TRUE,ix1,iy1,iradg);
+
+           /*   Write marker number at this location */
+	   if (show_num)
+	     {
+	       string = itoa(i+1);
+	       witext(icontx, string, ix1, iy1, 1, 0, -9, 2, FALSE);
+	       free(string);
+	     }
+           }
+        }
+    ptr += maxreg;   // Next doc file line
+
+    }
+ if (dbuf) free(dbuf); dbuf = NULL; 
+
+ /* Refresh screen  */
+ expos_cb(NULL,NULL,NULL);
+
+ return markdoc;
+ }
+
+/***********  Erase button callback *********************************/
+
+ void goldmen_butum(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ int	ixs, iys;
+
+ /* Erase markers by redrawing image from the Ximage stuff */
+
+ /* Find the new location of the image */
+ ixs = ixul - ixullmin;
+ iys = iyul - iyullmin;
+
+ /* Redraw the image */
+ XPutImage(idispl,imagsav,icontx, imagel, nsam1,nrow1,
+          ixul,iyul, nsam-ixs, nrow-iys);
+
+ XPutImage(idispl,iwin   ,icontx, imagel, nsam1,nrow1,
+          ixul,iyul, nsam-ixs, nrow-iys);
+
+ neednewmap = TRUE;
+
+ /*  Refresh screen  */
+ expos_cb(NULL,NULL,NULL);
+ }
+
+/*********** Stop button callback **********************************/
+
+ void goldmen_buts(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ /*  Remove message */
+ showbutx("","","",TRUE);
+
+ /*  Remove the menu widget */
+ XtUnmanageChild(iw_goldmen);
+
+/*  Remove the menu widget */
+ XtUnmanageChild(iw_gold);
+
+ /*  Remove the marker number input widget */
+ XtUnmanageChild(iw_dean);
+
+ /*  Cancel buttons,  stop this routine */
+ XtUninstallTranslations(iw_win);
+
+ /* Reset the values */
+ ixul   = ixulrmin;
+ iyul   = iyulrmin;
+
+ /* Leave the Ximage storage alone, it will be emptied on next image */ 
+ if (fpdocg) fclose(fpdocg); fpdocg = NULL;
+ }
+
+@
+
+
+1.17
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header:  $*/
+d234 2
+@
+
+
+1.16
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.15 1996/07/24 20:18:08 liy Exp $*/
+d4 1
+a4 1
+C++*************************************************************************
+d38 1
+a38 1
+C    PURPOSE:    displays gold marker selecting menu
+d40 1
+a40 1
+C    PARAMETERS: none   
+d51 1
+a51 1
+ /* internal function prototypes */
+d59 7
+a65 7
+ /* external common variables */
+ extern Widget iw_dean;
+ extern Widget iw_gold;
+ extern FILE * fpdocg;
+ extern char   docnamg[81];
+ extern int    markg;
+ extern int    iradg;
+d67 1
+a67 1
+ /* internal common variables */
+d69 1
+a69 1
+ static Widget iw_num = NULL;
+d79 1
+a79 1
+    {   /* create marker picking menu first */
+d96 1
+a96 1
+    /* create box for stop or cancel  */
+d104 2
+a105 1
+/************** goldmen_tgcb ************************************/
+d107 1
+a107 1
+{
+d110 3
+a112 2
+ }
+/***********  shift button callback  *********************************/
+d116 1
+a116 1
+ /*  remove message */
+d119 1
+a119 1
+ /*  remove the menu widget */
+d122 1
+a122 1
+ /*  cancel buttons */
+d125 1
+a125 1
+ /* check translations setting in shift??? */
+d129 1
+a129 1
+/***********  markit button callback *********************************/
+d137 1
+a137 1
+/* close doc file, recover and display markers from doc file */
+d140 1
+a140 1
+ /* reopen the doc file for output again */
+d159 1
+a159 1
+ /* vax does not like file opened twice */
+d165 1
+a165 1
+    {   /* problem retrieving doc file, assume it does not exist */
+d171 3
+a173 1
+ /* add markers to display*/
+d180 1
+a180 1
+        /*     this marker is in use now, display it */
+a182 1
+        ptr  += maxreg; 
+d184 1
+a184 1
+        /*    find location relative to screen */
+d189 1
+a189 1
+        /*   draw a circle at this location if it is in the image area*/
+d196 1
+a196 1
+           /*   write marker number at this location */
+d200 1
+a200 1
+	       witext(icontx, string, ix1, iy1, 1, 0, 9, 2, FALSE);
+d205 2
+d210 1
+a210 1
+ /* refresh screen  */
+d216 1
+a216 1
+/***********  unmarkit button callback *********************************/
+d222 1
+a222 1
+ /* erase markers by redrawing image from the Ximage stuff */
+d224 1
+a224 1
+ /* find the new location of the image */
+d228 1
+a228 1
+ /* redraw the image */
+d235 1
+a235 1
+ /*  refresh screen  */
+d239 1
+a239 1
+/*********** stop button callback **********************************/
+d243 1
+a243 1
+ /*  remove message */
+d246 1
+a246 1
+ /*  remove the menu widget */
+d249 1
+a249 1
+/*  remove the menu widget */
+d252 1
+a252 1
+ /*  remove the marker number input widget */
+d255 1
+a255 1
+ /*  cancel buttons,  stop this routine */
+d258 1
+a258 1
+ /* reset the values */
+d262 1
+a262 1
+ /* leave the Ximage storage alone, it will be emptied on next image */ 
+@
+
+
+1.15
+log
+@recover show marker# fun
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.14 1996/05/02 15:47:46 leith Exp $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1990 , WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.14
+log
+@added gold delete ?
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.13 1996/04/24 15:12:59 leith Exp leith $*/
+d40 1
+d52 1
+d73 3
+d87 6
+d140 1
+a140 1
+/* vax does not like file opened twice */
+d177 6
+a182 3
+           string = itoa(i+1);
+           witext(icontx, string, ix1, iy1, 1, 0, 9, 2, FALSE);
+           free(string);
+a242 1
+
+@
+
+
+1.13
+log
+@irad made iradg (global)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.12 1996/04/24 15:07:59 leith Exp leith $*/
+d112 1
+a112 1
+            &openit, TRUE);
+@
+
+
+1.12
+log
+@uses doc file always now
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.11 1996/04/19 14:00:10 leith Exp $*/
+d47 1
+a47 1
+ extern int    irad;
+d162 2
+a163 2
+           xorc(iwin,   icontx,TRUE,ix1,iy1,irad);
+           xorc(imagsav,icontx,TRUE,ix1,iy1,irad);
+@
+
+
+1.11
+log
+@used old version
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.7 1995/08/09 13:26:38 leith Exp $*/
+a33 2
+#define NMARK 200
+
+d35 5
+a39 4
+ void          goldmen_buts  (Widget, caddr_t, caddr_t);
+ void          goldmen_butshf(Widget, caddr_t, caddr_t);
+ void          goldmen_butm  (Widget, caddr_t, caddr_t);
+ void          goldmen_butum (Widget, caddr_t, caddr_t);
+d43 5
+a47 3
+ extern int    irad, nmark;
+ extern int *  locx, * locy, *locnew;
+ extern char * cbufl;
+d50 1
+a50 1
+ Widget        iw_goldmen;
+d57 1
+a57 2
+ Widget  iw_rowcolv, iw_pushs, iw_pushc, iw_pusha, iw_dums; 
+ Widget  iw_shift, iw_markit, iw_unmarkit;
+d59 1
+a59 1
+ if (iw_goldmen <= (Widget)0)
+d65 1
+a65 1
+    iw_shift   = wid_pushg(iw_rowcolv, 0, "Shift the image",
+d68 1
+a68 1
+    iw_markit  = wid_pushg(iw_rowcolv, 0, "Show current markers",
+d71 1
+a71 1
+    iw_unmarkit = wid_pushg(iw_rowcolv, 0, "Erase markers",
+d74 4
+a77 5
+    /* create box for apply  */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_goldmen, 
+                         &iw_pushs, &iw_pushc, &iw_pusha, "SC",
+                        goldmen_buts, fin_cb ,fin_cb, NULL);
+ 
+d84 1
+a84 1
+ void goldmen_butshf(Widget iw_temp, caddr_t data, caddr_t call_data)
+d86 8
+d95 3
+a97 2
+   /*  remove message */
+   showbutx("","","",TRUE);
+d99 1
+a99 2
+   /*  remove the menu widget */
+   XtUnmanageChild(iw_goldmen);
+d101 13
+a113 2
+   /*  cancel buttons */
+   XtUninstallTranslations(iw_win);
+a114 2
+   shift(MARKER);
+}
+d116 1
+a116 1
+/***********  markit button callback *********************************/
+d118 1
+a118 1
+ void goldmen_butm(Widget iw_temp, caddr_t data, caddr_t call_data)
+d122 18
+d141 2
+a142 2
+ /*  remove the menu widget */
+ XtUnmanageChild(iw_goldmen);
+d144 3
+a146 2
+ /* add markers */
+ for (i= 1; i < nmark+1; i++)
+d148 13
+a160 1
+        if (*(locnew + i)) 
+d162 7
+a168 20
+           /*     this marker is in use now, display it */
+           ixi = *(locx + i);
+           iyi = *(locy + i);
+
+           /*    find location relative to screen */
+           ix1 = ixi + ixul - 1;
+           iy1 = iyi + iyul - 1;
+
+           /*   draw a circle at this location if it is in the image area*/
+           if (ix1 >= ixullmin && ix1 < ixullmin+nsam  && 
+               iy1 >= iyullmin && iy1 < iyullmin+nrow) {
+
+           	xorc(iwin,   icontx,TRUE,ix1,iy1,irad);
+           	xorc(imagsav,icontx,TRUE,ix1,iy1,irad);
+
+           	/*   write marker number at this location */
+           	string = itoa(i);
+           	witext(icontx, string, ix1, iy1, 1, 0, 9, 2, FALSE);
+           	free(string);
+		}
+d171 2
+d176 2
+d182 1
+a182 1
+ void goldmen_butum(Widget iw_temp, caddr_t data, caddr_t call_data)
+a185 3
+ /*  remove the menu widget */
+ XtUnmanageChild(iw_goldmen);
+
+d188 3
+a190 3
+   /* find the new location of the image */
+   ixs = ixul - ixullmin;
+   iys = iyul - iyullmin;
+d192 2
+a193 2
+   /* redraw the image */
+   XPutImage(idispl,imagsav,icontx, imagel, nsam1,nrow1,
+d196 1
+a196 1
+   XPutImage(idispl,iwin   ,icontx, imagel, nsam1,nrow1,
+d205 1
+a205 1
+ void goldmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+d213 3
+a224 1
+ marker = 0;
+d227 1
+a227 9
+
+ /* free marker storage */
+ if (locnew) 
+     { free(locnew); locnew = NULL; }
+ if (locx) 
+     { free(locx);  locy = NULL; }
+ if (locy) 
+     { free(locy); locy = NULL; }
+
+@
+
+
+1.10
+log
+@fixed Marker cannot load more than 1000 markers
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.9 1995/10/24 20:21:04 liy Exp liy $*/
+a30 1
+#include <Xm/Text.h>
+d34 2
+a37 1
+ void          goldmen_butsav(Widget, caddr_t, caddr_t);
+a39 1
+ void          goldmen_butl  (Widget, caddr_t, caddr_t);
+d41 1
+a41 5
+ void          newdoc_cb     (Widget, caddr_t, caddr_t);
+
+ /* external function prototypes */  
+ void          goldmen1     (void);
+
+d44 1
+a44 1
+ extern int    irad, nmark, mark;
+a46 5
+ extern int    docsav;		   /* flag of save doc */
+ extern FILE   *fpdoc;		   /* doc file pointer */
+
+ extern Widget        iw_deant;    /* text part of iw_dean */
+ extern  int          iphi, itheta;
+d50 1
+a50 1
+ Widget	       iw_num;
+d57 1
+a57 1
+ Widget  iw_doc, iw_shift, iw_load, iw_markit, iw_unmarkit;
+a64 3
+    iw_doc     = wid_pushg(iw_rowcolv, 0, "Save selections in doc file",
+                  goldmen_butsav, NULL, -1,-1);
+
+a67 3
+    iw_load    = wid_pushg(iw_rowcolv, 0, "Load markers",
+                  goldmen_butl, NULL, -1,-1);
+
+a70 4
+    iw_num    = wid_togmen (iw_rowcolv,0,"Show marker numbers",
+                             show_num,0,0);
+    XmToggleButtonGadgetSetState(iw_num, show_num, FALSE);
+
+a82 15
+/***********  load button callback  *********************************/
+
+ void goldmen_butsav(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+   char         outstr[80];
+
+   /* put a note for the starting marker number */
+   sprintf(outstr," Note: The saving marker number will start from %s. \n",
+     		   XmTextGetString(iw_deant));
+   spout(outstr);
+   
+   /* pick up the doc filename */
+   goldmen1();
+ }
+
+a105 3
+ int     nsams, nrows, nslices;		/* find the real size for the image */
+
+ show_num = XmToggleButtonGadgetGetState(iw_num);
+a122 4
+	   /* get the display size of the image */
+	   dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, 
+		     &nsams, &nrows, &nslices);
+
+d124 2
+a125 2
+           if (ix1 >= ixullmin && ix1 < ixullmin+nsams  && 
+               iy1 >= iyullmin && iy1 < iyullmin+nrows) {
+a130 1
+	   if (show_num) {
+a133 1
+		  }
+a146 1
+ int    nsams, nrows, nslices;		/* find the real size for the image */
+a156 3
+   /* get the display size of the image */
+   dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &nslices);
+
+d159 1
+a159 1
+          ixul,iyul, nsams-ixs, nrows-iys);
+d162 1
+a162 1
+          ixul,iyul, nsams-ixs, nrows-iys);
+a171 5
+ float        fdum;
+ float        theta, phi, alpha, beta, gamma;
+ char         outstr[80];
+ int          nlet, numfili, numfild;
+
+d176 1
+a176 2
+ if ( iw_goldmen > (Widget)0)
+     XtUnmanageChild(iw_goldmen);
+d189 1
+a189 5
+ /* remove the Ximage and cbuf storage 
+ if (imagel) 
+     { free(imagel); imagel = NULL; }
+ if (cbufl) 
+     { free(cbufl); cbufl = NULL; }*/
+a198 54
+ /* save tilt angle into doc file, then close it */
+ if (docsav) {
+   theta     = itheta;
+   phi       = iphi;
+
+   /* find euler angles */
+   gongon(theta, phi, &alpha, &beta, &gamma);
+
+   /* if doc file is created */
+   if (fpdoc != NULL) {
+      /*    put angles in the doc file */
+      fprintf(fpdoc," ;  %s angles for theta phi: %10.4f%10.4f\n",
+                filnow,theta,phi);
+      fprintf(fpdoc," ;  1 3%12.4f%12.4f%12.4f \n",
+                  alpha,beta,gamma);
+
+      /*      put angles on output window also */
+      sprintf(outstr," theta,phi,alpha,beta,gamma:%8.2f%8.2f%8.2f%8.2f%8.2f",
+                  theta,phi,alpha,beta,gamma);
+      spout(outstr);
+
+      /* close the doc file */
+      fclose(fpdoc);
+      }
+
+   /* no doc file created */
+   else {
+      sprintf(outstr," Note: No doc file is created.\n");
+      spout(outstr);
+      }
+
+   if (ntimg) {
+      /*      increment image file name */
+      filinc(filnow,filnext,&nlet,&numfili);
+
+      /*     increment doc file name */
+      filinc(docnam,docnam,&nlet,&numfild); 
+
+     /* display image file widget for next file */ 
+     imagemen(NULL,"5",NULL); 
+     }
+   }
+ }
+
+/***********  load button callback  *********************************/
+
+ void goldmen_butl(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+ static char       label_string[] = "Enter file extension";  
+ static Widget     iw_doc=(Widget) 0;
+
+ /* create text input box */
+ iw_doc = wid_text(iw_win, iw_doc, "Enter Doc filename", (char *) NULL,
+                       *newdoc_cb, NULL, 10, 100);
+a200 1
+ /**********************  newdoc_cb  *********************************/
+a201 67
+ void newdoc_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+    FILE	*fpi;
+    int		key[2],i, j;
+    float	codn[2];
+    char	c, outstr[80], out[80];
+    char *      ctemp;
+    char	docload[80];
+    XmString    doc_string;
+
+    XmSelectionBoxCallbackStruct *cbs =
+      (XmSelectionBoxCallbackStruct *) call_data;
+ 
+    doc_string = cbs -> value;
+    strcpy(docload,extractstr(cbs -> value));
+
+    if (doc_string) XmStringFree(doc_string);
+
+    /* open the doc file */
+    if ((fpi = fopen(docload, "r")) == NULL) {
+	sprintf(outstr," Warning: Cann't open the doc file %s. \n", docload);
+   	spout(outstr);
+	return;
+	}
+
+    j=0;
+    /* read the data */
+    c = fgetc(fpi);
+    while ( !feof(fpi) ) {
+
+    c = fgetc(fpi);
+    if ( c == ';') {
+	while (c != '\n'&& !feof(fpi))
+	    c = fgetc(fpi);
+	}
+
+    else {
+	i = 0;
+	out[i] = c;
+	while ((c = fgetc(fpi)) != '\n' && !feof(fpi)) {
+	    i++;
+	    out[i] = c;
+	    }
+
+	sscanf(out, "%d %d %f %f", &key[0], &key[1],&codn[0], &codn[1]);
+        *(locx + key[0])   = codn[0];
+        *(locy + key[0])   = codn[1];
+        *(locnew + key[0]) = TRUE;
+
+	/* remember the highest key */
+	if (j<key[0]) j = key[0];
+
+	while (c != '\n' && !feof(fpi))
+	    c = fgetc(fpi);
+	}
+    c = fgetc(fpi);
+      }
+    nmark = j+1;
+    mark = key[0];
+    /*  change marker # in marker input box */
+    ctemp = itoa(nmark);
+    XmTextSetString(iw_deant,ctemp);
+    free(ctemp);
+
+    /* close the doc file */
+    fclose(fpi);
+}
+@
+
+
+1.9
+log
+@let the marker program save marker to the doc file automaticly
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.4 1995/02/02 16:25:43 liy Exp $*/
+a34 2
+#define NMARK 500
+
+d355 1
+a356 1
+	    i++;
+@
+
+
+1.8
+log
+@Let Markers work for resized image
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.7 1995/08/09 13:26:38 leith Exp liy $*/
+d31 1
+d35 1
+a35 1
+#define NMARK 200
+d39 1
+d42 1
+d44 5
+a48 1
+  
+d51 1
+a51 1
+ extern int    irad, nmark;
+d54 2
+d57 3
+d62 1
+a62 1
+
+d69 1
+a69 1
+ Widget  iw_shift, iw_markit, iw_unmarkit;
+d77 3
+d83 3
+d89 4
+d105 15
+d145 2
+d175 1
+d179 1
+d222 5
+d231 2
+a232 1
+ XtUnmanageChild(iw_goldmen);
+d245 5
+a249 1
+ /* leave the Ximage storage alone, it will be emptied on next image */ 
+d259 54
+d315 17
+d333 51
+@
+
+
+1.7
+log
+@added closefilep
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.6 1995/08/08 17:57:39 leith Exp leith $*/
+d106 1
+d124 4
+d129 2
+a130 2
+           if (ix1 >= ixullmin && ix1 < ixullmin+nsam  && 
+               iy1 >= iyullmin && iy1 < iyullmin+nrow) {
+d152 1
+d163 3
+d168 1
+a168 1
+          ixul,iyul, nsam-ixs, nrow-iys);
+d171 1
+a171 1
+          ixul,iyul, nsam-ixs, nrow-iys);
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.5 1995/07/21 20:14:59 liy Exp leith $*/
+d189 1
+a189 3
+ /* remove the Ximage storage */ 
+ if (imagel) 
+     { free(imagel); imagel = NULL; }
+@
+
+
+1.5
+log
+@added shift image function
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.4 1995/02/02 16:25:43 liy Exp $*/
+d189 1
+a189 1
+ /* remove the Ximage and cbuf storage 
+a191 2
+ if (cbufl) 
+     { free(cbufl); cbufl = NULL; }*/
+@
+
+
+1.4
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/goldmen.c,v 1.3 1995/01/26 20:14:57 liy Exp liy $*/
+d38 1
+d57 1
+a57 1
+ Widget  iw_markit, iw_unmarkit;
+d65 3
+d83 17
+d111 1
+a111 2
+
+ for (i= 0; i < nmark; i++)
+d123 12
+a134 8
+           /*   draw a circle at this location */
+           xorc(iwin,icontx,   TRUE,ix1,iy1,irad);
+           xorc(imagsav,icontx,TRUE,ix1,iy1,irad);
+
+           /*   write marker number at this location */
+           string = itoa(i);
+           witext(icontx, string, ix1, iy1, 1, 0, 9, 2, FALSE);
+           free(string);
+d146 1
+d153 10
+a162 2
+ XPutImage(idispl,imagsav,icontx, imagel, nsam1,nrow1,
+          ixul,iyul, nsam, nrow);
+d164 1
+a164 4
+ XPutImage(idispl,iwin   ,icontx, imagel, nsam1,nrow1,
+          ixul,iyul, nsam, nrow);
+ 
+ /* refresh screen  */
+d184 6
+a189 1
+ /* remove the Ximage and cbuf storage */
+d193 1
+a193 1
+     { free(cbufl); cbufl = NULL; }
+@
+
+
+1.3
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/goldmen.c,v 1.2 1994/04/08 13:17:03 leith Exp liy $*/
+d58 1
+a58 1
+ if (iw_goldmen <= (void *)0)
+@
+
+
+1.2
+log
+@erase bug fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/goldmen.c,v 1.1 93/11/10 10:11:42 leith Exp Locker: leith $*/
+d58 1
+a58 1
+ if ((int)iw_goldmen <= 0)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d30 2
+a35 21
+ /* function prototypes */
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*) (), 
+                             char *,int,int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern void   showbutx     (char *, char *, char *, int);
+ extern void   witext       (GC, char *, int, int,int, int, 
+                               int, int, int);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern int    wisetplanes  (Display *, GC, int);
+ extern void   clearover    (Widget, caddr_t, caddr_t);
+ extern void   xorc         (Window, GC, int, int, int, int);
+ extern char * itoa         (int);
+ extern void   setamap      (Colormap);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+
+
+d37 3
+a39 2
+ void          goldmen_buts(Widget, caddr_t, caddr_t);
+ void          goldmen_butm(Widget, caddr_t, caddr_t);
+d44 2
+a45 1
+ extern int    loc[2][NMARK], locnew[NMARK];
+d50 1
+a50 1
+ /********************   goldmen   ****************************/
+d68 1
+a68 1
+                  clearover, NULL, -1,-1);
+d86 3
+a90 3
+ /*  enable plane 8 only  for drawing */
+ wisetplanes(idispl,icontx,128);
+
+d93 1
+a93 1
+        if (locnew[i]) 
+d96 2
+a97 2
+           ixi = loc[0][i];
+           iyi = loc[1][i];
+d114 3
+a116 2
+ /*  enable all planes for drawing */
+ wisetplanes(idispl,icontx,-1);
+d118 17
+a134 1
+ /*     refresh screen  */
+a135 1
+
+a137 1
+
+a141 4
+
+ /*  enable all planes for drawing */
+ wisetplanes(idispl,icontx,-1);
+
+d154 13
+a166 2
+ /*  restore default lut */
+ setamap(map);
+@

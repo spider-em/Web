@@ -1,0 +1,358 @@
+head	1.9;
+access;
+symbols
+	pre-tilt-improve:1.9
+	pre_surf_fromtop:1.9
+	pre_neednewmap:1.9
+	pre_apppluss_remove:1.9
+	pre_tiltpair_chng:1.9
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.9
+date	2005.10.18.16.59.51;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	96.08.01.16.33.17;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.07.11.17.28.15;	author mladjadj;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.09.22.10.46.00;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.09.22.10.41.46;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.06.03.11.16.01;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.06.02.15.15.56;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.06.02.13.04.58;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.06.02.12.51.18;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@to pop up error message with ok button
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@/*$Header $*/
+
+/***********************************************************************
+ *
+ * pop_errmsg.c
+ *
+ ***********************************************************************
+ * author : ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * pop_errmsg()
+ * 
+ * PURPOSE:    .
+ *
+ * RETURNS:    
+ *
+ * PARAMETERS: 
+ *
+ ***********************************************************************
+*/
+
+#include "x.h"
+#include <Xm/MessageB.h>
+
+extern  Widget   iw_win;
+
+/****************************** Str2XmString *************************/
+
+XmString Str2XmString( char *string )
+    {    
+     XmString        motif_string;
+
+     motif_string = XmStringCreateLtoR( string, 
+                                XmSTRING_DEFAULT_CHARSET );
+
+     return( motif_string );
+     }       
+
+/****************************** RemoveDialButton *********************/
+
+void RemoveDialButton( Widget widget, int which_button )
+   {      
+   Widget  dead_widget;
+
+   dead_widget = (Widget) XmMessageBoxGetChild( widget, which_button );
+
+   XtUnmanageChild( dead_widget );
+   }      
+ 
+/******************************  pop_errmsg_buto *********************/
+
+void pop_errmsg_buto(Widget widget, caddr_t client_data, 
+                           XmAnyCallbackStruct * call_data)
+   {
+   XtRemoveGrab( widget );
+   XtUnmanageChild( widget );
+   }
+
+/******************************  pop_errmsg *************************/
+
+void pop_errmsg( char message[] )
+   {
+   Arg             args[2];
+   static Widget   widget = (Widget) 0;
+   XmString        motif_string;
+
+   motif_string = Str2XmString( message );
+
+   if (widget == 0)
+      { 
+      widget = (Widget) XmCreateErrorDialog(iw_win, "Error Message",
+                                            NULL, 0 );
+
+      RemoveDialButton(widget, XmDIALOG_HELP_BUTTON );
+      RemoveDialButton(widget, XmDIALOG_CANCEL_BUTTON );
+      XtAddCallback(widget, XmNokCallback, 
+                        (XtCallbackProc) pop_errmsg_buto, NULL);
+      }
+
+   XtSetArg( args[0], XmNmessageString, motif_string );
+   XtSetValues(widget, args, 1);
+
+   XtAddGrab(widget, TRUE, FALSE);
+   XtManageChild(widget);
+
+   XmStringFree(motif_string );
+   }      
+
+@
+
+
+1.8
+log
+@cosmetic
+@
+text
+@d9 23
+a31 6
+ * COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH                       
+@
+
+
+1.7
+log
+@static Widget = (Widget)0
+@
+text
+@d1 1
+d3 25
+d33 2
+d36 2
+a37 2
+{    
+        XmString        motif_string;
+d39 1
+a39 1
+        motif_string = XmStringCreateLtoR( string, 
+d42 2
+a43 1
+        return( motif_string );
+d45 1
+a45 1
+}       /* Str2XmString */
+d48 2
+a49 2
+{      
+        Widget  dead_widget;
+d51 1
+a51 2
+        dead_widget = (Widget) XmMessageBoxGetChild( widget,
+                        which_button );
+d53 2
+a54 3
+        XtUnmanageChild( dead_widget );
+                        
+}       /* RemoveDialButton */
+d56 2
+d60 4
+a63 5
+{
+   
+     XtRemoveGrab( widget );
+     XtUnmanageChild( widget );
+}
+d65 2
+d68 15
+a82 15
+{
+        Arg             args[2];
+        int             n;
+        static Widget   widget = (Widget) 0;
+        XmString        motif_string;
+        motif_string = Str2XmString( message );
+
+        if(widget == 0)
+         { 
+           widget = (Widget) XmCreateErrorDialog(iw_win, "Error Message",
+                   NULL, 0 );
+
+          RemoveDialButton( widget, XmDIALOG_HELP_BUTTON );
+          RemoveDialButton( widget, XmDIALOG_CANCEL_BUTTON );
+          XtAddCallback( widget, XmNokCallback, 
+d84 1
+a84 5
+        }
+
+        n = 0;
+        XtSetArg( args[n], XmNmessageString, motif_string ); n++;
+        XtSetValues( widget, args, n);
+d86 2
+a87 2
+        XtAddGrab( widget, TRUE, FALSE);
+        XtManageChild( widget );
+d89 2
+a90 1
+        XmStringFree( motif_string );
+d92 2
+a93 1
+}       /* pop_errmsg */
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d41 1
+a41 1
+        static Widget   widget = 0;
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d18 1
+a18 1
+RemoveDialButton( Widget widget, int which_button )
+@
+
+
+1.4
+log
+@added modal mode to the pop up error message dialog
+@
+text
+@d3 1
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d4 1
+a4 1
+#include  "common.h"
+d27 8
+d38 1
+a38 1
+        Arg             args[10];
+d40 1
+a40 1
+        Widget          widget;
+d44 11
+d57 1
+d59 1
+a59 6
+        widget = (Widget) XmCreateErrorDialog( iw_win, "Error Message",
+                   args, n );
+
+        RemoveDialButton( widget, XmDIALOG_HELP_BUTTON );
+        RemoveDialButton( widget, XmDIALOG_CANCEL_BUTTON );
+
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 2
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 3
+#include  <Xm/Xm.h>
+
+extern Widget  iw_win;
+@

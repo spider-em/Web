@@ -1,0 +1,446 @@
+head	1.6;
+access;
+symbols
+	pre-tilt-improve:1.6
+	pre_surf_fromtop:1.6
+	pre_neednewmap:1.6
+	pre_apppluss_remove:1.6
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.6
+date	2005.10.18.16.59.51;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.10.12.15.31.14;	author mladjadj;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.09.18.21.15.49;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.09.14.18.26.27;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.09.14.17.01.37;	author mladjadj;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.08.02.13.46.26;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new.
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@/***************************************************************************
+*
+* POWER.FOR 
+*
+C **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+*
+*  POWER(X,WORK,NSAM,NROW)
+*
+*  PURPOSE:      POWER SPECTRUM CALCULATION
+*
+*  PARAMETERS:   
+*
+*  CALLED BY:    WID_POWER
+*
+*  note: in the fortran version, a ( horizontal) line on the screen
+*        is stored in a column, i.e; line 5 was x(i,5) in array x(i,j)
+*	 since variable i varies the fastest ( storage in fortran is done
+*	 by column first).
+*
+*	 in c, we had to reverse that since in x(i,j) j varies fastest.
+*
+*	 so x(ntrow, ntsam).
+*/
+
+#include "common.h"
+#include "routines.h"
+
+/********************************* power() ************************************/
+int power(float *x, int ntsam, int ntrow)
+  {
+  register int i, j;
+  int irtflg, ifns, ifnr, ns2, nr2, k, ins, i1, j1;
+  float  scl, t;
+                  
+  ifns = (ntsam%2 == 0) ? 1 : 0;
+  ifnr = (ntrow%2 == 0) ? 1 : 0;
+  ns2 = (int) ntsam/2;
+  nr2 = (int) ntrow/2;
+  scl = 2.0 / ((float) ntsam  * (float) ntrow);
+
+  ins = 1;
+  irtflg = fmr_2(x,ntsam,ntrow,&ins);
+  if (!ins)
+      { spout(" *** error in routine fmr_2 "); return 1;}
+
+  /* for lower half */
+  for (i=1; i <=ntrow; i++)
+      {
+      k = ntsam;
+      for (j=ntsam; j >=3 ; j-=2,  k--)
+          {
+          x[(i-1)*ntsam + k-1] = scl * 
+                  sqrt(x[(i-1)*ntsam +j-1] * x[(i-1)*ntsam +j-1] +
+                       x[(i-1)*ntsam +j-1-1]*x[(i-1)*ntsam +j-1-1]);
+          }
+      }
+  if (ifns)
+      {
+      if (ifnr)
+          {
+          /* for two unlucky lines */
+          x[(1-1)*ntsam+ns2+1-1] = scl * 
+	      (float) fabs((double)(x[(2-1)*ntsam+1-1]));
+          k = ntrow-1;      
+          for (j=2; j <= nr2; j++, k -= 2)
+              {
+              x[(j-1)*ntsam+ns2+1-1] = scl * 
+                        sqrt(x[(k-1)*ntsam+1-1] * x[(k-1)*ntsam+1-1] 
+                      + x[(k+1-1)*ntsam+1-1] * x[(k+1-1)*ntsam+1-1]);
+              x[(ntrow-j+2-1)*ntsam + ns2+1-1] = x[(j-1)*ntsam + ns2+1-1];
+              }
+          x[(1-1)*ntsam+1-1] = scl *
+	        (float) fabs((double)(x[(2-1)*ntsam +2-1]));
+          x[(nr2+1-1)*ntsam+1-1] = scl *
+	        (float) fabs((double)(x[(1-1)*ntsam+2-1]));
+          k = ntrow-1;
+          for (j=2; j <= nr2; j++, k -= 2)
+              {
+              x[(j-1)*ntsam+1-1] =  scl * 
+                         sqrt(x[(k-1)*ntsam + 2-1]*x[(k-1)*ntsam + 2-1] + 
+                          x[(k+1-1)*ntsam + 2-1]*x[(k+1-1)*ntsam + 2-1]);
+              x[(ntrow -j+2-1)*ntsam + 1-1] = x[(j-1)*ntsam+1-1];
+              }
+          /* rewrite symmetric parts */
+          /* left side */
+          i1 = nr2+1;
+          for (i=1; i <= (nr2+1); i++, i1--)
+              {
+              j1 = ntsam;
+              for (j=2; j <= ns2; j++, j1--)
+                  {
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j1-1];
+                  }        
+              }       
+          /* right side */
+          i1 = ntrow;
+          for (i=(nr2+2); i <= ntrow; i++, i1--)
+              {
+              j1 = ntsam;
+              for (j=2; j <= ns2; j++, j1--)
+                  {
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j1-1];
+                  }
+              }
+
+          /* sort lower half */
+          i1 = nr2+1;
+          for (i=1; i <= nr2; i++, i1++)
+              {
+              for (j=(ns2+2); j <= ntsam; j++)
+                  {
+                  t = x[(i-1)*ntsam + j-1];
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j-1];
+                  x[(i1-1)*ntsam + j-1] = t;
+                  }
+              }
+
+          }   /* if (ifnr) */
+      else      
+          {
+          /* for two unlucky lines */
+          k = ntrow-1;
+          for (j=1; j <=nr2; j++, k -= 2)
+              {
+              x[(j-1)*ntsam + ns2+1-1] =  scl * 
+                        sqrt(x[(k-1)*ntsam+1-1] * x[(k-1)*ntsam+1-1]
+                        + x[(k+1-1)*ntsam+1-1] * x[(k+1-1)*ntsam+1-1]); 
+              x[(ntrow -j+1-1)*ntsam + ns2+1-1] = x[(j-1)*ntsam + ns2+1-1];
+              }
+          x[(nr2+1-1)*ntsam+1-1] = scl*
+	   (float) fabs((double)(x[(1-1)*ntsam+2-1]));
+          k = ntrow-1;
+          for (j=1; j <=nr2; j++, k -= 2)
+              {
+              x[(j-1)*ntsam+1-1] =  scl * 
+                     sqrt(x[(k-1)*ntsam+ 2-1] * x[(k-1)*ntsam+ 2-1] + 
+                               x[(k+1-1)*ntsam+ 2-1] * x[(k+1-1)*ntsam+ 2-1]);
+              x[(ntrow -j + 1-1)*ntsam+1-1] = x[(j-1)*ntsam+1-1];
+              }
+
+          /* rewrite symmetric parts */
+          /* left side */
+          i1 = nr2+1;
+          for (i=1; i <= nr2+1; i++, i1--)
+              {
+              j1 = ntsam;
+              for (j=2; j <= ns2; j++, j1--)
+                  {
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j1-1];
+                  }
+              }
+
+          /* right side */
+          i1 = ntrow;
+          for (i=nr2+2; i <= ntrow; i++, i1--)
+              {
+              j1 = ntsam;
+              for (j=2; j <= ns2; j++, j1--)
+                  {
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j1-1];
+                  }
+              }
+                          
+          /* copy and transpose upper part onto lower half */
+          i1 = ntrow;
+          for (i=1; i <= ntrow; i++, i1--)
+              {
+              j1 = ntsam;
+              for (j=2; j <= ns2; j++, j1--)
+                  {
+                  x[(i1-1)*ntsam + j1-1] = x[(i-1)*ntsam + j-1];
+                  }
+              }
+          }     /* else if (ifnr) */
+      }        /* if (ifns) */
+  else     
+      {
+      if (ifnr)
+          {
+          /* for one unlucky lines */
+          x[(1-1)*ntsam+ns2+1-1] = scl *
+	    (float) fabs((double)(x[(2-1)*ntsam+1-1]));
+          k = ntrow-1;
+          for (j = 2; j <= nr2; j++, k -= 2)
+              {
+              x[(j-1)*ntsam +ns2+1-1] =  scl * 
+                    sqrt(x[(k-1)*ntsam+1-1] * x[(k-1)*ntsam+1-1]
+                     + x[(k+1-1)*ntsam+1-1] * x[(k+1-1)*ntsam+1-1]);
+              x[ (ntrow -j + 2-1)*ntsam +ns2+1-1] = x[(j-1)*ntsam + ns2+1-1];
+              }
+
+          /* rewrite symmetric parts */
+          /* left side */                                   
+          i1 = nr2+1;
+          for (i=1; i <= (nr2+1); i++, i1--)
+              {
+              j1 = ntsam;
+              for (j=1; j <= ns2; j++, j1--)
+                  {
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j1-1];
+                  }
+              }
+
+          /* right side */
+          i1 = ntrow;
+          for (i=nr2+2; i <= ntrow; i++, i1--)
+              {
+              j1 = ntsam ;
+              for (j=1; j <= ns2; j++, j1--)
+                  {
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j1-1];
+                  }
+              }
+
+          /* sort lower half */
+          i1 = nr2+1;
+          for (i=1; i <= nr2; i++, i1++)
+              {
+              for (j=ns2+2; j <= ntsam; j++)
+                  {
+                  t = x[(i-1)*ntsam + j-1];
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j-1];
+                  x[(i1-1)*ntsam + j-1] = t;
+                  }
+              }
+          }
+      else      /* if (ifnr) */
+          {
+          /* for ONE unlucky lines */
+          k = ntrow -1;
+          for (j=1; j <= nr2; j++, k -= 2)
+              {
+              x[(j-1)*ntsam + ns2+1-1] =  scl *
+                 sqrt(x[(k-1)*ntsam+1-1] * x[(k-1)*ntsam+1-1] 
+                 +x[(k+1-1)*ntsam+1-1] * x[(k+1-1)*ntsam+1-1]);
+              x[(ntrow -j+1-1)*ntsam +ns2+1 -1] = x[(j-1)*ntsam + ns2+1-1];
+              }
+
+          /* rewrite symmetric parts */
+          /* left side */
+          i1 = nr2+1;
+          for (i=1; i <= nr2+1; i++, i1--)
+              {
+              j1 = ntsam;
+              for (j=1; j <= ns2; j++, j1--)
+                  {
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j1-1];
+                  }
+              }
+
+          /* right side */
+          i1 = ntrow;
+          for (i=nr2+2; i <= ntrow; i++, i1--)
+              {
+              j1 = ntsam ;
+              for (j=1; j <= ns2; j++, j1--)
+                  {
+                  x[(i-1)*ntsam + j-1] = x[(i1-1)*ntsam + j1-1];
+                  }
+              }
+                   
+          /* copy and transpose upper part onto lower half */
+          i1 = ntrow;
+          for (i=1; i <= ntrow; i++, i1--)
+              {
+              j1 = ntsam;
+              for (j=1; j <= ns2; j++, j1--)
+                  {
+                  x[(i1-1)*ntsam + j1-1] = x[(i-1)*ntsam + j-1];
+                  }
+              }       
+          }     /* else if (ifnr) */
+      }    /*  else if (ifns) */
+
+  /* set the (0,0) to the neighboring value */
+  x[(nr2+1-1)*ntsam + ns2+1-1] = x[(nr2-1)*ntsam+ns2-1];
+
+/*
+  if(mode == 'l') al10(x,ntsam*ntrow);
+*/
+
+  return 0;
+  }
+
+/*****************  end of power() ************************************/
+@
+
+
+1.5
+log
+@change fabsf(does not exists on sun sparc) to fabs
+@
+text
+@d5 25
+a29 8
+* **************************************************************************
+* *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH,    *
+* *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+* *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+* *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+* *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+* *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+* **************************************************************************
+@
+
+
+1.4
+log
+@put back variable miskipm1
+@
+text
+@d69 2
+a70 1
+          x[(1-1)*ntsam+ns2+1-1] = scl * fabsf(x[(2-1)*ntsam+1-1]);
+d79 4
+a82 2
+          x[(1-1)*ntsam+1-1] = scl * fabsf(x[(2-1)*ntsam +2-1]);
+          x[(nr2+1-1)*ntsam+1-1] = scl * fabsf(x[(1-1)*ntsam+2-1]);
+d137 2
+a138 1
+          x[(nr2+1-1)*ntsam+1-1] = scl*fabsf(x[(1-1)*ntsam+2-1]);
+d188 2
+a189 1
+          x[(1-1)*ntsam+ns2+1-1] = scl * fabsf(x[(2-1)*ntsam+1-1]);
+@
+
+
+1.3
+log
+@remove variable irtflg
+@
+text
+@d39 1
+a39 1
+  int  ifns, ifnr, ns2, nr2, k, ins, i1, j1;
+@
+
+
+1.2
+log
+@change abs to fabsf
+@
+text
+@d39 1
+a39 1
+  int irtflg, ifns, ifnr, ns2, nr2, k, ins, i1, j1;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d69 1
+a69 1
+          x[(1-1)*ntsam+ns2+1-1] = scl * abs(x[(2-1)*ntsam+1-1]);
+d78 2
+a79 2
+          x[(1-1)*ntsam+1-1] = scl * abs(x[(2-1)*ntsam +2-1]);
+          x[(nr2+1-1)*ntsam+1-1] = scl * abs(x[(1-1)*ntsam+2-1]);
+d134 1
+a134 1
+          x[(nr2+1-1)*ntsam+1-1] = scl*abs(x[(1-1)*ntsam+2-1]);
+d184 1
+a184 1
+          x[(1-1)*ntsam+ns2+1-1] = scl * abs(x[(2-1)*ntsam+1-1]);
+@

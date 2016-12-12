@@ -1,0 +1,306 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.7
+	pre_apppluss_remove:1.7
+	pre_tiltpair_chng:1.7
+	pre_GPL:1.5;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2011.09.21.13.43.10;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2011.05.27.18.06.07;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.18.16.59.58;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.02.08.17.22.48;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.06.17.12.52.54;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.19.17.14.29;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.02.13.45.21;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.20;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@NEEDNEWMAP SET
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/webclear.c,v 1.7 2011/05/27 18:06:07 leith Exp leith $*/
+/*
+C++*************************************************************************
+C
+C WEBCLEAR.FOR -- MARCH 91 al
+C                 CONVERTED TO C -- AUG 91
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    webclear(iw_dum, data, call_data)
+C
+C    PURPOSE:          Clears image window
+C
+C    PARAMETERS:       
+C
+C    CALLED BY:        web_com
+C
+C--*********************************************************************
+*/
+
+/*****************  webclear  ******************************/
+
+#include "common.h"
+
+ void webclear(Widget iw_dum, XtPointer data, XtPointer call_data)
+ {
+
+ XGCValues    gcval;
+
+ // Preserve current foreground
+ XGetGCValues(idispl, icontx, GCForeground, &gcval);
+ 
+ // Set clearing color
+ if (icolorxb < 1) icolorxb = 0;
+ XSetForeground(idispl,icontx,icolorxb);
+
+ // Clear imagsav backing store 
+ XFillRectangle(idispl,imagsav,icontx,0,0,iwidex,ihighx);
+
+ // Clear displayed window
+ XClearWindow(idispl,iwin);
+
+ expos_cb(NULL,NULL,NULL);
+
+ // Restore current color in icontx
+ XSetForeground(idispl, icontx, gcval.foreground);
+
+ // Should start next image at upper left corner 
+ nbot       = ihighx;
+ ntop       = ihighx;
+
+ neednewmap = TRUE;
+
+ return;
+ }
+
+@
+
+
+1.7
+log
+@added expos_cb, cleaned unused stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/webclear.c,v 1.6 2005/10/18 16:59:58 leith Exp $*/
+d40 1
+a40 1
+C    PARAMETERS:       none
+d75 4
+a78 2
+ nbot    = ihighx;
+ ntop    = ihighx;
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/webclear.c,v 1.5 1995/02/08 17:22:48 liy Exp $*/
+d36 1
+a36 1
+C    WEBCLEAR()
+d38 1
+a38 1
+C    PURPOSE:          clears image window
+d47 1
+a47 2
+#include "x.h"
+#include "std.h"
+d49 1
+a49 6
+ extern Display        *idispl;
+ extern Drawable       iwin, imagsav;
+ extern unsigned int   iwidex, ihighx;
+ extern GC             icontx, icontxb;
+ extern int            icolorxb;
+ extern int            nbot,ntop;
+d51 1
+a51 3
+ /*****************  webclear  ******************************/
+
+ void webclear(Widget iw_dum, caddr_t data, caddr_t call_data)
+a54 10
+ int          icolorxf;
+
+ if (icontxb <= (GC)0)
+   { /* need to create a new graphics context for blanking */
+   icontxb = XCreateGC(idispl,iwin,0,&gcval);
+   XCopyGC(idispl,icontx,0,icontxb);
+   }
+
+ if (icolorxb < 1)
+    icolorxb = 0;
+d56 1
+d59 2
+d63 1
+d66 1
+d69 1
+a69 1
+ XFlush(idispl);
+d71 1
+d74 1
+a74 1
+ /* should start next image at upper left corner */
+@
+
+
+1.5
+log
+@modified (int)structure for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/webclear.c,v 1.4 1994/06/17 12:52:54 odesanya Exp liy $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+@
+
+
+1.4
+log
+@fixed so that the foreground color is reset after clearing window
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/webclear.c,v 1.3 94/05/19 17:14:29 leith Exp $*/
+d48 1
+a48 1
+ if ((int)icontxb <= 0)
+@
+
+
+1.3
+log
+@lekans 11 may change
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/webclear.c,v 1.2 94/02/02 13:45:21 leith Exp $*/
+d46 1
+d57 2
+d66 2
+@
+
+
+1.2
+log
+@starts at upper left now after clearing
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/webclear.c,v 1.1 93/11/10 10:11:20 leith Exp Locker: leith $*/
+d58 2
+a59 2
+ XFillRectangle(idispl,imagsav,icontxb,0,0,iwidex,ihighx);
+ 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a36 1
+ extern int            cleared;
+d38 1
+a38 1
+ extern int             nbot;
+d64 1
+a64 1
+ cleared = TRUE;
+d66 1
+@

@@ -1,0 +1,1522 @@
+head	1.38;
+access;
+symbols
+	pre-tilt-improve:1.38
+	pre_surf_fromtop:1.37
+	pre_neednewmap:1.37
+	pre_apppluss_remove:1.37
+	pre_tiltpair_chng:1.37
+	pre_GPL:1.34;
+locks;
+comment	@ * @;
+
+
+1.38
+date	2012.12.05.17.02.40;	author leith;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2007.11.28.16.17.59;	author leith;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2005.10.18.17.00.03;	author leith;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2005.01.25.18.54.14;	author leith;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2004.07.23.15.32.37;	author leith;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2004.07.21.16.55.50;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2002.04.10.18.49.41;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2001.09.12.14.42.53;	author leith;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2001.09.04.15.08.18;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2001.08.08.16.10.07;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2001.08.08.13.51.16;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2000.02.17.19.55.43;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2000.01.03.18.34.11;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	99.09.21.17.42.17;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	99.09.20.13.59.35;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	99.08.04.16.54.19;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	97.03.18.16.17.06;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	97.03.11.17.29.54;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	97.02.26.15.05.50;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	97.02.24.17.24.38;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	96.07.26.17.33.26;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	96.06.20.16.39.20;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	96.06.13.18.47.38;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	96.03.26.15.07.33;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.08.17.14.14.57;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.08.08.17.57.41;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.03.06.21.59.04;	author liy;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.01.13.21.31.16;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.05.31.10.36.13;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.05.12.12.40.10;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.03.18.12.07.33;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.02.16.09.32.16;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.01.28.17.14.03;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.01.28.15.46.47;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.01.28.15.42.28;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.22.13.12.12;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.37;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.38
+log
+@sent disp q to openold to skip unable to open msg on last montage img.
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/mont2.c,v 1.37 2007/11/28 16:17:59 leith Exp leith $*/
+
+/*
+C++********************************************************************
+C
+C MONT2 -- CREATED FROM WKMONT                    JUL 91 ArDean Leith
+C          CONVERTED TO C                         JUL 92 ArDean Leith
+C          ADDED "BIG MOVIE"                      SEP 01 ArDean Leith
+C          REMOVED UNABLE TO OPEN MSG             DEC 12 ArDean Leith
+C *********************************************************************
+C=* AUTHOR: A. LEITH                                                  *
+C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+C=* Copyright 1985-2012  Health Research Inc.,                        *
+C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+C=* Email:  spider@@wadsworth.org                                      *
+C=*                                                                   *
+C=* This program is free software; you can redistribute it and/or     *
+C=* modify it under the terms of the GNU General Public License as    *
+C=* published by the Free Software Foundation; either version 2 of    *
+C=* the License, or (at your option) any later version.               *
+C=*                                                                   *
+C=* This program is distributed in the hope that it will be useful,   *
+C=* but without any warranty; without even the implied warranty of    *
+c=* merchantability or fitness for a particular purpose.  See the GNU *
+C=* General Public License for more details.                          *
+C=* You should have received a copy of the GNU General Public License *
+C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+C=*                                                                   *
+C *********************************************************************
+C
+C    MONT2
+C
+C    PURPOSE:         DISPLAY MONTAGE FROM 2D FILE SERIES.
+C
+C    PARAMETERS:     
+C
+C    CALLED BY:       IMAGEMEN
+C
+C**********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* External routines */
+ extern int sumum(float * first, float * second, float * output, 
+                  int npix);
+ extern int average(float * input,  float * output,
+                    int npix, float divisor);
+ extern int avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
+ extern int setnprow(int nsam);
+
+ /* External variables used here */
+ extern int      lastfile;           
+ extern int    * docimgnums;       /* doc file image numbers */
+ extern int      docimgtotal;      /* number of images from doc file */
+ extern int      montaverage;      /* want montage average */
+ extern char     avgnam[128];      /* name for montage average file */
+ extern int      numnext;          /* from docmontmen */
+ extern int      numnextout;       /* from docmontmen */
+ extern int      stkgo, stkend;
+ extern XImage * ximagelist[1000]; /* from showmovie */
+
+ /* Internal variables used elsewhere */
+ int          ndone;             /* used by cat.c & movie            */
+ char         filego[81] = "\0"; /* name of first image in montage   */
+ int          minfile, maxfile;
+ int          ixulmon,iyulmon;   /* upper left corner of montage     */
+
+/****************************  mont2  ********************************/
+
+ void mont2(int nmint, int nmaxt)
+
+ {   
+ int          resetmar, iret, ifile;
+ int          numfil, nlet,  toomany;
+ FILEDATA   * filedatan;
+ int          nsamn, nrown, nslicen, iformn;
+ int          marlefo;
+ XImage *     imagex    = NULL;
+ char   *     imagec    = NULL;
+ float  *     imagef    = NULL;
+ float  *     imagefavg = NULL;
+ size_t       slen;
+ char         *avgname;
+ int          keepimage, keepimagef, keepimagec;
+
+ /* DO NOT FORCE FIRST IMAGE POSITION */
+ force = FALSE;
+
+ resetmar = FALSE;
+ if (placed) 
+   {
+   marlefo  = marlef;
+   marlef   = ixuln - marx;
+   resetmar = TRUE;
+   }
+
+ islice  = 1;
+ ndone   = 0;
+ toomany = FALSE;
+
+ /* Update the screen */
+ expos_cb(NULL,NULL,NULL);
+
+ keepimagef = (ioper == 20 && montaverage);
+ keepimagec = (ioper == 24);
+ keepimage  = (ioper == 24);
+
+ /* Display initial image on a new line*/
+ newline = TRUE;
+
+ ndone++;
+ if (keepimage) 
+    {  /* Big movie wanted */
+    showimage(filedata, 
+        keepimagec, &imagec, 
+        keepimage,  &imagex, 
+        keepimagef, &imagef, FALSE,
+        (float) filedata->fmin_spi, (float) filedata->fmax_spi,
+        nmint, nmaxt);
+
+        /* Record image list for moveie */
+        ximagelist[ndone] = imagex;
+    }
+ else
+    {
+    /* Display initial image, don't keep image or buffer */
+    imagedis(filedata, keepimage, &imagex, keepimagec, 
+             keepimagef, &imagefavg, nmint, nmaxt);
+    }
+   
+ /* Free up the file descriptor for this image */
+ closefile(filedata); filedata = NULL;
+
+ /* remember montage location */
+ ixulmon = ixul;
+ iyulmon = iyul;
+
+ /* Force desired number of images/line now even if truncates */
+ force = TRUE;
+
+ /* Find following image names and display their files */
+ if (ioper != 20 && ioper != 23 )
+    {strcpy(filego,filnow);}
+
+ /* Find nprow now if not set earlier (e.g. not set in docmontage) */
+ if (nprow <= 0)
+   {    /* Calculate nprow after opening first image */
+   nprow = setnprow(nsam);
+   }
+
+ do
+   {
+   /* Get next file name */
+   if (ioper == 20 || ioper == 23)
+      {   /* docmontage or categorize from doc file --   */
+          /* Get file names using docimgnums array */
+      ifile = docimgnums[numnext++];
+      if (ifile < minfile || ifile > maxfile) 
+         { iret = 0;}
+      else
+         { iret   = filget(filego, filnext, 80, ifile);  }
+
+      /* Set numfil so test of: numfil <= lastfile  always succeeds */
+      numfil = lastfile;
+      }
+   else
+      {   /* Sequential montage -- increment file name */
+      iret = filinc(filnow, filnext, &nlet, &numfil); 
+      }
+
+
+   if (iret) 
+      {   /* File number incrementing succeeded */
+      if (numfil <= lastfile || lastfile < 0) 
+         {
+         /* Still want to display this next file so open it */
+         /* disp: "q" signifies no Unable to open error msg wanted */
+         
+         if ((filedatan = openold(filnext, &nsamn, &nrown, &nslicen, 
+              &iformn, "q")) == NULL)
+            {   
+	    /* Next file not found (may not exist if * was used) */
+            /* Stop if lastfile indicates * was used for files */
+
+            if (lastfile < 0) 
+               {
+               toomany = TRUE;
+               /* Stop if it reaches the last file */ 
+               }
+
+            else 
+               {
+               strcpy(filnow,filnext);  /* Try opening next file */
+               }
+            }
+         else
+            {   /* Next image file found OK, set filnow to filnext */
+            strcpy(filnow,filnext);
+            filedata = filedatan;
+            nsam     = nsamn;
+            nrow     = nrown;
+            nslice   = nslicen;
+            islice   = 1;
+
+            /* Normalize file if necessary */
+            if ((filedata -> imami == 1) || norm(filedata) == TRUE)
+
+               {   /* file normalized ok */
+               if (fabs(filedata -> fmax_spi - filedata ->fmin_spi) < FLTZER)
+                  { spout("*** BLANK IMAGE SKIPPED"); }
+
+               else
+                  {
+                  newline = FALSE;
+                  if (ndone % nprow == 0) newline = TRUE;
+
+                  if (keepimage) 
+                     {  /* Big movie wanted, keep the images */
+                     imagec = NULL;
+                     showimage(filedata, 
+                        keepimagec, &imagec, 
+                        keepimage,  &imagex, 
+                        keepimagef, &imagef, FALSE,
+                        (float) filedata->fmin_spi, (float) filedata->fmax_spi,
+                        nmint, nmaxt);
+                     /* record image list for movie */
+                     ximagelist[ndone+1] = imagex;
+                     }
+                  else
+                     {
+                     /* Display this image, dont keep image or buffer */
+                     imagedis(filedata, keepimage, &imagex,keepimagec,
+                              keepimagef, &imagef,nmint,nmaxt);
+                     }
+                  }
+
+               if (ioper == 20 && montaverage)
+                  { /* Montage from doc file & want avg. image */
+                  sumum(imagefavg, imagef, imagefavg , nsam * nrow);
+                  free(imagef);
+                  imagef = NULL;
+                  }
+
+               /* free up the file descriptor for this image */
+               closefile(filedata); filedata = NULL;
+
+               /* increment image counter */
+               ndone++;
+
+               }    /* ends: if ((filedata  */
+            }       /* ends: if ((filedatan */
+         }          /* ends: if (numfil     */
+      }             /* ends: if (filinc     */
+   }                /* ends: if (iret)      */
+
+ while ((
+        ((ioper == 20 || ioper == 23) && numnext < docimgtotal)) || 
+        ((ioper != 20 && ioper != 23) && (numfil <= lastfile && !toomany)) || 
+         (lastfile < 0 && !toomany));
+
+ if (ioper == 20)
+    {   /* Free storage for imgnums from doc file */
+        /* do not free storage when doing categorize afterwards */
+    if (docimgnums) free(docimgnums);
+    docimgnums = NULL;
+    }
+
+ if (ioper == 20 && montaverage)
+    {  /* Montage from doc. file with average image calculation */
+       /* cancel waitcursor */
+       waitcursor(iwin, FALSE, 79);
+
+    /* Calulate floating point average image */
+    average(imagefavg, imagefavg ,nsam * nrow, (float) ndone);
+
+    /* store the floating point average image */
+    if (strlen(avgnam) <= 0)
+       spout("No file name specified for average file!");
+    else
+       {
+       /* add datexc to avgnam if not already there */
+       slen = strlen(avgnam) + strlen(datexc) + (size_t) 2;
+
+       if (!(avgname = (char *) malloc(slen * sizeof(char))))
+          {
+          spout("*** Unable to allocate avgname memory in mont2!");
+          return;
+          }  
+       strcpy(avgname,avgnam);
+       if (strstr(avgname,datexc) != 
+            (avgname + strlen(avgname) - strlen(datexc)))
+          {   /* need to add datexc extension at end of avgname */
+          if (!addext(avgname,datexc,slen)) return;
+          }
+
+       newline = TRUE;
+       avgsave(avgname, nsam, nrow, imagefavg);
+
+       /* display the average image */
+       ioper = 1;    /* not a montage anymore */
+       imagemen1(avgname, TRUE);
+       if (avgname) free(avgname);
+
+       /* cancel waitcursor */
+       waitcursor(iwin, FALSE, 79);
+         }
+    if (imagefavg) free(imagefavg);
+    imagefavg = NULL;
+
+    }
+
+ force = FALSE;
+
+ /* RESET MARLEF TO DEFAULT, IF NECESSARY */
+ if (resetmar)
+      marlef =  marlefo;
+
+ newline = FALSE;
+
+ if (ioper == 11  || ioper == 23)
+    {                    /* categorize images from montage now */
+    catmen();
+    }
+
+ else if (ioper == 16)
+    {                    /* show movie now */
+    moviemen(TRUE); 
+    }
+
+ return;
+ }
+
+
+ 
+@
+
+
+1.37
+log
+@rep opennew.c
+rep norm.c
+rep imagemen.c
+rep imagedis.c
+rep scale32to8.c
+rep backmen.c
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.36 2007/11/01 19:33:45 leith Exp $*/
+d5 1
+a5 1
+C++*********************************************************************
+d7 24
+a30 29
+C MONT2 -- CREATED JULY 91 FROM WKMONT ArDean Leith
+C          CONVERTED TO C - JULY 92 ArDean Leith
+C          ADDED "BIG MOVIE" SEP 01 ArDean Leith
+C **********************************************************************
+C * AUTHOR:  ArDean Leith                                              *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+d40 1
+a40 1
+C***********************************************************************
+d46 1
+a46 1
+ /* external routines */
+d54 9
+a62 9
+ /* external variables used here */
+ extern int   lastfile;           
+ extern int   *docimgnums;      /* doc file image numbers */
+ extern int   docimgtotal;      /* number of images from doc file */
+ extern int   montaverage;      /* want montage average */
+ extern char  avgnam[128];      /* name for montage average file */
+ extern int   numnext;          /* from docmontmen */
+ extern int   numnextout;       /* from docmontmen */
+ extern int   stkgo, stkend;
+d65 1
+a65 1
+ /* internal variables used elsewhere */
+d104 1
+a104 1
+ /* update the screen */
+d111 1
+a111 1
+ /* display initial image on a new line*/
+d116 1
+a116 1
+    {  /* big movie wanted */
+d124 1
+a124 1
+        /* record image list for moveie */
+d129 1
+a129 1
+    /* display initial image, don't keep image or buffer */
+d134 1
+a134 1
+ /* free up the file descriptor for this image */
+d141 1
+a141 1
+ /* FORCE DESIRED NUMBER OF IMAGES/LINE NOW EVEN IF TRUNCATES */
+d144 1
+a144 1
+ /* find following image names and display their files */
+d148 1
+a148 1
+ /* find nprow now if not set earlier (e.g. not set in docmontage) */
+d150 1
+a150 1
+   {    /* calculate nprow after opening first image */
+d156 1
+a156 1
+   /* get next file name */
+d159 1
+a159 1
+          /* get file names using docimgnums array */
+d166 1
+a166 1
+      /* set numfil so test of: numfil <= lastfile  always succeeds */
+d170 1
+a170 1
+      {   /* sequential montage -- increment file name */
+d176 1
+a176 1
+      {   /* file number incrementing succeeded */
+d179 3
+a181 1
+         /* still want to display this next file so open it */
+d183 1
+a183 1
+              &iformn, "o")) == NULL)
+d185 3
+a187 2
+	    /* next file not found (may not exist if * was used) */
+            /* stop if lastfile indicates * was used for files */
+d189 1
+d191 7
+a197 3
+               /* stop if it reaches the last file */ 
+            else  
+               strcpy(filnow,filnext);  /* try opening next file */
+d200 1
+a200 1
+            {   /* next image file found OK, set filnow to filnext */
+d208 1
+a208 1
+            /* normalize file if necessary */
+d221 1
+a221 1
+                     {  /* big movie wanted, keep the images */
+d234 1
+a234 1
+                     /* display this image, dont keep image or buffer */
+d241 1
+a241 1
+                  { /* montage from doc file & want avg. image */
+d265 1
+a265 1
+    {   /* free storage for imgnums from doc file */
+d272 1
+a272 1
+    {  /* montage from doc. file with average image calculation */
+d276 1
+a276 1
+    /* calulate floating point average image */
+@
+
+
+1.36
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.35 2005/10/18 17:00:03 leith Exp $*/
+d126 1
+a126 1
+        filedata->fmin_spi, filedata->fmax_spi,
+d224 1
+a224 1
+                        filedata->fmin_spi, filedata->fmax_spi,
+@
+
+
+1.35
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.34 2005/01/25 18:54:14 leith Exp $*/
+d126 1
+a126 1
+        filedata->fmin, filedata->fmax,
+d209 1
+a209 1
+               if (fabs(filedata -> fmax - filedata ->fmin) < FLTZER)
+d224 1
+a224 1
+                        filedata->fmin, filedata->fmax,
+@
+
+
+1.34
+log
+@killed waitcursor after montage from doc file with average
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.33 2004/07/23 15:32:37 leith Exp $*/
+d12 23
+a34 5
+C * COPYRIGHT (C)1991, 2001. HEALTH RESEARCH INCORPORATED (HRI),       *
+C * ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                   *
+C * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO HRI AND ARE NOT   *
+C * TO BE DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED *
+C * WITHOUT WRITTEN APPROVAL OF HRI.                                   *
+@
+
+
+1.33
+log
+@docnumimgs[] incremented bug fixed.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.32 2004/07/21 16:55:50 leith Exp leith $*/
+d252 3
+@
+
+
+1.32
+log
+@number of images wrong with doc file selection.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.31 2002/04/10 18:49:41 leith Exp leith $*/
+d151 2
+a152 4
+         {
+         iret   = filget(filego, filnext, 80, ifile);
+         docimgnums[numnextout++] = ifile;
+         }
+@
+
+
+1.31
+log
+@for stack movies
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.30 2001/09/12 14:42:53 leith Exp $*/
+d241 1
+a241 1
+        ( ioper == 20 || ioper == 23) && numnext <= docimgtotal) || 
+@
+
+
+1.30
+log
+@added volume movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.29 2001/09/04 15:08:18 leith Exp $*/
+d110 1
+d210 1
+a210 1
+                     /* record image list for moveie */
+@
+
+
+1.29
+log
+@added big movie
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/mont2.c,v 1.28 2001/08/08 16:10:07 leith Exp $*/
+d162 1
+a302 5
+    }
+
+ else if (ioper == 24)
+    {                    /* show big movie now */
+    showmoviemen(TRUE); 
+@
+
+
+1.28
+log
+@stack support improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.26 2000/02/17 19:55:43 leith Exp $*/
+d7 3
+a9 3
+C MONT2 -- CREATED JULY 91 FROM WKMONT
+C          CONVERTED TO C - JULY 92 al
+C
+d39 1
+d41 1
+a41 1
+ /* external variables */
+d50 1
+d53 1
+a53 1
+ int          ndone;             /* used by cat.c                    */
+d68 2
+a69 1
+ XImage *     imaget    = NULL;
+d74 1
+d88 1
+a88 2
+
+ ndone   = 1;
+d94 4
+d101 19
+a119 3
+ imagedis(filedata, FALSE, &imaget,FALSE, 
+          ioper == 20 && montaverage, &imagefavg, nmint, nmaxt);
+
+d132 1
+a132 1
+   {strcpy(filego,filnow);}
+d137 2
+a138 11
+    /* adjust marlefo for left side position */
+    marlefo = marlef;
+    if (placed) marlefo = ixuln;
+
+    if (iskip > 1)
+       nprow = (iwidex - marlefo) / ((nsam / iskip)  + marx);
+    else if (iskip < -1)
+       nprow = (iwidex - marlefo) / ((nsam * -iskip) + marx);
+    else
+       nprow = (iwidex - marlefo) / ((nsam         ) + marx);
+    }
+a169 1
+
+d172 5
+a176 4
+            if (lastfile < 0) toomany = TRUE;
+
+            /*  stop if it reaches the last file */ 
+            else  strcpy(filnow,filnext);  /* try opening next file */
+d191 2
+a192 4
+               if (fabs(filedata -> fmax - filedata ->fmin) < FLTZER) {
+                  spout("*** BLANK IMAGE SKIPPED");
+		  ndone--;
+		  }
+d199 18
+a216 4
+                  /* display this image, dont keep image or buffer */
+                  imagedis(filedata, FALSE, &imaget,FALSE,
+                           ioper == 20 && montaverage, &imagef,
+                           nmint,nmaxt);
+a290 1
+
+d303 6
+d310 1
+a310 1
+    {                    /* show movie from montage now*/
+@
+
+
+1.27
+log
+@stack support improved
+@
+text
+@a8 8
+C *********************************************************************
+C *  AUTHOR:  ArDean Leith                                            *
+C *  COPYRIGHT (C)1992,1996  HEALTH RESEARCH INC, EMPIRE STATE PLAZA, *
+C *    ALBANY, NY 12201.  THE CONTENTS OF THIS DOCUMENT ARE           *
+C *    PROPRIETARY TO HEALTH RESEARCH INC., AND ARE NOT TO BE         *
+C *    DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED   *
+C *    WITHOUT WRITTEN APPROVAL OF HEALTH RESEARCH INC.               *
+C *********************************************************************
+d10 9
+d32 2
+d48 1
+@
+
+
+1.26
+log
+@lastfile test failed when coming from docmontmen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.25 2000/01/03 18:34:11 leith Exp leith $*/
+a40 1
+ extern int   icattyp;          /* categorize type */
+d104 1
+a104 1
+ if (ioper != 20 && (ioper != 11 || icattyp != 1))
+d125 1
+a125 1
+   if (ioper == 20 || (ioper == 11 && icattyp == 1))
+d209 2
+a210 2
+        (ioper == 20 || (ioper == 11 && icattyp == 1))  && numnext <= docimgtotal) || 
+        ((ioper != 20 && (ioper != 11 || icattyp != 1)) && (numfil <= lastfile && !toomany)) || 
+d270 1
+a270 1
+ if (ioper == 11)
+@
+
+
+1.25
+log
+@docmontage image # wrong
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.24 1999/09/21 17:42:17 leith Exp leith $*/
+d137 1
+d209 2
+a210 2
+ while (((ioper == 20 || 
+         (ioper == 11 && icattyp == 1)) && numnext <= docimgtotal) || 
+d214 7
+d257 1
+a257 1
+    free(imagefavg);
+a261 6
+ if (ioper == 20)
+    {   /* free storage for imgnums from doc file */
+        /* do not free storage when doing categorize afterwards */
+    if (docimgnums) free(docimgnums);
+    docimgnums = NULL;
+    }
+@
+
+
+1.24
+log
+@nprow calculated here now
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.23 1999/09/20 13:59:35 leith Exp $*/
+d45 1
+d133 4
+a136 1
+         {iret   = filget(filego, filnext, 80, ifile);}
+@
+
+
+1.23
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.22 1999/08/04 16:54:19 leith Exp leith $*/
+d107 15
+d241 4
+a244 1
+       }
+@
+
+
+1.22
+log
+@for new scale bars
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.21 1997/03/18 16:17:06 leith Exp $*/
+d20 1
+a20 1
+C    PURPOSE:         DIPLAY MONTAGE FROM 2D FILE SERIES.
+d111 2
+a112 1
+      {   /* docmontage -- get file names using docimgnums array */
+d171 1
+a171 1
+                  { 
+d195 1
+a195 1
+    { 
+@
+
+
+1.21
+log
+@bad comment delimiter fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.20 1997/03/11 17:29:54 leith Exp leith $*/
+d44 1
+d49 1
+d57 1
+a57 1
+ int          resetmar, iret, numnow;
+d104 2
+a105 7
+ if (ioper == 20 || (ioper == 11 && icattyp == 1))
+    {  /* docmontage -- second image for (ioper = 20)  */
+       /* categorize from docmontage -- second image (ioper = 11) */
+    numnow = 1;
+    }
+ else
+    {strcpy(filego,filnow);}
+d111 6
+a116 2
+      {   /* docmontage -- get file names using imgnums array */
+      iret   = filget(filego, filnext, 80, docimgnums[numnow++]);
+d186 1
+a186 1
+   }                /* ends: while          */
+d188 2
+a189 1
+ while (((ioper == 20 || (ioper == 11 && icattyp == 1)) && numnow < docimgtotal) || 
+@
+
+
+1.20
+log
+@categorize montage did nt work with specifed number of files
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.19 1997/02/26 15:05:50 leith Exp leith $*/
+d43 1
+a43 1
+ extern char  avgnam[128];      /* name for montage average file *?
+@
+
+
+1.19
+log
+@added categorize from doc file
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.18 1997/02/24 17:24:38 leith Exp leith $*/
+d187 3
+a189 3
+ while (((ioper == 20 || ioper == 11) && numnow < docimgtotal) || 
+         ((ioper != 20 && ioper != 11) && (numfil <= lastfile && !toomany) || 
+          (lastfile < 0 && !toomany)));
+@
+
+
+1.18
+log
+@used addext, fixed docmont file number handling
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.17 1996/07/26 17:33:26 leith Exp $*/
+d20 1
+a20 1
+C    PURPOSE:         DIPLAY MONTAGE FROM 2D FILE SERIES ON X WORKSTATION.
+d39 5
+a43 4
+ extern int   *docimgnums;
+ extern int   docimgtotal;
+ extern int   montaverage;
+ extern char  avgnam[128];
+d102 3
+a104 2
+ if (ioper == 20)
+    {  /* docmontage -- second image for ioper = 20  */
+d113 1
+a113 1
+   if (ioper == 20)
+d187 3
+a189 3
+ while ((ioper == 20 && numnow < docimgtotal) || ((ioper != 20) &&
+        (numfil <= lastfile && !toomany) || 
+        (lastfile < 0 && !toomany)));
+d230 2
+a231 1
+    {   /* get file names using imgnums */
+d242 12
+a253 2
+   newline = FALSE;
+   return;
+d255 2
+@
+
+
+1.17
+log
+@try to make docmontage not skip any files
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.16 1996/06/20 16:39:20 leith Exp leith $*/
+a95 1
+ strcpy(filego,filnow);
+d100 1
+a100 1
+ /* find following image names and display them */
+d102 5
+a106 1
+    { numnow = 1;    /* second image for ioper = 20 (doc montage) */ }
+d112 1
+a112 1
+      {   /* get file names using imgnums */
+d117 1
+a117 1
+      {   /* increment file name */
+d204 1
+a204 1
+          spout("*** Unable to allocate memory in mont2!");
+d210 2
+a211 2
+          {   /* add extension now */
+          strcat(avgname,".");  strcat(avgname,datexc);
+d213 1
+@
+
+
+1.16
+log
+@added average capability
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.15 1996/06/13 18:47:38 leith Exp $*/
+d110 1
+a110 1
+      iret   = filget(filnow, filnext, 80, docimgnums[numnow++]);
+@
+
+
+1.15
+log
+@added doc montage call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.14 1996/03/26 15:07:33 leith Exp $*/
+d31 5
+d41 2
+a43 1
+
+d59 5
+a63 1
+ XImage *     imaget = FALSE;
+d87 2
+a88 1
+ imagedis(filedata, FALSE, &imaget,FALSE, nmint, nmaxt);
+d158 10
+a167 1
+                  imagedis(filedata, FALSE, &imaget,FALSE,nmint,nmaxt);
+d186 37
+d225 2
+a226 1
+    if(docimgnums) free(docimgnums);
+@
+
+
+1.14
+log
+@fixed misc
+@
+text
+@d2 2
+a3 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.13 1995/08/17 14:14:57 leith Exp leith $*/
+a4 1
+
+d9 8
+a16 9
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+C *  COPYRIGHT (C)1991 ,WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **********************************************************************
+d22 1
+a22 1
+C    PARAMETERS:      NONE
+d33 4
+a36 1
+ extern int lastfile;           
+d48 1
+a48 1
+ int          resetmar;
+d91 3
+d97 11
+a107 1
+   if (filinc(filnow, filnext, &nlet, &numfil) != FALSE) 
+a110 1
+
+d162 8
+a169 1
+ while ((numfil <= lastfile && !toomany) || (lastfile < 0 && !toomany));
+@
+
+
+1.13
+log
+@used imagedis instead of image
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.12 1995/08/08 17:57:41 leith Exp leith $*/
+d78 1
+a78 1
+ closefile(filedata);
+d137 1
+a137 1
+               closefile(filedata);
+@
+
+
+1.12
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.11 1995/03/06 21:59:04 liy Exp leith $*/
+d47 1
+a47 1
+ int          numfil, nlet,  toomany, nummis;
+a67 1
+ nummis  = 0;
+d75 1
+a75 1
+ image(filedata, FALSE, &imaget,FALSE, nmint, nmaxt);
+a110 1
+            nummis = 0;
+d133 1
+a133 1
+                  image(filedata, FALSE, &imaget,FALSE,nmint,nmaxt);
+@
+
+
+1.11
+log
+@fixed montage cannot display images with Frames/row
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.10 1995/01/13 21:31:16 liy Exp liy $*/
+d51 1
+a51 1
+ XImage *     imaget;
+@
+
+
+1.10
+log
+@fixed montage problem
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/mont2.c,v 1.9 94/05/31 10:36:13 odesanya Exp $*/
+d124 1
+a124 1
+               if (fabs(filedata -> fmax - filedata ->fmin) < FLTZER)
+d126 2
+@
+
+
+1.9
+log
+@fix the problem of not continuing with only one file missing
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/mont2.c,v 1.8 94/05/12 12:40:10 leith Exp $*/
+d96 3
+a98 1
+         {     /* still want to display this next file so open it */
+d101 4
+a104 2
+            {   /* next file not found (may not exist if * was used) */
+                /* stop if lastfile indicates * was used for files */
+d106 2
+a107 2
+            /* if more than two missing files, stop here anyway */
+            if (++nummis > 2) toomany = TRUE;
+@
+
+
+1.8
+log
+@ used imagego...imageend
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d104 1
+a105 1
+
+@
+
+
+1.7
+log
+@deallocated cbuf as necessary
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont2.c,v 1.6 94/02/16 09:32:16 leith Exp $*/
+d4 2
+a5 1
+C++************************************************************************
+d9 1
+a9 1
+C **************************************************************************
+d17 1
+a17 1
+C **************************************************************************
+d27 1
+a27 1
+C*********************************************************************
+d41 1
+a41 1
+/***************************  mont2  ********************************/
+d43 2
+a44 1
+ void mont2(void)
+d76 1
+a76 1
+ image(filedata, FALSE, &imaget,FALSE);
+d129 1
+a129 1
+                  image(filedata, FALSE, &imaget,FALSE);
+@
+
+
+1.6
+log
+@removed unused nfil
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont2.c,v 1.5 94/01/28 17:14:03 leith Exp Locker: leith $*/
+d30 1
+a31 9
+ /* external function prototypes */
+ extern int      filinc     (char *, char *, int *, int *);
+ extern FILEDATA *openold   (char *, int *, int *, int *, int *, char *);
+ extern int      norm       (FILEDATA *);
+ extern void     image      (FILEDATA *, int, XImage **);
+ extern void     spout      (char *);
+ extern int      closefile  (FILEDATA *);
+ extern void     expos_cb   (Widget, caddr_t, caddr_t);
+
+d74 1
+a74 1
+ image(filedata, FALSE, &imaget);
+d126 2
+a127 2
+                  /* display this image */
+                  image(filedata, FALSE, &imaget);
+@
+
+
+1.5
+log
+@added cat routine
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont2.c,v 1.4 94/01/28 15:46:47 leith Exp Locker: leith $*/
+a41 1
+ extern int nfil;               /* number of panes/files in montage */
+@
+
+
+1.4
+log
+@bug
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont2.c,v 1.3 94/01/28 15:42:28 leith Exp Locker: leith $*/
+d47 1
+d88 4
+@
+
+
+1.3
+log
+@added filego variable
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont2.c,v 1.2 93/11/22 13:12:12 leith Exp $*/
+d45 2
+a46 2
+ int          ndone;            /* used by cat.c                    */
+ char         filego[81] = "\0" /* name of first image in montage   */
+@
+
+
+1.2
+log
+@bad image parametrs in call
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/mont2.c,v 1.1 93/11/10 10:11:37 leith Exp Locker: leith $*/
+d41 2
+a42 1
+ extern int lastfile;
+d44 4
+d52 1
+a52 1
+ int          ndone,  resetmar;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d35 1
+a35 1
+ extern void     image      (FILEDATA *);
+a42 1
+
+d48 1
+a48 1
+ int          numfil, nlet, iform, toomany, nummis;
+d52 2
+a53 1
+ 
+d77 1
+a77 1
+ image(filedata);
+d126 1
+a126 1
+                  image(filedata);
+@

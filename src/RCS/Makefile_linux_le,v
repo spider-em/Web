@@ -1,0 +1,65 @@
+head	1.1;
+access;
+symbols
+	pre-tilt-improve:1.1;
+locks;
+comment	@# @;
+
+
+1.1
+date	2004.07.13.14.54.12;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@# 
+# ------ MAKEFILE FOR Linux WEB Using Regular 8  bit Visual ------------------
+#        Native byte ordering  
+#
+# Makefile for use on Linux kindly provided by William Nicholson.
+# Uses the gcc compiler and public domain X library
+#
+# Original for WEB on SGI   March 1992          ArDean Leith
+# Modifications for Sun: Mars 1993; Septembre 1994; Daniel Thomas
+# Modified Makefile for Linux from Chao Yang 2001
+# Additional modifications - William Nicholson 2001
+# Additional modifications - ArDean Leith 2003
+#
+# Use Gnu compiler
+CC     = cc
+
+# Define compiler flags & include locations
+CFLAGS = -Wall -DFUNCPROTO -O2 -I/usr/X11R6/include -v
+
+LF     =
+
+PGM    = web_linux_le
+
+LIB    =  $(PGM).a
+
+OTHERLIBS = -L/usr/X11R6/lib -lXm -lXt -lX11 -lXmu -lm
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+$(PGM)    :  $(LIB)
+	@@echo linking $(PGM)
+	$(CC) $(LF) $(LIB) -u main $(OTHERLIBS) -o $@@
+
+$(LIB)    :  $(ELEMENTS)
+
+$(ELEMENTS) : 
+	$(CC) -c $(CFLAGS) $*.c
+	$(AR) r $(LIB) $*.o
+	@@\rm $*.o
+@

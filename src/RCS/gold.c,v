@@ -1,0 +1,2043 @@
+head	1.27;
+access;
+symbols
+	pre-tilt-improve:1.27
+	pre_surf_fromtop:1.27
+	pre_neednewmap:1.27
+	pre_apppluss_remove:1.27
+	pre_tiltpair_chng:1.27
+	pre_GPL:1.25;
+locks;
+comment	@ * @;
+
+
+1.27
+date	2011.05.17.17.29.22;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2005.10.18.17.00.04;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	99.11.19.20.40.21;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	97.09.03.15.26.05;	author liy;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	96.07.24.20.18.01;	author liy;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	96.05.14.15.47.54;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	96.05.02.16.14.31;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	96.04.24.15.12.51;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	96.04.24.15.07.44;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	96.04.19.13.54.59;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	95.11.29.20.15.04;	author liy;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	95.11.29.20.00.49;	author liy;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.11.07.19.19.21;	author liy;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.10.24.20.20.58;	author liy;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.09.19.15.07.07;	author liy;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.08.09.16.05.50;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.08.09.13.26.21;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.02.07.21.48.47;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.02.02.16.23.27;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.01.26.20.14.15;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.07.06.10.10.46;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.05.24.18.08.33;	author odesanya;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.04.08.13.16.47;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.02.14.12.47.59;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.01.21.14.45.01;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.17.05.07;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.42;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.27
+log
+@*** empty log message ***
+@
+text
+@
+/*$Header:   $*/
+/*
+C++*********************************************************************
+C
+C WID_GOLD.FOR -- CREATED JAN 90 FROM LXGOLD.FOR
+C                 WIDGETIZED MAY 91 al
+C gold.c          NOV 92 al
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    GOLD
+C
+C    CALLED BY: web_com   
+C
+C    gold --> gold_buta -------> gongon ------------ savdn1 -- widean 
+C              ?                                       ^           |
+C              ---> goldmen_butm --> goldmen_mark --> unsdal       |
+C                                                                  v
+C                                                               pop setup
+C
+C    gold_pop ---L--> savdn1
+C             |
+C             |--M--> goldmen --- _butum --> XPutimage
+C             |               |
+C             |               --- _butm  --> _mark -->unsdal -- savdn1
+C             |               |
+C             |               --- _butsh --> shift
+C             |
+C             |
+C             |--R--> filinc -- goldmen_buts --> imagemen
+C
+C--*********************************************************************
+*/
+#include "common.h"
+#include "routines.h"
+#include <Xm/Text.h>
+#include <stdlib.h>
+
+ /* Externally defined protypes */
+ extern void   goldmen_buts(Widget, XtPointer, XtPointer);
+ extern int    goldmen_mark(void);
+
+ /* Internal subroutine prototypes */
+ void          gold       (void);
+ void          gold_pop   (Widget,  XEvent *,  String *, Cardinal *);
+ void          gold_buta  (Widget, XtPointer, XtPointer);
+ int           gold_delete(int);
+
+ /* External global variables */
+ extern Widget    iw_deant;             /* Text part of iw_dean */
+
+ /* Internal file variables */
+ static Widget    iw_phi, iw_theta, iw_docg;
+ static int       markg;
+ static float     fphi, ftheta;         /* Input tilt angles */
+ static int       deltaphi = 0, deltatheta = 0;
+ static float     phig, thetag;
+ static char      docnamepe[81];
+
+ /* Internally defined global variables */
+ Widget           iw_dean     = NULL;
+ Widget           iw_gold     = NULL;
+ char             docnamg[81] = "markerdoc000";
+ FILE             *fpdocg     = NULL;
+ int              iradg       = 4;
+
+ /****************************  gold   *******************************/
+
+ void gold(void)
+
+ {
+ Widget  iw_rowcolv, iw_pushs, iw_pusha; 
+ char    cval[10];
+
+ /* Refresh screen */
+ expos_cb(NULL,NULL,NULL);
+
+ if (iw_gold == (Widget) 0)
+    {   
+    /* Create marker doc file menu first */
+
+    iw_gold = wid_dialog(iw_win, 0, "Marker document file", -1, -1);
+    iw_rowcolv  = wid_rowcol(iw_gold, 'v', -1, -1);
+
+    /*   Create a text box for doc file name input */
+    iw_docg = wid_textboxb(iw_rowcolv,0,"Doc file:  ",docnamg,20);
+
+    wid_labelg(iw_rowcolv,0,"Theta is tilt about y axis. ",
+                         -1,-1);
+    /*   Create a text box for theta angle input */
+    sprintf(cval,"%6.2f",ftheta);
+    iw_theta = wid_textboxb(iw_rowcolv,0,"Theta:     ",cval,7);
+
+    wid_labelg(iw_rowcolv,0,
+              "Phi is ccw rotation about z axis.",-1,-1);
+
+    /*   Create a text box for phi angle input */
+    sprintf(cval,"%6.2f",fphi);
+    iw_phi = wid_textboxb(iw_rowcolv,0,"Phi:       ",cval,7);
+
+    /* Create box for apply  */
+    wid_stdbut(iw_rowcolv, iw_gold, 
+               &iw_pushs, &iw_pushs, &iw_pusha, "SA",
+               goldmen_buts, gold_buta ,gold_buta, 
+               NULL);
+    }
+ else
+    {
+    /*   Alter text box for doc file name input */
+    iw_docg = wid_textboxb(iw_rowcolv,iw_docg,"Doc file:",docnamg,20);
+
+    /*   Create a text box for theta angle input */
+    ftheta = ftheta + deltatheta;
+    sprintf(cval,"%6.2f",ftheta);
+    iw_theta = wid_textboxb(iw_rowcolv,iw_theta,"Theta:     ",cval,7);
+
+    /*   Create a text box for phi angle input */
+    fphi = fphi + deltaphi;
+    sprintf(cval,"%6.2f",fphi);
+    iw_phi = wid_textboxb(iw_rowcolv,iw_phi,"Phi:       ",cval,7);
+
+    }
+ XtManageChild(iw_gold);
+
+ }
+
+/*************  Docfile accept button callback ***********************/
+
+ void gold_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ int        idum;
+ float        alpha, beta, gamma;
+ char         outstr[80];
+ int          openit;
+ char         *ctemp = NULL;
+ int          append;
+ float        plist[1];
+ int          markdoc;
+
+ if (rdprxc(iw_docg,&docnamg[0],81) == 0) 
+    {
+    /*  This program requires a doc file name */
+    spout("*** You must enter a doc. file name now!");
+    XBell(idispl,50);
+    return;
+    }
+
+ /* Find theta */
+ if (!rdprx(iw_theta,'f',&idum,&ftheta)) return;
+ if (ftheta > 360 || ftheta < -360) 
+    {
+    spout("*** Theta range -360 ... 360!"); XBell(idispl,50);
+    return;
+    }
+
+ /* Find phi */
+ if (!rdprx(iw_phi,'f',&idum,&fphi)) return;
+ if (fphi > 360 || fphi < -360) 
+    {
+    spout("*** Phi range -360 ... 360!"); XBell(idispl,50);
+    return;
+    }
+
+ /*  Remove doc file menu */
+ XtUnmanageChild(iw_gold);
+
+ /*     Refresh screen  */
+ expos_cb(NULL,NULL,NULL);
+
+ deltatheta = ftheta - thetag;
+ thetag     = ftheta;
+ deltaphi   = fphi - phig;
+ phig       = fphi;
+
+ /* Find euler angles */
+ gongon(thetag, phig, &alpha, &beta, &gamma);
+
+ /* Add datexc (name extension ) to docname if not there  */
+ strcpy(docnamepe,docnamg);
+ if (strstr(docnamepe,datexc) == 0)
+    {
+    if ((strlen(docnamepe) + strlen(datexc) + 1) > (size_t) 80)
+       { spout("*** Doc. file name too long:"); spout(docnamepe); 
+       return; }  
+    strcat(strcat(docnamepe,"."),datexc);
+    }
+
+ /* See if there is an existing document file to append to */
+ append  = FALSE;
+ markg   = 0;
+ markdoc = 0;
+ if ((fpdocg = fopen(docnamepe,"r")) != NULL )
+    {  
+    spout("  Doc. file already exists."); 
+    fclose(fpdocg); fpdocg = NULL;
+ 
+    /* Display existing markers, recover markdoc  */
+    markdoc = goldmen_mark();
+
+    /* Recover existing points */
+    if (markdoc <= 0) 
+       {  
+       spout("*** Unable to read existing doc. file.");
+       XBell(idispl,50);
+      }
+    else
+       {
+       markg  = markdoc;
+       sprintf(outstr,"Recovered %4d markers from: %s", markg,docnamepe);
+       spout(outstr);
+       append = TRUE;
+       }
+    }
+
+ /* Open doc file as append to put angles in it, leave it open */
+ openit   = TRUE;
+ plist[0] = 0.0;      /* necessary to avoid fl. pt. execption on dec */
+ fpdocg   = savdn1(&docnamg[0], datexc, &fpdocg, plist, 0, 
+                   &openit, append, TRUE);
+
+ if (markdoc == 0)
+    {
+    /*    Put angles in the doc file */
+    fprintf(fpdocg," ; Image file: %s\n", filnow);
+    fprintf(fpdocg," ; Theta & phi angles: %10.4f%10.4f\n",thetag,phig);
+    /* ramark in hvem had order of angles chaned on 12 may 94 ------
+    fprintf(fpdocg," ; Alpha, beta & gamma are on following line:\n");
+    fprintf(fpdocg," ;  1 3%12.4f%12.4f%12.4f\n", alpha,beta,gamma);
+      *****************************/
+    fprintf(fpdocg," ; Beta, gamma & alpha are on following line:\n");
+    fprintf(fpdocg," ;  1 3%12.4f%12.4f%12.4f\n",beta,gamma,alpha);
+    fflush(fpdocg);
+    }
+
+ /*      Put angles on output window also */
+ sprintf(outstr," thetag,phig,alpha,beta,gamma:%8.2f%8.2f%8.2f%8.2f%8.2f",
+                  thetag,phig,alpha,beta,gamma);
+ spout(outstr);
+  
+ showbutx("Set marker location.",
+          "Menu.",
+          "Next marker file.",FALSE);
+
+ /*  Display marker number selection widget */
+ iw_dean = widean(iw_win,iw_dean,"marker","1",
+                  ixul+nsam+1, iyul+nrow+1,5);
+
+ /*  Change marker # in marker input box */
+ ctemp = itoa(++markg);
+ XmTextSetString(iw_deant,ctemp);
+ if (ctemp) free(ctemp);
+
+ /* Define button meanings */
+ actions(iw_win, "gold_pop", gold_pop, "123");
+ }
+
+ /************************ gold_pop **********************************/
+
+ void gold_pop(Widget iw_t, XEvent *event, String *params,
+               Cardinal *num_params)
+ {
+ int        ix1, iy1, ixi, iyi;
+ int        nlet, numfili, numfild;
+ float      fdum;
+ char     * ctemp;
+ float      dlist[3];
+ char       outstr[80];
+ static int openit = FALSE;
+ int        nsams, nrows, nslices;	 
+
+ if (!(strcmp(*params,"1")))            /* Button 1 pushed */ 
+    {
+    /* Left button, record location if inside image */
+
+    /* Get mouse position */
+    getloc(event,'M',&ix1,&iy1);
+ 
+    /*         Find location relative to image */
+    ixi = ix1 - ixul + 1;
+    iyi = iy1 - iyul + 1;
+
+    /* Get the display size of the image */
+    dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &nslices);
+
+    if (ixi < 1 || ixi > nsams || iyi < 1 || iyi > nrows) 
+       {
+       /*  Outside of image. can not select this location */
+       spout("*** Outside image, unable to select location"); 
+       XBell(idispl,50);
+       }
+    else
+       {
+       /* Inside image and want to select this location for doc file */
+
+       /* Get marker number from text box */
+       rdprx(iw_deant, 'i', &markg, &fdum);
+  
+       if (markg < 0) 
+          {
+          /*    Delete this marker from doc file */
+          if (gold_delete(-markg) > 0)
+              { 
+              sprintf(outstr,"Marker: %d deleted.", markg);
+              spout(outstr);
+              }
+          }
+       else
+          {
+          sprintf(outstr,"Marker: %d (%d,%d)", markg,ixi,iyi);
+          spout(outstr);
+ 
+          /*    Draw circle at this location */
+          xorc(iwin,icontx,   TRUE,ix1,iy1,iradg);
+          xorc(imagsav,icontx,TRUE,ix1,iy1,iradg);
+
+          /*    Write marker number at this location */
+	  if (show_num) 
+	    {
+	    ctemp = itoa(markg);
+	    witext(icontx, ctemp, ix1, iy1, 0, 0, -9, 2, FALSE);
+	    }
+
+          /*     Put this marker in the file */
+          dlist[0] = markg;
+
+          /* Resize the location of markers */
+          if (iskip > 1)
+             {
+             dlist[1] = ixi * iskip;
+             dlist[2] = iyi * iskip;
+	     }
+          else if (iskip < -1)
+             {
+             dlist[1] = ixi / -iskip;
+             dlist[2] = iyi / -iskip;
+	     }
+          else 
+             {
+             dlist[1] = ixi;
+             dlist[2] = iyi;
+	     }
+
+          fpdocg = savdn1(&docnamg[0], datexc, &fpdocg, dlist, 3, 
+                  &openit, TRUE, FALSE);
+
+          /*  Change marker # in marker input box */
+          ctemp = itoa(++markg);
+          XmTextSetString(iw_deant,ctemp);
+          free(ctemp);
+          }
+       }
+    }
+
+ else if (!(strcmp(*params,"2")))            /* Button 2 pushed */ 
+    {
+    /*  Show marker picking options menu */
+    goldmen();
+    }
+
+ else if (!(strcmp(*params,"3")))            /* Button 3 pushed */ 
+    {
+    /*  Next doc file wanted */
+
+    /*      Increment image file name */
+    filinc(filnow,filnext,&nlet,&numfili);
+
+    /*     Increment doc file name */
+    filinc(docnamg,docnamg,&nlet,&numfild);
+
+    /*  Remove message, etc. */
+    goldmen_buts(NULL,NULL,NULL);
+
+    /* Display image file widget for next file */
+    imagemen(NULL,"5",NULL); 
+    }
+ }
+
+
+ /************************ gold_delete ****************************/
+
+
+int gold_delete(int markg)
+ {
+ float * ptr;
+ int     maxkeys = 9999, maxreg = 3;
+ float   dlist[4];
+ int     unused, keepgo, i, markers;
+ float * dbuf = NULL;
+ int     markdoc;
+ int     openit = TRUE;
+ char    outstr[120];
+ char    reclin[101];
+ FILE    *fpdocgtmp = NULL;
+
+ /* Vax does not like file opened twice and unsdal opens it*/
+ if (fpdocg) fclose(fpdocg); fpdocg = NULL;
+
+ /* Retrieve marker locations from doc file */
+ if (unsdal(&docnamg[0], &unused, 0, dlist, 0, &dbuf, &markdoc,
+           maxkeys, maxreg) > 0) 
+    {   /* problem retrieving doc file */
+    if (dbuf) free(dbuf); dbuf = NULL; XBell(idispl,50);
+    spout("*** Unable to read marker doc. file.");
+    return 0;
+    }
+
+ /* Reopen old doc file */
+ openit = TRUE;
+ fpdocg = savdn1(&docnamg[0], datexc, &fpdocg, dlist, 0, 
+                  &openit, TRUE, FALSE);
+
+ /* Open a new temporary doc file */
+ openit = TRUE;
+ fpdocgtmp = savdn1("web_temp_jnk12345", NULL, &fpdocgtmp, dlist, 0, 
+                  &openit, FALSE, FALSE);
+
+  /* Copy the comment lines at top of old file to temporary file*/
+  keepgo     = TRUE;
+  while ((fgets(reclin,100,fpdocg)) != (char *) NULL  && keepgo)
+      {
+      if (ferror(fpdocg))
+         {
+         spout("*** Error reading docfile line:"); spout(reclin);
+         fclose(fpdocg); return 0;
+         }
+
+      if ((strstr(reclin,";")) != (char *) NULL)
+         { /* Copy this comment line */ ;
+         fprintf(fpdocgtmp,"%s",reclin);
+         fflush(fpdocgtmp);
+         }
+      else
+         {
+         keepgo = FALSE;
+         }
+      }
+ 
+ /* Remove marg from the array, put array in temporary doc file */
+ ptr     = dbuf;
+ openit  = FALSE;
+ markers = 0;
+ keepgo = TRUE;
+
+ for (i= 0; i < markdoc  && keepgo; i++)
+     {
+     if ((*ptr) > 1 && ((i+1) != markg)) 
+        {
+        /*     This marker exists and is still wanted */
+        markers++;
+        dlist[0] = i+1;
+        dlist[1] = *(ptr + 1);
+        dlist[2] = *(ptr + 2);
+        ptr  += maxreg; 
+        fpdocgtmp = savdn1(docnamg, datexc, &fpdocgtmp, dlist, 3, 
+                  &openit, TRUE, FALSE);
+        if (!fpdocgtmp)
+           {
+           spout("*** Error writing docfile.");
+           markdoc = 0;
+           keepgo  = FALSE;
+           }
+        }
+     }
+ fflush(fpdocgtmp);
+
+ if (dbuf) free(dbuf); dbuf = NULL; 
+
+ /* Close the new doc file */
+ if (fpdocgtmp) fclose(fpdocgtmp); fpdocgtmp = NULL;
+
+ /* Close the old doc file */
+ if (fpdocg) fclose(fpdocg); fpdocg = NULL;
+
+ if (keepgo) 
+   { /* copy succeeded */
+
+   /* Move temp doc file to old doc file name */
+   strcpy(outstr,"mv ");
+   strcat(outstr,"web_temp_jnk12345 ");
+   strcat(outstr,docnamepe);
+   system(outstr);
+   }
+
+ /* Open new doc file with original doc file name */
+ openit = TRUE;
+ fpdocg = savdn1(&docnamg[0], datexc, &fpdocg, dlist, 0, 
+                  &openit, TRUE, FALSE);
+
+ return markers;
+ }
+
+@
+
+
+1.26
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.25 1999/11/19 20:40:21 leith Exp $*/
+d4 1
+a4 1
+C++*************************************************************************
+a33 1
+C *    THE DIVISION OF LABORATORIES AND RESEARCH                           *
+d64 1
+a64 1
+ /* externally defined protypes */
+d68 4
+a71 4
+ /* internal subroutine prototypes */
+ void          gold(void);
+ void          gold_pop(Widget, XEvent *, String *, Cardinal *);
+ void          gold_buta(Widget, XtPointer, XtPointer);
+d74 2
+a75 2
+ /* external global variables */
+ extern Widget    iw_deant;    /* text part of iw_dean */
+d77 1
+a77 1
+ /* internal file variables */
+d80 1
+a80 1
+ static float       fphi, ftheta;		/* input tilt angles */
+d85 6
+a90 6
+ /* internally defined global variables */
+ Widget           iw_dean = NULL;
+ Widget           iw_gold = NULL;
+ char             docnamg[81];
+ FILE             *fpdocg = NULL;
+ int              iradg = 4;
+d100 1
+a100 1
+ /* refresh screen */
+d105 1
+a105 1
+    /* create marker doc file menu first */
+d110 1
+a110 1
+    /*   create a text box for doc file name input */
+d115 1
+a115 1
+    /*   create a text box for theta angle input */
+d122 1
+a122 1
+    /*   create a text box for phi angle input */
+d126 1
+a126 1
+    /* create box for apply  */
+d134 1
+a134 1
+    /*   alter text box for doc file name input */
+d137 1
+a137 1
+    /*   create a text box for theta angle input */
+d142 1
+a142 1
+    /*   create a text box for phi angle input */
+d152 1
+a152 1
+/*************  docfile accept button callback ***********************/
+d167 1
+a167 1
+    /*  this program requires a doc file name */
+d173 1
+a173 1
+ /* find theta */
+d181 1
+a181 1
+ /* find phi */
+d189 1
+a189 1
+ /*  remove doc file menu */
+d192 1
+a192 1
+ /*     refresh screen  */
+d200 1
+a200 1
+ /* find euler angles */
+d203 1
+a203 1
+ /* Add datexc (name extension ) to docname if not already there  */
+d213 1
+a213 1
+ /* see if there is an existing document file to append to, */
+d222 1
+a222 1
+    /* display existing markers, recover markdoc  */
+d225 1
+a225 1
+    /* recover existing points */
+d240 1
+a240 1
+ /* open doc file as append to put angles in it, leave it open */
+d248 1
+a248 1
+    /*    put angles in the doc file */
+d260 1
+a260 1
+ /*      put angles on output window also */
+d269 1
+a269 1
+ /*  display marker number selection widget */
+d273 1
+a273 1
+ /*  change marker # in marker input box */
+d278 1
+a278 1
+ /* define button meanings */
+d285 1
+a285 1
+                   Cardinal *num_params)
+d296 1
+a296 1
+ if (!(strcmp(*params,"1")))            /* button 1 pushed */ 
+d298 1
+a298 1
+    /* left button, record location if inside image */
+d300 1
+a300 1
+    /* get mouse position */
+d303 1
+a303 1
+    /*         find location relative to image */
+d307 1
+a307 1
+    /* get the display size of the image */
+d312 1
+a312 1
+       /*  outside of image. can not select this location */
+d318 1
+a318 1
+       /* inside image and want to select this location for doc file */
+d320 1
+a320 1
+       /* get marker number from text box */
+d325 1
+a325 1
+          /*    delete this marker from doc file */
+d337 1
+a337 1
+          /*    draw a circle at this location */
+d341 1
+a341 1
+          /*    write marker number at this location */
+d343 1
+a343 1
+	  {
+d346 1
+a346 1
+	  }
+d348 1
+a348 1
+          /*     put this marker in the file */
+d351 1
+a351 1
+          /* resize the location of markers */
+d371 1
+a371 1
+          /*  change marker # in marker input box */
+d379 1
+a379 1
+ else if (!(strcmp(*params,"2")))            /* button 2 pushed */ 
+d381 1
+a381 1
+    /*  show marker picking options menu */
+d385 1
+a385 1
+ else if (!(strcmp(*params,"3")))            /* button 3 pushed */ 
+d387 1
+a387 1
+    /*  next doc file wanted */
+d389 1
+a389 1
+    /*      increment image file name */
+d392 1
+a392 1
+    /*     increment doc file name */
+d395 1
+a395 1
+    /*  remove message, etc. */
+d398 1
+a398 1
+    /* display image file widget for next file */
+d420 1
+a420 1
+ /* vax does not like file opened twice and unsdal opens it*/
+d423 1
+a423 1
+ /* retrieve marker locations from doc file */
+d432 1
+a432 1
+ /* reopen old doc file */
+d437 1
+a437 1
+ /* open a new temporary doc file */
+d442 1
+a442 1
+  /* copy the comment lines at top of old file to temporary file*/
+d453 1
+a453 1
+         { /* copy this comment line */ ;
+d463 1
+a463 1
+ /* remove marg from the array, put array in temporary doc file */
+d473 1
+a473 1
+        /*     this marker exists and is still wanted */
+d493 1
+a493 1
+ /* close the new doc file */
+d496 1
+a496 1
+ /* close the old doc file */
+d502 1
+a502 1
+   /* move temp doc file to old doc file name */
+d509 1
+a509 1
+ /* open new doc file with original doc file name */
+@
+
+
+1.25
+log
+@to avoid floating pt. execption on dec initialized plist[0]
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.24 1997/09/03 15:26:05 liy Exp leith $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 23
+a33 5
+C *  COPYRIGHT (C)1987 , DIVISION OF LABORATORIES AND                      *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE DIVISION OF    *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+d35 1
+a35 1
+C **************************************************************************
+@
+
+
+1.24
+log
+@let <markers> take floating angles
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.23 1996/07/24 20:18:01 liy Exp $*/
+d224 4
+a227 3
+ openit = TRUE;
+ fpdocg = savdn1(&docnamg[0], datexc, &fpdocg, plist, 0, 
+            &openit, append, TRUE);
+@
+
+
+1.23
+log
+@recover show marker# fun
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.22 1996/05/14 15:47:54 leith Exp $*/
+d62 2
+a63 1
+ static int       iphi, itheta, markg;
+d99 2
+a100 2
+    sprintf(cval,"%d",itheta);
+    iw_theta = wid_textboxb(iw_rowcolv,0,"Theta:     ",cval,4);
+d106 2
+a107 2
+    sprintf(cval,"%d",iphi);
+    iw_phi = wid_textboxb(iw_rowcolv,0,"Phi:       ",cval,4);
+d121 3
+a123 3
+    itheta = itheta + deltatheta;
+    sprintf(cval,"%d",itheta);
+    iw_theta = wid_textboxb(iw_rowcolv,iw_theta,"Theta:     ",cval,4);
+d126 3
+a128 3
+    iphi = iphi + deltaphi;
+    sprintf(cval,"%d",iphi);
+    iw_phi = wid_textboxb(iw_rowcolv,iw_phi,"Phi:       ",cval,4);
+d139 1
+a139 1
+ float        fdum;
+d157 2
+a158 2
+ if (!rdprx(iw_theta,'i',&itheta,&fdum)) return;
+ if (itheta > 360 || itheta < -360) 
+d165 2
+a166 2
+ if (!rdprx(iw_phi,'i',&iphi,&fdum)) return;
+ if (iphi > 360 || iphi < -360) 
+d178 4
+a181 4
+ deltatheta = itheta - thetag;
+ thetag     = itheta;
+ deltaphi   = iphi - phig;
+ phig       = iphi;
+@
+
+
+1.22
+log
+@changed rdprxc
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.21 1996/05/02 16:14:31 leith Exp leith $*/
+d323 5
+a327 2
+          ctemp = itoa(markg);
+          witext(icontx, ctemp, ix1, iy1, 0, 0, -9, 2, FALSE);
+@
+
+
+1.21
+log
+@changed order of angles in doc file, added gold_delete
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.20 1996/04/24 15:12:51 leith Exp leith $*/
+d147 1
+a147 1
+ if (rdprxc(iw_docg,&docnamg[0]) == 0) 
+@
+
+
+1.20
+log
+@irad not defined
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.19 1996/04/24 15:07:44 leith Exp leith $*/
+d45 1
+d55 1
+d65 1
+a140 1
+ float        dlist[1];
+d143 1
+a143 3
+ char         docname[81];
+ int          maxkeys = 9999, maxreg = 3;
+ int          unused, append, i;
+d186 2
+a187 2
+ strcpy(docname,docnamg);
+ if (strstr(docname,datexc) == 0)
+d189 2
+a190 2
+    if ((strlen(docname) + strlen(datexc) + 1) > (size_t) 80)
+       { spout("*** Doc. file name too long:"); spout(docname); 
+d192 1
+a192 1
+    strcat(strcat(docname,"."),datexc);
+d196 4
+a199 3
+ append = FALSE;
+ markg  = 0;
+ if ((fpdocg = fopen(docname,"r")) != NULL )
+d216 1
+a216 1
+       sprintf(outstr,"Recovered %4d markers from: %s", markg,docname);
+d224 2
+a225 2
+ fpdocg = savdn1(&docnamg[0], datexc, &fpdocg, dlist, 0, 
+            &openit, append);
+d232 1
+d235 3
+d306 6
+a311 6
+          /*    set this marker to unused */
+          spout(" Not implemented yet !!!!");
+
+          /* need code HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+          sprintf(outstr,"Marker: %d cancelled.", markg);
+          **********************************/
+d347 1
+a347 1
+                  &openit, TRUE);
+d380 115
+@
+
+
+1.19
+log
+@used doc file always now
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.18 1996/04/19 13:54:59 leith Exp $*/
+d60 1
+a60 1
+ static int       iphi, itheta, markg, irad = 4;
+d69 1
+d314 2
+a315 2
+          xorc(iwin,icontx,   TRUE,ix1,iy1,irad);
+          xorc(imagsav,icontx,TRUE,ix1,iy1,irad);
+@
+
+
+1.18
+log
+@replaced with old version
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.13 1995/09/19 15:07:07 liy Exp $*/
+d21 1
+a21 1
+C    PARAMETERS     
+d23 5
+a27 1
+C    CALLED BY: web_com    
+d29 11
+a45 2
+#define NMARK 200
+
+d47 2
+a48 1
+ extern void          goldmen_buts(Widget, caddr_t, caddr_t);
+d51 6
+a56 4
+ void          gold_pop     (Widget, XEvent *, String *, Cardinal *);
+ void          goldmen1_butc(Widget, caddr_t, caddr_t);
+ void          goldmen1_buta(Widget, caddr_t, caddr_t);
+ void          goldmen1     (void);
+a57 3
+ /* external common variables */
+ extern Widget        iw_deant;    /* text part of iw_dean */
+ 
+d59 10
+a68 5
+ Widget        iw_phi, iw_theta, iw_docg, iw_goldmen1;
+ Widget        iw_dean = 0;
+ int           iphi, itheta, nmark, mark, irad = 4;
+ int           *locx, *locy, *locnew;
+ static  int   iphiold = 0, ithetaold = 0;
+d75 2
+a76 3
+ int i;
+
+ spout("Warning, locations not saved until right button pressed!");
+d81 1
+a81 129
+ /* allocate space for marker arrays, limited to NMARK now */
+ if (((locx   = (int *) malloc(NMARK*sizeof(int))) == (int *) 0)||
+     ((locy   = (int *) malloc(NMARK*sizeof(int))) == (int *) 0)||
+     ((locnew = (int *) malloc(NMARK*sizeof(int))) == (int *) 0))
+      {spout("*** Memory allocation failed in gold.c"); return;}
+
+ mark   = 1;
+ nmark  = 0;
+        
+ /* initialize the marker location determined list */
+ for (i=0; i < NMARK; i++)
+    * (locnew + i) = FALSE;
+
+ showbutx("set marker location.",
+          "menu.",
+          "save locations in doc file.",FALSE);
+
+ /*  display marker selection widget */
+ iw_dean = widean(iw_win,iw_dean,"marker","1",
+                  ixul+nsam+1, iyul+nrow+1,5);
+
+ actions(iw_win, "gold_pop", gold_pop, "123");
+
+ }
+
+
+ /************************ gold_pop **********************************/
+
+ void gold_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+ int    ix1, iy1, ixi, iyi;
+ float  fdum;
+ char * ctemp;
+ char   outstr[80];
+ int    nsams, nrows, nslices;		/* find the real size for the image */
+
+ if (!(strcmp(*params,"1")))            /* button 1 pushed */ 
+    {
+    /* left button, record location if inside image */
+
+    /* get mouse position */
+    getloc(event,'M',&ix1,&iy1);
+ 
+    /*         find location relative to image */
+    ixi = ix1 - ixul + 1;
+    iyi = iy1 - iyul + 1;
+
+    /* get the display size of the image */
+    dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &nslices);
+
+    if (ixi < 1 || ixi > nsams || iyi < 1 || iyi > nrows) 
+       {
+       /*  outside of image. can not select this location */
+       spout("*** Outside image, unable to select location");
+       }
+    else
+       {
+       /* inside image and want to select this location for doc file */
+
+       /* get marker number from text box */
+       rdprx(iw_deant, 'i', &mark, &fdum);
+ 
+       if (mark >= NMARK)
+          { spout("*** Maximum marker number is 200!"); } 
+ 
+       else if (mark < 0) 
+          {
+          /*    set this marker to unused */
+          mark             = -mark;
+          *(locnew + mark) = FALSE;
+
+          sprintf(outstr,"Marker: %d cancelled.", mark);
+          spout(outstr);
+          }
+       else
+          {
+          sprintf(outstr,"Marker: %d (%d,%d)", mark,ixi,iyi);
+          spout(outstr);
+ 
+          /*    draw a circle at this location */
+          xorc(iwin,icontx,   TRUE,ix1,iy1,irad);
+          xorc(imagsav,icontx,TRUE,ix1,iy1,irad);
+
+          /*    write marker number at this location */
+          ctemp = itoa(mark);
+          witext(icontx, ctemp, ix1, iy1, 0, 0, -9, 2, FALSE);
+
+          /*  set location for this marker */
+          *(locx + mark)   = ixi;
+          *(locy + mark)   = iyi;
+          *(locnew + mark) = TRUE;
+
+          /* record highest marker number in use */
+          nmark = MYMAX(nmark,mark);
+
+          /*  change marker # in marker input box */
+          ctemp = itoa(++mark);
+          XmTextSetString(iw_deant,ctemp);
+          free(ctemp);
+          }
+       }
+    }
+
+ else if (!(strcmp(*params,"2")))            /* button 2 pushed */ 
+    {
+    /*  show marker picking options menu */
+    goldmen();
+    }
+
+ else if (!(strcmp(*params,"3")))            /* button 3 pushed */ 
+    {
+    /*  end of input, save locations in doc file */
+    goldmen1();
+    }
+ }
+
+
+ /**************************   goldmen1   ****************************/
+
+ void goldmen1(void)
+
+ {
+ Widget  iw_rowcolv, iw_pushs, iw_pushc, iw_pusha, iw_dums; 
+ Widget  iw_lab1, iw_lab2;
+
+ char    cval[10];
+
+ if (iw_goldmen1 <= (Widget)0)
+d85 2
+a86 2
+    iw_goldmen1 = wid_dialog(iw_win, 0, "Marker document file", -1, -1);
+    iw_rowcolv  = wid_rowcol(iw_goldmen1, 'v', -1, -1);
+d89 1
+a89 1
+    iw_docg = wid_textboxb(iw_rowcolv,0,"Doc file:  ",docnam,20);
+d91 1
+a91 1
+    iw_lab1 = wid_labelg(iw_rowcolv,0,"Theta is tilt about y axis. ",
+d97 1
+a97 1
+    iw_lab2 = wid_labelg(iw_rowcolv,0,
+d105 4
+a108 4
+    iw_dums = wid_stdbut(iw_rowcolv, iw_goldmen1, 
+                         &iw_pushs, &iw_pushc, &iw_pusha, "SCA",
+                         goldmen_buts, goldmen1_butc ,goldmen1_buta, 
+                        NULL);
+d113 1
+a113 1
+    iw_docg = wid_textboxb(iw_rowcolv,iw_docg,"Doc file:",docnam,20);
+d116 1
+a116 1
+    itheta = itheta + itheta - ithetaold;
+d121 1
+a121 1
+    iphi = iphi + iphi - iphiold;
+d126 1
+a126 1
+ XtManageChild(iw_goldmen1);
+d132 1
+a132 1
+ void goldmen1_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d135 1
+a135 4
+ float        dlist[3];
+ int          nlet, numfili, numfild, n, openit, i;
+ static FILE *fpdoc;
+ float        theta, phi, alpha, beta, gamma;
+d137 8
+d146 1
+a146 1
+ if (rdprxc(iw_docg,&docnam[0]) == 0) 
+d150 1
+d158 1
+a158 1
+    spout("*** Theta range -360 ... 360!");
+d166 1
+a166 1
+    spout("*** Phi range -360 ... 360!");
+d171 1
+a171 1
+ XtUnmanageChild(iw_goldmen1);
+d176 17
+a192 8
+ /* store markers in doc file and go on to next image */
+ openit = TRUE;
+ for (n=0; n <= nmark; n++)
+    {     
+    if (*(locnew + n)) 
+       {
+       /*     put this marker in the file */
+       dlist[0] = n;
+d194 10
+a203 13
+       /* resize the location of markers */
+       if (iskip > 1) {
+           dlist[1] = *(locx + n) * iskip;
+           dlist[2] = *(locy + n) * iskip;
+	   }
+       else if (iskip < -1) {
+           dlist[1] = *(locx + n) / -iskip;
+           dlist[2] = *(locy + n) / -iskip;
+	   }
+       else {
+           dlist[1] = *(locx + n);
+           dlist[2] = *(locy + n);
+	   }
+d205 12
+a216 2
+       fpdoc    = savdn1(docnam, datexc, &fpdoc, dlist, 3, 
+                  &openit, FALSE);
+a218 5
+         
+ theta     = itheta;
+ ithetaold = itheta;
+ phi       = iphi;
+ iphiold   = iphi;
+d220 4
+a223 2
+ /* find euler angles */
+ gongon(theta, phi, &alpha, &beta, &gamma);
+d225 9
+a233 8
+ /*    put angles in the doc file */
+ fprintf(fpdoc," ;  %s angles for theta phi: %10.4f%10.4f\n",
+                filnow,theta,phi);
+ fprintf(fpdoc," ;  1 3%12.4f%12.4f%12.4f \n",
+                alpha,beta,gamma);
+
+ /*     close doc file */
+ fclose(fpdoc);
+d236 2
+a237 2
+ sprintf(outstr," theta,phi,alpha,beta,gamma:%8.2f%8.2f%8.2f%8.2f%8.2f",
+                  theta,phi,alpha,beta,gamma);
+d240 3
+a242 2
+ /*      increment image file name */
+ filinc(filnow,filnext,&nlet,&numfili);
+d244 3
+a246 2
+ /*     increment doc file name */
+ filinc(docnam,docnam,&nlet,&numfild);
+d248 4
+a251 2
+ /*  remove message, etc. */
+ goldmen_buts(NULL,NULL,NULL);
+d253 2
+a254 2
+ /* display image file widget for next file */
+ imagemen(NULL,"5",NULL);  
+d257 82
+a338 1
+/************** docfile cancel button callback ***********************/
+d340 2
+a341 1
+ void goldmen1_butc(Widget iw_temp, caddr_t data, caddr_t call_data)
+d343 26
+a368 3
+ {
+ /*  remove the menu widget */
+ XtUnmanageChild(iw_goldmen1);
+d370 3
+a372 2
+ /* refresh screen to redraw images if damaged */
+ expos_cb(NULL,NULL,NULL);
+@
+
+
+1.17
+log
+@icreased the marker number list
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.16 1995/11/29 20:00:49 liy Exp $*/
+a29 1
+#include <Xm/ToggleBG.h>
+d31 1
+a31 1
+#define NMARK 2500
+a43 1
+ extern Widget        iw_goldmen;  /* goldmen widget*/
+a47 1
+ Widget        iw_next;			/* next image flag */
+a49 2
+ static  int   opendoc = FALSE;		   /* flag to open doc file */
+ FILE 	       *fpdoc;			   /* doc file pointer */
+a50 1
+ int   	       docsav;		   /* flag of save doc */
+a58 3
+ /* set docsav */
+ docsav = FALSE;
+
+d79 1
+a79 1
+          "Stop this routine",FALSE);
+a86 2
+ /* call goldmen1() to specify the doc filename */
+ goldmen1();
+a98 1
+ float  dlist[3];			/* doc buffer */
+d128 1
+a128 3
+          { 
+	  spout("*** Maximum marker number is 2500!"); 
+	  } 
+d149 2
+a150 4
+   	  if(show_num) {
+            ctemp = itoa(mark);
+            witext(icontx, ctemp, ix1, iy1, 0, 0, -9, 2, FALSE);
+	    }
+a156 22
+          /*     put this marker in the file */
+	  if (docsav) {
+            dlist[0] = mark;
+
+            /* resize the location of markers */
+            if (iskip > 1) {
+             dlist[1] = ixi * iskip;
+             dlist[2] = iyi * iskip;
+	     }
+            else if (iskip < -1) {
+             dlist[1] = ixi / -iskip;
+             dlist[2] = iyi / -iskip;
+	     }
+            else {
+             dlist[1] = ixi;
+             dlist[2] = iyi;
+	     }
+
+            fpdoc    = savdn1(docnam, datexc, &fpdoc, dlist, 3, 
+                  &opendoc, TRUE);
+	    }
+
+d177 1
+a177 1
+    goldmen_buts(NULL, NULL, NULL);
+a191 4
+ /* If iw_goldmen exists, remove it */
+ if ( iw_goldmen > (Widget)0)
+    XtUnmanageChild(iw_goldmen);
+
+a201 4
+    iw_next    = wid_togmen (iw_rowcolv,0,"Start a new image",
+                             ntimg,0,0);
+    XmToggleButtonGadgetSetState(iw_next,ntimg, TRUE);
+
+d246 5
+a250 1
+ int	      nttemp;			/* temp buffer for next image */
+a258 6
+ /* get the flag to take next image */
+ ntimg = XmToggleButtonGadgetGetState(iw_next);
+
+ /*  remove doc file menu */
+ XtUnmanageChild(iw_goldmen1);
+
+d275 35
+d311 1
+d314 28
+a341 2
+ docsav = TRUE;
+ opendoc = TRUE;
+a348 4
+ /* reset parameters */
+ docsav = FALSE;
+ ntimg = FALSE;
+
+@
+
+
+1.16
+log
+@increased marker list to 2500
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.15 1995/11/07 19:19:21 liy Exp liy $*/
+d140 3
+a142 1
+          { spout("*** Maximum marker number is 1000!"); } 
+@
+
+
+1.15
+log
+@set marker buffer to 1000
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.14 1995/10/24 20:20:58 liy Exp $*/
+d32 1
+a32 1
+#define NMARK 1000
+@
+
+
+1.14
+log
+@let the marker program save marker to the doc file automaticly
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.12 1995/08/09 16:05:50 leith Exp $*/
+d32 1
+a32 1
+#define NMARK 500
+d140 1
+a140 1
+          { spout("*** Maximum marker number is 200!"); } 
+@
+
+
+1.13
+log
+@Let Markers work for resized image
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.12 1995/08/09 16:05:50 leith Exp liy $*/
+d30 1
+d32 1
+a32 1
+#define NMARK 200
+d45 1
+d50 1
+d53 2
+d56 1
+d65 3
+d88 1
+a88 1
+          "save locations in doc file.",FALSE);
+d96 2
+d110 1
+d161 4
+a164 2
+          ctemp = itoa(mark);
+          witext(icontx, ctemp, ix1, iy1, 0, 0, -9, 2, FALSE);
+d171 22
+d213 1
+a213 1
+    goldmen1();
+d228 4
+d242 4
+d290 1
+a290 5
+ float        dlist[3];
+ int          nlet, numfili, numfild, n, openit, i;
+ static FILE *fpdoc;
+ float        theta, phi, alpha, beta, gamma;
+ char         outstr[80];
+d299 6
+a320 35
+ /*  remove doc file menu */
+ XtUnmanageChild(iw_goldmen1);
+
+ /*     refresh screen  */
+ expos_cb(NULL,NULL,NULL);
+
+ /* store markers in doc file and go on to next image */
+ openit = TRUE;
+ for (n=0; n <= nmark; n++)
+    {     
+    if (*(locnew + n)) 
+       {
+       /*     put this marker in the file */
+       dlist[0] = n;
+
+       /* resize the location of markers */
+       if (iskip > 1) {
+           dlist[1] = *(locx + n) * iskip;
+           dlist[2] = *(locy + n) * iskip;
+	   }
+       else if (iskip < -1) {
+           dlist[1] = *(locx + n) / -iskip;
+           dlist[2] = *(locy + n) / -iskip;
+	   }
+       else {
+           dlist[1] = *(locx + n);
+           dlist[2] = *(locy + n);
+	   }
+
+       fpdoc    = savdn1(docnam, datexc, &fpdoc, dlist, 3, 
+                  &openit, FALSE);
+       }
+    }
+         
+ theta     = itheta;
+a321 1
+ phi       = iphi;
+d324 2
+a325 28
+ /* find euler angles */
+ gongon(theta, phi, &alpha, &beta, &gamma);
+
+ /*    put angles in the doc file */
+ fprintf(fpdoc," ;  %s angles for theta phi: %10.4f%10.4f\n",
+                filnow,theta,phi);
+ fprintf(fpdoc," ;  1 3%12.4f%12.4f%12.4f \n",
+                alpha,beta,gamma);
+
+ /*     close doc file */
+ fclose(fpdoc);
+
+ /*      put angles on output window also */
+ sprintf(outstr," theta,phi,alpha,beta,gamma:%8.2f%8.2f%8.2f%8.2f%8.2f",
+                  theta,phi,alpha,beta,gamma);
+ spout(outstr);
+  
+ /*      increment image file name */
+ filinc(filnow,filnext,&nlet,&numfili);
+
+ /*     increment doc file name */
+ filinc(docnam,docnam,&nlet,&numfild);
+
+ /*  remove message, etc. */
+ goldmen_buts(NULL,NULL,NULL);
+
+ /* display image file widget for next file */
+ imagemen(NULL,"5",NULL);  
+d333 4
+@
+
+
+1.12
+log
+@fixed closefile double use
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.11 1995/08/09 13:26:21 leith Exp leith $*/
+d99 1
+d112 4
+a115 1
+    if (ixi < 1 || ixi > nsam || iyi < 1 || iyi > nrow) 
+d289 15
+a303 2
+       dlist[1] = *(locx + n);
+       dlist[2] = *(locy + n);
+@
+
+
+1.11
+log
+@added closefilep
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.10 1995/02/07 21:48:47 liy Exp leith $*/
+a321 3
+
+ /* close the existing image file structure */
+ closefilep(&filedata);
+@
+
+
+1.10
+log
+@corrected the length for dlist
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.9 1995/02/02 16:23:27 liy Exp liy $*/
+d49 2
+a50 2
+ int *         locx, * locy, * locnew;
+ static  int   iphiold = 0,ithetaold = 0;
+d323 4
+@
+
+
+1.9
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/gold.c,v 1.8 1995/01/26 20:14:15 liy Exp liy $*/
+d242 1
+a242 1
+ float        dlist[2];
+@
+
+
+1.8
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/gold.c,v 1.7 1994/07/06 10:10:46 leith Exp liy $*/
+d188 1
+a188 1
+ if (iw_goldmen1 <= (void *)0)
+@
+
+
+1.7
+log
+@default for iphi and itheta changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/gold.c,v 1.6 94/05/24 18:08:33 odesanya Exp Locker: leith $*/
+d188 1
+a188 1
+ if ((int)iw_goldmen1 <= 0)
+@
+
+
+1.6
+log
+@move marker selection widget creation up before setting up actions
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/gold.c,v 1.5 94/04/08 13:16:47 leith Exp $*/
+d50 1
+d219 1
+a219 1
+    /*   create a text box for doc file name input */
+d222 10
+d292 4
+a295 2
+ theta = itheta;
+ phi   = iphi;
+@
+
+
+1.5
+log
+@erase bug fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/gold.c,v 1.4 94/02/14 12:47:59 leith Exp Locker: leith $*/
+a79 2
+ actions(iw_win, "gold_pop", gold_pop, "123");
+
+d83 3
+d239 1
+a239 1
+    /*  this program requires an doc file name */
+d310 1
+a310 1
+ imagemen(NULL,"5",NULL);
+@
+
+
+1.4
+log
+@replaced MIN,MAX with MYMIN,MYMAX
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/gold.c,v 1.3 94/01/21 14:45:01 leith Exp Locker: leith $*/
+d28 1
+d33 2
+a34 30
+ /* external subroutines */
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern Widget wid_textboxb (Widget, Widget, char *, char *,  int); 
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern void   overlut      (void);
+ extern void   witext       (GC, char *, int, int,int, int, 
+                               int, int, int);
+ extern int    filinc       (char *, char *, int *, int *);
+ extern int    gongon       (float, float, float *, float *, float *);
+ extern void   spout        (char *);
+ extern void   showbutx     (char *, char *, char *, int);
+ extern void   actions      (Widget, char *, void (*)(), char *);
+ extern FILE * savdn1       (char *, char *, FILE **,float *, 
+                             int,int *,int);
+ extern void   goldmen      (void);
+ extern void   xorc         (Window, GC, int, int, int, int);
+ extern void   getloc       (XEvent *, char, int *, int *);
+ extern int    rdprx        (Widget, char, int *, float *);
+ extern int    wisetplanes  (Display *, GC, int);
+ extern Widget widean       (Widget, Widget, char *, char *,
+                             int, int, int);
+ extern void   imagemen     (Widget, caddr_t, caddr_t);
+ extern char * itoa         (int);
+ extern int    rdprxc       (Widget, char *);
+ extern void   setamap      (Colormap);
+a37 1
+ void          goldmen1_buts(Widget, caddr_t, caddr_t);
+d43 1
+a43 1
+ extern        Widget        iw_deant;
+d45 1
+a45 1
+ /* internal common variables */
+d49 1
+a49 2
+ int           loc[2][NMARK], locnew[NMARK];
+ char          outstr[80];
+d51 1
+a51 1
+ /************************  gold   *******************************/
+a59 3
+ /* set new lut for all correct use with x-or */
+ overlut();
+
+d63 5
+d74 1
+a74 1
+    locnew[i] = FALSE;
+a84 1
+
+d88 1
+a88 1
+ /********************* gold_pop **********************************/
+d96 1
+d122 1
+a122 3
+          {
+          spout("*** Maximum marker number is 200!");
+          } 
+d127 2
+a128 2
+          mark = -mark;
+          locnew[mark] = FALSE;
+a137 3
+          /*  set mask so image in first 7 planes and text overlay plane 8 */
+          wisetplanes(idispl,icontx,128);
+
+a145 3
+          /*  set mask so writing to all planes */
+          wisetplanes(idispl,icontx,-1);
+
+d147 3
+a149 3
+          loc[0][mark] = ixi;
+          loc[1][mark] = iyi;
+          locnew[mark] = TRUE;
+d161 1
+a167 1
+
+d176 1
+a176 1
+ /********************   goldmen1   ****************************/
+d212 2
+a213 2
+                         goldmen1_buts, goldmen1_butc ,goldmen1_buta, NULL);
+
+d225 1
+a225 1
+/***********  docfile accept button callback ***********************/
+d234 1
+a261 3
+ /*  enable all planes for drawing */
+ wisetplanes(idispl,icontx,-1);
+
+d269 1
+a269 1
+    if (locnew[n]) 
+d273 2
+a274 2
+       dlist[1] = loc[0][n];
+       dlist[2] = loc[1][n];
+d287 1
+a287 1
+ fprintf(fpdoc," ;  %s anglesfor theta phi: %10.4f%10.4f\n",
+d306 2
+a307 2
+ /*  remove message */
+ showbutx("","","",TRUE);
+a308 15
+ /*  enable all planes for drawing */
+ wisetplanes(idispl,icontx,-1);
+
+ /*  remove the menu widget */
+ XtUnmanageChild(iw_goldmen1);
+
+ /*  remove the marker number input widget */
+ XtUnmanageChild(iw_dean);
+
+ /*  cancel menu,  stop this routine */
+ XtUninstallTranslations(iw_win);
+
+ /*  restore default lut */
+ setamap(map);
+
+d312 1
+d314 1
+a314 1
+/*********** stop button callback **********************************/
+a315 1
+ void goldmen1_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+a316 7
+
+ /*  remove message */
+ showbutx("","","",TRUE);
+
+ /*  enable all planes for drawing */
+ wisetplanes(idispl,icontx,-1);
+
+a319 16
+ /*  remove the marker number input widget */
+ XtUnmanageChild(iw_dean);
+
+ /*  cancel menu,  stop this routine */
+ XtUninstallTranslations(iw_win);
+
+ }
+
+/*********** docfile cancel button callback ***********************/
+
+ void goldmen1_butc(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+
+ /*  remove the menu widget */
+ XtUnmanageChild(iw_goldmen1);
+
+a321 1
+
+@
+
+
+1.3
+log
+@fixed savdn1 bug and next image bug and angles in doc file line
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/gold.c,v 1.2 93/11/16 17:05:07 leith Exp Locker: leith $*/
+d187 1
+a187 1
+          nmark = MAX(nmark,mark);
+@
+
+
+1.2
+log
+@bad format
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/gold.c,v 1.1 93/11/10 10:11:42 leith Exp Locker: leith $*/
+d49 2
+a50 1
+ extern FILE * savdn1       (char *, char *, float *, int,int *,int);
+d312 2
+a313 1
+       fpdoc    = savdn1(docnam, datexc, dlist, 3, &openit, FALSE);
+d324 4
+a327 2
+ fprintf(fpdoc," ;      %12.4f%12.4f%12.4f   %s %10.4f%10.4f\n",
+                alpha,beta,gamma,filnow,theta,phi);
+d361 1
+a361 1
+ imagemen(NULL,"1",NULL);
+a384 2
+ /*  restore default lut */
+     /******** wid_defluts(.false.,irtflg) */
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d322 1
+a322 1
+ fprintf(fpdoc," ;      %12.4f%12.4f%12.4f   %s %10.4 f%10.4f\n",
+@

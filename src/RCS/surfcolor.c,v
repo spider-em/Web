@@ -1,0 +1,460 @@
+head	1.6;
+access;
+symbols
+	pre-tilt-improve:1.6
+	pre_surf_fromtop:1.6
+	pre_neednewmap:1.6
+	pre_apppluss_remove:1.6
+	pre_tiltpair_chng:1.6
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.6
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2005.10.18.16.59.45;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2001.08.10.12.57.29;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.08.21.15.28.05;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.06.22.19.26.38;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	95.06.21.16.28.07;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.6
+log
+@fmin ->fmin_spi..
+@
+text
+@
+/*
+C**************************************************************************
+C
+C   surfcolor.c  -- CREATED JUNE 1995
+C
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C  surfcolor(colorvol)
+C
+C  PURPOSE:     sets up colorvolume stuff
+C
+C  PARAMETERS:  colvol 3D texture mapping vol  buffer
+
+C  RETURNS:     VOID
+C
+C  CALLED BY:   surf
+C
+C  NOTES:       
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* external function prototypes */
+
+ /* externally defined variables used here */
+ extern char filcolvol[81];
+
+ /* static variables for use here */
+ static Colormap mapsurf;
+
+ /* variables that are used here */
+
+ /* variables that are used elsewhere also */
+
+ /******************************   surfcolor   ***********************/
+
+ int surfcolor(unsigned char * colvol, int nvolcolors, int * ncolrange)
+
+ {
+ int nsamc, nrowc, nslicec, iformc;
+ FILEDATA   * filedatac;      /* for color volume */
+ float      *fdumptr, fdum0, fdum1;
+ int        indx, ipixel, nindex, nredcolors, ncolors, i;
+ float      fact, colval;
+ char       output[80];
+ Visual     *visualb;
+
+ if (colvol != (unsigned char *) NULL)
+    {
+    /* load the color mapping volume into char array */
+    /* normalize over 0..nvolcolors                  */
+
+    filedatac = openold(filcolvol,&nsamc,&nrowc,&nslicec, &iformc,"o");
+
+    if (filedatac == (FILEDATA *)FALSE)
+       {
+       spout("*** Unable to open color volume file");
+       waitcursor(iwin, FALSE, 79);
+       return FALSE;
+       }
+
+    if ((filedatac->imami != 1) && (norm(filedatac) == FALSE))
+       {    
+       spout("*** Color volume man/max extraction failed.");
+       closefile(filedatac);
+       waitcursor(iwin, FALSE, 79);
+       return FALSE;
+       }
+
+    if (!redvol(filedatac, TRUE, (char **)&colvol, FALSE, &fdumptr, 
+             1, filedata->nsam, 1,filedata->nrow, 1,filedata->nslice, 
+             0, nvolcolors , 
+             filedatac->fmin_spi,filedatac->fmax_spi, &fdum0, &fdum1, 1))
+        return FALSE;
+  
+    /* inform user about partitioning of color volume */
+    /* find range for each final color by dividing total color range */
+
+    sprintf(output, "Color volume range: %f...%f", 
+                  filedatac->fmin_spi, filedatac->fmax_spi);
+    spout(output);
+
+    /* we are through with the file now */
+    closefile(filedatac);
+    }  /* (colvol != (unsigned char *) NULL) */
+
+ /* make a mapsurf colormap for the nvolcolors */
+ /* blue - green - red  - yellow - cyan - magenta - white */
+
+ if (mapsurf == 0) 
+    {
+    /*   create a new surface color map */
+    ncolors = MAXCOL;
+    visualb = visual;
+    mapsurf = XCreateColormap(idispl,iwtop,visualb,AllocAll);       
+    }
+
+ if (mapsurf <= 0) 
+    { spout("*** In surfcolor, failed to create colormap"); return FALSE; }
+
+ /* recover colors from the normal colormap */
+ for ( i=0; i < ncolors; i++)
+    {
+#ifdef WEB_24
+    colort[i].pixel = ispicol[i];
+#else
+    colort[i].pixel = i;
+#endif
+    colort[i].flags = DoRed|DoGreen|DoBlue; 
+    }
+ XQueryColors(idispl,map,colort,ncolors);
+
+
+ /* find number of intensities available for each colormap color */
+ *ncolrange   = (colorend - mapgo) / nvolcolors;
+
+ /* fill colormap with intensity ramp for each color */
+ /* actually this should be skipped and let user set colormap */
+ /* using the lut operation from a file */
+
+ fact     = 65535.0 / (*ncolrange);
+ indx     = -1;
+ ipixel   = mapgo;
+
+ /* I do not define more than seven colors */
+ nredcolors = MYMIN(nvolcolors,7);
+
+ for (nindex = 0; nindex < *ncolrange; nindex++)
+      {
+      /* The color cells between mapgo-->colorend can be used for coloring   */
+      /* the image.      */
+
+      colval  = nindex  * fact;
+
+      /* set the colormap position for blue*/
+      indx++;
+      colort[indx].flags   = DoRed|DoGreen|DoBlue;
+#ifdef WEB_24
+      colort[indx].pixel   = ispicol[ipixel];
+#else
+      colort[indx].pixel   = ipixel;
+#endif
+      colort[indx].red     = 0;
+      colort[indx].green   = 0;
+      colort[indx].blue    = colval;
+
+      /* set the colormap position for green*/
+      indx++;
+#ifdef WEB_24
+      colort[indx].pixel   = ispicol[ipixel + *ncolrange];
+#else
+      colort[indx].pixel   = ipixel + *ncolrange;
+#endif
+      colort[indx].flags   = DoRed|DoGreen|DoBlue;
+      colort[indx].red     = 0;
+      colort[indx].green   = colval;
+      colort[indx].blue    = 0;
+
+      if (nredcolors > 2)
+         {
+         /* set the colormap position for red*/
+         indx++;
+#ifdef WEB_24
+         colort[indx].pixel   = ispicol[ipixel + 2 * (*ncolrange)];
+#else
+         colort[indx].pixel   = ipixel + 2 * (*ncolrange);
+#endif
+         colort[indx].flags   = DoRed|DoGreen|DoBlue;
+         colort[indx].red     = colval;
+         colort[indx].green   = 0;
+         colort[indx].blue    = 0;
+         }
+      if (nredcolors > 3)
+         {
+         /* set the colormap position for yellow*/
+         indx++;
+#ifdef WEB_24
+         colort[indx].pixel   = ispicol[ipixel + 3 * (*ncolrange)];
+#else
+         colort[indx].pixel   = ipixel + 3 * (*ncolrange);
+#endif
+         colort[indx].flags   = DoRed|DoGreen|DoBlue;
+         colort[indx].red     = colval;
+         colort[indx].green   = colval;
+         colort[indx].blue    = 0;
+         }
+      if (nredcolors > 4)
+         {
+         /* set the colormap position for cyan*/
+         indx++;
+#ifdef WEB_24
+         colort[indx].pixel   = ispicol[ipixel + 4 * (*ncolrange)];
+#else
+         colort[indx].pixel   = ipixel + 4 * (*ncolrange);
+#endif
+         colort[indx].flags   = DoRed|DoGreen|DoBlue;
+         colort[indx].red     = 0;
+         colort[indx].green   = colval;
+         colort[indx].blue    = colval;
+         }
+      if (nredcolors > 5)
+         {
+         /* set the colormap position for magenta*/
+         indx++;
+#ifdef WEB_24
+         colort[indx].pixel   = ispicol[ipixel + 5 * (*ncolrange)];
+#else
+         colort[indx].pixel   = ipixel + 5 * (*ncolrange);
+#endif
+         colort[indx].flags   = DoRed|DoGreen|DoBlue;
+         colort[indx].red     = colval;
+         colort[indx].green   = 0;
+         colort[indx].blue    = colval;
+         }
+      if (nredcolors > 6)
+         {
+         /* set the colormap position for white*/
+         indx++;
+#ifdef WEB_24
+         colort[indx].pixel   = ispicol[ipixel + 6 * (*ncolrange)];
+#else
+         colort[indx].pixel   = ipixel + 6 * (*ncolrange);
+#endif
+         colort[indx].flags   = DoRed|DoGreen|DoBlue;
+         colort[indx].red     = colval;
+         colort[indx].green   = colval;
+         colort[indx].blue    = colval;
+         }
+      ipixel++;
+      }
+
+    /************ debug output ************** removed
+    printf("colort[%d] pixel: %d,  r:%d  g:%d  b:%d\n",
+            indx, colort[indx].pixel,
+            colort[indx].red,colort[indx].green,colort[indx].blue);
+    *********** debug output ***************/
+
+    /* put colors in the surface colormap */
+    XStoreColors(idispl,mapsurf,colort,indx); 
+
+    /* inform user on info needed for color map*/
+    sprintf(output,
+        "Number of colors:%d   Initial lut index: %d Indices/color: %d",
+         nvolcolors, mapgo, (*ncolrange));
+    spout(output);
+
+    /* activate the colormap */
+    setamap(mapsurf);
+
+
+    return TRUE; 
+ }
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d102 1
+a102 1
+             filedatac->fmin,filedatac->fmax, &fdum0, &fdum1, 1))
+d109 1
+a109 1
+                  filedatac->fmin, filedatac->fmax);
+@
+
+
+1.4
+log
+@vogans linux mods
+@
+text
+@d7 1
+a7 1
+C **************************************************************************
+d9 24
+a32 7
+C *  COPYRIGHT (C)1995, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH     *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.3
+log
+@redvol needed iskip in call
+@
+text
+@d116 3
+d120 1
+d150 3
+d154 1
+d161 3
+d165 1
+d175 3
+d179 1
+d189 3
+d193 1
+d203 3
+d207 1
+d217 3
+d221 1
+d231 3
+d235 1
+@
+
+
+1.2
+log
+@surfcolor stuff
+@
+text
+@d85 1
+a85 1
+             filedatac->fmin,filedatac->fmax, &fdum0, &fdum1))
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a1 3
+
+/* source: /net/ithaca/usr1/web/dev/surf.c  */
+
+d38 1
+d41 1
+a43 1
+ char filcolvol[81];
+d55 1
+a55 1
+ int        indx, ipixel, nindex, nredcolors;
+d58 1
+d63 1
+a63 1
+    /* normalize over 0..nvolcolors-0.5            */
+d82 1
+a82 1
+    if (!redvol(filedatac, TRUE, &colvol, FALSE, &fdumptr, 
+d94 24
+d119 1
+a120 2
+ /* make a default colormap for the nvolcolors */
+ /* blue - green - red - white - yellow - cyan - magenta  */
+d173 1
+a173 1
+         colort[indx].pixel   = ipixel + 4* (*ncolrange);
+d183 1
+a183 1
+         colort[indx].pixel   = ipixel + 5* (*ncolrange);
+d193 1
+a193 1
+         colort[indx].pixel   = ipixel + 6* (*ncolrange);
+d203 1
+a203 1
+         colort[indx].pixel   = ipixel + 3 * (*ncolrange);
+d212 1
+a212 1
+    /************ debug output **************
+d218 2
+a219 2
+    /* put colors in the shared colormap */
+    XStoreColors(idispl,map,colort,indx); 
+d223 2
+a224 2
+        "Number of colors:%d   Initial lut index: %d Indices/color: %d, %d",
+         nvolcolors, mapgo, (*ncolrange), indx);
+d226 4
+@

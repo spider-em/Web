@@ -1,0 +1,2142 @@
+head	1.15;
+access;
+symbols
+	pre-tilt-improve:1.15
+	pre_surf_fromtop:1.15
+	pre_neednewmap:1.15
+	pre_apppluss_remove:1.14
+	pre_tiltpair_chng:1.14
+	pre_GPL:1.10;
+locks;
+comment	@ * @;
+
+
+1.15
+date	2011.07.26.15.28.34;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2011.05.10.15.26.39;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2011.05.05.12.04.47;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2011.03.18.13.23.06;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2005.10.18.16.59.44;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2001.08.10.12.56.56;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	97.02.17.17.50.37;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.11.08.20.57.56;	author mladjadj;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.09.12.15.54.24;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.04.04.11.14.56;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.04.01.09.49.51;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.29.15.10.06;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.02.12.20.36;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.02.11.52.19;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.08;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.15
+log
+@less output to screen now
+@
+text
+@
+/*$Header: /usr8/web/new/RCS/defluts.c,v 1.14 2011/05/10 15:26:39 leith Exp $*/
+/*
+C***********************************************************************
+C
+C defluts             Directcolor mods by: Erik Vogan July 2001
+C
+C***********************************************************************
+C* AUTHOR: ArDean Leith                                                 
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C***********************************************************************
+C
+C    DEFLUTS(DUMMY)
+C
+C    PURPOSE:  Create colormaps and set the spider 
+c              color look-up-tables in the maps.
+C              The color map has a grey ramp in MAPGO...MAPEND and
+c              spider color shades in COLORGO...COLOREND.
+C              Positions starting at 0 are often used by window 
+c              manager.  If so, the number of image grey levels 
+c              should be reduced to fit in the space above the 
+c              reserved numbers and below number 127.
+C              (This mechanism is used to preserve overlay in 
+c              last plane).  The colormap sets MAPEND - MAPGO +1
+c              grey levels and <=128 spider colors and attempts
+c              to preserve background & foreground colors used by
+c              the window manager. (It may not succeed)
+C
+C    PARAMETERS:  None currently used
+C
+C    CALLED BY:   web_main
+C
+C    CALLS: 
+C
+C        COLORGO          1   2      3           4    5         6      7
+C    128 BLACK, BLUE, GREEN, BLUE_GREEN, RED, MAGENTA, YELLOW, WHITE
+C    
+C    128 BLACK,    dark blue  blue          BLUE
+C    132 green     green      blue          blue
+C    136 green     green      blue          CYAN
+C    140 GREEN     green      blue          blue
+C
+C    144 red       red        magenta       magenta
+C    148 brown     brown      bluish        bluish  
+C    152 greenish  green      blueish       blueish             
+C    156 green     green      blueish       blueish
+c
+C    160 red       red        magenta        magenta
+C    164 orange    orangish   lite orange    lite magenta
+C    168 yellow    yellow     bluish         bluish
+C    172 greeenish greenish   lite blue      lite blue
+C
+C    176 RED       red        magenta        MAGENTA
+C    180 orange    orange     pink           pink
+C    184 orange    orange     pink orange    pink orange
+C    188 YELLOW    yellow     lite yellow    WHITE
+C
+C--********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+#include "common.h"
+#include "routines.h"
+
+ /*************************  defluts   *******************************/
+
+Colormap defluts(int dummy) 
+ {
+
+ Colormap        mappriv, mapdef;
+ int             i, it, nramp, idepth, tofree;
+ unsigned short  ival;
+ XVisualInfo     visual_data;
+ XColor          colors[MAXCOL];
+ float           fval;
+ unsigned long   cells[MAXCOL];
+ Visual          *visualdef; 
+ int             screen;
+ unsigned long   plane_mask; 
+
+ int             icol;               // First spider color
+ int             nl   = 2;           // # of shades 
+ //unsigned long   nlooks[] = {0, 128, 192, 255};
+ unsigned long   nlooks[] = {0, 255};
+ int             nr,ng, nb ;
+
+ int             nplanes = 0;
+ Status          ires;
+ 
+ screen    = DefaultScreen(idispl);
+ visualdef = DefaultVisual(idispl, screen);
+ mapdef    = DefaultColormapOfScreen(iscreen);
+ idepth    = DefaultDepthOfScreen(iscreen);
+
+ printf(" Web ----------------------\n" );
+ printf(" Default Screen:     %d  \n",screen);
+ printf(" Screen depth:       %d  \n",idepth);
+ printf(" Default visual:     %#X \n",visualdef);
+ printf(" Default colormap:   %#X \n",mapdef );
+
+
+ // Write out private colormap info 
+ //lut_info("shared",mapdef,24,0,256); 
+
+ // Check depth of screen (number of bit planes) 
+ if(idepth < 8)
+    {fprintf(stderr,"*** Screen depth is too shallow!"); 
+     exit(1); }
+
+ // Get a directcolor visual for colormap use  ------------ DirectColor
+
+ if (!XMatchVisualInfo(idispl, XDefaultScreen(idispl), idepth,
+                       DirectColor, &visual_data))
+    {fprintf(stderr,"*** No %d bit, directcolor visual!",idepth);  
+     exit(2);  }
+
+ ncolors = visual_data.colormap_size;
+ visual  = visual_data.visual;
+
+ // Create new private colormap
+ mappriv = XCreateColormap(idispl, RootWindowOfScreen(iscreen), 
+                           visual, AllocNone);
+ if (!mappriv)
+    { fprintf(stderr,"*** Failed to create private colormap!");  
+      exit(3);  }
+ printf(" Private map:        %#x \n",mappriv );
+ printf(" # of colors:        %d  \n",ncolors);
+ 
+
+ ires = XAllocColorCells(idispl, mappriv, TRUE, 
+                         NULL, nplanes, cells, ncolors);
+ if (!ires)
+    { fprintf(stderr,"*** Failed to allocate %d colors!\n",
+      ncolors);  exit(4);  }
+
+ // Allocate colors in the Directcolor visual   
+ mapgo    =  64;                    // Need >= 64 levels for ramp 
+ mapend   = 127;  
+ colorgo  = 128;
+ colorend = 252;
+
+ nramp    = mapend - mapgo + 1;     // # of grey levels  
+ fval     = 65535.0 / (nramp - 1);
+
+ // Query existing default colormap colors 
+ for (i=0; i <256; i++)
+    {
+    colors[i].pixel = cells[i];
+    ispicol[i]      = cells[i];
+    colors[i].flags = DoRed|DoGreen|DoBlue; 
+    ispicoln[i]     = i;     // Used in colmen
+    }
+ ires = XQueryColors(idispl, mapdef, colors, 256);
+ if (!ires)
+    {fprintf(stderr,"*** Failed to query colors! \n");  
+     exit(2); }
+
+#ifdef DEBUG
+ // Debug info
+ for (i = 0; i < ncolors; i=i+4)
+    {
+    printf(" ispicol(%3d..%3d) : %#8x  %#8x   %#8x   %#8x \n",
+             i,i+3, ispicol[i],   ispicol[i+1],  
+                    ispicol[i+2], ispicol[i+3]) ; 
+    }
+#endif
+
+ // Set colors in the image portion of the colormap 
+ for (i = mapgo; i <= mapend; i++)
+    {
+    ival            = (unsigned short)(i - mapgo) * fval;
+    colors[i].red   = ival;
+    colors[i].green = ival;
+    colors[i].blue  = ival;    
+    colors[i].flags = DoRed|DoGreen|DoBlue;
+    }
+
+ // Place grey ramp and colors in the private colormap 
+ ires = XStoreColors(idispl,mappriv,colors,ncolors);
+ if (!ires)
+    {fprintf(stderr,"*** Failed to store colors! \n");  
+     exit(2);  }
+
+ // Set colors in spider colors
+ icol = colorgo;       // First spider color
+ nl   = 2;             // # of shades 
+ for (nr = 0; nr < nl; nr++)        // number of reds
+    {
+    for (ng = 0; ng < nl; ng++)     // number of greens
+       {
+       for (nb = 0; nb < nl; nb++)  // number of blues
+          {
+          ispicol[icol++] = nlooks[nr] << 16 | 
+                            nlooks[ng] <<  8 | 
+                            nlooks[nb];
+          } 
+       }
+    }
+     
+#ifdef DEBUG
+ // Debug info
+ for (i = 0; i < ncolors; i=i+4)
+    {
+    printf(" ispicol(%3d..%3d) : %#8x  %#8x   %#8x   %#8x \n",
+             i,i+3, ispicol[i],   ispicol[i+1],  
+                    ispicol[i+2], ispicol[i+3]) ; 
+    }
+#endif
+
+ // Make cells available for the window manager  
+ //tofree = 1,2          : bad slider  
+ //tofree = 4            : bad widget
+ //tofree = 63,8,127,255 : works OK
+ //tofree = 256          : invisible widget
+ //tofree = 257,500      : crashes bad free
+ //tofree = 64           : crashes in contrast
+   tofree = 63;
+ //  tofree = 31;
+
+ // Free colors below image ramp 
+ plane_mask = 0 ; 
+
+ if (tofree > 0)
+    {
+    XFreeColors(idispl,  mappriv,(cells+1), tofree, plane_mask);  
+    //XFreeColors(idispl,mappriv, cells,    tofree, plane_mask); // bad 
+    if (!ires)
+       {fprintf(stderr,"*** Failed to free lower colors! \n");  
+        exit(2);  }
+    //printf(" Freed cells:       %3d,   From: %#8x  Using mask: %#x \n",
+    //            tofree,cells[1], plane_mask);
+    } 
+ XFlush(idispl);
+
+ // Free colors above colorend 
+ tofree = 128;
+tofree = 0;
+
+ if (tofree > 0)
+    {
+    ires = XFreeColors(idispl, mappriv, (cells+colorgo), 
+                       tofree, 0);
+    if (!ires)
+      {fprintf(stderr,"*** Failed to free upper colors! \n");  exit(2);  }
+
+    //printf(" Freed cells:        %3d,  From: %#8x  Using mask: %#x \n",
+    //               tofree,cells[colorgo], plane_mask);
+    }
+ XFlush(idispl);
+
+ // Write out private colormap info 
+ //lut_info("Private",mappriv,24,0,256); 
+
+ return mappriv;
+}
+
+
+
+
+ /*************************  defluts    *******************************/
+
+ 
+Colormap defluts_tryout(int dummy) 
+ {
+
+ Colormap        mappriv, mapdef;
+ int             i, it, nramp,  ncolors, tofree;
+ unsigned short  ival;
+ XVisualInfo     visual_data;
+ XColor          colors[256];
+ float           fval;
+ unsigned long   cells[256];
+ Visual          *visualdef; 
+ int             screen;
+ 
+ int red[] = {
+      0, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+  19660, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+  28784, 12850,     0,     0, 24415, 16962, 27499, 49087, 36751, 12850,
+  32639, 12079,  8995,  8995, 12850,     0,  8995, 65535,     0, 36494,
+  42405, 62708, 52428, 56283, 60138,     0, 12079, 20303,  8995, 12850,
+  27499, 16962, 32639, 36751,  8995,     0, 39321, 12079, 12079, 21588,
+  21588, 43176, 43176, 49344, 49344, 40863, 65535, 36494, 52428, 56283,
+  39321, 37779, 48316, 60138, 65535, 20303, 56283, 65535, 52428, 28527,
+  36494, 56283, 55512, 44461, 28784, 28784, 20303, 40863, 55512, 65535,
+  65535, 37779,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0 
+ };
+ int green[] = {
+      0, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+  19660, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+  56283, 52428,     0,     0, 40863, 16962,  8995, 55512, 36751, 12850,
+      0, 12079,  8995,  8995, 39321, 32639, 27499, 32639, 65535,  8995,
+  10794, 42148, 32639, 56283, 60138, 65535, 20303, 20303, 36494, 52428,
+  36494, 28527, 65535, 48316, 36494, 65535, 52428, 20303, 20303, 21588,
+  21588, 43176, 43176, 49344, 49344, 40863,     0,  8995, 12850, 28784,
+  12850, 28784, 36751, 44461,     0, 12079, 28784,     0, 12850, 16962,
+  27499, 37779, 49087, 60138, 37779, 56283, 12079, 24415, 55512, 65535,
+  65535, 56283,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0 
+ };
+ int blue[] = {
+      0, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+  19660, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+  37779, 39321,     0, 65535, 40863, 28527, 36494, 55512, 48316, 52428,
+  65535, 20303, 36494, 36494, 52428, 65535, 36494,     0, 65535,  8995,
+  10794, 24672, 12850, 28784, 44461,     0, 12079, 12079,  8995, 12850,
+   8995, 16962,     0, 36751, 27499, 32639, 12850, 20303, 20303, 21588,
+  21588, 43176, 43176, 49344, 49344, 24415, 65535, 27499, 12850, 56283,
+  52428, 56283, 36751, 60138,     0, 12079, 37779, 32639, 39321, 16962,
+   8995, 28784, 55512, 60138, 56283, 56283, 20303, 40863, 49087, 65535,
+      0, 28784,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0 
+ };
+
+ screen    = DefaultScreen(idispl);
+ visualdef = DefaultVisual(idispl, screen);
+ mapdef    = DefaultColormapOfScreen(iscreen);
+ idepth    = DefaultDepthOfScreen(iscreen);
+
+ printf("\n" );
+ printf(" Default Screen:     %d   ---------------------- \n",screen);
+ printf(" Default depth:      %d  \n",idepth);
+ printf(" Default visual:     %#X \n",visualdef);
+ printf(" Default colormap:   %#X \n",mapdef );
+
+ /* find depth of screen (number of bit planes) */
+ if((DefaultDepthOfScreen(iscreen)) <= 8)
+    {fprintf(stderr,"*** Screen depth is too shallow!"); return FALSE; }
+
+ /* get a directcolor visual for colormap use */
+ if (!XMatchVisualInfo(idispl, XDefaultScreen(idispl),
+                       DefaultDepthOfScreen(iscreen),
+                       DirectColor, &visual_data))
+      { fprintf(stderr,"*** No %d bit, directcolor visual!",
+                          DefaultDepthOfScreen(iscreen));   return FALSE; }
+
+ visual  = visual_data.visual;
+ ncolors = visual_data.colormap_size;
+ mapdef  = DefaultColormapOfScreen(iscreen);
+
+ mappriv = XCreateColormap(idispl, RootWindowOfScreen(iscreen),
+                              visual, AllocNone);
+ if (mappriv == mapdef)
+   {fprintf(stderr,"*** Can not create private colormap!"); return FALSE; }
+
+ mapgo    = 64;  /* Need >= 64 colors for ramp  */
+ mapend   = 127;  
+ colorgo  = 128;
+ colorend = 239;
+
+ ncolors  = 256;
+ nramp    = mapend - mapgo + 1; //  nramp is number of grey levels available 
+ fval     = 65535.0 / (nramp - 1);
+
+ int  nplanes = 0;
+ 
+ // allocate 256 colors in the visual requested 
+ XAllocColorCells(idispl, mappriv, TRUE, NULL, nplanes, cells, ncolors);
+
+ /* query existing default colors used by window system */
+ for (i=0; i <256; i++)
+    {
+    //printf(" Cell(%3d): %#x \n",i, cells[i]);
+    colors[i].pixel = cells[i];
+    ispicol[i]      = cells[i];
+    colors[i].flags = DoRed|DoGreen|DoBlue; 
+    }
+ XQueryColors(idispl, mapdef, colors, 256);
+
+ for (i = 0; i < ncolors; i=i+4)
+    {
+    printf(" ispicol(%3d..%3d) : %#8x  %#8x   %#8x   %#8x \n",
+             i,i+3, ispicol[i],   ispicol[i+1],  
+                    ispicol[i+2], ispicol[i+3]) ; 
+    }
+
+ // Set colors in the image portion of the colormap ----------
+ colorgo  = 128;
+ colorend = 128+64-1;
+
+#ifdef NVER
+ for (i = mapgo; i <= mapend; i++)
+    {
+    ival            = (unsigned short)(i - mapgo) * fval;
+    colors[i].red   = ival;
+    colors[i].green = ival;
+    colors[i].blue  = ival;    
+    colors[i].flags = DoRed|DoGreen|DoBlue;
+    }
+
+ // Set colors in the spider color portion of the colormap ----
+
+ for (i = colorgo; i <= colorend; i++)
+    {
+    it              = i - colorgo;
+    colors[i].red   = red[it];
+    colors[i].green = green[it];
+    colors[i].blue  = blue[it];
+    colors[i].flags = DoRed|DoGreen|DoBlue;
+    }
+#endif
+  // Place grey ramp and colors in the private colormap 
+  XStoreColors(idispl,mappriv,colors,256);
+
+ unsigned long  plane_mask = 0 ; 
+ // Make some cells available for the window manager later use 
+ //tofree = 256=invisible widget; // works: mapgo -1,8,127,255,;  1,2=bad slider  4=bad widget
+ //tofree = 257,500; // crashes bad free
+ tofree = 64; 
+ //tofree = 255; 
+
+ //if (tofree > 0)
+   //XFreeColors(idispl, mappriv, (cells+mapgo-tofree), tofree, 0);
+   XFreeColors(idispl, mappriv, (cells+1), tofree, plane_mask);     //WORKS!
+   // FAILSXFreeColors(idispl, mappriv, cells, tofree, plane_mask);
+   //XFreeColors(idispl, mappriv, cells,tofree, plane_mask);
+ 
+ printf(" Freeing %3d cells: %#x  Using mask: %#x  \n",
+                  tofree,cells[1], plane_mask);
+ XFlush(idispl);
+
+#ifdef NVR
+ // Free colors above colorend 
+ tofree = 255 - colorend;
+ tofree = 64;
+ if (tofree > 0)
+    XFreeColors(idispl, mappriv, (cells+colorend+1), tofree, 0);
+#endif
+
+ // Write out colormap info 
+ //lut_info("Private",mappriv,24,0,256); 
+
+ return mappriv;
+}
+
+
+
+
+
+@
+
+
+1.14
+log
+@comments
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/defluts.c,v 1.13 2011/05/05 12:04:47 leith Exp $*/
+d118 3
+a120 2
+ printf("\n" );
+ printf(" Default Screen:     %d   ---------------------- \n",screen);
+a123 1
+ printf(" Screen depth:       %d  \n",idepth);
+d253 2
+a254 2
+    printf(" Freed cells:       %3d,   From: %#8x  Using mask: %#x \n",
+                tofree,cells[1], plane_mask);
+d267 1
+a267 2
+       {fprintf(stderr,"*** Failed to free upper colors! \n");  
+        exit(2);  }
+d269 2
+a270 2
+    printf(" Freed cells:        %3d,  From: %#8x  Using mask: %#x \n",
+                   tofree,cells[colorgo], plane_mask);
+@
+
+
+1.13
+log
+@-cmap_changes_etc
+@
+text
+@d2 1
+a2 1
+/*$Header: /local/valcour.usr10/user8-copy/web/src/RCS/defluts.c,v 1.11 2005/10/18 16:59:44 leith Exp $*/
+d37 13
+a49 13
+C    PURPOSE:  CREATE COLORMAPS AND SET THE SPIDER 
+C              COLOR LOOK-UP-TABLES IN THE MAPS.
+C              THE COLOR MAP HAS A GREY RAMP IN mapgo...mapend AND
+C              SPIDER COLOR SHADES IN colorgo...colorend.
+C              POSITIONS STARTING AT 0 ARE OFTEN USED BY WINDOW 
+C              MANAGER.  IF so, THE NUMBER OF IMAGE GREY LEVELS 
+C              SHOULD BE REDUCED TO FIT IN THE SPACE ABOVE THE 
+C              RESERVED NUMBERS AND BELOW NUMBER 127.
+C              (THIS MECHANISM IS USED TO PRESERVE OVERLAY IN 
+C               LAST PLANE).  THE COLORMAP SETS mapend - mapgo +1
+C              GREY LEVELS AND <=128 SPIDER COLORS AND ATTEMPTS
+C              TO PRESERVE BACKGROUND & FOREGROUND COLORS USED BY
+C              THE WINDOW MANAGER. (IT MAY NOT SUCCEED)
+d51 1
+a51 1
+C    PARAMETERS:  NONE CURRENTLY USED
+d55 5
+a59 1
+C    CALLS:     
+d63 17
+a79 17
+     140 GREEN     green      blue          blue
+
+     144 red       red        magenta       magenta
+     148 brown     brown      bluish        bluish  
+     152 greenish  green      blueish       blueish             
+     156 green     green      blueish       blueish
+
+     160 red       red        magenta        magenta
+     164 orange    orangish   lite orange    lite magenta
+     168 yellow    yellow     bluish         bluish
+     172 greeenish greenish   lite blue      lite blue
+
+     176 RED       red        magenta        MAGENTA
+     180 orange    orange     pink           pink
+     184 orange    orange     pink orange    pink orange
+     188 YELLOW    yellow     lite yellow    WHITE
+
+@
+
+
+1.12
+log
+@experimental trials only
+@
+text
+@d2 77
+a82 1
+#include <X11/Xatom.h>
+d84 1
+a84 2
+#define  MAXCOLT 256
+#define  NUMCOLT 128
+d86 2
+a87 1
+ /*************************  defluts    *******************************/
+d89 10
+a98 2
+ Colormap defluts_fail(int dummy) 
+ {
+d100 5
+a104 28
+ XVisualInfo           visual_data;
+ Visual                *visualdef; 
+ Visual                *visual_24d; 
+ Visual                *visual_8p; 
+
+ Colormap              mapdef, mappriv;
+
+ unsigned long         plane_masks[8];
+ XColor                colors[256];
+ unsigned long         cells[256*3];
+ unsigned long         pixel;
+ unsigned long         pixel3[3];
+ unsigned long         pixel256[256];
+ unsigned long         ispicolt[256];
+ 
+ unsigned long         whitepixel;
+ Status                ires;
+ int                   mapgot,  mapendt, colorgot, colorendt;
+ int                   screen;
+ int                   idepth;
+ int                   ncolors;
+ unsigned long         red_mask;
+ unsigned long         green_mask;
+ unsigned long         blue_mask;
+ unsigned int          nred, ngreen, nblue;
+ int                   nramp;
+ float                 fval;
+ int                   i,ival,it,tofree;
+d106 2
+a107 2
+ //Colormap              imap;
+ //Arg                   args[1];
+a108 47
+  int red[] = {
+      0, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+  19660, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+  28784, 12850,     0,     0, 24415, 16962, 27499, 49087, 36751, 12850,
+  32639, 12079,  8995,  8995, 12850,     0,  8995, 65535,     0, 36494,
+  42405, 62708, 52428, 56283, 60138,     0, 12079, 20303,  8995, 12850,
+  27499, 16962, 32639, 36751,  8995,     0, 39321, 12079, 12079, 21588,
+  21588, 43176, 43176, 49344, 49344, 40863, 65535, 36494, 52428, 56283,
+  39321, 37779, 48316, 60138, 65535, 20303, 56283, 65535, 52428, 28527,
+  36494, 56283, 55512, 44461, 28784, 28784, 20303, 40863, 55512, 65535,
+  65535, 37779,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0 
+ };
+ int green[] = {
+      0, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+  19660, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+  56283, 52428,     0,     0, 40863, 16962,  8995, 55512, 36751, 12850,
+      0, 12079,  8995,  8995, 39321, 32639, 27499, 32639, 65535,  8995,
+  10794, 42148, 32639, 56283, 60138, 65535, 20303, 20303, 36494, 52428,
+  36494, 28527, 65535, 48316, 36494, 65535, 52428, 20303, 20303, 21588,
+  21588, 43176, 43176, 49344, 49344, 40863,     0,  8995, 12850, 28784,
+  12850, 28784, 36751, 44461,     0, 12079, 28784,     0, 12850, 16962,
+  27499, 37779, 49087, 60138, 37779, 56283, 12079, 24415, 55512, 65535,
+  65535, 56283,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0 
+ };
+ int blue[] = {
+      0, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+  19660, 24247, 28834, 33421, 38008, 42595, 47182, 51769, 56356, 65535,
+  37779, 39321,     0, 65535, 40863, 28527, 36494, 55512, 48316, 52428,
+  65535, 20303, 36494, 36494, 52428, 65535, 36494,     0, 65535,  8995,
+  10794, 24672, 12850, 28784, 44461,     0, 12079, 12079,  8995, 12850,
+   8995, 16962,     0, 36751, 27499, 32639, 12850, 20303, 20303, 21588,
+  21588, 43176, 43176, 49344, 49344, 24415, 65535, 27499, 12850, 56283,
+  52428, 56283, 36751, 60138,     0, 12079, 37779, 32639, 39321, 16962,
+   8995, 28784, 55512, 60138, 56283, 56283, 20303, 40863, 49087, 65535,
+      0, 28784,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,     0,     0,     0,     0,     0,     0,     0 
+ };
+
+
+a115 1
+ printf(" Default depth:      %d  \n",idepth);
+d119 9
+a127 7
+ // Query default visual & colormap positions 
+ // visual_info(idispl, visualdef, &idepth,   &ncolors); 
+ // lut_info("Default",mapdef, idepth, ncolors); 
+ // Query top colormap positions 
+ // XtSetArg(args[0], XmNcolormap, &imap); 
+ // XtGetValues(iw_top,args,1);
+ // lut_info("Top",imap, idepth, ncolors); 
+d129 1
+a129 2
+if(idepth < 8)
+    {fprintf(stderr,"*** Screen depth is too shallow!"); return FALSE; }
+a130 1
+ // Get a directcolor visual for colormap use ---------------- DIRECT COLOR
+d133 5
+a137 4
+    { fprintf(stderr,"*** No %d bit, directcolor visual!",idepth);  return FALSE;  }
+ visual_24d = visual_data.visual;
+ visual     = visual_24d;
+ ncolors    = visual_data.colormap_size;
+d143 2
+a144 3
+    { fprintf(stderr,"*** Failed to create private colormap!");  return FALSE;  }
+
+ printf(" ncolors:            %d  \n",ncolors);
+d146 2
+d149 5
+a153 21
+ int nplanes = 8;
+ int ncol    = 1;
+
+ ires = XAllocColorCells(idispl, mappriv, TRUE, plane_masks, nplanes, &pixel,ncol);
+  if (!ires)
+    { fprintf(stderr,"*** Failed to alloc colors!");  exit(3);  }
+
+ printf(" Pixel:              %x  \n",pixel);
+ printf(" Masks:              %x %x %x %x  %x  %x  %x  %x \n",
+                               plane_masks[0],plane_masks[1],
+                               plane_masks[2],plane_masks[3],
+                               plane_masks[4],plane_masks[5],
+                               plane_masks[6],plane_masks[7]);
+
+ // Copy contents of default colormap to web's private map
+ copylut(mapdef,  mappriv,  ncolors) ;
+ printf(" Copied lut \n") ; 
+
+ XFlush(idispl);
+ // List colormap contents info  
+ lut_info("Private", mappriv, idepth, 0, ncolors); 
+d155 2
+a156 1
+ mapgo    = 64;  /* Need >= 64 colors for ramp  */
+d159 1
+a159 1
+ colorend = 239;
+d161 1
+a161 1
+ nramp    = mapend - mapgo + 1; //  nramp is number of grey levels available 
+d164 2
+a165 1
+ for(i=0 ; i < ncolors ; i++)
+d167 4
+a170 13
+    colors[i].pixel = i << 16 | i << 8 | i ;
+    colors[i].flags = DoRed|DoGreen|DoBlue;
+    }
+ // Query colors used in mappriv 
+ XQueryColors(idispl, mappriv,  colors, 256);
+ XFlush(idispl);
+
+ // Fill ispicol 
+ for (i = 0; i < ncolors; i++)
+    {
+    ispicol[i]  = colors[i].pixel;
+    ispicolt[i] = colors[i].pixel;
+    //printf(" ispicol(%3d) : %#x   \n",i,ispicolt[i]) ; 
+d172 4
+d177 2
+d181 3
+a183 3
+    printf(" ispicol(%3d..%3d) : %#x  %#x   %#x   %#x \n",
+             i,i+3, ispicolt[i],  ispicolt[i+1],  ispicolt[i+2], 
+                                                  ispicolt[i+3]) ; 
+d185 1
+d187 1
+a187 1
+ // Fill spider ramp, keeping previous: colors[i].pixel
+a190 1
+
+d197 25
+a221 29
+ // Set colors in the spider color portion of the colormap
+ // Keeping previous: colors[i].pixel
+ for (i = colorgo; i <= colorend; i++)
+    {
+    it              = i - colorgo;
+    colors[i].red   = red[it];
+    colors[i].green = green[it];
+    colors[i].blue  = blue[it];
+    colors[i].flags = DoRed|DoGreen|DoBlue;
+    }
+
+ // Store colors used in mappriv 
+ if (!XStoreColors(idispl, mappriv, colors, ncolors))
+ XFlush(idispl);
+
+ // List colormap contents info  
+ printf("  \n");
+ lut_info("Private", mappriv, idepth, 0, ncolors); 
+ XFlush(idispl);
+
+
+ // Free some cells for the window manager
+ unsigned long  plane_mask;
+ unsigned long  ipix = pixel;
+ unsigned long  jnk  = plane_masks[1];
+ unsigned int   npix = 16;
+
+#ifdef NEVER
+ for (i = 0; i < npix; i++)
+d223 3
+a225 4
+    plane_mask = 1; i << 16 | i << 8 | i;
+    XFreeColors(idispl, mappriv,  &ispicolt[i], 1, plane_masks[0]);
+    //XFreeColors(idispl, mappriv,  &ispicolt[i], 1, plane_masks[0]);
+    printf(" Freeing color(%3d) : %#x %#x \n",i,ispicolt[i],plane_masks[0]);
+d229 9
+a237 3
+i = 16; //1,15 failed; 0, 128, 64, 32, 16 Work with npix=16 ; 
+plane_mask =  i << 16 | i << 8 | i;
+XFreeColors(idispl, mappriv,  ispicolt, npix, plane_mask);
+d239 2
+a240 2
+ XFlush(idispl);
+ printf(" Freed %d pixels Using mask: %#x \n",npix, plane_mask);
+d242 1
+a242 33
+
+
+
+
+#ifdef NEVER
+
+ int shift;
+ shift = 0; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[0],(1 << shift),(1 << shift)|pixel);
+ shift = 1; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[1],(1 << shift),(1 << shift)|pixel);
+ shift = 2; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[2],(1 << shift),(1 << shift)|pixel);
+ shift = 3; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[3],(1 << shift),(1 << shift)|pixel);
+ shift = 4; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[4],(1 << shift),(1 << shift)|pixel);
+ shift = 5; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[5],(1 << shift),(1 << shift)|pixel);
+ shift = 6; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[6],(1 << shift),(1 << shift)|pixel);
+ shift = 7; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[7],(1 << shift),(1 << shift)|pixel);
+
+ shift = 8; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[0],(1 << shift),(1 << shift)|pixel);
+ shift =16; printf("shift: %4d  mask: %x   (1<<shift): %u   p: %#x \n",shift,plane_masks[0],(1 << shift),(1 << shift)|pixel);
+
+
+ // Set colors in the image portion of the colormap ----------
+ //for (shift = 0;  plane_masks[shift] == (1<<shift) ; shift++);
+
+ for (shift = 1;  (plane_masks[0] >> shift) !=  0; shift++);
+ shift--;
+ printf(" Shift:  %6d \n",shift) ;
+ //colors[i].pixel = (i << shift) | pixel;
+    
+ unsigned long nt;
+
+ shift = 8; printf(" Shift: %4d \n",shift) ;
+
+ for (i = 1; i <= mapend; i++)
+d244 8
+a251 16
+    ival            = (unsigned short)(i - mapgo) * fval;
+    nt              = (i << shift) | pixel ;
+    pixel256[i-1]   = nt; 
+    colors[i].pixel = nt ;
+    printf(" Color: %4d (i << shift): %#x    nt: %#x \n", 
+                      i,(i << shift),        nt) ; 
+
+    //colors[i].pixel = i << 16 | i << 8 | i ;
+    colors[i].red   = ival;
+    colors[i].green = ival;
+    colors[i].blue  = ival;    
+    colors[i].flags = DoRed|DoGreen|DoBlue;
+    }
+
+ // place grey ramp and colors in the private colormap 
+ XStoreColors(idispl,mappriv,colors,1);
+d254 3
+a256 19
+ // Free some cells for the window manager
+ unsigned long  plane_mask = red_mask | green_mask | blue_mask ; 
+ unsigned long  ipix = pixel;
+ unsigned long  jnk  = plane_masks[1];
+
+ //printf(" Freeing:   %#x  %#x  %#x\n",pixel,plane_masks[0],  plane_masks[1]);
+ printf(" Freeing:     %#x  %#x  \n",ispicol[0], ispicol[1]);
+
+ //XFreeColors(idispl, mappriv, &pixel256[0], 1, 0);
+ XFreeColors(idispl, mappriv,  ispicol, 1, 0);
+
+ XFlush(idispl);
+ printf(" Freed Pixels  \n");
+#endif
+
+ return mappriv;
+ }
+
+
+d258 7
+d266 2
+a267 32
+
+
+
+
+#ifdef NEVER
+
+ //tofree = 1; 
+ //if (tofree > 0)
+   XFreeColors(idispl, mappriv, &ipix, tofree, plane_mask);
+ XFlush(idispl);
+ printf(" Cells:  %#x  \n",ipix);
+ printf(" Freed:  %ul  %#x -- %d \n",ipix,ipix, plane_mask);
+ XFlush(idispl);
+printf(" After freeing  pixel: %#x \n",ipix);
+
+ for(i=0 ; i < ncolors ; i++)
+   {
+   colors[i].pixel = i << 16 | i << 8 | i ;
+   colors[i].flags = DoRed|DoGreen|DoBlue;
+   }
+ //XQueryColors(idispl, mappriv,  colors, ncolors);
+
+ // Set colors in the spider color portion of the colormap 
+
+ for (i = colorgo; i <= colorend; i++)
+    {
+    it              = i - colorgo;
+    colors[i].pixel = i << 16 | i << 8 | i ;
+    colors[i].red   = red[it];
+    colors[i].green = green[it];
+    colors[i].blue  = blue[it];
+    colors[i].flags = DoRed|DoGreen|DoBlue;
+a268 1
+
+d271 2
+a272 5
+ // place grey ramp and colors in the private colormap 
+ //XStoreColors(idispl,mappriv,colors,ncolors);
+
+ //lut_info("Private",mappriv, idepth, ncolors);
+
+a273 26
+ // Free some cells for the window manager
+ 
+ unsigned long  plane_mask = red_mask | green_mask | blue_mask ; 
+ unsigned long  ipix = 1;
+ unsigned long  jnk = plane_mask;
+
+ printf(" Freeing:     %#x %d \n",ipix,jnk);
+ XFreeColors(idispl, mappriv, &ipix, 1, jnk);
+ XFlush(idispl);
+ printf(" Freed Pixel: %#x %#x \n",ipix,jnk);
+
+ tofree = 1; 
+ if (tofree > 0)
+   XFreeColors(idispl, mappriv, &ipix, tofree, plane_mask);
+ XFlush(idispl);
+ printf(" Cells:  %#x  \n",ipix);
+ printf(" Freed:  %ul  %#x -- %d \n",ipix,ipix, plane_mask);
+ XFlush(idispl);
+printf(" After freeing  pixel: %#x \n",ipix);
+
+
+ /* free colors above colorend */
+ tofree = 255 - colorend;
+ //if (tofree > 0)
+ //   XFreeColors(idispl, mappriv, (cells+colorend+1), tofree, plane_masks);
+ printf(" Returning: %#x \n");
+d275 1
+a275 13
+ }
+
+#endif
+
+
+ // if (! XAllocColorPlanes(idispl, mappriv, TRUE, plane_masks, 8, pixels,1))
+ //    { fprintf(stderr,"*** Failed to allocate: %d  colors in map: %#X",ncolors,mapriv);  
+ //      return FALSE; }
+//printf(" Pixel: %d -- %x %x %x %x  %x  %x  %x  %x \n",pixel,
+//                                        plane_masks[0],plane_masks[1],
+//                                        plane_masks[2],plane_masks[3],
+//                                        plane_masks[4],plane_masks[5],
+//                                        plane_masks[6],plane_masks[7]);
+d283 1
+a283 1
+Colormap defluts(int dummy) 
+d399 3
+a401 3
+    printf(" ispicol(%3d..%3d) : %#x  %#x   %#x   %#x \n",
+             i,i+3, ispicol[i],  ispicol[i+1],  ispicol[i+2], 
+                                                ispicol[i+3]) ; 
+d407 2
+d428 1
+a428 1
+
+d437 1
+a447 1
+ printf(" Freed %3d Pixels  \n",tofree);
+d449 2
+a450 1
+# // Free colors above colorend 
+d452 1
+d455 1
+a462 500
+#ifdef NEVER
+lumpur 219% swd ; clean ; ./testweb_24 dat                                 
+/local/valcour.usr10/user8-copy/web/dev                                    
+ ~ --> Data file extension: dat                                            
+
+ Default Screen:     0   ---------------------- 
+ Default depth:      24                         
+ Default visual:     0X80AF278                  
+ Default colormap:   0X20                       
+ ncolors:            256                        
+ Private map:        0x340000d                  
+ Pixel:              0                          
+ Masks:              10101 20202 40404 80808  101010  202020  404040  808080                                                                          
+ Copied lut                                                                
+ Private colormap:  0x340000d contents                                     
+     0 :        0 --     0     0     0                                     
+     1 :    10101 --   256   256   256                                     
+     2 :    20202 --   512   512   512                                     
+     3 :    30303 --   768   768   768                                     
+     4 :    40404 --  1024  1024  1024                                     
+     5 :    50505 --  1280  1280  1280                                     
+     6 :    60606 --  1536  1536  1536                                     
+     7 :    70707 --  1792  1792  1792                                     
+     8 :    80808 --  2048  2048  2048                                     
+     9 :    90909 --  2305  2305  2305                                     
+    10 :    A0A0A --  2561  2561  2561                                     
+    11 :    B0B0B --  2817  2817  2817                                     
+    12 :    C0C0C --  3073  3073  3073                                     
+    13 :    D0D0D --  3329  3329  3329                                     
+    14 :    E0E0E --  3585  3585  3585                                     
+    15 :    F0F0F --  3841  3841  3841                                     
+    16 :   101010 --  4097  4097  4097                                     
+    17 :   111111 --  4354  4354  4354                                     
+    18 :   121212 --  4610  4610  4610                                     
+    19 :   131313 --  4866  4866  4866                                     
+    20 :   141414 --  5122  5122  5122                                     
+    21 :   151515 --  5378  5378  5378                                     
+    22 :   161616 --  5634  5634  5634                                     
+    23 :   171717 --  5890  5890  5890                                     
+    24 :   181818 --  6146  6146  6146                                     
+    25 :   191919 --  6403  6403  6403                                     
+    26 :   1A1A1A --  6659  6659  6659                                     
+    27 :   1B1B1B --  6915  6915  6915                                     
+    28 :   1C1C1C --  7171  7171  7171                                     
+    29 :   1D1D1D --  7427  7427  7427                                     
+    30 :   1E1E1E --  7683  7683  7683                                     
+    31 :   1F1F1F --  7939  7939  7939                                     
+    32 :   202020 --  8227  8227  8227                                     
+    33 :   212121 --  8484  8484  8484                                     
+    34 :   222222 --  8740  8740  8740                                     
+    35 :   232323 --  8996  8996  8996                                     
+    36 :   242424 --  9252  9252  9252                                     
+    37 :   252525 --  9508  9508  9508                                     
+    38 :   262626 --  9764  9764  9764                                     
+    39 :   272727 -- 10020 10020 10020                                     
+    40 :   282828 -- 10276 10276 10276                                     
+    41 :   292929 -- 10532 10532 10532                                     
+    42 :   2A2A2A -- 10789 10789 10789                                     
+    43 :   2B2B2B -- 11045 11045 11045                                     
+    44 :   2C2C2C -- 11301 11301 11301                                     
+    45 :   2D2D2D -- 11557 11557 11557                                     
+    46 :   2E2E2E -- 11813 11813 11813                                     
+    47 :   2F2F2F -- 12069 12069 12069                                     
+    48 :   303030 -- 12325 12325 12325                                     
+    49 :   313131 -- 12581 12581 12581                                     
+    50 :   323232 -- 12838 12838 12838                                     
+    51 :   333333 -- 13094 13094 13094                                     
+    52 :   343434 -- 13350 13350 13350                                     
+    53 :   353535 -- 13606 13606 13606                                     
+    54 :   363636 -- 13862 13862 13862                                     
+    55 :   373737 -- 14118 14118 14118                                     
+    56 :   383838 -- 14374 14374 14374                                     
+    57 :   393939 -- 14630 14630 14630                                     
+    58 :   3A3A3A -- 14887 14887 14887                                     
+    59 :   3B3B3B -- 15143 15143 15143                                     
+    60 :   3C3C3C -- 15399 15399 15399                                     
+    61 :   3D3D3D -- 15655 15655 15655                                     
+    62 :   3E3E3E -- 15911 15911 15911                                     
+    63 :   3F3F3F -- 16167 16167 16167                                     
+    64 :   404040 -- 16455 16455 16455                                     
+    65 :   414141 -- 16711 16711 16711                                     
+    66 :   424242 -- 16968 16968 16968                                     
+
+
+   240 :   F0F0F0 -- 61693 61693 61693                                     
+   241 :   F1F1F1 -- 61949 61949 61949                                     
+   242 :   F2F2F2 -- 62205 62205 62205                                     
+   243 :   F3F3F3 -- 62461 62461 62461                                     
+   244 :   F4F4F4 -- 62717 62717 62717                                     
+   245 :   F5F5F5 -- 62973 62973 62973                                     
+   246 :   F6F6F6 -- 63229 63229 63229                                     
+   247 :   F7F7F7 -- 63486 63486 63486                                     
+   248 :   F8F8F8 -- 63742 63742 63742                                     
+   249 :   F9F9F9 -- 63998 63998 63998                                     
+   250 :   FAFAFA -- 64254 64254 64254                                     
+   251 :   FBFBFB -- 64510 64510 64510                                     
+   252 :   FCFCFC -- 64766 64766 64766                                     
+   253 :   FDFDFD -- 65022 65022 65022                                     
+   254 :   FEFEFE -- 65278 65278 65278                                     
+   255 :   FFFFFF -- 65535 65535 65535                                     
+ ---------------------------------------                                   
+ ispicol(  0..  3) : 0         0x10101    0x20202    0x30303                        
+ ispicol(  4..  7) : 0x40404   0x50505    0x60606    0x70707                  
+ ispicol(  8.. 11) : 0x80808   0x90909    0xa0a0a    0xb0b0b                  
+ ispicol( 12.. 15) : 0xc0c0c   0xd0d0d    0xe0e0e    0xf0f0f                  
+ ispicol( 16.. 19) : 0x101010  0x111111   0x121212   0x131313              
+ ispicol( 20.. 23) : 0x141414  0x151515   0x161616   0x171717              
+ ispicol( 24.. 27) : 0x181818  0x191919   0x1a1a1a   0x1b1b1b              
+ ispicol( 28.. 31) : 0x1c1c1c  0x1d1d1d   0x1e1e1e   0x1f1f1f              
+ ispicol( 32.. 35) : 0x202020  0x212121   0x222222   0x232323              
+ ispicol( 36.. 39) : 0x242424  0x252525   0x262626   0x272727              
+ ispicol( 40.. 43) : 0x282828  0x292929   0x2a2a2a   0x2b2b2b              
+ ispicol( 44.. 47) : 0x2c2c2c  0x2d2d2d   0x2e2e2e   0x2f2f2f              
+ ispicol( 48.. 51) : 0x303030  0x313131   0x323232   0x333333              
+ ispicol( 52.. 55) : 0x343434  0x353535   0x363636   0x373737              
+ ispicol( 56.. 59) : 0x383838  0x393939   0x3a3a3a   0x3b3b3b              
+ ispicol( 60.. 63) : 0x3c3c3c  0x3d3d3d   0x3e3e3e   0x3f3f3f              
+ ispicol( 64.. 67) : 0x404040  0x414141   0x424242   0x434343              
+ ispicol( 68.. 71) : 0x444444  0x454545   0x464646   0x474747              
+ ispicol( 72.. 75) : 0x484848  0x494949   0x4a4a4a   0x4b4b4b              
+ ispicol( 76.. 79) : 0x4c4c4c  0x4d4d4d   0x4e4e4e   0x4f4f4f              
+ ispicol( 80.. 83) : 0x505050  0x515151   0x525252   0x535353              
+ ispicol( 84.. 87) : 0x545454  0x555555   0x565656   0x575757              
+ ispicol( 88.. 91) : 0x585858  0x595959   0x5a5a5a   0x5b5b5b              
+ ispicol( 92.. 95) : 0x5c5c5c  0x5d5d5d   0x5e5e5e   0x5f5f5f              
+ ispicol( 96.. 99) : 0x606060  0x616161   0x626262   0x636363              
+ ispicol(100..103) : 0x646464  0x656565   0x666666   0x676767              
+ ispicol(104..107) : 0x686868  0x696969   0x6a6a6a   0x6b6b6b              
+ ispicol(108..111) : 0x6c6c6c  0x6d6d6d   0x6e6e6e   0x6f6f6f              
+ ispicol(112..115) : 0x707070  0x717171   0x727272   0x737373              
+ ispicol(116..119) : 0x747474  0x757575   0x767676   0x777777              
+ ispicol(120..123) : 0x787878  0x797979   0x7a7a7a   0x7b7b7b              
+ ispicol(124..127) : 0x7c7c7c  0x7d7d7d   0x7e7e7e   0x7f7f7f              
+ ispicol(128..131) : 0x808080  0x818181   0x828282   0x838383              
+ ispicol(132..135) : 0x848484  0x858585   0x868686   0x878787              
+ ispicol(136..139) : 0x888888  0x898989   0x8a8a8a   0x8b8b8b              
+ ispicol(140..143) : 0x8c8c8c  0x8d8d8d   0x8e8e8e   0x8f8f8f              
+ ispicol(144..147) : 0x909090  0x919191   0x929292   0x939393              
+ ispicol(148..151) : 0x949494  0x959595   0x969696   0x979797              
+ ispicol(152..155) : 0x989898  0x999999   0x9a9a9a   0x9b9b9b              
+ ispicol(156..159) : 0x9c9c9c  0x9d9d9d   0x9e9e9e   0x9f9f9f              
+ ispicol(160..163) : 0xa0a0a0  0xa1a1a1   0xa2a2a2   0xa3a3a3              
+ ispicol(164..167) : 0xa4a4a4  0xa5a5a5   0xa6a6a6   0xa7a7a7              
+ ispicol(168..171) : 0xa8a8a8  0xa9a9a9   0xaaaaaa   0xababab              
+ ispicol(172..175) : 0xacacac  0xadadad   0xaeaeae   0xafafaf              
+ ispicol(176..179) : 0xb0b0b0  0xb1b1b1   0xb2b2b2   0xb3b3b3              
+ ispicol(180..183) : 0xb4b4b4  0xb5b5b5   0xb6b6b6   0xb7b7b7              
+ ispicol(184..187) : 0xb8b8b8  0xb9b9b9   0xbababa   0xbbbbbb              
+ ispicol(188..191) : 0xbcbcbc  0xbdbdbd   0xbebebe   0xbfbfbf              
+ ispicol(192..195) : 0xc0c0c0  0xc1c1c1   0xc2c2c2   0xc3c3c3              
+ ispicol(196..199) : 0xc4c4c4  0xc5c5c5   0xc6c6c6   0xc7c7c7              
+ ispicol(200..203) : 0xc8c8c8  0xc9c9c9   0xcacaca   0xcbcbcb              
+ ispicol(204..207) : 0xcccccc  0xcdcdcd   0xcecece   0xcfcfcf              
+ ispicol(208..211) : 0xd0d0d0  0xd1d1d1   0xd2d2d2   0xd3d3d3              
+ ispicol(212..215) : 0xd4d4d4  0xd5d5d5   0xd6d6d6   0xd7d7d7              
+ ispicol(216..219) : 0xd8d8d8  0xd9d9d9   0xdadada   0xdbdbdb              
+ ispicol(220..223) : 0xdcdcdc  0xdddddd   0xdedede   0xdfdfdf              
+ ispicol(224..227) : 0xe0e0e0  0xe1e1e1   0xe2e2e2   0xe3e3e3              
+ ispicol(228..231) : 0xe4e4e4  0xe5e5e5   0xe6e6e6   0xe7e7e7              
+ ispicol(232..235) : 0xe8e8e8  0xe9e9e9   0xeaeaea   0xebebeb              
+ ispicol(236..239) : 0xececec  0xededed   0xeeeeee   0xefefef              
+ ispicol(240..243) : 0xf0f0f0  0xf1f1f1   0xf2f2f2   0xf3f3f3              
+ ispicol(244..247) : 0xf4f4f4  0xf5f5f5   0xf6f6f6   0xf7f7f7              
+ ispicol(248..251) : 0xf8f8f8  0xf9f9f9   0xfafafa   0xfbfbfb              
+ ispicol(252..255) : 0xfcfcfc  0xfdfdfd   0xfefefe   0xffffff              
+                                                                           
+ Private colormap:  0x340000d contents                                     
+     0 :        0 --     0     0     0                                     
+     1 :    10101 --   256   256   256                                     
+     2 :    20202 --   512   512   512                                     
+     3 :    30303 --   768   768   768                                     
+     4 :    40404 --  1024  1024  1024                                     
+     5 :    50505 --  1280  1280  1280                                     
+     6 :    60606 --  1536  1536  1536                                     
+     7 :    70707 --  1792  1792  1792                                     
+     8 :    80808 --  2048  2048  2048                                     
+     9 :    90909 --  2305  2305  2305                                     
+    10 :    A0A0A --  2561  2561  2561                                     
+    11 :    B0B0B --  2817  2817  2817                                     
+    12 :    C0C0C --  3073  3073  3073                                     
+    13 :    D0D0D --  3329  3329  3329                                     
+    14 :    E0E0E --  3585  3585  3585                                     
+    15 :    F0F0F --  3841  3841  3841                                     
+    16 :   101010 --  4097  4097  4097                                     
+    17 :   111111 --  4354  4354  4354                                     
+    18 :   121212 --  4610  4610  4610                                     
+    19 :   131313 --  4866  4866  4866                                     
+    20 :   141414 --  5122  5122  5122                                     
+    21 :   151515 --  5378  5378  5378                                     
+    22 :   161616 --  5634  5634  5634                                     
+    23 :   171717 --  5890  5890  5890                                     
+    24 :   181818 --  6146  6146  6146                                     
+    25 :   191919 --  6403  6403  6403                                     
+    26 :   1A1A1A --  6659  6659  6659                                     
+    27 :   1B1B1B --  6915  6915  6915                                     
+    28 :   1C1C1C --  7171  7171  7171                                     
+    29 :   1D1D1D --  7427  7427  7427                                     
+    30 :   1E1E1E --  7683  7683  7683                                     
+    31 :   1F1F1F --  7939  7939  7939                                     
+    32 :   202020 --  8227  8227  8227                                     
+    33 :   212121 --  8484  8484  8484                                     
+    34 :   222222 --  8740  8740  8740                                     
+    35 :   232323 --  8996  8996  8996                                     
+    36 :   242424 --  9252  9252  9252                                     
+    37 :   252525 --  9508  9508  9508                                     
+    38 :   262626 --  9764  9764  9764                                     
+    39 :   272727 -- 10020 10020 10020                                     
+    40 :   282828 -- 10276 10276 10276                                     
+    41 :   292929 -- 10532 10532 10532                                     
+    42 :   2A2A2A -- 10789 10789 10789                                     
+    43 :   2B2B2B -- 11045 11045 11045                                     
+    44 :   2C2C2C -- 11301 11301 11301                                     
+    45 :   2D2D2D -- 11557 11557 11557                                     
+    46 :   2E2E2E -- 11813 11813 11813                                     
+    47 :   2F2F2F -- 12069 12069 12069                                     
+    48 :   303030 -- 12325 12325 12325                                     
+    49 :   313131 -- 12581 12581 12581                                     
+    50 :   323232 -- 12838 12838 12838                                     
+    51 :   333333 -- 13094 13094 13094                                     
+    52 :   343434 -- 13350 13350 13350                                     
+    53 :   353535 -- 13606 13606 13606                                     
+    54 :   363636 -- 13862 13862 13862                                     
+    55 :   373737 -- 14118 14118 14118                                     
+    56 :   383838 -- 14374 14374 14374                                     
+    57 :   393939 -- 14630 14630 14630                                     
+    58 :   3A3A3A -- 14887 14887 14887                                     
+    59 :   3B3B3B -- 15143 15143 15143                                     
+    60 :   3C3C3C -- 15399 15399 15399                                     
+    61 :   3D3D3D -- 15655 15655 15655                                     
+    62 :   3E3E3E -- 15911 15911 15911                                     
+    63 :   3F3F3F -- 16167 16167 16167                                     
+    64 :   404040 --     0     0     0                                     
+    65 :   414141 --  1024  1024  1024                                     
+    66 :   424242 --  2080  2080  2080                                     
+    67 :   434343 --  3105  3105  3105                                     
+    68 :   444444 --  4161  4161  4161                                     
+    69 :   454545 --  5186  5186  5186                                     
+    70 :   464646 --  6242  6242  6242                                     
+    71 :   474747 --  7267  7267  7267                                     
+    72 :   484848 --  8323  8323  8323                                     
+    73 :   494949 --  9348  9348  9348                                     
+    74 :   4A4A4A -- 10404 10404 10404                                     
+    75 :   4B4B4B -- 11429 11429 11429                                     
+    76 :   4C4C4C -- 12485 12485 12485                                     
+    77 :   4D4D4D -- 13510 13510 13510                                     
+    78 :   4E4E4E -- 14566 14566 14566                                     
+    79 :   4F4F4F -- 15591 15591 15591                                     
+    80 :   505050 -- 16647 16647 16647                                     
+    81 :   515151 -- 17672 17672 17672                                     
+    82 :   525252 -- 18728 18728 18728                                     
+    83 :   535353 -- 19753 19753 19753                                     
+    84 :   545454 -- 20809 20809 20809                                     
+    85 :   555555 -- 21834 21834 21834                                     
+    86 :   565656 -- 22890 22890 22890                                     
+    87 :   575757 -- 23915 23915 23915                                     
+    88 :   585858 -- 24971 24971 24971                                     
+    89 :   595959 -- 25996 25996 25996                                     
+    90 :   5A5A5A -- 27052 27052 27052                                     
+    91 :   5B5B5B -- 28077 28077 28077                                     
+    92 :   5C5C5C -- 29133 29133 29133                                     
+    93 :   5D5D5D -- 30158 30158 30158                                     
+    94 :   5E5E5E -- 31214 31214 31214                                     
+    95 :   5F5F5F -- 32239 32239 32239                                     
+    96 :   606060 -- 33295 33295 33295                                     
+    97 :   616161 -- 34320 34320 34320                                     
+    98 :   626262 -- 35376 35376 35376                                     
+    99 :   636363 -- 36401 36401 36401                                     
+   100 :   646464 -- 37457 37457 37457                                     
+   101 :   656565 -- 38482 38482 38482                                     
+   102 :   666666 -- 39538 39538 39538                                     
+   103 :   676767 -- 40563 40563 40563                                     
+   104 :   686868 -- 41619 41619 41619                                     
+   105 :   696969 -- 42644 42644 42644                                     
+   106 :   6A6A6A -- 43700 43700 43700                                     
+   107 :   6B6B6B -- 44725 44725 44725                                     
+   108 :   6C6C6C -- 45781 45781 45781                                     
+   109 :   6D6D6D -- 46806 46806 46806                                     
+   110 :   6E6E6E -- 47862 47862 47862                                     
+   111 :   6F6F6F -- 48887 48887 48887                                     
+   112 :   707070 -- 49943 49943 49943                                     
+   113 :   717171 -- 50968 50968 50968                                     
+   114 :   727272 -- 52024 52024 52024                                     
+   115 :   737373 -- 53049 53049 53049                                     
+   116 :   747474 -- 54105 54105 54105                                     
+   117 :   757575 -- 55130 55130 55130                                     
+   118 :   767676 -- 56186 56186 56186                                     
+   119 :   777777 -- 57211 57211 57211                                     
+   120 :   787878 -- 58267 58267 58267                                     
+   121 :   797979 -- 59292 59292 59292                                     
+   122 :   7A7A7A -- 60348 60348 60348                                     
+   123 :   7B7B7B -- 61373 61373 61373                                     
+   124 :   7C7C7C -- 62429 62429 62429                                     
+   125 :   7D7D7D -- 63454 63454 63454                                     
+   126 :   7E7E7E -- 64510 64510 64510                                     
+   127 :   7F7F7F -- 65535 65535 65535                                     
+   128 :   808080 --     0     0     0                                     
+   129 :   818181 -- 24235 24235 24235                                     
+   130 :   828282 -- 28845 28845 28845                                     
+   131 :   838383 -- 33423 33423 33423                                     
+   132 :   848484 -- 38001 38001 38001                                     
+   133 :   858585 -- 42612 42612 42612                                     
+   134 :   868686 -- 47190 47190 47190                                     
+   135 :   878787 -- 51768 51768 51768                                     
+   136 :   888888 -- 56378 56378 56378                                     
+   137 :   898989 -- 65535 65535 65535                                     
+   138 :   8A8A8A -- 19657     0     0                                     
+   139 :   8B8B8B -- 24235     0     0                                     
+   140 :   8C8C8C -- 28845     0     0                                     
+   141 :   8D8D8D -- 33423     0     0                                     
+   142 :   8E8E8E -- 38001     0     0                                     
+   143 :   8F8F8F -- 42612     0     0                                     
+   144 :   909090 -- 47190     0     0                                     
+   145 :   919191 -- 51768     0     0                                     
+   146 :   929292 -- 56378     0     0                                     
+   147 :   939393 -- 65535     0     0                                     
+   148 :   949494 --     0 19657     0                                     
+   149 :   959595 --     0 24235     0                                     
+   150 :   969696 --     0 28845     0                                     
+   151 :   979797 --     0 33423     0                                     
+   152 :   989898 --     0 38001     0                                     
+   153 :   999999 --     0 42612     0                                     
+   154 :   9A9A9A --     0 47190     0                                     
+   155 :   9B9B9B --     0 51768     0                                     
+   156 :   9C9C9C --     0 56378     0                                     
+   157 :   9D9D9D --     0 65535     0                                     
+   158 :   9E9E9E --     0     0 19657                                     
+   159 :   9F9F9F --     0     0 24235                                     
+   160 :   A0A0A0 --     0     0 28845                                     
+   161 :   A1A1A1 --     0     0 33423                                     
+   162 :   A2A2A2 --     0     0 38001                                     
+   163 :   A3A3A3 --     0     0 42612                                     
+   164 :   A4A4A4 --     0     0 47190                                     
+   165 :   A5A5A5 --     0     0 51768                                     
+   166 :   A6A6A6 --     0     0 56378                                     
+   167 :   A7A7A7 --     0     0 65535                                     
+   168 :   A8A8A8 -- 28781 56282 37777                                     
+   169 :   A9A9A9 -- 12838 52440 39314                                     
+   170 :   AAAAAA --     0     0     0                                     
+   171 :   ABABAB --     0     0 65535                                     
+   172 :   ACACAC -- 24395 40851 40851                                     
+   173 :   ADADAD -- 16968 16968 28525                                     
+   174 :   AEAEAE -- 27501  8996 36497                                     
+   175 :   AFAFAF -- 49079 55514 55514                                     
+   176 :   B0B0B0 -- 36753 36753 48310                                     
+   177 :   B1B1B1 -- 12838 12838 52440                                     
+   178 :   B2B2B2 -- 32623     0 65535                                     
+   179 :   B3B3B3 -- 12069 12069 20297                                     
+   180 :   B4B4B4 --  8996  8996 36497                                     
+   181 :   B5B5B5 --  8996  8996 36497                                     
+   182 :   B6B6B6 -- 12838 39314 52440                                     
+   183 :   B7B7B7 --     0 32623 65535                                     
+   184 :   B8B8B8 --  8996 27501 36497                                     
+   185 :   B9B9B9 -- 65535 32623     0                                     
+   186 :   BABABA --     0 65535 65535                                     
+   187 :   BBBBBB -- 36497  8996  8996                                     
+   188 :   BCBCBC -- 42420 10789 10789                                     
+   189 :   BDBDBD -- 62717 42163 24683                                     
+   190 :   BEBEBE -- 52440 32623 12838                                     
+   191 :   BFBFBF -- 56282 56282 28781                                     
+   192 :   C0C0C0 -- 60156 60156 44469                                     
+   193 :   C1C1C1 --     0 65535     0                                     
+   194 :   C2C2C2 -- 12069 20297 12069                                     
+   195 :   C3C3C3 -- 20297 20297 12069                                     
+   196 :   C4C4C4 --  8996 36497  8996                                     
+   197 :   C5C5C5 -- 12838 52440 12838                                     
+   198 :   C6C6C6 -- 27501 36497  8996                                     
+   199 :   C7C7C7 -- 16968 28525 16968                                     
+   200 :   C8C8C8 -- 32623 65535     0                                     
+   201 :   C9C9C9 -- 36753 48310 36753                                     
+   202 :   CACACA --  8996 36497 27501                                     
+   203 :   CBCBCB --     0 65535 32623                                     
+   204 :   CCCCCC -- 39314 52440 12838                                     
+   205 :   CDCDCD -- 12069 20297 20297                                     
+   206 :   CECECE -- 12069 20297 20297                                     
+   207 :   CFCFCF -- 21578 21578 21578                                     
+   208 :   D0D0D0 -- 21578 21578 21578                                     
+   209 :   D1D1D1 -- 43188 43188 43188                                     
+   210 :   D2D2D2 -- 43188 43188 43188                                     
+   211 :   D3D3D3 -- 49367 49367 49367                                     
+   212 :   D4D4D4 -- 49367 49367 49367                                     
+   213 :   D5D5D5 -- 40851 40851 24395                                     
+   214 :   D6D6D6 -- 65535     0 65535                                     
+   215 :   D7D7D7 -- 36497  8996 27501                                     
+   216 :   D8D8D8 -- 52440 12838 12838                                     
+   217 :   D9D9D9 -- 56282 28781 56282                                     
+   218 :   DADADA -- 39314 12838 52440
+   219 :   DBDBDB -- 37777 28781 56282
+   220 :   DCDCDC -- 48310 36753 36753
+   221 :   DDDDDD -- 60156 44469 60156
+   222 :   DEDEDE -- 65535     0     0
+   223 :   DFDFDF -- 20297 12069 12069
+   224 :   E0E0E0 -- 56282 28781 37777
+   225 :   E1E1E1 -- 65535     0 32623
+   226 :   E2E2E2 -- 52440 12838 39314
+   227 :   E3E3E3 -- 28525 16968 16968
+   228 :   E4E4E4 -- 36497 27501  8996
+   229 :   E5E5E5 -- 56282 37777 28781
+   230 :   E6E6E6 -- 55514 49079 55514
+   231 :   E7E7E7 -- 44469 60156 60156
+   232 :   E8E8E8 -- 28781 37777 56282
+   233 :   E9E9E9 -- 28781 56282 56282
+   234 :   EAEAEA -- 20297 12069 20297
+   235 :   EBEBEB -- 40851 24395 40851
+   236 :   ECECEC -- 55514 55514 49079
+   237 :   EDEDED -- 65535 65535 65535
+   238 :   EEEEEE -- 65535 65535     0
+   239 :   EFEFEF -- 37777 56282 28781
+   240 :   F0F0F0 -- 61693 61693 61693
+   241 :   F1F1F1 -- 61949 61949 61949
+   242 :   F2F2F2 -- 62205 62205 62205
+   243 :   F3F3F3 -- 62461 62461 62461
+   244 :   F4F4F4 -- 62717 62717 62717
+   245 :   F5F5F5 -- 62973 62973 62973
+   246 :   F6F6F6 -- 63229 63229 63229
+   247 :   F7F7F7 -- 63486 63486 63486
+   248 :   F8F8F8 -- 63742 63742 63742
+   249 :   F9F9F9 -- 63998 63998 63998
+   250 :   FAFAFA -- 64254 64254 64254
+   251 :   FBFBFB -- 64510 64510 64510
+   252 :   FCFCFC -- 64766 64766 64766
+   253 :   FDFDFD -- 65022 65022 65022
+   254 :   FEFEFE -- 65278 65278 65278
+   255 :   FFFFFF -- 65535 65535 65535
+ ---------------------------------------
+ Freed 16 pixels Using mask: 0x101010
+ Set colormap:                  0x340000d
+
+
+ Default Screen:     0   -------------------- WORKS BELOW with alloc cells
+ Default depth:      24                         
+ Default visual:     0X80AF278                  
+ Default colormap:   0X20                       
+ ispicol(  0..  3) : 0         0x10101    0x20202    0x30303 
+ ispicol(  4..  7) : 0x40404   0x50505    0x60606    0x70707 
+ ispicol(  8.. 11) : 0x80808   0x90909    0xa0a0a    0xb0b0b 
+ ispicol( 12.. 15) : 0xc0c0c   0xd0d0d    0xe0e0e    0xf0f0f 
+ ispicol( 16.. 19) : 0x101010  0x111111   0x121212   0x131313 
+ ispicol( 20.. 23) : 0x141414  0x151515   0x161616   0x171717 
+ ispicol( 24.. 27) : 0x181818  0x191919   0x1a1a1a   0x1b1b1b 
+ ispicol( 28.. 31) : 0x1c1c1c  0x1d1d1d   0x1e1e1e   0x1f1f1f 
+ ispicol( 32.. 35) : 0x202020  0x212121   0x222222   0x232323 
+ ispicol( 36.. 39) : 0x242424  0x252525   0x262626   0x272727 
+ ispicol( 40.. 43) : 0x282828  0x292929   0x2a2a2a   0x2b2b2b 
+ ispicol( 44.. 47) : 0x2c2c2c  0x2d2d2d   0x2e2e2e   0x2f2f2f 
+ ispicol( 48.. 51) : 0x303030  0x313131   0x323232   0x333333 
+ ispicol( 52.. 55) : 0x343434  0x353535   0x363636   0x373737 
+ ispicol( 56.. 59) : 0x383838  0x393939   0x3a3a3a   0x3b3b3b 
+ ispicol( 60.. 63) : 0x3c3c3c  0x3d3d3d   0x3e3e3e   0x3f3f3f 
+ ispicol( 64.. 67) : 0x404040  0x414141   0x424242   0x434343 
+ ispicol( 68.. 71) : 0x444444  0x454545   0x464646   0x474747 
+ ispicol( 72.. 75) : 0x484848  0x494949   0x4a4a4a   0x4b4b4b 
+ ispicol( 76.. 79) : 0x4c4c4c  0x4d4d4d   0x4e4e4e   0x4f4f4f 
+ ispicol( 80.. 83) : 0x505050  0x515151   0x525252   0x535353 
+ ispicol( 84.. 87) : 0x545454  0x555555   0x565656   0x575757 
+ ispicol( 88.. 91) : 0x585858  0x595959   0x5a5a5a   0x5b5b5b 
+ ispicol( 92.. 95) : 0x5c5c5c  0x5d5d5d   0x5e5e5e   0x5f5f5f 
+ ispicol( 96.. 99) : 0x606060  0x616161   0x626262   0x636363 
+ ispicol(100..103) : 0x646464  0x656565   0x666666   0x676767 
+ ispicol(104..107) : 0x686868  0x696969   0x6a6a6a   0x6b6b6b
+ ispicol(108..111) : 0x6c6c6c  0x6d6d6d   0x6e6e6e   0x6f6f6f
+ ispicol(112..115) : 0x707070  0x717171   0x727272   0x737373
+ ispicol(116..119) : 0x747474  0x757575   0x767676   0x777777
+ ispicol(120..123) : 0x787878  0x797979   0x7a7a7a   0x7b7b7b
+ ispicol(124..127) : 0x7c7c7c  0x7d7d7d   0x7e7e7e   0x7f7f7f
+ ispicol(128..131) : 0x808080  0x818181   0x828282   0x838383
+ ispicol(132..135) : 0x848484  0x858585   0x868686   0x878787
+ ispicol(136..139) : 0x888888  0x898989   0x8a8a8a   0x8b8b8b
+ ispicol(140..143) : 0x8c8c8c  0x8d8d8d   0x8e8e8e   0x8f8f8f
+ ispicol(144..147) : 0x909090  0x919191   0x929292   0x939393
+ ispicol(148..151) : 0x949494  0x959595   0x969696   0x979797
+ ispicol(152..155) : 0x989898  0x999999   0x9a9a9a   0x9b9b9b
+ ispicol(156..159) : 0x9c9c9c  0x9d9d9d   0x9e9e9e   0x9f9f9f
+ ispicol(160..163) : 0xa0a0a0  0xa1a1a1   0xa2a2a2   0xa3a3a3
+ ispicol(164..167) : 0xa4a4a4  0xa5a5a5   0xa6a6a6   0xa7a7a7
+ ispicol(168..171) : 0xa8a8a8  0xa9a9a9   0xaaaaaa   0xababab
+ ispicol(172..175) : 0xacacac  0xadadad   0xaeaeae   0xafafaf
+ ispicol(176..179) : 0xb0b0b0  0xb1b1b1   0xb2b2b2   0xb3b3b3
+ ispicol(180..183) : 0xb4b4b4  0xb5b5b5   0xb6b6b6   0xb7b7b7
+ ispicol(184..187) : 0xb8b8b8  0xb9b9b9   0xbababa   0xbbbbbb
+ ispicol(188..191) : 0xbcbcbc  0xbdbdbd   0xbebebe   0xbfbfbf
+ ispicol(192..195) : 0xc0c0c0  0xc1c1c1   0xc2c2c2   0xc3c3c3
+ ispicol(196..199) : 0xc4c4c4  0xc5c5c5   0xc6c6c6   0xc7c7c7
+ ispicol(200..203) : 0xc8c8c8  0xc9c9c9   0xcacaca   0xcbcbcb
+ ispicol(204..207) : 0xcccccc  0xcdcdcd   0xcecece   0xcfcfcf
+ ispicol(208..211) : 0xd0d0d0  0xd1d1d1   0xd2d2d2   0xd3d3d3
+ ispicol(212..215) : 0xd4d4d4  0xd5d5d5   0xd6d6d6   0xd7d7d7
+ ispicol(216..219) : 0xd8d8d8  0xd9d9d9   0xdadada   0xdbdbdb
+ ispicol(220..223) : 0xdcdcdc  0xdddddd   0xdedede   0xdfdfdf
+ ispicol(224..227) : 0xe0e0e0  0xe1e1e1   0xe2e2e2   0xe3e3e3
+ ispicol(228..231) : 0xe4e4e4  0xe5e5e5   0xe6e6e6   0xe7e7e7
+ ispicol(232..235) : 0xe8e8e8  0xe9e9e9   0xeaeaea   0xebebeb
+ ispicol(236..239) : 0xececec  0xededed   0xeeeeee   0xefefef
+ ispicol(240..243) : 0xf0f0f0  0xf1f1f1   0xf2f2f2   0xf3f3f3
+ ispicol(244..247) : 0xf4f4f4  0xf5f5f5   0xf6f6f6   0xf7f7f7
+ ispicol(248..251) : 0xf8f8f8  0xf9f9f9   0xfafafa   0xfbfbfb
+ ispicol(252..255) : 0xfcfcfc  0xfdfdfd   0xfefefe   0xffffff
+
+ Freeing  63 cells: 0xff8b7680  Using mask: 0
+ Freed  63 Pixels
+ Set colormap:                  0x340000d
+a463 1
+if do not free any is bad slider
+a466 1
+#endif
+@
+
+
+1.11
+log
+@GPL
+@
+text
+@a1 58
+/*$Header: /net/bali/usr1/web/src/RCS/defluts.c,v 1.10 2001/08/10 12:56:56 leith Exp $*/
+/*
+C***********************************************************************
+C
+C defluts             Directcolor mods by: Erik Vogan July 2001
+C
+C***********************************************************************
+C* AUTHOR: ArDean Leith                                                 
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C***********************************************************************
+C
+C    DEFLUTS(DUMMY)
+C
+C    PURPOSE:        TO CREATE COLORMAPS AND SET THE SPIDER 
+C                    COLOR LOOK-UP-TABLES IN THE MAPS.
+C                    THE COLOR MAP HAS A GREY RAMP IN mapgo...mapend AND
+C                    SPIDER COLOR SHADES IN colorgo...colorend.
+C                    POSITIONS STARTING AT 0 ARE OFTEN USED BY WINDOW 
+C                    MANAGER.  IF so, THE NUMBER OF IMAGE GREY LEVELS 
+C                    SHOULD BE REDUCED TO FIT IN THE SPACE ABOVE THE 
+C                    RESERVED NUMBERS AND BELOW NUMBER 127.
+C                    (THIS MECHANISM IS USED TO PRESERVE OVERLAY IN 
+C                    LAST PLANE).  THE COLORMAP SETS mapend - mapgo +1
+C                    GREY LEVELS AND <=128 SPIDER COLORS AND ATTEMPTS
+C                    TO PRESERVE BACKGROUND & FOREGROUND COLORS USED BY
+C                    THE WINDOW MANAGER. (IT MAY NOT SUCCEED)
+C
+C    PARAMETERS:     NONE CURRENTLY USED
+C
+C    CALLED BY:      web_main
+C
+C    CALLS:     
+C
+C--********************************************************************
+*/
+
+d6 1
+d11 1
+a11 1
+ /*************************  defluts   *******************************/
+d13 393
+a405 1
+ Colormap defluts(int dummy) 
+d409 1
+a409 1
+ int             i, it, nramp, idepth, istart, tofree;
+d412 1
+a412 1
+ XColor          colors[MAXCOLT];
+d414 4
+a417 2
+ unsigned long   cells[MAXCOLT];
+
+d464 10
+d476 1
+a476 1
+ if((DefaultDepthOfScreen(iscreen)) < 8)
+d479 2
+a480 8
+#ifdef WEB_24
+ if ((DefaultDepthOfScreen(iscreen)) > 8)
+    {
+    fprintf(stderr,"*** Screen depth is %d bits.\n",
+                       DefaultDepthOfScreen(iscreen) );
+
+    /* get a directcolor visual for colormap use */
+    if (!XMatchVisualInfo(idispl, XDefaultScreen(idispl),
+d483 2
+a484 10
+      {
+      fprintf(stderr,"*** No %d bit, directcolor visual!",
+                          DefaultDepthOfScreen(iscreen)); 
+      return FALSE;
+      }
+   } 
+ else
+    {
+    /* get a 8-bit pseudocolor visual for colormap use */
+    fprintf(stderr,"*** Screen depth is 8 bits.\n");
+d486 3
+a488 13
+#endif
+
+    if (!XMatchVisualInfo(idispl, XDefaultScreen(idispl), 8,
+                      PseudoColor, &visual_data)) 
+       {
+       fprintf(stderr,"*** No 8 bit, pseudocolor visual!"); 
+       return FALSE;
+       }
+#ifdef WEB_24
+    }
+#endif
+
+ visual = visual_data.visual;
+a491 1
+ mapdef  = DefaultColormapOfScreen(iscreen);
+d495 3
+a497 5
+ /* make a colormap by looking at default map used positions */
+ querylut(mapdef, &mapgo,&mapend, &colorgo,&colorend);
+
+ /* ensure that enough ramp (64) & colors (100) are available anyway */
+ if (mapgo > 64)  mapgo = 64;  /* need >= 64 colors for ramp  */
+d500 8
+a507 4
+#ifdef WEB_24
+  /* allocate all 256 colors in the visual requested */
+  XAllocColorCells(idispl, mappriv, TRUE, NULL, 0, cells, MAXCOLT);
+#endif
+d510 1
+a510 1
+ for (i=0; i <MAXCOLT; i++)
+d512 1
+a512 1
+#ifdef WEB_24
+a514 4
+#else
+    colors[i].pixel = i;
+    ispicol[i]      = i;
+#endif
+d517 1
+a517 1
+ XQueryColors(idispl, mapdef, colors, MAXCOLT);
+d519 6
+d526 3
+a528 6
+ /*      SET COLORS IN THE IMAGE PORTION OF THE COLORMAP ----------*/
+    
+ /* NRAMP IS NUMBER OF GREY LEVELS AVAILABLE */
+ nramp = mapend - mapgo + 1;
+ fval = 65535.0 / (nramp - 1);
+
+a534 1
+#ifdef WEB_24
+a535 1
+#endif
+d538 1
+a538 2
+
+ /*      SET COLORS IN THE SPIDER COLOR PORTION OF THE COLORMAP ----*/
+d542 1
+a542 1
+    it = i - colorgo;
+a545 1
+#ifdef WEB_24
+a546 1
+#endif
+d549 2
+a550 7
+#ifndef WEB_24
+  /* allocate all 256 colors in the visual requested */
+  XAllocColorCells(idispl, mappriv, TRUE, NULL, 0, cells, MAXCOLT);
+#endif
+
+  /* place grey ramp and colors in the private colormap */
+  XStoreColors(idispl,mappriv,colors,MAXCOLT);
+d552 16
+a567 4
+ /* Now make some cells available for the window manager later use  */
+ tofree = mapgo -1;
+ if (tofree > 0)
+   XFreeColors(idispl, mappriv, (cells+mapgo-tofree), tofree, 0);
+d569 1
+a569 1
+ /* free colors above colorend */
+d574 2
+a575 2
+ /* write out colormap info */
+ /*  wid_lutinfo(mappriv,256); */
+d580 506
+@
+
+
+1.10
+log
+@vogans linux mods
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/defluts.c,v 1.9 1997/02/17 17:50:37 leith Exp $*/
+d10 23
+a32 6
+C* COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+C* RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+C* THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+C* LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+C* USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+C* THE CENTER FOR LABORATORIES AND RESEARCH                       
+@
+
+
+1.9
+log
+@freed all non-SPIDER colormap locations
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/defluts.c,v 1.8 1994/11/08 20:57:56 mladjadj Exp leith $*/
+d6 1
+a6 1
+C defluts
+d115 20
+a134 1
+ /* get a 8-bit pseudocolor visual for colormap use */
+d136 3
+a138 1
+ if (!XMatchVisualInfo(idispl, XDefaultScreen(idispl), 8,
+d140 7
+a146 1
+   {fprintf(stderr,"*** No 8 bit, pseudocolor visual!"); return FALSE; }
+d163 5
+d171 4
+d176 2
+a178 1
+    ispicol[i]      = i;
+d195 3
+d209 3
+d214 1
+d217 2
+a218 1
+ 
+@
+
+
+1.8
+log
+@spelling bee for text
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/defluts.c,v 1.7 1994/09/12 15:54:24 leith Exp mladjadj $*/
+d8 9
+a16 9
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+C *  COPYRIGHT (C)1992,  WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **********************************************************************
+d36 1
+a36 1
+C    CALLED BY:     web_main
+d57 1
+a57 1
+ int             i, it, nramp, idepth, istart;
+d178 8
+a185 5
+ if (mapgo > 10)
+   XFreeColors(idispl, mappriv, (cells+mapgo-10), 10, 0);
+
+ /* free 10 colors above colorend */
+ XFreeColors(idispl, mappriv, (cells+colorend+1), 10, 0);
+@
+
+
+1.7
+log
+@used common.h
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/defluts.c,v 1.6 94/04/04 11:14:56 leith Exp Locker: leith $*/
+d28 1
+a28 1
+C                    (THIS IS MECHANISM IS USED TO PRESERVE OVERLAY IN 
+@
+
+
+1.6
+log
+@changed allocations
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/defluts.c,v 1.5 94/04/01 09:49:51 leith Exp Locker: leith $*/
+d4 1
+a4 1
+C***************************************************************************
+d8 1
+a8 1
+C **************************************************************************
+d16 1
+a16 1
+C **************************************************************************
+a33 1
+C
+d45 1
+d51 1
+a51 7
+ extern Display   *idispl;
+ extern Screen    *iscreen;
+ extern int       mapgo, mapend, colorgo, colorend;
+ extern Visual    *visual;
+ extern int       ispicol[MAXCOLT];
+
+ /*************************  defluts   ****************************/
+@
+
+
+1.5
+log
+@new order of window assignment
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d136 1
+a136 1
+ makedeflut(&istart,&mapend,&colorgo,&colorend);
+d139 2
+a140 3
+ if(istart > 54)  istart = 54;  /* reserve at least 10 entries for */
+ mapgo    = 64;                 /*   Window Manager later use  */
+ if (colorend < 228) colorend = 228;
+d167 1
+a167 1
+/*      SET COLORS IN THE SPIDER COLOR PORTION OF THE COLORMAP ----*/
+d177 1
+d183 6
+a188 2
+/* Now make some cells available for the window manager later use  */
+   XFreeColors(idispl, mappriv, (cells+istart+1), (mapgo-istart-1), 0);
+@
+
+
+1.4
+log
+@used setamap to set the maps
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/defluts.c,v 1.3 94/02/02 12:20:36 leith Exp $*/
+a52 1
+ extern Window    iwin, iwtop;
+a53 1
+ extern Widget    iw_win, iw_top;
+a55 1
+ extern char      outstr[80];
+d63 1
+a63 1
+ int             i, it, nramp, idepth;
+d68 1
+a68 2
+ Status          istat;
+ Window          win_list[2];
+d118 2
+a119 2
+ if((idepth = DefaultDepthOfScreen(iscreen)) < 8)
+    { spout("*** Screen depth is too shallow!"); return FALSE; }
+d125 1
+a125 1
+   {  spout("*** No 8 bit, pseudocolor visual!"); return FALSE; }
+d129 2
+a130 3
+ mappriv = XCreateColormap(idispl,iwtop,visual,AllocAll);
+ spout("*** Created private colormap!"); 
+
+d133 1
+a133 1
+   { spout("*** Can not create private colormap!"); return FALSE; }
+d136 1
+a136 4
+ makedeflut(&mapgo,&mapend,&colorgo,&colorend);
+ sprintf(outstr,"Proposed ramp: %d...%d Colors: %d...%d",
+         mapgo,mapend,colorgo,colorend);
+ spout(outstr);
+d139 2
+a140 1
+ if (mapgo    > 64)  mapgo    = 64;
+d167 1
+d178 2
+d183 2
+a184 2
+  /* set the colormap for the windows desired */
+  setamap(mappriv);
+a187 4
+
+ sprintf(outstr,"Ramp: %d...%d Colors: %d...%d",
+         mapgo,mapend,colorgo,colorend);
+ spout(outstr);
+@
+
+
+1.3
+log
+@ramp end fixed to 127
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/defluts.c,v 1.2 94/02/02 11:52:19 leith Exp Locker: leith $*/
+d46 1
+a59 5
+ void  spout        (char *message);
+ int   wid_lutinfo  (Colormap, int);
+ void  visual_info  (Display *, Visual *);
+ int   makedeflut   (int *, int * ,int *, int *);
+
+d134 2
+a173 1
+
+d188 1
+a188 6
+  XSetWindowColormap(idispl,iwin,mappriv);
+  XFlush(idispl);
+
+  win_list[0] = iwin;
+  win_list[1] = iwtop;
+  XSetWMColormapWindows(idispl,iwtop,win_list,2); 
+@
+
+
+1.2
+log
+@added makedeflut possibility
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/defluts.c,v 1.1 93/11/10 10:11:08 leith Exp $*/
+d6 1
+a6 1
+C    DEFLUTS
+d18 1
+a18 1
+C    DEFLUTS(PMAP)
+d30 3
+a32 3
+C                    GREY LEVELS AND <=1208 SPIDER COLORS AND ATTEMPTS
+C                    TO PRESERVE BACKGROUND & FOREGROUND COLORS FOR THE
+C                    WINDOW MANAGER. (IT MAY NOT SUCCEED)
+d144 1
+a144 1
+ sprintf(outstr," Proposed ramp: %d...%d Colors: %d...%d",
+d164 1
+a164 3
+ /* NCOLS IS NUMBER OF SPIDER COLORS AVAILABLE AT THIS SITE
+    NRAMP IS NUMBER OF GREY LEVELS AVAILABLE AT THIS SITE */
+
+d170 1
+a170 1
+    ival             = (unsigned short)(i - mapgo) * fval;
+a178 1
+
+d187 1
+a187 1
+  /* put grey ramp and colors in the private colormap */
+d190 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d23 5
+a27 5
+C                    SPIDER COLOR SHADES IN 128...ncolors.
+C                    POSITIONS STARTING AT 0 ARE USED BY THE WINDOW 
+C                    MANAGER.  THE NUMBER OF IMAGE GREY LEVELS IS 
+C                    REDUCED TO FIT IN THE SPACE ABOVE THE RESERVED 
+C                    NUMBERS AND BELOW NUMBER 127.
+d29 2
+a30 2
+C                    LAST PLANE).  THE PRIVATE COLORMAP SETS mapend - mapgo +1
+C                    GREY LEVELS AND 120+ SPIDER COLORS AND ATTEMPTS
+d35 1
+a35 2
+C    PARAMETERS:    PMAPT    LOGICAL FLAG THAT PRIVATE COLORMAP
+C                            IS WANTED
+d53 1
+a53 1
+ extern int       mapgo, mapend;
+d57 1
+d59 4
+a62 3
+ void  spout(char *message);
+ int   wid_lutinfo(Colormap, int);
+ void  visual_info(Display *, Visual *);
+d66 1
+a66 1
+ Colormap defluts(int private) 
+d142 5
+d148 3
+a150 2
+ /* NCOLS IS NUMBER OF SPIDER COLORS AVAILABLE AT THIS SITE
+    NRAMP IS NUMBER OF GREY LEVELS AVAILABLE AT THIS SITE */
+a151 2
+ nramp = mapend - mapgo + 1;
+
+a156 1
+
+d164 4
+d170 1
+a170 1
+ for (i = 1; i <= nramp; i++)
+d172 4
+a175 7
+    it = mapgo + i - 1;
+    colors[it].pixel = it;
+    colors[it].flags = DoRed|DoGreen|DoBlue;
+    ival             = (unsigned short)(i - 1) * fval;
+    colors[it].red   = ival;
+    colors[it].green = ival;
+    colors[it].blue  = ival;    
+d182 1
+a182 1
+ for (i = 0; i <NUMCOLT; i++)
+d184 4
+a187 9
+    it = NUMCOLT + i;
+    colors[it].pixel = it;
+    colors[it].flags = DoRed|DoGreen|DoBlue;
+
+    colors[it].red   = red[i];
+    colors[it].green = green[i];
+    colors[it].blue  = blue[i];
+
+    ispicol[it] = it;
+d201 5
+a205 1
+ /*  wid_lutinfo(mappriv,NUMCOLT); */
+@

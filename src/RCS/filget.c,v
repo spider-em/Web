@@ -1,0 +1,505 @@
+head	1.12;
+access;
+symbols
+	pre-tilt-improve:1.12
+	pre_surf_fromtop:1.12
+	pre_neednewmap:1.12
+	pre_apppluss_remove:1.12
+	pre_tiltpair_chng:1.12
+	pre_GPL:1.11;
+locks;
+comment	@ * @;
+
+
+1.12
+date	2005.10.18.16.59.50;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	98.04.13.15.25.15;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	97.02.24.20.38.19;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	97.02.24.17.25.02;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	96.08.13.19.21.40;	author mladjadj;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	96.07.10.16.15.19;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.06.13.18.47.04;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.05.07.14.38.59;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.07.20.58.58;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.21.12.22.12;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.14.12.48.13;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.16.14.03.31;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.12
+log
+@GPL
+@
+text
+@/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.11 1998/04/13 15:25:15 leith Exp $*/
+
+/*
+C++*************************************************************************
+C
+C FILGET  -- CREATED JAN 89
+C            CONVERTED TO C -- JULY 92 al
+C
+C *********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C *********************************************************************
+C
+C    FILGET
+C
+C    PURPOSE:        USED TO CREATE FILENAME FROM 
+C                    FILE-NAME TEMPLATE AND ARRAY OF FILE NUMBERS.
+C
+C    PARAMETERS:     FILPAT    CHAR. FILE NAME PATTERN (NEEDED)
+C                    FILNAM    CHAR. FILE NAME         (RETURNED)
+C                    MAXLEN    MAX LENGTH FOR FILNAM   (NEEDED)
+C                    INUM      FILE NUMBER             (NEEDED)
+C
+C    RETURNS:        IRTFLG    ERROR FLAG (0 IS ERROR, 2 IS ALL OK)
+C
+C--*************************************************************************
+*/
+
+#include "std.h"
+#include "routines.h"
+
+ extern char           datexc[4];         /* file extension           */
+ extern char           dirnow[81];        /* current directory        */
+  
+/************************  filget  *********************************/
+
+ int filget(char * filpat, char * filnam, int maxlen, int inum)
+
+ { 
+ char   *dot, dataext[5]=".";
+ long   igo, numast, nlet, locast, numi;
+ int    ierflg;
+
+ /* find if there is an extension */
+ strcat(dataext,datexc);
+ dot = strstr(filpat,dataext);
+ 
+ /* normal return is 2 */
+ ierflg = 2;
+
+ nlet   = strlen(filpat);
+
+ /*  find location of first * in filpat */
+ if ((locast = strcspn(filpat,"*")) == nlet)
+    { /* no * in template, find run of digits at end */
+
+    /* skip extension at end of filename (if any) */
+    if (dot) nlet = nlet - strlen(dot);
+
+    for (locast=nlet-1; locast >=  0; locast--)
+       if (! isdigit(*(filpat+locast)))
+       {
+       locast++;
+       break;
+       }
+
+    numast = 1;
+    }
+ else
+    {  /* has *(s)  in filpat (template)  */
+
+    /* skip extension at end of filpat (if any) */
+    if (dot) nlet = nlet - strlen(dot);
+
+    numast = nlet - locast;
+    }
+
+ /* find number of digits in file number. (must be >= numast) */
+ if (inum > 0)
+    numi = MYMAX(((int) log10((float) inum) + 1.0),(numast));
+ else
+    numi = numast;
+
+  
+ /* find 1st char in filpat that will be altered */
+ igo = nlet - numi;
+
+ if (igo < 0)
+    {
+    spouts("*** FILE NUMBER: ");            spouti(inum);
+    spouts("*** DESTROYS FILE TEMPLATE: "); spout(filpat);
+    return 0;
+    }
+
+ if (igo < locast)
+    {
+    /*    printf("igo: %d, locast: %d, numi: %d, inum: %d \n",
+                igo,     locast,      numi,   inum); */
+    spouts("WARNING, FILE NUMBER: ");    spouti(inum);
+    spouts("MAY ALTER FILE TEMPLATE: "); spout(filpat);
+    ierflg = 1;
+    }
+
+ if (strlen(filpat) >= (size_t) maxlen)
+    {
+    spouts("*** Filename too long in filget: "); spout(filpat);
+    return 0;
+    }
+ strcpy(filnam,filpat);
+
+ if (sprintf(&filnam[igo],"%0*.*d",numi,numi,inum) < 0) 
+    return 0;
+ if (dot) strcat(filnam,dataext);
+
+ return ierflg;
+ }
+
+@
+
+
+1.11
+log
+@did not handle avg*** with 0 correctly
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.10 1997/02/24 20:38:19 leith Exp leith $*/
+d10 23
+a32 5
+C *  COPYRIGHT (C)1992,1996  HEALTH RESEARCH INC, EMPIRE STATE PLAZA, *
+C *    ALBANY, NY 12201.  THE CONTENTS OF THIS DOCUMENT ARE           *
+C *    PROPRIETARY TO HEALTH RESEARCH INC., AND ARE NOT TO BE         *
+C *    DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED   *
+C *    WITHOUT WRITTEN APPROVAL OF HEALTH RESEARCH INC.               *
+@
+
+
+1.10
+log
+@added error trap for file number zero
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.9 1997/02/24 17:25:02 leith Exp leith $*/
+d85 1
+a85 1
+    numi = 1;
+@
+
+
+1.9
+log
+@skips over datexc at end correctly now when inserting file number
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.8 1996/08/13 19:21:40 mladjadj Exp $*/
+d70 1
+a70 2
+    /* find number of digits to be altered  */
+    numi = MYMAX(((int) log10((float) inum) + 1.0),(1));
+d79 1
+d81 2
+a82 1
+    /* find number of digits in file number. (must be >= numast) */
+d84 3
+a86 1
+    }
+@
+
+
+1.8
+log
+@allow directory to in filename
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.7 1996/07/10 16:15:19 leith Exp $*/
+a52 1
+ nlet = strlen(filpat);
+d54 1
+d61 1
+a61 1
+        nlet = strlen(filpat) -  strlen(dot);
+d74 5
+a78 1
+    {  /* has *(s)  in template */
+@
+
+
+1.7
+log
+@now AV1001 with filenumber 10 --> AV1010 not AV0001
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.6 1996/06/13 18:47:04 leith Exp leith $*/
+d35 3
+d43 1
+a43 1
+ char   *dot;
+d47 4
+a54 2
+ /* find if there is an extension */
+ dot = strrchr(filpat,'.');
+d61 1
+a61 1
+    nlet = strlen(filpat) - strlen(dot);  
+d109 1
+a109 1
+ if (dot) strcat(filnam,dot);
+@
+
+
+1.6
+log
+@changed filget param to do error trap on strlen
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.5 1996/05/07 14:38:59 leith Exp $*/
+d64 3
+d68 3
+d72 3
+a74 4
+ numast = nlet - locast;
+
+ /* find number of digits in file number. (must be >= numast) */
+ numi = MYMAX(((int) log10((float) inum) + 1.0),(numast));
+@
+
+
+1.5
+log
+@increased length of outstr
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.4 1995/02/07 20:58:58 liy Exp leith $*/
+d9 7
+a15 9
+C **************************************************************************
+C *  AUTHOR: A. LEITH
+C *  COPYRIGHT (C)1989, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH 			   *
+C **************************************************************************
+d19 1
+a19 1
+C    PURPOSE:        USED TO CREATE NEXT FILENAME FROM 
+d24 1
+d27 1
+a27 1
+C    RETURNS:        IRTFLG    ERROR FLAG (0 IS NORMAL)
+d33 1
+a34 3
+ /* external function prototypes */
+ extern void  spout(char *);
+
+d37 1
+a37 1
+ int filget(char * filpat, char * filnam, int inum)
+d40 10
+a49 3
+ char   *outstr;
+ int    it;
+ long   igo,numast,nlet, locast, numi;
+d51 1
+a51 2
+ /*  FIND LOCATION OF FIRST * IN FILPAT */
+ nlet   = strlen(filpat);
+d56 1
+a56 4
+    if ((strrchr(filpat,'.')) != (char *) NULL)
+        nlet = strlen(filpat) - 4;
+    else
+        nlet = strlen(filpat);  
+d68 1
+a68 1
+ /* FIND NUMBER OF DIGITS IN FILE NUMBER. (MUST BE >= NUMAST) */
+d71 1
+a71 1
+ /* FIND 1ST CHAR IN FILPAT THAT WILL BE ALTERED */
+d76 3
+a78 6
+    outstr = (char *) calloc(50+numi+nlet,sizeof(char));
+    sprintf(outstr,
+          " *** FILE NUMBER: %*d DESTROYS FILE TEMPLATE: %s",
+          numi,inum,filpat);
+    spout(outstr); free(outstr);
+    return 1;
+a82 1
+    outstr = (char *) calloc(60+numi+nlet,sizeof(char));
+d85 3
+a87 4
+    sprintf(outstr,
+          " WARNING, FILE NUMBER: %*d MAY ALTER FILE TEMPLATE: %s",
+          numi,inum,filpat);
+    spout(outstr); free(outstr);
+d90 5
+d97 3
+a99 1
+ if (sprintf(&filnam[igo],"%0*.*d",numi,numi,inum) < 0) return 1;
+d101 1
+a101 1
+ return 0;
+@
+
+
+1.4
+log
+@modified (int)structure for Onyx
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.3 1994/03/21 12:22:12 leith Exp liy $*/
+d43 3
+a45 3
+ char *outstr;
+ int  locast, numast, nlet, igo, numi, it;
+ char *pext;
+a46 1
+
+d53 1
+a53 1
+    if ((pext = strrchr(filpat,'.')) != (char *) NULL)
+d58 1
+a58 1
+    for (locast=nlet-1; locast >= 0; locast--)
+d76 1
+a76 1
+    outstr = (char *) calloc(80,sizeof(char));
+d78 3
+a80 3
+    " *** FILE NUMBER: %d DESTROYS FILE TEMPLATE: %s",inum,filpat);
+    spout(outstr);
+    free(outstr);
+d86 1
+a86 1
+    outstr = (char *) calloc(60,sizeof(char));
+d90 3
+a92 3
+    " WARNING, FILE NUMBER: %d MAY ALTER FILE TEMPLATE: %s",inum,filpat);
+    spout(outstr);
+    free(outstr);
+@
+
+
+1.3
+log
+@for vax
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/filget.c,v 1.2 94/02/14 12:48:13 leith Exp $*/
+d54 1
+a54 1
+    if ((pext = strrchr(filpat,(int)".")) != (char *) NULL)
+@
+
+
+1.2
+log
+@replaced MIN,MAX with MYMIN,MYMAX
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/filget.c,v 1.1 93/11/16 14:03:31 leith Exp Locker: leith $*/
+d47 1
+d97 3
+a99 1
+ if (sprintf(&filnam[igo],"%*.*d",numi,numi,inum) < 0) return 1;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d69 1
+a69 1
+ numi = MAX(((int) log10((float) inum) + 1.0),(numast));
+@

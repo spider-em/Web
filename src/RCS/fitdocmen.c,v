@@ -1,0 +1,893 @@
+head	1.22;
+access;
+symbols
+	pre-tilt-improve:1.20
+	pre_surf_fromtop:1.19
+	pre_neednewmap:1.19
+	pre_apppluss_remove:1.19
+	pre_tiltpair_chng:1.18
+	pre_GPL:1.17;
+locks;
+comment	@ * @;
+
+
+1.22
+date	2015.09.18.16.25.21;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2015.09.01.17.53.12;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2015.06.11.13.29.54;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2011.06.22.19.13.30;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2005.10.18.16.59.41;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2000.07.05.15.17.32;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	96.06.13.18.47.18;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	96.05.07.14.17.29;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	96.04.16.14.24.28;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.08.14.16.51.27;	author mladjadj;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.08.08.15.34.27;	author mladjadj;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.07.25.19.50.08;	author mladjadj;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.02.02.16.10.46;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.01.26.20.08.40;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.12.30.10.17.08;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.06.06.11.28.33;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.04.18.11.09.25;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.04.12.13.49.46;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.25.10.03.50;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.24.13.54.39;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.23.16.13.51;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.16.14.13.05;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.22
+log
+@fitdoc call removed (unused??)
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.21 2015/09/01 17:53:12 leith Exp $*/
+
+/*
+ C**********************************************************************
+ C                                                                     *
+ C  fitdocmen.c    New                           May   93 ArDean Leith *
+ C                 Improved                      Jun 2011 ArDean Leith *
+ C                 Improved                      Jun 2015 ArDean Leith *
+ C                 fitdoc call removed           Sep 2015 ArDean Leith *
+ C                                                                     *
+ C *********************************************************************
+ C   AUTHOR:  ArDean Leith                                             *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C  fitdocmen()
+ C
+ C  PURPOSE:    Inputs doc file name for particle picking and then
+ C              returns to particle picker
+ C
+ C  PARAMETERS: none   
+ C
+ C  CALLed BY:  pickp      
+ C
+ C  CALLS:      
+ C
+ C**********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+#include <Xm/Text.h>
+
+ // Internal subroutine prototypes 
+ void           fitdocmen_butc(Widget, XtPointer, XtPointer);
+ void           fitdocmen_buta(Widget, XtPointer, XtPointer);
+
+ //  Global variables (see pickp) 
+ int            nfd   = -1;            // Doc file number         
+ int            iredu = 1;             // Image reduction factor  
+ char           dfil1[12],dfil2[12];   // Doc file root names
+ char           dfil3[12],dfil4[12];
+ char           dfil5[12],dfil6[12];
+
+ // External global variables used here ??
+ extern float   phif, thetaf, gammaff; // Defined in: fitmen
+ extern int     fitted;                // Defined in: pickp
+
+ // Internal file scope variables 
+ static Widget  iw_redu, iw_nfd;
+ static Widget  iw_fitdocmen = (Widget)0;
+ 
+ /*********************** fitdocmen ********************************/
+
+ void fitdocmen(Widget iw_temp, XtPointer data, 
+                                XtPointer call_data)
+
+ {
+ static Widget iw_rowcolv;
+ Widget        iw_pushc, iw_pusha, iw_dums; 
+ char          cval[8];
+
+ if (iw_fitdocmen == (Widget)0)
+    {   
+    /*   Create marker doc file menu */
+
+    iw_fitdocmen = wid_dialog(iw_win, 0, 
+                   "Particle document file", -1,-1);
+
+    iw_rowcolv = wid_rowcol(iw_fitdocmen, 'v', -1, -1);
+
+    /*   Create text box for doc file number input */
+    nfd++;
+    sprintf(cval,"%4d",nfd);
+    iw_nfd = wid_textboxb(iw_rowcolv,0,
+                         "Doc file number:",cval,4);
+
+    /*  Create a text box for reduction factor input */
+    iw_redu = wid_textboxb(iw_rowcolv,0,
+                     "Image reduction factor:","1",4);
+
+    /* Create box for apply  */
+    wid_stdbut(iw_rowcolv, iw_fitdocmen, 
+               &iw_pushc, &iw_pushc, &iw_pusha, "CA",
+       fitdocmen_butc, fitdocmen_butc ,fitdocmen_buta,NULL);
+
+    }
+ else
+    {
+    /*   Update text box for doc file number input */
+    nfd++;
+    sprintf(cval,"%4d",nfd);
+    iw_nfd = wid_textboxb(iw_rowcolv,iw_nfd,
+                     "Doc file number:",cval,4);
+    }
+ XtManageChild(iw_fitdocmen);
+ }
+
+/***********  Docfile accept button callback ***********************/
+
+ void fitdocmen_buta(Widget iw_temp, XtPointer data, 
+                                     XtPointer call_data)
+ {
+ float        fdum;
+
+ /* Get image reduction factor */
+ if (!rdprx(iw_redu,'i',&iredu,&fdum)) return;
+ if (iredu < 1) 
+    {spout("*** Reduction factor must be >= 1 !"); return;}
+
+ /* Get doc file number: nfd */
+ if (!rdprx(iw_nfd,'i',&nfd,&fdum)) return;
+ if (nfd < 0 || nfd > 999) 
+    {spout("*** Doc. file number range 0 ...999 !"); return;}
+
+ // Create output doc file names
+ filget("dcu***",dfil1,12,nfd);
+ filget("dct***",dfil2,12,nfd);
+ filget("dcb***",dfil3,12,nfd);
+ filget("duc***",dfil4,12,nfd);
+ filget("dtc***",dfil5,12,nfd);
+ filget("dft***",dfil6,12,nfd);
+
+ /*  Remove doc file menu */
+ XtUnmanageChild(iw_fitdocmen);
+
+ /* Set x-hairs cursor */
+ setacursor(76,-1,-1);
+
+ /* Initialize some variables for each run */
+ fitted = FALSE;
+ thetaf = 0.0;  gammaff = -90.0;  phif = -90.0;
+
+ /* Start picking points now */
+ pickp(TRUE);
+ }
+
+/*********** Docfile cancel button callback ***********************/
+
+ void fitdocmen_butc(Widget iw_temp, XtPointer data, 
+                                     XtPointer call_data)
+ {
+ /*  Remove the menu widget */
+ XtUnmanageChild(iw_fitdocmen);
+
+ /* Refresh screen to redraw images if damaged */
+ expos_cb(NULL,NULL,NULL);
+ }
+
+@
+
+
+1.21
+log
+@$2
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.20 2015/06/11 13:29:54 leith Exp $*/
+d7 4
+a10 3
+ C  fitdocmen.c         New                      May   93 ArDean Leith *
+ C                      Improved                 Jun 2011 ArDean Leith *
+ C                      Improved                 Jun 2015 ArDean Leith *
+d83 2
+a84 2
+ Widget  iw_pushc, iw_pusha, iw_dums; 
+ char    cval[8];
+a155 3
+
+ /* Recover any existing picked particles */
+ ///fitdoc(TRUE);
+@
+
+
+1.20
+log
+@if (fitdoc(TRUE) > 0),   cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.19 2011/06/22 19:13:30 leith Exp $*/
+d5 8
+a12 8
+C++*********************************************************************
+C                                                                      *
+C  fitdocmen.c          New                      May 93   ArDean Leith *
+C                       Improved                 Jun 2011 ArDean Leith *
+C                       Improved                 Jun 2015 ArDean Leith *
+C                                                                      *
+C **********************************************************************
+C    AUTHOR:  ArDean Leith                                             *
+d36 14
+a49 14
+C **********************************************************************
+C
+C    fitdocmen()
+C
+C    PURPOSE:    Inputs doc file name for particle picking and then
+C                returns to particle picker
+C
+C    PARAMETERS: none   
+C
+C    CALLed BY:  pickp      
+C
+C    CALLS:      
+C
+C--*********************************************************************
+d51 1
+d57 2
+a58 2
+ void       fitdocmen_butc(Widget, XtPointer, XtPointer);
+ void       fitdocmen_buta(Widget, XtPointer, XtPointer);
+d61 9
+a69 9
+ int              nfd   = -1;          // Doc file number         
+ int              iredu = 1;           // Image reduction factor  
+ char             dfil1[12],dfil2[12];
+ char             dfil3[12],dfil4[12];
+ char             dfil5[12],dfil6[12];
+
+ // External global variables used here 
+ extern float     phif, thetaf, gammaff; // Defined in: fitmen
+ extern int       fitted;                // Defined in: pickp
+d72 2
+a73 2
+ static Widget    iw_redu, iw_nfd;
+ static Widget    iw_fitdocmen = (Widget)0;
+d87 1
+a87 1
+    /*  Create marker doc file menu */
+d94 1
+a94 1
+    /*  Create text box for doc file number input */
+d112 1
+a112 1
+    /*  Update text box for doc file number input */
+d128 1
+a128 1
+ /* Find iimage reduction factor */
+d133 1
+a133 1
+ /* Find doc file number= nfd */
+d154 1
+a154 1
+ thetaf = 0.0; gammaff = -90.0; phif = -90.0;
+d156 2
+a157 7
+ /* Retrieve info from doc files, do not list points, start pickp */
+ if (fitdoc(TRUE) > 0)
+    { 
+    spout("*** Can not continue, fix document files!");
+    XBell(idispl,50); XBell(idispl,50); XBell(idispl,50); 
+    return;
+    }
+a160 1
+
+d165 2
+a166 1
+ void fitdocmen_butc(Widget iw_temp, XtPointer data, XtPointer call_data)
+@
+
+
+1.19
+log
+@rewrite
+@
+text
+@d2 1
+a2 1
+/*$Header:  Exp $*/
+d7 1
+a7 1
+C  fitdocmen.c          New                      May 93  ArDean Leith  *
+d9 1
+d14 1
+a14 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d72 1
+a72 1
+ static Widget    iw_fitdocmen= (Widget)0;
+d156 1
+a156 1
+ if (fitdoc(FALSE) > 0)
+@
+
+
+1.18
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitdocmen.c,v 1.17 2000/07/05 15:17:32 leith Exp $*/
+d5 5
+a9 4
+C++*************************************************************************
+C
+C  fitdocmen.c          May 93 al
+C
+d11 1
+a11 1
+C    AUTHOR:  ArDean Leith                                                 *
+d54 18
+a71 18
+ /* internal subroutine prototypes */
+ void          fitdocmen_butc(Widget, XtPointer, XtPointer);
+ void          fitdocmen_buta(Widget, XtPointer, XtPointer);
+
+ /*  global variables (see pickp) */
+ int                nfd   = -1;     /* doc file number         */
+ int                iredu = 1;      /* image reduction factor  */
+ char               dfil1[12],dfil2[12],dfil3[12],dfil4[12];
+ char               dfil5[12],dfil6[12];
+
+ /* external global variables used here */
+ extern float       xorg,  yorg;
+ extern float       phif, thetaf, gammaff;
+ extern int         fitted;
+
+ /* internal file scope variables */
+ static Widget     iw_redu, iw_nfd;
+ static Widget     iw_fitdocmen= (Widget)0;
+d75 2
+a76 1
+ void fitdocmen(Widget iw_temp, XtPointer data , XtPointer call_data)
+d85 4
+a88 1
+    /* create marker doc file menu first */
+a89 1
+    iw_fitdocmen = wid_dialog(iw_win, 0, "Particle document file", -1,-1);
+d92 1
+a92 1
+    /*  create a text box for doc file number input */
+d95 2
+a96 1
+    iw_nfd = wid_textboxb(iw_rowcolv,0,"Doc file number:",cval,4);
+d98 3
+a100 2
+    /*  create a text box for reduction factor input */
+    iw_redu = wid_textboxb(iw_rowcolv,0,"Reduction factor:","1",4);
+d102 1
+a102 1
+    /* create box for apply  */
+d104 2
+a105 2
+                         &iw_pushc, &iw_pushc, &iw_pusha, "CA",
+     fitdocmen_butc, fitdocmen_butc ,fitdocmen_buta,NULL);
+d110 1
+a110 1
+    /*  create a text box for doc file number input */
+d113 2
+a114 3
+    iw_nfd = wid_textboxb(iw_rowcolv,iw_nfd,"Doc file number:",cval,4);
+
+
+d119 1
+a119 1
+/***********  docfile accept button callback ***********************/
+d121 2
+a122 1
+ void fitdocmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+d126 1
+a126 1
+ /* find redf */
+d129 1
+a129 1
+    { spout("*** Reduction factor must be >= 1 !"); return; }
+d131 1
+a131 1
+ /* find nfd */
+d134 1
+a134 1
+    { spout("*** Doc. file number range 0 ...999 !"); return; }
+d136 1
+d144 1
+a144 1
+ /*  remove doc file menu */
+d147 1
+a147 1
+ /* set x-hairs cursor */
+d150 1
+a150 2
+ /* initialize some variables for each run */
+ yorg = 0.0; xorg = 0.0;
+d154 1
+a154 1
+ /* retrieve info from doc files, do not list points, start pickp */
+d162 1
+a162 1
+ /* start picking points now */
+d167 1
+a167 1
+/*********** docfile cancel button callback ***********************/
+d171 1
+a171 1
+ /*  remove the menu widget */
+d174 1
+a174 1
+ /* refresh screen to redraw images if damaged */
+@
+
+
+1.17
+log
+@replaced phif & gamamaf with -90.0 as default
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitdocmen.c,v 1.16 1996/06/13 18:47:18 leith Exp leith $*/
+d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.16
+log
+@changed filget param
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitdocmen.c,v 1.15 1996/05/07 14:17:29 leith Exp leith $*/
+d129 1
+a129 1
+ thetaf = 0.0; gammaff = 0.0; phif = 0.0;
+@
+
+
+1.15
+log
+@increased cval to 8 long
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitdocmen.c,v 1.14 1996/04/16 14:24:28 leith Exp leith $*/
+d113 6
+a118 6
+ filget("dcu***",dfil1,nfd);
+ filget("dct***",dfil2,nfd);
+ filget("dcb***",dfil3,nfd);
+ filget("duc***",dfil4,nfd);
+ filget("dtc***",dfil5,nfd);
+ filget("dft***",dfil6,nfd);
+@
+
+
+1.14
+log
+@initialized xorg, ththa , etc.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitdocmen.c,v 1.13 1995/08/14 16:51:27 mladjadj Exp $*/
+d62 1
+a62 1
+ char    cval[5];
+@
+
+
+1.13
+log
+@initialize here instead
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitdocmen.c,v 1.10 1995/02/02 16:10:46 liy Exp $*/
+d10 2
+a11 2
+C    AUTHOR:  ArDean Leith
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND             *
+d37 2
+a38 2
+ void          fitdocmen_butc(Widget, caddr_t, caddr_t);
+ void          fitdocmen_buta(Widget, caddr_t, caddr_t);
+d40 1
+a40 1
+ /* externally defined common variables (see pickp) */
+d46 8
+a53 3
+ /* internal common variables */
+ Widget     iw_redu, iw_nfd;
+ static Widget  iw_fitdocmen= (Widget)0;
+d57 1
+a57 1
+ void fitdocmen(Widget iw_temp, caddr_t data , caddr_t call_data)
+d64 1
+a64 1
+ if (iw_fitdocmen <= (Widget)0)
+d80 1
+a80 1
+    iw_dums = wid_stdbut(iw_rowcolv, iw_fitdocmen, 
+a81 1
+/****                    fin_cb, fin_cb ,fitdocmen_buta, NULL);  */
+d99 1
+a99 1
+ void fitdocmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d126 16
+a141 2
+ /* retrieve info from doc files, list points, start pickp */
+ fitdoc(FALSE, TRUE);
+d146 1
+a146 1
+ void fitdocmen_butc(Widget iw_temp, caddr_t data, caddr_t call_data)
+@
+
+
+1.12
+log
+@clean printf
+@
+text
+@d41 4
+a44 3
+ extern   int                nfd, iredu;
+ extern   char               dfil1[12],dfil2[12],dfil3[12],dfil4[12];
+ extern   char               dfil5[12],dfil6[12];
+@
+
+
+1.11
+log
+@static Widget = (Widget)0
+@
+text
+@d46 3
+a48 2
+ Widget     iw_redu, iw_nfd, iw_fitdocmen= (Widget)0;
+
+d54 2
+a55 1
+ Widget  iw_pushc, iw_pusha, iw_dums, iw_rowcolv; 
+a56 2
+ 
+ printf(" FITDOCMEN: \n");
+@
+
+
+1.10
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitdocmen.c,v 1.9 1995/01/26 20:08:40 liy Exp liy $*/
+d46 1
+a46 1
+ Widget     iw_redu, iw_nfd, iw_fitdocmen;
+a53 1
+
+d55 2
+d76 2
+a77 2
+                        fin_cb, fin_cb ,fitdocmen_buta, NULL);
+ /****  fitdocmen_butc, fitdocmen_butc ,fitdocmen_buta, ******/
+@
+
+
+1.9
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitdocmen.c,v 1.8 1994/12/30 10:17:08 leith Exp liy $*/
+d57 1
+a57 1
+ if (iw_fitdocmen <= (void *)0)
+@
+
+
+1.8
+log
+@ removed excess output
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitdocmen.c,v 1.7 94/06/06 11:28:33 odesanya Exp Locker: leith $*/
+d57 1
+a57 1
+ if ((int)iw_fitdocmen <= 0)
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/fitdocmen.c,v 1.6 94/04/18 11:09:25 leith Exp $*/
+d121 1
+a121 1
+ fitdoc(TRUE, TRUE);
+@
+
+
+1.6
+log
+@lekans bug fixes
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitdocmen.c,v 1.5 94/04/12 13:49:46 leith Exp $*/
+d43 1
+a43 1
+ extern   char               dfil5[12];
+d112 1
+@
+
+
+1.5
+log
+@added pickback stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitdocmen.c,v 1.4 94/03/25 10:03:50 leith Exp $*/
+d110 2
+a111 2
+ filget("dtc***",dfil4,nfd);
+ filget("duc***",dfil5,nfd);
+@
+
+
+1.4
+log
+@spoutfile altered
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitdocmen.c,v 1.3 93/11/24 13:54:39 leith Exp Locker: leith $*/
+d41 1
+a41 1
+ extern   int                nfd;
+d43 1
+d46 1
+a46 1
+ Widget        iw_nfd, iw_fitdocmen;
+d69 3
+d97 5
+d111 1
+a120 1
+
+@
+
+
+1.3
+log
+@added results file output
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitdocmen.c,v 1.2 93/11/23 16:13:51 leith Exp Locker: leith $*/
+d33 1
+a35 17
+ /* external subroutines */
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern Widget wid_textboxb (Widget, Widget, char *, char *,  int); 
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern void   spout        (char *);
+ extern int    rdprx        (Widget, char, int *, float *);
+ extern int    filget       (char *, char *, int);
+ extern void   fitdoc       (int, int);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern void   setacursor   (int, int, int);
+ extern void  spout         (char *);
+ extern int    spoutfile    (int);
+
+a43 1
+
+a107 3
+
+ /* start saving info in results file */
+ spoutfile(TRUE);
+@
+
+
+1.2
+log
+@added radcur call
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitdocmen.c,v 1.1 93/11/16 14:13:05 leith Exp Locker: leith $*/
+d50 1
+d125 3
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a0 1
+/*$Header$*/
+d2 2
+d48 2
+d112 1
+a112 4
+    {
+    spout("*** Doc. file number range 0 ...999 !");
+    return;
+    }
+d121 3
+@

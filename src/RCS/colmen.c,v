@@ -1,0 +1,1470 @@
+head	1.22;
+access;
+symbols
+	pre-tilt-improve:1.22
+	pre_surf_fromtop:1.22
+	pre_neednewmap:1.22
+	pre_apppluss_remove:1.20
+	pre_tiltpair_chng:1.19
+	pre_GPL:1.16;
+locks;
+comment	@ * @;
+
+
+1.22
+date	2011.09.14.15.47.04;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2011.09.13.15.48.18;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2011.07.19.19.37.02;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2011.05.18.14.31.24;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2011.05.05.12.04.47;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2005.10.18.17.00.01;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	96.01.25.21.02.01;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	96.01.23.17.44.58;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.07.11.17.28.08;	author mladjadj;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.02.14.20.43.45;	author liy;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.02.01.21.46.20;	author liy;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.01.26.18.57.20;	author liy;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.01.23.10.00.07;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.09.12.15.54.08;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.09.12.14.29.10;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.09.09.16.09.30;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.09.09.16.03.42;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.07.05.15.34.56;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.06.16.10.56.35;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.12.09.09.41;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.19.12.25.37;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.35;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.22
+log
+@cosmetic
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/colmen.c,v 1.20 2011/07/19 19:37:02 leith Exp $*/
+/*
+C++*********************************************************************
+C
+C WID_COLMEN.FOR  -- CREATED MARCH 91
+C COLMEN.C           CONVERTED TO C -- NOV 92 al  
+C                                               
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    COLMEN
+C
+C    PURPOSE:      Displays color selection super-widget
+C
+C    CALLED BY:    web_com
+C
+C--********************************************************************
+*/
+
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+#include <Xm/PushB.h>
+
+#include "common.h"
+#include "routines.h"
+
+#define MAX_ARGS   12
+
+ /* Internal function prototypes */
+ void            colmen_but(Widget, XtPointer, XtPointer);
+ void            colset    (Widget, XtPointer, XtPointer);
+ 
+ /* Internal common variables */
+ static Widget   iw_colmen = (Widget)0;
+ static Widget   iw_colorf, iw_colorb, iw_colorov, iw_colorcf, iw_colorcb;
+ static Widget   iw_curf, iw_curb;
+
+ static int      itemp = 0;         // Current selected color number
+ unsigned long   itempx;            // Current selected x color
+
+ /*************************   colmen   *******************************/
+
+ void colmen(Widget iw_caller, XtPointer data, XtPointer call_data)
+
+ { 
+ Arg             args[MAX_ARGS];  
+ Widget          iw_temp;
+ int             iwid, ixd, iyd, ixulb, iyulb, ici, icolort;
+ unsigned long   icolorxt;
+ int             n;
+ XmString        str_label;       
+
+/* printf(" Colmen itemp: %d \n",itemp); */
+
+ if (iw_colmen <= (Widget)0)
+    {   
+    /* Create color choice menu widget first */
+
+    iw_colmen  = wid_dialog(iw_win, 0, "Color options", -1, -1);
+
+    /* Create label box for color palette ----------------- Pallette */
+    wid_labelg(iw_colmen, 0, "COLOR PALETTE (Click on color first) ", 60, 25);
+
+    n = 0;
+    XtSetArg(args[n], XmNautoUnmanage, FALSE); n++; 
+    XtSetValues(iw_colmen, args, 1);
+
+    /* Set size for overall pallete */
+    iwid    = 688;
+
+    /* Set size for individual color boxes */
+    ixd     = 32;
+    iyd     = 32;
+    ixulb   = iwid;
+    iyulb   = 30;
+
+    n = 0;
+#ifdef WEB_BGFGO
+    XtSetArg(args[n], XmNbackground,  icolorxmb); n++;
+#endif
+
+    /* XtSetArg(args[n], XmNshowAsDefault,   0); n++; ?????? */
+    XtSetArg(args[n], XmNmarginWidth,     0); n++; 
+    XtSetArg(args[n], XmNmarginHeight,    0); n++; 
+    XtSetArg(args[n], XmNshadowThickness, 0); n++; 
+    XtSetArg(args[n], XmNwidth,         ixd); n++; 
+    XtSetArg(args[n], XmNheight,        iyd); n++;
+    XtSetArg(args[n], XmNcolormap,      map); n++;
+
+    str_label = XmStringCreateLtoR("",XmSTRING_DEFAULT_CHARSET);
+    XtSetArg(args[n], XmNlabelString, str_label);  n++;
+
+    for (ici = 0; ici < MAXCOLSPI; ici++)
+       {
+       ixulb = ixulb + ixd;
+       if (ixulb > (iwid-ixd) || ici == 16 || ici == 32 || ici ==48 )
+          {
+          /* Start new line of color boxes */
+          ixulb = 20;
+          iyulb = iyulb + iyd;
+          }
+
+       /* Set x color for this box */
+       icolorxt  = ispicol[ici+colorgo];
+ 
+       XtSetArg(args[n],   XmNx, ixulb);
+       XtSetArg(args[n+1], XmNy, iyulb); 
+       XtSetArg(args[n+2], XmNbackground, icolorxt);
+
+       iw_temp = XmCreatePushButton(iw_colmen, "iw_pb", args, n+3);
+
+       XtAddCallback(iw_temp,         XmNactivateCallback,
+                    (XtCallbackProc)  colmen_but,
+                    (XtPointer)       &ispicoln[colorgo + ici]);
+       XtManageChild(iw_temp);
+ 
+       } // End of for: ici 
+
+    // Free the String (not doing this may result in a memory leak) 
+    XmStringFree(str_label);
+
+    // Y position for line of current colors
+    iyulb = iyulb + 80;
+
+    // Create boxes for current colors 
+    iw_colorf  = wid_label(iw_colmen, 0, "  ", map,   20,  iyulb );
+    iw_colorb  = wid_label(iw_colmen, 0, "  ", map,  120,  iyulb );
+    iw_colorov = wid_label(iw_colmen, 0, "  ", map,  220,  iyulb );
+    iw_colorcf = wid_label(iw_colmen, 0, "  ", map,  320,  iyulb );
+    iw_colorcb = wid_label(iw_colmen, 0, "  ", map,  420,  iyulb );
+
+    // Put visible border around current color boxes 
+    XtSetArg(args[0], XmNborderWidth, 2);
+
+    /* Place current x color in  current color boxes */
+    XtSetArg(args[1], XmNbackground, icolorx);
+    XtSetValues(iw_colorf, args, 2);
+    XtSetArg(args[1], XmNbackground, icolorxb);
+    XtSetValues(iw_colorb, args, 2);
+    XtSetArg(args[1], XmNbackground, icolorxov);
+    XtSetValues(iw_colorov, args, 2);
+    XtSetArg(args[1], XmNbackground, icolorxcf);
+    XtSetValues(iw_colorcf, args, 2);
+    XtSetArg(args[1], XmNbackground, icolorxcb);
+    XtSetValues(iw_colorcb, args, 2);
+
+    /*
+    printf(" icolorx:   %#8x \n", icolorx);
+    printf(" icolorxb:  %#8x \n", icolorxb);
+    printf(" icolorxov: %#8x \n", icolorxov);
+    printf(" icolorxcf: %#8x \n", icolorxcf);
+    printf(" icolorxcb: %#8x \n", icolorxcb);
+    */
+
+    // Y position for line of current colors push buttons
+    iyulb = iyulb + 30;
+
+    // Create color setting buttons 
+    wid_pushg(iw_colmen, 0,"   FOREGROUND  ",     colset, "fore",   20, iyulb );
+    wid_pushg(iw_colmen, 0,"   BACKGROUND  ",     colset, "back",  120, iyulb );
+    wid_pushg(iw_colmen, 0,"   OVERLAY     ",     colset, "over",  220, iyulb );
+    wid_pushg(iw_colmen, 0,"   CURSOR      ",     colset, "curf",  320, iyulb );
+    wid_pushg(iw_colmen, 0,"   CURSOR OUTLINE  ", colset, "curb",  420, iyulb );
+
+    // Y position for finished button
+    iyulb = iyulb + 90;
+
+    // Create finished button 
+    wid_pushg(iw_colmen, 0,"   FINISHED  ", fin_cb,
+              (char *) iw_colmen,  300,iyulb);
+    }
+
+ XtManageChild(iw_colmen);
+ }
+
+
+ /*********** Color assignment button callback **************************/
+
+ void colset(Widget iw_temp, XtPointer data, XtPointer call_data)
+    {
+    Arg           args[1];
+
+    //printf(" colset; icolor: %d,  itempx:  %#8x \n",itemp,itempx);
+
+    if (!strcmp(data, "fore"))
+       { // Set current color for draw operations 
+
+       /* Update color in foreground color box */
+       XtSetArg(args[0], XmNbackground, itempx);
+       XtSetValues(iw_colorf, args, 1);
+
+       // wicolor sets both icolor and icolorx 
+       wicolor(icontx, itemp);
+       }
+
+     else if (!strcmp(data, "back"))
+       {  /* Set window background (used in clearing) */
+       icolorb  = itemp;
+       icolorxb = itempx;
+
+       /* Update color in backgound color box */
+       XtSetArg(args[0], XmNbackground, itempx);
+       XtSetValues(iw_colorb, args, 1);
+
+       XtSetArg(args[0], XmNbackground, itempx);
+       XtSetValues(iw_win, args, 1);
+       }
+
+     else if (!strcmp(data, "over"))
+       {   /* Set color used in mask overlay */
+       icolorov  = itemp;
+       icolorxov = itempx;
+
+       /* Update color in overlay color box */
+       XtSetArg(args[0], XmNbackground, itempx);
+       XtSetValues(iw_colorov, args, 1);
+       }
+
+    else if (!strcmp(data, "curf"))
+       {  /* Set cursor foreground  */
+       icolorcf   = itemp;
+       icolorxcf  = itempx;
+
+       /* Update color in cursor foregound color box */
+       XtSetArg(args[0], XmNbackground, itempx);
+       XtSetValues(iw_colorcf, args, 1);
+
+       /* Set cursor foreground color */
+       setacursor(icursor,icolorcf,-1); 
+       }
+
+    else if (!strcmp(data, "curb"))
+       {  /* Set cursor background  */
+       icolorcb   = itemp;
+       icolorxcb  = itempx;
+
+       /* Update color in cursor background color box */
+       XtSetArg(args[0], XmNbackground, itempx);
+       XtSetValues(iw_colorcb, args, 1);
+
+       /* Set cursor background color */
+       setacursor(icursor,-1,icolorcb); 
+       }
+    }
+
+
+/*********** Select color button callback **************************/
+
+ void colmen_but(Widget iw_temp, XtPointer data, XtPointer call_data)
+   {
+   itemp    = * (int * ) data; 
+   itempx   = ispicol[itemp];
+
+   //printf(" setting color: %d \n",itemp,itempx);
+   //printf(" itemp: %d,  itempx:  %#8x \n",itemp,itempx);
+   }
+
+
+                              
+
+
+                              
+@
+
+
+1.21
+log
+@COLOR PALETTE (Click on color first)
+@
+text
+@d45 1
+a180 2
+
+
+a201 11
+/*********** Select color button callback **************************/
+
+ void colmen_but(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ itemp    = * (int * ) data; 
+ itempx   = ispicol[itemp];
+
+ //printf(" setting color: %d \n",itemp,itempx);
+ //printf(" itemp: %d,  itempx:  %#8x \n",itemp,itempx);
+
+ }
+d272 14
+@
+
+
+1.20
+log
+@BGFGO
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/colmen.c,v 1.19 2011/05/18 14:31:24 leith Exp leith $*/
+d87 1
+a87 1
+    wid_labelg(iw_colmen, 0, "     COLOR PALETTE", 60, 25);
+@
+
+
+1.19
+log
+@rewrote the color selection
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/colmen.c,v 1.17 2005/10/18 17:00:01 leith Exp $*/
+d52 1
+a52 1
+#define MAX_ARGS   11
+d103 4
+@
+
+
+1.18
+log
+@-cmap_changes_etc
+@
+text
+@d10 1
+a10 1
+C *  AUTHOR: A. LEITH                                                      *
+d56 1
+d62 3
+a64 1
+ static int      over, fore, curf, curb, back;
+d74 1
+a74 1
+ unsigned long   icolorxt, itempx;
+a77 32
+ fore   = FALSE;
+ back   = FALSE;
+ over   = FALSE;
+ curb   = FALSE;
+ curf   = FALSE;
+
+ if (!strcmp(data, "0"))
+    {  /* Altering web foreground */
+    fore   = TRUE;
+    itempx = icolorx;
+    }
+ else if (!strcmp(data, "1"))
+    {   /* Altering web background color */
+    back   = TRUE;
+    itempx = icolorxb;
+    }
+ else if (!strcmp(data, "2"))
+    {  /* Altering web overlay color */
+    over   = TRUE;
+    itempx = ispicol[icolorov];
+    }
+ else if  (!strcmp(data, "3"))
+    {   /* Altering web cursor center color */
+    curf   = TRUE;
+    itempx = ispicol[icolorcf];
+    }
+ else if  (!strcmp(data, "4"))
+    {   /* Altering web cursor outline color */
+    curb   = TRUE;
+    itempx = ispicol[icolorcb];
+    }
+
+d86 2
+a87 2
+    /* create label box for color palette ----------------- pallette */
+    wid_labelg(iw_colmen, 0, "     COLOR PALETTE", 60, 15);
+d93 1
+a93 1
+    /* set size for overall pallete */
+d96 1
+a96 1
+    /* set size for individual color boxes */
+d143 2
+d146 6
+a151 11
+    /* Create label boxes for current colors  */
+    iw_colorf  = wid_label(iw_colmen, 0, "  FOREGROUND", map,
+                          20,  iyulb + iyd + 20);
+    iw_colorb  = wid_label(iw_colmen, 0, "  BACKGROUND", map,
+                         100,  iyulb + iyd + 20);
+    iw_colorov = wid_label(iw_colmen, 0, "  OVERLAY", map,
+                         180,  iyulb + iyd + 20);
+    iw_colorcf = wid_label(iw_colmen, 0, "  CURSOR", map,
+                         260,  iyulb + iyd + 20);
+    iw_colorcb = wid_label(iw_colmen, 0, "  CURSOR OUTLINE", map,
+                         340,  iyulb + iyd + 20);
+d153 1
+a153 1
+    /* Put visible border around current color boxes 
+a154 17
+    XtSetValues(iw_colorf,  args, 1);
+    XtSetValues(iw_colorb,  args, 1);
+    XtSetValues(iw_colorov, args, 1);
+    XtSetValues(iw_colorcf, args, 1);
+    XtSetValues(iw_colorcb, args, 1);*/
+
+    /* Place current x color in  current color box */
+    XtSetArg(args[0], XmNbackground, icolorx);
+    XtSetValues(iw_colorf, args, 1);
+    XtSetArg(args[0], XmNbackground, icolorxb);
+    XtSetValues(iw_colorb, args, 1);
+    XtSetArg(args[0], XmNbackground, icolorxov);
+    XtSetValues(iw_colorov, args, 1);
+    XtSetArg(args[0], XmNbackground, icolorxcf);
+    XtSetValues(iw_colorcf, args, 1);
+    XtSetArg(args[0], XmNbackground, icolorxcb);
+    XtSetValues(iw_colorcb, args, 1);
+d156 36
+d193 1
+a193 2
+              (char *) iw_colmen,  300,iyulb + iyd + 100);
+
+d199 1
+a199 2
+
+ /*********** Color changed button callback **************************/
+d203 7
+a209 3
+ Arg           args[1];
+ int           itemp;
+ unsigned long itempx;
+d211 1
+a211 1
+ itemp = * (int * ) data;     
+d213 5
+a217 3
+ if (itemp >= 0 && itemp < MAXCOL)
+    {   
+    itempx = ispicol[itemp];
+d219 1
+a219 3
+    /* Set graphics foreground or background color */
+       
+    if (fore)
+d230 1
+a230 1
+     else if (back)
+d243 1
+a243 1
+     else if (over)
+d253 1
+a253 1
+   else if (curf)
+d266 1
+a266 1
+    else if (curb)
+d278 2
+a279 2
+    } 
+ }
+a281 5
+/*************************
+       idumt = * (int * ) data;
+       printf("data,mapgo,mapend,,itemp: %d - %d...%d, %d -- %d\n",
+               mapgo,mapend,icolort,itemp);
+***********************/
+@
+
+
+1.17
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/colmen.c,v 1.16 1996/01/25 21:02:01 leith Exp $*/
+d38 1
+a38 1
+C    PURPOSE:      DISPLAYS COLOR SELECTION SUPER-WIDGET
+d52 1
+a52 1
+#define MAX_ARGS 11
+d54 2
+a55 2
+ /* internal function prototypes */
+ void          colmen_but(Widget iw_temp, caddr_t, caddr_t);
+d57 1
+a57 1
+ /* internal common variables */
+d59 1
+a59 1
+ static Widget   iw_color, iw_radio;
+d61 1
+a61 1
+ static int      over, fore, cursit, curf = TRUE, curb = FALSE, back;
+d65 1
+a65 1
+ void colmen(Widget iw_caller, caddr_t data, caddr_t call_data)
+d70 2
+a71 1
+ int             iwid, ixd, iyd, ixulb, iyulb, ici, icolort, itemp;
+d76 1
+a76 1
+ cursit = FALSE;
+d78 2
+a79 1
+ back   = FALSE;
+d81 4
+a84 12
+ if  (!strcmp(data, "3"))
+    {   /* altering web cursor color */
+    cursit = TRUE;
+    if (curf)
+       itemp = ispicol[icolorcf];
+    else
+       itemp = ispicol[icolorcb];
+    }
+ else if (!strcmp(data, "0"))
+    {  /* altering web foreground */
+    fore  = TRUE;
+    itemp = icolorx;
+d87 3
+a89 3
+    {  /* altering web overlay color */
+    over  = TRUE;
+    itemp = ispicol[icolorov];
+d92 13
+a104 3
+    {   /* altering web background color */
+    back  = TRUE;
+    itemp = icolorxb;
+d107 1
+a107 1
+/* printf(" colmen itemp: %d\n",itemp); */
+d111 1
+a111 1
+    /* create color choice menu widget first */
+d143 1
+a143 1
+    for (ici = 0; ici < MAXCOL; ici++)
+d146 1
+a146 1
+       if (ixulb > (iwid-ixd) || ici == mapgo || ici == colorgo )
+d148 1
+a148 1
+          /* start new line of color boxes */
+d153 2
+a154 2
+       /* set color for box */
+       icolort  = ispicol[ici];
+d158 1
+a158 1
+       XtSetArg(args[n+2], XmNbackground, icolort);
+d162 3
+a164 2
+       XtAddCallback(iw_temp,XmNactivateCallback,
+                (XtCallbackProc) colmen_but,(XtPointer) &ispicol[ici]);
+d167 1
+a167 1
+       } /* endfor ici */
+d169 1
+a169 1
+    /* free the String (not doing this may result in a memory leak) */
+a171 2
+    /* create radio box for color cursor object toggles */
+    iw_radio  = wid_rowcol(iw_colmen, 'h', 0, iyulb);
+d173 11
+a183 2
+    XtSetArg(args[0], XmNradioBehavior, TRUE);
+    XtSetValues(iw_radio, args, 1);
+d185 1
+a185 14
+    iw_curf = wid_togmen(iw_radio,iw_curf,
+              "Cursor-foreground  ", curf,-1,-1);
+
+    iw_curb = wid_togmen(iw_radio,iw_curb,
+              "  Cursor-background", curb, -1,-1);
+
+    /* radio box is not shown if not changing cursor colors */
+    if (!cursit)  XtUnmanageChild(iw_radio);
+
+    /* create label box for current color ---------------- pallette */
+    iw_color  = wid_label(iw_colmen, 0, "  CURRENT \n COLOR", map,
+                         20,  iyulb + iyd + 70);
+
+    /* put visible border around current color box */
+d187 17
+a203 1
+    XtSetValues(iw_color, args, 1);
+d206 1
+a206 1
+                        (char *) iw_colmen,  180,iyulb + iyd + 75);
+a208 13
+ else
+    {   
+    /* color menu widget already exists, update it */
+
+    if (cursit)
+       XtManageChild(iw_radio);
+    else  
+       XtUnmanageChild(iw_radio);
+    }
+
+ /* place current color in  current color box */
+ XtSetArg(args[0], XmNbackground, itemp);
+ XtSetValues(iw_color, args, 1);
+d214 1
+a214 1
+ /*********** color changed button callback **************************/
+d216 1
+a216 1
+ void colmen_but(Widget iw_temp, caddr_t data, caddr_t call_data)
+d218 3
+a220 12
+ Arg    args[1];
+ int    itemp, colorbox;
+
+ if (cursit)
+    {
+    curf = XmToggleButtonGadgetGetState(iw_curf);
+    curb = XmToggleButtonGadgetGetState(iw_curb);
+    } 
+ else
+    {
+    curf  =  curb  =  FALSE;
+    }
+d222 1
+a222 1
+ colorbox = * (int * ) data;     
+d224 1
+a224 1
+ if (colorbox >= 0 && colorbox <= MAXCOL)
+d226 1
+a226 1
+    itemp = ispicol[colorbox];
+d228 1
+a228 1
+    /* set graphics foreground or background color */
+d231 8
+a238 3
+       {   /* set current color for draw operations */
+       wicolor(icontx, colorbox);
+       /* wicolor sets icolor and icolorx */
+d242 9
+a250 2
+       {  /* set window background (used in clearing) */
+       XtSetArg(args[0], XmNbackground, ispicol[colorbox]);
+a251 2
+       icolorb  = colorbox;
+       icolorxb = ispicol[colorbox];
+d255 7
+a261 2
+       {   /* set color used in mask overlay */
+       icolorov  = colorbox;
+d265 7
+a271 2
+       {  /* set cursor foreground  */
+       icolorcf  = colorbox;
+d273 1
+a273 1
+       /* set cursor foreground color */
+d278 7
+a284 2
+       {  /* set cursor background  */
+       icolorcb  = colorbox;
+d286 1
+a286 1
+       /* set cursor background color */
+a288 4
+
+    /* place current color in current color box */
+    XtSetArg(args[0], XmNbackground, itemp);
+    XtSetValues(iw_color, args, 1);
+@
+
+
+1.16
+log
+@comments added
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/colmen.c,v 1.15 1996/01/23 17:44:58 leith Exp leith $*/
+d11 23
+a33 6
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH	        		   *
+@
+
+
+1.15
+log
+@removed unused x colors for cursor and overlay
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/colmen.c,v 1.14 1995/07/11 17:28:08 mladjadj Exp leith $*/
+d52 1
+a52 2
+ static  Widget  iw_lab;
+ Widget          iw_pushf, iw_temp;
+d63 1
+a63 1
+    {
+d71 1
+a71 1
+    {
+d76 1
+a76 1
+    {
+d81 1
+a81 1
+    {
+d86 1
+d95 1
+a95 1
+    iw_lab = wid_labelg(iw_colmen, 0, "     COLOR PALETTE", 60, 15);
+d173 1
+a173 1
+    iw_pushf = wid_pushg(iw_colmen, 0,"   FINISHED  ", fin_cb,
+@
+
+
+1.14
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/colmen.c,v 1.13 1995/02/14 20:43:45 liy Exp mladjadj $*/
+d67 1
+a67 1
+       itemp = icolorxcf;
+d69 1
+a69 1
+       itemp = icolorxcb;
+d79 1
+a79 1
+    itemp = icolorxov;
+a236 1
+       icolorxov = ispicol[colorbox];
+a241 1
+       icolorxcf = ispicol[colorbox];
+a249 1
+       icolorxcb = ispicol[colorbox];
+@
+
+
+1.13
+log
+@changed data comparison for compiling on arlfa machine
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/colmen.c,v 1.12 1995/02/01 21:46:20 liy Exp liy $*/
+d41 1
+a41 1
+ static Widget   iw_colmen = 0;
+@
+
+
+1.12
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/colmen.c,v 1.11 1995/01/26 18:57:20 liy Exp liy $*/
+d63 1
+a63 1
+ if  (*data == '3')
+d71 1
+a71 1
+ else if (*data == '0')
+d76 1
+a76 1
+ else if (*data == '1')
+d81 1
+a81 1
+ else if (*data == '2')
+@
+
+
+1.11
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/colmen.c,v 1.10 1995/01/23 10:00:07 leith Exp liy $*/
+d88 1
+a88 1
+ if (iw_colmen <= (void *)0)
+@
+
+
+1.10
+log
+@shortened wid_togglemen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/colmen.c,v 1.9 94/09/12 15:54:08 leith Exp Locker: leith $*/
+d88 1
+a88 1
+ if ((int)iw_colmen <= 0)
+d95 1
+a95 1
+    iw_lab  = wid_labelg(iw_colmen, 0, "     COLOR PALETTE", 60, 15);
+@
+
+
+1.9
+log
+@fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/colmen.c,v 1.8 94/09/12 14:29:10 leith Exp Locker: leith $*/
+d156 1
+a156 1
+    iw_curf = wid_togglemen(iw_radio,iw_curf,
+d159 1
+a159 1
+    iw_curb = wid_togglemen(iw_radio,iw_curb,
+@
+
+
+1.8
+log
+@reworked color assignments
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/colmen.c,v 1.7 94/09/09 16:09:30 leith Exp $*/
+d4 1
+a4 1
+C++*************************************************************************
+d9 1
+a9 1
+C **************************************************************************
+d17 1
+a17 1
+C **************************************************************************
+d31 1
+a43 1
+
+a44 1
+ extern int      colorgo, colorend; 
+d48 1
+a48 1
+ void colment(Widget iw_caller, caddr_t data, caddr_t call_data)
+d89 2
+a90 1
+    {   /* create color choice menu widget first */
+d200 1
+a200 1
+ int    icolort, itemp, colorbox, idumt;
+d212 1
+a212 1
+ colorbox = * (int * ) data;     /* range 0....MAXCOL */
+d222 1
+a222 1
+       wicolor(icontx,icolort);
+d230 1
+a230 1
+       icolorb  = icolort;
+d236 1
+a236 1
+       icolorov  = icolort ;
+d242 1
+a242 1
+       icolorcf  = icolort;
+d251 1
+a251 1
+       icolorcb  = icolort;
+d267 2
+a268 2
+       printf("data,mapgo,mapend,icolort,itemp: %d - %d...%d, %d -- %d\n",
+               idumt,mapgo,mapend,icolort,itemp);
+@
+
+
+1.7
+log
+@removed debug output
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/colmen.c,v 1.6 94/09/09 16:03:42 leith Exp Locker: leith $*/
+a20 2
+C    PARAMETERS:   
+C                  
+d45 2
+a46 1
+ 
+d49 1
+a49 1
+ void colmen(Widget iw_caller, caddr_t data, caddr_t call_data)
+d52 6
+a57 6
+ Arg        args[MAX_ARGS];   /* arg list */
+ static     Widget   iw_lab;
+ Widget     iw_pushf, iw_temp;
+ int        iwid, ixd, iyd, ixulb, iyulb, ici, icolort, itemp;
+ int        n;
+ XmString   str_label;        /* String label */
+d95 1
+a95 1
+    iw_lab  = wid_labelg(iw_colmen, 0, "COLOR PALETTE", 60, 15);
+d102 1
+a102 1
+    iwid    = 344;
+d122 1
+a122 1
+    for (ici = mapend+1; ici < MAXCOL; ici++)
+d125 1
+a125 1
+       if (ixulb > (iwid-ixd))
+a212 1
+ icolort  =  colorbox - mapend;  /* range 1.... */
+d214 1
+a214 1
+ if (icolort >= 0 && icolort <= MAXCOL)
+d216 1
+a216 1
+    itemp = ispicol[mapend + icolort];
+d218 1
+a218 1
+   /* set graphics foreground or background color */
+d222 3
+a225 14
+       if (icolort <= 10) 
+          {    
+          /* special code to make grey ramp within image ramp */
+          itemp = mapgo + ((float)(mapend - mapgo) / 9.0) * 
+                           (float) (icolort - 1);
+          wicolor(icontx,-itemp);   /* sets icolor and icolorx */
+          }
+       else
+          {
+          wicolor(icontx,icolort);
+          /* wicolor sets icolor and icolorx */
+          }
+       } 
+
+d228 5
+a232 5
+       if (icolort <= 10) 
+          {    
+          /* special code to make grey ramp within image ramp */
+          itemp = mapgo + ((float)(mapend - mapgo) / 9.0) * 
+                           (float) (icolort - 1);
+a233 13
+          XtSetArg(args[0], XmNbackground, ispicol[itemp]);
+          XtSetValues(iw_win, args, 1);
+          icolorb  = itemp;
+          icolorxb = ispicol[itemp];
+          }
+       else
+          {
+          XtSetArg(args[0], XmNbackground, ispicol[colorbox]);
+          XtSetValues(iw_win, args, 1);
+          icolorb  = icolort;
+          icolorxb = ispicol[colorbox];
+          }
+        }
+@
+
+
+1.6
+log
+@fixed color settings for background
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/colmen.c,v 1.5 94/07/05 15:34:56 odesanya Exp Locker: leith $*/
+a71 3
+
+  printf("cursor colorx: %d\n",itemp);
+
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/colmen.c,v 1.4 1994/06/16 10:56:35 odesanya Exp odesanya $*/
+a29 1
+#include "common.h"
+d33 2
+a37 14
+ /* external function prototypes */
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*)(), 
+                              char *, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_label    (Widget, Widget, char *, Colormap, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern void   setacursor   (int,    int, int);
+
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern int    wicolor      (GC, int);
+
+
+d46 1
+a46 2
+ static int      over, fore, cursit, curf, curb;
+ static int      itemp_f, itemp_b, itemp_o, itemp_c;
+d54 1
+a54 3
+
+ static Widget   iw_lab, iw_rowcolh1;
+
+d56 1
+a56 2
+ int        iwid, ihi, ixd, iyd, ixulb, iyulb, ici, icolort, itemp;
+ char *     cptr;
+d63 1
+d65 2
+a66 1
+ if      (*data == '3')
+d68 8
+d77 4
+a80 1
+    fore = TRUE;
+d82 11
+a92 2
+    over = TRUE;
+ 
+a106 1
+    ihi     = 288;
+d146 1
+a146 1
+                      (XtCallbackProc) colmen_but,(XtPointer) &ispicol[ici]);
+a159 1
+    curf    = TRUE;
+a162 1
+    curb    = !curf;
+a179 18
+    if (cursit)
+     {  /* altering cursor color */
+      if (curf)
+        itemp_c = ispicol[mapend + icolorcf + 1];
+      else
+        itemp_c = ispicol[mapend + icolorcb + 1];
+     }
+    else
+     {   /* altering foreground, background or overlay color */
+      if (over)
+        itemp_o = ispicol[mapend + icolorov + 1];
+
+      else if (fore)
+        itemp_f = ispicol[mapend + icolor + 1];
+      else
+        itemp_b = ispicol[mapend + icolorb + 1];
+     }
+
+a185 20
+     {  /* altering cursor color */
+      if (curf)
+        itemp = itemp_c;
+     }
+    else
+     {   /* altering foreground, background or overlay color */
+      if (over)
+        itemp = itemp_o;
+
+      else if (fore)
+        itemp = itemp_f;
+      else
+        itemp = itemp_b;
+     }
+
+   /* place current color in  current color box */
+     XtSetArg(args[0], XmNbackground, itemp);
+     XtSetValues(iw_color, args, 1);
+
+    if (cursit)
+d191 4
+a195 1
+
+a198 1
+
+d204 1
+a204 1
+ int    icolort, itemp;
+d212 3
+a214 1
+      curf  =  curb  =  FALSE;
+d216 2
+a218 2
+ icolort =  * (int * ) data - mapend;
+
+d220 1
+a220 2
+    {    /* place current color in current color box */
+
+a221 2
+    XtSetArg(args[0], XmNbackground, itemp);
+    XtSetValues(iw_color, args, 1);
+d223 1
+a223 1
+       /* set graphics foreground or background color */
+d225 9
+a233 5
+       if (over)
+          {   /* set color used in mask overlay */
+          itemp_o = itemp;
+          icolorov  = icolort ;
+          icolorxov = ispicol[mapend + icolort + 1];
+d235 2
+a236 3
+       else if (fore)
+          {   /* set current color for draw operations */
+          itemp_f = itemp;
+d238 1
+d240 1
+d242 7
+a248 5
+       else if (curf)
+          {  /* set cursor foreground  */
+          itemp_c = itemp;
+          icolorcf  = icolort;
+          icolorxcf = ispicol[icolort + mapend + 1];
+d250 4
+a253 2
+          /* set cursor foreground color */
+          setacursor(icursor,icolort,-1); 
+a254 11
+
+       else if (curb)
+          {  /* set cursor background  */
+          itemp_c = itemp;
+          icolorcb  = icolort;
+          icolorxcb = ispicol[icolort + mapend + 1];
+
+          /* set cursor background color */
+          setacursor(icursor,-1,icolort); 
+          }
+
+d256 2
+a257 3
+          {  /* set window background (used in clearing) */
+          itemp_b = itemp;
+          XtSetArg(args[0], XmNbackground, ispicol[mapend + icolort]);
+d260 1
+a260 1
+          icolorxb = ispicol[icolorb + mapend];
+d262 29
+a290 1
+      } 
+d294 5
+@
+
+
+1.4
+log
+@fixed iw_color widget to correctly indicate the menu selection.
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/colmen.c,v 1.3 94/05/12 09:09:41 leith Exp $*/
+d142 1
+a142 1
+                     colmen_but,(XtPointer) &ispicol[ici]);
+@
+
+
+1.3
+log
+@lekans background color fix
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/colmen.c,v 1.2 93/11/19 12:25:37 leith Exp $*/
+d60 1
+d181 1
+a181 1
+        itemp = ispicol[mapend + icolorcf + 1];
+d183 1
+a183 1
+        itemp = ispicol[mapend + icolorcb + 1];
+d188 1
+a188 1
+        itemp = ispicol[mapend + icolorov + 1];
+d191 1
+a191 1
+        itemp = ispicol[mapend + icolor + 1];
+d193 1
+a193 1
+        itemp = ispicol[mapend + icolorb + 1];
+a195 4
+  /* place current color in  current color box */
+    XtSetArg(args[0], XmNbackground, itemp);
+    XtSetValues(iw_color, args, 1);
+
+a196 1
+
+d202 20
+d238 1
+a238 1
+ int    icolort;
+d254 2
+a255 1
+    XtSetArg(args[0], XmNbackground, ispicol[mapend + icolort]);
+d262 1
+d268 1
+d274 1
+d284 1
+d294 1
+@
+
+
+1.2
+log
+@for prototype compatibility
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/colmen.c,v 1.1 93/11/10 10:11:35 leith Exp Locker: leith $*/
+a53 2
+ /* external common variables */
+
+d55 1
+a55 1
+ static Widget   iw_colmen;
+d61 1
+a61 1
+ /********************   colmen   ****************************/
+a75 1
+
+d82 1
+a82 1
+ else if (*data == '2')
+a85 2
+ else
+    fore = TRUE;
+d115 1
+a115 1
+    XtSetArg(args[n], XmNheight,        iyd); n++; 
+d177 22
+d211 1
+a212 24
+ if (cursit)
+    {  /* altering cursor color */
+    if (curf)
+       itemp = ispicol[mapend + icolorcf + 1];
+    else
+       itemp = ispicol[mapend + icolorcb + 1];
+    }
+ else
+    {   /* altering foreground, background or overlay color */
+    if (over)
+       itemp = ispicol[mapend + icolorov + 1];
+
+    else if (fore)
+       itemp = ispicol[mapend + icolor + 1];
+    else
+       itemp = ispicol[mapend + icolorb + 1];
+    }
+
+
+ /* place current color in  current color box */
+ XtSetArg(args[0], XmNbackground, itemp);
+ XtSetValues(iw_color, args, 1);
+
+ XtManageChild(iw_colmen);
+d229 2
+d232 1
+d273 2
+a274 1
+          XSetWindowBackground(idispl,iwin,icolort+1);
+d276 1
+a276 1
+          icolorxb = ispicol[icolorb + mapend +1];       
+d282 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d146 1
+a146 1
+                     colmen_but,&ispicol[ici]);
+@

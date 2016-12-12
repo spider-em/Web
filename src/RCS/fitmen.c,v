@@ -1,0 +1,1882 @@
+head	1.35;
+access;
+symbols
+	pre-tilt-improve:1.33
+	pre_surf_fromtop:1.32
+	pre_neednewmap:1.32
+	pre_apppluss_remove:1.32
+	pre_tiltpair_chng:1.31
+	pre_GPL:1.30;
+locks;
+comment	@ * @;
+
+
+1.35
+date	2015.09.18.16.17.27;	author leith;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2015.09.01.17.53.12;	author leith;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2015.06.11.13.25.48;	author leith;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2011.06.22.19.11.55;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2005.10.18.17.00.01;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2004.12.15.19.29.27;	author leith;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	96.05.06.16.23.17;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	96.04.16.14.24.52;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	96.04.12.16.59.10;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	96.04.05.16.48.47;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	96.03.25.14.43.25;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	96.03.21.20.17.30;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	96.03.21.19.37.15;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	96.03.19.14.13.44;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	96.01.22.21.08.18;	author mladjadj;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	95.08.16.18.13.11;	author mladjadj;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	95.08.14.16.52.49;	author mladjadj;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	95.08.10.15.40.59;	author mladjadj;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	95.08.08.15.35.33;	author mladjadj;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	95.07.11.17.28.12;	author mladjadj;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.02.21.19.13.01;	author liy;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.02.02.16.13.38;	author liy;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.01.26.20.09.41;	author liy;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.12.30.10.17.14;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.07.05.16.10.45;	author odesanya;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.06.07.18.27.15;	author odesanya;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.06.07.18.14.42;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.06.06.12.57.09;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.06.06.11.29.26;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.03.25.10.04.04;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	93.11.26.12.29.20;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.11.24.15.47.29;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.22.16.38.26;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.19.16.46.13;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.16.14.13.07;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.35
+log
+@Removed fitdoc call
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.34 2015/09/01 17:53:12 leith Exp $*/
+
+/*
+ C**********************************************************************
+ C                                                                     *
+ C fitmen                                                              *
+ C         In: fit_butfit  moved Unmanage        Dec 2004 ArDean Leith *
+ C         Improved                              Jun 2011 ArDean Leith *
+ C         Particle number selector              Aug 2015 ArDean Leith *
+ C                                                                     * 
+ C**********************************************************************
+ C *  AUTHOR:  ArDean Leith                                            *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C    fitmen
+ C
+ C    PURPOSE:         Display fitmen menu
+ C
+ C    CALLED BY:       fitorigin, pickmen, pickp.
+ C
+ C    CALL TREE:
+ C                    | _fit_butfit  --> get text theta
+ C                                       willsg
+ C                                       spout
+ C
+ C                    | _fit_buttilt --> get text arealim
+ C                                       tiltang
+ C                                       fitmen_adv
+ C
+ C*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+#include <Xm/Text.h>
+
+ // Internal function prototypes 
+ void          fit_buttilt  (Widget, XtPointer, XtPointer);
+ void          fit_butfit   (Widget, XtPointer, XtPointer);
+ void          fit_butdraw2 (Widget, XtPointer, XtPointer);
+ void          fit_butsavang(Widget, XtPointer, XtPointer);
+ void          fitmen_butok (Widget, XtPointer, XtPointer);
+ void          fitmen_butk  (Widget, XtPointer, XtPointer);
+
+ // Externally defined global variables 
+ extern int    maxpart;
+ extern float  xu0t,  yu0t,  xs0t,  ys0t;    // From: fitorigin
+ extern float  * xim, * xu0, * yu0; 
+ extern float  * xs,  * ys, * xs2, * ys2; 
+ extern int    fitted;                       // From: pickp
+ extern int    orgkey;                       // From: pickmen
+ extern int    numm;                         // From: pickp
+ extern Widget iw_parlabel;                  // From: pickmen
+ extern Widget iw_rowcolh0;                  // From: pickmen
+	       
+ // Global variables defined here, used here & elsewhere 
+ float         phif          = 0.0;
+ float         thetaf        = 0.0;
+ float         gammaff       = 0.0;
+ float         arealim       = 5000;         // Min. triangle area
+ Widget        iw_fitmen_adv = (Widget) 0;   // Used in: pickp 
+
+ // File scope variables used here
+ static Widget iw_area, iw_orgkey, iw_xorg, iw_yorg;
+ static Widget iw_thetaf;
+ static Widget iw_partext;
+
+
+ /****************************  fitmen_adv   ***********************/
+
+ void fitmen_adv(void)
+
+ { 
+ static Widget iw_rowcolv, iw_rowcolh1, iw_rowcolh2, iw_rowcolh3;
+ Widget        iw_pushs, iw_dums; 
+
+ char   cval[40];
+ 
+ if (iw_fitmen_adv == (Widget)0)
+    {   // Create fit menu widget first 
+
+    iw_fitmen_adv  = wid_dialog(iw_win, 0, 
+                    "Angle fitting menu", -1, -1);
+
+    iw_rowcolv = wid_rowcol(iw_fitmen_adv, 'v', -1, -1);
+
+
+    // Create text box for particle key  --------------------- Key number
+    sprintf(cval,"%4d",numm);
+    iw_partext = wid_textboxb(iw_rowcolv,0,
+                            "Next particle number:",cval,4);
+    XtAddCallback(iw_partext,XmNvalueChangedCallback,
+                           (XtCallbackProc) fitmen_butk,"0");
+
+    // Create horizontal rowcol for origins   */
+    iw_rowcolh1  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    // Create text box for origin key ----------------------  Origin key 
+    sprintf(cval,"%4d",orgkey);
+    iw_orgkey = wid_textboxb(iw_rowcolh1,0,
+                         "Key number for origin:",cval,4);
+    //XtAddCallback(iw_orgkey,XmNvalueChangedCallback,
+    XtAddCallback(iw_orgkey,XmNactivateCallback,
+                           (XtCallbackProc) fitmen_butok,"0");
+
+    // Create horizontal rowcol for origins   */
+    iw_rowcolh2  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    // Create text box for x origin ------------------------- X origin 
+    sprintf(cval,"%f",xu0t);
+    iw_xorg = wid_textboxb(iw_rowcolh2,0,
+                           "X origin:",cval,10);
+
+    // Create text box for y origin ------------------------- Y origin 
+    sprintf(cval,"%f",yu0t);
+    iw_yorg = wid_textboxb(iw_rowcolh2,0,
+                           "Y origin:",cval,10);
+
+    // Create horizontal rowcol for angles   */
+    iw_rowcolh3  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    // Create text box for thetaf ---------------------------- Thetaf 
+    sprintf(cval,"%f",thetaf);
+    iw_thetaf = wid_textboxb(iw_rowcolh3,0,
+                           "Theta:",cval,10);
+
+    // Create text box for arealim --------------------------- Arealim 
+    sprintf(cval,"%f",arealim);
+    iw_area = wid_textboxb(iw_rowcolv,iw_area,
+                           "Min. triangle area:",cval,10);
+
+    // Create push button for tilt angle det. ---------------- Tilt 
+    wid_pushg(iw_rowcolv, 0, "Determine theta",
+                     fit_buttilt, NULL, -1,-1);
+
+    // Create push button for fitting angles ----------------- Fit 
+    wid_pushg(iw_rowcolv, 0, "Fit angles",
+                     fit_butfit, NULL, -1,-1);
+
+    // Create push button for draw points -------------------- Draw 
+    wid_pushg(iw_rowcolv, 0, "Draw fitted locations",
+                     fit_butdraw2, NULL, -1,-1);
+
+    // Create push button for saving angles ------------------ Save ang. 
+    wid_pushg(iw_rowcolv, 0, "Save angles",
+                     fit_butsavang, NULL, -1,-1);
+
+    // Create box for cancel --------------------------------- Cancel 
+    iw_dums = wid_stdbut(iw_rowcolv, iw_fitmen_adv, 
+                        &iw_pushs, &iw_dums, &iw_dums,"C",
+                        fin_cb,fin_cb ,fin_cb, NULL);
+    }
+
+ else
+    {
+    // Update text box for particle -------------------------- Particle key
+    sprintf(cval,"%4d",numm);
+    iw_partext = wid_textboxb(iw_rowcolv,iw_partext,
+                       "Next particle number:",cval,4);
+    // Update label box for particle number
+    wid_labelg(iw_rowcolh0,iw_parlabel,cval,-1,-1);
+
+    // Update text box for origin key ------------------------ Origin key 
+    sprintf(cval,"%4d",orgkey);
+    iw_orgkey = wid_textboxb(iw_rowcolv,iw_orgkey,
+                       "Key number for origin:",cval,4);
+
+    // Update text box for x origin -------------------------- X origin 
+    sprintf(cval,"%f",xu0t);
+    iw_xorg = wid_textboxb(iw_rowcolh2,iw_xorg,
+                        "X origin:",cval,10);
+
+    // Update text box for y origin -------------------------- Y origin 
+    sprintf(cval,"%f",yu0t);
+    iw_yorg = wid_textboxb(iw_rowcolh2,iw_yorg,
+                        "Y origin:",cval,10);
+
+    // Update text box for thetaf ---------------------------- Thetaf 
+    sprintf(cval,"%f",thetaf);
+    iw_thetaf = wid_textboxb(iw_rowcolh3,iw_thetaf,
+                       "Theta:",cval,10);
+
+    // Update text box for arealim --------------------------  Arealim 
+    sprintf(cval,"%f",arealim);
+    iw_area = wid_textboxb(iw_rowcolv,iw_area,
+                      "Min triangle area:",cval,10);
+    }
+
+ XtManageChild(iw_fitmen_adv);
+ }  
+
+
+ /*********** Particle number changed callback ************************/
+
+ void fitmen_butk(Widget iw_temp, XtPointer data, 
+                                   XtPointer calldata)
+ {
+ char * string = NULL;
+ char   cval[40];
+
+ /* Find particle number */
+ string = XmTextGetString(iw_partext);
+ sscanf(string,"%d",&numm);
+ if (string) free(string);
+
+ if (numm < 1) 
+    { spout("*** Particle number must be > 0"); return; }
+
+ // Update label box for particle number
+ sprintf(cval,"%4d",numm);
+ wid_labelg(iw_rowcolh0,iw_parlabel,cval,-1,-1);
+ }
+
+/***********  Origin key changed callback ***********************/
+
+ void fitmen_butok(Widget iw_temp, XtPointer data, 
+                                   XtPointer call_data)
+ {
+
+ char *   string;
+ char     outmsg[80];
+
+ /* Query origin key */
+ string = XmTextGetString(iw_orgkey);
+ sscanf(string,"%d",&orgkey);
+ if (string) free(string);
+
+ if (orgkey > maxpart  || orgkey < 1)
+    {sprintf(outmsg,"Bad origin key: %d, Max key available: %d", 
+             orgkey,maxpart);
+    spout(outmsg); XBell(idispl,50);
+    return;
+    }
+
+ // Set origin location corresponding to location in key 
+ xu0t = xu0[orgkey-1];
+ yu0t = yu0[orgkey-1];
+ xs0t =  xs[orgkey-1];
+ ys0t =  ys[orgkey-1];
+
+ // Update text boxes
+ XtUnmanageChild(iw_fitmen_adv); 
+ fitmen_adv();
+
+ }
+
+
+
+/****************  Fitting callback ***********************/
+
+ void fit_butfit(Widget iw_temp, XtPointer data, 
+                                 XtPointer calldata)
+ {
+ char * string;
+ char   outmes[80];
+ int    iflag;
+
+ /* Query xu0t */
+ string = XmTextGetString(iw_xorg);
+ sscanf(string,"%f",&xu0t);
+ if (string) free(string);
+
+ /* Query yu0t */
+ string = XmTextGetString(iw_yorg);
+ sscanf(string,"%f",&yu0t);
+ if (string) free(string);
+    
+ /* Query theta */
+ string = XmTextGetString(iw_thetaf);
+ sscanf(string,"%f",&thetaf);
+ if (string) free(string);
+
+ /* Fit tilt angles to the selected points */
+ spoutfile(TRUE);
+
+ /* Routine: willsq returns phif, gammaff, & error flag */
+ iflag = willsq(xu0, yu0, xs, ys, maxpart, 
+                thetaf, &gammaff, &phif);
+ if (iflag == 0)
+   {   /*  willsq succeeded, fitting is OK */
+   fitted = TRUE;
+   sprintf(outmes,"Tilt (theta): %5.2f  Gamma:%5.2f Phi:%5.2f  Origin: (%7.2f,%7.2f)",
+                  thetaf, gammaff,phif, xs0t,ys0t);
+   spout(outmes);
+   }
+ else
+   { XBell(idispl,50); }
+
+ spoutfile(FALSE);
+
+ /* Restart the advanced fitting menu */
+ fitmen_adv(); 
+ }
+
+
+/***********  Determine tilt callback *******************************/
+
+ void fit_buttilt(Widget iw_temp,  XtPointer data, 
+                                   XtPointer calldata )
+ {
+ char *  string;
+ int     flag;
+ int     iarea;
+
+ /* Query arealim */
+ string = XmTextGetString(iw_area);
+ sscanf(string,"%f",&arealim);
+ if (string) free(string);
+
+ spoutfile(TRUE);
+
+ /* Determine theta tilt angle */
+ flag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim, TRUE);
+ if (flag > 0)
+    {  
+    spout("*** Warning, can not calculate tilted angle. Try again");
+    XBell(idispl,50); XBell(idispl,50);
+    }
+ if (flag < 0)
+    { /* Some bad locations accepted */ 
+    XBell(idispl,50);
+    }
+
+ spoutfile(FALSE);
+
+ /* Restart the fitting menu so values of angles will change */
+ fitmen_adv(); 
+ }
+
+
+/***********  fit_butdraw2 button callback *************************/
+
+ void fit_butdraw2(Widget iw_temp,  XtPointer data, 
+                                    XtPointer calldata )
+ {
+ if (thetaf == 0.0)
+    {
+    spout("*** Do not have tilt angle yet.");
+    XBell(idispl,50); return;
+    }
+
+ if (! fitted)
+    {
+    spout("*** Do not have fit angles yet.");
+    XBell(idispl,50); return;
+    }
+
+ /* Calculate fitted positions using  gamma, theta & phi */
+ spoutfile(TRUE);
+ witran(xu0, yu0, xs2, ys2, maxpart, gammaff, thetaf, phif);
+ spoutfile(FALSE);
+
+ /* Draw fitted positions now */
+ pickdraw(FALSE, FALSE, TRUE, FALSE, TRUE, maxpart);
+ }
+
+/***********  Save angles callback *********************************/
+
+ void fit_butsavang(Widget iw_temp,  XtPointer data, 
+                                     XtPointer calldata )
+ {
+ spoutfile(TRUE);
+
+ fitsav(maxpart);
+
+ spoutfile(FALSE);
+ }
+
+
+@
+
+
+1.34
+log
+@$2
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.33 2015/06/11 13:25:48 leith Exp $*/
+d180 1
+a180 1
+    // Update text box for particle -------------------------  Particle key
+d187 1
+a187 1
+    // Update text box for origin key -------------------------  Origin key 
+d247 1
+a247 10
+ /* Retrieve points from doc file */
+ spoutfile(TRUE);
+ if (fitdoc(FALSE) != 0)
+    {
+    spout("*** Can not fit angles yet!"); XBell(idispl,50);
+    spoutfile(FALSE);
+    return;
+    }
+ spoutfile(FALSE);
+
+d259 1
+a259 1
+ // Set origin location
+d304 1
+a304 1
+   {   /* Succeeded, fitting is OK */
+d315 1
+a315 1
+ /* Restart the fitting menu */
+@
+
+
+1.33
+log
+@another parameter on tiltang call
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.32 2011/06/22 19:11:55 leith Exp $*/
+d5 9
+a13 8
+C++*********************************************************************
+C                                                                      *
+C fitmen                                                               *
+C              In: fit_butfit  moved Unmanage    Dec 2004 ArDean Leith *
+C              Improved                          Jun 2011 ArDean Leith *
+C                                                                      * 
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                             *
+d37 1
+a37 1
+ C **********************************************************************
+d54 1
+a54 1
+ C***********************************************************************
+d67 1
+d70 2
+a71 2
+ extern int     maxpart;
+ extern float  xu0t,  yu0t,  xs0t,  ys0t;   // From: fitorigin
+d74 5
+a78 2
+ extern int    fitted;                      // From: pickp
+ extern int    orgkey;                      // From: pickmen
+d81 5
+a85 4
+ float         phif, thetaf, gammaff;
+ Widget        iw_fitmen_adv = (Widget) 0;    // Used in: pickp 
+ float         arealim = 5000;                // Min. triangle area
+
+d88 3
+a90 3
+ static Widget   iw_area, iw_orgkey, iw_xorg, iw_yorg;
+ static Widget   iw_thetaf;
+ static Widget   iw_advanced_adv;
+d98 1
+a98 1
+ static Widget iw_rowcolv, iw_rowcolh0, iw_rowcolh1, iw_rowcolh2;
+d112 7
+d120 1
+a120 1
+    iw_rowcolh0  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+d124 1
+a124 1
+    iw_orgkey = wid_textboxb(iw_rowcolh0,0,
+d131 1
+a131 1
+    iw_rowcolh1  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+d135 1
+a135 1
+    iw_xorg = wid_textboxb(iw_rowcolh1,0,
+d140 1
+a140 1
+    iw_yorg = wid_textboxb(iw_rowcolh1,0,
+d144 1
+a144 1
+    iw_rowcolh2  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+d146 1
+a146 1
+    // Create text box for thetaf --------------------------- Thetaf 
+d148 1
+a148 1
+    iw_thetaf = wid_textboxb(iw_rowcolh2,0,
+d151 1
+a151 1
+    // Create text box for arealim ------------------------- Arealim 
+d156 1
+a156 1
+    // Create push button for tilt angle det. -------------- Tilt 
+d160 1
+a160 1
+    // Create push button for fitting angles --------------- Fit 
+d164 1
+a164 1
+    // Create push button for draw points ------------------ Draw 
+d168 1
+a168 1
+    // Create push button for saving angles ---------------- Save ang. 
+d172 1
+a172 1
+    // Create box for cancel ------------------------------- Cancel 
+d180 8
+a187 1
+    // Update text box for origin key ----------------------  Origin key 
+d192 1
+a192 1
+    // Update text box for x origin ------------------------- X origin 
+d194 1
+a194 1
+    iw_xorg = wid_textboxb(iw_rowcolh1,iw_xorg,
+d197 1
+a197 1
+    // Update text box for y origin ------------------------- Y origin 
+d199 1
+a199 1
+    iw_yorg = wid_textboxb(iw_rowcolh1,iw_yorg,
+d202 1
+a202 1
+    // Update text box for thetaf --------------------------- Thetaf 
+d204 1
+a204 1
+    iw_thetaf = wid_textboxb(iw_rowcolh2,iw_thetaf,
+d207 1
+a207 1
+    // Update text box for arealim -------------------------  Arealim 
+d217 22
+a238 1
+/***********  origin key changed callback ***********************/
+@
+
+
+1.32
+log
+@rewrite
+@
+text
+@d2 1
+a2 1
+/*$Header:  Exp $*/
+d14 1
+a14 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d36 18
+a53 9
+C **********************************************************************
+C
+C    fitmen
+C
+C    PURPOSE:         Display fitmen menu
+C
+C    CALLED BY:       fitorigin, pickmen, pickp.
+C
+C***********************************************************************
+d274 2
+a275 3
+   sprintf(outmes,
+   "Fitted Gamma: %5.2f  Phi:%5.2f Theta:%5.2f  Origin: (%7.2f,%7.2f)",
+            gammaff,phif,thetaf, xs0t,ys0t);
+d305 1
+a305 1
+ flag = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, arealim);
+@
+
+
+1.31
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/fitmen.c,v 1.30 2004/12/15 19:29:27 leith Exp $*/
+d5 6
+a10 5
+C++************************************************************************
+C
+C fitmen
+C              In: fit_butfit  moved Unmanage      Dec 04 ArDean Leith
+C
+d12 1
+a12 1
+C *  AUTHOR:  ArDean Leith                                                 *
+d38 1
+a38 1
+C    FITMEN
+d40 1
+a40 1
+C    PURPOSE:         display fitmen menu
+d42 1
+a42 1
+C    CALLED BY:       fitorigin, others.
+d51 1
+a51 1
+ /* internal function prototypes */
+d56 1
+d58 1
+a58 1
+ /* external global variables */
+d60 5
+a64 3
+ extern  float  xu0t,  yu0t,  xs0t,  ys0t;
+ extern float  * xim, * xu0, * yu0, * xs,  * ys, * xs2, * ys2; 
+ extern int    fitted;
+d66 1
+a66 2
+ /* global variables used here & elsewhere */
+ float         xorg,  yorg;
+d68 3
+a70 1
+ Widget        iw_fitmen = (Widget) 0;    /* used in pickp */
+d72 4
+a75 4
+ /* file scope variables used here */
+ static Widget  iw_area, iw_xorg, iw_yorg;
+ static Widget  iw_phif, iw_gammaf, iw_thetaf;
+ static float   arealim = 5000;
+a76 1
+ /****************************   fitmen   ****************************/
+d78 3
+a80 1
+ void fitmen(void)
+d83 1
+a83 1
+ static Widget iw_rowcolv, iw_rowcolh1, iw_rowcolh2;
+d88 7
+a94 2
+ if (iw_fitmen == (Widget)0)
+    {   /* create fit menu widget first */
+a95 2
+    iw_fitmen  = wid_dialog(iw_win, 0, "Angle fitting menu", -1, -1);
+    iw_rowcolv = wid_rowcol(iw_fitmen, 'v', -1, -1);
+d97 12
+a108 1
+    /* create horizontal rowcol for origins ------------------------  */
+d111 1
+a111 1
+    /* create text box for x origin -----------------------  x origin */
+d113 2
+a114 1
+    iw_xorg = wid_textboxb(iw_rowcolh1,0,"X origin:",cval,10);
+d116 1
+a116 1
+    /* create text box for y origin -----------------------  y origin */
+d118 2
+a119 1
+    iw_yorg = wid_textboxb(iw_rowcolh1,0,"Y origin:",cval,10);
+d121 1
+a121 1
+    /* create horizontal rowcol for angles -------------------------  */
+d124 1
+a124 9
+    /* create text box for phif -------------------------------- phif */
+    sprintf(cval,"%f",phif);
+    iw_phif = wid_textboxb(iw_rowcolh2,0,"Phi:",cval,10);
+
+    /* create text box for gammaf ---------------------------  gammaf */
+    sprintf(cval,"%f",gammaff);
+    iw_gammaf = wid_textboxb(iw_rowcolh2,0,"Gamma:",cval,10);
+
+    /* create text box for thetaf ---------------------------  thetaf */
+d126 2
+a127 1
+    iw_thetaf = wid_textboxb(iw_rowcolh2,0,"Theta:",cval,10);
+d129 1
+a129 1
+    /* create text box for arealim -------------------------  arealim */
+d132 1
+a132 1
+                           "Tiltangle area:",cval,10);
+d134 1
+a134 1
+    /* create push button for tilt angle det. ------------------ tilt */
+d138 1
+a138 1
+    /* create push button for fitting angles ------------------- fit */
+d142 1
+a142 1
+    /* create push button for draw points ---------------------- draw */
+d146 1
+a146 1
+    /* create push button for saving angles --------------- save ang. */
+d150 3
+a152 3
+    /* create box for cancel --------------------------------- cancel */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_fitmen, 
+                        &iw_pushs, &iw_dums, &iw_dums,  "C",
+d158 6
+a163 1
+    /* create text box for x origin -----------------------  x origin */
+d165 2
+a166 1
+    iw_xorg = wid_textboxb(iw_rowcolh1,iw_xorg,"X origin:",cval,10);
+d168 1
+a168 1
+    /* create text box for y origin -----------------------  y origin */
+d170 2
+a171 5
+    iw_yorg = wid_textboxb(iw_rowcolh1,iw_yorg,"Y origin:",cval,10);
+
+    /* create text box for phi --------------------------------- phif */
+    sprintf(cval,"%f",phif);
+    iw_phif = wid_textboxb(iw_rowcolh2,iw_phif,"Phi:",cval,10);
+d173 1
+a173 5
+    /* create text box for gammaf ---------------------------  gammaf */
+    sprintf(cval,"%f",gammaff);
+    iw_gammaf = wid_textboxb(iw_rowcolh2,iw_gammaf,"Gamma:",cval,10);
+
+    /* create text box for thetaf ---------------------------  thetaf */
+d175 2
+a176 1
+    iw_thetaf = wid_textboxb(iw_rowcolh2,iw_thetaf,"Theta:",cval,10);
+d178 1
+a178 1
+    /* create text box for arealim -------------------------  arealim */
+d180 2
+a181 1
+    iw_area = wid_textboxb(iw_rowcolv,iw_area,"Tiltangle area:",cval,10);
+d184 1
+a184 1
+ XtManageChild(iw_fitmen);
+a186 1
+/****************  fitting  callback ***********************/
+d188 48
+a235 1
+ void fit_butfit(Widget iw_temp, XtPointer data, XtPointer calldata)
+d241 1
+a241 4
+ /* remove the fitting menu so the values of angles will change */
+ XtUnmanageChild(iw_fitmen);
+
+ /* find xorg */
+d246 1
+a246 1
+ /* find yorg */
+d251 1
+a251 11
+ /* find phi */
+ string = XmTextGetString(iw_phif);
+ sscanf(string,"%f",&phif);
+ if (string) free(string);
+
+ /* find gammaf */
+ string = XmTextGetString(iw_gammaf);
+ sscanf(string,"%f",&gammaff);
+ if (string) free(string);
+
+ /* find theta */
+d256 1
+a256 1
+ /* fit the tilt angles to the selected points */
+d259 3
+a261 3
+ /* willsq returns phif, gammaff, & error flag */
+ iflag = willsq(xu0, yu0, xs, ys, maxpart, thetaf, &gammaff, &phif);
+
+d263 1
+a263 1
+   {   /* willsq succeeded, fitting is OK */
+d267 1
+a267 1
+   gammaff,phif,thetaf, xs0t,ys0t);
+d271 2
+a272 3
+   {
+   XBell(idispl,50);
+   }
+d275 2
+a276 2
+ /* restart the fitting menu */
+ fitmen();
+d280 1
+a280 1
+/***********  determine tilt callback *******************************/
+d282 2
+a283 1
+ void fit_buttilt(Widget iw_temp,  XtPointer data, XtPointer calldata )
+d289 1
+a289 1
+ /* find arealim */
+d296 1
+a296 1
+ /* determine theta tilt angle */
+d300 1
+a300 1
+    spout("*** Warning, can not calculate tilted angle.  Try again");
+d304 1
+a304 1
+    { /* some bad locations accepted */ 
+a308 1
+ XtUnmanageChild(iw_fitmen);
+d310 2
+a311 1
+ fitmen();
+d314 1
+d317 2
+a318 1
+ void fit_butdraw2(Widget iw_temp,  XtPointer data, XtPointer calldata )
+d332 1
+a332 1
+ /* first calculate fitted positions using  gamma, theta & phi */
+d337 1
+a337 1
+ /* draw fitted positions now */
+d341 1
+a341 1
+/***********  save angles callback *********************************/
+d343 2
+a344 1
+ void fit_butsavang(Widget iw_temp,  XtPointer data, XtPointer calldata )
+d347 1
+d349 1
+@
+
+
+1.30
+log
+@In: fit_butfit  moved Unmanage to top (try to fix slatons bug)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/fitmen.c,v 1.29 1996/05/06 16:23:17 leith Exp leith $*/
+d10 1
+a10 1
+C **************************************************************************
+d12 24
+a35 7
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.29
+log
+@removed aval, bval from willsq call.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.28 1996/04/16 14:24:52 leith Exp leith $*/
+d8 1
+d162 3
+a208 3
+
+ /* remove the fitting menu so the values of angles will change */
+ XtUnmanageChild(iw_fitmen);
+@
+
+
+1.28
+log
+@no lnger sets fit flage if willsq fails
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.27 1996/04/12 16:59:10 leith Exp leith $*/
+a41 1
+ extern float  *aval, * bval; 
+d190 1
+a190 2
+ iflag = willsq(xu0, yu0, xs, ys, maxpart, aval, bval, 
+                thetaf, &gammaff, &phif);
+@
+
+
+1.27
+log
+@changed aval
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.26 1996/04/05 16:48:47 leith Exp leith $*/
+d33 2
+a34 3
+ void          fit_buttilt (Widget, XtPointer, XtPointer);
+ void          fit_butfit  (Widget, XtPointer, XtPointer);
+ void          fit_butdraw1 (Widget, XtPointer, XtPointer);
+d38 1
+a38 1
+ /* external common variables */
+d43 1
+d45 4
+a48 4
+ /* common variables used elsewhere */
+ int            iarea;
+ float          xorg,  yorg, phif, thetaf, gammaff, arealim=5000;
+ Widget         iw_fitmen = (Widget)0;    /* used in pickp */
+d50 1
+a50 1
+ /* common variables used here */
+d53 1
+d68 1
+a68 1
+    iw_fitmen  = wid_dialog(iw_win, 0, "Point fitting menu", -1, -1);
+d76 1
+a76 1
+    iw_xorg = wid_textboxb(iw_rowcolh1,0,"x origin:",cval,10);
+d80 1
+a80 1
+    iw_yorg = wid_textboxb(iw_rowcolh1,0,"y origin:",cval,10);
+d111 1
+a111 5
+    wid_pushg(iw_rowcolv, 0, "Draw points",
+                     fit_butdraw1, NULL, -1,-1);
+
+    /* create push button for draw points ---------------------- draw */
+    wid_pushg(iw_rowcolv, 0, "Draw fitted points",
+a125 1
+
+d128 1
+a128 1
+    iw_xorg = wid_textboxb(iw_rowcolh1,iw_xorg,"x origin:",cval,10);
+d132 1
+a132 1
+    iw_yorg = wid_textboxb(iw_rowcolh1,iw_yorg,"y origin:",cval,10);
+a153 1
+
+d160 1
+a161 4
+ if (maxpart < 3)
+   { spout(" *** Unable to fit angles: 3 or more points needed");
+     XBell(idispl,50);  return;}
+   
+d171 1
+a171 1
+
+a186 1
+    
+a188 1
+ willsq(xu0, yu0, xs, ys, maxpart, aval, bval);
+d190 8
+a197 1
+ sprintf(outmes,
+d199 8
+a206 2
+    gammaff,phif,thetaf,xs0t,ys0t);
+ spout(outmes);
+a211 1
+ spoutfile(FALSE);
+d221 2
+a222 4
+ 
+ if (maxpart < 3)
+   { spout(" *** Unable to compute Theta: 3 or more points needed");
+      XBell(idispl,50); return;}
+a228 1
+ /* determine theta tilt angle */
+d231 3
+a233 1
+ if ((tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea)) != 0)
+d236 4
+d242 1
+d249 1
+d251 1
+a251 3
+/***********  draw button callback *********************************/
+
+ void fit_butdraw1(Widget iw_temp,  XtPointer data, XtPointer calldata )
+d254 3
+a256 3
+    { 
+    spout("Warning: fit angle theta is zero! reading DOC files\n");
+    fitdoc(FALSE,FALSE);
+a257 2
+ pickdraw(TRUE,TRUE,  TRUE,TRUE,  FALSE, maxpart);
+ }
+d259 4
+a262 9
+/***********  fit_butdraw2 button callback *************************/
+
+ void fit_butdraw2(Widget iw_temp,  XtPointer data, XtPointer calldata )
+ {
+
+ if(thetaf == 0.0)
+    { 
+    spout("Warning: fit angle theta is zero! reading DOC files\n");
+    fitdoc(FALSE,FALSE);
+d265 1
+a265 1
+ /* must calculate translated positions */
+d270 1
+d277 6
+a282 5
+    {
+    spoutfile(TRUE);
+    fitsav();
+    spoutfile(FALSE);
+    }
+@
+
+
+1.26
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.25 1996/03/25 14:43:25 leith Exp leith $*/
+d42 2
+a43 2
+ extern float  * xim, * xu0, * yu0, * xs,  * ys, * xs2, * ys2, 
+               * aval, * bval; 
+d60 1
+a60 2
+ Widget iw_fit,  iw_tilt, iw_pushs, iw_dums; 
+ Widget iw_savang, iw_draw1, iw_draw2; 
+d102 1
+a102 1
+    iw_tilt   = wid_pushg(iw_rowcolv, 0, "Determine theta",
+d106 1
+a106 1
+    iw_fit    = wid_pushg(iw_rowcolv, 0, "Fit angles",
+d110 1
+a110 1
+    iw_draw1   = wid_pushg(iw_rowcolv, 0, "Draw points",
+d114 1
+a114 1
+    iw_draw2   = wid_pushg(iw_rowcolv, 0, "Draw fitted points",
+d118 1
+a118 1
+    iw_savang = wid_pushg(iw_rowcolv, 0, "Save angles",
+@
+
+
+1.25
+log
+@minor
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.24 1996/03/21 20:17:30 leith Exp leith $*/
+d47 2
+a48 2
+ float          phif, thetaf, gammaff, arealim=5000;
+ float          xorg,  yorg;
+d51 2
+a52 3
+ static Widget  iw_fitmen= (Widget)0, iw_area;
+ static Widget iw_xorg, iw_yorg;
+ static Widget iw_phif, iw_gammaf, iw_thetaf;
+d65 1
+a65 1
+ if (iw_fitmen <= (Widget)0)
+d169 1
+a169 1
+     return;}
+d223 1
+a223 1
+     return;}
+d234 5
+a238 4
+  {  spout("*** Warning, can not calculate tilted angle.  Try again");}
+
+ /*  fitsav(TRUE); update the doc files */
+
+a239 1
+ spoutfile(FALSE);
+d249 1
+a249 1
+ if(thetaf == 0.0)
+d279 5
+a283 5
+ {
+ spoutfile(TRUE);
+ fitsav(TRUE);
+ spoutfile(FALSE);
+ }
+@
+
+
+1.24
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.23 1996/03/21 19:37:15 leith Exp leith $*/
+d33 5
+a37 5
+ void          fit_buttilt (Widget, caddr_t, caddr_t);
+ void          fit_butfit  (Widget, caddr_t, caddr_t);
+ void          fit_butdraw1 (Widget, caddr_t, caddr_t);
+ void          fit_butdraw2 (Widget, caddr_t, caddr_t);
+ void          fit_butsavang(Widget, caddr_t, caddr_t);
+d163 1
+a163 1
+ void fit_butfit(Widget iw_temp, caddr_t data, caddr_t call_data)
+d205 1
+d218 1
+a218 1
+ void fit_buttilt(Widget iw_temp, caddr_t data, caddr_t call_data)
+d248 1
+a248 1
+ void fit_butdraw1(Widget iw_temp, caddr_t data, caddr_t call_data)
+d258 3
+a260 1
+ void fit_butdraw2(Widget iw_temp, caddr_t data, caddr_t call_data)
+d279 1
+a279 1
+ void fit_butsavang(Widget iw_temp, caddr_t data, caddr_t call_data)
+@
+
+
+1.23
+log
+@removed unused variables
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.22 1996/03/19 14:13:44 leith Exp leith $*/
+a53 1
+ static int    translated = FALSE;
+a126 1
+    translated = FALSE;
+a196 1
+ translated = FALSE;
+a253 1
+ translated = FALSE;
+a264 1
+ translated = TRUE;
+@
+
+
+1.22
+log
+@removed unused variables
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.21 1996/01/22 21:08:18 mladjadj Exp leith $*/
+d52 3
+a54 3
+ Widget iw_xorg, iw_yorg;
+ Widget iw_phif, iw_gammaf, iw_thetaf;
+ int    translated = FALSE;
+a167 2
+ float  *eval[4];
+ int    it;
+@
+
+
+1.21
+log
+@no saving of angles in fit_buttilt
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.20 1995/08/16 18:13:11 mladjadj Exp $*/
+a39 2
+ extern int     ixull, iyull, ixulr, iyulr, irad;
+ extern char	dfil4[12];
+d43 1
+a43 1
+               * aval, * bval, * xsmf, * ysmf; 
+d48 1
+a48 1
+ float        xorg,  yorg;
+@
+
+
+1.20
+log
+@clean up
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.15 1995/02/21 19:13:01 liy Exp $*/
+d243 1
+a243 1
+ fitsav(TRUE);  /* update the doc files */
+@
+
+
+1.19
+log
+@do not read doc when drawing points
+@
+text
+@a56 1
+ int    theta_ok = 0;
+d177 1
+a177 5
+/*
+ if (!theta_ok)
+   { spout(" *** Unable to fit angles: THETA has be be computed first");
+     return;}
+*/    
+d241 1
+a241 4
+  {  spout("*** Warning, can not calculate tilted angle.  Try again");
+     theta_ok = 0; }
+ else
+     theta_ok=1;
+@
+
+
+1.18
+log
+@disable theta_ok for now
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.17 1995/08/08 15:35:33 mladjadj Exp mladjadj $*/
+d43 4
+a46 1
+
+d50 1
+a50 4
+ float        * xu0 = 0, * yu0 = 0, * xs   = 0, * ys   = 0;
+ float        * xs2 = 0, * ys2 = 0, * aval = 0, * bval = 0, * xim = 0;
+ float        * xsmf = 0, * ysmf = 0;
+ float          xu0t,  yu0t,  xs0t,  ys0t,  xorg,  yorg;
+a56 1
+/* disable for now
+a57 1
+*/
+d178 1
+a178 1
+/* disable for now !!!!
+d182 1
+a182 2
+*/
+     
+d247 1
+a247 7
+/* disable for now
+     theta_ok = 0;
+*/
+
+  }
+  
+/* disable for now
+a249 1
+*/
+d264 5
+a268 1
+ fitdoc(FALSE,FALSE);
+a269 1
+
+d275 6
+a280 5
+/*
+ if(thetaf == 0.0) 
+    spout("Warning: fit angle theta is zero!\n");
+*/
+ fitdoc(FALSE,FALSE);
+d283 4
+a286 4
+/* must calculate translated positions */
+  spoutfile(TRUE);
+  witran(xu0, yu0, xs2, ys2, maxpart, gammaff, thetaf, phif);
+  spoutfile(FALSE);
+@
+
+
+1.17
+log
+@add static and conditions for theta
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.15 1995/02/21 19:13:01 liy Exp $*/
+d57 1
+d59 1
+d180 1
+d184 1
+d250 7
+a256 1
+     theta_ok = 0; }
+d259 1
+@
+
+
+1.16
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.15 1995/02/21 19:13:01 liy Exp mladjadj $*/
+d46 1
+a46 1
+ float          phif, thetaf, gammaff, arealim;
+d57 1
+d64 1
+a64 1
+ Widget iw_rowcolv, iw_rowcolh1, iw_rowcolh2;
+d69 1
+a69 1
+
+d175 7
+d208 1
+a208 1
+
+d231 4
+d245 4
+a248 1
+     spout("*** Warning, can not calculate tilted angle.  Try again");
+a292 1
+
+@
+
+
+1.15
+log
+@fixed <fit angles> should not overwrite the old angles
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.14 1995/02/02 16:13:38 liy Exp liy $*/
+d53 1
+a53 1
+ static Widget  iw_fitmen, iw_area;
+@
+
+
+1.14
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitmen.c,v 1.13 1995/01/26 20:09:41 liy Exp liy $*/
+a207 2
+
+ fitsav(TRUE);  /* update the doc files */
+@
+
+
+1.13
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitmen.c,v 1.12 1994/12/30 10:17:14 leith Exp liy $*/
+d69 1
+a69 1
+ if (iw_fitmen <= (void *)0)
+@
+
+
+1.12
+log
+@ removed excess output
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitmen.c,v 1.11 94/07/05 16:10:45 odesanya Exp Locker: leith $*/
+d69 1
+a69 1
+ if ((int)iw_fitmen <= 0)
+@
+
+
+1.11
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitmen.c,v 1.10 1994/06/07 18:27:15 odesanya Exp odesanya $*/
+d250 1
+a250 1
+ fitdoc(TRUE,FALSE);
+d262 1
+a262 1
+ fitdoc(TRUE,FALSE);
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitmen.c,v 1.6 94/03/25 10:04:04 leith Exp $*/
+d46 1
+a46 1
+ float          phif, thetaf, gammaf, arealim;
+d94 1
+a94 1
+    sprintf(cval,"%f",gammaf);
+d149 1
+a149 1
+    sprintf(cval,"%f",gammaf);
+d191 1
+a191 1
+ sscanf(string,"%f",&gammaf);
+d207 1
+a207 1
+    gammaf,phif,thetaf,xs0t,ys0t);
+d267 1
+a267 1
+  witran(xu0, yu0, xs2, ys2, maxpart, gammaf, thetaf, phif);
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d237 2
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d209 2
+d256 4
+a259 1
+ if(gammaf == 0.0) return;  /* fit angle is not currently available  */
+d268 1
+a268 1
+ pickdraw(FALSE,FALSE,  TRUE,TRUE,  TRUE, maxpart);
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d249 1
+a249 1
+ pickdraw(TRUE,TRUE,  TRUE,TRUE,  TRUE, maxpart);
+d263 1
+a263 1
+ pickdraw(TRUE,TRUE,  TRUE,TRUE,  TRUE, maxpart);
+@
+
+
+1.6
+log
+@ spoutfile altered
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitmen.c,v 1.5 93/11/26 12:29:20 leith Exp Locker: leith $*/
+d35 2
+a36 1
+ void          fit_butdraw (Widget, caddr_t, caddr_t);
+d64 2
+a65 2
+ Widget iw_fit, iw_draw, iw_tilt, iw_pushs, iw_dums; 
+ Widget iw_savang; 
+d115 2
+a116 2
+    iw_draw   = wid_pushg(iw_rowcolv, 0, "Draw points",
+                     fit_butdraw, NULL, -1,-1);
+d118 4
+d244 1
+a244 1
+ void fit_butdraw(Widget iw_temp, caddr_t data, caddr_t call_data)
+d247 1
+d249 2
+a250 6
+ if (!translated)
+    {    /* must calculate tanslated positions */
+    spoutfile(TRUE);
+    witran(xu0, yu0, xs2, ys2, maxpart, gammaf, thetaf, phif);
+    translated = TRUE;
+    spoutfile(FALSE);
+d252 10
+a261 1
+    }
+@
+
+
+1.5
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitmen.c,v 1.4 93/11/24 15:47:29 leith Exp Locker: leith $*/
+d29 1
+a31 33
+ /* function prototypes */
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_textboxb (Widget, Widget, char *, char *,  int);
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_labelgt  (Widget, Widget, char *, int, int);
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*) (), 
+                             char *,int,int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+
+ extern FILE   * savdn1     (char *, char *, FILE **, float *, 
+			     int,int *,int);
+ extern void   spout        (char *);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern void   clearover    (Widget, caddr_t, caddr_t);
+ extern void   xorc         (Window, GC, int, int, int, int);
+ extern int    wisetplanes  (Display *, GC, int);
+ extern char   * itoa	    (int);
+ extern int    tiltang      (float *, float *, float *, float *,
+	                     int, float *, int *);
+ extern void   willsq       (float *, float *, float *, float *,
+                             int, float *, float *);
+ extern void   witran	    (float *, float *, float *, float *, int,
+			     float, float, float);
+ extern void   witext       (GC, char *, int, int,int, int, 
+                             int, int, int);
+ extern void   pickdraw     (int, int, int, int, int, int);
+ extern void   fitdoc       (int, int);
+ extern void   fitsav       (int);
+
+d57 1
+a57 1
+ /********************   fitmen   ****************************/
+d197 1
+d208 1
+d225 2
+d231 1
+d245 1
+a245 1
+
+d248 2
+d259 1
+d261 2
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitmen.c,v 1.3 93/11/22 16:38:26 leith Exp Locker: leith $*/
+d232 1
+a232 1
+   "Fitted Gamma: %5.2f  Phi:%5.2f Theta:%5.2f  Origin: (7.2f,%7.2f)\n",
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitmen.c,v 1.2 93/11/19 16:46:13 leith Exp Locker: leith $*/
+d62 1
+d65 4
+a68 3
+ void          fit_buttilt(Widget, caddr_t, caddr_t);
+ void          fit_butfit (Widget, caddr_t, caddr_t);
+ void          fit_butdraw(Widget, caddr_t, caddr_t);
+d96 1
+d109 1
+a109 1
+    /* create text box for x origin ----------------------  x origin */
+d137 1
+a137 1
+    /* create push button for tilt angle det. ----------------- tilt */
+d141 1
+a141 1
+    /* create push button for fitting angles ------------------ fit */
+d145 1
+a145 1
+    /* create push button for draw points --------------------- draw */
+d149 4
+d280 6
+@
+
+
+1.2
+log
+@freed strings
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitmen.c,v 1.1 93/11/16 14:13:07 leith Exp Locker: leith $*/
+d53 1
+a53 1
+	                     int, float *, int *, float *);
+d78 1
+d225 2
+a226 2
+   "Fitted  x org.:%7.2f y org.:%7.2f  gamma: %5.2f phi:%5.2f theta:%5.2f\n",
+   xs0t,ys0t, gammaf,phif,thetaf);
+d248 1
+a248 1
+ if ((tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, aval)) != 0)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a0 1
+/*$Header$*/
+d2 2
+a30 1
+
+a183 3
+
+
+
+d191 1
+a192 1
+
+d196 1
+d201 1
+d206 1
+d211 1
+d216 1
+d223 3
+a225 2
+ printf("Fitted  x origin:%f y origin:%f  gamma: %f phi:%f theta:%f\n",
+	   xs0t,ys0t,gammaf,phif,thetaf);
+a239 1
+ int     ier;
+d244 1
+d246 3
+a248 3
+ /* determine theta tilt*/
+ if ((ier = tiltang(xu0,yu0, xs,ys, maxpart, &thetaf, &iarea, aval)) != 0)
+ spout("*** Warning, can not calculate tilted angle.  Try again");
+@

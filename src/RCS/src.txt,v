@@ -1,0 +1,389 @@
+head	1.9;
+access;
+symbols
+	pre-tilt-improve:1.9;
+locks;
+comment	@# @;
+
+
+1.9
+date	2002.05.17.13.57.09;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2002.05.17.13.54.24;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2001.09.04.15.06.48;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2001.09.04.15.05.55;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2000.06.30.19.54.25;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	99.09.30.17.13.03;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	99.09.14.13.34.44;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	99.08.13.12.39.06;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	99.08.13.12.35.25;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@# 
+#  file: src.txt
+#  put names of web source code files in this list
+#
+action.c
+actions.c
+addext.c
+annote.c
+annotemen.c
+average.c
+backmen.c
+bar.c
+barmen.c
+blackout.c
+bldr.c
+cald.c
+cantrot.c
+cat.c
+catmen.c
+changedir.c
+changepat.c
+checkcom.c
+clearover.c
+closefile.c
+closefilecnt.c
+closefilep.c
+cntmen.c
+cntplot.c
+colmen.c
+comap.c
+comapmen.c
+comapmen2.c
+comapmen3.c
+comapmen5.c
+comapsav.c
+contrastmen.c
+corr_mask.c
+csget.c
+csgettext.c
+ctfmen.c
+curmen.c
+defluts.c
+dendromen.c
+denoisemen.c
+dent.c
+dentmen.c
+dentmen2.c
+dispmen.c
+dispsize.c
+dist.c
+distmen.c
+distoref.c
+docmontmen.c
+erodemen.c
+eul_to_xyz.c
+exitexit.c
+expos_cb.c
+extractstr.c
+fftmcf.c
+filget.c
+filinc.c
+fillmen.c
+filter.c
+filtere.c
+filterfill.c
+filtermen.c
+filterskel.c
+filterv.c
+filtestb.c
+fin_cb.c
+fitdoc.c
+fitdocmen.c
+fitmen.c
+fitorigin.c
+fitsav.c
+fmr_1.c
+fmr_2.c
+fontmen.c
+foumen.c
+get_imsiz.c
+getoldstack.c
+getcorner.c
+getdoc.c
+getloc.c
+gold.c
+goldmen.c
+gongon.c
+his.c
+hist.c
+imagedis.c
+imagemen.c
+imoptmen.c
+invert.c
+iskipadj.c
+iskipundo.c
+itex.c
+itoa.c
+lahemen.c
+localareaeq.c
+locc.c
+lut.c
+lutmen.c
+mag.c
+mask.c
+maskmen.c
+mircol.c
+monn.c
+mont2.c
+mont3.c
+montmen2.c
+montmen3.c
+movearea.c
+movecur.c
+moviemen.c
+newcursor.c
+newext.c
+norm.c
+numdig.c
+opennew.c
+openold.c
+openoldcnt.c
+overlut.c
+pickback.c
+pickbackave.c
+pickbackmen.c
+pickdisp.c
+pickdraw.c
+pickmen.c
+pickp.c
+pixel.c
+pixelmen.c
+pixlen.c
+pop_errmsg.c
+power.c
+powermen.c
+profile.c
+profilemen.c
+querylut.c
+radcur.c
+rcaver.c
+rdpriw.c
+rdprx.c
+rdprxc.c
+redlin.c
+redlin8.c
+redlin8f.c
+redlin16f.c
+redvol.c
+redvol8.c
+reflmen.c
+rubberline.c
+savdn1.c
+scaleimg.c
+scale32to8.c
+setacursor.c
+setamap.c
+setline.c
+setmag.c
+setmen.c
+setnprow.c
+setprm.c
+setxor.c
+shift.c
+showbimage.c
+showbutx.c
+showimage.c
+showmovie.c
+showmoviemen.c
+stackmen.c
+stackdis.c
+sird.c
+spout.c
+spoutfile.c
+strtoint.c
+surf.c
+surfcolor.c 
+surfmen.c
+surfmovie.c
+surfrot.c
+tfd.c
+thresh.c
+threshmen.c
+tiltang.c
+toggle2_cb.c
+toggle_cb.c
+unsdal.c
+visual_info.c
+visuals.c
+waitcursor.c
+web.c
+web_com.c
+web_info.c
+web_main.c
+web_man.c
+webclear.c
+wicolor.c
+wid_angles.c
+wid_dialog.c
+wid_file.c
+wid_label.c
+wid_labelg.c
+wid_lutinfo.c
+wid_mess.c
+wid_movie.c
+wid_optmenu.c
+wid_posiz.c
+wid_power.c
+wid_pulldown.c
+wid_push.c
+wid_pushg.c
+wid_rowcol.c
+wid_scale.c
+wid_sep.c
+wid_stdbut.c
+wid_text.c
+wid_textboxb.c
+wid_toggleg.c
+wid_togmen.c
+wid_win.c
+widean.c
+widisp.c
+widpos.c
+wiline.c
+wilines.c
+willsq.c
+wimakecur.c
+winbox.c
+windata.c
+windowsp.c
+winfile.c
+winmov.c
+winread.c
+winsel.c
+winsiz.c
+wipic.c
+wisetplanes.c
+witext.c
+witran.c
+wrtlin.c
+wrtname.c
+wrtvol.c
+xorbox.c
+xorc.c
+xorlin.c
+xorline.c
+xyz_to_eul.c
+ztoxy.c
+ztoxyn.c
+@
+
+
+1.8
+log
+@wrtname
+@
+text
+@d240 1
+a240 1
+wrtnam.c
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d240 1
+@
+
+
+1.6
+log
+@added showmovie
+@
+text
+@d168 1
+a168 1
+showmovemen.c
+@
+
+
+1.5
+log
+@added iskipundo.c
+@
+text
+@d160 1
+d167 2
+@
+
+
+1.4
+log
+@added getoldstack
+@
+text
+@d95 1
+@
+
+
+1.3
+log
+@added iskipadj
+@
+text
+@d81 1
+@
+
+
+1.2
+log
+@added tfd
+@
+text
+@d93 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d174 1
+@

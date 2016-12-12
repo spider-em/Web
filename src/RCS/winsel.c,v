@@ -1,0 +1,327 @@
+head	1.9;
+access;
+symbols
+	pre-tilt-improve:1.9
+	pre_surf_fromtop:1.9
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.9
+date	2011.09.23.19.01.48;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2011.05.18.18.22.03;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.10.18.16.59.44;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.10.05.13.28.08;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.10.05.12.06.09;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.08.02.14.14.04;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.04.11.13.46.29;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.23.10.52.49;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.24;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@added call tree
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/winsel.c,v 1.8 2011/05/18 18:22:03 leith Exp $*/
+/*
+
+C++*************************************************************************
+C
+C  WID_WINSEL.FOR -- CREATED MAY 91 al
+C                    CONVERTED TO C -- SEPT 92 al 
+C **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C WINSEL
+C
+C PURPOSE:       Selects windowed operations 
+C
+C PARAMETERS:    Void
+C
+C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
+C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
+C                     \ wid_posiz  --> winsiz3    /
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* Global variables */
+ extern int iwintyp;
+
+
+ /****************************  winsel  *******************************/
+
+ void winsel(void)
+ {
+ if (ioper > 9) ioper = ioper / 10;
+
+
+ if       (ioper == 4) 
+   {     /* Window from a source file */
+   winfile();
+   }
+
+ else if  (ioper == 5) 
+   {     /* Draw box(s) */
+   winbox(iwintyp);
+   }
+
+ else if (ioper == 6) 
+   {     /* Record area command */
+   winread();
+   }
+
+ else if (ioper == 7) 
+   {     /* Move area command */
+   movearea();
+   }
+
+ else if (ioper == 8) 
+   {     /* Power spectrum command */
+   powermen();
+   }
+ }
+@
+
+
+1.8
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/winsel.c,v 1.7 2005/10/18 16:59:44 leith Exp leith $*/
+d41 4
+d61 1
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winsel.c,v 1.6 94/10/05 13:28:08 leith Exp $*/
+d35 1
+a35 1
+C WID_WINSEL
+d37 1
+a37 1
+C PURPOSE:       SELECTS WINDOWED OPERATIONS 
+d39 1
+a39 3
+C PARAMETERS:    
+C
+C CALLED BY:     
+d47 1
+a47 1
+ /* global variables */
+d58 1
+a58 1
+   {     /* window from a source file */
+d63 1
+a63 1
+   {     /* draw box(s) */
+d68 1
+a68 1
+   {     /* record area command */
+d73 1
+a73 1
+   {     /* move area command */
+d78 1
+a78 1
+   {     /* power spectrum command */
+@
+
+
+1.6
+log
+@need ioper trap for alpha only
+needed void for prototype
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winsel.c,v 1.5 94/10/05 12:06:09 leith Exp Locker: leith $*/
+d9 25
+a33 8
+C **************************************************************************
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.5
+log
+@ioper is > 10 on alpha only.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winsel.c,v 1.4 94/08/02 14:14:04 leith Exp Locker: leith $*/
+d38 1
+a38 1
+ void winsel()
+@
+
+
+1.4
+log
+@added powermen
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/winsel.c,v 1.3 94/04/11 13:46:29 leith Exp $*/
+d40 2
+@
+
+
+1.3
+log
+@changed winbox call
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/winsel.c,v 1.2 93/11/23 10:52:49 leith Exp Locker: leith $*/
+d35 1
+d59 5
+a64 10
+
+
+#ifdef NEVER
+        ELSEIF (IOPER .EQ. 18) THEN
+C          WINDOW FROM EXISTING FILE COMMAND
+           CALL WID_WINFIL(IXULW,IYULW,NSAMW,NROWW,ICONTXX,IRTFLG)
+        ELSEIF (IOPER .EQ. 20) THEN
+C          MASK AREA OF SCREEN TO A FILE, INIMAG IS FALSE
+           CALL WID_MASKMEN(.TRUE.,.FALSE.)
+#endif
+@
+
+
+1.2
+log
+@after move loopback added
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/winsel.c,v 1.1 93/11/10 10:11:24 leith Exp Locker: leith $*/
+d30 1
+d32 2
+a33 5
+ /* external functions */
+ extern void movearea(void);
+ extern void winread(void);
+ extern void winbox(void);
+ extern void winfile(void);
+a37 1
+
+d46 1
+a46 1
+   winbox();
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d4 1
+d26 1
+a26 1
+C--******************************************************************
+a28 2
+#include "x.h"
+#include "std.h"
+d37 1
+a37 3
+
+
+ /********************  winsel  **************************/
+@

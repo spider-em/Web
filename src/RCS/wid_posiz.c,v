@@ -1,0 +1,620 @@
+head	1.13;
+access;
+symbols
+	pre-tilt-improve:1.13
+	pre_surf_fromtop:1.13
+	pre_neednewmap:1.13
+	pre_apppluss_remove:1.13
+	pre_tiltpair_chng:1.13
+	pre_GPL:1.11;
+locks;
+comment	@ * @;
+
+
+1.13
+date	2011.05.18.18.24.48;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2005.10.18.17.00.00;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.03.29.15.31.56;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.03.27.15.27.55;	author mladjadj;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.03.26.17.38.58;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.07.11.18.20.14;	author mladjadj;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.02.02.18.25.17;	author liy;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.01.27.16.14.58;	author liy;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.01.26.20.32.39;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.09.12.15.34.17;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.07.05.15.34.47;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.06.02.14.21.48;	author odesanya;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.26;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@set default size 64 64
+@
+text
+@
+/*$Header: /usr8/web/new/RCS/wid_posiz.c,v 1.12 2005/10/18 17:00:00 leith Exp leith $*/
+/*
+ * wid_posiz.c
+ *
+ **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ **********************************************************************
+ *
+ * PURPOSE:	Creates a position and size widget
+ *
+ * RETURNS:	Widget number
+ * 
+ * PARAMETERS:  
+ *
+ * NOTE:	A row column widget is used for the vertical alignment
+ *		of the children and a separate row column child is
+ *		used whenever horizontal orientation is needed
+ *
+ **********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+#include "routines.h"
+
+ /* Internal functions */
+ void          wid_posiz_buta(Widget, XtPointer, XtPointer);
+ void          junk          ();
+ void          subit         (void (*)());
+ void          doit	     (void);
+ 
+ /* File variables */
+ static Widget        iw_ix = (Widget)0,  iw_iy = (Widget)0,
+                      iw_icols = (Widget)0, iw_irows = (Widget)0;
+ static Widget        iw_pushc,   iw_pusha;   
+ static Widget        iw_rowcol1, iw_rowcol2; 
+ static Widget        iw_title1,  iw_title2;
+ static Widget        iw_posizt= (Widget)0;
+
+ /* Common variables */
+ int           ix_posiz;
+ int           iy_posiz;
+ int           icols_posiz  = 64 ;  // Default size
+ int           irows_posiz  = 64 ;
+
+ /******************************************************************/
+ 
+ Widget wid_posiz(Widget iw_parent, Widget iw_posiz, int ixt, int iyt, 
+                  int icolst, int irowst, char ctype, void (* call)())
+ {
+ Widget        iw_rowcol, iw_dum; 
+ char          cval[5];
+
+ ix_posiz    = ixt;    iy_posiz    = iyt;
+ icols_posiz = icolst; irows_posiz = irowst;
+
+ if (iw_posiz == (Widget)0) 
+    {
+    /* Create a  new dialog widget for iw_posiz */
+    iw_posiz  = wid_dialog(iw_parent,0, "position",-1,-1);
+
+    /* Create a RowColumn widget within iw_posiz */
+    iw_rowcol = wid_rowcol(iw_posiz, 'v', -1, -1);
+
+    /*--------------- Position portion of widget ----------------*/
+
+    /* Create a label widget with default alignment */
+    iw_title1 = wid_labelg(iw_rowcol, 0, 
+                "Enter X & Y position (in pixels)", -1,-1);
+
+    /* Create a parent for the prompts and labels */
+    iw_rowcol1  = wid_rowcol(iw_rowcol, 'h', -1, -1);
+
+    /* Create a label and text box for ix */
+    sprintf(cval,"%4d",ix_posiz);
+    iw_ix = wid_textboxb(iw_rowcol1,0,"X:   ",cval,4);
+    sprintf(cval,"%4d",iy_posiz);
+    iw_iy = wid_textboxb(iw_rowcol1,0,"Y:   ",cval,4);
+
+    if (ctype == 's'  || ctype == 'S' )
+       {
+       XtUnmanageChild(iw_title1);
+       XtUnmanageChild(iw_rowcol1);
+       }
+ 
+    /*------------------- Size portion of widget ----------------*/
+
+    /* Create a label widget with default alignment */
+    iw_title2 = wid_labelg(iw_rowcol, 0, 
+                        "Enter cols. & rows (in pixels)", -1,-1);
+
+    /* Create a rowcol parent for the prompts and labels */
+    iw_rowcol2  = wid_rowcol(iw_rowcol, 'h', -1, -1);
+
+    /* create a label and text box for width & height */
+    sprintf(cval,"%4d",icols_posiz);
+    iw_icols = wid_textboxb(iw_rowcol2,0,"COLS:",cval,4);
+    sprintf(cval,"%4d",irows_posiz);
+    iw_irows = wid_textboxb(iw_rowcol2,0,"ROWS:",cval,4);
+
+    if (ctype == 'P'  || ctype == 'p' )
+       {
+       XtUnmanageChild(iw_title2);
+       XtUnmanageChild(iw_rowcol2);
+       }
+   
+   /* Create a separator for consistancy with other pop up dialogs */
+   wid_sep(iw_rowcol);
+
+   iw_dum = wid_stdbut(iw_rowcol, iw_posiz, &iw_dum, &iw_pushc, &iw_pusha, 
+                       "CA",fin_cb,fin_cb, wid_posiz_buta, (char *) call);
+   }
+
+ else 
+    {
+    /* Update widget for iw_posiz */
+    iw_posiz  = wid_dialog(iw_parent,iw_posiz, "position",-1,-1);
+
+    XtRemoveAllCallbacks(iw_pusha,XmNactivateCallback); 
+    XtAddCallback(iw_pusha,XmNactivateCallback,
+                   (XtCallbackProc) wid_posiz_buta, (XtPointer) call);
+
+    if (ctype == 'p' || ctype == 'b' || ctype == 'P' || ctype == 'B' )
+       {
+       /* Update label and text box for ix */
+       sprintf(cval,"%4d",ix_posiz);
+       iw_ix = wid_textboxb(iw_rowcol1,iw_ix,"X:",cval,4);
+       sprintf(cval,"%4d",iy_posiz);
+       iw_iy = wid_textboxb(iw_rowcol1,iw_iy,"Y:",cval,4);
+
+       XtManageChild(iw_title1);
+       XtManageChild(iw_rowcol1);
+       }
+    if (ctype == 'P'  || ctype == 'p' )
+       {
+       XtUnmanageChild(iw_title2);
+       XtUnmanageChild(iw_rowcol2);
+       }
+  
+    if (ctype == 's' || ctype == 'b' || ctype == 'S' || ctype == 'B' )
+       {
+       /* Update text box for cols & rows */
+       sprintf(cval,"%4d",icols_posiz);
+       iw_icols = wid_textboxb(iw_rowcol2,iw_icols,"COLS:",cval,4);
+       sprintf(cval,"%4d",irows_posiz);
+       iw_irows = wid_textboxb(iw_rowcol2,iw_irows,"ROWS:",cval,4);
+       XtManageChild(iw_title2);
+       XtManageChild(iw_rowcol2); 
+       }
+    if (ctype == 'P'  || ctype == 'p' )
+       {
+       XtUnmanageChild(iw_title2);
+       XtUnmanageChild(iw_rowcol2);
+       }
+    if (ctype == 's'  || ctype == 'S' )
+       {
+       XtUnmanageChild(iw_title1);
+       XtUnmanageChild(iw_rowcol1);
+       }
+    }
+
+ XtManageChild(iw_posiz);
+
+ iw_posizt = iw_posiz;
+ return iw_posiz;
+ }
+
+
+ /****************** Accept button callback   *********************/
+
+ void wid_posiz_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+
+ { 
+ /* Recover values from the text boxes */
+ if (iw_ix    > (Widget)0 && strtoint(iw_ix,   "x position",&ix_posiz)    
+             == FALSE) return;
+ if (iw_iy    > (Widget)0 && strtoint(iw_iy,   "y position",&iy_posiz)    
+             == FALSE) return;
+ if (iw_icols > (Widget)0 && strtoint(iw_icols,"columns",   &icols_posiz)
+             == FALSE) return;
+ if (iw_irows > (Widget)0 && strtoint(iw_irows,"rows",      &irows_posiz)
+             == FALSE) return;
+
+ /* Unmanage wid_posiz widget */
+ XtUnmanageChild(iw_posizt);
+
+ /* Kludge to get it to call routine passed in data */
+ subit((void (*)()) data); 
+ }
+
+
+ /****************** Kludge routine to activate data *****************/
+
+
+ void subit(void (*doit)())
+ {
+ doit();
+ }
+
+
+
+ /****************** Sample kludge routine    ************************/
+
+
+ void junk()
+ {
+ printf(" in junk, SUCCESS \n");
+ printf(" ix,iy: %d %d \n",ix_posiz,iy_posiz);
+ }
+@
+
+
+1.12
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_posiz.c,v 1.11 1996/03/29 15:31:56 leith Exp $*/
+d32 1
+a32 3
+ * 
+ * 
+ * PURPOSE:	creates a position and size widget
+d38 1
+a38 1
+ * NOTE:	a row column widget is used for the vertical alignment
+d41 1
+d49 1
+a49 1
+ /* internal functions */
+d55 1
+a55 1
+ /* file variables */
+d63 5
+a67 2
+ /* common variables */
+ int           ix_posiz,   iy_posiz,  icols_posiz, irows_posiz;
+d82 1
+a82 1
+    /* create a  new dialog widget for iw_posiz */
+d85 1
+a85 1
+    /* create a RowColumn widget within iw_posiz */
+d88 1
+a88 1
+    /*--------------- position portion of widget ----------------*/
+d90 1
+a90 1
+    /* create a label widget with default alignment */
+d94 1
+a94 1
+    /* create a parent for the prompts and labels */
+d97 1
+a97 1
+    /* create a label and text box for ix */
+d109 1
+a109 1
+    /*------------------- size portion of widget ----------------*/
+d111 1
+a111 1
+    /* create a label widget with default alignment */
+d115 1
+a115 1
+    /* create a rowcol parent for the prompts and labels */
+d130 1
+a130 1
+   /* create a separator for consistancy with other pop up dialogs */
+d139 1
+a139 1
+    /* update widget for iw_posiz */
+d148 1
+a148 1
+       /* update label and text box for ix */
+d165 1
+a165 1
+       /* update text box for cols & rows */
+d192 1
+a192 2
+ /****************** accept button callback   *********************/
+
+d197 1
+a197 1
+ /* recover values from the text boxes */
+d207 1
+a207 1
+ /* unmanage wid_posiz widget */
+d210 1
+a210 1
+ /* kludge to get it to call routine passed in data */
+d215 1
+a215 1
+ /****************** kludge routine to activate data *****************/
+d225 1
+a225 1
+ /****************** sample kludge routine    ************************/
+@
+
+
+1.11
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_posiz.c,v 1.10 1996/03/27 15:27:55 mladjadj Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.10
+log
+@prototype of doit()
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_posiz.c,v 1.9 1996/03/26 17:38:58 leith Exp mladjadj $*/
+d193 1
+a193 1
+ subit((void (*)()) data);
+@
+
+
+1.9
+log
+@minor changes
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_posiz.c,v 1.8 1995/07/11 18:20:14 mladjadj Exp leith $*/
+d37 2
+a38 1
+
+@
+
+
+1.8
+log
+@static Widget =(Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_posiz.c,v 1.7 1995/02/02 18:25:17 liy Exp mladjadj $*/
+d34 1
+a34 1
+ void          wid_posiz_buta(Widget, caddr_t, caddr_t);
+d60 1
+a60 1
+ if (iw_posiz <= (Widget)0) 
+d175 1
+a175 1
+ void wid_posiz_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+@
+
+
+1.7
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_posiz.c,v 1.6 1995/01/27 16:14:58 liy Exp liy $*/
+d39 2
+a40 1
+ static Widget        iw_ix = 0,  iw_iy = 0, iw_icols = 0, iw_irows = 0;
+d44 1
+a44 1
+ static Widget        iw_posizt;
+@
+
+
+1.6
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_posiz.c,v 1.5 1995/01/26 20:32:39 liy Exp $*/
+d59 1
+a59 1
+ if (iw_posiz <= (void *)0) 
+d178 1
+a178 1
+ if (iw_ix    > (void *)0 && strtoint(iw_ix,   "x position",&ix_posiz)    
+d180 1
+a180 1
+ if (iw_iy    > (void *)0 && strtoint(iw_iy,   "y position",&iy_posiz)    
+d182 1
+a182 1
+ if (iw_icols > (void *)0 && strtoint(iw_icols,"columns",   &icols_posiz)
+d184 1
+a184 1
+ if (iw_irows > (void *)0 && strtoint(iw_irows,"rows",      &irows_posiz)
+@
+
+
+1.5
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_posiz.c,v 1.4 1994/09/12 15:34:17 leith Exp liy $*/
+d178 1
+a178 1
+ if ((int) iw_ix    > 0 && strtoint(iw_ix,   "x position",&ix_posiz)    
+d180 1
+a180 1
+ if ((int) iw_iy    > 0 && strtoint(iw_iy,   "y position",&iy_posiz)    
+d182 1
+a182 1
+ if ((int) iw_icols > 0 && strtoint(iw_icols,"columns",   &icols_posiz)
+d184 1
+a184 1
+ if ((int) iw_irows > 0 && strtoint(iw_irows,"rows",      &irows_posiz)
+@
+
+
+1.4
+log
+@used routines.h
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_posiz.c,v 1.3 94/07/05 15:34:47 odesanya Exp Locker: leith $*/
+d59 1
+a59 1
+ if ((int)iw_posiz <= 0) 
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/wid_posiz.c,v 1.2 1994/06/02 14:21:48 odesanya Exp odesanya $*/
+d31 1
+a32 14
+
+/* external function prototypes */
+ extern Widget wid_dialog    (Widget, Widget, char *, int, int);
+ extern Widget wid_rowcol    (Widget, char , int, int);
+ extern Widget wid_textboxb  (Widget, Widget, char *, char *,  int);
+ extern Widget wid_labelg    (Widget, Widget, char *, int, int);
+ extern Widget wid_sep       (Widget);
+ extern Widget wid_stdbut    (Widget, Widget, Widget*, Widget*, Widget*,
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern void   spout         (char *);
+ extern void   fin_cb        (Widget, caddr_t, caddr_t);
+ extern int    strtoint      (Widget, char *, int *);
+
+d113 1
+a113 1
+                       "CA",fin_cb,fin_cb, wid_posiz_buta, call);
+d195 1
+a195 1
+ /****************** kludge routine to activate data *************/
+d205 1
+a205 1
+ /****************** sample kludge routine    *********************/
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/wid_posiz.c,v 1.1 93/11/10 10:11:26 leith Exp $*/
+d136 1
+a136 1
+                  wid_posiz_buta, (XtPointer) call);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d136 1
+a136 1
+                  wid_posiz_buta,call);
+@

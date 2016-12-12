@@ -1,0 +1,580 @@
+head	1.13;
+access;
+symbols
+	pre-tilt-improve:1.13
+	pre_surf_fromtop:1.12
+	pre_neednewmap:1.12
+	pre_apppluss_remove:1.12
+	pre_tiltpair_chng:1.12
+	pre_GPL:1.11;
+locks;
+comment	@ * @;
+
+
+1.13
+date	2012.04.17.18.32.04;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2005.10.18.17.00.01;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	99.07.30.19.20.37;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	97.09.09.19.47.02;	author liy;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.05.14.15.48.03;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	96.04.01.17.24.33;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.08.02.16.31.36;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.08.02.16.28.41;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.02.01.21.29.59;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.01.26.18.48.41;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.09.26.16.32.26;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.01.12.05.00;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.01.28.17.14.37;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new.
+@
+
+
+1.13
+log
+@output dialog labels.
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/catmen.c,v 1.12 2005/10/18 17:00:01 leith Exp $*/
+/*
+C++*********************************************************************
+C
+C  catmen.c          Jan 94 
+C
+C **********************************************************************
+C    AUTHOR:  ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    catmen()
+C
+C    PURPOSE:    Displays category selecting menu
+C
+C    PARAMETERS: None   
+C
+C    CALLED BY:  mont2      
+C
+C--*********************************************************************
+*/
+#include "common.h"
+#include "routines.h"
+#include <Xm/ToggleBG.h>
+
+ /* External function prototypes */
+ extern void   cat          (void);
+
+ /* Internal function prototypes */
+ void          catmen_buts(Widget, XtPointer, XtPointer);
+ void          catmen_buta(Widget, XtPointer, XtPointer);
+  
+ /* External common variables */
+ extern int        ncat;        /* number of categories wanted */
+
+ /* Internal common variables */
+ static Widget     iw_catmen= 0, iw_docgg, iw_nkeyc, iw_ncat;
+ static int        showing = FALSE;
+
+ /********************   catmen   ****************************/
+
+ void catmen(void)
+
+ {
+ static Widget  iw_rowcolv; 
+ Widget  iw_pushs, iw_pusha; 
+
+ char    cval[3];
+
+ if (iw_catmen == (Widget)0)
+    {   
+    /*   Create categories doc file menu first */
+
+    iw_catmen = wid_dialog(iw_win, 0, "Categories document file", 
+                           -1, -1);
+    iw_rowcolv  = wid_rowcol(iw_catmen, 'v', -1, -1);
+
+    /*   Create a text box for doc file name input */
+    iw_docgg = wid_textboxb(iw_rowcolv,0,"Output doc file:  ",
+                            docnam,20);
+
+    /*   Create a text box for category numbers input */
+    sprintf(cval,"%d",ikeyc);
+
+    /* printf("---ikey = %d\n", ikeyc); */
+
+    iw_nkeyc = wid_textboxb(iw_rowcolv,0,"Starting key number:  ",
+                            cval,4);
+
+    /*   Create a text box for category numbers input */
+    sprintf(cval,"%d",ncat);
+    iw_ncat = wid_textboxb(iw_rowcolv,0,"Categories:  ",cval,2);
+
+    /* Create box for apply  */
+    wid_stdbut(iw_rowcolv, iw_catmen, 
+                         &iw_pushs, &iw_pushs, &iw_pusha, "SA",
+                         catmen_buts, catmen_buts ,catmen_buta, NULL);
+
+    }
+ else
+    {
+    /*   Create a text box for doc file name input */
+    iw_docgg = wid_textboxb(iw_rowcolv,iw_docgg,"Output doc file:",
+                            docnam,20);
+
+    /*   Recover the key num  */
+    sprintf(cval,"%d",ikeyc);
+    iw_nkeyc = wid_textboxb(iw_rowcolv,iw_nkeyc,"Starting key number:  ",cval,4);
+    }
+ XtManageChild(iw_catmen);
+
+ }
+
+/***********  Docfile accept button callback ***********************/
+
+ void catmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ float        fdum;
+
+ if (rdprxc(iw_docgg,&docnam[0],81) == 0) 
+    {
+    spout("*** You must enter a doc. file name now!");
+    return;
+    }
+
+ /*  Find new key */
+ if (!rdprx(iw_nkeyc,'i',&ikeyc,&fdum)) return;
+
+ /*  Find ncat */
+ if (!rdprx(iw_ncat,'i',&ncat,&fdum)) return;
+ if (ncat > 9 || ncat < 1) 
+    {
+    spout("*** Categories range 1 ... 9");
+    return;
+    }
+
+ /*  Remove doc file menu */
+ XtUnmanageChild(iw_catmen);
+
+ /*  Refresh screen  */
+ expos_cb(NULL,NULL,NULL);
+
+ /*  Start categorizing routine */
+ showing = TRUE;
+ cat();
+
+ }
+
+
+/*********** Stop button callback **********************************/
+
+ void catmen_buts(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+
+ /*  Remove message */
+ if (showing)
+   {
+   showing = FALSE;
+   showbutx("","","",TRUE);
+   }
+
+ /*  Remove the menu widget */
+ XtUnmanageChild(iw_catmen);
+
+ /*  Cancel buttons,  stop this routine */
+ XtUninstallTranslations(iw_win);
+
+ }
+
+
+@
+
+
+1.12
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/catmen.c,v 1.11 1999/07/30 19:20:37 leith Exp $*/
+d4 1
+a4 1
+C++**********************************************************************
+d37 1
+a37 1
+C    PURPOSE:    displays category selecting menu
+d39 1
+a39 1
+C    PARAMETERS: none   
+d49 1
+a49 1
+ /* external function prototypes */
+d52 1
+a52 1
+ /* internal function prototypes */
+d56 2
+a57 2
+ /* external common variables */
+ extern int           ncat;        /* number of categories wanted */
+d59 3
+a61 3
+ /* internal common variables */
+ static Widget        iw_catmen= 0, iw_docgg, iw_nkeyc, iw_ncat;
+ static int           showing = FALSE;
+d75 1
+a75 1
+    /* create marker doc file menu first */
+d77 2
+a78 1
+    iw_catmen = wid_dialog(iw_win, 0, "Categories document file", -1, -1);
+d81 3
+a83 2
+    /*   create a text box for doc file name input */
+    iw_docgg = wid_textboxb(iw_rowcolv,0,"Doc file:  ",docnam,20);
+d85 1
+a85 1
+    /*   create a text box for category numbers input */
+d90 2
+a91 1
+    iw_nkeyc = wid_textboxb(iw_rowcolv,0,"Starting key number:  ",cval,4);
+d93 1
+a93 1
+    /*   create a text box for category numbers input */
+d97 1
+a97 1
+    /* create box for apply  */
+d105 3
+a107 2
+    /*   create a text box for doc file name input */
+    iw_docgg = wid_textboxb(iw_rowcolv,iw_docgg,"Doc file:",docnam,20);
+d109 1
+a109 1
+    /*   recover the key num  */
+d117 1
+a117 1
+/***********  docfile accept button callback ***********************/
+a124 1
+    /*  this program requires a doc file name */
+d129 1
+a129 1
+ /* find new key */
+d132 1
+a132 1
+ /* find ncat */
+d140 1
+a140 1
+ /*  remove doc file menu */
+d143 1
+a143 1
+ /*     refresh screen  */
+d146 1
+a146 1
+ /* start the categorizing routine */
+d153 1
+a153 1
+/*********** stop button callback **********************************/
+d158 1
+a158 1
+ /*  remove message */
+d165 1
+a165 1
+ /*  remove the menu widget */
+d168 1
+a168 1
+ /*  cancel buttons,  stop this routine */
+@
+
+
+1.11
+log
+@removed debug print oout statement
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/catmen.c,v 1.10 1997/09/09 19:47:02 liy Exp leith $*/
+d10 23
+a32 6
+C *  COPYRIGHT (C)1994, WADSWORTH CENTER FOR LABORATORIES AND          *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.  *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS *
+C *    OR USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN        *
+C *    APPROVAL OF THE CENTER FOR LABORATORIES AND RESEARCH            *
+@
+
+
+1.10
+log
+@added ikeyc for categorization to get accumulatedkey number
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/catmen.c,v 1.9 1996/05/14 15:48:03 leith Exp $*/
+d68 3
+a70 1
+printf("---ikey = %d\n", ikeyc);
+@
+
+
+1.9
+log
+@changed rdprxc
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/catmen.c,v 1.8 1996/04/01 17:24:33 leith Exp leith $*/
+d43 1
+a43 1
+ static Widget        iw_catmen= 0, iw_docgg, iw_ncat;
+d67 5
+d86 3
+d106 3
+@
+
+
+1.8
+log
+@xtpointer, iw_catmen=0, showing is boolian
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/catmen.c,v 1.7 1995/08/02 16:31:36 leith Exp leith $*/
+a31 2
+#define NMARK 200
+
+d92 1
+a92 1
+ if (rdprxc(iw_docgg,&docnam[0]) == 0) 
+@
+
+
+1.7
+log
+@fixed rowcolv double def (new)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/catmen.c,v 1.6 1995/08/02 16:28:41 leith Exp leith $*/
+d38 2
+a39 2
+ void          catmen_buts(Widget, caddr_t, caddr_t);
+ void          catmen_buta(Widget, caddr_t, caddr_t);
+d45 2
+a46 2
+ static Widget        iw_catmen, iw_docgg, iw_ncat;
+ static int           showing = 0;
+d54 1
+a54 1
+ Widget  iw_pushs, iw_pusha, iw_dums; 
+d58 1
+a58 1
+ if (iw_catmen <= (Widget)0)
+d90 1
+a90 1
+ void catmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d116 1
+a116 1
+ showing = 1;
+d124 1
+a124 1
+ void catmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+d128 1
+a128 1
+ if(showing)
+d130 1
+a130 1
+   showing = 0;
+@
+
+
+1.6
+log
+@fixed static leaks
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/catmen.c,v 1.5 1995/02/01 21:29:59 liy Exp leith $*/
+d54 1
+a54 1
+ Widget  iw_rowcolv, iw_pushs, iw_pusha, iw_dums; 
+d73 1
+a73 1
+    iw_dums = wid_stdbut(iw_rowcolv, iw_catmen, 
+@
+
+
+1.5
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/catmen.c,v 1.4 1995/01/26 18:48:41 liy Exp liy $*/
+d29 1
+d34 1
+a34 13
+ /* function prototypes */
+ extern Widget wid_textboxb (Widget, Widget, char *, char *,  int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern void   showbutx     (char *, char *, char *, int);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern void   spout        (char *);
+ extern int    rdprx        (Widget, char, int *, float *);
+ extern int    rdprxc       (Widget, char *);
+d45 2
+a46 2
+ Widget        iw_catmen, iw_docgg, iw_ncat;
+ int           showing = 0;
+d53 1
+d129 1
+a129 1
+  {
+d132 1
+a132 1
+  }
+@
+
+
+1.4
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/catmen.c,v 1.3 1994/09/26 16:32:26 odesanya Exp liy $*/
+d68 1
+a68 1
+ if (iw_catmen <= (void *)0)
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/catmen.c,v 1.2 94/02/01 12:05:00 leith Exp $*/
+d68 1
+a68 1
+ if ((int)iw_catmen <= 0)
+@
+
+
+1.2
+log
+@fixed
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d57 1
+d106 1
+a106 1
+    /*  this program requires an doc file name */
+d126 1
+d138 5
+a142 1
+ showbutx("","","",TRUE);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header $*/
+d46 1
+@

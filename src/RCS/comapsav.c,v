@@ -1,0 +1,1087 @@
+head	1.13;
+access;
+symbols
+	pre-tilt-improve:1.13
+	pre_surf_fromtop:1.13
+	pre_neednewmap:1.12
+	pre_apppluss_remove:1.11
+	pre_tiltpair_chng:1.11
+	pre_GPL:1.8;
+locks;
+comment	@ * @;
+
+
+1.13
+date	2011.09.21.13.23.20;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2011.09.15.18.35.06;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2011.05.19.15.51.18;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2007.11.21.16.26.43;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2005.10.18.17.00.00;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	97.08.15.15.27.21;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	97.03.27.15.18.51;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.06.13.18.46.45;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.05.01.16.13.33;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.01.22.20.46.19;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.11.22.15.34.38;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.10.20.17.15.32;	author mladjadj;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.26.14.07.16;	author odesanya;	state Exp;
+branches;
+next	;
+
+
+desc
+@built by mladjadj for corr-map
+@
+
+
+1.13
+log
+@          neednewmap = TRUE;
+@
+text
+@/*
+************************************************************************
+** comapsav.c		
+**              WID_COMAPSAV.FOR ported to UNIX   8/93
+**              24 bit visual support             Nov 2007 ArDean Leith
+**
+** PURPOSE: Analyses outlined comap, saves averages, etc...
+**
+** CALLED BY:  comapmen5.c comapmen3.c comapmen2.c
+**
+** WID_COMAPSAV.FOR ported to UNIX
+**
+C **********************************************************************
+** *  AUTHOR:  Mahieddine Ladjadj                                      *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2007  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/Text.h>
+#include <stdlib.h>
+#include "routines.h"
+
+
+  extern char   docnammo[81], filnamm[81], imnamm[81];  
+  extern int    nline, ixmar, iymar, ixsize, iysize, gotbin, gotav,
+                nowbin, gotavim;
+  extern float  *bufx, *bufy;
+  extern int    *nkey, ovrlap;
+  extern double factxa, factxb,factya, factyb;
+  extern int    itxrego, ityrego, labrego;
+  extern float  rangel, rangeu;
+  extern Pixmap msksav;
+
+/********************** comapsav ***********************************/
+
+void comapsav(int itag)
+{
+  register int  i, j1;
+  XImage        *imagemask;
+  FILEDATA      *ptrdoc;
+  FILE          *fp;
+  char          outstr[81], filnam[81];
+  int           nlist, nrun, ixs, iys, iform, ixulw, iyulw;
+  float         *plist, b, *ipoc;
+  float         pmin, pmax, pmean, thup, thdown, pnormal, scal, fmsc;
+  double        psig, davd, davd2;
+  int           nlet, numfil, iloc, irec, nnmax = 127;   /* limited display */
+  int           xxsiz, yysiz;
+  static int    icountav, icountin, *ibin;
+  static char   *lbuf;
+  static char   *excbuf;
+  static float  *avims, *avim;
+  static int    ibmaxx, ibmaxy, ibminx, ibminy;
+
+  if (itag == 4 || itag == 5)
+      {  /* --------------------------------------------   clear and restart masking */
+      gotav = gotbin  = gotavim = FALSE;
+
+      /* free up the memory space */
+      if (ibin) 
+        { free(ibin); ibin = (int *) NULL; }
+      if (avims)
+        { free(avims); avims = (float *) NULL; }
+      if (avim)
+        { free(avim); avim = (float *) NULL; }
+      if (lbuf)
+        { free(lbuf); lbuf = (char *) NULL;  }
+      if (msksav) 
+        { XFreePixmap( idispl, msksav ); msksav = (Pixmap) NULL; }
+ 
+     if (itag == 4)
+         {/* Blank markers but not image, by clearing the overlays */
+         //clearover(NULL,NULL,NULL); al may 2011
+         corr_mask(1);
+         }
+      else 
+         corr_mask(2);
+
+      return;
+      }   /* End of: if (itag == 4 || itag == 5)  */
+
+
+  /* Set wait cursor */
+  waitcursor(iwin, TRUE, 79);
+ 
+  /* Find which images are within the polygon */
+  if (!gotbin)
+      {  /* Recover the overlay bitmap into an image structure */
+      imagemask = (XImage *) 0;
+      if ( (imagemask = XGetImage(idispl,msksav,ixmar,iymar,
+                         (unsigned int) ixsize, (unsigned int)iysize,
+                         (unsigned long)128, XYPixmap) ) == (XImage *) 0)
+           {
+           spout(" *** Error - Image formation failed"); 
+           waitcursor(iwin, FALSE, 0);  return;
+           }
+
+      nowbin++;
+      if (!gotbin)
+          { /* Allocate memory space for ibin[] */
+          if ( (ibin = (int *) calloc(nline, sizeof(int))) == (int *) NULL)
+             {
+             spout(" *** Error - comapsav.c can't allocate memory for ibin");
+             waitcursor(iwin, FALSE, 0);   return; 
+             }
+          }
+      icountin = 0;
+      ibmaxx   = ibmaxy = -10000;
+      ibminx   = ibminy =  10000;
+
+      for (i = 0; i < nline; i++)
+          {   /* Make list of included images */
+          if (nkey[i] > 0)
+             {    /* image inside map, find scaled location */
+             ixs = (int) (bufx[i] * factxa + factxb);
+             iys = (int) (bufy[i] * factya + factyb);
+
+             if ( XGetPixel(imagemask,ixs,iys) > 0)    /* image is inside mask */
+                {
+                ibin[i] = nowbin;
+                icountin++;
+                ibmaxx = MYMAX(ibmaxx,ixs);
+                ibminx = MYMIN(ibminx,ixs);
+                ibmaxy = MYMAX(ibmaxy,iys);
+                ibminy = MYMIN(ibminy,iys);
+                /* printf(" Image: %d. #: %d at: (%d,%d) is: %d \n", 
+                            i,nowbin,ixs,iys,XGetPixel(imagemask,ixs,iys)); */
+                }
+             }
+          else
+              ibin[i] = -1;
+          }
+      
+      /* free-up image storage in Xserver */  
+      XDestroyImage(imagemask);
+      gotbin = TRUE;
+
+      /* sprintf(outstr,"Images within mask: %d. Total images: %d", 
+                          icountin,nline); spout(outstr); */
+      }                   
+
+  if (itag == 1) 
+      {    /* ------------------------------------  save image listing in doc file. */
+      nrun = 1;
+      fp = (FILE *) NULL;
+      nlist = MYMAX(MYMAX(itxrego,ityrego),labrego) + 2;
+
+      /* find the name of the document file */
+      nlet = strlen(docnammo);
+      if (nlet==0)
+          { sprintf(outstr,"*** Error - filename is empty! ");
+            spout(outstr); waitcursor(iwin, FALSE, 0); return; }
+      strcpy(filnam,docnammo);
+      if (filnam[nlet] != '.')
+                strcat(strcat(filnam,"."),datexc);
+
+      j1 = 0;
+      for (i = 0; i < nline; i++)
+          {  /* only binned images inside map will be put in doc file */
+          if (ibin[i] > 0 && nkey[i] >= 0)
+              {  /* run time allocate of memory space for plist[]*/
+              if ( (plist = (float *) calloc(nlist, sizeof(float)) )
+                          == (float *) NULL )
+                    {
+                    spout(" *** Error - comapsav.c can't allocate memory for plist");
+                    waitcursor(iwin, FALSE, 0);   return;
+                    }
+ 
+              plist[0]         = (float) ++j1;
+              plist[1]         = (float) nkey[i];
+              plist[itxrego+1] = bufx[i];
+              plist[ityrego+1] = bufy[i];
+              plist[labrego+1] = ibin[i];
+              fp               = savdn1(filnam,datexc,&fp,plist,nlist,&nrun,0,TRUE);
+              nrun             = 0;
+              free(plist);    /* free memory space */
+              }
+          }
+
+      /* set next filename for doc file */
+      filnam[nlet] = (char) NULL;
+      strcpy(docnammo,filnam);
+
+      /* increment the NEXT filename */
+      if(filinc(docnammo,filnam,&nlet,&numfil) != 2)
+           {
+           sprintf(outstr,"*** Error - could not increment filename: %s",docnammo);
+           spout(outstr); waitcursor(iwin, FALSE, 0); return;
+           }
+      filnam[nlet] = (char) NULL;
+      strcpy(docnammo,filnam);     
+  
+      if(fp) 
+          {
+          fclose(fp);
+          sprintf(outstr,"Images within mask recorded in doc file: %d. Total images: %d",
+                  icountin,nline); 
+          }
+      else
+          {
+          sprintf(outstr,"No images within mask.  No Doc. file saved. ");
+          }
+      spout(outstr);
+
+      /* reset cursor and put up menu again */
+      waitcursor(iwin, FALSE, 0);
+
+      comapmen2();
+      return;
+      }       /*********************************************  itag = 1  */
+
+
+  if ( (!gotav) && ((itag == 2) || (itag == 3)))
+      {  /* -------------------------------------------------------  calculate average image  */
+      icountav = 0;
+
+      for (i = 0; i < nline; i++)
+          {
+          if (ibin[i] == nowbin)
+              { /* skip images outside map boundary */
+              if ( nkey[i] >= 0) 
+                  {   /* construct file name */
+                  filget(filnamm,filnam,81,nkey[i]);
+                  strcat(strcat(filnam,"."),datexc);
+
+                  /* open 'old' image file */
+                  if ((ptrdoc = openold(filnam,&nsam,&nrow,&nslice,&iform,"o")) 
+                             != (FILEDATA *) NULL )
+                       {
+                       if(nslice > 1) 
+                           {
+                           sprintf(outstr,"Error - Not 2D image. Nslice= %d\n",nslice);
+                           spout(outstr);
+                           }
+ 
+                       /* add image from new file to new running total */
+                       icountav++;
+                       if (icountav == 1) 
+                           {
+                           /* allocate memory space for average image */
+                           if ( (avim = (float *) calloc((nsam * nrow),
+                                 sizeof(float)) ) == (float *) NULL)           {
+                           spout(" *** Error - comapsav.c can't allocate memory for avim");
+                           waitcursor(iwin, FALSE, 0); return;                 }
+                           }
+
+                       ipoc = avim ;
+                       for (irec = 1; irec <= nrow; irec++)
+                          {
+                          if (redlin(ptrdoc,ptrdoc->buf,nsam,irec) == TRUE)
+                             {
+                             for (j1 = 0; j1 < nsam; j1++)
+                                 { (*avim++) += ptrdoc->buf[j1];  }
+                             }
+                          else
+                             {spout(" *** Error - Could not read buf for average, one value of AVIM lost"); }
+                          }
+                       avim = ipoc;
+                       closefile(ptrdoc);
+                       }
+                  else
+                       {
+                       sprintf(outstr,"*** Error - Bad filename: %s",filnam);
+                       spout(outstr);
+                       }
+                  }                    /*  if (nkey[i] > = 0)  */
+              }                        /* if ibin[i]==nowbin  */
+          }                            /* for (i = 0; i < nline; i++) */
+
+      }     /******************    (!gotav && (itag == 2 || itag == 3)) */
+
+
+  if ( (itag == 2) || ((itag == 3) && (!gotav)) )
+      {
+      if (icountav > 0) 
+          {  /* at least one file in sum, scale the summed page */
+          davd = davd2 = 0.0;
+          pmin = 10e30;    pmax = -10e30;
+
+          /* find min, max, avg, & standard dev. for average image */
+          for (i = 0; i < nrow * nsam; i++)
+              {
+              pmax = MYMAX(avim[i],pmax);
+              pmin = MYMIN(avim[i],pmin);
+              davd += avim[i];
+              davd2 += (double)(avim[i]) * (double)(avim[i]);
+              }
+          if ((pmax-pmin) < FLTZER)                      {
+              spout("*** Blank average image skipped ");
+              waitcursor(iwin, FALSE, 0); return;        }
+
+          /* standard deviation */
+          psig   = sqrt( (davd2 - (davd * davd) / (nsam * nrow) ) 
+                      / (double)(nsam * nsam - 1.0) );
+          pmean  = davd / (nsam * nrow);
+          thup   = pmean + rangeu * psig;
+          thdown = pmean - rangel * psig;
+          if (pmax > thup)   pmax = thup;
+          if (pmin < thdown) pmin = thdown;
+
+          /* normalization for averaging */
+          pnormal = 1.0 / ((float) icountav);
+
+          /* conversion factor from floating point to logical *1 range */
+          scal = ((float)(nnmax - imagego)) / (pmax - pmin);
+          fmsc = - pmin * scal + imagego + 0.5;
+                                                                  
+          /* run time allocation of memory space for 8 bit image */
+          if ( (lbuf = (char *) calloc((nsam * nrow),sizeof(char)) ) 
+                     == (char *) NULL)                               {
+              spout(" *** Error - comapsav.c can't allocate memory for lbuf");
+              waitcursor(iwin, FALSE, 0);    return;                 }                         
+                            
+          /* run time allocation of memory space for saved image */
+          if ( (avims = (float *) calloc((nsam * nrow),sizeof(float)) ) 
+                      == (float *) NULL)                              {
+              spout(" *** Error - comapsav.c can't allocate memory for avims");
+              waitcursor(iwin, FALSE, 0);    return;                  } 
+          if (nnmax < 128)
+              {
+              for (i = 0; i < nrow * nsam; i++)
+                  {
+                  b = avim[i];
+                  if (b > thup)   b = thup;
+                  if (b < thdown) b = thdown;
+                  avims[i] = b * pnormal;
+                  lbuf[i]  =  (b * scal) + fmsc;
+                  }
+              }
+          else
+              {
+              for (i = 0; i < nrow * nsam; i++)
+                  {
+                  b = avim[i];
+                  if (b > thup)   b = thup;
+                  if (b < thdown) b = thdown;
+                  avims[i] = b * pnormal;
+
+                  /* convert 0..255 integers to -128..127 logical *1 */
+                  lbuf[i] = (((b * scal) + fmsc) < 128   ? 
+                              (b * scal) + fmsc            :
+                              (b * scal) + fmsc - 256.0 );
+                  }
+              }
+         
+          gotav = TRUE;
+          }                                /* (icountav > 0)  */
+
+      if (itag == 2 && icountav > 0)      /* --------------------------- display the average image  */
+          {  /* find the location for image on screen */
+          ixulw = MYMAX( 0,
+                (((ibmaxx + ibminx) /2.0) - (float) nsam /2.0)) + ixmar;
+          if ((ixulw + nsam) > iwidex) ixulw = iwidex - nsam;
+          iyulw = MYMAX( 0, 
+                (((ibmaxy + ibminy) /2.0) - (float) nrow /2.0)) + iymar;
+          if ((iyulw + nrow) > ihighx) iyulw = ihighx - nrow;
+
+          /* no overlaping of average image and mask ? */
+          if (!ovrlap)
+              {
+              /* shift by xxsiz and yysiz */
+              xxsiz = (int) ((ibmaxx - ibminx + nsam) / 2.0) + 10;
+              yysiz = (int) ((ibmaxy - ibminy + nrow) / 2.0) + 10;
+
+              /* try to find a position left, top, bottom, then right */
+              if ((ixulw - xxsiz) > 0)
+                  ixulw -= xxsiz;                   /* left */
+              else if ((iyulw - yysiz) > 0)
+                  iyulw -= yysiz;                   /* top */
+              else if ((iyulw + yysiz) < ihighx)
+                  iyulw += yysiz;                   /* bottom */
+              else if ((ixulw + xxsiz) < iwidex)
+                  ixulw += xxsiz;                   /* right */
+              else
+                  spout("Can not move average image in any  direction !");
+
+              spout(" *** NOTE: shift is proportional to size of MASK ");
+              }
+
+          /* create image for  the screen in window */
+
+#if defined(WEB_24) || defined(WEB_TRUE)
+          if (DefaultDepthOfScreen(iscreen) != 8)
+             {
+             int i, j, k, Bpp;    /* Bpp will be 4 */
+             Bpp = (int) pow(2, (DefaultDepthOfScreen(iscreen) / 8) - 1);
+
+             excbuf = calloc(nsam * nrow * Bpp, sizeof(char));
+             for (i=0; i<nrow; i++)
+                for (j=0; j<nsam; j++)
+                   for (k=0; k<Bpp; k++)
+                      if (k == 3)
+                         excbuf[((i*nsam) + j) * Bpp + k] = 0;
+                      else
+                         excbuf[((i*nsam) + j) * Bpp + k] = lbuf[(i*nsam) + j];
+
+             if ( (imagemask = XCreateImage(idispl,visual,
+                           (unsigned int) DefaultDepthOfScreen(iscreen),
+                           (int) ZPixmap, 0, (char *) excbuf,
+                           (unsigned int) nsam, 
+                           (unsigned int) nrow, Bpp*4, nsam*Bpp) )
+                           == (XImage *) NULL)
+               { spout(" *** Error - XCreateImage failed ");  }
+             }  
+          else
+#endif
+          {
+          if ( (imagemask = XCreateImage(idispl,visual,
+                              DefaultDepthOfScreen(iscreen),
+                              (int) ZPixmap, 0, (char *) lbuf,
+                              (unsigned int) nsam,
+                              (unsigned int) nrow, 8, nsam) ) 
+                                   == (XImage *) NULL)
+              { spout(" *** Error -  XCreateImage failed ");  }
+          }  
+
+          /* Put image on screen */
+          XPutImage(idispl,iwin,icontx,imagemask,0,0,ixulw,iyulw,nsam,nrow); 
+
+          /* Make average image permanent */
+          XPutImage(idispl,imagsav,icontx,imagemask,0,0,ixulw,iyulw,nsam,nrow); 
+
+          neednewmap = TRUE;
+
+          /* Make changes visible */
+          XFlush(idispl);
+
+          /* Free up memory space (excbuf cleared, lbuf space has to be saved */
+          imagemask->data = (char *) NULL; 
+          XDestroyImage(imagemask);
+          }
+
+      sprintf(outstr,"Images averaged: %d. Total images: %d", icountav,nline);  
+      spout(outstr);
+      }        /*********    (itag == 2 || (itag == 3 && (!gotav)) ) */
+
+
+  if (itag == 3 && icountav > 0)
+      {/*****                              ------------------------ Save the averaged image  itag=3 */
+      /* find the filename for averaged image */
+      nlet = strlen(imnamm);
+      if (nlet==0)
+         { sprintf(outstr,"*** Error - No file name input! ");
+           spout(outstr); waitcursor(iwin, FALSE, 0); return;        }
+   
+      strcpy(filnam,imnamm);
+      if (filnam[nlet] != '.')
+          strcat(strcat(filnam,"."),datexc);
+
+      iform = 1;      /* 2D image */    
+      if ((ptrdoc = opennew(filnam,nsam,nrow,nslice,iform,"n"))
+                 != (FILEDATA *)NULL)
+            {
+            iloc = 0;
+            for (i = 1; i <= nrow; i++)
+                {
+                wrtlin(ptrdoc,&avims[iloc],nsam,i);
+                iloc += nsam;
+                }
+            closefile(ptrdoc);
+
+            /* increment the NEXT filename */
+            filnam[nlet] = (char) NULL;
+            strcpy(imnamm,filnam);
+            if(filinc(imnamm,filnam,&nlet,&numfil) != 2)
+              { sprintf(outstr,"*** Error - Could not increment filename: %s",imnamm);
+                spout(outstr); waitcursor(iwin, FALSE, 0); return;       }
+
+            filnam[nlet] = (char) NULL;
+            strcpy(imnamm,filnam); 
+            }
+      else
+            {
+            sprintf(outstr,"*** Error - Filename: %s already exists.",imnamm);
+            spout(outstr);
+            }
+      }          /*********   if (itag == 3 && icountav > 0) */
+ 
+  /* unset cursor */
+  waitcursor(iwin, FALSE, 0);
+
+  /* put up menu again */
+  comapmen2();
+
+  return;
+  }               
+ /****** end of comapsav function ******/
+
+@
+
+
+1.12
+log
+@if defined(WEB_24) || defined(WEB_TRUE)
+@
+text
+@a41 2
+#include "std.h"
+#include "x.h"
+d445 2
+@
+
+
+1.11
+log
+@//clearover(NU
+@
+text
+@d97 1
+a97 1
+         {/* blank markers but not image, by clearing the overlays */
+d108 1
+a108 1
+  /* set wait cursor */
+d111 1
+a111 1
+  /* find which images are within the polygon */
+d113 1
+a113 1
+      {  /* recover the overlay bitmap into an image structure */
+d117 1
+a117 1
+                         (unsigned long)128, (int) XYPixmap) ) == (XImage *) 0)
+d125 1
+a125 1
+          { /* allocate memory space for ibin[] */
+d137 1
+a137 1
+          {   /* make list of included images */
+d407 1
+a407 1
+#ifdef WEB_24
+@
+
+
+1.10
+log
+@24 bit visual improved
+@
+text
+@d98 1
+a98 1
+         clearover(NULL,NULL,NULL);
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@d2 4
+a5 2
+*****************************************************************************
+** comapsav.c		8/93
+d7 1
+a7 1
+** Purpose: Analyses outlined comap, saves averages, etc...
+d9 1
+a9 1
+** called by:  comapmen5.c comapmen3.c comapmen2.c
+d11 1
+a11 1
+** WID_COMAPSAV.FOR transported to UNIX
+d14 1
+a14 1
+** *  AUTHOR:  Mahieddine Ladjadj                                          *
+d16 1
+a16 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+a38 1
+*****************************************************************************
+d76 1
+d81 1
+a81 1
+      {  /* clear and restart masking */
+d85 1
+a85 1
+      if(ibin) 
+d87 1
+a87 1
+      if(avims)
+d89 1
+a89 1
+      if(avim)
+d91 1
+a91 1
+      if(lbuf)
+d93 1
+a93 1
+      if(msksav) 
+d105 1
+a105 1
+      }
+d107 1
+d116 6
+a121 5
+                               (unsigned int) ixsize, (unsigned int)iysize,
+                               (unsigned long)128, (int) XYPixmap) )
+                   == (XImage *) 0)                {
+           spout("*** Image formation failed ");
+           waitcursor(iwin, FALSE, 0);  return;    }
+d125 6
+a130 6
+          { /* run time allocate of memory space for ibin[] */
+          if ( (ibin = (int *) calloc(nline, sizeof(int)))
+                     == (int *) NULL)                                {
+               spout(" *** WARNING: returning from comapsav.c ");
+               spout(" CALLOC() CAN'T ALLOCATE HEAP MEMORY SPACE for ibin");
+               waitcursor(iwin, FALSE, 0);   return;                 }
+d133 2
+a134 2
+      ibmaxx = ibmaxy = -10000;
+      ibminx = ibminy =  10000;
+d137 1
+a137 1
+          {
+d139 3
+a141 3
+              {    /* image inside map, find scaled location */
+              ixs = (int) (bufx[i] * factxa + factxb);
+              iys = (int) (bufy[i] * factya + factyb);
+d143 12
+a154 10
+             if ( XGetPixel(imagemask,ixs,iys) > 0)
+                  {
+                  ibin[i] = nowbin;
+                  icountin++;
+                  ibmaxx = MYMAX(ibmaxx,ixs);
+                  ibminx = MYMIN(ibminx,ixs);
+                  ibmaxy = MYMAX(ibmaxy,iys);
+                  ibminy = MYMIN(ibminy,iys);
+                  }
+              }
+d162 4
+a165 1
+      }                     /************    if (!gotbin) */
+d168 1
+a168 1
+      {    /* save bin in doc file now. */
+d176 1
+a176 1
+          { sprintf(outstr,"filename is of lenght 0 (empty) !!! ");
+d179 1
+a179 1
+      if(filnam[nlet] != '.')
+d188 5
+a192 4
+                          == (float *) NULL )                           {
+                    spout(" *** WARNING: return from comapsav.c ");
+                    spout("CAN'T ALLOCATE HEAP MEMORY SPACE for plist");
+                    waitcursor(iwin, FALSE, 0);   return;               }
+d194 2
+a195 2
+              plist[0]        = (float) ++j1;
+              plist[1]        = (float) nkey[i];
+d199 2
+a200 2
+              fp = savdn1(filnam,datexc,&fp,plist,nlist,&nrun,0,TRUE);
+              nrun = 0;
+d212 1
+a212 1
+           sprintf(outstr,"could not increment filename %s",docnammo);
+d221 2
+a222 2
+          sprintf(outstr,"images within mask: %d. total images: %d",
+                  icountin,nline);
+d226 1
+a226 1
+          sprintf(outstr," No Doc. saved. No images within mask ?");
+d237 1
+d239 1
+a239 1
+      {  /* calculate average image */
+d257 1
+a257 1
+                           sprintf(outstr,"NOT 2D image. nslice= %d\n",nslice);
+d268 1
+a268 2
+                           spout(" *** WARNING: return from comapsav.c ");
+                           spout("CAN'T ALLOCATE MEMORY SPACE for avim");
+d271 1
+d274 9
+a282 14
+                           {
+                           if (redlin(ptrdoc,ptrdoc->buf,nsam,irec) == TRUE)
+                               {
+                               for (j1 = 0; j1 < nsam; j1++)
+                                   {
+                                   (*avim++) += ptrdoc->buf[j1];
+                                   }
+                               }
+                           else
+                               {
+                               spout("*** could not read buf for average");
+                               spout("one value of AVIM[] lost:: comapsav.c");
+                               }
+                           }
+d288 1
+a288 1
+                       sprintf(outstr,"Bad filename: %s in comapsav.c",filnam);
+d297 1
+d336 1
+a336 2
+              spout(" *** WARNING: return from comapsav.c ");
+              spout(" MALLOC() CAN'T ALLOCATE HEAP MEMORY SPACE");
+d342 1
+a342 2
+              spout(" *** WARNING: return from comapsav.c ");
+              spout(" MALLOC() CAN'T ALLOCATE HEAP MEMORY SPACE");
+d366 2
+a367 2
+                            (b * scal) + fmsc            :
+                            (b * scal) + fmsc - 256.0 );
+d374 1
+a374 1
+      if (itag == 2 && icountav > 0)      /* display the average image */
+d384 1
+a384 1
+          if(!ovrlap)
+d391 1
+a391 1
+              if((ixulw - xxsiz) > 0)
+d393 1
+a393 1
+              else if((iyulw - yysiz) > 0)
+d395 1
+a395 1
+              else if((iyulw + yysiz) < ihighx)
+d397 1
+a397 1
+              else if((ixulw + xxsiz) < iwidex)
+d400 1
+a400 1
+                  spout("can not move average image in any  direction !!");
+a405 5
+          imagemask  = XCreateImage(idispl,visual,
+                                 DefaultDepthOfScreen(iscreen),
+                                 ZPixmap, 0, (char *) lbuf,
+                                 (unsigned int) nsam,
+                                 (unsigned int) nrow, 8, nsam);
+d407 36
+a442 1
+          /* put image to the screen */
+d445 1
+a445 1
+          /* make average image permanent */
+d448 1
+a448 1
+          /* make changes visible */
+d451 1
+a451 1
+          /* free up memory space (lbuf space has to be saved */
+d456 2
+a457 2
+      sprintf(outstr,"images averaged: %d. total images: %d",
+         icountav,nline);  spout(outstr);
+d460 1
+d462 1
+a462 1
+      {/*****  save the averaged image       *********** itag=3      */
+d466 1
+a466 1
+         { sprintf(outstr,"filename is of lenght 0 (empty) !!! ");
+d470 2
+a471 2
+      if(filnam[nlet] != '.')
+               strcat(strcat(filnam,"."),datexc);
+d489 1
+a489 1
+              { sprintf(outstr,"could not increment filename %s",imnamm);
+d497 1
+a497 3
+            spout("can not save averaged image or masked images");
+            spout("can not open the file as a new file.");
+            sprintf(outstr,"filename: %s already exist.",imnamm);
+@
+
+
+1.8
+log
+@fixed corr_map remembering the previous result on Alpha machine
+@
+text
+@d11 1
+a11 1
+** **************************************************************************
+d13 24
+a36 7
+** *  COPYRIGHT (C)1990 , WADSWORTH CENTER FOR LABORATORIES AND             *
+** *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+** *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+** *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+** *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+** *    THE CENTER FOR LABORATORIES AND RESEARCH			    *
+** **************************************************************************
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d46 1
+a46 1
+  XImage        *imagep;
+d94 2
+a95 2
+      imagep = (XImage *) 0;
+      if ( (imagep = XGetImage(idispl,msksav,ixmar,iymar,
+d122 1
+a122 1
+             if ( XGetPixel(imagep,ixs,iys) > 0)
+d137 1
+a137 1
+      XDestroyImage(imagep);
+d384 1
+a384 1
+          imagep  = XCreateImage(idispl,visual,
+d391 1
+a391 1
+          XPutImage(idispl,iwin,icontx,imagep,0,0,ixulw,iyulw,nsam,nrow); 
+d394 1
+a394 1
+          XPutImage(idispl,imagsav,icontx,imagep,0,0,ixulw,iyulw,nsam,nrow); 
+d400 2
+a401 2
+          imagep->data = (char *) NULL; 
+          XDestroyImage(imagep);
+@
+
+
+1.6
+log
+@changed filget param
+@
+text
+@d37 1
+a37 1
+  extern int    itxreg, ityreg, labreg;
+d145 1
+a145 1
+      nlist = MYMAX(MYMAX(itxreg,ityreg),labreg) + 2;
+d169 3
+a171 3
+              plist[itxreg+1] = bufx[i];
+              plist[ityreg+1] = bufy[i];
+              plist[labreg+1] = ibin[i];
+d294 1
+a294 1
+          psig = sqrt( (davd2 - (davd * davd) / (nsam * nrow) ) 
+d296 2
+a297 2
+          pmean = davd / (nsam * nrow);
+          thup = pmean + rangeu * psig;
+d299 1
+a299 1
+          if (pmax > thup) pmax = thup;
+d327 1
+a327 1
+                  if (b > thup) b = thup;
+d330 1
+a330 1
+                  lbuf[i] =  (b * scal) + fmsc;
+d338 1
+a338 1
+                  if (b > thup) b = thup;
+d458 3
+a460 1
+  }                /****** end of comapsav function ******/
+@
+
+
+1.5
+log
+@altered savdn1 call
+@
+text
+@d220 1
+a220 1
+                  filget(filnamm,filnam,nkey[i]);
+@
+
+
+1.4
+log
+@used imagego..imagenend instead of mapgo..
+@
+text
+@d172 1
+a172 1
+              fp = savdn1(filnam,datexc,&fp,plist,nlist,&nrun,0);
+@
+
+
+1.3
+log
+@added parenthesis to fix standard deviation psig
+@
+text
+@d306 2
+a307 2
+          scal = ((float)(nnmax - mapgo)) / (pmax - pmin);
+          fmsc = - pmin * scal + mapgo + 0.5;
+@
+
+
+1.2
+log
+@fixed standard deviation psig
+@
+text
+@d294 1
+a294 1
+          psig = sqrt( (davd2 - (davd * davd / nsam * nrow) ) 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d60 1
+a60 1
+   
+d93 1
+a93 2
+      {
+      /* recover the overlay bitmap into an image structure */
+d147 6
+a152 5
+      if(filinc(docnammo,filnam,&nlet,&numfil) != 2)
+           {
+           sprintf(outstr,"could not increment filename %s",docnammo);
+           spout; waitcursor(iwin, FALSE, 0); return;
+           }
+d155 1
+d181 9
+d213 1
+a213 1
+   
+d250 1
+d252 1
+d277 1
+a277 2
+          {
+          /* at least one file in sum, scale the summed page */
+d279 1
+a279 1
+          pmin = - (pmax = - 10e30);
+d293 3
+a295 2
+          psig = sqrt( ((davd2 - davd * davd) / (nsam * nrow)) /
+                       (double)(nsam * nsam - 1.0) );
+d353 1
+a353 2
+          {
+          /* find the location for image on screen */
+d409 8
+a416 7
+      {    /*  save the averaged image */
+      if(filinc(imnamm,filnam,&nlet,&numfil) != 2)
+          {
+          sprintf(outstr,"could not increment filename %s",docnammo);
+          waitcursor(iwin, FALSE, 0);
+          spout; return;
+          }
+d418 1
+a418 1
+           strcat(strcat(filnam,"."),datexc);
+d432 1
+d435 6
+@

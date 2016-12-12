@@ -1,0 +1,1097 @@
+head	1.17;
+access;
+symbols
+	pre-tilt-improve:1.17
+	pre_surf_fromtop:1.16
+	pre_neednewmap:1.16
+	pre_apppluss_remove:1.16
+	pre_tiltpair_chng:1.16
+	pre_GPL:1.13;
+locks;
+comment	@ * @;
+
+
+1.17
+date	2012.04.17.18.30.05;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2007.11.28.16.17.54;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2005.10.18.16.59.58;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2004.07.20.19.56.40;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2002.05.16.20.21.54;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2002.04.29.15.25.56;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2002.04.10.18.49.59;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2001.08.28.19.26.30;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2001.08.08.16.10.11;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2001.08.08.13.51.18;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	99.09.30.17.18.05;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	99.09.30.17.07.55;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	99.09.29.17.32.02;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.03.05.17.05.13;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.02.09.19.48.01;	author liy;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.02.05.20.59.07;	author liy;	state Exp;
+branches;
+next	;
+
+
+desc
+@Initial rivision. Create for stack files.
+@
+
+
+1.17
+log
+@Make a list of displayed images for cat.c
+nprow = setnprow(nsam) active
+..
+@
+text
+@
+/*
+C++*********************************************************************
+C
+C stackdis.c -- CREATED Jan 1998 YL
+C               Problem with categorize from doc file    Jul 2004 al
+C               Problem with categorize from seq. stack  Apr 2012 al
+C
+C *********************************************************************
+C *				                                       *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2012  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C *********************************************************************
+C
+C    STACKDIS
+C
+C    PURPOSE:         DISPLAY STACK FILES.
+C
+C    PARAMETERS:     
+C
+C    CALLED BY:       STACKMEN
+C
+C***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* External routines */
+ extern int   sumum(float * first, float * second, float * output, 
+                    int npix);
+ extern int   average(float * input,  float * output,
+                      int npix, float divisor);
+ extern int   avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
+ extern void  showmoviemen  (int);
+
+ /* External variables */
+ extern int   stkgo, stkend;       /* From stackmen for montage only*/
+ extern int   *docimgnums;         /* Doc file image numbers */
+ extern int   docimgtotal;         /* Number of images from doc file */
+ extern int   montaverage;         /* Want montage average */
+ extern char  avgnam[128];         /* Name for montage average file */
+ extern int   ndone;               /* Used by cat.c & movie, from mont2 */
+ extern char  *cmont3buf;          /* From mont3 */
+ extern int   nsami,nrowi,nslicei; /* From mont3 */
+ extern XImage * ximagelist[1000]; /* From showmovie */
+
+ /* Externally used variables */
+ int imagelist[1000];              /* Used by: cat.c */
+ int nimage;                       /* Used by: cat.c */
+
+/****************************  stackdis  ********************************/
+
+ void stackdis(int nmint, int nmaxt)
+
+ {   
+ XImage *     imaget    = NULL;
+ float  *     imagef    = NULL;
+ float  *     imagefavg = NULL;
+ char         *avgname;
+ int          nsam, nrow, imgnum, imgot, nsams, nrows;
+ int          keepgo, numdone, iloc, numvox;
+ char	      savename[81];
+ char *       strtmp;
+ size_t       slen;
+ int          keepimage, keepimagef, keepimagec;
+ XImage *     imagex    = NULL;
+ char   *     imagec    = NULL;
+ char   *     cptr;
+ 
+ /* DO NOT FORCE FIRST IMAGE POSITION */
+ force = FALSE;
+ 
+ nsam    = filedata->nsam;
+ nrow    = filedata->nrow;
+  
+ /* Set the full image size for image display */
+ nsam2 = nsam;  nrow2 = nrow;  nslicei = 1;      
+ dispsize(nsam1,nsam2,nrow1, nrow2, 1,1,iskip, &nsami, &nrowi, &nslicei);
+
+ keepimagef = FALSE;
+ keepimagec = (ioper == 24);
+ keepimage  = (ioper == 24);
+ ndone      = 0;
+
+ if (keepimage) 
+    {  /* Montage operation is active */
+    numvox = (stkend - stkgo + 1) * nsami * nrowi;
+    if ((cmont3buf = (char *) malloc(numvox * sizeof(char))) == (char *) 0)
+       {
+       spout(" *** Can not allocate cmont3buf in stackdis."); 
+       waitcursor(iwin, FALSE, 79); return;
+       }
+    }
+
+ /* Find nprow now if not set earlier (e.g. not set in docmontage) */
+ if (nprow <= 0  || (ioper == 11 && nstack == 2))
+    { nprow = setnprow(nsam);  }
+
+ /* Save the filname */
+ strcpy(savename, filnow);
+
+ if (ioper == 20 || ioper == 23)
+    {  /* Use doc file list for images or stacked images*/
+    numdone = 0;
+    }
+ else
+    {  /* Use stack selection list from menu */
+
+    /* Check the starting # and ending # */
+    if (stkgo < 1 || stkgo > stkend)
+       { spout(" Illegal image numbers!\n"); return;  }
+
+    /* Starting image for sequential list */
+    imgnum = stkgo-1;
+    }
+
+ //printf("In: stackdis; nstack: %d, imginstack: %d \n", nstack,imginstack); 
+
+ /* Display the images */
+ keepgo = 1;
+ nimage = 0;
+ do
+    {
+    if (ioper == 20  || ioper == 23)
+       {  // -------------- Display stack montage from doc file list 
+          // -------------- Categorize stack montage from doc file list 
+
+       /* Get stacked image number from docimgnums array */
+       if ( numdone + 1 > docimgtotal) 
+          { break;}
+       imgnum = docimgnums[numdone];
+       }
+    else
+       { // -------------- Display stack montage using stack list menu 
+       imgnum++;
+       if (imgnum > stkend) 
+          {break;}
+       }
+    numdone++;
+
+    if ((imgot = getoldstack(filedata, imgnum, TRUE, TRUE)) <= 0) 
+        break;
+
+    if (ioper != 24 || (imgot >= stkgo && imgot <= stkend))
+       {   /* Got a used (active) image */
+
+        if (ioper == 11 )
+          {
+          /* Make a list of displayed images for cat.c use */
+          if (nimage >= 1000)
+             { spout(" Too many images in list, Limit: 1000!\n"); return;  }
+
+          imagelist[nimage++] = imgnum;
+          //printf("In: stackdis; nimage: %d,  list[0]: %d \n", nimage,imagelist[0]); 
+          }
+
+       if (names)
+          { 
+          /* Write the image # in stack */
+          /* showimage strips off directory listing */
+          sprintf(filnow,   "/@@%d", imgot);
+
+          /* Blank out the char after number */       
+          /* *(filnow + numdig(imgot,1) + 1) = '0'; */
+          } 
+ 
+       if (montaverage)
+          { /* -------------- Montage from doc file & want avg. image */
+          if (numdone <= 1)
+             {  /* Display the image, save fimage in imagefavg */	    
+             imagedis(filedata, FALSE, &imaget,FALSE, 
+                      TRUE, &imagefavg, nmint,nmaxt);
+             }
+          else
+             {
+             /* ------------ Display the image, save fimage in imagef */	    
+             imagedis(filedata, FALSE, &imaget,FALSE, 
+                      TRUE, &imagef, nmint,nmaxt);
+
+             sumum(imagefavg, imagef, imagefavg , nsam * nrow);
+             free(imagef);
+             imagef = NULL;
+             }
+          }
+       else
+          { /* -----------------------------------  No average wanted */
+          if (keepimage) 
+              {  /* ------------------------------  Big movie wanted */
+              iloc = ndone * nsami * nrowi;
+              cptr = &cmont3buf[iloc];
+              showimage(filedata, 
+                  keepimagec, &cptr, 
+                  keepimage,  &imagex, 
+                  keepimagef, &imagef, FALSE,
+                  (float) filedata->fmin_spi, (float) filedata->fmax_spi,
+                  nmint, nmaxt);
+
+                  /* record image list for moveie */
+                  ximagelist[++ndone] = imagex;
+              }
+          else
+              {
+              /* ------------- Display the image, do not save fimage */	    
+              imagedis(filedata, FALSE, &imaget,FALSE, 
+                       FALSE, &imagef, nmint,nmaxt);
+              }
+          }
+
+      } /* if (imgot > stkgo && imgot < stkend) */
+    }
+ while (keepgo);  /* do */
+
+ /* Recover filnow */
+ strcpy(filnow, savename);
+
+ /* Free up the file descriptor for this image */
+ closefile(filedata); filedata = NULL;
+
+ if (ioper != 11 && ioper != 23 && ioper != 26 && ioper != 25)
+    {   /* Free storage for imgnums from doc file */
+        /* Do not free storage when doing categorize afterwards */
+    if (docimgnums) free(docimgnums);
+    docimgnums = NULL;
+    }
+
+ if (montaverage)
+    {  /* Montage from doc. file with average image calculation */
+
+    /* Calculate floating point average image */
+    average(imagefavg, imagefavg ,nsam * nrow, (float) numdone);
+
+    /* Store the floating point average image */
+    if (strlen(avgnam) <= 0)
+       spout("No file name specified for average file!");
+    else
+       {
+       /* Add datexc to avgnam if not already there */
+       slen = strlen(avgnam) + strlen(datexc) + (size_t) 2;
+
+       if (!(avgname = (char *) malloc(slen * sizeof(char))))
+          {
+          spout("*** Unable to allocate avgname memory in stackdis!");
+          return;
+          }  
+       strcpy(avgname,avgnam);
+       if (strstr(avgname,datexc) != 
+            (avgname + strlen(avgname) - strlen(datexc)))
+          {   /* Need to add datexc extension at end of avgname */
+          if (!addext(avgname,datexc,slen)) return;
+          }
+
+       newline = TRUE;
+       avgsave(avgname, nsam, nrow, imagefavg);
+
+       /* Display the average image */
+       ioper = 1;    /* Not a montage anymore */
+       imagemen1(avgname, TRUE);
+       if (avgname) free(avgname);
+
+       /* Cancel waitcursor */
+       waitcursor(iwin, FALSE, 79);
+         }
+    if (imagefavg) free(imagefavg);
+    imagefavg = NULL;
+    }
+
+ if (ioper == 11  || ioper == 23)
+    {                    /* Categorize images from montage now */
+    catmen();
+    }
+
+ else if (ioper == 24)
+    { /* Show montage */
+    showmoviemen(TRUE);
+    } 
+ return;
+ }
+
+
+ 
+@
+
+
+1.16
+log
+@*** empty log message ***
+@
+text
+@d6 2
+a7 1
+C               Problem with categorize from doc file  July 2004 al
+d10 1
+a10 1
+C *				                                      *
+d12 1
+a12 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d50 22
+a71 19
+ /* external routines */
+ extern int sumum(float * first, float * second, float * output, 
+                  int npix);
+ extern int average(float * input,  float * output,
+                    int npix, float divisor);
+ extern int avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
+ extern void   showmoviemen  (int);
+
+ /* external varibles */
+ extern int   stkgo, stkend;    /* from stackmen for montage only*/
+ extern int   *docimgnums;      /* doc file image numbers */
+ extern int   docimgtotal;      /* number of images from doc file */
+ extern int   montaverage;      /* want montage average */
+ extern char  avgnam[128];      /* name for montage average file */
+ extern int   ndone;            /* used by cat.c & movie, from mont2 */
+ extern char  *cmont3buf;          /* from mont3 */
+ extern int   nsami,nrowi,nslicei; /* from mont3 */
+ extern XImage * ximagelist[1000]; /* from showmovie */
+
+d98 1
+a98 1
+ /* set the full image size for image display */
+d108 1
+a108 1
+    {  /* montage operation is active */
+d117 3
+a119 3
+ /* find nprow now if not set earlier (e.g. not set in docmontage) */
+ if (nprow <= 0)
+   {   nprow = setnprow(nsam);  }
+d121 1
+a121 1
+ /* save the filname */
+d125 1
+a125 1
+    {  /* use doc file list for images or stacked images*/
+d129 1
+a129 1
+    {  /* use stack selection list from menu */
+d131 1
+a131 1
+    /* check the starting # and ending # */
+d135 1
+a135 1
+    /* starting image for sequential list */
+d139 3
+a141 1
+ /* display the images */
+d143 1
+d147 2
+a148 2
+       {  /* -------------- display stack montage from doc file list */
+          /* ----------- categorize stack montage from doc file list */
+d150 1
+a150 1
+       /* get stacked image number from docimgnums array */
+d156 1
+a156 1
+       { /* ------------- display stack montage using stack list menu*/
+d167 11
+a177 1
+       {   /* got a used (active) image */
+d181 1
+a181 1
+          /* write the image # in stack */
+d185 1
+a185 1
+          /* blank out the char after number */       
+d190 1
+a190 1
+          { /* -------------- montage from doc file & want avg. image */
+d192 1
+a192 1
+             {  /* display the image, save fimage in imagefavg */	    
+d198 1
+a198 1
+             /* ------------ display the image, save fimage in imagef */	    
+d208 1
+a208 1
+          { /* ----------------------------------- no average wanted */
+d210 1
+a210 1
+              {  /* ------------------------------  big movie wanted */
+d225 1
+a225 1
+              /* ------------- display the image, do not save fimage */	    
+d235 1
+a235 1
+ /* recover filnow */
+d238 1
+a238 1
+ /* free up the file descriptor for this image */
+d242 2
+a243 2
+    {   /* free storage for imgnums from doc file */
+        /* do not free storage when doing categorize afterwards */
+d249 3
+a251 2
+    {  /* montage from doc. file with average image calculation */
+    /* calulate floating point average image */
+d254 1
+a254 1
+    /* store the floating point average image */
+d259 1
+a259 1
+       /* add datexc to avgnam if not already there */
+d270 1
+a270 1
+          {   /* need to add datexc extension at end of avgname */
+d277 2
+a278 2
+       /* display the average image */
+       ioper = 1;    /* not a montage anymore */
+d282 1
+a282 1
+       /* cancel waitcursor */
+d290 1
+a290 1
+    {                    /* categorize images from montage now */
+d293 1
+d295 1
+a295 1
+    { /* show montage */
+@
+
+
+1.15
+log
+@fmin ->fmin_spi..
+@
+text
+@d200 1
+a200 1
+                  filedata->fmin_spi, filedata->fmax_spi,
+@
+
+
+1.14
+log
+@GPL
+@
+text
+@d200 1
+a200 1
+                  filedata->fmin, filedata->fmax,
+@
+
+
+1.13
+log
+@stack montage from doc file with limits bug
+@
+text
+@d10 23
+a32 5
+C *  COPYRIGHT (C)1992,2001  HEALTH RESEARCH INC, EMPIRE STATE PLAZA, *
+C *    ALBANY, NY 12201.  THE CONTENTS OF THIS DOCUMENT ARE           *
+C *    PROPRIETARY TO HEALTH RESEARCH INC., AND ARE NOT TO BE         *
+C *    DISCLOSED TO OTHERS OR USED FOR PURPOSES OTHER THAN INTENDED   *
+C *    WITHOUT WRITTEN APPROVAL OF HEALTH RESEARCH INC.               *
+@
+
+
+1.12
+log
+@improved
+@
+text
+@d6 2
+a7 1
+C 
+d40 1
+a40 1
+ extern int   stkgo, stkend;
+a44 2
+ extern int   numnext;          /* from docmontmen */
+ extern int   numnextout;       /* from docmontmen */
+d86 1
+a86 1
+    {
+d103 1
+a103 1
+    {  /* use doc file list */
+a104 2
+    stkgo   = 0;
+    stkend  = INT_MAX;
+d138 1
+a138 1
+    if ((imgot = getoldstack(filedata, imgnum, TRUE, TRUE)) < 0) 
+d141 1
+a141 1
+    if (imgot >= stkgo && imgot <= stkend)
+d252 7
+a258 2
+ if (ioper == 24)
+    {
+@
+
+
+1.11
+log
+@stack movie crashed due to continual cmont3buf realloc
+@
+text
+@d46 3
+a49 2
+ extern int   ndone;             /* used by cat.c & movie, from mont2 */
+ extern char   *cmont3buf;       /* from mont3 */
+a51 1
+
+a64 1
+ int          marlefo;
+d78 2
+a79 3
+ nsam2 = nsam;  nrow2 = nrow;  islice = 1;      
+ dispsize(nsam1,nsam2,nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &islice);
+
+a85 1
+
+d88 1
+a88 1
+    numvox = (stkend - stkgo + 1) * nsam * nrow;
+d98 1
+a98 12
+   {    /* calculate nprow */
+    /* adjust marlefo for left side position */
+    marlefo = marlef;
+    if (placed) marlefo = ixuln;
+
+    if (iskip > 1)
+       nprow = (iwidex - marlefo) / ((nsam / iskip)  + marx);
+    else if (iskip < -1)
+       nprow = (iwidex - marlefo) / ((nsam * -iskip) + marx);
+    else
+       nprow = (iwidex - marlefo) / ((nsam         ) + marx);
+    }
+d125 2
+a126 2
+       {  /* display stack montage from doc file list */
+          /* categorize stack montage from doc file list */
+d134 1
+a134 1
+       { /* display stack montage using stack list menu*/
+d158 1
+a158 1
+          { /* montage from doc file & want avg. image */
+d166 1
+a166 1
+             /* display the image, save fimage in imagef */	    
+d176 1
+a176 1
+          { /* no average wanted */
+d178 2
+a179 2
+              {  /* big movie wanted */
+              iloc = ndone * nsam * nrow;
+d193 1
+a193 1
+              /* display the image, do not save fimage */	    
+@
+
+
+1.10
+log
+@for stack movies
+@
+text
+@d48 1
+a48 1
+ extern char   *cmont3buf;   /* from mont3 */
+d70 2
+a71 1
+  
+d87 2
+d98 1
+d194 1
+a194 1
+
+d196 1
+a196 1
+                  keepimagec, &cmont3buf[iloc], 
+@
+
+
+1.9
+log
+@starting image not displayed bug fixed
+@
+text
+@d36 1
+d46 3
+d51 1
+d62 1
+a62 1
+ int          keepgo, numdone;
+d67 3
+a73 2
+ /* check the starting # and ending # */
+
+d81 14
+d186 21
+a206 4
+          {
+          /* display the image, do not save fimage */	    
+          imagedis(filedata, FALSE, &imaget,FALSE, 
+                   FALSE, &imagef, nmint,nmaxt);
+d265 4
+@
+
+
+1.8
+log
+@stack support improved
+@
+text
+@d9 1
+a9 1
+C *  COPYRIGHT (C)1992,1996  HEALTH RESEARCH INC, EMPIRE STATE PLAZA, *
+d107 1
+a107 1
+    imgnum = stkgo;
+@
+
+
+1.7
+log
+@stack support improved
+@
+text
+@a27 1
+#include "files.h"
+a28 1
+#include "std.h"
+d30 7
+d41 2
+a42 1
+ extern int   icattyp;          /* categorize type */
+a44 2
+ extern char  avgnam[128];      /* name for montage average file */
+ extern int   montaverage;      /* want montage average */
+a45 5
+ extern int sumum(float * first, float * second, float * output, 
+                  int npix);
+ extern int average(float * input,  float * output,
+                    int npix, float divisor);
+ extern int avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
+d77 1
+a77 1
+   {    /* calculate nprow after opening first image */
+d93 1
+a93 1
+ if (ioper == 25 || ioper == 27)
+d114 1
+a114 1
+    if (ioper == 25  || ioper == 27)
+d136 1
+a136 2
+       /* write the image # in stack if "write image name" has been set */
+       /* put the filename in to temp buf */
+d138 5
+a142 3
+          {  /* showimage strips off directory listing which it needs */
+          strtmp = strrchr(filnow,'/');
+          sprintf(strtmp+1, "@@%d", imgot);
+d144 1
+a144 1
+          *(filnow + numdig(imgot,1) + 1) = '0';
+a146 4
+       /* display the image */	    
+       imagedis(filedata, FALSE, &imaget,FALSE, 
+                ioper == 27 && montaverage, &imagefavg, nmint,nmaxt);
+	    
+@
+
+
+1.6
+log
+@ added filedata to getoldstack parameters
+@
+text
+@a1 2
+/*$Header: /net/ithaca/usr1/web/src/RCS/stackdis.c,v 1.5 1999/09/30 17:07:55 leith Exp leith $*/
+
+d18 1
+a18 1
+C    PURPOSE:         DIPPLAY A STACK FILE.
+d33 15
+a47 2
+ extern int stkgo, stkend;
+ 
+d55 2
+d58 1
+d61 2
+d68 3
+a70 5
+ if (stkgo < 1 || stkgo > stkend)
+    { spout(" Illegal image numbers!\n"); return;  }
+ 
+  nsam    = filedata->nsam;
+  nrow    = filedata->nrow;
+d72 18
+a89 3
+  /* set the full image size for image display */
+  nsam2 = nsam;  nrow2 = nrow;  islice = 1;      
+  dispsize(nsam1,nsam2,nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &islice);
+d94 17
+d112 2
+a113 1
+ for (imgnum =stkgo; imgnum<=stkend; imgnum++)
+d115 16
+a130 1
+    if ((imgot = getoldstack(filedata, imgnum, TRUE, TRUE)) < 0) break;
+d132 3
+d149 1
+a149 1
+                FALSE, &imagef, nmint,nmaxt);
+d151 28
+a178 2
+       } /* if (imgot > stkgo && imgot < stkend) */
+    }    /* for (imgnum =stkgo-1; imgnum<stkend; imgnum++) */
+d185 47
+@
+
+
+1.5
+log
+@added filedata to getoldstack parameters
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/stackdis.c,v 1.4 1999/09/29 17:32:02 leith Exp leith $*/
+a32 2
+
+extern int getoldstack(int imgnum, int wantnext, int sayit);
+@
+
+
+1.4
+log
+@used getoldstack
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/stackdis.c,v 1.3 1998/03/05 17:05:13 leith Exp $*/
+d70 1
+a70 1
+    if ((imgot = getoldstack(imgnum, TRUE, TRUE)) < 0) break;
+@
+
+
+1.3
+log
+@removed ihist
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/stackdis.c,v 1.2 1998/02/09 19:48:01 liy Exp leith $*/
+d20 1
+a20 1
+C    PURPOSE:         DIPLAY A STACK FILE.
+d34 2
+d46 3
+a48 7
+ float	      header[256];
+ int       nsam,nrow,nslice,iform,headbyt,headrec;
+ int	    i, j;
+ int        nsams, nrows, idum;
+ char	    outstr[100];
+ char	    savename[81], *strtmp;
+ int	    savestate;
+a51 1
+ savestate = FALSE;
+d54 2
+a55 4
+ if (stkgo < 1 || stkgo > stkend) {
+     spout(" Can not interpret stack image number!\n");
+     return;
+ }
+d57 2
+a58 6
+  /* set offset for reading header from file */
+  headbyt = filedata->headbyt;
+  nsam = filedata->nsam;
+  nrow = filedata->nrow;
+  nslice = filedata->nslice;
+  filedata->offset = headbyt*stkgo + nsam*nrow*nslice*(stkgo-1)*4;
+d62 4
+a65 1
+  dispsize( nsam1, nsam2, nrow1, nrow2, 1,1,iskip, &nsams, &nrows, &islice);
+d68 22
+a89 1
+ for (i=stkgo-1; i<stkend; i++) {
+d91 2
+a92 2
+    /* read header of image file */
+    redlin(filedata,header,256,1);
+d94 3
+a96 132
+    /* if the image is not exist, skip it */
+    if (header[24] == 1) {
+
+	nslice = header[0];
+	if (nslice < 0) nslice = - nslice;
+	filedata -> nslice  = nslice;
+	
+	filedata -> nrow    = header[1];
+	
+	filedata -> nlabel  = header[3];
+	filedata -> iform   = header[4];
+	filedata -> imami   = header[5];
+	filedata -> fmax    = header[6];
+	filedata -> fmin    = header[7];
+	filedata -> av      = header[8];
+	filedata -> sig     = header[9];
+	
+	filedata -> nsam    = header[11];
+	filedata -> headrec = header[12];
+	filedata -> iangle  = header[13];
+	filedata -> phi     = header[14];
+	filedata -> theta   = header[15];
+	filedata -> gamma   = header[16];
+	
+	filedata -> headbyt = header[21];
+	filedata -> reclen  = header[22];
+
+	/* set error correction for bad headbyt and reclen spider files */
+	iform = filedata -> iform;
+	if (iform < 4 && 
+	 (filedata -> reclen < (filedata -> nsam) * 4)) 
+	 {
+	 filedata -> reclen = (filedata -> nsam) * 4;
+	 } 
+	
+	headrec = 1024 / (filedata -> reclen);
+	if (filedata->reclen < 1024 &&
+	 (1024 % (filedata -> reclen)) != 0) headrec++;
+	headbyt = headrec * (filedata -> reclen);
+	
+	if (iform < 4 && ((filedata -> headbyt) < headbyt))
+	 {
+	 filedata -> headbyt = headbyt;
+	 }
+	
+	if ((filedata->buf = (float *) malloc(filedata->nsam * sizeof(float))) == 
+	(float *) 0) 
+	{spout("*** Unable to malloc buf in stackdis."); return; }
+	
+	/* initialize ximage pointer*/
+	filedata -> ximage = NULL; 
+	
+	/* set offset for reading image data from file in future */
+	filedata -> offset += filedata -> headbyt;
+    
+        if (filedata->imami != 1)  norm(filedata);
+	
+	fmin = filedata->fmin;
+	fmax = filedata->fmax;
+	sprintf(outstr, "*** Image %d:  Range: %f,    %f", i+1, fmin, fmax);
+	spout(outstr);
+	
+	if (nslice > 1) newline = TRUE;
+	
+	/* write the image # in stack if "write image name" has been set */
+	/* put the filename in to temp buf */
+	if (names) {
+	   strcpy(savename, filnow);
+#ifdef VMS
+	    /* vms specific line follows */
+	    strtmp = strrchr(filnow,']');
+#else
+	    /* unix specific line follows */
+	    strtmp = strrchr(filnow,'/');
+#endif
+
+	    sprintf(strtmp+1, "@@%3d.", i+1);
+	    strtmp++;
+	    while(*++strtmp == ' ') {
+		*strtmp = '0';
+	    }
+	}
+	    
+	for (j=0; j<nslice; j++) {
+	    if (imaget) {
+		free(imaget);
+		imaget = NULL;
+	    }
+	    if (imagef) {
+		free(imagef);
+		imagef = NULL;
+	    }
+	    
+	    imagedis(filedata, FALSE, &imaget,FALSE, 
+		  FALSE, &imagef, nmint,nmaxt);
+	    
+	    /* set the file pointer for next image */
+	    filedata -> offset += nsam * nrow * 4;	    
+	    newline = FALSE;
+	    
+	    /* 3D image only display the number once. */
+	    if(names && nslice > 1) {
+		savestate = names;
+		names = FALSE;
+	    }
+	    if (savestate && j==nslice-1) {
+		names = savestate;
+		savestate = FALSE;
+	    }
+	}
+	
+	/* recover filnow */
+	if (names) strcpy(filnow, savename);
+    }
+    else {
+	/* add offset */
+	filedata -> offset += headbyt;
+
+	 dispsize(nsam1,nsam2,nrow1,nrow2,idum,idum,iskip,
+		  &nsams, &nrows, &idum);
+	if (names)
+	   locc(&ixul, &iyul, nsams, nrows+names_height, 
+	     &ntop, &nbot,  &nrit, marx, mary, marlef, martop,
+	     iwidex, ihighx, placed , newline, &nuscrn, force);
+	else
+	   locc(&ixul, &iyul, nsams, nrows, 
+	     &ntop, &nbot,  &nrit, marx, mary, marlef, martop,
+	     iwidex, ihighx, placed , newline, &nuscrn, force);
+
+	/* set the file pointer for next image */
+	filedata -> offset += nsam * nrow * nslice *4;	    
+    }
+a97 2
+ return;
+}
+@
+
+
+1.2
+log
+@ added func to display image #
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/mont2.c,v 1.21 1997/03/18 16:17:06 leith Exp $*/
+a94 1
+	filedata -> ihist   = header[10];
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d49 2
+d54 2
+a55 1
+
+d144 19
+d179 10
+d190 3
+@

@@ -1,0 +1,4133 @@
+head	1.47;
+access;
+symbols
+	pre-tilt-improve:1.47
+	pre_surf_fromtop:1.47
+	pre_neednewmap:1.47
+	pre_apppluss_remove:1.47
+	pre_tiltpair_chng:1.47
+	pre_GPL:1.44;
+locks;
+comment	@ * @;
+
+
+1.47
+date	2011.05.10.13.33.44;	author leith;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2005.10.18.16.59.43;	author leith;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	99.02.08.17.09.30;	author leith;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	96.08.05.18.13.58;	author leith;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	96.08.02.18.01.30;	author leith;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	96.08.01.19.15.04;	author leith;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	96.07.31.20.28.18;	author leith;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	96.04.25.14.18.01;	author leith;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	96.04.19.19.48.25;	author leith;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	95.07.11.17.28.11;	author mladjadj;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	95.03.09.21.54.00;	author liy;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	95.03.09.21.40.50;	author liy;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	95.02.14.21.39.01;	author liy;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	95.02.02.15.59.05;	author liy;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	95.01.26.20.07.27;	author liy;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	95.01.23.10.21.51;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	95.01.13.16.53.25;	author leith;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	95.01.04.11.18.59;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	95.01.03.16.41.13;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	94.11.23.10.13.48;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	94.11.18.13.56.56;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	94.10.14.10.55.46;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	94.10.12.12.03.30;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	94.10.11.15.15.21;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	94.10.04.14.59.56;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	94.10.03.13.46.47;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	94.10.03.13.32.28;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	94.09.28.10.15.29;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	94.09.27.16.52.00;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	94.09.16.15.58.55;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	94.09.07.20.20.24;	author odesanya;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	94.09.07.19.10.27;	author odesanya;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	94.08.03.16.10.36;	author odesanya;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	94.08.03.15.55.48;	author odesanya;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.07.26.20.59.25;	author odesanya;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.07.26.15.23.17;	author odesanya;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.07.23.17.25.25;	author odesanya;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.07.22.16.54.45;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.03.24.16.04.10;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.03.24.14.05.48;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.03.24.13.54.17;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.02.14.10.23.01;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.12.30.14.01.42;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.12.20.13.36.07;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.12.20.11.57.10;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.12.09.10.58.24;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.47
+log
+@updated, menu colors
+@
+text
+@
+/*$Header: /local/valcour.usr10/user8-copy/web/new/RCS/filtermen.c,v 1.46 2007/11/01 19:33:45 leith Exp leith $*/
+
+/*
+C++*********************************************************************
+C
+C filtermen
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                             *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    filtermen
+C
+C    PURPOSE:     Display filter menu
+C
+C    CALL TREE:
+                                 filterfill
+                                 denoise
+                                 filtestb
+                                 thresh
+                                 filterskel
+                 / filterbut --> filtere    
+                 | showbimage    localareaeq
+                 |               invert
+                 |               filterv
+                 |               filter
+                 |                 |       filtermen
+   imagemen      |                 |       /
+      |          |                 `----> filinc --> filtersave
+      v          |                           ^            |
+  imagemen_cb    | filter-butrep <------------------------'
+      |          |           \
+      v          |            \
+   imagemen1     |             filinc --> imagemen1 --> filterbut
+      |          | 
+      v          |
+   filtermen --> | filterbut_flip --> 
+                 |
+                 | threshmen --> thresh -->
+                 |
+                 | lahemen --> lahe -->
+                 |
+                 \ fillmen --> fill -- >
+
+
+C***********************************************************************
+*/
+
+#include <Xm/RowColumn.h>
+#include <Xm/Text.h>
+#include <Xm/Scale.h>
+#include "common.h"
+#include "routines.h"
+
+ /* Routines called from here */
+ extern int  filset     (float *, int, int, float, float,
+                         float *, float *, float *);
+ extern int  denoise    (float *, int, int, float *, int, int, 
+                         float *, float *, float *, float);
+ extern void setmen     (Widget, XtPointer, XtPointer);
+ extern void denoisemen (Widget, XtPointer, XtPointer);
+ extern void lahemen    (Widget, XtPointer, XtPointer);
+ extern void threshmen  (Widget, XtPointer, XtPointer);
+ extern void erodemen   (Widget, XtPointer, XtPointer);
+ extern void fillmen    (Widget, XtPointer, XtPointer);
+ extern int  filtestb   (float *, int, int, float, float, float *, 
+                         float *, float *);
+
+ /* Internal function prototypes */
+ void          filter_buts   (Widget, XtPointer, XtPointer);
+ void          filter_butsav (Widget, XtPointer, XtPointer);
+ void          filter_butrep (Widget, XtPointer, XtPointer);
+ void          filter_butflip(Widget, XtPointer, XtPointer);
+ void          filtersav_cb  (Widget, XtPointer, XtPointer);
+ void          filtersave    (char *);
+
+ /* External global variables used here */
+ extern int        nsams, nrows, nslices;
+ extern float    * fimage;
+ extern char       outstr[80];
+ extern float      threshval, fillval;    /* From fillmen */
+ extern int        ixseed, iyseed;
+ extern int        fillconnect;
+ extern float      noiselowerlim;
+
+ /* Common globals used elsewhere */
+ float           fminnew, fmaxnew,fminold, fmaxold;
+ int             nsamold, nrowold;
+ float           lower, lowerval, upper,  upperval; /* threshmen */
+ float           erodethresh;    /* erodemen */
+ int             bins   = 30;    /* lahemen */
+ int             border = 10;    /* lahemen */
+ float           oldset = 0.0;   /* setmen  */
+ float           newset = 0.0;   /* setmen  */
+
+ /* File scope variables used here */
+ static char *   environm;
+ static char*    cimage        = NULL;
+ static char     manfile[81]   = "convolve.man";       
+ static char     outnam[81]    = "\0";      /* Name for output file  */ 
+ static char     prompt[]      = "Enter output file name"; 
+ static char     lastfilter[1] = " ";
+ static float*   newimage      = NULL;
+ static Widget   iw_filtermen  = (Widget)0;
+ static Widget   iw_text       = (Widget)0;
+ static int      repeat        = FALSE;
+ static int      saveinfile    = FALSE;
+
+ /************************   filtermen   ******************************/
+
+ void filtermen(void)
+
+ { 
+ Widget iw_rowcolv;
+
+ Widget iw_pushs,   iw_pushc,   iw_dums;
+ Widget iw_menubc1, iw_menubc2, iw_menubc3, iw_menubc4, iw_menubc5, 
+        iw_menubc6, iw_menubc7;
+ Widget iw_menupc1, iw_menupc2, iw_menupc3, iw_menupc4, iw_menupc5, 
+        iw_menupc6, iw_menupc7;
+
+ Arg     args[5];  
+
+ if (iw_filtermen <= (Widget)0)
+    {   /* create filter menu widget first */
+
+    iw_filtermen  = wid_dialog(iw_win, 0, "Discrete convolution menu", -1,-1);
+    iw_rowcolv    = wid_rowcol(iw_filtermen, 'v', -1, -1);
+
+    /* Create  Laplacian menu ---------------------------- Laplacian */
+    iw_menubc1 = wid_menubar(iw_rowcolv);
+
+    iw_menupc1 = wid_pulldown(iw_menubc1,"Laplacian      =>",'A');
+    wid_pushg(iw_menupc1,(Widget)0," 3 x 3",filter_but,"1",0,0);
+    wid_pushg(iw_menupc1,(Widget)0," 5 x 5",filter_but,"2",0,0);
+    wid_pushg(iw_menupc1,(Widget)0," 7 x 7",filter_but,"v",0,0);
+
+    /* Create  Sobel menu ------------------------------------ Sobel */
+    iw_menubc7 = wid_menubar(iw_rowcolv);
+
+    iw_menupc7 = wid_pulldown(iw_menubc7,"Sobel         =>",'A');
+    wid_pushg(iw_menupc7,(Widget)0," X ",filter_but,"C",0,0);
+    wid_pushg(iw_menupc7,(Widget)0," Y ",filter_but,"D",0,0);
+
+    /* Create a Gaussian button --------------------------- Gaussian */
+    wid_pushg(iw_rowcolv,(Widget)0,"Gaussian (7x7)",filter_but,"3",0,0);
+
+    /* Create a Hipass menu --------------------------------- Hipass */
+    iw_menubc2 = wid_menubar(iw_rowcolv);
+
+    iw_menupc2= wid_pulldown(iw_menubc2,"Highpass       =>",'A');
+    wid_pushg(iw_menupc2,(Widget)0," 3 x 3",filter_but,"4",0,0);
+    wid_pushg(iw_menupc2,(Widget)0," 5 x 5",filter_but,"5",0,0);
+
+    /* Create a LoPass menu --------------------------------- LoPass */
+    iw_menubc3 = wid_menubar(iw_rowcolv);
+
+    iw_menupc3 = wid_pulldown(iw_menubc3,"LowPass      =>",'A');
+    wid_pushg(iw_menupc3, 0, " (3x3)",filter_but,"6", -1,-1);
+    wid_pushg(iw_menupc3, 0, " (5x5)",filter_but,"7", -1,-1);
+
+    /* Create a Sharpen button ------------------------------ Sharpen */
+    wid_pushg(iw_rowcolv, 0, "Sharpen (3x3)",filter_but,"8",-1,-1);
+
+    /* Create a Erode menu ----------------------------------- Erode */
+    iw_menubc4 = wid_menubar(iw_rowcolv);
+
+    iw_menupc4 = wid_pulldown(iw_menubc4,"Erode      =>",'A');
+    wid_pushg(iw_menupc4, 0, " (0)",erodemen,"a", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (1)",erodemen,"b", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (2)",erodemen,"c", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (3)",erodemen,"d", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (4)",erodemen,"e", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (5)",erodemen,"f", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (6)",erodemen,"g", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (7)",erodemen,"h", -1,-1);
+
+    /* Create a Dilate menu ---------------------------------- Dilate */
+    iw_menubc5 = wid_menubar(iw_rowcolv);
+
+    iw_menupc5= wid_pulldown(iw_menubc5,"Dilate      =>",'A');
+    wid_pushg(iw_menupc5, 0, " (0)",erodemen,"i", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (1)",erodemen,"j", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (2)",erodemen,"k", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (3)",erodemen,"l", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (4)",erodemen,"m", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (5)",erodemen,"n", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (6)",erodemen,"o", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (7)",erodemen,"p", -1,-1);
+
+    /* Create a Variance menu -------------------------------- Variance */
+    iw_menubc6= wid_menubar(iw_rowcolv); 
+
+    iw_menupc6= wid_pulldown(iw_menubc6,"Variance      =>",'A');
+    wid_pushg(iw_menupc6, 0, " (3x3)",filter_but,"q", -1,-1);
+    wid_pushg(iw_menupc6, 0, " (5x5)",filter_but,"r", -1,-1);
+    wid_pushg(iw_menupc6, 0, " (7x7)",filter_but,"s", -1,-1);
+
+    /* Create a lahe button ----------------------------------- lahe */
+    wid_pushg(iw_rowcolv, 0, "LAHE",lahemen,"t",-1,-1);
+
+    /* Create a thresh button --------------------------------- thresh */
+    wid_pushg(iw_rowcolv, 0, "Threshold",threshmen,"u",-1,-1);
+
+    /* Create a fill button ----------------------------------- fill */
+    wid_pushg(iw_rowcolv, 0, "Seed fill",fillmen,"x",-1,-1);
+
+    /* Create a invert button --------------------------------- invert */
+    wid_pushg(iw_rowcolv, 0, "Invert",filter_but,"y",-1,-1);
+
+    /* Create a test button ----------------------------------- test */
+    wid_pushg(iw_rowcolv, 0, "Test",filter_but,"w",-1,-1);
+
+    /* Create a set button ------------------------------------ set */
+    wid_pushg(iw_rowcolv, 0, "Set",setmen,"A",-1,-1);
+
+    /* Create a thresh buttonmenu ----------------------------- denoise */
+    wid_pushg(iw_rowcolv, 0, "Denoise",denoisemen,"B",-1,-1);
+
+    /* Create a skeleton button  ------------------------------ skeleton */
+    wid_pushg(iw_rowcolv, 0, "Binary skeleton",
+                                      filter_but,"z",-1,-1);
+
+    /* Create push button for repeating on file series. ------- repeat */
+    wid_pushg(iw_rowcolv, 0, "Repeat on series",
+                           filter_butrep,"0", -1,-1);
+
+    /* Create push button for flipping. --------------------- flip I/O */
+    wid_pushg(iw_rowcolv, 0, "Flip input and output",
+                         filter_butflip,"0", -1,-1);
+
+    /* Create push button for saving file. --------------------- save */
+    wid_pushg(iw_rowcolv, 0, "Save in file",filter_butsav,"0", -1,-1);
+
+    /* Create box for stop ------------------------------------- stop */
+    wid_stdbut(iw_rowcolv,  iw_filtermen, 
+               &iw_pushs,   &iw_pushc, &iw_dums,  "S",
+               filter_buts, fin_cb ,fin_cb, manfile);
+    }
+
+ /* Set size and min, max as per input image */
+ nsamold     = filedata -> nsam;
+ nrowold     = filedata -> nrow;
+ fminold     = filedata -> fmin_spi;
+ fmaxold     = filedata -> fmax_spi;
+ fminnew     = filedata -> fmin_spi;
+ fmaxnew     = filedata -> fmax_spi;
+ repeat      = FALSE;
+ saveinfile  = FALSE;
+
+ XtManageChild(iw_filtermen);
+ }  
+
+
+/****************  Filter  callback ***********************/
+
+ void filter_but(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+
+ static float sobelx[] = {-1.0,-2.0,-1.0,
+                           0.0, 0.0, 0.0,
+                           1.0, 2.0, 1.0};
+
+ static float sobely[] = {-1.0, 0.0, 1.0,
+                          -2.0, 0.0, 2.0,
+                          -1.0, 0.0, 1.0};
+
+static float laplacian[] = { 0.0,-1.0, 0.0,
+                             -1.0, 4.0,-1.0,
+                              0.0,-1.0, 0.0};
+
+
+ static float laplac5[] = { -1, -1, -1, -1, -1,
+                            -1, -1, -1, -1, -1,
+                            -1, -1, 24, -1, -1,
+                            -1, -1, -1, -1, -1,
+                            -1, -1, -1, -1, -1,};
+
+ static float laplac7[] = { -1, -1, -1,  -1, -1, -1, -1,
+                            -1, -1, -1,  -1, -1, -1, -1,
+                            -1, -1, -1,  -1, -1, -1, -1,
+                            -1, -1, -1,  48, -1, -1, -1,
+                            -1, -1, -1,  -1, -1, -1, -1,
+                            -1, -1, -1,  -1, -1, -1, -1,
+                            -1, -1, -1,  -1, -1, -1, -1,};
+
+ static float gauss[] = {1, 1, 2, 2, 2, 1, 1,
+                         1, 2, 2, 4, 2, 2, 1,
+                         2, 2, 4, 8, 4, 2, 2,
+                         2, 4, 8,16, 8, 4, 2,
+                         2, 2, 4, 8, 4, 2, 2,
+                         1, 2, 2, 4, 2, 2, 1,
+                         1, 1, 2, 2, 2, 1, 1};
+
+ static float hipass3[]  = {-1,-1,-1,
+                            -1, 9,-1,
+                            -1,-1,-1};
+
+  static float denoise3[] = { 1, 1, 1,
+                              1, 0, 1,
+                              1, 1, 1};
+
+ static float hipass5[] =  { 0,-1,-1,-1, 0,
+                            -1, 2,-4, 2,-1,
+                            -1,-4,13,-4,-1,
+                            -1, 2,-4, 2,-1,
+                             0,-1,-1,-1, 0};
+
+ static float sharpen3[] = {-1,-2,-1,
+                            -2,16,-2,
+                            -1,-2,-1};
+
+ static float lopass3[]  = { 1, 2, 1,
+                             2, 4, 2,
+                             1, 2, 1};
+
+
+ static float lopass5[] = { 1, 1, 1, 1, 1,
+                            1, 4, 4, 4, 1,
+                            1, 4,12, 4, 1,
+                            1, 4, 4, 4, 1,
+                            1, 1, 1, 1, 1};
+ 
+ static float variance3[]  = { 1, 1, 1,
+                               1, 0, 1,
+                               1, 1, 1};
+
+ static float variance5[] = { 0, 1, 1, 1, 0,
+                              1, 1, 1, 1, 1,
+                              1, 1, 0, 1, 1,
+                              1, 1, 1, 1, 1,
+                              0, 1, 1, 1, 0};
+
+ static float variance7[] = { 0, 0, 1, 1, 1, 0, 0,
+                              0, 1, 1, 1, 1, 1, 0,
+                              1, 1, 1, 1, 1, 1, 1,
+                              1, 1, 1, 0, 1, 1, 1,
+                              1, 1, 1, 1, 1, 1, 1,
+                              0, 1, 1, 1, 1, 1, 0,
+                              0, 0, 1, 1, 1, 0, 0};
+ int            iok;
+ float *        tempimage;
+ int            isel;
+ char           erodes[]  = "abcdefgh";
+ char           dilates[] = "ijklmnop";
+ char           *cptr;
+
+ /* set size and min, max as per input image */
+ nsamold   = filedata -> nsam;
+ nrowold   = filedata -> nrow;
+ fminold   = filedata -> fmin_spi;
+ fmaxold   = filedata -> fmax_spi;
+ fminnew   = filedata -> fmin_spi;
+ fmaxnew   = filedata -> fmax_spi;
+
+ if (!newimage)
+    {
+    /* allocate newimage space first */
+    if ((newimage = (float *) malloc(nsamold * nrowold *
+                      sizeof(float))) == (float *) 0)
+      {spout("*** Unable to allocate memory in filter_but.");return;}
+    }
+
+
+ /* set waitcursor */
+ waitcursor(iwin, TRUE, 79);
+
+ if (!strcmp(data, "1"))
+    {                                            /* laplacian filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          laplacian, 3, 3,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "2"))
+    {  /* laplac5 filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          laplac5, 5, 5,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "v"))
+    {  /* laplac7 filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          laplac7, 7, 7,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "C"))
+    {                                                /* Sobel filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          sobelx, 3, 3,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "D"))
+    {                                                
+    iok = filter(fimage, nsamold, nrowold, 
+          sobely, 3, 3,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "3"))
+    {                                                /* gauss filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          gauss, 7, 7,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "4"))
+    {                                              /* hipass3 filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          hipass3, 3, 3,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "5"))
+    {  /* hipass5 filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          hipass5, 5, 5,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "6"))
+    {                                              /* lopass3 filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          lopass3, 3, 3,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "7"))
+    {  /* lopass5 filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          lopass5, 5, 5,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "8"))
+    {                                              /* sharpen filter */
+    iok = filter(fimage, nsamold, nrowold, 
+          sharpen3, 3, 3,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if ((cptr = strstr(erodes, data)) != NULL )
+    {                                                /* erode filter */
+    isel = cptr - erodes;
+    iok = filtere(fimage, nsamold, nrowold, 
+          TRUE, (int) isel, erodethresh,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if ((cptr = strstr(dilates, data)) != NULL )
+    {                                                /* dilate filter */
+    isel = cptr - dilates;
+    iok = filtere(fimage, nsamold, nrowold, 
+          FALSE, (int) isel, erodethresh,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "q"))
+    {                                            /* variance  filter */
+    iok = filterv(fimage, nsamold, nrowold, 
+          variance3, 3, 3,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "r"))
+    {  /* variance5 filter */
+    iok = filterv(fimage, nsamold, nrowold, 
+          variance5, 5, 5,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "s"))
+    {  /* variance7 filter */
+    iok = filterv(fimage, nsamold, nrowold, 
+          variance7, 7, 7,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "t"))
+    {                                        /* local area histogram */
+    iok = localareaeq(fimage,nsamold,nrowold,
+            &fminnew,&fmaxnew,bins, border, newimage);
+    }
+
+ else if (!strcmp(data, "u"))
+    {                                                   /* threshold */
+    iok = thresh(fimage,nsamold,nrowold,
+                 lower,lowerval, upper, upperval, 
+                 newimage, &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "w"))
+    {  
+                                                          /* filtest */
+    iok = filtestb(fimage, nsamold,nrowold,
+                1.0, 3.0, newimage, &fminnew,&fmaxnew);
+    }
+
+ else if (!strcmp(data, "A"))
+    {  
+                                                          /* filset */
+    iok = filset(fimage, nsamold,nrowold,
+                oldset, newset, newimage, &fminnew,&fmaxnew);
+    }
+
+ else if (!strcmp(data, "B"))
+    {  
+                                                          /* denoise */
+    iok = denoise(fimage, nsamold, nrowold, 
+          denoise3, 3, 3,
+
+
+          newimage , &fminnew, &fmaxnew, noiselowerlim);
+    }
+
+ else if (!strcmp(data, "x"))
+    {                                                     /*  fill */
+    iok = filterfill(fimage, nsamold,nrowold,
+                ixseed, iyseed, threshval, fillval, 
+                newimage, &fminnew,&fmaxnew,fillconnect);
+    }
+
+ else if (!strcmp(data, "y"))
+    {                                                      /* invert */
+    iok = invert(fimage, nsamold,nrowold,
+                newimage, &fminnew,&fmaxnew);
+    }
+ else if (!strcmp(data, "z"))
+    {                                                     /* skeleton */
+    iok = filterskel(fimage, nsamold,nrowold,
+                newimage, &fminnew,&fmaxnew);
+    }
+
+ /* remove the filter menu to get out of way */
+ XtUnmanageChild(iw_filtermen); 
+
+ if (iok)
+    {
+    /* display filtered image */
+    tempimage = fimage;
+    fimage    = newimage;
+    /* display image in floating point buffer */
+    /* destroy imagel and cimage */
+    showbimage(fimage, FALSE, &cimage,
+                       FALSE, &imagel, 
+                       nsam, nrow, fminnew, fmaxnew);
+    fimage    = tempimage;
+    }
+
+ /* Cancel waitcursor */
+ waitcursor(iwin, FALSE, 79);
+
+ /* Remember filter type used */
+ strncpy(lastfilter,(char *) data,1);
+
+ if (!repeat)
+    { /* Redisplay the filter choice menu */
+    filtermen();
+    }
+ }
+
+/***************************  repeat  callback ***********************/
+
+ void filter_butrep(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ int nlet, numfil, iok;
+
+ /* Free up the file descriptor on current file */
+ closefile(filedata);
+
+ do {
+    /* Increment input file name */
+    if (filinc(filnow,filnext,&nlet,&numfil) != FALSE)
+       {   /* file number incrementing succeeded */
+       /* Start the next convolution */
+       repeat = TRUE;
+
+       /* Open and read input file */
+       ioper  = -10;
+       iok    = imagemen1(filnext, TRUE);
+
+       if (iok) 
+          {
+          /* Carry out filtration */
+          filter_but(NULL, (XtPointer) lastfilter, NULL);
+
+          if (saveinfile)
+             {      /* Want to save filter output in file */
+             /* Increment output file name */
+             if (filinc(outnam, outnam, &nlet, &numfil) != FALSE)
+                {   /* Place output in output file */
+                filtersave(outnam);
+                }/* end if (filinc      */
+             }   /* end if (saveinfile) */
+
+          /* Free up the file descriptor on current file */
+          closefile(filedata);
+
+          }      /* end if (iok)        */
+       }         /* end if (filinc      */
+    } while (iok == TRUE);
+
+ }
+
+/***********  stop convolving callback *******************************/
+
+ void filter_buts(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ /* Free memory for image arrays */
+ if (newimage) 
+     { free(newimage); newimage = NULL; }
+ if (fimage) 
+     { free(fimage); fimage = NULL; }
+
+ /* Free up the file descriptor */
+ closefile(filedata);
+
+ /* Remove the filter menu to get out of way */
+ XtUnmanageChild(iw_filtermen);
+
+ }
+
+/***************************  save  callback *************************/
+
+ void filter_butsav(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ int                            nlet, numfil;
+
+ /* Increment the output filename if not null */
+ if (outnam[1] != '\0')
+     filinc(outnam, outnam, &nlet, &numfil);
+ 
+ /* Create text input box */
+ iw_text = wid_text(iw_win, iw_text, prompt, &outnam[0],
+                    filtersav_cb, NULL, 0, 0);
+ }
+
+ /*****************  filtersav_cb  (runs after wid_text) *************/
+
+ void filtersav_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ XmSelectionBoxCallbackStruct * cbs;
+
+ cbs = (XmSelectionBoxCallbackStruct *) call_data;
+
+ strcpy(outnam,extractstr(cbs -> value));
+
+ filtersave(outnam);
+
+ saveinfile = TRUE;
+ }
+
+ /*****************  filtersave  (runs after filtersav_cb) ************/
+
+ void filtersave(char * filnam)
+ {
+ FILEDATA      *filedatat;
+
+ /* Redraw image in case damaged by window name box */ 
+ expos_cb(NULL,NULL,NULL);
+
+ /* Add datexc to filnam if not already there */
+ if (strstr(filnam,datexc) == 0)
+    {
+    strcat(filnam,".");
+    strcat(filnam,datexc);
+    }
+
+ /* Open new output file */
+ filedatat = opennew(filnam, nsam, nrow, 1, 1, "u");
+
+ /* Put newimage in output file */
+ wrtvol(filedatat, newimage);
+
+ closefile(filedatat);
+
+ /* Remember the output file name */
+ strcpy(outnam,filnam);
+ }
+
+/****************************  flip  callback ***********************/
+
+ void filter_butflip(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ float * tempptr;
+
+ tempptr     = newimage;
+ newimage    = fimage;
+ fimage      = tempptr;
+ fminold     = fminnew;
+ fmaxold     = fmaxnew;
+ lowerval    = fminold;
+ upperval    = fmaxold;
+ erodethresh = fmaxold;
+
+ /* Tell user new min and max, in case he wants them for new filters */
+ sprintf(outstr,"New Range:  %f ...%f",fminnew,fmaxnew);
+ spout(outstr);
+ }
+
+
+@
+
+
+1.46
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/filtermen.c,v 1.45 2005/10/18 16:59:43 leith Exp $*/
+d10 1
+a10 1
+C *  AUTHOR:  ArDean Leith                                                 *
+d38 1
+a38 1
+C    PURPOSE:         display filter menu
+d79 1
+a79 1
+ /* routines called from here */
+d93 1
+a93 1
+ /* internal function prototypes */
+d101 1
+a101 1
+ /* external global variables used here */
+d105 1
+a105 1
+ extern float      threshval, fillval;    /* from fillmen */
+d110 1
+a110 1
+ /* common global used elsewhere */
+d114 1
+a118 1
+ float           erodethresh;    /* erodemen */
+d120 1
+a120 1
+ /* file scope variables used here */
+d122 10
+a131 10
+ static char     manfile[81] = "convolve.man";       
+ static char     outnam[81] = "\0";      /* name for output file  */ 
+ static Widget   iw_filtermen= (Widget)0;
+ static float*   newimage   = NULL;
+ static char     prompt[]   = "Enter output file name"; 
+ static Widget   iw_text    =  (Widget)0;
+ static char*    cimage     = NULL;
+ static char*    lastfilter = " ";
+ static int      repeat     = FALSE;
+ static int      saveinfile = FALSE;
+d154 4
+a157 4
+    /* create  Laplacian menu ---------------------------- Laplacian */
+    iw_menubc1= XmCreateMenuBar(iw_rowcolv, "menubc1", args, 0);
+    XtManageChild(iw_menubc1);
+    iw_menupc1= wid_pulldown(iw_menubc1,"Laplacian      =>",'A');
+d162 4
+a165 4
+    /* create  Sobel menu ------------------------------------ Sobel */
+    iw_menubc7= XmCreateMenuBar(iw_rowcolv, "menubc7", args, 0);
+    XtManageChild(iw_menubc7);
+    iw_menupc7= wid_pulldown(iw_menubc7,"Sobel         =>",'A');
+d169 1
+a169 1
+    /* create a Gaussian menu ----------------------------- Gaussian */
+d172 3
+a174 3
+    /* create a Hipass menu --------------------------------- Hipass */
+    iw_menubc2= XmCreateMenuBar(iw_rowcolv, "menubc2", args, 0);
+    XtManageChild(iw_menubc2);
+d179 4
+a182 4
+    /* create a LoPass menu --------------------------------- LoPass */
+    iw_menubc3= XmCreateMenuBar(iw_rowcolv, "menubc3", args, 0);
+    XtManageChild(iw_menubc3);
+    iw_menupc3= wid_pulldown(iw_menubc3,"LowPass      =>",'A');
+d186 1
+a186 1
+    /* create a Sharpen menu ------------------------------- Sharpen */
+d189 4
+a192 4
+    /* create a Erode menu ----------------------------------- Erode */
+    iw_menubc4= XmCreateMenuBar(iw_rowcolv, "menubc4", args, 0);
+    XtManageChild(iw_menubc4);
+    iw_menupc4= wid_pulldown(iw_menubc4,"Erode      =>",'A');
+d202 3
+a204 3
+    /* create a Dilate menu --------------------------------- Dilate */
+    iw_menubc5= XmCreateMenuBar(iw_rowcolv, "menubc5", args, 0);
+    XtManageChild(iw_menubc5);
+d215 3
+a217 3
+    /* create a Variance menu ------------------------------ Variance */
+    iw_menubc6= XmCreateMenuBar(iw_rowcolv, "menubc6", args, 0);
+    XtManageChild(iw_menubc6);
+d223 1
+a223 1
+    /* create a lahe menu -------------------------------------- lahe */
+d226 1
+a226 1
+    /* create a thresh menu ---------------------------------- thresh */
+d229 1
+a229 1
+    /* create a fill menu -------------------------------------- fill */
+d232 1
+a232 1
+    /* create a invert menu ---------------------------------- invert */
+d235 1
+a235 1
+    /* create a test menu ------------------------------------- test */
+d238 1
+a238 1
+    /* create a set menu ---------------------------------------- set */
+d241 1
+a241 1
+    /* create a thresh menu --------------------------------- denoise */
+d244 1
+a244 1
+    /* create a skeleton menu ------------------------------ skeleton */
+d248 1
+a248 1
+    /* create push button for repeating on file series. ------ repeat */
+d252 1
+a252 1
+    /* create push button for flipping. -------------------- flip I/O */
+d256 1
+a256 1
+    /* create push button for saving file. -------------------- save */
+d259 1
+a259 9
+     if( (environm = getenv("WEBMAN_DIR") ) == NULL)
+        spout("*** The WEBMAN_DIR environment variable is blank!");
+     else
+        {
+        strcpy(manfile,environm);
+        strcat(manfile,"convolve.man");
+        }
+
+    /* create box for cancel -------------------------------- cancel */
+d261 1
+a261 1
+               &iw_pushs,   &iw_pushc, &iw_dums,  "SH",
+d265 1
+a265 1
+ /* set size and min, max as per input image */
+d279 1
+a279 1
+/****************  filter  callback ***********************/
+a497 1
+
+d530 2
+d536 1
+a536 1
+    {                                                       /*  fill */
+d548 1
+a548 1
+    {                                                    /* skeleton */
+d569 1
+a569 1
+ /* cancel waitcursor */
+d572 2
+a573 2
+ /* remember filter type used */
+ strncpy(lastfilter,data,1);
+d576 1
+a576 2
+    {
+    /* redisplay the filter choice menu */
+d587 1
+a587 1
+ /* free up the file descriptor on current file */
+d591 1
+a591 1
+    /* increment input file name */
+d594 1
+a594 1
+       /* start the next convolution */
+d597 1
+a597 1
+       /* open and read input file */
+d603 2
+a604 2
+          /* carry out filtration */
+          filter_but(NULL, (XtPointer) lastfilter,NULL);
+d607 2
+a608 2
+             {      /* want to save filter output in file */
+             /* increment output file name */
+d610 1
+a610 1
+                {   /* place output in output file */
+d615 1
+a615 1
+          /* free up the file descriptor on current file */
+d628 1
+a628 1
+ /* free memory for image arrays */
+d634 1
+a634 1
+ /* free up the file descriptor */
+d637 1
+a637 1
+ /* remove the filter menu to get out of way */
+d648 1
+a648 1
+ /* increment the output filename if not null */
+d652 1
+a652 1
+ /* create text input box */
+d678 1
+a678 1
+ /* redraw image in case damaged by window name box */ 
+d681 1
+a681 1
+ /* add datexc to filnam if not already there */
+d688 1
+a688 1
+ /* open new output file */
+d691 1
+a691 1
+ /* put newimage in output file */
+d696 1
+a696 1
+ /* remember the output file name */
+d715 1
+a715 1
+ /* tell user new min and max, in case he wants them for new filters */
+@
+
+
+1.45
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.44 1999/02/08 17:09:30 leith Exp $*/
+d276 4
+a279 4
+ fminold     = filedata -> fmin;
+ fmaxold     = filedata -> fmax;
+ fminnew     = filedata -> fmin;
+ fmaxnew     = filedata -> fmax;
+d383 4
+a386 4
+ fminold   = filedata -> fmin;
+ fmaxold   = filedata -> fmax;
+ fminnew   = filedata -> fmin;
+ fmaxnew   = filedata -> fmax;
+@
+
+
+1.44
+log
+@added sobel filter
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.43 1996/08/05 18:13:58 leith Exp leith $*/
+d11 23
+a33 6
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+@
+
+
+1.43
+log
+@added comments
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.42 1996/08/02 18:01:30 leith Exp leith $*/
+d125 1
+a125 1
+        iw_menubc6;
+d127 1
+a127 1
+        iw_menupc6;
+d145 7
+d275 9
+a283 1
+ static float laplacian[] = { 0.0,-1.0, 0.0,
+d399 14
+@
+
+
+1.42
+log
+@removed erodethresh setting
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.41 1996/08/01 19:15:04 leith Exp leith $*/
+a22 2
+C    CALLED BY:       imagemen
+C
+d24 13
+a36 5
+
+
+                 / filterbut --> filtere    filtermen
+   imagemen      |               filterv   /
+      |          |               filter  --> filinc --> filtersave
+@
+
+
+1.41
+log
+@removed some routines to separate files, added erode threshold
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.40 1996/07/31 20:28:18 leith Exp leith $*/
+a249 1
+ erodethresh = fmaxold;
+d662 8
+a669 7
+ tempptr  = newimage;
+ newimage = fimage;
+ fimage   = tempptr;
+ fminold  = fminnew;
+ fmaxold  = fmaxnew;
+ lowerval = fminold;
+ upperval = fmaxold;
+@
+
+
+1.40
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.39 1996/04/25 14:18:01 leith Exp leith $*/
+d65 1
+d67 2
+a76 2
+ int           filtestb(float *, int, int, float, float, float *, 
+                     float *, float *);
+d95 1
+d97 1
+a97 1
+ /* common variables used here */
+d163 8
+a170 8
+    wid_pushg(iw_menupc4, 0, " (0)",filter_but,"a", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (1)",filter_but,"b", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (2)",filter_but,"c", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (3)",filter_but,"d", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (4)",filter_but,"e", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (5)",filter_but,"f", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (6)",filter_but,"g", -1,-1);
+    wid_pushg(iw_menupc4, 0, " (7)",filter_but,"h", -1,-1);
+d176 8
+a183 8
+    wid_pushg(iw_menupc5, 0, " (0)",filter_but,"i", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (1)",filter_but,"j", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (2)",filter_but,"k", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (3)",filter_but,"l", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (4)",filter_but,"m", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (5)",filter_but,"n", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (6)",filter_but,"o", -1,-1);
+    wid_pushg(iw_menupc5, 0, " (7)",filter_but,"p", -1,-1);
+d244 9
+a252 8
+ nsamold    = filedata -> nsam;
+ nrowold    = filedata -> nrow;
+ fminold    = filedata -> fmin;
+ fmaxold    = filedata -> fmax;
+ fminnew    = filedata -> fmin;
+ fmaxnew    = filedata -> fmax;
+ repeat     = FALSE;
+ saveinfile = FALSE;
+d338 4
+d420 1
+a420 1
+ else if (!strcmp(data, "a"))
+d422 1
+d424 1
+a424 1
+          TRUE, 0, fmaxold,
+a426 89
+ else if (!strcmp(data, "b"))
+    {  /* erode filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          TRUE, 1, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "c"))
+    {  /* erode filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          TRUE, 2, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "d"))
+    {  /* erode filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          TRUE, 3, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "e"))
+    {  /* erode filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          TRUE, 4, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "f"))
+    {  /* erode filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          TRUE, 5, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "g"))
+    {  /* erode filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          TRUE, 6, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "h"))
+    {  /* erode filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          TRUE, 7, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "i"))
+    {                                               /* dilate filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          FALSE, 0, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "j"))
+    {  /* dilate filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          FALSE, 1, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "k"))
+    {  /* dilate filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          FALSE, 2, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "l"))
+    {  /* dilate filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          FALSE, 3, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+ else if (!strcmp(data, "m"))
+    {     /* dilate filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          FALSE, 4, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "n"))
+    {     /* dilate filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          FALSE, 5, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+
+ else if (!strcmp(data, "o"))
+    {     /* dilate filter */
+    iok = filtere(fimage, nsamold, nrowold, 
+          FALSE, 6, fmaxold,
+          newimage , &fminnew, &fmaxnew);
+    }
+d428 3
+a430 2
+ else if (!strcmp(data, "p"))
+    {     /* dilate filter */
+d432 1
+a432 1
+          FALSE, 7, fmaxold,
+a435 1
+
+a673 1
+
+a674 94
+
+
+/******************************  filtestb *****************************/
+
+ int filtestb(float * oldimage, int nsamt, int nrowt,
+              float   in,        float out, 
+              float * newimage, float * fmint, float * fmaxt)
+ {
+ int     iloc, nsizei, nsizeo, xot, yot, ipointo,ipointi, inval, outval;
+ int     * xo = 0, * yo = 0, * xi = 0, * yi = 0, * ic = 0;
+ float   dist, distmin, distmax;
+
+ /* this could be speeded up but it is a one shot pgm, so not worth it*/
+ nsizei  = -1;
+ nsizeo  = -1;
+
+ ipointo = -1;
+ ipointi = -1;
+
+ for (iloc = 0; iloc < nsamt * nrowt; iloc++)
+     {
+     /* fill newimage with negatives  */
+     newimage[iloc] = -1.0;
+
+     if (oldimage[iloc] == out) 
+        {
+        if ((++ipointo) > nsizeo)
+           {  /* must get more array memory  */
+           nsizeo += 1000;
+
+           if (((xo = (int *) realloc(xo,nsizeo * sizeof(int))) == (int) 0) ||
+               ((yo = (int *) realloc(yo,nsizeo * sizeof(int))) == (int) 0) ||
+               ((ic = (int *) realloc(ic,nsizeo * sizeof(int))) == (int) 0))
+                { 
+                spout("*** Unable to alloc outer arrays in filtestb.c.");
+                return FALSE;
+                }
+           }
+        xo[ipointo] = iloc / nsamt;
+        yo[ipointo] = iloc % nsamt;
+        ic[ipointo] = iloc;
+        }
+
+     else if (oldimage[iloc] == in)
+        {
+        if ((++ipointi) > nsizei)
+           {  /* must get more array memory  */
+           nsizei += 1000;
+           if (((xi = (int *) realloc(xi,nsizei * sizeof(int))) == (int *) 0) ||
+               ((yi = (int *) realloc(yi,nsizei * sizeof(int))) == (int *) 0))
+
+                { 
+                spout("*** Unable to realloc inner space in filtestb.c.");
+                return FALSE;
+                }
+          }
+
+        xi[ipointi] = iloc / nsamt;
+        yi[ipointi] = iloc % nsamt;
+        }
+     }
+
+ distmax = (nsamt + nrowt) * (nsamt + nrowt);
+ *fmaxt  = -distmax;
+
+ for (outval =0; outval <= ipointo; outval++)
+     {
+     distmin = distmax;
+
+     xot     = xo[outval]; 
+     yot     = yo[outval];
+
+     for (inval =0; inval <= ipointi; inval++)
+         {
+         dist = ((xot - xi[inval]) * (xot - xi[inval]) +
+                 (yot - yi[inval]) * (yot - yi[inval]));
+
+         if (dist < distmin) distmin = dist;
+         }
+     distmin              = sqrt(distmin);
+     newimage[ic[outval]] = distmin;
+     *fmaxt               = MYMAX(*fmaxt,distmin);
+     }
+
+  * fmint = -1.0;
+
+  if (xo) free(xo);
+  if (xi) free(xi);
+  if (yo) free(yo);
+  if (yi) free(yi);
+  if (ic) free(ic);
+
+  return TRUE;
+  }
+@
+
+
+1.39
+log
+@fixed noise filter
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.38 1996/04/19 19:48:25 leith Exp leith $*/
+d56 10
+a65 8
+ int filset  (float *, int, int, float, float,
+                     float *, float *, float *);
+ extern int denoise  (float *, int, int, float *, int, int, 
+                      float *, float *, float *, float);
+
+ void          setmen       (Widget, XtPointer, XtPointer);
+ void          setmen_buta  (Widget, XtPointer, XtPointer);
+ extern int filtestb(float *, int, int, float, float, float *, float *, float *);
+a67 1
+ void          filter_but    (Widget, XtPointer, XtPointer);
+d74 2
+a75 6
+ void          fillmen       (Widget, XtPointer, XtPointer);
+ void          lahemen       (Widget, XtPointer, XtPointer);
+ void          lahemen_buta  (Widget, XtPointer, XtPointer);
+ void          threshmen_buta(Widget, XtPointer, XtPointer);
+ void          threshmen     (Widget, XtPointer, XtPointer);
+ void          denoisemen    (Widget, XtPointer, XtPointer);
+d87 1
+a87 2
+ float           fminnew, fmaxnew;
+ float           fminold, fmaxold;
+d89 5
+a104 10
+ static int      bins   = 30;
+ static int      border = 10;
+ static float    oldset = 0.0;
+ static float    newset = 0.0;
+ static float    lower, lowerval, upper,  upperval;
+ static Widget   iw_bins,      iw_border,   iw_lahemen,  iw_setmen,
+                 iw_threshmen, iw_lower,    iw_lowerval,  iw_oldset,
+                 iw_upper,     iw_upperval, iw_ngo,      iw_nend,
+                 iw_newset;
+ static int      ngo=0,   nend=100;
+a757 295
+/************************************  lahemen **********************/
+
+ void lahemen(Widget iw_temp, XtPointer data, XtPointer call_data)
+ { 
+ char     cval[5];
+ Widget   iw_rowcol;
+ Widget   iw_pushc, iw_pusha, iw_dums;
+
+ if (iw_lahemen <= (Widget)0)
+    {   /* create lahe menu widget first */
+
+    iw_lahemen = wid_dialog(iw_win,iw_lahemen,"lahe options",20,20);
+    iw_rowcol   = wid_rowcol(iw_lahemen,'v',-1,-1);
+
+    /* create text box for bordersize input ----------------- border */
+    sprintf(cval,"%4d",border);
+    iw_border = wid_textboxb(iw_rowcol,0, 
+                  "Border ((box -1)/2):",cval,4);
+
+    /* create text box for bins input ------------------------- bins */
+    sprintf(cval,"%4d",bins);
+    iw_bins = wid_textboxb(iw_rowcol,0, "Bins:",cval,4);
+
+    /* create accept boxes  ---------------------------------- apply */
+    iw_pushc = (Widget) 0;
+    iw_pusha = (Widget) 0;
+    wid_stdbut(iw_rowcol, iw_lahemen, 
+               &iw_dums, &iw_pushc, &iw_pusha, 
+               "CA",fin_cb,fin_cb,lahemen_buta, NULL);
+    }
+
+ XtManageChild(iw_lahemen);
+ }
+
+ /********************* lahe accept button callback *******************/
+
+ void lahemen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char           filtertype[2];
+
+ if (strtoint(iw_bins,"bins",&bins) == FALSE) return;
+ if (bins  < 2 ) 
+    { spout("*** Bins range is: 2...");  return; }
+
+ if (strtoint(iw_border,"border", &border) == FALSE) return;
+ if (border < 1 || 
+     border >= (nsamold) /2 || border >= (nrowold)/2) 
+    { spout("*** Border range is: 1...min(nsam/2, nrow/2)"); return; }
+
+ XtUnmanageChild(iw_lahemen);
+
+ filtertype[0] = 't';
+ filtertype[1] = '\0';
+ filter_but(iw_temp, (XtPointer) filtertype, call_data);
+ }
+
+/*********************************** threshmen **********************/
+
+ void threshmen(Widget iw_temp, XtPointer data, XtPointer call_data)
+ { 
+ char     cval11[12];
+ Widget   iw_rowcol, iw_rowcolh;
+ Widget   iw_pushc, iw_pusha, iw_dums;
+
+ if (iw_threshmen <= (Widget)0)
+    {   /* create thresh menu widget first */
+
+    iw_threshmen = wid_dialog(iw_win,iw_threshmen,
+                           "Threshold values",20,20);
+    iw_rowcol    = wid_rowcol(iw_threshmen,'v',-1,-1);
+
+    /* create a horizontal row-col widget for scales */
+    iw_rowcolh = wid_rowcol(iw_rowcol, 'h', -1,-1);
+
+    /* create scale widget for lower --------------------------- ngo */
+    ngo     = 0;
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", 0,100,  ngo, 
+                        180,50, -1,-1);
+
+    /* create scale widget for upper -------------------------- nend */
+    nend    = 100;
+    iw_nend = wid_scale(iw_rowcolh, 0, "", 0,100,  nend, 
+                         180,50, -1,-1);
+
+    XtAddCallback(iw_ngo,XmNvalueChangedCallback,
+                           (XtCallbackProc) threshmen,"0");
+    XtAddCallback(iw_nend,XmNvalueChangedCallback,
+                           (XtCallbackProc) threshmen,"0");
+
+    /* create text box for lower ----------------------------  lower */
+    lower = fminold + ngo * (fmaxold - fminold) / 100.0;
+    sprintf(cval11,"%f",lower);
+    iw_lower = wid_textboxb(iw_rowcol,iw_lower,
+                              "Lower Threshold:",cval11,10);
+
+    /* create text box for lowerval ----------------------  lowerval */
+    lowerval = fminold;
+    sprintf(cval11,"%f",lowerval);
+    iw_lowerval = wid_textboxb(iw_rowcol,iw_lowerval,
+                               "Lower Value:    ",cval11,10);
+
+    /* create text box for upper ----------------------------  upper */
+    upper = fminold + nend * (fmaxold - fminold)/ 100.0;
+    sprintf(cval11,"%f",upper);
+    iw_upper = wid_textboxb(iw_rowcol,iw_upper,
+                               "Upper Threshold:",cval11,10);
+
+    /* create text box for upperval ----------------------  upperval */
+    upperval = fmaxold;
+    sprintf(cval11,"%f",upperval);
+    iw_upperval = wid_textboxb(iw_rowcol,iw_upperval,
+                              "Upper Value:    ",cval11,10);
+
+    /* create accept boxes  ---------------------------------- apply */
+    iw_pushc = (Widget) 0;
+    iw_pusha = (Widget) 0;
+    wid_stdbut(iw_rowcol, iw_threshmen, 
+               &iw_dums, &iw_pushc, &iw_pusha, 
+               "CA",fin_cb,fin_cb,threshmen_buta, NULL);
+    }
+
+ else
+    {   /* thresh menu widget already exists, update it */
+
+    /* get ngo & nend */
+    XmScaleGetValue(iw_ngo, &ngo);
+    XmScaleGetValue(iw_nend,&nend);
+
+    /* alter text box for lower -----------------------------  lower */
+    lower = fminold + ngo * (fmaxold - fminold)/ 100.0;
+    sprintf(cval11,"%f",lower);
+    iw_lower = wid_textboxb(iw_rowcol,iw_lower,
+                            "Lower Threshold:",cval11,10);
+
+    /* create text box for lowerval ----------------------  lowerval */
+    sprintf(cval11,"%f",lowerval);
+    iw_lowerval = wid_textboxb(iw_rowcol,iw_lowerval,
+                               "Lower Value:    ",cval11,10);
+
+    /* alter text box for upper -----------------------------  upper */
+    upper = fminold + nend * (fmaxold - fminold)/ 100.0;
+    sprintf(cval11,"%f",upper);
+    iw_upper = wid_textboxb(iw_rowcol,iw_upper,
+                            "Upper Threshold:",cval11,10);
+
+    /* alter text box for upperval ------------------------  upperval */
+    sprintf(cval11,"%f",upperval);
+    iw_upperval = wid_textboxb(iw_rowcol,iw_upperval,
+                               "Upper Value:    ",cval11,10);
+   }
+
+ XtManageChild(iw_threshmen);
+ }
+
+
+
+ /********************* thresh accept button callback *****************/
+
+ void threshmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char *         string;
+ char           filtertype[2];
+
+ /* find thresholds */
+ string = XmTextGetString(iw_lower);
+ sscanf(string,"%f",&lower);
+ if (string) free(string);
+
+ string = XmTextGetString(iw_lowerval);
+ sscanf(string,"%f",&lowerval);
+ if (string) free(string);
+
+ string = XmTextGetString(iw_upper);
+ sscanf(string,"%f",&upper);
+ if (string) free(string);
+
+ string = XmTextGetString(iw_upperval);
+ sscanf(string,"%f",&upperval);
+ if (string) free(string);
+
+ filtertype[0] = 'u';
+ filtertype[1] = '\0';
+ filter_but(iw_temp, (XtPointer) filtertype, call_data);
+ }
+
+
+
+
+
+#include "std.h"
+#ifndef VMS
+#include "float.h"
+#endif
+
+ /******************************  filset *****************************/
+
+ int filset(float * oldimage, int nsamt, int nrowt, 
+            float oldsett, float newsett,
+             float * newimage, float * fmint, float * fmaxt)
+ {
+ int     iloc;
+ float   fval;
+
+  * fmint = MYMAX(fmaxold,newsett);
+  * fmaxt = MYMIN(fminold,newsett);
+
+ /* convolve over all positions in the new image */
+
+ for (iloc = 0; iloc < nsamt * nrowt; iloc++)
+     {
+     fval = oldimage[iloc];
+     if (fval == oldsett)
+        {
+        newimage[iloc] = newsett;
+        * fmint = MYMIN(*fmint,newsett);
+        * fmaxt = MYMAX(*fmaxt,newsett);
+        }
+     else
+        {
+        newimage[iloc] = fval;
+        * fmint = MYMIN(*fmint,fval);
+        * fmaxt = MYMAX(*fmaxt,fval);
+        }
+     }
+
+  return TRUE;
+  }
+/************************************  setmen **********************/
+
+ void setmen(Widget iw_temp, XtPointer data, XtPointer call_data)
+ { 
+ char     cval[10];
+ Widget   iw_rowcol;
+ Widget   iw_pushc, iw_pusha, iw_dums;
+
+ if (iw_setmen <= (Widget)0)
+    {   /* create set menu widget first */
+
+    iw_setmen = wid_dialog(iw_win,iw_setmen,"set options",20,20);
+    iw_rowcol   = wid_rowcol(iw_setmen,'v',-1,-1);
+
+    /* create text box for old value input ---------------------- old */
+    sprintf(cval,"%7.2f",oldset);
+    iw_oldset = wid_textboxb(iw_rowcol,0,"Old value:",cval,10);
+
+    /* create text box for new value input ---------------------- new */
+    sprintf(cval,"%7.2f",newset);
+    iw_newset = wid_textboxb(iw_rowcol,0, "New value:",cval,10);
+
+    /* create accept boxes  ---------------------------------- apply */
+    iw_pushc = (Widget) 0;
+    iw_pusha = (Widget) 0;
+    wid_stdbut(iw_rowcol, iw_setmen, 
+               &iw_dums, &iw_pushc, &iw_pusha, 
+              "CA",fin_cb,fin_cb,setmen_buta, NULL);
+    }
+
+ XtManageChild(iw_setmen);
+ }
+
+ /********************* set accept button callback *******************/
+
+ void setmen_buta(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char   filtertype[2];
+ char * string;
+
+ string = XmTextGetString(iw_oldset);
+ if (sscanf(string,"%f",&oldset) <= 0)  
+    {
+    spout("*** Illegal value for: Old value");
+    XmStringFree((unsigned char *) string);
+    return;
+    } 
+
+ XmStringFree((unsigned char *) string);
+
+ string = XmTextGetString(iw_newset);
+ if (sscanf(string,"%f",&newset) <= 0)  
+    {
+    spout("*** Illegal value for: New value");
+    XmStringFree((unsigned char *) string);
+    return;
+    } 
+/***********************/
+ printf(" old & new: %f , %f \n",oldset,newset);
+/*****************************/
+ XmStringFree((unsigned char *) string);
+
+ XtUnmanageChild(iw_setmen);
+
+ filtertype[0] = 'A';
+ filtertype[1] = '\0';
+ filter_but(iw_temp, (XtPointer) filtertype, call_data);
+ }
+@
+
+
+1.38
+log
+@added denoise
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.37 1995/07/11 17:28:11 mladjadj Exp leith $*/
+d300 4
+d577 1
+a577 1
+          lopass5, 5, 5,
+@
+
+
+1.37
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.36 1995/03/09 21:54:00 liy Exp mladjadj $*/
+d56 1
+a56 1
+ extern int filset  (float *, int, int, float, float,
+d58 5
+a62 2
+ void          setmen       (Widget, caddr_t, caddr_t);
+ void          setmen_buta  (Widget, caddr_t, caddr_t);
+d66 6
+a71 6
+ void          filter_but    (Widget, caddr_t, caddr_t);
+ void          filter_buts   (Widget, caddr_t, caddr_t);
+ void          filter_butsav (Widget, caddr_t, caddr_t);
+ void          filter_butrep (Widget, caddr_t, caddr_t);
+ void          filter_butflip(Widget, caddr_t, caddr_t);
+ void          filtersav_cb  (Widget, caddr_t, caddr_t);
+d73 6
+a78 5
+ void          fillmen       (Widget, caddr_t, caddr_t);
+ void          lahemen       (Widget, caddr_t, caddr_t);
+ void          lahemen_buta  (Widget, caddr_t, caddr_t);
+ void          threshmen_buta(Widget, caddr_t, caddr_t);
+ void          threshmen     (Widget, caddr_t, caddr_t);
+d80 1
+a80 1
+ /* external common variables used here */
+d87 1
+d89 1
+a89 1
+ /* common variables used elsewhere */
+d124 1
+a124 6
+ Widget iw_f1, iw_f2, iw_f3, iw_f4, iw_f5, iw_f6, iw_f7, iw_f8;
+ Widget iw_fa, iw_fb, iw_fc, iw_fd, iw_fe, iw_ff, iw_fg, iw_fh, iw_fi;
+ Widget iw_fj, iw_fk, iw_fl, iw_fm, iw_fn, iw_fo, iw_fp, iw_fq, iw_fr;
+ Widget iw_fs, iw_ft, iw_fu, iw_fv, iw_fw, iw_fx, iw_fy, iw_fz, iw_fA;
+ Widget iw_fill,    iw_frepeat, iw_fsav,iw_pushs, iw_pushc, iw_dums,
+        iw_fflip,   iw_lahe;  
+a134 1
+
+a137 1
+
+d142 3
+a144 3
+    iw_f1 = wid_pushg(iw_menupc1,(Widget)0," 3 x 3",filter_but,"1",0,0);
+    iw_f2 = wid_pushg(iw_menupc1,(Widget)0," 5 x 5",filter_but,"2",0,0);
+    iw_fv = wid_pushg(iw_menupc1,(Widget)0," 7 x 7",filter_but,"v",0,0);
+d147 1
+a147 1
+    iw_f3 = wid_pushg(iw_rowcolv,(Widget)0,"Gaussian (7x7)",filter_but,"3",0,0);
+d153 2
+a154 2
+    iw_f4 = wid_pushg(iw_menupc2,(Widget)0," 3 x 3",filter_but,"4",0,0);
+    iw_f5 = wid_pushg(iw_menupc2,(Widget)0," 5 x 5",filter_but,"5",0,0);
+d160 2
+a161 2
+    iw_f6 = wid_pushg(iw_menupc3, 0, " (3x3)",filter_but,"6", -1,-1);
+    iw_f7 = wid_pushg(iw_menupc3, 0, " (5x5)",filter_but,"7", -1,-1);
+d164 1
+a164 1
+    iw_f8 = wid_pushg(iw_rowcolv, 0, "Sharpen (3x3)",filter_but,"8",-1,-1);
+d170 8
+a177 8
+    iw_fa = wid_pushg(iw_menupc4, 0, " (0)",filter_but,"a", -1,-1);
+    iw_fb = wid_pushg(iw_menupc4, 0, " (1)",filter_but,"b", -1,-1);
+    iw_fc = wid_pushg(iw_menupc4, 0, " (2)",filter_but,"c", -1,-1);
+    iw_fd = wid_pushg(iw_menupc4, 0, " (3)",filter_but,"d", -1,-1);
+    iw_fe = wid_pushg(iw_menupc4, 0, " (4)",filter_but,"e", -1,-1);
+    iw_ff = wid_pushg(iw_menupc4, 0, " (5)",filter_but,"f", -1,-1);
+    iw_fg = wid_pushg(iw_menupc4, 0, " (6)",filter_but,"g", -1,-1);
+    iw_fh = wid_pushg(iw_menupc4, 0, " (7)",filter_but,"h", -1,-1);
+d183 8
+a190 8
+    iw_fi = wid_pushg(iw_menupc5, 0, " (0)",filter_but,"i", -1,-1);
+    iw_fj = wid_pushg(iw_menupc5, 0, " (1)",filter_but,"j", -1,-1);
+    iw_fk = wid_pushg(iw_menupc5, 0, " (2)",filter_but,"k", -1,-1);
+    iw_fl = wid_pushg(iw_menupc5, 0, " (3)",filter_but,"l", -1,-1);
+    iw_fm = wid_pushg(iw_menupc5, 0, " (4)",filter_but,"m", -1,-1);
+    iw_fn = wid_pushg(iw_menupc5, 0, " (5)",filter_but,"n", -1,-1);
+    iw_fo = wid_pushg(iw_menupc5, 0, " (6)",filter_but,"o", -1,-1);
+    iw_fp = wid_pushg(iw_menupc5, 0, " (7)",filter_but,"p", -1,-1);
+d196 3
+a198 3
+    iw_fq = wid_pushg(iw_menupc6, 0, " (3x3)",filter_but,"q", -1,-1);
+    iw_fr = wid_pushg(iw_menupc6, 0, " (5x5)",filter_but,"r", -1,-1);
+    iw_fs = wid_pushg(iw_menupc6, 0, " (7x7)",filter_but,"s", -1,-1);
+d201 1
+a201 1
+    iw_lahe = wid_pushg(iw_rowcolv, 0, "LAHE",lahemen,"t",-1,-1);
+d204 1
+a204 1
+    iw_fu = wid_pushg(iw_rowcolv, 0, "Threshold",threshmen,"u",-1,-1);
+d207 1
+a207 1
+    iw_fx = wid_pushg(iw_rowcolv, 0, "Seed fill",fillmen,"x",-1,-1);
+d210 1
+a210 1
+    iw_fy = wid_pushg(iw_rowcolv, 0, "Invert",filter_but,"y",-1,-1);
+d213 1
+a213 1
+    iw_fw = wid_pushg(iw_rowcolv, 0, "Test",filter_but,"w",-1,-1);
+d216 4
+a219 1
+    iw_fw = wid_pushg(iw_rowcolv, 0, "Set",setmen,"A",-1,-1);
+d222 1
+a222 1
+    iw_fz = wid_pushg(iw_rowcolv, 0, "Binary skeleton",
+d226 1
+a226 1
+    iw_frepeat = wid_pushg(iw_rowcolv, 0, "Repeat on series",
+d230 1
+a230 1
+    iw_fflip = wid_pushg(iw_rowcolv, 0, "Flip input and output",
+d234 1
+a234 1
+    iw_fsav = wid_pushg(iw_rowcolv, 0, "Save in file",filter_butsav,"0", -1,-1);
+d245 3
+a247 3
+    iw_dums = wid_stdbut(iw_rowcolv,  iw_filtermen, 
+                        &iw_pushs,   &iw_pushc, &iw_dums,  "SH",
+                        filter_buts, fin_cb ,fin_cb, manfile);
+d266 1
+a266 1
+ void filter_but(Widget iw_temp, caddr_t data, caddr_t call_data)
+d569 8
+d626 1
+a626 1
+ void filter_butrep(Widget iw_temp, caddr_t data, caddr_t call_data)
+d647 1
+a647 1
+          filter_but(NULL,lastfilter,NULL);
+d669 1
+a669 1
+ void filter_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+d687 1
+a687 1
+ void filter_butsav(Widget iw_temp, caddr_t data, caddr_t call_data)
+d702 1
+a702 1
+ void filtersav_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+d745 1
+a745 1
+ void filter_butflip(Widget iw_temp, caddr_t data, caddr_t call_data)
+d765 1
+a765 1
+ void lahemen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d769 1
+a769 1
+ Widget   iw_pushc, iw_pusha, iw_dums, iw_dum;
+d789 3
+a791 3
+    iw_dum   = wid_stdbut(iw_rowcol, iw_lahemen, 
+                          &iw_dums, &iw_pushc, &iw_pusha, 
+                        "CA",fin_cb,fin_cb,lahemen_buta, NULL);
+d799 1
+a799 1
+ void lahemen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d816 1
+a816 1
+ filter_but(iw_temp,(caddr_t) filtertype,call_data);
+d821 1
+a821 1
+ void threshmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d825 1
+a825 1
+ Widget   iw_pushc, iw_pusha, iw_dums, iw_dum;
+d879 3
+a881 3
+    iw_dum   = wid_stdbut(iw_rowcol, iw_threshmen, 
+                          &iw_dums, &iw_pushc, &iw_pusha, 
+                         "CA",fin_cb,fin_cb,threshmen_buta, NULL);
+d921 1
+a921 1
+ void threshmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d945 1
+a945 1
+ filter_but(iw_temp,(caddr_t) filtertype,call_data);
+d992 1
+a992 1
+ void setmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d996 1
+a996 1
+ Widget   iw_pushc, iw_pusha, iw_dums, iw_dum;
+d1015 3
+a1017 3
+    iw_dum   = wid_stdbut(iw_rowcol, iw_setmen, 
+                          &iw_dums, &iw_pushc, &iw_pusha, 
+                        "CA",fin_cb,fin_cb,setmen_buta, NULL);
+d1025 1
+a1025 1
+ void setmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d1056 1
+a1056 1
+ filter_but(iw_temp,(caddr_t) filtertype,call_data);
+@
+
+
+1.36
+log
+@changed (void *) structure for compiling web on Alpha
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.35 1995/03/09 21:40:50 liy Exp liy $*/
+d93 1
+a93 1
+ static Widget   iw_filtermen;
+d96 1
+a96 1
+ static Widget   iw_text    = 0;
+@
+
+
+1.35
+log
+@changed (void *) structure for compiling web on Alpha
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.34 1995/02/14 21:39:01 liy Exp liy $*/
+d606 1
+a606 1
+ strcpy(lastfilter,data,1);
+@
+
+
+1.34
+log
+@changed data comparison for compiling on arlfa machine
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.33 1995/02/02 15:59:05 liy Exp $*/
+d98 1
+a98 1
+ static char     lastfilter = ' ';
+d606 1
+a606 1
+ lastfilter = *data;
+d638 1
+a638 1
+          filter_but(NULL,&lastfilter,NULL);
+@
+
+
+1.33
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtermen.c,v 1.32 1995/01/26 20:07:27 liy Exp liy $*/
+d360 1
+a360 1
+ if (*data == '1')
+d366 1
+a366 1
+ else if (*data == '2')
+d372 1
+a372 1
+ else if (*data == 'v')
+d379 1
+a379 1
+ else if (*data == '3')
+d385 1
+a385 1
+ else if (*data == '4')
+d391 1
+a391 1
+ else if (*data == '5')
+d398 1
+a398 1
+ else if (*data == '6')
+d404 1
+a404 1
+ else if (*data == '7')
+d410 1
+a410 1
+ else if (*data == '8')
+d417 1
+a417 1
+ else if (*data == 'a')
+d423 1
+a423 1
+ else if (*data == 'b')
+d429 1
+a429 1
+ else if (*data == 'c')
+d435 1
+a435 1
+ else if (*data == 'd')
+d441 1
+a441 1
+ else if (*data == 'e')
+d447 1
+a447 1
+ else if (*data == 'f')
+d454 1
+a454 1
+ else if (*data == 'g')
+d461 1
+a461 1
+ else if (*data == 'h')
+d468 1
+a468 1
+ else if (*data == 'i')
+d474 1
+a474 1
+ else if (*data == 'j')
+d480 1
+a480 1
+ else if (*data == 'k')
+d486 1
+a486 1
+ else if (*data == 'l')
+d492 1
+a492 1
+ else if (*data == 'm')
+d499 1
+a499 1
+ else if (*data == 'n')
+d506 1
+a506 1
+ else if (*data == 'o')
+d513 1
+a513 1
+ else if (*data == 'p')
+d521 1
+a521 1
+ else if (*data == 'q')
+d527 1
+a527 1
+ else if (*data == 'r')
+d533 1
+a533 1
+ else if (*data == 's')
+d541 1
+a541 1
+ else if (*data == 't')
+d547 1
+a547 1
+ else if (*data == 'u')
+d554 1
+a554 1
+ else if (*data == 'w')
+d561 1
+a561 1
+ else if (*data == 'A')
+d568 1
+a568 1
+ else if (*data == 'x')
+d575 1
+a575 1
+ else if (*data == 'y')
+d580 1
+a580 1
+ else if (*data == 'z')
+@
+
+
+1.32
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.31 1995/01/23 10:21:51 leith Exp liy $*/
+d132 1
+a132 1
+ if (iw_filtermen <= (void *)0)
+d762 1
+a762 1
+ if (iw_lahemen <= (void *)0)
+d818 1
+a818 1
+ if (iw_threshmen <= (void *)0)
+d989 1
+a989 1
+ if (iw_setmen <= (void *)0)
+@
+
+
+1.31
+log
+@ shortened name of extractstring to extractstr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.30 95/01/13 16:53:25 leith Exp Locker: leith $*/
+d132 1
+a132 1
+ if ((int)iw_filtermen <= 0)
+d762 1
+a762 1
+ if ((int)iw_lahemen <= 0)
+d818 1
+a818 1
+ if ((int)iw_threshmen <= 0)
+d989 1
+a989 1
+ if ((int)iw_setmen <= 0)
+@
+
+
+1.30
+log
+@added filset
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.29 95/01/04 11:18:59 leith Exp Locker: leith $*/
+d699 1
+a699 1
+ strcpy(outnam,extractstring(cbs -> value));
+@
+
+
+1.29
+log
+@fixed distance checker
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.28 95/01/03 16:41:13 leith Exp Locker: leith $*/
+d56 4
+a59 1
+ extern int filtesta(float *, int, int, float *, float *, float *);
+d101 2
+d104 4
+a107 3
+ static Widget   iw_bins,      iw_border,   iw_lahemen,
+                 iw_threshmen, iw_lower,   iw_lowerval, 
+                 iw_upper,     iw_upperval,iw_ngo,      iw_nend;
+d122 1
+a122 1
+ Widget iw_fs, iw_ft, iw_fu, iw_fv, iw_fw, iw_fx, iw_fy, iw_fz;
+d217 3
+d561 7
+d948 1
+a948 1
+ /******************************  filtesta *****************************/
+d950 2
+a951 1
+ int filtesta(float * oldimage, int nsamt, int nrowt, 
+d955 1
+d957 3
+d964 7
+a970 2
+     if (oldimage[iloc] > * fmint)
+        newimage[iloc] = 1.0;
+d972 5
+a976 1
+        newimage[iloc] = 0.0;
+a977 2
+  * fmint = 0.0;
+  * fmaxt = 1.0;
+d981 68
+@
+
+
+1.28
+log
+@added distance of approcah routine
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.27 94/11/23 10:13:48 leith Exp Locker: leith $*/
+d978 1
+a978 1
+        if (++ipointo > nsizeo)
+a980 2
+/*************************debug**************/
+           printf("*** need more out space= %d \n",nsizeo);
+a986 3
+/******************************debug */
+                printf("*** did not get more outer space= %d\n",nsizeo);
+
+d997 1
+a997 1
+        if (++ipointi > nsizei)
+a999 2
+           printf("*** need more inner space= %d , %d \n",nsizei,xi);
+
+a1004 2
+/******************************debug */
+                printf("*** did not get inner space= %d\n",nsizei);
+d1007 1
+a1007 3
+/******************************debug */
+           printf("*** got more inner space= %d\n",nsizei);
+           }
+d1014 2
+a1015 2
+ distmax = (nsamt*nrowt) * (nsamt*nrowt) + nsamt;
+ *fmaxt  = distmax;
+d1026 1
+a1026 1
+         dist = ((xot - xi[inval]) * (xot - xi[inval]) -
+@
+
+
+1.27
+log
+@added 8 or 4 fold fill
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.26 94/11/18 13:56:56 leith Exp Locker: leith $*/
+d56 2
+a57 1
+ extern int filtest(float *, int, int, float *, float *, float *);
+d548 2
+a549 2
+    iok = filtest(fimage, nsamold,nrowold,
+                newimage, &fminnew,&fmaxnew);
+d892 2
+d932 1
+a932 1
+ /******************************  filtest *****************************/
+d934 1
+a934 1
+ int filtest(float * oldimage, int nsamt, int nrowt, 
+d950 104
+@
+
+
+1.26
+log
+@added call tree
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.25 94/10/14 10:55:46 leith Exp Locker: leith $*/
+a66 1
+ void          fillmen_buta  (Widget, caddr_t, caddr_t);
+d72 1
+a72 1
+ /* external common variables */
+d76 3
+d81 3
+a94 2
+ static int      ixseed = 2;
+ static int      iyseed = 2;
+a96 1
+ static float    threshval, fillval;
+d98 1
+a98 2
+ static Widget   iw_fillmen,   iw_ixseed,  iw_iyseed,   iw_thresh, 
+                 iw_fillval,   iw_bins,    iw_border,   iw_lahemen,
+a100 3
+ static float    fminnew, fmaxnew;
+ static float    fminold, fmaxold;
+ static int      nsamold, nrowold;
+a123 1
+ int     n;
+a131 2
+    /* create a menu bar for command selection ----------------------*/
+    n = 0;
+a328 1
+ int            numfil, nlet;
+d555 1
+a555 1
+                newimage, &fminnew,&fmaxnew);
+a736 92
+
+/********************************  fillmen **************************/
+
+ void fillmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+ { 
+ char     cval[5], cval11[11];
+ Widget   iw_rowcol, iw_rowcol1;
+ Widget   iw_pushc, iw_pusha, iw_dums, iw_dum;
+
+ if ((int)iw_fillmen <= 0)
+    {   /* create fill menu widget first */
+
+    iw_fillmen = wid_dialog(iw_win,iw_fillmen,
+                             "fill options",20,20);
+    iw_rowcol   = wid_rowcol(iw_fillmen,'v',-1,-1);
+
+    iw_rowcol1  = wid_rowcol(iw_rowcol,'h',-1,-1);
+    /* create text box for ixseed input --------------------- ixseed */
+    sprintf(cval,"%4d",ixseed);
+    iw_ixseed = wid_textboxb(iw_rowcol1,0, "X SEED:",cval,4);
+
+    /* create text box for iyseed input --------------------- iyseed */
+    sprintf(cval,"%4d",iyseed);
+    iw_iyseed = wid_textboxb(iw_rowcol1,0, "Y SEED:",cval,4);
+
+    /* create text box for threshold -----------------------  thresh */
+    /* must set default threshold */
+    threshval = fminold + ((fmaxold - fminold) / 2.0);
+    sprintf(cval11,"%f",threshval);
+    iw_thresh = wid_textboxb(iw_rowcol,iw_thresh,"Threshold:",
+                             cval11,10);
+
+    /* create text box for fillval ------------------------  fillval */
+    /* must set default fillval */
+    fillval = fminold;
+    sprintf(cval11,"%f",fillval);
+    iw_fillval = wid_textboxb(iw_rowcol,iw_fillval,
+                                "Fill value:",cval11,10);
+
+    /* create accept boxes  ---------------------------------- apply */
+    iw_pushc = (Widget) 0;
+    iw_pusha = (Widget) 0;
+    iw_dum   = wid_stdbut(iw_rowcol, iw_fillmen,
+                          &iw_dums, &iw_pushc, &iw_pusha, 
+                        "CA",fin_cb,fin_cb,fillmen_buta, NULL);
+    }
+
+ XtManageChild(iw_fillmen);
+ }
+
+ /*********************** fill accept button callback *****************/
+
+ void fillmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+ char *         string;
+ char           filtertype[2];
+
+ if (strtoint(iw_ixseed,"X seed",&ixseed) == FALSE) return;
+
+ if (strtoint(iw_iyseed,"Y seed", &iyseed) == FALSE) return;
+
+ if (ixseed  < 1 || ixseed  > nsamold) 
+    {
+    spout("*** X seed range is: 1...nsam"); 
+    return;
+    }
+
+ if (iyseed < 1 || iyseed > nrowold) 
+    {
+    spout("*** Y seed range is: 1...nrow"); 
+    return;
+    }
+
+ /* find threshold */
+ string = XmTextGetString(iw_thresh);
+ sscanf(string,"%f",&threshval);
+ if (threshval > fmaxold) threshval = fmaxold;
+ if (threshval < fminold) threshval = fminold;
+ if (string) free(string);
+
+ /* find fillval */
+ string = XmTextGetString(iw_fillval);
+ sscanf(string,"%f",&fillval);
+ if (string) free(string);
+
+ XtUnmanageChild(iw_fillmen);
+
+ filtertype[0] = 'x';
+ filtertype[1] = '\0';
+ filter_but(iw_temp,(caddr_t) filtertype,call_data);
+ }
+
+a774 1
+ char *         string;
+@
+
+
+1.25
+log
+@changed repeat method
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.24 94/10/12 12:03:30 leith Exp Locker: leith $*/
+d25 22
+@
+
+
+1.24
+log
+@added filtest
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.23 94/10/11 15:15:21 leith Exp $*/
+a56 1
+ Widget            lastpush;    /* used in imagemen */
+d82 2
+a83 1
+ static int      repeat = FALSE;
+d223 8
+a230 7
+ nsamold   = filedata -> nsam;
+ nrowold   = filedata -> nrow;
+ fminold   = filedata -> fmin;
+ fmaxold   = filedata -> fmax;
+ fminnew   = filedata -> fmin;
+ fmaxnew   = filedata -> fmax;
+ repeat    = FALSE;
+d571 5
+a575 1
+ if (iok && repeat)
+d577 1
+a577 20
+    /* want to repeat this operation on whole file series */
+    if (outnam[1] != '\0')
+       {
+       /* first save the file */
+       if (filinc(outnam, outnam, &nlet, &numfil) != FALSE)
+          {
+          filtersave(outnam);
+          filter_butrep(NULL,NULL,NULL);
+          }
+       }
+    else
+       {   /* no need to save file */
+       filter_butrep(NULL,NULL,NULL);
+       }
+    }
+ else
+    {
+    lastfilter = *data;
+    lastpush   = iw_temp;
+    /* restart the filter menu */
+d586 1
+a586 1
+ int nlet, numfil;
+d588 35
+a622 8
+ /* increment file name */
+ if (filinc(filnow,filnext,&nlet,&numfil) != FALSE)
+    {   /* file number incrementing succeeded */
+    /* start the next convolution */
+    repeat = TRUE;
+    ioper  = -10;
+    imagemen1(filnext, TRUE);
+    }
+d635 3
+d669 2
+a807 1
+ lastpush      = iw_temp;
+a864 1
+ lastpush      = iw_temp;
+a991 1
+ lastpush      = iw_temp;
+d1000 1
+d1026 1
+a1026 1
+ }
+@
+
+
+1.23
+log
+@fixed repetitive filter bug , added laplac7
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.22 94/10/04 14:59:56 leith Exp Locker: leith $*/
+d34 2
+d190 3
+d527 7
+d981 32
+@
+
+
+1.22
+log
+@added threshold feature
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.21 94/10/03 13:46:47 leith Exp Locker: leith $*/
+d55 1
+d81 1
+d89 1
+d92 2
+a93 2
+ Widget iw_fj, iw_fk, iw_fl, iw_fm, iw_fn, iw_fo;
+
+d120 1
+d148 6
+a153 6
+    iw_fi = wid_pushg(iw_menupc4, 0, " (2)",filter_but,"c", -1,-1);
+    iw_fj = wid_pushg(iw_menupc4, 0, " (3)",filter_but,"d", -1,-1);
+    iw_fk = wid_pushg(iw_menupc4, 0, " (4)",filter_but,"e", -1,-1);
+    iw_fl = wid_pushg(iw_menupc4, 0, " (5)",filter_but,"f", -1,-1);
+    iw_fl = wid_pushg(iw_menupc4, 0, " (6)",filter_but,"g", -1,-1);
+    iw_fl = wid_pushg(iw_menupc4, 0, " (7)",filter_but,"h", -1,-1);
+d159 6
+a164 6
+    iw_fc = wid_pushg(iw_menupc5, 0, " (0)",filter_but,"i", -1,-1);
+    iw_fd = wid_pushg(iw_menupc5, 0, " (1)",filter_but,"j", -1,-1);
+    iw_fm = wid_pushg(iw_menupc5, 0, " (2)",filter_but,"k", -1,-1);
+    iw_fn = wid_pushg(iw_menupc5, 0, " (3)",filter_but,"l", -1,-1);
+    iw_fo = wid_pushg(iw_menupc5, 0, " (4)",filter_but,"m", -1,-1);
+    iw_fo = wid_pushg(iw_menupc5, 0, " (5)",filter_but,"n", -1,-1);
+d166 1
+a166 1
+    iw_fo = wid_pushg(iw_menupc5, 0, " (7)",filter_but,"p", -1,-1);
+d172 3
+a174 3
+    iw_fe = wid_pushg(iw_menupc6, 0, " (3x3)",filter_but,"q", -1,-1);
+    iw_ff = wid_pushg(iw_menupc6, 0, " (5x5)",filter_but,"r", -1,-1);
+    iw_fg = wid_pushg(iw_menupc6, 0, " (7x7)",filter_but,"s", -1,-1);
+d180 1
+a180 1
+    iw_lahe = wid_pushg(iw_rowcolv, 0, "Threshold",threshmen,"u",-1,-1);
+d183 1
+a183 1
+    iw_fill = wid_pushg(iw_rowcolv, 0, "Seed fill",fillmen,"x",-1,-1);
+d186 1
+a186 1
+    iw_fill = wid_pushg(iw_rowcolv, 0, "Invert",filter_but,"y",-1,-1);
+d188 3
+a190 2
+    /* create a skeleton menu ------------------------------- skeleton */
+    iw_fill = wid_pushg(iw_rowcolv, 0, "Binary skeleton",filter_but,"z",-1,-1);
+d194 1
+a194 1
+                            filter_butrep,"0", -1,-1);
+d198 1
+a198 1
+                            filter_butflip,"0", -1,-1);
+d218 2
+d224 1
+a224 2
+ nsamold   = filedata -> nsam;
+ nrowold   = filedata -> nrow;
+d239 1
+d246 8
+d306 1
+a306 1
+ int            repeat, numfil, nlet;
+d308 8
+d321 1
+a321 1
+       {spout("*** Unable to allocate memory in filter_but.");return;}
+d324 1
+a327 8
+ /* used to repeat a filter on a file series (see imagemen1) */
+ repeat = FALSE;
+ if (*data == ' ')  
+    {
+    *data = lastfilter;
+    repeat = TRUE;
+    }
+
+d340 6
+d511 2
+a512 2
+    iok = localareaeq(fimage,nsamold,nrowold,&fminnew,&fmaxnew, 
+                bins, border, newimage);
+d541 1
+a541 1
+ XtUnmanageChild(iw_filtermen);
+d548 2
+a549 1
+    /* display image in floating point buffer, destroy imagel and cimage*/
+d570 4
+d578 1
+d584 16
+d619 1
+d621 4
+a690 1
+/***************************  repeat  callback ***********************/
+a691 13
+ void filter_butrep(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+ int nlet, numfil;
+
+ /* increment file name */
+ if (filinc(filnow,filnext,&nlet,&numfil) != FALSE)
+    {   /* file number incrementing succeeded */
+    /* start the next convolution */
+    ioper = -10;
+    imagemen1(filnext, TRUE);
+    }
+ }
+
+d720 2
+a721 1
+    iw_thresh = wid_textboxb(iw_rowcol,iw_thresh,"Threshold:",cval11,10);
+d727 2
+a728 1
+    iw_fillval = wid_textboxb(iw_rowcol,iw_fillval,"Fill value:",cval11,10);
+d733 2
+a734 1
+    iw_dum   = wid_stdbut(iw_rowcol, iw_fillmen, &iw_dums, &iw_pushc, &iw_pusha, 
+d778 1
+d781 1
+a781 1
+ filter_but(NULL,(caddr_t) filtertype,call_data);
+d800 2
+a801 1
+    iw_border = wid_textboxb(iw_rowcol,0, "Border ((box -1)/2):",cval,4);
+d810 2
+a811 1
+    iw_dum   = wid_stdbut(iw_rowcol, iw_lahemen, &iw_dums, &iw_pushc, &iw_pusha, 
+d827 1
+a827 4
+    {
+    spout("*** Bins range is: 2..."); 
+    return;
+    }
+d832 1
+a832 4
+    {
+    spout("*** Border range is: 1...min(nsam/2, nrow/2)"); 
+    return;
+    }
+d836 1
+d839 1
+a839 1
+ filter_but(NULL,(caddr_t) filtertype,call_data);
+d842 1
+a842 1
+/***********************************  threshmen **********************/
+d853 2
+a854 1
+    iw_threshmen = wid_dialog(iw_win,iw_threshmen,"Threshold values",20,20);
+d862 2
+a863 1
+    iw_ngo  = wid_scale(iw_rowcolh, 0, "", 0,100,  ngo, 180,50, -1,-1);
+d867 2
+a868 1
+    iw_nend = wid_scale(iw_rowcolh, 0, "", 0,100,  nend, 180,50, -1,-1);
+d878 2
+a879 1
+    iw_lower = wid_textboxb(iw_rowcol,iw_lower,"Lower Threshold:",cval11,10);
+d884 2
+a885 1
+    iw_lowerval = wid_textboxb(iw_rowcol,iw_lowerval,"Lower Value:    ",cval11,10);
+d890 2
+a891 1
+    iw_upper = wid_textboxb(iw_rowcol,iw_upper,"Upper Threshold:",cval11,10);
+d896 2
+a897 1
+    iw_upperval = wid_textboxb(iw_rowcol,iw_upperval,"Upper Value:    ",cval11,10);
+d902 3
+a904 2
+    iw_dum   = wid_stdbut(iw_rowcol, iw_threshmen, &iw_dums, &iw_pushc, &iw_pusha, 
+                        "CA",fin_cb,fin_cb,threshmen_buta, NULL);
+d917 2
+a918 1
+    iw_lower = wid_textboxb(iw_rowcol,iw_lower,"Lower Threshold:",cval11,10);
+d922 2
+a923 1
+    iw_lowerval = wid_textboxb(iw_rowcol,iw_lowerval,"Lower Value:    ",cval11,10);
+d928 2
+a929 1
+    iw_upper = wid_textboxb(iw_rowcol,iw_upper,"Upper Threshold:",cval11,10);
+d933 2
+a934 1
+    iw_upperval = wid_textboxb(iw_rowcol,iw_upperval,"Upper Value:    ",cval11,10);
+d940 1
+a940 1
+ /********************* thresh accept button callback *******************/
+d964 1
+d967 1
+a967 1
+ filter_but(NULL,(caddr_t) filtertype,call_data);
+@
+
+
+1.21
+log
+@changed NULL to char
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.20 94/10/03 13:32:28 leith Exp Locker: leith $*/
+d30 1
+d46 2
+d70 6
+a75 3
+ static float    thresh, fillval;
+ static Widget   iw_fillmen, iw_ixseed, iw_iyseed, iw_thresh, 
+                 iw_fillval, iw_bins,   iw_border, iw_lahemen;
+d79 1
+d175 3
+d489 1
+a489 1
+    localareaeq(fimage,nsamold,nrowold,&fminnew,&fmaxnew, 
+d493 7
+d503 1
+a503 1
+                ixseed, iyseed, thresh, fillval, 
+d633 2
+d683 2
+a684 2
+    thresh = fminold + ((fmaxold - fminold) / 2.0);
+    sprintf(cval11,"%f",thresh);
+d728 3
+a730 3
+ sscanf(string,"%f",&thresh);
+ if (thresh > fmaxold) thresh = fmaxold;
+ if (thresh < fminold) thresh = fminold;
+d749 1
+a749 1
+ char     cval[5], cval11[11];
+d802 115
+@
+
+
+1.20
+log
+@added flip feature, added lahe menu
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d521 1
+a521 1
+    if (outnam[1] != NULL)
+d722 1
+a722 1
+ filtertype[1] = (char) NULL;
+d783 1
+a783 1
+ filtertype[1] = (char) NULL;
+@
+
+
+1.19
+log
+@added skeleton
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.18 94/09/27 16:52:00 leith Exp Locker: leith $*/
+d5 1
+a5 1
+C++************************************************************************
+d9 1
+a9 1
+C **************************************************************************
+d17 1
+a17 1
+C **************************************************************************
+d34 11
+a44 8
+ void          filter_but   (Widget, caddr_t, caddr_t);
+ void          filter_buts  (Widget, caddr_t, caddr_t);
+ void          filter_butsav(Widget, caddr_t, caddr_t);
+ void          filter_butrep(Widget, caddr_t, caddr_t);
+ void          filtersav_cb (Widget, caddr_t, caddr_t);
+ void          filtersave   (char *);
+ void          fillmen_buta (Widget, caddr_t, caddr_t);
+ void          fillmen      (Widget, caddr_t, caddr_t);
+d49 1
+d54 3
+a58 2
+ char            *environm, manfile[81] = "convolve.man";       
+ char            outnam[81] = "\0";      /* name for output file  */ 
+d65 8
+a72 2
+ static float    thresh;
+ static Widget   iw_fillmen, iw_ixseed, iw_iyseed, iw_thresh;
+d84 2
+a85 2
+ Widget iw_fill, iw_frepeat, iw_fsav,iw_pushs, iw_pushc, iw_dums;
+ 
+d87 1
+a87 1
+        iw_menubc6, iw_menubc7;
+d89 1
+a89 1
+        iw_menupc6, iw_menupc7;
+d157 1
+a157 1
+    /* create a Variance menu ----------------------------- Variance */
+d165 2
+a166 8
+    /* create a LAHE menu ------------------------------------- LAHE */
+    iw_menubc7= XmCreateMenuBar(iw_rowcolv, "menubc7", args, 0);
+    XtManageChild(iw_menubc7);
+    iw_menupc7= wid_pulldown(iw_menubc7,"LAHE      =>",'A');
+    iw_fh = wid_pushg(iw_menupc7, 0, "LAHE (11x11) - 26",filter_but,"t", -1,-1);
+    iw_fh = wid_pushg(iw_menupc7, 0, "LAHE (17x17) - 30",filter_but,"u", -1,-1);
+    iw_fh = wid_pushg(iw_menupc7, 0, "LAHE (21x21) - 30",filter_but,"v", -1,-1);
+    iw_fh = wid_pushg(iw_menupc7, 0, "LAHE (25x25) - 50",filter_but,"w", -1,-1);
+d168 1
+a168 1
+    /* create a fill menu ------------------------------------- fill */
+d171 1
+a171 1
+    /* create a invert menu --------------------------------- invert */
+d174 1
+a174 1
+    /* create a skeleton menu ------------------------------ skeleton */
+d181 4
+d201 9
+a278 2
+ float          fmint, fmaxt;
+ int            nsamt, nrowt;
+a282 6
+ /* find size and normalization parameters for original image */
+ nsamt   = filedata -> nsam;
+ nrowt   = filedata -> nrow;
+ fmint   = filedata -> fmin;
+ fmaxt   = filedata -> fmax;
+
+d286 1
+a286 1
+    if ((newimage = (float *) malloc(nsamt * nrowt *
+d304 1
+a304 1
+    iok = filter(fimage, nsamt, nrowt, 
+d306 1
+a306 1
+          newimage , &fmint, &fmaxt);
+d310 1
+a310 1
+    iok = filter(fimage, nsamt, nrowt, 
+d312 1
+a312 1
+          newimage , &fmint, &fmaxt);
+d317 1
+a317 1
+    iok = filter(fimage, nsamt, nrowt, 
+d319 1
+a319 1
+          newimage , &fmint, &fmaxt);
+d323 1
+a323 1
+    iok = filter(fimage, nsamt, nrowt, 
+d325 1
+a325 1
+          newimage , &fmint, &fmaxt);
+d329 1
+a329 1
+    iok = filter(fimage, nsamt, nrowt, 
+d331 1
+a331 1
+          newimage , &fmint, &fmaxt);
+d336 1
+a336 1
+    iok = filter(fimage, nsamt, nrowt, 
+d338 1
+a338 1
+          newimage , &fmint, &fmaxt);
+d342 1
+a342 1
+    iok = filter(fimage, nsamt, nrowt, 
+d344 1
+a344 1
+          newimage , &fmint, &fmaxt);
+d347 2
+a348 2
+    {                                             /* sharpen5 filter */
+    iok = filter(fimage, nsamt, nrowt, 
+d350 1
+a350 1
+          newimage , &fmint, &fmaxt);
+d355 3
+a357 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          TRUE, 0, fmaxt,
+          newimage , &fmint, &fmaxt);
+d361 3
+a363 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          TRUE, 1, fmaxt,
+          newimage , &fmint, &fmaxt);
+d367 3
+a369 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          TRUE, 2, fmaxt,
+          newimage , &fmint, &fmaxt);
+d373 3
+a375 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          TRUE, 3, fmaxt,
+          newimage , &fmint, &fmaxt);
+d379 3
+a381 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          TRUE, 4, fmaxt,
+          newimage , &fmint, &fmaxt);
+d385 3
+a387 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          TRUE, 5, fmaxt,
+          newimage , &fmint, &fmaxt);
+d392 3
+a394 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          TRUE, 6, fmaxt,
+          newimage , &fmint, &fmaxt);
+d399 3
+a401 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          TRUE, 7, fmaxt,
+          newimage , &fmint, &fmaxt);
+d406 3
+a408 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          FALSE, 0, fmaxt,
+          newimage , &fmint, &fmaxt);
+d412 3
+a414 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          FALSE, 1, fmaxt,
+          newimage , &fmint, &fmaxt);
+d418 3
+a420 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          FALSE, 2, fmaxt,
+          newimage , &fmint, &fmaxt);
+d424 3
+a426 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          FALSE, 3, fmaxt,
+          newimage , &fmint, &fmaxt);
+d430 3
+a432 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          FALSE, 4, fmaxt,
+          newimage , &fmint, &fmaxt);
+d437 3
+a439 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          FALSE, 5, fmaxt,
+          newimage , &fmint, &fmaxt);
+d444 3
+a446 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          FALSE, 6, fmaxt,
+          newimage , &fmint, &fmaxt);
+d451 3
+a453 3
+    iok = filtere(fimage, nsamt, nrowt, 
+          FALSE, 7, fmaxt,
+          newimage , &fmint, &fmaxt);
+d459 1
+a459 1
+    iok = filterv(fimage, nsamt, nrowt, 
+d461 1
+a461 1
+          newimage , &fmint, &fmaxt);
+d465 1
+a465 1
+    iok = filterv(fimage, nsamt, nrowt, 
+d467 1
+a467 1
+          newimage , &fmint, &fmaxt);
+d471 1
+a471 1
+    iok = filterv(fimage, nsamt, nrowt, 
+d473 1
+a473 1
+          newimage , &fmint, &fmaxt);
+d479 2
+a480 3
+    /* nbins=26; border_thickness=5; */
+    localareaeq(fimage,nsamt,nrowt,&fmint,&fmaxt, 
+                26, 5, newimage);
+a482 21
+ else if (*data == 'u')
+    {  /* local area histogram equalization  filter */
+    /* nbins=30; border_thickness=8; */
+    localareaeq(fimage,nsamt,nrowt,&fmint,&fmaxt, 
+                30, 8, newimage);
+    }
+
+ else if (*data == 'v')
+    {  /* local area histogram equalization  filter */
+    /* nbins=30; border_thickness=10; */
+    iok = localareaeq(fimage,nsamt,nrowt,&fmint,&fmaxt, 
+                30, 10, newimage);
+    }
+
+ else if (*data == 'w')
+    {  /* local area histogram equalization  filter */
+    /* nbins=50; border_thickness=12; */
+    iok = localareaeq(fimage,nsamt,nrowt,&fmint,&fmaxt, 
+                50, 12, newimage);
+    }
+
+d485 3
+a487 3
+    iok = filterfill(fimage, nsamt,nrowt,
+                ixseed, iyseed, thresh, fmint, 
+                newimage, &fmint,&fmaxt);
+d492 2
+a493 2
+    iok = invert(fimage, nsamt,nrowt,
+                newimage, &fmint,&fmaxt);
+d497 2
+a498 2
+    iok = filterskel(fimage, nsamt,nrowt,
+                newimage, &fmint,&fmaxt);
+d512 1
+a512 1
+                       nsam, nrow, fmint, fmaxt);
+d554 1
+a554 1
+/******************  save  callback **********************************/
+d564 1
+a564 1
+ /*************  filtersav_cb  (runs after wid_text) *****************/
+d577 1
+a577 1
+ /*************  filtersave  (runs after filtersav_cb) ****************/
+d605 1
+a605 1
+/******************  repeat  callback *********************************/
+d607 18
+d638 1
+a638 1
+/**************************  fillmen *******************************/
+a644 1
+ float          fmint, fmaxt;
+d650 1
+a650 1
+                             "image display options",20,20);
+d654 1
+a654 1
+    /* create text box for ixseed input ---------------------- ixseed */
+d658 1
+a658 1
+    /* create text box for iyseed input ---------------------- iyseed */
+d662 1
+a662 1
+    /* create text box for threshold ------------------------  thresh */
+d664 1
+a664 1
+    thresh = filedata->fmin + ((filedata->fmax - filedata->fmin) / 2.0);
+d668 7
+a674 1
+    /* create accept boxes  ----------------------------------- apply */
+a682 1
+ /************ accept button callback *********************************/
+d684 2
+d695 12
+d710 2
+a711 2
+ if (thresh > filedata -> fmax) thresh = filedata -> fmax;
+ if (thresh < filedata -> fmin) thresh = filedata -> fmin;
+d714 53
+a766 1
+ if (ixseed  < 1 || ixseed  > filedata -> nsam) 
+d768 1
+a768 1
+    spout("*** X seed range is: 1...nsam"); 
+d772 3
+a774 1
+ if (iyseed < 1 || iyseed > filedata ->nrow) 
+d776 1
+a776 1
+    spout("*** Y seed range is: 1...nrow"); 
+d780 1
+a780 1
+ XtUnmanageChild(iw_fillmen);
+d782 2
+a783 2
+ filtertype[0] = 'x';
+ filtertype[1] = NULL;
+a785 1
+
+@
+
+
+1.18
+log
+@added fill
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.17 94/09/16 15:58:55 leith Exp Locker: leith $*/
+d169 3
+d468 1
+a468 1
+    {                   /* local area histogram equalization  filter */
+d476 1
+a476 1
+    /* nbins=50; border_thickness=8; */
+d483 1
+a483 1
+    /* nbins=50; border_thickness=10; */
+d503 1
+a503 1
+    {                                                     /* invert */
+d505 5
+@
+
+
+1.17
+log
+@added pulldown menus and more options for erode/dilate
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d29 1
+d37 1
+d39 3
+d56 6
+a61 1
+ static char*    cimage = NULL;
+a62 1
+
+d69 5
+a73 4
+ Widget iw_f1, iw_f2, iw_f3, iw_f4, iw_f5, iw_f6, iw_f7, iw_f8, iw_f9,
+        iw_fa, iw_fb, iw_fc, iw_fd, iw_fe, iw_ff, iw_fg, iw_fh, iw_fi,
+        iw_fj, iw_fk, iw_fl, iw_fm, iw_fn, iw_fo, iw_fp, iw_fq, iw_fr,
+        iw_fsav,iw_pushs, iw_pushc, iw_dums;
+d75 4
+a78 4
+ Widget iw_menubc1, iw_menubc2, iw_menubc3, iw_menubc4,iw_menubc5, 
+        iw_menubc6;
+ Widget iw_menupc1, iw_menupc2, iw_menupc3, iw_menupc4,iw_menupc5, 
+        iw_menupc6;
+d87 1
+a87 1
+    iw_filtermen  = wid_dialog(iw_win, 0, "Discrete convolution menu", -1, -1);
+d90 1
+a90 1
+    /* create a menu bar for command selection -----------------*/
+d126 6
+a131 4
+    iw_fi = wid_pushg(iw_menupc4, 0, " (2)",filter_but,"i", -1,-1);
+    iw_fj = wid_pushg(iw_menupc4, 0, " (3)",filter_but,"j", -1,-1);
+    iw_fk = wid_pushg(iw_menupc4, 0, " (4)",filter_but,"k", -1,-1);
+    iw_fl = wid_pushg(iw_menupc4, 0, " (5)",filter_but,"l", -1,-1);
+d137 8
+a144 5
+    iw_fc = wid_pushg(iw_menupc5, 0, " (0)",filter_but,"c", -1,-1);
+    iw_fd = wid_pushg(iw_menupc5, 0, " (1)",filter_but,"d", -1,-1);
+    iw_fm = wid_pushg(iw_menupc5, 0, " (2)",filter_but,"m", -1,-1);
+    iw_fn = wid_pushg(iw_menupc5, 0, " (3)",filter_but,"n", -1,-1);
+    iw_fo = wid_pushg(iw_menupc5, 0, " (4)",filter_but,"o", -1,-1);
+d150 3
+a152 3
+    iw_fe = wid_pushg(iw_menupc6, 0, " (3x3)",filter_but,"e", -1,-1);
+    iw_ff = wid_pushg(iw_menupc6, 0, " (5x5)",filter_but,"f", -1,-1);
+    iw_fg = wid_pushg(iw_menupc6, 0, " (7x7)",filter_but,"g", -1,-1);
+d155 7
+a161 1
+    iw_fh = wid_pushg(iw_rowcolv, 0, "LAHE (7x7)",filter_but,"h", -1,-1);
+d163 2
+d166 7
+d262 1
+a263 1
+
+d275 1
+a275 4
+       { 
+       spout(" *** Unable to allocate memory in filter_but.");
+       return;
+       }
+d278 2
+a279 2
+  /* set waitcursor */
+  waitcursor(iwin, TRUE, 79);
+d281 8
+d290 1
+a290 1
+    {  /* laplacian filter */
+d303 1
+a303 1
+    {  /* gauss filter */
+d309 1
+a309 1
+    {  /* hipass3 filter */
+d322 1
+a322 1
+    {  /* lopass3 filter */
+d334 1
+a334 1
+    {  /* sharpen5 filter */
+d341 1
+a341 1
+    {  /* erode filter */
+d352 1
+a352 1
+ else if (*data == 'i')
+d358 1
+a358 1
+ else if (*data == 'j')
+d364 1
+a364 1
+ else if (*data == 'k')
+d370 1
+a370 1
+ else if (*data == 'l')
+d377 2
+a378 2
+ else if (*data == 'c')
+    {  /* dilate filter */
+d380 14
+d397 1
+a397 1
+ else if (*data == 'd')
+d403 1
+a403 1
+ else if (*data == 'm')
+d409 1
+a409 1
+ else if (*data == 'n')
+d415 2
+a416 2
+ else if (*data == 'o')
+    {  /* dilate filter */
+d422 24
+a445 2
+ else if (*data == 'e')
+    {  /* variance3 filter */
+d450 1
+a450 1
+ else if (*data == 'f')
+d456 1
+a456 1
+ else if (*data == 'g')
+d463 9
+a471 1
+ else if (*data == 'h')
+d473 1
+a473 1
+    /* nbins=50; border_thickness=5; */
+d475 1
+a475 1
+                20, 5, newimage);
+d478 27
+d522 19
+a540 3
+
+ /* restart the filter menu */
+ filtermen();
+a542 1
+
+a572 1
+ FILEDATA      *filedatat;
+d578 9
+d590 2
+a591 2
+ /* add datexc to winnam if not already there */
+ if (strstr(outnam,datexc) == 0)
+d593 2
+a594 2
+    strcat(outnam,".");
+    strcat(outnam,datexc);
+d598 1
+a598 1
+ filedatat = opennew(outnam, nsam, nrow, 1, 1, "u");
+d600 1
+d605 2
+d608 93
+@
+
+
+1.16
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/filtermen.c,v 1.14 94/08/03 16:10:36 odesanya Exp Locker: odesanya $*/
+d28 1
+d48 1
+a48 1
+ char            outnam[81] = "\0";            /* name for output file    */ 
+d61 8
+a68 2
+        iw_fa, iw_fb, iw_fc, iw_fd, iw_fe, iw_ff, iw_fg,
+        iw_fsav,iw_pushs, iw_pushc, iw_dums; 
+d70 3
+d76 1
+d80 2
+a81 3
+    /* create push button for Laplac3 filter. --------------- Laplac3 */
+    iw_f1   = wid_pushg(iw_rowcolv, 0, "Laplacian (3x3)",
+                     filter_but,"1", -1,-1);
+d83 6
+a88 3
+    /* create push button for Laplac3 filter. --------------- Laplac5 */
+    iw_f2   = wid_pushg(iw_rowcolv, 0, "Laplacian (5x5)",
+                     filter_but,"2", -1,-1);
+d90 2
+a91 3
+    /* create push button for Laplac3 filter. ---------------- Gauss7 */
+    iw_f3   = wid_pushg(iw_rowcolv, 0, "Gaussian (7x7)",
+                     filter_but,"3", -1,-1);
+d93 6
+a98 3
+    /* create push button for hipass3 filter. --------------- HiPass3 */
+    iw_f4   = wid_pushg(iw_rowcolv, 0, "Hi Pass (3x3)",
+                     filter_but,"4", -1,-1);
+d100 6
+a105 3
+    /* create push button for Hipass5 filter. --------------- HiPass5 */
+    iw_f5   = wid_pushg(iw_rowcolv, 0, "Hi Pass (5x5)",
+                     filter_but,"5", -1,-1);
+d107 2
+a108 3
+    /* create push button for LoPass3 filter. -------------- Lo Pass3 */
+    iw_f6   = wid_pushg(iw_rowcolv, 0, "Low Pass (3x3)",
+                     filter_but,"6", -1,-1);
+d110 10
+a119 3
+    /* create push button for LoPass5 filter. -------------- Lo Pass3 */
+    iw_f7   = wid_pushg(iw_rowcolv, 0, "Low Pass (5x5)",
+                     filter_but,"7", -1,-1);
+d121 9
+a129 3
+    /* create push button for LoPass5 filter. -------------- Sharpens */
+    iw_f8   = wid_pushg(iw_rowcolv, 0, "Sharpen (3x3)",
+                     filter_but,"8", -1,-1);
+d131 7
+a137 3
+    /* create push button for Erode0 filter. --------------- Erodes */
+    iw_fa   = wid_pushg(iw_rowcolv, 0, "Erode (0)",
+                     filter_but,"a", -1,-1);
+d139 2
+a140 3
+    /* create push button for Erode0 filter. --------------- Erodes */
+    iw_fb   = wid_pushg(iw_rowcolv, 0, "Erode (1)",
+                     filter_but,"b", -1,-1);
+a141 3
+    /* create push button for Erode0 filter. --------------- Dilates */
+    iw_fc   = wid_pushg(iw_rowcolv, 0, "Dilate (0)",
+                     filter_but,"c", -1,-1);
+a142 16
+    /* create push button for Erode0 filter. --------------- Dilates */
+    iw_fd   = wid_pushg(iw_rowcolv, 0, "Dilate (1)",
+                     filter_but,"d", -1,-1);
+
+    /* create push button for Variance3 filter. ----------- Variance */
+    iw_fe   = wid_pushg(iw_rowcolv, 0, "Variance (3x3)",
+                     filter_but,"e", -1,-1);
+
+    /* create push button for Variance5 filter. ----------- Variance */
+    iw_ff   = wid_pushg(iw_rowcolv, 0, "Variance (5x5)",
+                     filter_but,"f", -1,-1);
+
+    /* create push button for Variance5 filter. ----------- Variance */
+    iw_fg   = wid_pushg(iw_rowcolv, 0, "Variance (7x7)",
+                     filter_but,"g", -1,-1);
+
+d144 1
+a144 2
+    iw_fsav = wid_pushg(iw_rowcolv, 0, "Save in file",
+                     filter_butsav,"0", -1,-1);
+d147 1
+a147 1
+        spout("Could not get the WEBMAN_DIR environment!");
+d149 1
+a149 1
+      {
+d152 2
+a153 1
+      }
+d266 1
+d285 1
+d304 1
+d317 25
+d354 19
+a378 1
+
+a384 1
+
+d386 1
+a386 1
+    {  /* variance3 filter */
+d390 7
+@
+
+
+1.15
+log
+@*** empty log message ***
+@
+text
+@d219 7
+d229 1
+a229 1
+    if ((newimage = (float *) malloc(nsams * nrows *
+a236 6
+ /* find size and normalization parameters for original image */
+ nsamt   = filedata -> nsam;
+ nrowt   = filedata -> nrow;
+ fmint   = filedata -> fmin;
+ fmaxt   = filedata -> fmax;
+
+a349 1
+
+@
+
+
+1.14
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.12 1994/07/26 20:59:25 odesanya Exp odesanya $*/
+@
+
+
+1.13
+log
+@*** empty log message ***
+@
+text
+@d46 2
+a47 2
+ char           *manfile;                /* name for help file      */       
+ char            outnam[81] = "\0";      /* name for output file    */ 
+d133 3
+a135 1
+     if( (manfile = getenv("WEBMAN_DIR") ) == NULL)
+d137 2
+a138 3
+        spout("Could not get the WEBMAN_DIR environment!");
+        manfile = (char *) malloc(13*sizeof(char) );
+        strcpy(manfile,"convolve.man");
+a139 2
+     else
+      strcat(manfile,"convolve.man");
+@
+
+
+1.12
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/filtermen.c,v 1.10 94/07/23 17:25:25 odesanya Exp $*/
+d46 1
+a46 1
+ char            manfile[81];             /* name for help file      */       
+d133 8
+a140 2
+     strcpy(manfile,getenv("WEBMAN_DIR") );
+     strcat(manfile,"convolve.man");
+@
+
+
+1.11
+log
+@*** empty log message ***
+@
+text
+@a30 2
+ extern Widget   wid_optmenu( Widget, char *);
+
+d58 1
+a58 1
+ Widget iw_rowcolv, iw_option;
+a68 1
+    iw_option = wid_optmenu(iw_rowcolv, "Laplacian:");
+d70 1
+a70 1
+    iw_f1   = wid_pushg(iw_option, 0, "(3x3)",
+d74 1
+a74 1
+    iw_f2   = wid_pushg(iw_option, 0, "(5x5)",
+a80 1
+    iw_option = wid_optmenu(iw_rowcolv, "Hi Pass:");
+d82 1
+a82 1
+    iw_f4   = wid_pushg(iw_option, 0, "(3x3)",
+d86 1
+a86 1
+    iw_f5   = wid_pushg(iw_option, 0, "(5x5)",
+a88 1
+    iw_option = wid_optmenu(iw_rowcolv, "Low Pass:");
+d90 1
+a90 1
+    iw_f6   = wid_pushg(iw_option, 0, "(3x3)",
+d94 1
+a94 1
+    iw_f7   = wid_pushg(iw_option, 0, "(5x5)",
+a100 1
+    iw_option = wid_optmenu(iw_rowcolv, "Erode:");
+d102 1
+a102 1
+    iw_fa   = wid_pushg(iw_option, 0, "(0)",
+d106 1
+a106 1
+    iw_fb   = wid_pushg(iw_option, 0, "(1)",
+a108 1
+    iw_option = wid_optmenu(iw_rowcolv, "Dilate:");
+d110 1
+a110 1
+    iw_fc   = wid_pushg(iw_option, 0, "(0)",
+d114 1
+a114 1
+    iw_fd   = wid_pushg(iw_option, 0, "(1)",
+a116 1
+    iw_option = wid_optmenu(iw_rowcolv, "Variance:");
+d118 1
+a118 1
+    iw_fe   = wid_pushg(iw_option, 0, "(3x3)",
+d122 1
+a122 1
+    iw_ff   = wid_pushg(iw_option, 0, "(5x5)",
+d126 1
+a126 1
+    iw_fg   = wid_pushg(iw_option, 0, "(7x7)",
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/filtermen.c,v 1.9 1994/07/22 16:54:45 odesanya Exp $*/
+d31 2
+d48 1
+a48 1
+ char            mandir[81];             /* name for help file      */       
+d60 1
+a60 1
+ Widget iw_rowcolv;
+d71 1
+d73 1
+a73 1
+    iw_f1   = wid_pushg(iw_rowcolv, 0, "Laplacian (3x3)",
+d77 1
+a77 1
+    iw_f2   = wid_pushg(iw_rowcolv, 0, "Laplacian (5x5)",
+d84 1
+d86 1
+a86 1
+    iw_f4   = wid_pushg(iw_rowcolv, 0, "Hi Pass (3x3)",
+d90 1
+a90 1
+    iw_f5   = wid_pushg(iw_rowcolv, 0, "Hi Pass (5x5)",
+d93 1
+d95 1
+a95 1
+    iw_f6   = wid_pushg(iw_rowcolv, 0, "Low Pass (3x3)",
+d99 1
+a99 1
+    iw_f7   = wid_pushg(iw_rowcolv, 0, "Low Pass (5x5)",
+d106 1
+d108 1
+a108 1
+    iw_fa   = wid_pushg(iw_rowcolv, 0, "Erode (0)",
+d112 1
+a112 1
+    iw_fb   = wid_pushg(iw_rowcolv, 0, "Erode (1)",
+d115 1
+d117 1
+a117 1
+    iw_fc   = wid_pushg(iw_rowcolv, 0, "Dilate (0)",
+d121 1
+a121 1
+    iw_fd   = wid_pushg(iw_rowcolv, 0, "Dilate (1)",
+d124 1
+d126 1
+a126 1
+    iw_fe   = wid_pushg(iw_rowcolv, 0, "Variance (3x3)",
+d130 1
+a130 1
+    iw_ff   = wid_pushg(iw_rowcolv, 0, "Variance (5x5)",
+d134 1
+a134 1
+    iw_fg   = wid_pushg(iw_rowcolv, 0, "Variance (7x7)",
+d141 2
+a142 2
+     strcpy(mandir,getenv("WEBMAN_DIR") );
+     strcat(mandir,"convolve.man");
+d146 1
+a146 1
+                        filter_buts, fin_cb ,fin_cb, mandir);
+@
+
+
+1.9
+log
+@made preparations for online help for the different Convolution options
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/filtermen.c,v 1.8 94/03/24 16:04:10 leith Exp $*/
+a27 4
+#include <Xm/PushB.h>  /*  lekan  */
+#include <Xm/CascadeB.h>  /*  lekan  */
+#include <Xm/MainW.h>  /*  lekan  */
+
+a36 3
+/*  lekan  */
+ void          filter_help_menu( Widget );   
+
+d46 1
+a68 3
+    filter_help_menu(iw_rowcolv);
+    iw_rowcolv    = wid_rowcol(iw_rowcolv, 'v', -1, -1);
+
+d133 2
+d137 2
+a138 2
+                        &iw_pushs,   &iw_pushc, &iw_dums,  "SC",
+                        filter_buts,fin_cb ,fin_cb, NULL);
+a404 102
+
+/*    lekan   */
+/*************  these sections will process the help requests */ 
+
+void filter_help_callback(Widget iw_tempt, int butpos, caddr_t call_data)
+ {
+ 
+       switch( butpos )
+        {
+          case 1: 
+             spout("Help is currently unavailable for Laplacian (3x3)"); break;
+          case 2: 
+             spout("Help is currently unavailable for Laplacian (5x5)"); break;
+          case 3: 
+             spout("Help is currently unavailable for Gaussian (7x7)"); break;
+          case 4: 
+             spout("Help is currently unavailable for Hi Pass (3x3)"); break;
+          case 5: 
+             spout("Help is currently unavailable for Hi Pass (5x5)"); break;
+          case 6: 
+             spout("Help is currently unavailable for Low Pass (3x3)"); break;
+          case 7: 
+             spout("Help is currently unavailable for Low Pass (5x5)"); break;
+          case 8: 
+             spout("Help is currently unavailable for Sharpen (3x3)"); break;
+          case 9: 
+             spout("Help is currently unavailable for Erode (0)"); break;
+          case 10: 
+             spout("Help is currently unyet available for Erode (1)"); break;
+          case 11: 
+             spout("Help is currently unavailable for Dilate (0)"); break;
+          case 12: 
+            spout("Help is currently unavailable for Dilate (1)"); break;
+          case 13: 
+             spout("Help is currently unavailable for Variance (5x5)"); break;
+          case 14: 
+             spout("Help is currently unavailable for Variance (7x7)"); break;
+          default:  break;
+        }
+ } 
+
+void filter_fill_menu( Widget parent, char * textlabel, int butpos)
+ { 
+   Widget  iw_item;
+
+    iw_item = XtCreateManagedWidget(textlabel, xmPushButtonWidgetClass, 
+                                         parent, NULL, 0);
+
+    XtAddCallback(iw_item, XmNactivateCallback, 
+               (XtCallbackProc) filter_help_callback, (XtPointer) butpos);
+ }
+
+void filter_help_menu( Widget parent )
+ {
+  Arg        args[5];  
+  Widget      iw_mw, iw_mb, iw_h, iw_pd;
+
+   
+    XtSetArg( args[0], XmNheight, 40);
+    XtSetArg( args[1], XmNshadowThickness, 0);
+    XtSetArg( args[2], XmNshowSeparator, True);
+
+    iw_mw = XmCreateMainWindow(parent, "main_window", args, 3);
+    XtManageChild( iw_mw );
+
+    iw_mb   = (Widget) XmCreateMenuBar(iw_mw, "help_menu_bar", args, 0);
+    XtManageChild( iw_mb );
+
+    XmMainWindowSetAreas(iw_mw, iw_mb, (Widget) NULL, (Widget) NULL, 
+                         (Widget) NULL, (Widget) NULL) ;
+
+/* create help menu  */
+    iw_h = XmCreateCascadeButton( iw_mb, "Help", args, 0);
+    XtManageChild( iw_h );
+
+/* make it look like a default motif help widget */
+    XtSetArg( args[0], XmNmenuHelpWidget, iw_h);
+    XtSetValues( iw_mb, args, 1);
+
+/* Create the pull down menu  */
+    iw_pd = (Widget) XmCreatePulldownMenu( iw_mb, "help_list", args, 0);
+    
+    XtSetArg( args[0], XmNsubMenuId, iw_pd); /* set up help button to pull down */
+    XtSetValues( iw_h, args, 1);
+
+/* Fill in the menu items  */
+    filter_fill_menu(iw_pd,  "Laplacian (3x3)",  1); 
+    filter_fill_menu(iw_pd,  "Laplacian (5x5)",  2);
+    filter_fill_menu(iw_pd,  "Gaussian (7x7)",   3);
+    filter_fill_menu(iw_pd,  "Hi Pass (3x3)",    4);
+    filter_fill_menu(iw_pd,  "Hi Pass (5x5)",    5);
+    filter_fill_menu(iw_pd,  "Low Pass (3x3)",   6);
+    filter_fill_menu(iw_pd,  "Low Pass (5x5)",   7);
+    filter_fill_menu(iw_pd,  "Sharpen (3x3)",    8);
+    filter_fill_menu(iw_pd,  "Erode (0)",        9);
+    filter_fill_menu(iw_pd,  "Erode (1)",       10);
+    filter_fill_menu(iw_pd,  "Dilate (0)",      11);
+    filter_fill_menu(iw_pd,  "Dilate (1)",      12);
+    filter_fill_menu(iw_pd,  "Variance (5x5)",  13);
+    filter_fill_menu(iw_pd,  "Variance (7x7)",  14);
+
+}
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/filtermen.c,v 1.7 94/03/24 14:05:48 leith Exp Locker: leith $*/
+d28 4
+d41 3
+d75 3
+d413 101
+@
+
+
+1.7
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/filtermen.c,v 1.6 94/03/24 13:54:17 leith Exp Locker: leith $*/
+a39 1
+ extern char     * cimage;
+d45 1
+a45 1
+ static float *  newimage   = NULL;
+d49 1
+d222 1
+a222 1
+ /* fin size and normalization parametrs for original image */
+d333 3
+a335 1
+    showbimage(fimage, FALSE, FALSE, &imagel, nsam, nrow, fmint, fmaxt);
+@
+
+
+1.6
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/filtermen.c,v 1.5 94/02/14 10:23:01 leith Exp Locker: leith $*/
+d29 1
+a29 1
+#include "results.h"
+@
+
+
+1.5
+log
+@closefile test wrong
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/filtermen.c,v 1.4 93/12/30 14:01:42 leith Exp Locker: leith $*/
+d29 1
+a29 29
+
+ /* function prototypes */
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*) (), 
+                             char *,int,int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+
+ extern void   spout        (char *);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern int    filter       (float *, int, int, float *, int, int, 
+                             float *, float *, float *);
+ extern void   waitcursor   (Window, int, int);
+ extern int    showimage    (FILEDATA *, int, int, XImage **, int, int);
+ extern int    showbimage   (float *, int, int, XImage **, int, int,
+                             float, float);
+ extern int    filtere      (float *, int, int, int, int, float, 
+                             float *, float *, float *);
+ extern int    filterv      (float *, int, int, float *, int, int, 
+                             float *, float *, float *);
+ extern Widget wid_text     (Widget, Widget, char *, char *,
+                             void (*)(), caddr_t, int, int);
+ extern char * extractstring(XmString);
+ extern int    wrtvol       (FILEDATA *,  float *);
+ extern int    closefile    (FILEDATA *);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern FILEDATA *opennew   (char *, int, int, int, int, char *);
+@
+
+
+1.4
+log
+@added save button
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/filtermen.c,v 1.3 93/12/20 13:36:07 leith Exp $*/
+d425 1
+a425 1
+ if ((int) filedatat != NULL) closefile(filedatat);
+@
+
+
+1.3
+log
+@added variance filters
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/filtermen.c,v 1.2 93/12/20 11:57:10 leith Exp Locker: leith $*/
+d51 7
+d62 2
+d73 5
+a77 2
+ static Widget  iw_filtermen;
+ static float   * newimage = NULL;
+d79 1
+d88 1
+a88 1
+        iw_pushs, iw_pushc, iw_dums; 
+d156 4
+d389 1
+d391 37
+@
+
+
+1.2
+log
+@added erosion
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/filtermen.c,v 1.1 93/12/09 10:58:24 leith Exp Locker: leith $*/
+d49 2
+d74 1
+a74 1
+        iw_fa, iw_fb, iw_fc, iw_fd,
+d131 13
+a143 1
+    /* create box for cancel --------------------------------- cancel */
+d193 1
+d199 4
+d204 13
+d308 1
+a308 1
+ else if (*data == 'c')
+d312 20
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitmen.c,v 1.5 93/11/26 12:29:20 leith Exp $*/
+d47 2
+d72 1
+d113 16
+d192 1
+a192 1
+    /* allocate float space first */
+d256 24
+@

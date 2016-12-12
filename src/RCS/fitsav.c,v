@@ -1,0 +1,1083 @@
+head	1.27;
+access;
+symbols
+	pre-tilt-improve:1.26
+	pre_surf_fromtop:1.25
+	pre_neednewmap:1.25
+	pre_apppluss_remove:1.25
+	pre_tiltpair_chng:1.23
+	pre_GPL:1.22;
+locks;
+comment	@ * @;
+
+
+1.27
+date	2015.09.01.17.53.12;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2015.06.11.13.28.57;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2011.06.22.19.09.19;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2011.06.22.19.08.29;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2005.10.18.16.59.44;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	96.05.07.14.08.35;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	96.05.01.16.15.11;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	96.04.16.14.25.50;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	96.04.05.16.48.53;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	96.03.25.14.43.34;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	96.03.19.14.22.34;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	95.09.06.16.07.57;	author mladjadj;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.08.16.18.14.46;	author mladjadj;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.08.14.16.55.12;	author mladjadj;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	95.08.10.15.43.17;	author mladjadj;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.08.08.15.37.54;	author mladjadj;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.12.30.10.17.19;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.07.05.16.11.06;	author odesanya;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.06.07.18.15.27;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.06.06.14.57.40;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.06.06.11.25.50;	author odesanya;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.05.19.17.14.15;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	93.11.29.16.30.30;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.11.29.10.35.25;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.26.13.25.34;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.24.15.47.31;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.24.13.47.46;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.27
+log
+@$2
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/fitsav.c,v 1.26 2015/06/11 13:28:57 leith Exp $*/
+
+/*
+ C**********************************************************************
+ C
+ C  fitsav.c
+ C
+ C *********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C  fitsav(limfitt)
+ C
+ C  PURPOSE:    Saves fitted angles in dfil3
+ C              Saves tilted predicted locations in dfil6
+ C
+ C  CALLED BY:   
+ C
+ C**********************************************************************
+*/
+
+#include "std.h"
+#include "common.h"
+#include "x.h"
+#include "routines.h"
+
+ /* Function prototypes */
+
+ /* External common variables used here */
+ extern char    dfil3[12], dfil6[12] ;       /* Doc file names   */
+ extern int     iredu ;                      /* Image reduction  */
+ extern int     fitted ;                     /* Fitted flag      */
+ extern float   phif, thetaf, gammaff ;      /* Tilt angles      */
+ extern float   xu0t, yu0t, xs0t, ys0t ;     /* Tilt origins     */
+ extern float * xu0 ; 
+ extern float * yu0 ; 
+ extern float * xs2 ; 
+ extern float * ys2 ; 
+ extern int     maxpart ;
+ extern char    datexc[4] ;                  /* File extension   */    
+     
+
+ char     str121[] =
+  " Key: 121                                                   #Markers-fitted         ";
+ //121 6            0            0            0            0           24            0
+
+ char     str122[] = 
+  " Key: 122   Fitted-flag";
+//0122 6            1            0            0            0            0            0
+
+ char     str123[] = 
+  " Key: 123    Untilted-X,Y-Origin      Tilted-X,Y-Origin       Img-Reduction";
+//0123 6          379          211      405.087      245.268            1            0
+
+ char     str124[] = 
+  "Key:  124 Tilt-angle  Untilted-axis-direction-angles (Gamma,Phi)"; 
+//0124 6      49.1505     -77.9898     -77.7016            0            0            0
+
+ char     strdft1[] =  "  Predicted locations in tilted (right) file"; 
+
+ char     strdft2[] = 
+  "            Particle   Reduced-X,Y-location     Original-X,Y-location           Flag";
+//0001 6            1      404.354      244.869      404.354      244.869            0
+
+
+/*****************************   fitsav   ****************************/
+
+ void fitsav(int limfitt)
+
+ { 
+ float      dlist[8];
+ FILE *     fpdoc;
+ int        i, openit, append_flag, date_flag;
+
+ /* Save fit info in dfil3 (dcb***) doc file */ 
+ dlist[0] = 121;
+ dlist[1] = 0.0;
+ dlist[2] = 0.0;
+ dlist[3] = 0.0;
+ dlist[4] = 0.0;
+ dlist[5] = limfitt; 
+ dlist[6] = 0.0;       // Used to be: back_wins; 
+    
+ /* Doc file: dfil3  (dcb***) opened and closed here. */
+ openit   = TRUE;  /* Openit first time to get fpdoc pointer */
+ fpdoc    = savdnc(dfil3, datexc, &fpdoc, dlist, 
+                   7, &openit, FALSE, TRUE,str121);
+ if (!fpdoc) 
+    {  XBell(idispl,50); XBell(idispl,50); return; }
+
+ /* Set fitted flag */
+ dlist[0] = 122;
+ dlist[1] = fitted;
+ dlist[2] = 0.0;
+ dlist[3] = 0.0;
+ dlist[4] = 0.0;
+ dlist[5] = 0.0;
+ dlist[6] = 0.0;
+      
+ fpdoc    = savdnc(dfil3, datexc, &fpdoc,dlist, 
+                  7, &openit, TRUE, TRUE,str122);
+
+ /* Save origin info*/
+ dlist[0] = 123;
+ dlist[1] = xu0t;
+ dlist[2] = yu0t;
+ dlist[3] = xs0t;
+ dlist[4] = ys0t;
+ dlist[5] = iredu; 
+ dlist[6] = 0.0;
+ 
+ fpdoc = savdnc(dfil3, datexc, &fpdoc,dlist, 
+                   7, &openit, TRUE, TRUE,str123);
+
+ /* Set tilt angle info */
+ dlist[0] = 124;
+ dlist[1] = thetaf;
+ dlist[2] = gammaff;
+ dlist[3] = phif;
+ dlist[4] = 0.0;
+ dlist[5] = 0.0; 
+ dlist[6] = 0.0;
+      
+ fpdoc = savdnc(dfil3, datexc, &fpdoc, dlist, 
+                   7, &openit, TRUE, TRUE, str124);
+
+ fclose(fpdoc); fpdoc = NULL;
+
+ if (fitted)
+    {
+    /* Use angles to get predicted location in tilted image  */
+    witran(xu0, yu0, xs2, ys2, maxpart, gammaff, thetaf, phif);
+       
+    openit      = TRUE; 
+    append_flag = FALSE;
+    date_flag   = TRUE;
+    fpdoc       = savdnc(dfil6, datexc, &fpdoc,
+                         dlist, 0, &openit, append_flag, date_flag, strdft1);
+    if (!fpdoc) 
+       { XBell(idispl,50); XBell(idispl,50); return; }
+
+    append_flag = TRUE;
+    date_flag   = FALSE;
+    fpdoc       = savdnc(dfil6, datexc, &fpdoc,
+                     dlist, 0, &openit, append_flag, date_flag, strdft2);
+
+    dlist[6] = 0.0;
+
+    for ( i = 0; i < maxpart; i++)
+       {
+       /* Save predicted right locations in doc file: dfil6 (dft***) */ 
+       dlist[0] = i+1;
+       dlist[1] = i+1;
+       dlist[2] = xs2[i] * iredu;
+       dlist[3] = ys2[i] * iredu;
+       dlist[4] = xs2[i];
+       dlist[5] = ys2[i];       
+   
+       fpdoc   = savdn1(dfil6, datexc, &fpdoc,
+                        dlist, 7, &openit, append_flag, date_flag);
+
+       }
+    fclose(fpdoc); fpdoc = NULL;
+    }
+ }
+
+@
+
+
+1.26
+log
+@formatting,  output msg formatting, cosmetic, append_flag setting
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/fitsav.c,v 1.25 2011/06/22 19:09:19 leith Exp $*/
+d5 5
+a9 5
+C++*********************************************************************
+C
+C    fitsav
+C
+C **********************************************************************
+d33 10
+a42 10
+C **********************************************************************
+C
+C    fitsav
+C
+C    PURPOSE:    Saves fitted angles in dfil3
+C                Saves tilted predicted loactions in dfil6
+C
+C    CALLED BY:   
+C
+C **********************************************************************
+d53 11
+a63 8
+ extern char   dfil3[12], dfil6[12];       /* Doc file names   */
+ extern int    iredu;                      /* Image reduction  */
+ extern int    fitted;                     /* Fitted flag      */
+ extern float  phif, thetaf, gammaff;      /* Tilt angles      */
+ extern float  xu0t, yu0t, xs0t, ys0t;     /* Tilt origins     */
+ extern float  * xu0, * yu0, * xs2, * ys2; 
+ extern int    lbnum, maxpart;
+ extern char   datexc[4];                  /* File extension   */    
+d67 1
+a67 1
+  " Key: 121                                                   #Markers-fitted   #Backgrounds";
+d82 3
+a84 1
+ char     strdft[] = 
+d94 3
+a96 3
+ float          dlist[8];
+ FILE           * fpdoc;
+ int            i, openit, append_flag;
+d105 1
+a105 1
+ dlist[6] = lbnum; 
+d107 1
+a107 1
+ /* dfil3  (dcb***) will be opened and closed here. */
+a153 3
+    // 2015  openit = TRUE; append_flag = TRUE;
+    openit = TRUE; append_flag = FALSE;
+
+d156 13
+d171 1
+a171 1
+       
+d182 2
+a183 12
+       if (i == 0) 
+          { /* First time thru */ 
+          fpdoc   = savdnc(dfil6, datexc, &fpdoc,
+                         dlist, 7, &openit, append_flag, TRUE, strdft);
+          if (!fpdoc) 
+              { XBell(idispl,50); XBell(idispl,50); return; }
+
+          append_flag = TRUE;
+          }
+       else
+          {fpdoc   = savdn1(dfil6, datexc, &fpdoc,
+                          dlist, 7, &openit, append_flag,TRUE);}
+d186 1
+a186 1
+    fclose(fpdoc);
+@
+
+
+1.25
+log
+@typo
+@
+text
+@d2 1
+a2 1
+/*$Header:  Exp $*/
+d11 1
+a11 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d53 5
+a57 5
+ extern char   dfil3[12], dfil6[12];     /* Doc file names     */
+ extern int    iredu;                    /* Image reduction */
+ extern int    fitted;
+ extern float  phif, thetaf, gammaff;    /* Tilt angles       */
+ extern float  xu0t, yu0t, xs0t, ys0t;   /* Tilt origins      */
+d60 1
+a60 1
+ extern char   datexc[4];                /* File extension   */    
+d76 1
+a76 1
+  "Key: 124 Tilt-angle  Untilted,tilted-axis-dir (Theta, Gamma,Phi)";
+d130 1
+a130 1
+ fpdoc    = savdnc(dfil3, datexc, &fpdoc,dlist, 
+d142 1
+a142 1
+ fpdoc    = savdnc(dfil3, datexc, &fpdoc, dlist, 
+d149 2
+a150 1
+    openit = TRUE; append_flag = TRUE;
+@
+
+
+1.24
+log
+@file formatting
+@
+text
+@d76 1
+a76 1
+  "Key: 123 Tilt-angle  Untilted,tilted-axis-dir (Theta, Gamma,Phi)";
+@
+
+
+1.23
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitsav.c,v 1.22 1996/05/07 14:08:35 leith Exp $*/
+d5 1
+a5 1
+C++*************************************************************************
+d37 2
+a38 2
+C    PURPOSE:    saves fit angles in dfil3
+C                      tilted predicted loactions in dfil6
+d50 1
+a50 1
+ /* function prototypes */
+d52 3
+a54 3
+ /* external variables used here */
+ extern char   dfil3[12], dfil6[12];     /* doc file names     */
+ extern int    iredu;                    /* current reduction */
+d56 2
+a57 2
+ extern float  phif, thetaf, gammaff;    /* tilt angles       */
+ extern float  xu0t, yu0t, xs0t, ys0t;   /* tilt origins      */
+d60 1
+a60 1
+ extern char   datexc[4];                /* file extension   */    
+d62 23
+a84 1
+ /*****************************   fitsav   ****************************/
+d93 1
+a93 1
+ /* save fit info in doc file */ 
+d102 4
+a105 4
+ /* dfil3 will be opened and closed here. */
+
+ openit   = TRUE;  /* openit first time to get fpdoc pointer */
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc, dlist, 7, &openit, FALSE, TRUE);
+d107 1
+a107 4
+    { /* unable to open the doc file!! */
+    XBell(idispl,50); XBell(idispl,50);
+    return;
+    }
+d109 1
+a109 1
+ /* set fitted flag */
+d118 2
+a119 2
+ fprintf(fpdoc," ; FITTED flag\n");
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 7, &openit, TRUE, TRUE);
+d121 1
+a121 1
+ /* set origin */
+d130 2
+a131 2
+ fprintf(fpdoc," ; X0,Y0 ORIG. IN 0 DEG IM., XS0,YS0 ORIG. IN TILTED IM. REDUCTION FACTOR\n");
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 7, &openit, TRUE, TRUE);
+d133 1
+a133 1
+ /* set tilt angles */
+d142 2
+a143 2
+ fprintf(fpdoc," ; TILTANGLE, AXIS DIR. IN:  0 DEG IM.  THETA GAMMA PHI\n");
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc, dlist, 7, &openit, TRUE, TRUE);
+d149 1
+a149 1
+    openit      = TRUE; append_flag = TRUE;
+d151 1
+a151 1
+    /* use angles to get predicted location in tilted image  */
+d154 2
+a155 2
+    dlist[6] = 1.0; 
+
+d158 1
+a158 1
+       /* save predicted right locations in doc file: dfil6 */ 
+a164 1
+       dlist[6] = 0.0;       
+a165 2
+       fpdoc   = savdn1(dfil6, datexc, &fpdoc,
+                         dlist, 7, &openit, append_flag, TRUE);
+d167 3
+a169 1
+          { /* first time thru, will have opened file now */ 
+d171 2
+a172 4
+              { /* unable to open the doc file!! */
+              XBell(idispl,50); XBell(idispl,50);
+              return;
+              }
+d175 4
+@
+
+
+1.22
+log
+@saved 6 reg always even if blank
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitsav.c,v 1.21 1996/05/01 16:15:11 leith Exp leith $*/
+d9 25
+a33 8
+C **************************************************************************
+C *  COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+d42 1
+a42 1
+C **************************************************************************
+@
+
+
+1.21
+log
+@altered savdn1 call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitsav.c,v 1.20 1996/04/16 14:25:50 leith Exp leith $*/
+d77 4
+d83 1
+a83 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 3, &openit, TRUE, TRUE);
+d92 1
+d95 1
+a95 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 6, &openit, TRUE, TRUE);
+d102 3
+d107 1
+a107 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc, dlist, 4, &openit, TRUE, TRUE);
+d129 1
+@
+
+
+1.20
+log
+@added limfit parameter
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitsav.c,v 1.19 1996/04/05 16:48:53 leith Exp leith $*/
+d66 1
+a66 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc, dlist, 7, &openit, FALSE);
+d79 1
+a79 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 3, &openit, TRUE);
+d90 1
+a90 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 6, &openit, TRUE);
+d99 1
+a99 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc, dlist, 4, &openit, TRUE);
+d123 1
+a123 1
+                         dlist, 7, &openit, append_flag);
+@
+
+
+1.19
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitsav.c,v 1.18 1996/03/25 14:43:34 leith Exp leith $*/
+d31 1
+a33 6
+ extern void    spout      (char *);
+ extern void    fitdoc     (int, int);
+ extern void    witran     (float *, float *, float *, float *, int,
+			       float, float, float);
+ extern FILE  * savdn1     (char *, char *, FILE **, float *, 
+                             int,int *,int);
+d42 1
+a42 1
+ extern int    lim, lbnum, igflag, maxpart;
+d47 1
+a47 1
+ void fitsav()
+d54 1
+a54 1
+ /* save info in doc file */ 
+d60 1
+a60 1
+ dlist[5] = lim; 
+d62 2
+a63 5
+ 
+      
+ /* Mahieddine ladjadj
+    save the data by a call from fitmen. I assume that the file
+    dfil3 will be opened and closed here. */
+d73 1
+a73 1
+ /* set fitted flags? */
+d76 1
+a76 1
+ dlist[2] = igflag;
+d78 1
+a78 1
+ fprintf(fpdoc," ; FITTED & IGFLAG flags\n");
+d104 2
+a105 9
+  {
+    openit      = TRUE;
+    append_flag = TRUE;
+
+    /* recover untilted point locations from doc file dfil1
+               tilted point locations from doc file dfil2
+               tilt parameters from doc file dfil3 (if present)  */
+
+    fitdoc(FALSE,FALSE);
+d127 1
+a127 1
+             { /* unable to open the doc file!! */
+d130 1
+a130 1
+               }
+@
+
+
+1.18
+log
+@minor
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitsav.c,v 1.17 1996/03/19 14:22:34 leith Exp leith $*/
+d20 2
+a21 1
+C    PURPOSE:    saves fit angles, etc in doc file
+d29 2
+d52 1
+a52 1
+ void fitsav(int pickpnow)
+d57 1
+a57 1
+ int            i, openit, append_flag = FALSE;
+d71 3
+a73 3
+    dfil3 will be opened and closed here.
+ */
+ openit   = 1;  /* openit first time to get fpdoc pointer */
+d75 5
+d109 1
+a109 1
+ fclose(fpdoc);
+d111 1
+a111 1
+ if(fitted)
+d113 7
+a119 1
+    openit = 1;
+d125 2
+d128 2
+a129 2
+     {
+        /* save info in doc file */ 
+d136 1
+a136 2
+       dlist[6] = 1.0; 
+       
+d139 10
+a148 3
+       append_flag = TRUE;
+     }
+
+d150 1
+a150 3
+
+  }
+
+@
+
+
+1.17
+log
+@removed unused variables
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitsav.c,v 1.16 1995/09/06 16:07:57 mladjadj Exp leith $*/
+d53 1
+a53 1
+ static FILE    * fpdoc;
+d79 1
+a79 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 4, &openit, TRUE);
+@
+
+
+1.16
+log
+@dlist[8]
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitsav.c,v 1.11 94/12/30 10:17:19 leith Exp $*/
+d38 2
+a39 2
+ extern char   dfil3[12], dfil6[12];    /* doc file names     */
+ extern int    iredu;                   /* current reduction */
+d42 1
+a42 1
+ extern float  xu0t, yu0t, xs0t, ys0t;  /* tilt origins      */
+d44 2
+a45 2
+ extern int    lnum, lim, lbnum, ifit, igflag, maxpart;
+ extern char   datexc[4];               /* file extension   */    
+d52 1
+a52 1
+ float    dlist[8];
+d54 1
+a54 1
+ int             i, openit, append_flag = FALSE;
+d70 1
+a70 1
+ openit = 1;  /* openit first time to get fpdoc pointer */
+@
+
+
+1.15
+log
+@clean up
+@
+text
+@d52 1
+a52 1
+ float    dlist[7];
+@
+
+
+1.14
+log
+@more explicit comments for doc file
+@
+text
+@d40 1
+a40 1
+ extern int    fitted, theta_ok;
+a96 1
+ dlist[4] = theta_ok;
+@
+
+
+1.13
+log
+@disable theta_ok for now
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fitsav.c,v 1.12 1995/08/08 15:37:54 mladjadj Exp mladjadj $*/
+d40 1
+a40 1
+ extern int    fitted; /* disable for now , theta_ok; */
+d78 1
+d89 1
+a89 1
+ fprintf(fpdoc," ; X0,Y0 ORIG. IN 0 DEG IM., XS0,YS0 ORIG. IN TILTED IM.\n");
+d97 1
+a97 1
+/*  dlist[4] = theta_ok; */
+d99 1
+a99 1
+ fprintf(fpdoc," ; TILTANGLE, AXIS DIR. IN:  0 DEG IM.\n");
+@
+
+
+1.12
+log
+@clean printf
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitsav.c,v 1.11 94/12/30 10:17:19 leith Exp $*/
+d40 1
+a40 1
+ extern int    fitted, theta_ok;
+d96 1
+a96 1
+ dlist[4] = theta_ok;
+@
+
+
+1.11
+log
+@ removed excess output
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitsav.c,v 1.10 94/07/05 16:11:06 odesanya Exp Locker: leith $*/
+d40 1
+a40 1
+ extern int    fitted;
+a56 1
+
+d64 1
+d87 1
+a87 1
+
+d96 1
+d108 1
+a108 1
+ /* use angles to get predicted location in tilted image  */
+d121 2
+a122 1
+      fpdoc   = savdn1(dfil6, datexc, &fpdoc,
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitsav.c,v 1.9 1994/06/07 18:15:27 odesanya Exp odesanya $*/
+d105 1
+a105 1
+    fitdoc(TRUE,FALSE);
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/fitsav.c,v 1.6 94/05/19 17:14:15 leith Exp $*/
+d41 1
+a41 1
+ extern float  phif, thetaf, gammaf;    /* tilt angles       */
+d94 1
+a94 1
+ dlist[2] = gammaf;
+d108 1
+a108 1
+    witran(xu0, yu0, xs2, ys2, maxpart, gammaf, thetaf, phif);
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d125 2
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d30 4
+a33 1
+ extern void    spout(char *);
+@
+
+
+1.6
+log
+@sets openit = TRUE.
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitsav.c,v 1.5 93/11/29 16:30:30 leith Exp $*/
+d35 1
+a35 1
+ extern char   dfil3[12];               /* doc file name     */
+d40 2
+a41 1
+ extern int    lnum, lim, lbnum, ifit, igflag;
+d51 1
+a51 1
+ int              openit;
+d59 1
+a59 1
+ dlist[4] = lnum;
+d98 26
+@
+
+
+1.5
+log
+@bug on comment line of doc files
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitsav.c,v 1.4 93/11/29 10:35:25 leith Exp Locker: leith $*/
+d62 6
+a67 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc, dlist, 7, &openit, TRUE);
+@
+
+
+1.4
+log
+@altered doc file
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitsav.c,v 1.3 93/11/26 13:25:34 leith Exp Locker: leith $*/
+d79 1
+a79 1
+ fprintf(fpdoc," ; X0,Y0 ORIG. IN 0 DEG IM., XS0,YS0 ORIG. IN TILTED IM.");
+d88 1
+a88 1
+ fprintf(fpdoc," ; TILTANGLE, AXIS DIR. IN:  0 DEG IM.");
+@
+
+
+1.3
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitsav.c,v 1.2 93/11/24 15:47:31 leith Exp Locker: leith $*/
+d37 1
+d66 1
+a66 1
+ dlist[1] = ifit;
+d78 2
+a79 1
+      
+d88 1
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/fitsav.c,v 1.1 93/11/24 13:47:46 leith Exp Locker: leith $*/
+a66 4
+ dlist[3] = 0.0;
+ dlist[4] = 0.0;
+ dlist[5] = 0.0; 
+ dlist[6] = 0.0; 
+d68 1
+a68 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 7, &openit, TRUE);
+a76 1
+ dlist[6] = 0.0; 
+d78 1
+a78 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc,dlist, 7, &openit, TRUE);
+a84 3
+ dlist[4] = 0.0;
+ dlist[5] = 0.0; 
+ dlist[6] = 0.0; 
+d86 1
+a86 1
+ fpdoc    = savdn1(dfil3, datexc, &fpdoc, dlist, 7, &openit, TRUE);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a0 1
+/*$Header$*/
+d2 1
+a49 1
+
+@

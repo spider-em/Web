@@ -1,0 +1,626 @@
+head	1.14;
+access;
+symbols
+	pre-tilt-improve:1.14
+	pre_surf_fromtop:1.14
+	pre_neednewmap:1.14
+	pre_apppluss_remove:1.13
+	pre_tiltpair_chng:1.13
+	pre_GPL:1.12;
+locks;
+comment	@ * @;
+
+
+1.14
+date	2011.07.22.19.33.40;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2005.10.18.16.59.43;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.07.26.15.19.57;	author mladjadj;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.01.31.19.48.51;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.01.22.20.43.01;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.02.02.16.38.02;	author liy;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.01.26.20.15.48;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.01.23.09.59.21;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.09.12.11.21.31;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.08.29.14.32.20;	author odesanya;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.08.25.11.14.02;	author odesanya;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.02.12.10.06;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.02.14.10.23.20;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.21;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.14
+log
+@removed imagego imageend
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/imoptmen.c,v 1.13 2005/10/18 16:59:43 leith Exp leith $*/
+/*
+C++************************************************************************
+C
+C IMOPTMEN -- CREATED JUNE 91
+C          -- CONVERTED TO C -- AUG 92      
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C IMOPTMEN
+C
+C PURPOSE:         SET VARIOUS PARAMETERS RELATING TO IMAGE DISPLAY
+C
+C VARIABLES:       NAMES      LOGICAL FLAG TO PRINT NAMES
+C                  IXUL,IYUL  UPPER LEFT CORNER FOR LAST IMAGE
+C                  MARX,MARY  X & Y MARGINS FOR MONTAGE
+C
+C CALLED BY:       WEB_COM
+C      
+C***********************************************************************
+*/
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+#include "x.h"
+#include "std.h"
+#include "common.h"
+#include "routines.h"
+
+ /* Function prototypes */
+ void          imoptmen_buta(Widget, caddr_t, caddr_t);
+
+ /* File variables */
+ Widget   iw_names,  iw_keepxy, iw_newline, iw_nuscrn, iw_listfi;
+ Widget   iw_movieo, iw_marlef, iw_martop,  iw_marx,   iw_mary;
+ Widget   iw_iskip;
+ Widget   iw_imoptmen;
+
+
+ /**************************  imoptmen *******************************/
+
+ void imoptmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+ { 
+ char     cval[5];
+ Widget   iw_marlefl, iw_martopl, iw_marxl, iw_maryl, iw_iskipl;
+ Widget   iw_dum, iw_rowcol, iw_rowcol1, iw_rowcol2, iw_rowcol3;
+ Widget   iw_pushc, iw_pusha, iw_dums, iw_rawsiz;
+
+ if (iw_imoptmen <= (Widget)0)
+    {   /* create 3-D montage menu widget first */
+
+    iw_imoptmen = wid_dialog(iw_win,iw_imoptmen,
+                             "image display options",20,20);
+    iw_rowcol   = wid_rowcol(iw_imoptmen,'v',-1,-1);
+
+    iw_rowcol1  = wid_rowcol(iw_rowcol,'h',-1,-1);
+    /* create text box for marlef input ---------------------- marlef */
+    sprintf(cval,"%4d",marlef);
+    iw_marlef = wid_textboxb(iw_rowcol1,0, "MARGIN    LEFT:",cval,4);
+    /* create text box for martop input ---------------------- martop */
+    sprintf(cval,"%4d",martop);
+    iw_martop = wid_textboxb(iw_rowcol1,0, " TOP:",cval,4);
+
+    iw_rowcol2 = wid_rowcol(iw_rowcol,'h',-1,-1);
+    /* create text box for marx input  ------------------------- marx */
+    sprintf(cval,"%4d",marx);
+    iw_marx = wid_textboxb(iw_rowcol2,0,   "MARGIN       X:",cval,4);
+    /* create text box for mary input  ------------------------- mary */
+    sprintf(cval,"%4d",mary);
+    iw_mary = wid_textboxb(iw_rowcol2,0,   "   Y:",cval,4);
+
+    /* create text box for iskip input  ----------------------- iskip */
+    sprintf(cval,"%3d",iskip);
+    iw_iskip = wid_textboxb(iw_rowcol,0,   "SIZE REDUCTION:",cval,4);
+
+    /* create toggle box for movie ---------------------------- movie */
+    iw_movieo = wid_togmen(iw_rowcol,0,"MONTAGE MOVIE ",movie,0,0);
+
+    /* create toggle box for names ---------------------------- names */
+    iw_names = wid_togmen (iw_rowcol,0,"SHOW FILE NAMES ",names,0,0);
+ 
+    /* create toggle box newline ---------------------------- newline */
+    iw_newline = wid_togmen(iw_rowcol,0,"START NEW LINE OF IMAGES ",
+                             newline,0,0);
+
+    /* create toggle box nuscrn ------------------------------ nuscrn */
+    iw_nuscrn = wid_togmen (iw_rowcol,0,"START NEW SCREEN OF IMAGES",
+                             nuscrn,0,0);
+
+    /* create toggle box listfi ------------------------------ listfi */
+    iw_listfi = wid_togmen(iw_rowcol,0,"LIST FILES IN FILE-SELECTOR",
+                             listfi,0,0);
+
+    /* create toggle box for saving x & y set location ------- keepxy */
+    iw_keepxy = wid_togmen(iw_rowcol,0,"KEEP X & Y POSITION FOR MONTAGE",
+                             keepxy,0,0);
+
+    /* make a push button for changing raw image size  */
+    iw_rawsiz = wid_pushg(iw_rowcol, 0, "SET RAW IMAGE SIZE  ",
+                  get_imsiz,"0", 0,0);
+ 
+    /* create accept boxes  ----------------------------------- apply */
+    iw_pushc = (Widget) 0;
+    iw_pusha = (Widget) 0;
+    iw_dum   = wid_stdbut(iw_rowcol, iw_imoptmen, &iw_dums, &iw_pushc, &iw_pusha, 
+                        "CA",fin_cb,fin_cb,imoptmen_buta, NULL);
+    }
+
+ XtManageChild(iw_imoptmen);
+ }
+
+
+ /************ accept button callback *********************************/
+
+ void imoptmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+
+ /* names_height: pixel height of the filename */
+ if( (names   = XmToggleButtonGadgetGetState(iw_names)) )
+     names_height = 12; 
+ else
+     names_height = 0;
+ 
+ keepxy  = XmToggleButtonGadgetGetState(iw_keepxy);
+ newline = XmToggleButtonGadgetGetState(iw_newline);
+ nuscrn  = XmToggleButtonGadgetGetState(iw_nuscrn);
+ listfi  = XmToggleButtonGadgetGetState(iw_listfi);
+ movie   = XmToggleButtonGadgetGetState(iw_movieo);
+
+ if (strtoint(iw_marlef,"left margin",&marlef) == FALSE) return;
+
+ if (strtoint(iw_martop,"top margin", &martop) == FALSE) return;
+
+ if (strtoint(iw_marx,  "x margin",   &marx)   == FALSE) return;
+
+ if (strtoint(iw_mary,  "y margin",   &mary)   == FALSE) return;
+
+ if (strtoint(iw_iskip, "reduction",  &iskip)  == FALSE) return;
+
+ XtUnmanageChild(iw_imoptmen);
+ }
+
+
+@
+
+
+1.13
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imoptmen.c,v 1.12 1996/07/26 15:19:57 mladjadj Exp $*/
+d35 1
+a35 1
+C    IMOPTMEN
+d37 1
+a37 1
+C    PURPOSE:         SET VARIOUS PARAMETERS RELATING TO IMAGE DISPLAY
+d39 3
+a41 3
+C    VARIABLES:       NAMES      LOGICAL FLAG TO PRINT NAMES
+C                     IXUL,IYUL  UPPER LEFT CORNER FOR LAST IMAGE
+C                     MARX,MARY  X & Y MARGINS FOR MONTAGE
+d43 1
+a43 1
+C    CALLED BY:       WEB_COM
+d56 1
+a56 1
+ /* function prototypes */
+d59 1
+a59 1
+ /* file variables */
+d62 1
+a62 1
+ Widget   iw_iskip,  iw_imagego,  iw_imageend;
+a101 8
+    iw_rowcol3  = wid_rowcol(iw_rowcol,'h',-1,-1);
+    /* create text box for imagego input ------------------------ imagego */
+    sprintf(cval,"%4d",imagego);
+    iw_imagego = wid_textboxb(iw_rowcol3, 0, "MAPGO:",cval,4);
+    /* create text box for imageend input ---------------------- imageend */
+    sprintf(cval,"%4d",imageend);
+    iw_imageend = wid_textboxb(iw_rowcol3,0, "MAPEND:",cval,4);
+
+a142 1
+ int       imagegot, imageendt;
+a164 19
+
+ if (strtoint(iw_imagego, "Image norm. start",  &imagegot)  == FALSE) return;
+
+ if (strtoint(iw_imageend,"Image norm. end", &imageendt)  == FALSE) return;
+
+ if (imagegot  < 0 || imagegot  > 255) 
+    {
+    spout("*** Lower image normalization range is: 0...255"); 
+    return;
+    }
+
+ if (imageendt < imagegot || imageendt > 255) 
+    {
+    spout("*** Upper image normalization range is: lower...255"); 
+    return;
+    }
+
+ imagego  = imagegot;
+ imageend = imageendt;
+@
+
+
+1.12
+log
+@correct space added for img name display
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imoptmen.c,v 1.11 1996/01/31 19:48:51 leith Exp $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1991,  WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+@
+
+
+1.11
+log
+@back mary setting fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imoptmen.c,v 1.10 1996/01/22 20:43:01 leith Exp $*/
+d136 6
+a141 1
+ names   = XmToggleButtonGadgetGetState(iw_names);
+@
+
+
+1.10
+log
+@used imagego..imagenend instead of mapgo..
+>> .
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imoptmen.c,v 1.9 1995/02/02 16:38:02 liy Exp leith $*/
+d149 1
+a149 1
+ if (strtoint(iw_marx,  "y margin",   &mary)   == FALSE) return;
+@
+
+
+1.9
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/imoptmen.c,v 1.8 1995/01/26 20:15:48 liy Exp liy $*/
+d45 1
+a45 1
+ Widget   iw_iskip,  iw_mapgo,  iw_mapend;
+d86 6
+a91 6
+    /* create text box for mapgo input ------------------------ mapgo */
+    sprintf(cval,"%4d",mapgo);
+    iw_mapgo = wid_textboxb(iw_rowcol3, 0, "MAPGO:",cval,4);
+    /* create text box for mapend input ---------------------- mapend */
+    sprintf(cval,"%4d",mapend);
+    iw_mapend = wid_textboxb(iw_rowcol3,0, "MAPEND:",cval,4);
+d134 1
+a134 1
+ int       mapgot, mapendt;
+d153 1
+a153 1
+ if (strtoint(iw_mapgo, "mapgo",      &mapgot)  == FALSE) return;
+d155 1
+a155 1
+ if (strtoint(iw_mapend,"mapend",     &mapendt)  == FALSE) return;
+d157 1
+a157 1
+ if (mapgot  < 0 || mapgot  > 255) 
+d159 1
+a159 1
+    spout("*** Mapgo range is: 0...255"); 
+d163 1
+a163 1
+ if (mapendt < mapgot || mapendt > 255) 
+d165 1
+a165 1
+    spout("*** Mapend range is: mapgo...255"); 
+d169 2
+a170 2
+ mapgo  = mapgot;
+ mapend = mapendt;
+@
+
+
+1.8
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imoptmen.c,v 1.7 1995/01/23 09:59:21 leith Exp liy $*/
+d58 1
+a58 1
+ if (iw_imoptmen <= (void *)0)
+@
+
+
+1.7
+log
+@shortened wid_togglemen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imoptmen.c,v 1.6 94/09/12 11:21:31 leith Exp Locker: leith $*/
+d58 1
+a58 1
+ if ((int)iw_imoptmen <= 0)
+@
+
+
+1.6
+log
+@fixed mapgo, mapend input
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/imoptmen.c,v 1.5 1994/08/29 14:32:20 odesanya Exp $*/
+d94 1
+a94 1
+    iw_movieo = wid_togglemen(iw_rowcol,0,"MONTAGE MOVIE ",movie,0,0);
+d97 1
+a97 1
+    iw_names = wid_togglemen (iw_rowcol,0,"SHOW FILE NAMES ",names,0,0);
+d100 1
+a100 1
+    iw_newline = wid_togglemen(iw_rowcol,0,"START NEW LINE OF IMAGES ",
+d104 1
+a104 1
+    iw_nuscrn = wid_togglemen (iw_rowcol,0,"START NEW SCREEN OF IMAGES",
+d108 1
+a108 1
+    iw_listfi = wid_togglemen(iw_rowcol,0,"LIST FILES IN FILE-SELECTOR",
+d112 1
+a112 1
+    iw_keepxy = wid_togglemen(iw_rowcol,0,"KEEP X & Y POSITION FOR MONTAGE",
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr1/web/src/RCS/imoptmen.c,v 1.4 94/08/25 11:14:02 odesanya Exp $*/
+d31 3
+d37 1
+a37 2
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+a39 15
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                            char *, void (*)(), void (*)(), void (*)(),
+                            void (*)());
+ extern void   spout        (char *);
+ extern Widget wid_textboxb (Widget iw_parent, Widget iw_text, 
+                              char *prompt, char *string,  int icol);
+ extern Widget wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern int    strtoint     (Widget, char *, int *);
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*)(), 
+                              char *, int, int);
+ extern void   get_imsiz    (void);
+
+d49 1
+a49 1
+ /************************************************************/
+d86 1
+a86 1
+    /* create text box for mapgo input ---------------------- mapgo */
+d122 1
+a122 1
+     iw_dum   = wid_stdbut(iw_rowcol, iw_imoptmen, &iw_dums, &iw_pushc, &iw_pusha, 
+a131 2
+ /* accept button callback --*/
+
+d134 1
+a134 1
+  int mapgot, mapendt;
+d153 1
+a153 1
+ if (strtoint(iw_iskip, "mapgo",  &mapgot)  == FALSE) return;
+d155 1
+a155 1
+ if (strtoint(iw_iskip, "mapend",  &mapendt)  == FALSE) return;
+d157 14
+a170 7
+ if(mapgot  < 0 || mapgot  > 255)  return;
+ if(mapendt < 0 || mapendt > 255)  return;
+ if(mapendt > mapgot)
+  {
+    mapgo  = mapgot;
+    mapend = mapendt;
+  }
+@
+
+
+1.4
+log
+@added input slots for mapgo and mapend specifications
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imoptmen.c,v 1.2 94/02/14 10:23:20 leith Exp $*/
+d49 3
+d69 1
+a69 1
+ Widget   iw_pushc, iw_pusha, iw_dums;
+d128 4
+@
+
+
+1.3
+log
+@added push button for raw image size
+@
+text
+@a48 3
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*)(), 
+                              char *, int, int);
+ extern void     get_imsiz    (void);
+a49 1
+ /* internal subroutines */
+d55 1
+a55 1
+ Widget   iw_iskip;
+d59 1
+a59 1
+ /**********************  imoptmen  *****************************/
+d65 2
+a66 2
+ Widget   iw_dum, iw_rowcol, iw_rowcol1, iw_rowcol2;
+ Widget   iw_pushc, iw_pusha, iw_dums, iw_rawsiz;
+d95 8
+a124 4
+    /* make a push button for changing raw image size  */
+    iw_rawsiz = wid_pushg(iw_rowcol, 0, "SET RAW IMAGE SIZE  ",
+                  get_imsiz,"0", 0,0);
+ 
+d142 1
+d160 12
+@
+
+
+1.2
+log
+@need toggle header
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/imoptmen.c,v 1.1 93/11/10 10:11:21 leith Exp Locker: leith $*/
+d49 3
+d53 1
+d63 1
+a63 1
+ /************************************************************/
+d70 1
+a70 1
+ Widget   iw_pushc, iw_pusha, iw_dums;
+d121 4
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d35 1
+@

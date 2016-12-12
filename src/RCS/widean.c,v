@@ -1,0 +1,421 @@
+head	1.9;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.9
+date	2015.09.01.17.54.34;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2011.05.17.17.29.14;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.10.18.16.59.48;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.10.24.20.22.13;	author liy;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.03.10.15.19.07;	author liy;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.02.18.34.23;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.01.26.20.39.45;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.07.06.10.11.11;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.45;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@$2
+@
+text
+@
+/*$Header: /usr8/web/new/RCS/widean.c,v 1.8 2011/05/17 17:29:14 leith Exp $*/
+/*
+ C**********************************************************************
+ C
+ C wid_dean.for    Created                         Jun 91 ArDean Leith
+ C                 Converted to C  widean.c        Nov 92 ArDean Leith
+ C                 Cval internal var. now          Jul 15 ArDean Leith
+ C
+ C**********************************************************************
+ C   AUTHOR:  ArDean Leith                                             *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C  widean
+ C
+ C  PARAMETERS:    
+ C
+ C  PURPOSE:    Displays marker number selecting widget
+ C
+ C*********************************************************************
+*/
+
+#include "common.h"
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+ /* External function prototypes */
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_textboxb (Widget, Widget, char *, char *,  int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_pushg    (Widget, Widget, char *, void (*) (), 
+                             char *,int,int);
+ extern void   spout        (char *);
+
+
+ /* Internal function prototypes */
+ void     widean_cb   (Widget, XtPointer, XtPointer);
+
+ /* Global variables defined here */
+ char   cval_d[12] = "b0123456789";
+ Widget   iw_deant;
+
+ /***********************   widean   ****************************/
+  
+ Widget widean(Widget iw_parent, Widget iw_dean, 
+               char * label, char * string, int ix, int iy, int icol)
+
+ { 
+ int    i;
+ Widget iw_pb[11], iw_rowcolh;
+ char   ctemp[2];
+
+ if (iw_dean <= (Widget)0)
+    {   /* Create dean widget first */
+ 
+    iw_dean     = wid_dialog(iw_parent, 0, label, ix, iy);
+    iw_rowcolh  = wid_rowcol(iw_dean, 'h', -1, -1);
+
+    ctemp[1] = '\0';
+    for (i=0; i< 11; i++)
+       {
+       strncpy(&ctemp[0],&cval_d[i],1);
+       iw_pb[i] = wid_pushg(iw_rowcolh, (Widget)0, ctemp,
+                  widean_cb, &cval_d[i], -1,-1);
+       }
+
+    /*  Create the text input part of the box */
+    iw_deant = wid_textboxb(iw_rowcolh,0,"",string,icol);
+    }
+
+ XtManageChild(iw_dean);
+ return iw_dean;
+ }
+
+/***********************  widean_cb ************************/
+
+ void widean_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ char   opert[2];
+ int    ip;
+
+ strncpy(opert,data,1);
+ opert[1] = '\0'; 
+
+ //spouts("value:"); spout(opert); 
+ //printf(" value: %1.1s \n",opert);
+
+
+ if (*opert == 'b')
+    {
+    /*      Clear the text box string */
+    XmTextSetString(iw_deant," ");
+    }
+ else
+    {
+    /*      Append this digit to text in text box */
+
+    /*      Get present string length */
+    ip = (int) XmTextGetLastPosition(iw_deant);
+
+    /*      Find insertion point for new text */ 
+    if (*opert != '-' || ip == 0)
+       {
+       XmTextReplace(iw_deant,ip,ip,opert);            
+       }
+    }
+ return;
+ }
+        
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header:  Exp leith $*/
+d4 8
+a11 6
+C++*************************************************************************
+C
+C WID_DEAN.FOR -- CREATED JUNE 91
+C widean.c                NOV  92
+C **********************************************************************
+C    AUTHOR:  ArDean Leith
+d13 1
+a13 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d35 9
+a43 9
+C **********************************************************************
+C
+C  widean
+C
+C  PARAMETERS:    
+C
+C  PURPOSE:    Displays marker number selecting widget
+C
+C--*********************************************************************
+a49 1
+
+d60 1
+a60 1
+ void     widean_cb   (Widget, caddr_t, caddr_t);
+d62 3
+a64 2
+ Widget  iw_deant;
+ char    cval[12] = "b0123456789";
+d85 1
+a85 1
+       strncpy(&ctemp[0],&cval[i],1);
+d87 1
+a87 1
+                  widean_cb, &cval[i], -1,-1);
+d100 1
+a100 1
+ void widean_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+d102 1
+a102 1
+ char opert[2];
+d115 1
+a115 1
+    XmTextSetString(iw_deant,"0");
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/widean.c,v 1.6 1995/10/24 20:22:13 liy Exp $*/
+d37 3
+a39 1
+C    PARAMETERS:    
+d49 1
+a49 1
+ /* function prototypes */
+d58 1
+a58 1
+ /* internal function prototypes */
+d61 2
+a62 2
+ Widget iw_deant;
+ char   cval[12] = "b0123456789";
+d75 1
+a75 1
+    {   /* create dean widget first */
+d88 1
+a88 1
+    /*  create the text input part of the box */
+d104 4
+a107 1
+ /* opert[1] = '\0'; */
+a108 1
+ /*    spout("value$"); spout(opert); */
+d112 1
+a112 1
+    /* clear the text box string */
+d117 1
+a117 1
+    /*       append this digit to text in text box */
+d119 1
+a119 1
+    /*      get present string length */
+d122 1
+a122 1
+    /*    find insertion point for new text 
+d126 1
+a126 1
+       }*/
+@
+
+
+1.6
+log
+@remove <delete marker> function
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/widean.c,v 1.5 1995/03/10 15:19:07 liy Exp liy $*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.5
+log
+@changed string assignment for compling WEB on alpha
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/widean.c,v 1.4 1995/02/02 18:34:23 liy Exp liy $*/
+d43 1
+a43 1
+ char   cval[13] = "b-0123456789";
+d52 1
+a52 1
+ Widget iw_pb[12], iw_rowcolh;
+d62 1
+a62 1
+    for (i=0; i< 12; i++)
+d101 1
+a101 1
+    /*    find insertion point for new text */
+a103 1
+       /*  can not have - in middle of number */
+d105 1
+a105 1
+       }
+@
+
+
+1.4
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/widean.c,v 1.3 1995/01/26 20:39:45 liy Exp liy $*/
+d84 2
+a85 2
+ opert[0] = *data;
+ opert[1] = '\0';
+@
+
+
+1.3
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/widean.c,v 1.2 1994/07/06 10:11:11 leith Exp liy $*/
+d55 1
+a55 1
+ if (iw_dean <= (void *)0)
+@
+
+
+1.2
+log
+@b now sets text box to 0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/widean.c,v 1.1 93/11/10 10:11:45 leith Exp Locker: leith $*/
+d55 1
+a55 1
+ if ((int)iw_dean <= 0)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d87 1
+a87 3
+ /***********  strncpy(&oper[0],data,1); */
+ 
+      spout("value$"); spout(opert);
+d92 1
+a92 1
+    XmTextSetString(iw_deant,"");
+@

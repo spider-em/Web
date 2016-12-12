@@ -1,0 +1,333 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.6;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2011.06.10.13.52.26;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2005.10.18.16.59.49;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.02.24.14.50.50;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.11.07.19.59.19;	author mladjadj;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.11.02.22.46.10;	author mladjadj;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.07.11.17.28.14;	author mladjadj;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.01.23.10.22.07;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.02.03.16.38.15;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@sets extension
+@
+
+
+1.8
+log
+@alloc bug fixed
+@
+text
+@
+/*$Header: /usr8/web/new/RCS/newext.c,v 1.7 2005/10/18 16:59:49 leith Exp $*/
+
+/***********************************************************************
+ *
+ * newext.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ * 
+ * PURPOSE:  Change datexc     
+ * 
+ * PARAMETERS:	Widget 		iw_temp         Pushbutton (not used)
+ *		XtPointer       data            Label text string
+ *		XtPointer       call_data       Not used 
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* Internal functions */
+ void            newext_cb   (Widget, XtPointer,  XtPointer);
+
+ /* Static file scope variables */
+ static char       label_string[] = "Enter file extension";  
+ static Widget     iw_text = (Widget) 0;
+ static int        ixtext = 0;       /* x coord for text       */
+ static int        iytext = 0;       /* y coord for text       */
+ 
+
+/************************  newext  ***********************************/
+
+ void newext(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+
+ /* Create extension input box */
+ iw_text = wid_text(iw_win, iw_text, label_string, (char *) NULL,
+                       *newext_cb, NULL, ixtext, iytext);
+ }
+
+
+ /**********************  newext_cb  *********************************/
+
+ void newext_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
+ {
+ XmSelectionBoxCallbackStruct * cbs;
+ 
+ // cbs receives the text box contents.
+ cbs = (XmSelectionBoxCallbackStruct *) call_data;
+ 
+ // datexc is 3 char long
+ strncpy(datexc,extractstr(cbs -> value),3);
+ 
+ }
+
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/newext.c,v 1.5 1995/11/07 19:59:19 mladjadj Exp $*/
+d36 3
+a38 3
+ * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
+ *		caddr_t		data		label text string
+ *		caddr_t		call_data	not used 
+d46 2
+d49 1
+a49 5
+ /* internal functions */
+ void            newext_cb   (Widget, caddr_t, caddr_t);
+
+
+ /* file variables */
+d51 3
+a53 3
+ static Widget     iw_text=(Widget) 0;
+ static int        ixtext;           /* x coord for text       */
+ static int        iytext;           /* y coord for text       */
+d58 1
+a58 1
+ void newext(Widget iw_temp, caddr_t data, caddr_t call_data)
+d61 1
+a61 1
+ /* create text input box */
+a63 1
+
+d69 1
+a69 1
+ void newext_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+d71 1
+a71 2
+ XmString    txt_string;
+ int         n;
+d73 2
+a74 2
+ XmSelectionBoxCallbackStruct *cbs =
+      (XmSelectionBoxCallbackStruct *) call_data;
+d76 1
+a76 1
+ txt_string = cbs -> value;
+a78 14
+#ifdef VMS
+   /* vms has only uppercase filenames */
+   n = 0;
+   while(datexc[n])
+       { /* is char in the range a-z ? */
+       if( toascii((int) datexc[n]) >= 97 && 
+          toascii((int) datexc[n]) <= 122 ) 
+	  datexc[n] = (char) toupper((int) datexc[n]);
+       n++;
+       }
+#endif
+
+
+ if (txt_string) XmStringFree(txt_string);
+@
+
+
+1.6
+log
+@NT specific changes
+@
+text
+@d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+d76 1
+a76 2
+
+
+d82 1
+a82 1
+
+d95 1
+a95 1
+#ifndef SP_NT
+a96 1
+#endif
+@
+
+
+1.5
+log
+@remove printf
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/newext.c,v 1.4 1995/11/02 22:46:10 mladjadj Exp mladjadj $*/
+d59 2
+a60 1
+ 
+d66 1
+a66 1
+ 
+d79 1
+a79 1
+
+d81 1
+@
+
+
+1.4
+log
+@uppercase datexc for VAX
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/newext.c,v 1.3 1995/07/11 17:28:14 mladjadj Exp mladjadj $*/
+d66 1
+a66 1
+ #ifdef VMS
+a70 7
+       
+   
+  printf(" NEWEXT.C: n = %d datexc[n] = %c toascii() = %d toupper() %c \n",
+          n, datexc[n],
+          toascii((int) datexc[n]),toupper((int) datexc[n]) );
+
+
+@
+
+
+1.3
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/newext.c,v 1.2 1995/01/23 10:22:07 leith Exp mladjadj $*/
+d58 2
+a59 1
+
+d65 20
+@
+
+
+1.2
+log
+@ shortened name of extractstring to extractstr
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/newext.c,v 1.1 94/02/03 16:38:15 leith Exp Locker: leith $*/
+d36 1
+a36 1
+ static Widget     iw_text;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d27 1
+a28 4
+ /* function prototypes */
+ extern Widget   wid_text   (Widget, Widget, char *, char *, 
+                             void (*)(),  caddr_t, int, int);
+ extern char *   extractstring (XmString);
+a29 1
+
+d63 1
+a63 1
+ strncpy(datexc,extractstring(cbs -> value),3);
+@

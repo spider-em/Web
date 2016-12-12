@@ -1,0 +1,996 @@
+head	1.17;
+access;
+symbols
+	pre-tilt-improve:1.16
+	pre_surf_fromtop:1.16
+	pre_neednewmap:1.15
+	pre_apppluss_remove:1.15
+	pre_tiltpair_chng:1.13
+	pre_GPL:1.11;
+locks;
+comment	@ * @;
+
+
+1.17
+date	2015.09.10.13.17.48;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2011.09.23.19.33.02;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2011.07.19.19.18.45;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2011.06.22.19.05.48;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2011.05.18.18.21.23;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2005.10.18.16.59.57;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	96.05.07.14.55.24;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	96.03.26.17.33.26;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	96.03.21.14.29.24;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	96.03.19.15.39.26;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.07.11.17.28.15;	author mladjadj;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.12.29.14.28.28;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.03.29.15.10.53;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.02.16.14.35.31;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.02.16.12.46.35;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.16.41.00;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.14;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.17
+log
+@Reposition button menu
+@
+text
+@/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.16 2011/09/23 19:33:02 leith Exp $*/
+
+/*
+ ***********************************************************************
+ *                                                                     *
+ * showbutx.c                                                          *
+ *              Added showbuts                   Jun 2011 ArDean Leith *
+ *              Added showbuts_str               Sep 2015 ArDean Leith *
+ *                                                                     *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ * 
+ * PURPOSE:	Opens a message box displaying the mapping of the 
+ *              mouse buttons
+ *
+ * RETURNS:     void
+ * 
+ * PARAMETERS:	char *  but1	       Text description of button 1
+ *		char *  but2	       Text description of button 2
+ *		char *  but3	       Text description of button 3
+ *		int	unmanage       Unmanage the window if TRUE
+ *
+ ***********************************************************************
+*/
+
+#include <Xm/LabelG.h>
+#include <Xm/BulletinB.h>
+#include "common.h"
+#include "routines.h"
+#include <strings.h>
+
+#define MAX_MESSAGE_LENGTH 240
+
+/* External global variables */
+extern Widget     iw_win;    /* Image window widget  */
+extern Display *  idispl;
+
+/* Internal file variables */
+static Widget     iw_mess   = (Widget) 0 ;  /* Dialog widget   */
+static Widget     iw_labelg = (Widget) 0 ;  /* Label widget    */
+
+// Internal function prototypes
+void              ForceUpdate (Widget w);   // unused
+void              showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr, 
+                       char *but1, char *but2, char *but3, int manage);
+
+/********************** showbuts_str ***************************/
+// Can redefine strings within a widget
+
+void showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr, 
+                  char *but1, char *but2, char *but3, int manage)
+ {   
+ unsigned long   ilen;
+ char            message[MAX_MESSAGE_LENGTH];   
+ Arg             args[2];      /* Arg list */
+ XmString        str_label;    /* String label */
+   
+ if (* iw_buts_ptr == 0 ) 
+    {
+    * iw_buts_ptr = XmCreateBulletinBoardDialog(iw_win,"iw_buts_ptr",args,0);
+
+    XtSetArg(args[0], XmNalignment, XmALIGNMENT_BEGINNING);
+    * iw_labelg_str_ptr = XmCreateLabelGadget(*iw_buts_ptr,"iw_labelg_str_ptr",args,1);
+
+  //  XtManageChild(* iw_labelg_str_ptr);
+
+  //printf(" iw_buts_ptr: %d  iw_labelg_str_ptr: %d \n",*iw_buts_ptr, *iw_labelg_str_ptr);
+    }
+
+ /* Error trap kludge for alpha bug on particle picking  buggy */
+ if (but1 != NULL) ilen = strlen(but1);
+ if (but2 != NULL) ilen += strlen(but2);
+ if (but3 != NULL) ilen += strlen(but3);
+
+ if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
+    {
+    message[MAX_MESSAGE_LENGTH - 1] = '\0';
+    printf("*** Showbuts got an overlength string: %d \n",ilen);
+    printf("*** String:%s \n",message); 
+    XBell(idispl,50);
+    }
+
+ /* Set the message string */
+ strcpy(message, "BUTTON   left:    ");
+ strcat(message, but1);
+ strcat(message, "\n");
+
+ if (but2 != NULL) 
+    {
+    strcat(message, "         center:  ");
+    strcat(message, but2);
+    strcat(message, "\n");
+    }
+
+ if (but3 != NULL)
+    {
+    strcat(message, "         right:   ");
+    strcat(message, but3);
+    }
+
+ //  Note: XmStringCreateLtoR handles newline char oK) if this used
+ //        XmStringCreate you woould have to solve newline problem!
+
+ str_label = XmStringCreateLtoR(message,XmSTRING_DEFAULT_CHARSET);
+ XtSetArg(args[0], XmNlabelString, str_label); 
+ XtSetValues(* iw_labelg_str_ptr,args,1);
+
+ /* Free the String (not doing this may result in a memory leak) */
+ XmStringFree(str_label);
+ XtManageChild(* iw_labelg_str_ptr);
+
+ if (manage) 
+    {XtManageChild  (* iw_buts_ptr); }
+ else
+    {XtUnmanageChild(* iw_buts_ptr);}
+
+ //XFlush(idispl);
+
+ return;
+ }
+
+
+
+/********************** showbutx ***************************/
+
+void showbutx(char *but1, char *but2, char *but3, int unmanage)
+ {   
+ unsigned long   ilen;
+ char            message[MAX_MESSAGE_LENGTH];   
+ Arg             args[3];     /* Arg list */
+ XmString        str_label;   /* String label */
+ int             n;
+ 
+ if (unmanage && iw_mess)
+    { XtUnmanageChild(iw_mess); }
+
+ else 
+    {
+    /* Error trap kludge for alpha bug on particle picking  buggy */
+    if (but1 != NULL) ilen = strlen(but1);
+    if (but2 != NULL) ilen += strlen(but2);
+    if (but3 != NULL) ilen += strlen(but3);
+
+    if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
+       {
+       message[MAX_MESSAGE_LENGTH - 1] = '\0';
+       printf("*** Showbutx got an overlength string: %d \n",ilen);
+       printf("*** String:%s \n",message); XBell(idispl,50);
+       XBell(idispl,50);
+       }
+
+    /* Set the message string */
+    strcpy(message, "BUTTON   left:    ");
+    strcat(message, but1);
+    strcat(message, "\n");
+
+    if (but2 != NULL) 
+       {
+       strcat(message, "         center:  ");
+       strcat(message, but2);
+       strcat(message, "\n");
+       }
+
+    if (but3 != NULL)
+       {
+       strcat(message, "         right:   ");
+       strcat(message, but3);
+       }
+    //printf(" draw 0 \n");
+
+    if (iw_mess == (Widget) 0) 
+       {  /* Must create widget the first time it is used */
+       //printf(" creating iw_mess 11 \n");
+
+       n = 0;
+       Setbgfg(args, 3, &n);  // Handles BGFG Args
+       XtSetArg(args[n], XmNdefaultPosition, False);    n++;    
+       iw_mess   = XmCreateBulletinBoardDialog(iw_win,"iw_mess",args,n);
+
+       XtSetArg(args[n-1], XmNalignment, XmALIGNMENT_BEGINNING); 
+       iw_labelg = XmCreateLabelGadget(iw_mess,"iw_labelg",args,n);
+       XtManageChild(iw_labelg);
+       }
+
+    /* Note: XmStringCreateLtoR handles newline char oK) if this
+       changed to XmStringCreate you have to solve newline problem  */
+
+    str_label = XmStringCreateLtoR(message,XmSTRING_DEFAULT_CHARSET);
+    XtSetArg(args[0], XmNlabelString, str_label); 
+    XtSetValues(iw_labelg,args,1);
+
+    /* Free the String (not doing this may result in a memory leak) */
+    XmStringFree(str_label);
+
+    XtManageChild(iw_mess);
+    // ForceUpdate(iw_mess);
+    }
+
+  XFlush(idispl);
+  }
+
+
+/********************** showbuts ***************************/
+
+Widget showbuts(Widget iw_buts, 
+        char *but1, char *but2, char *but3, int manage)
+ {   
+ unsigned long   ilen;
+ char            message[MAX_MESSAGE_LENGTH];   
+ Arg             args[2];      /* Arg list */
+ XmString        str_label;    /* String label */
+ Widget          iw_labelgt;   /* Label widget    */
+   
+ if (iw_buts == 0 ) 
+    {
+    /* Error trap kludge for alpha bug on particle picking  buggy */
+    if (but1 != NULL) ilen = strlen(but1);
+    if (but2 != NULL) ilen += strlen(but2);
+    if (but3 != NULL) ilen += strlen(but3);
+
+    if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
+       {
+       message[MAX_MESSAGE_LENGTH - 1] = '\0';
+       printf("*** Showbuts got an overlength string: %d \n",ilen);
+       printf("*** String:%s \n",message); XBell(idispl,50);
+       XBell(idispl,50);
+       }
+
+    /* Set the message string */
+    strcpy(message, "BUTTON   left:    ");
+    strcat(message, but1);
+    strcat(message, "\n");
+
+    if (but2 != NULL) 
+       {
+       strcat(message, "         center:  ");
+       strcat(message, but2);
+       strcat(message, "\n");
+       }
+
+    if (but3 != NULL)
+       {
+       strcat(message, "         right:   ");
+       strcat(message, but3);
+       }
+
+    iw_buts = XmCreateBulletinBoardDialog(iw_win,"iw_buts",args,0);
+
+    XtSetArg(args[0], XmNalignment, XmALIGNMENT_BEGINNING); 
+    iw_labelgt = XmCreateLabelGadget(iw_buts,"iw_labelgt",args,1);
+    XtManageChild(iw_labelgt);
+
+    /* Note: XmStringCreateLtoR handles newline char oK) if this
+       changed to XmStringCreate you will have to solve newline problem  */
+
+    str_label = XmStringCreateLtoR(message,XmSTRING_DEFAULT_CHARSET);
+    XtSetArg(args[0], XmNlabelString, str_label); 
+    XtSetValues(iw_labelgt,args,1);
+
+    /* Free the String (not doing this may result in a memory leak) */
+    XmStringFree(str_label);
+    }
+
+ if (manage) XtManageChild(iw_buts);
+ 
+ XFlush(idispl);
+
+ return iw_buts;
+ }
+
+
+/********************** ForceUpdate ******** unused***********/
+
+    /* ForceUpdate() -- a superset of XmUpdateDisplay() that ensures
+    ** that a window's contents are visible before returning. 
+    ** The monitoring of window states is necessary because an attempt to
+    ** map a window is subject to the whim of the window manager, which can
+    ** introduce a significant delay before the window is actually mapped
+    ** and exposed. This function is intended to be called after XtPopup(), 
+    ** XtManageChild() or XMapRaised(). Don't use it in other situations
+    ** as it may sit and process other unrelated events until the widget
+    ** becomes visible.
+    */
+
+    /* The parameter widget must be visible before the function returns */
+    void ForceUpdate (Widget w)
+        {
+        Widget             diashell, topshell;
+        Window             diawindow, topwindow;
+        XtAppContext       cxt = XtWidgetToApplicationContext (w);
+        Display            *dpy;
+        XWindowAttributes  xwa;
+        XEvent             event;
+        /* Locate the shell we are interested in */
+        for (diashell = w; !XtIsShell (diashell);
+            diashell = XtParent (diashell));
+        /* Locate its primary window's shell (which may be the same) */
+        for (topshell = diashell; !XtIsTopLevelShell (topshell);
+            topshell = XtParent (topshell));
+        /* If the dialog shell (or its primary shell window) is
+        ** not realized, don't bother... nothing can possibly happen.
+        */
+        if (XtIsRealized (diashell) && XtIsRealized (topshell)) {
+            dpy = XtDisplay (topshell);
+            diawindow = XtWindow (diashell);
+            topwindow = XtWindow (topshell);
+
+            /* Wait for the dialog to be mapped.
+            ** It's guaranteed to become so
+            */
+            while (XGetWindowAttributes (dpy, diawindow, &xwa) &&
+                                        xwa.map_state != IsViewable) {
+                /*...if the primary is (or becomes) unviewable or
+                ** unmapped, it's probably iconic, and nothing will happen.
+                */
+                if (XGetWindowAttributes (dpy, topwindow, &xwa) &&
+                                        xwa.map_state != IsViewable)
+                    break;
+                /* we are guaranteed there will be an event of some kind. */
+                XtAppNextEvent (cxt, &event);
+                XtDispatchEvent (&event);
+            }
+        }
+        /* The next XSync() will get an expose event. */
+        XmUpdateDisplay (topshell);
+        }
+
+@
+
+
+1.16
+log
+@debug output added and forceupdate (unused)
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.15 2011/07/19 19:18:45 leith Exp $*/
+d7 3
+a9 1
+ *                Added showbuts                 Jun 2011 ArDean Leith *
+d12 1
+a12 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d41 3
+a43 3
+ * PARAMETERS:	char	*but1	       Text description of button 1
+ *		char	*but2	       Text description of button 2
+ *		char	*but3	       Text description of button 3
+d58 2
+a59 2
+extern Widget       iw_win;    /* Image window widget  */
+extern Display      *idispl;
+d62 83
+a144 2
+static Widget       iw_mess   = (Widget) 0 ;  /* Dialog widget   */
+static Widget       iw_labelg = (Widget) 0 ;  /* Label widget    */
+a145 1
+    void ForceUpdate (Widget w);
+a209 1
+    //printf(" draw 2 \n");
+a213 1
+    //printf(" draw 3 \n");
+a217 1
+    //printf(" draw 4 \n");  // DELAY AFTER THIS
+d219 1
+a219 4
+    //printf(" draw 5 \n");  // DELAY AFTER THIS
+    //ForceUpdate(iw_mess);
+
+    //printf(" draw 6 \n");
+d233 2
+a234 2
+ Arg             args[2];     /* Arg list */
+ XmString        str_label;   /* String label */
+a287 1
+
+a295 1
+
+@
+
+
+1.15
+log
+@EB_BGFGO
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.14 2011/06/22 19:05:48 leith Exp leith $*/
+d63 2
+d110 1
+d114 1
+d117 1
+a117 4
+#ifdef WEB_BGFGO
+       XtSetArg(args[n], XmNbackground,  icolorxmb);    n++;
+#endif
+
+d127 2
+a128 1
+       changed to XmStringCreate you will have to solve newline problem  */
+d133 1
+d138 1
+a138 1
+    //printf(" in showbutx final managing \n");
+d140 4
+a145 1
+  //printf(" in showbutx flushing \n\n");
+d147 1
+a147 1
+ }
+d212 1
+d219 58
+@
+
+
+1.14
+log
+@showbuts added
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/new/RCS/showbutx.c,v 1.13 2011/05/18 18:21:23 leith Exp $*/
+d49 1
+a49 1
+#include "std.h"
+d69 1
+a69 1
+ Arg             args[2];     /* Arg list */
+d71 2
+a72 1
+   
+d112 4
+a115 2
+       XtSetArg(args[0], XmNdefaultPosition, False);    
+       iw_mess   = XmCreateBulletinBoardDialog(iw_win,"iw_mess",args,1);
+d117 5
+a121 2
+       XtSetArg(args[0], XmNalignment, XmALIGNMENT_BEGINNING); 
+       iw_labelg = XmCreateLabelGadget(iw_mess,"iw_labelg",args,1);
+@
+
+
+1.13
+log
+@cosmetic & flush (unable to fix slow movearea)
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/new/RCS/showbutx.c,v 1.12 2005/10/18 16:59:57 leith Exp leith $*/
+d5 3
+a7 3
+ *
+ * showbutx.c
+ *
+d34 2
+a35 2
+ * PURPOSE:	Opens a message box displaying the mapping of the mouse
+ *              buttons
+d39 4
+a42 4
+ * PARAMETERS:	char	*but1	       text description of button 1
+ *		char	*but2	       text description of button 2
+ *		char	*but3	       text description of button 3
+ *		int	unmanage       unmanage the window if TRUE
+a46 1
+#include "x.h"
+d67 1
+d69 2
+a70 3
+ Arg             args[2];     /* arg list */
+ unsigned long   ilen;
+ XmString        str_label;  /* String label */
+d73 1
+a73 3
+    {
+    XtUnmanageChild(iw_mess);
+    }
+d135 69
+@
+
+
+1.12
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbutx.c,v 1.11 1996/05/07 14:55:24 leith Exp $*/
+a51 3
+#ifdef VMS
+#include <string.h>
+#else
+a52 1
+#endif
+d56 2
+a57 2
+/* external global variables */
+extern Widget       iw_win;    /* image window widget  */
+d60 3
+a62 3
+/* internal file variables */
+static Widget       iw_mess   = (Widget) 0 ;  /* dialog widget   */
+static Widget       iw_labelg = (Widget) 0 ;  /* label widget    */
+d80 1
+a80 1
+    /* error trap kludge for alpha bug on particle picking  buggy */
+d93 1
+a93 1
+    /* set the message string */
+d112 2
+a113 1
+       {  /* must create widget the first time it is used */
+d122 2
+a123 2
+    /* note: XmStringCreateLtoR handles newline char oK) if this
+    changed to XmStringCreate you will have to solve newline problem  */
+d129 1
+a129 1
+    /* free the String (not doing this may result in a memory leak) */
+d132 1
+d136 2
+a137 2
+ XFlush(idispl);
+
+@
+
+
+1.11
+log
+@added beeps if error
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbutx.c,v 1.10 1996/03/26 17:33:26 leith Exp leith $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.  
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.10
+log
+@bad test of length of null string
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbutx.c,v 1.9 1996/03/21 14:29:24 leith Exp leith $*/
+d76 2
+a77 1
+       printf("*** String:%s \n",message);
+@
+
+
+1.9
+log
+@removed unused code
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbutx.c,v 1.8 1996/03/19 15:39:26 leith Exp leith $*/
+a41 1
+#define MAX_ARGS 3
+d55 4
+a58 4
+ char      message[MAX_MESSAGE_LENGTH];   
+ Arg       args[MAX_ARGS];   /* arg list */
+ int       ilen;
+ XmString  str_label;        /* String label */
+d67 6
+a72 3
+    /* error trap kludge for alpha bug on particle picking */
+    if ((ilen = strlen(but1) + strlen(but2) + strlen(but3) + 57) > 
+        MAX_MESSAGE_LENGTH)
+@
+
+
+1.8
+log
+@put widgets in here instead of using wid_mess or wid_lableg
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbutx.c,v 1.7 1995/07/11 17:28:15 mladjadj Exp leith $*/
+a50 1
+static Position     ixp = 0, iyp = 0;
+a120 104
+
+
+#ifdef NEVER
+/********************** showbutx ***************************/
+
+void showbutx(char *but1, char *but2, char *but3, int unmanage)
+ {   
+ char      message[MAX_MESSAGE_LENGTH];   
+ Arg       args[MAX_ARGS];   /* arg list */
+ int       n, ilen;
+   
+ if (unmanage)
+    {
+    /* need to find location relative to position of top window */
+    XtSetArg(args[0], XmNx, &ixp);
+    XtSetArg(args[1], XmNy, &iyp);
+    XtGetValues(iw_mess,args,2);
+
+    /*** printf("ending showbut loc: %d %d \n",ixp,iyp);   */
+
+    XtUnmanageChild(iw_mess);
+    }
+
+ else 
+    {
+    /* clear the message string */
+    strcpy(message, "");
+
+    strcpy(message, "BUTTON   left:    ");
+    strcat(message, but1);
+    strcat(message, "\n");
+
+    if (but2 != NULL) 
+       {
+       strcat(message, "         center:  ");
+       strcat(message, but2);
+       strcat(message, "\n");
+       }
+
+    if (but3 != NULL)
+       {
+       strcat(message, "         right:   ");
+       strcat(message, but3);
+       }
+
+    /* error trap kludge for alpha bug on particle picking */
+    if ((ilen = strlen(message)) > MAX_MESSAGE_LENGTH)
+       {
+       message[MAX_MESSAGE_LENGTH - 1] = '\0';
+       printf("*** Showbutx got an overlength string: %d \n",ilen);
+       printf("*** String:%s \n",message);
+       }
+
+    /* set position for message window */   
+    iw_mess = wid_mess(iw_win, iw_mess, message, ixp, iyp);
+    }
+
+ XFlush(idispl);
+
+ }
+
+/********************** showbutxmes ******* unused ???? *******/
+
+void showbutxmes(char *but1, char *but2, char *but3)
+ {   
+ char          message[MAX_MESSAGE_LENGTH];   
+ Arg           args[1];              /* arg list */  
+ XmString      str_label;        /* String label */
+
+ /* clear the message string */
+ strcpy(message, "");
+
+ strcpy(message, "BUTTON   left:    ");
+ strcat(message, but1);
+ strcat(message, "\n");
+
+ if (but2 != NULL) 
+       {
+       strcat(message, "         center:  ");
+       strcat(message, but2);
+       strcat(message, "\n");
+       }
+
+ if (but3 != NULL)
+       {
+       strcat(message, "         right:   ");
+       strcat(message, but3);
+       }
+
+ /* note: XmStringCreateLtoR handles newline char oK) if this
+    changed to XmStringCreate you will have to solve newline problem*/
+
+ str_label = XmStringCreateLtoR(message,XmSTRING_DEFAULT_CHARSET);
+ XtSetArg(args[0], XmNlabelString, str_label);
+ XtSetValues(iw_mess,args,1);
+
+ /* free the String (not doing this may result in a memory leak) */
+ XmStringFree(str_label);
+
+ XFlush(idispl);
+
+ return;
+ }
+#endif
+@
+
+
+1.7
+log
+@static Widget = (Widget)0
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbutx.c,v 1.6 1994/12/29 14:28:28 leith Exp mladjadj $*/
+d31 2
+a45 2
+extern unsigned int ihighx;    /* height of the window */
+extern unsigned int iwidex;    /* width of the window  */
+d49 3
+a51 2
+static Widget       iw_mess = (Widget) 0 ;  /* message widget  */
+static Position     ixp, iyp;
+d59 72
+d183 1
+a183 1
+/********************** showbutmes ************************/
+d225 1
+@
+
+
+1.6
+log
+@added debug output
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/showbutx.c,v 1.5 94/03/29 15:10:53 leith Exp Locker: leith $*/
+d49 1
+a49 1
+static Widget       iw_mess = 0 ;  /* message widget  */
+@
+
+
+1.5
+log
+@added showbutxmes
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/showbutx.c,v 1.4 94/02/16 14:35:31 leith Exp $*/
+d58 1
+a58 1
+ int       n;
+d94 7
+a100 1
+    /* set position for message window */
+d102 1
+@
+
+
+1.4
+log
+@#ifdef wrong
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/showbutx.c,v 1.3 94/02/16 12:46:35 leith Exp Locker: leith $*/
+d32 1
+d40 1
+a40 1
+#define MAX_ARGS 2
+d42 1
+a42 6
+
+/* function prototypes */
+void   outmess   (char *);
+Widget wid_mess  (Widget, Widget, char *, int, int);
+
+
+d48 1
+a48 1
+
+d57 1
+a58 1
+ Arg       args[MAX_ARGS];   /* arg list */
+d62 1
+a62 1
+    /* need to find location relative to present position of top window */
+d101 43
+@
+
+
+1.3
+log
+@used ifdef VMS for string.h include
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/showbutx.c,v 1.2 93/11/10 16:41:00 leith Exp Locker: leith $*/
+d32 1
+a32 1
+$ifdef VMS
+@
+
+
+1.2
+log
+@improved location
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d32 3
+d36 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+d4 2
+a15 1
+ *
+a16 1
+ * 
+d22 4
+a25 4
+ * PARAMETERS:	char	*but1		the text description of button 1
+ *		char	*but2		the text description of button 2
+ *		char	*but3		the text description of button 3
+ *		int	unmanage	unmanage the window if TRUE
+d33 1
+d35 1
+d49 2
+a50 1
+static Widget              iw_mess = 0 ;   /* message widget  */
+d52 1
+a52 1
+/**********************************************************************/
+d56 3
+a58 3
+ char message[MAX_MESSAGE_LENGTH];   
+ int ix, iy;
+
+d61 8
+d70 1
+d96 1
+a96 5
+/******* this position is wrong wrong wrong...  change later! */
+    ix = -1;
+    iy = -1;
+
+    iw_mess = wid_mess(iw_win, iw_mess, message, ix, iy);
+@

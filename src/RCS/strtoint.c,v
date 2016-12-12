@@ -1,0 +1,215 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.16.59.50;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	96.05.16.17.35.03;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	95.02.02.16.58.49;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	95.01.26.20.24.18;	author liy;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.23;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/strtoint.c,v 1.4 1996/05/16 17:35:03 leith Exp $*/
+/*
+ * strtoint.c
+ *
+ **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ **********************************************************************
+ *
+ * 
+ * 
+ * PURPOSE:	retrieves string from widget and converts to integer
+ *
+ * RETURNS:	error flag (FALSE is error!)
+ * 
+ * PARAMETERS:  iw_it     widget to be interrogated
+ *              message   error message
+ *              ival      integer value (returned)
+ *
+ **********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+#include <Xm/TextF.h>
+#include <Xm/Text.h>
+
+
+/* function prototypes */
+ extern void spout(char *);
+ extern void spouts(char *);
+
+ /*********************** strtoint ******************************/
+ 
+ int strtoint(Widget iw_it, char * message, int * ival)
+
+ {
+ char * string;
+
+ if (!XtIsWidget(iw_it))
+    {
+    spout("*** iw_it not set, pgm. error in strtoint caller");
+    return FALSE;
+    }
+
+ string = XmTextGetString(iw_it);
+
+ if (sscanf(string,"%d",ival) <= 0)  
+    {
+    spouts("*** Illegal value for: "); spout(message);
+    XtFree(string);
+    return FALSE;
+    } 
+
+ XtFree(string);
+ return TRUE;
+ }
+
+@
+
+
+1.4
+log
+@fixed string stuff
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/strtoint.c,v 1.3 1995/02/02 16:58:49 liy Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.3
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/strtoint.c,v 1.2 1995/01/26 20:24:18 liy Exp liy $*/
+a24 2
+ * 
+ *
+d36 1
+a36 1
+
+d38 1
+a38 2
+
+ /******************************************************************/
+a42 1
+
+a43 1
+ char before[] = "*** Illegal value for\t";
+d45 1
+a45 1
+ if (iw_it <= (Widget)0)
+d47 1
+a47 1
+    spout("iw_it not set, program error in strtoint caller");
+d52 1
+d55 2
+a56 2
+    spout(before); spout(message);
+    XmStringFree((unsigned char *) string);
+d60 1
+a60 1
+ XmStringFree((unsigned char *) string);
+@
+
+
+1.2
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/strtoint.c,v 1.1 1993/11/10 10:11:23 leith Exp liy $*/
+d50 1
+a50 1
+ if (iw_it <= (void *)0)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d50 1
+a50 1
+ if ((int)iw_it <= 0)
+@

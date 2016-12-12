@@ -1,0 +1,184 @@
+head	1.4;
+access;
+symbols
+	pre-tilt-improve:1.4
+	pre_surf_fromtop:1.4
+	pre_neednewmap:1.3
+	pre_apppluss_remove:1.3
+	pre_tiltpair_chng:1.3
+	pre_GPL:1.2;
+locks;
+comment	@ * @;
+
+
+1.4
+date	2011.09.21.13.39.28;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.17.00.03;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.04.05.16.46.55;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.03.28.12.34.53;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new routine
+@
+
+
+1.4
+log
+@neednewmap
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/pickdisp.c,v 1.3 2005/10/18 17:00:03 leith Exp leith $*/
+
+/*C++*************************************************************************
+C
+C pickdisp.c             Mar. 94
+C                                                                  
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                      *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    PARAMETERS:   
+C
+C    PURPOSE:      redisplays particle image pair
+C
+C    CALLED BY:    pickmen  backmen
+C
+C--********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+ 
+ /* external commmon variables */
+ extern XImage*    imager;
+ extern XImage*    imagel;
+
+ /***************************** pickdisp *****************************/
+
+ void pickdisp(int leftside, int rightside)
+
+ {
+ if (leftside)
+    {
+    /* shift left image to shifted location */
+    XPutImage(idispl,iwin,   icontx,imagel, nsam1l, nrow1l,
+              ixull,iyull, nsam2l - nsam1l + 1, nrow2l - nrow1l + 1);
+    XPutImage(idispl,imagsav,icontx,imagel, nsam1l, nrow1l,
+              ixull,iyull, nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+    neednewmap = TRUE;
+    }
+
+ if (rightside)
+    {
+    /* shift right image */      
+    /* display, window, gc, image, srcx, srcy destx, desty width height */
+    XPutImage(idispl,iwin,   icontx,imager, nsam1r, nrow1r,
+              ixulr,iyulr, nsam2r - nsam1r + 1, nrow2r - nrow1r + 1);
+    XPutImage(idispl,imagsav,icontx,imager, nsam1r, nrow1r,
+              ixulr,iyulr, nsam2r - nsam1r + 1, nrow2r - nrow1r + 1);
+    neednewmap = TRUE;
+    }
+
+ return; 
+ }
+
+
+
+   
+  
+@
+
+
+1.3
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/pickdisp.c,v 1.2 1994/04/05 16:46:55 leith Exp $*/
+d63 1
+d74 1
+@
+
+
+1.2
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d8 1
+a8 1
+C **************************************************************************
+d10 24
+a33 7
+C *  COPYRIGHT (C)1994, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d42 3
+a44 1
+    XPutImage(idispl,iwin,   icontx,imagel, nsam1l-1,nrow1l-1,
+a45 2
+    XPutImage(idispl,imagsav,icontx,imagel, nsam1l-1,nrow1l-1,
+              ixull,iyull, nsam2l - nsam1l + 1,nrow2l - nrow1l + 1);
+d52 4
+a55 4
+    XPutImage(idispl,iwin,   icontx,imager, nsam1r-1,nrow1r-1,
+              ixulr,iyulr, nsam2r - nsam1r + 1,nrow2r - nrow1r + 1);
+    XPutImage(idispl,imagsav,icontx,imager, nsam1r,nrow1r,
+              ixulr,iyulr, nsam2r - nsam1r + 1,nrow2r - nrow1r + 1);
+@

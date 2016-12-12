@@ -1,0 +1,186 @@
+head	1.4;
+access;
+symbols
+	pre-tilt-improve:1.4
+	pre_surf_fromtop:1.4
+	pre_neednewmap:1.4
+	pre_apppluss_remove:1.4
+	pre_tiltpair_chng:1.4
+	pre_GPL:1.3;
+locks;
+comment	@ * @;
+
+
+1.4
+date	2005.10.18.16.59.53;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	96.05.10.13.06.29;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	96.05.09.14.45.02;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.11;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/action.c,v 1.3 1996/05/10 13:06:29 leith Exp $*/
+/*
+ * action.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ * 
+ * PURPOSE:	Adds one action to the translation table of iw_t
+ *              of form:  <event act_name params>
+ *
+ * RETURNS:	void
+ * 
+ * PARAMETERS:  Widget		iw_t
+ *		char		*event
+ *		char		*act_name
+ *		char		*params
+ *
+ *
+ * CALLED BY:   actions
+ *
+ ***********************************************************************
+*/
+
+#include "std.h"
+#include "x.h"
+#include "routines.h"
+
+extern Display *idispl;
+
+/**********************************************************************/
+void action(Widget iw_t, char *event, char *act_name, char *params)
+   {
+   char tmp_act_name[80];
+   char tmp_event[120];
+
+   if (((strlen(act_name)                                 ) >= (size_t) 80) ||
+       ((strlen(params) + strlen(act_name)                ) >= (size_t) 80) ||
+       ((strlen(params) + strlen(act_name) + strlen(event)) >= (size_t)120))
+       { 
+       spout("*** Pgm. error:  overlength action in action.c, tell Dean");
+       XBell(idispl,50); XBell(idispl,50); XBell(idispl,50); XBell(idispl,50);
+       return;
+       }
+
+   strcpy(tmp_event, event);
+   strcpy(tmp_act_name, act_name);
+
+   XtOverrideTranslations(iw_t, XtParseTranslationTable
+                         (strcat(tmp_event,
+                                 strcat(tmp_act_name, params))));
+   }
+@
+
+
+1.3
+log
+@bug in strlen calc.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/action.c,v 1.2 1996/05/09 14:45:02 leith Exp leith $*/
+d7 23
+a29 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.   
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.2
+log
+@added strlen tests.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/action.c,v 1.1 1993/11/10 10:11:11 leith Exp leith $*/
+d43 3
+a45 3
+   if (((strlen(act_name)                                 ) > (size_t) 80) ||
+       ((strlen(params) + strlen(act_name)                ) > (size_t) 80) ||
+       ((strlen(params) + strlen(act_name) + strlen(event)) > (size_t)120))
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a13 2
+ *
+ * 
+d15 1
+a15 1
+ * PURPOSE:	adds one action to the translation table of iw_t
+d33 1
+d35 1
+d39 1
+a39 1
+{
+d41 10
+a50 2
+   char tmp_params[80];
+   char tmp_event[80];
+a53 1
+   strcpy(tmp_params, params);
+d57 2
+a58 2
+                                 strcat(tmp_act_name, tmp_params))));
+}
+@

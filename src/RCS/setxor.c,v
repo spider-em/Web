@@ -1,0 +1,147 @@
+head	1.3;
+access;
+symbols
+	pre-tilt-improve:1.3
+	pre_surf_fromtop:1.3
+	pre_neednewmap:1.3
+	pre_apppluss_remove:1.3
+	pre_tiltpair_chng:1.3
+	pre_GPL:1.2;
+locks;
+comment	@ * @;
+
+
+1.3
+date	2005.10.18.16.59.52;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.10.45.33;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.23;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@GPL
+@
+text
+@/*$Header: /alwyn/usr1/web//RCS/setxor.c,v 1.2 93/11/10 10:45:33 leith Exp $*/
+/*
+C***************************************************************************
+C
+C SETXOR  -- CREATED NOV 89
+C           -- converted to C Aug 92 al                                                     
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C SETXOR(ICONTX1)
+C
+C PURPOSE:      CREATES NEW GRAPHICS CONTEXT SET TO EXCLUSIVE OR
+C
+C PARAMETERS:   icontx1    SOURCE  CONTEXT
+C               
+C RETURNS:      icontx2    new x-or context
+C
+C CALLED BY:    winsiz 
+C
+C--*********************************************************************
+*/
+
+#include "x.h"
+#include "std.h"
+#include "common.h"
+
+
+ /************************************************************/
+
+ GC setxor(GC icontx1)
+ {
+
+ GC             icontx2;
+ XGCValues      gcval;
+ unsigned long  gcmask;
+
+ /* create new graphics context */
+ icontx2 = XCreateGC(idispl, iwin, 0, &gcval);
+
+ /* COPY SOME CHARACTARISTICS OF THE OLD GC TO THE XOR GC */
+ gcmask = GCForeground | GCBackground | GCLineWidth | GCFont;
+
+ XCopyGC(idispl, icontx1, gcmask, icontx2);
+
+ XSetFunction(idispl,icontx2,GXxor);
+
+ XFlush(idispl);
+
+ return icontx2;
+ }
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/setxor.c,v 1.1 93/11/10 10:11:23 leith Exp Locker: leith $*/
+d7 1
+a7 1
+C **************************************************************************
+d9 24
+a32 7
+C *  COPYRIGHT (C)1989 , WADWSWORTH CENTER FOR LABORATORIES AND RESEARCH,  *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+@

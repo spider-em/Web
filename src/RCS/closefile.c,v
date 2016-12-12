@@ -1,0 +1,169 @@
+head	1.5;
+access;
+symbols
+	pre-tilt-improve:1.5
+	pre_surf_fromtop:1.5
+	pre_neednewmap:1.5
+	pre_apppluss_remove:1.5
+	pre_tiltpair_chng:1.5
+	pre_GPL:1.4;
+locks;
+comment	@ * @;
+
+
+1.5
+date	2005.10.18.17.00.03;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.08.08.17.57.37;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.07.13.18.36.10;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.10.11.09.19;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.04;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@GPL
+@
+text
+@/*$Header: /net/ithaca/usr1/web/src/RCS/closefile.c,v 1.4 1995/08/08 17:57:37 leith Exp $*/
+/*
+ *************************************************************************
+ *
+ * closefile.c
+ *
+ *************************************************************************
+ * AUTHOR: A. LEITH
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ **************************************************************************
+ *
+ * PURPOSE:
+ *
+ * RETURNS:
+ *
+ * PARAMETERS:   
+ *              
+ *********************************************************************/
+
+#include "files.h"
+
+ int closefile(FILEDATA *fileptr)
+
+ {
+ if (fclose(fileptr -> fp)) 
+     {
+     printf(" *** Error closing file. \n");
+     return FALSE;
+     }
+ /***** ? fileptr->fp =  NULL;   */
+
+ /* free the line buffer in the structure */
+ if (fileptr->buf) free(fileptr->buf);
+
+ /* free the whole structure */
+ free (fileptr);
+ 
+ return TRUE;
+ }
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/closefile.c,v 1.3 1994/07/13 18:36:10 odesanya Exp leith $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1981,1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF
+ * THE CENTER FOR LABORATORIES AND RESEARCH
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/closefile.c,v 1.2 93/11/10 11:09:19 leith Exp $*/
+d35 8
+a42 1
+ fileptr->fp =  NULL;
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/closefile.c,v 1.1 93/11/10 10:11:04 leith Exp Locker: leith $*/
+d35 1
+a35 1
+ fileptr = (FILEDATA *) NULL;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+d3 2
+a4 1
+/*$Header$*/
+@

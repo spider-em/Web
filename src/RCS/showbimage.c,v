@@ -1,0 +1,340 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.7;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2005.10.18.17.00.02;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	99.07.29.15.06.09;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.01.22.20.44.26;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	95.08.08.19.36.33;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.03.24.16.04.13;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.24.13.47.58;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.12.20.11.57.19;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.12.09.10.58.33;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@GPL
+@
+text
+@
+/*$Header: /net/bali/usr1/web/src/RCS/showbimage.c,v 1.7 1999/07/29 15:06:09 leith Exp $*/
+
+/***********************************************************************
+ *
+ * showbimage.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * showbimage
+ * 
+ * PURPOSE:    displays an image from floating point buffer
+ *
+ * RETURNS:    true if successfull
+ * 
+ * PARAMETERS:     
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* externally defined variables used here*/
+ extern int imagego, imageend;        /* set norm. range for image */
+ 
+/****************************  showbimage  ****************************/
+
+int showbimage(float * fbuf, int keepcimage, char** cimage,
+                             int keepimage,  XImage** imaget, 
+                             int nsamt, int nrowt,
+                             float fmint, float fmaxt)
+{   
+ int        nsams, nrows, nrowlab, iytot=0;
+ int        idum;
+ float      scal, offset;
+
+ /* find nsams, nrows in displayed image */
+ dispsize(1,nsamt,1,nrowt,idum,idum,iskip,
+         &nsams, &nrows, &idum);
+
+ if (!(*cimage))
+    {  /* must allocate space for cbuf */
+    if ((*cimage = (char *) malloc(nsams * nrows * sizeof(char))) 
+               == (char *) 0)
+       { 
+       spout(" *** Unable to allocate cimage in showbimage.c");
+       return FALSE;
+       }
+    }
+ /* scale existing 32 bit buffer into 8 bit buffer */ 
+ scale32to8(fmint, fmaxt, iskip, imagego, imageend, &scal, &offset);
+ if (!scaleimg(fbuf, nsamt, nrowt, iskip, FALSE, scal, offset, *cimage))
+       return FALSE;
+
+ if (placed) 
+    {  /* use location from ixuln, iyuln */
+    ixul = ixuln;
+    iyul = iyuln;
+    }
+
+ if (names) 
+    /* find y-offset needed for file name label */
+    {
+    /*  future wid_imglabeloc(filnow,iyline,iytot); !!!!!!!!!!!!*/
+    nrowlab = nrows + iytot;
+    }
+
+ if (!movie)
+    {   /* find location for next image */
+    locc(&ixul, &iyul, nsams, nrows, 
+               &ntop, &nbot,  &nrit, marx, mary, marlef, martop,
+               iwidex, ihighx, placed , newline, &nuscrn, force);
+    }
+
+
+ /* display image at ixul, iyul; deallocate imaget if !keepimage) */
+ wipic(icontx,*cimage,ixul,iyul,nsams,nrows,TRUE,keepimage,imaget);
+
+ if ((!keepcimage) && *cimage)
+    {
+    free(*cimage);
+    *cimage = NULL;
+    } 
+       
+ /* record magnification value for this image */
+ lastskip = iskip;
+
+ if (names)
+    {     /* print image file name below image */
+    /* future wid_imglabel(filnow,ixul,iyul+nrows+iyline) !!!!! */
+    }
+
+ placed = FALSE;
+ 
+ return TRUE;
+ }
+
+ 
+@
+
+
+1.7
+log
+@does allocation and calls scale32to8 here now (not in scaleimg)
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbimage.c,v 1.6 1996/01/22 20:44:26 leith Exp $*/
+d9 23
+a31 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.6
+log
+@used imagego..imagenend instead of mapgo..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbimage.c,v 1.5 1995/08/08 19:36:33 leith Exp leith $*/
+d31 2
+a32 1
+ /* common variables  */
+d43 1
+d49 9
+d59 2
+a60 2
+ if (!scaleimg(fbuf, nsamt,1,nsamt,  nrowt,1,nrowt, fmint,fmaxt, 
+          iskip, imagego,127, cimage))
+@
+
+
+1.5
+log
+@ set showit in wipic call
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/showbimage.c,v 1.4 1994/03/24 16:04:13 leith Exp leith $*/
+d49 1
+a49 1
+          iskip, mapgo,127, cimage))
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/showbimage.c,v 1.3 94/03/24 13:47:58 leith Exp $*/
+d74 1
+a74 1
+ wipic(icontx,*cimage,ixul,iyul,nsams,nrows,idum,keepimage,imaget);
+@
+
+
+1.3
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/showbimage.c,v 1.2 93/12/20 11:57:19 leith Exp Locker: leith $*/
+d29 1
+a31 1
+ extern char     * cimage;
+d35 4
+a38 3
+int showbimage(float * fbuf, int keepcimage, int keepimage, 
+              XImage ** imaget, int nsamt, int nrowt, float fmint,
+              float fmaxt)
+d49 1
+a49 1
+          iskip, mapgo,127, &cimage))
+d74 1
+a74 1
+ wipic(icontx,cimage,ixul,iyul,nsams,nrows,idum,keepimage,imaget);
+d76 1
+a76 1
+ if ((!keepcimage) && cimage)
+d78 2
+a79 2
+    free(cimage);
+    cimage = NULL;
+@
+
+
+1.2
+log
+@fixed fmin== fmax bug
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/showbimage.c,v 1.1 93/12/09 10:58:33 leith Exp Locker: leith $*/
+d6 1
+a6 1
+ * showimage.c
+d17 1
+a17 1
+ * showimage(
+a29 15
+/* external function prototypes */
+ extern void locc     (int *, int *, int, int, 
+                       int *, int *, int *, int, int, int, int, int,   
+                       int, int, int, int *, int);
+ extern int redvol    (FILEDATA *, int,  char  **, int, float **,
+                       int,  int, int, int, int, int, int, int, 
+                       float *,  float *);
+ extern void wipic    (GC, char *, int, int, int, int, int, int, XImage **);
+ extern void spout    (char *);
+ extern int  scaleimg (float *, int, int, int,   int, int, int,
+                       float, float, int,  int, int, char **);
+ extern void dispsize (int,  int, int,  int, int, int, int,
+                       int *, int *, int *);
+
+
+d33 1
+a33 1
+/************************************************************/
+a41 1
+ 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d62 5
+a86 3
+ /* scale existing 32 bit buffer into 8 bit buffer */ 
+ scaleimg(fbuf, nsamt,1,nsamt,  nrowt,1,nrowt, fmint,fmaxt, 
+          iskip, mapgo,127, &cimage);
+@

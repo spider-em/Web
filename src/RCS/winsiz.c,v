@@ -1,0 +1,893 @@
+head	1.16;
+access;
+symbols
+	pre-tilt-improve:1.16
+	pre_surf_fromtop:1.16
+	pre_neednewmap:1.15
+	pre_apppluss_remove:1.15
+	pre_tiltpair_chng:1.15
+	pre_GPL:1.13;
+locks;
+comment	@ * @;
+
+
+1.16
+date	2011.09.23.19.06.56;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2011.05.18.18.23.49;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2005.10.18.16.59.45;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	96.03.26.17.32.51;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	95.08.29.18.41.36;	author liy;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.07.11.17.28.18;	author mladjadj;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.05.11.16.33.19;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.05.09.18.20.17;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.03.10.15.47.37;	author liy;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.02.08.17.30.50;	author liy;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.09.12.14.22.59;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.09.12.11.23.22;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.09.12.11.21.57;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.07.12.21.55.26;	author odesanya;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.23.10.52.58;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.23;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@expos_cb(N.., XFlush(idispl),  wicolor colorgo
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/winsiz.c,v 1.15 2011/05/18 18:23:49 leith Exp $*/
+
+/*
+C++*************************************************************************
+C
+C WINSIZ -- CREATED JAN 90 al
+C           CONVERTED TO C -- AUG 92 al
+C **********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C WINSIZ
+C
+C PURPOSE:       Returns window coordinates and size
+C
+C VARIABLES:     iwintyp       window type ifs
+c                ioper         operation
+C
+C CALLED BY:     web_com  
+C
+C
+C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
+C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
+C                     \ wid_posiz  --> winsiz3    /
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* Internal function prototypes */
+ void winsiz_pop (Widget, XEvent *, String *, Cardinal *);
+ void winsiz_pop2(Widget, XEvent *, String *, Cardinal *);
+ void winsiz1    (void);
+ void winsiz3    (void);
+ void winsiz4    (void);
+
+ /* Externally defined variables */
+ extern int      ix_posiz;         /* x coord from wid_posiz */
+ extern int      iy_posiz;         /* y coord from wid_posiz */
+ extern int      icols_posiz;      /* Columns from wid_posiz */
+ extern int      irows_posiz;      /* Rows    from wid_posiz */
+
+ /* Internally or externally used variables */
+ static GC       icontxx;
+ int             iwintyp;
+ static Widget   iw_posiz = (Widget) 0;
+
+ /********************************* winsiz ***************************/
+
+ void winsiz(Widget iw_temp, XtPointer data, XtPointer call_data)
+
+ {
+ char ctemp[3];
+
+ if (data != NULL) 
+    {
+    strncpy(ctemp, (char*) data, 1); ctemp[1]= '\0'; 
+    ioper   = atoi(&ctemp[0]);
+
+    strncpy(ctemp, (char*)data, 2); ctemp[2]= '\0';
+    iwintyp = atoi(&ctemp[1]);
+    }
+
+ if (iwintyp < 1 || iwintyp > 3)
+    {
+    printf(
+        "in winsiz, iwintyp: %d ioper: %d ctemp: %c%c Notify Dean!\n",
+        iwintyp,ioper,ctemp[0],ctemp[1]);
+    } 
+ winsiz1();
+ }
+
+
+
+ /***************************** winsiz1 ******************************/
+
+ void winsiz1(void)
+
+ {
+
+ /* Make a xor graphics context */
+ icontxx = setxor(icontx);
+
+ /* Set default color for box in xor GC */
+ wicolor(icontxx,colorgo+icolorov);
+
+ if (iwintyp == 1) 
+    {   /* Interactive windowing by rubber box */
+
+    /* Set upper left corner cursor */
+    setacursor(67,-1,-1);
+
+    actions(iw_win, "winsiz_pop", winsiz_pop, "13");
+
+    //printf(" winsiz1 1\n");  // used to DELAY AFTER this
+
+    showbutx("Sets upper left window corner.",
+             NULL, 
+             "Stop this routine.", FALSE);
+
+    //printf(" winsiz1 2\n"); // used to DELAY Befor this
+
+
+    XFlush(idispl);
+    }
+
+ else if (iwintyp == 2) 
+    {    /* Want fixed size window */
+    if (nsamw > 0 && nroww > 0)
+       iw_posiz = wid_posiz(iw_win, iw_posiz, ixulw, iyulw, nsamw, nroww,
+               'S', winsiz4);
+    else
+       iw_posiz = wid_posiz(iw_win, iw_posiz, 
+                            ixulw, iyulw, icols_posiz, irows_posiz,
+                            'S', winsiz4);
+    }
+
+ else if (iwintyp == 3) 
+    {    /* Want specified coordinate window */
+    iw_posiz = wid_posiz(iw_win, iw_posiz, 
+                         ixulw, iyulw, nsamw, nroww,
+                         'B', winsiz3);
+    }
+ else
+    {
+    printf("iwintyp: %d in winsiz1 Notify Dean!\n", iwintyp);
+    } 
+ 
+ return;
+ }
+
+
+ /******************* Set interactive UL corner *********************/
+
+ void winsiz_pop(Widget iw_t, XEvent *event, String *params,
+                  Cardinal *num_params)
+ {
+
+ /* Uninstall translations */
+ XtUninstallTranslations(iw_t);
+   
+ if (!(strcmp(*params,"1")))            /* Button 1 pushed */
+    {
+    // printf(" winsiz_pop 12        \n");
+
+    getloc(event,'B',&ixulw,&iyulw);
+
+    // For "record file'. If cursor not in the last image
+    if( ioper == 4 && (ixulw < ixul || iyulw < iyul || 
+	ixulw > (ixul + nsam *iskip) || iyulw > (iyul + nrow *iskip)))
+        {
+ 	spout(" The cursor is not in the last image.");
+        actions(iw_win, "winsiz_pop", winsiz_pop, "13");
+	return;
+	}
+
+    /* Set lower right corner cursor */
+    setacursor(7,-1,-1);
+
+    /* Set up action procedure to set lower right corner */
+    actions(iw_win, "winsiz_pop2", winsiz_pop2, "M123");
+
+    //printf(" winsiz_pop 13\n");// DELAYS HERE
+
+    showbutx("Set lower right window corner.",
+             "Change upper right window corner.", 
+             "Stop this routine.", FALSE);
+    //printf(" winsiz_pop 14\n");// DELAYS HERE
+    }
+
+ else if (!(strcmp(*params,"3")))               
+    {                                       /* Button 3 pushed */
+    /* Set default cursor */
+    setacursor(0,-1,-1);
+
+    if (icontxx > (GC)0) XFreeGC(idispl,icontxx);
+
+    /* Unmanage information box */
+    showbutx("","","",TRUE);
+    }
+ }
+
+ /**************** Set interactive lower right corner ***************/
+
+ void winsiz_pop2(Widget iw_t, XEvent *event, String *params,
+                  Cardinal *num_params)
+ {
+ int ix,iy;
+
+   
+ if (!(strcmp(*params,"M")))            /* cursor moved */
+    {
+    /* Get mouse position */
+    getloc(event,'M',&ix,&iy);
+
+    nsamw = ix - ixulw + 1;
+    nroww = iy - iyulw + 1;
+
+    /* Mouse moved so draw new box */
+    xorbox(iwin,icontxx,FALSE,ixulw,iyulw,nsamw,nroww);
+    }
+
+ else if (!(strcmp(*params,"1")))       /* Button 1 pushed */
+    {
+    getloc(event,'B',&ix,&iy);
+
+    nsamw = ix - ixulw + 1;
+    nroww = iy - iyulw + 1;
+
+    /* Erase old box and set source window to this location */
+    xorbox(iwin,icontxx,TRUE,ixulw,iyulw,nsamw,nroww);
+
+    /* If 'record the last file', keep the window */
+    if (ioper == 4)	
+    	xorbox(imagsav,icontx,TRUE,ixulw,iyulw,nsamw,nroww);
+
+    /* Set default cursor */
+    setacursor(0,-1,-1);
+
+    /* Unmanage information box */
+    showbutx("","","",TRUE);
+
+    /* Uninstall translations */
+    XtUninstallTranslations(iw_t);
+
+    expos_cb(NULL,NULL,NULL);// Shortens delay!!
+
+    /* Proceed to specific operation on window */
+    winsel();
+    return;
+    }
+
+
+ else if (!(strcmp(*params,"2")))       /* Button 2 pushed */
+    {   /* Resize window */
+
+    /* Erase old box and set source window to this location */
+    xorbox(iwin,icontxx,TRUE,ixulw,iyulw,nsamw,nroww);
+
+    /* Set default cursor */
+    setacursor(0,-1,-1);
+
+    /* Unmanage information box */
+    showbutx("","","",TRUE);
+
+    /* Uninstall translations */
+    XtUninstallTranslations(iw_t);
+
+    winsiz1();
+    return;
+    }
+
+ else if (!(strcmp(*params,"3")))       /* Button 3 pushed */
+    {   /* Abort window */
+
+    /* Erase old box and set source window to this location */
+    xorbox(iwin,icontxx,TRUE,ixulw,iyulw,nsamw,nroww);
+
+    /* Set default cursor */
+    setacursor(0,-1,-1);
+
+    /* Unmanage information box */
+    showbutx("","","",TRUE);
+
+    /* Uninstall translations */
+    XtUninstallTranslations(iw_t);
+
+    XFreeGC(idispl,icontxx);
+
+    /******** if (docit)  CLOSE(LUNDOCW) */
+    return;
+    }
+
+ }
+
+ /****************** Set size window    *************************/
+
+
+ void winsiz4(void)
+ {
+ nsamw = icols_posiz;
+ nroww = irows_posiz;
+
+ winmov();
+ }
+
+ /****************** Set coordinate window    *******************/
+
+
+ void winsiz3(void)
+ {
+ ixulw = ix_posiz;
+ iyulw = iy_posiz;
+ nsamw = icols_posiz;
+ nroww = irows_posiz;
+
+ winsel();
+ }
+@
+
+
+1.15
+log
+@set default size 64 64
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/winsiz.c,v 1.14 2005/10/18 16:59:45 leith Exp leith $*/
+d110 1
+a110 1
+ wicolor(icontxx,icolorov);
+d120 2
+d126 3
+d167 1
+a167 1
+ if (!(strcmp(*params,"1")))            /* button 1 pushed */
+d169 2
+d173 1
+a173 1
+    /* For "record file'. If the cursor is not in the last image, return */
+d175 2
+a176 1
+	ixulw > (ixul + nsam *iskip) || iyulw > (iyul + nrow *iskip))) {
+d188 2
+d193 1
+a193 1
+    XFlush(idispl);
+d251 1
+@
+
+
+1.14
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winsiz.c,v 1.13 1996/03/26 17:32:51 leith Exp $*/
+d37 1
+a37 1
+C PURPOSE:       RETURNS WINDOW COORDINATES AND SIZE
+d39 2
+a40 2
+C VARIABLES:     IWINTYP       WINDOW TYPE IFS
+C                IOPER         OPERATION
+d55 1
+a55 1
+ /* internal function prototypes */
+d62 1
+a62 1
+ /* common variables */
+d65 2
+a66 2
+ extern int      icols_posiz;      /* columns from wid_posiz */
+ extern int      irows_posiz;      /* rows    from wid_posiz */
+d68 1
+a68 1
+ /* internally or externally used variables */
+d106 1
+a106 1
+ /* make a xor graphics context */
+d109 1
+a109 1
+ /* set default color for box in xor GC */
+d113 1
+a113 1
+    {   /* interactive windowing by rubber box */
+d115 1
+a115 1
+    /* set upper left corner cursor */
+d128 3
+a130 2
+    {    /* desired a fixed size window */
+    iw_posiz = wid_posiz(iw_win, iw_posiz, ixulw, iyulw, nsamw, nroww,
+d132 4
+d139 4
+a142 3
+    {    /* desired a specified coordinate window */
+    iw_posiz = wid_posiz(iw_win, iw_posiz, ixulw, iyulw, nsamw, nroww,
+               'B', winsiz3);
+d153 1
+a153 1
+ /******************* SET INTERACTIVE UL CORNER *********************/
+d159 1
+a159 1
+ /* uninstall translations */
+d166 1
+a166 1
+    /* for "record file'. If the cursor is not in the last image, return */
+d174 1
+a174 1
+    /* set lower right corner cursor */
+d177 1
+a177 1
+    /* set up action procedure to set lower right corner */
+d187 2
+a188 2
+    {                                       /* button 3 pushed */
+    /* set default cursor */
+d193 1
+a193 1
+    /* unmanage information box */
+d198 1
+a198 1
+ /**************** SET INTERACTIVE LOWER RIGHT CORNER ***************/
+d208 1
+a208 1
+    /* get mouse position */
+d214 1
+a214 1
+    /* mouse moved so draw new box */
+d218 1
+a218 1
+ else if (!(strcmp(*params,"1")))       /* button 1 pushed */
+d225 1
+a225 1
+    /* erase old box and set source window to this location */
+d228 1
+a228 1
+    /* if 'record the last file', keep the window */
+d232 1
+a232 1
+    /* set default cursor */
+d235 1
+a235 1
+    /* unmanage information box */
+d238 1
+a238 1
+    /* uninstall translations */
+d242 1
+a242 1
+    /* proceed to specific operation on window */
+d248 2
+a249 2
+ else if (!(strcmp(*params,"2")))       /* button 2 pushed */
+    {   /* resize window */
+d251 1
+a251 1
+    /* erase old box and set source window to this location */
+d254 1
+a254 1
+    /* set default cursor */
+d257 1
+a257 1
+    /* unmanage information box */
+d260 1
+a260 1
+    /* uninstall translations */
+d267 2
+a268 2
+ else if (!(strcmp(*params,"3")))       /* button 3 pushed */
+    {   /* abort window */
+d270 1
+a270 1
+    /* erase old box and set source window to this location */
+d273 1
+a273 1
+    /* set default cursor */
+d276 1
+a276 1
+    /* unmanage information box */
+d279 1
+a279 1
+    /* uninstall translations */
+d290 1
+a290 1
+ /****************** for set size window    *************************/
+d301 1
+a301 1
+ /****************** for set coordinate window    *******************/
+@
+
+
+1.13
+log
+@mainly cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winsiz.c,v 1.12 1995/08/29 18:41:36 liy Exp leith $*/
+d9 25
+a33 8
+C **************************************************************************
+C *  COPYRIGHT (C)1990 , WADSWORTH CENTER FOR LABORATORIES AND             *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH                            *
+C **************************************************************************
+@
+
+
+1.12
+log
+@modified for leaving the box when window the last file
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winsiz.c,v 1.11 1995/07/11 17:28:18 mladjadj Exp liy $*/
+d58 1
+a58 1
+ void winsiz(Widget iw_temp, caddr_t data, caddr_t call_data)
+d65 1
+a65 1
+    strncpy(ctemp,data,1); ctemp[1]= '\0'; 
+d67 2
+a68 1
+    strncpy(ctemp,data,2); ctemp[2]= '\0';
+d71 1
+d91 1
+a93 1
+
+@
+
+
+1.11
+log
+@static Widget = (Widget)0
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winsiz.c,v 1.10 1995/05/11 16:33:19 leith Exp mladjadj $*/
+d141 8
+d202 4
+@
+
+
+1.10
+log
+@fixed new bug
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winsiz.c,v 1.9 1995/05/09 18:20:17 leith Exp leith $*/
+d54 1
+a54 1
+ static Widget   iw_posiz = 0;
+@
+
+
+1.9
+log
+@fixed ctemp with null
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winsiz.c,v 1.8 1995/03/10 15:47:37 liy Exp leith $*/
+d65 1
+a65 1
+    strncpy(ctemp,data,1); ctemp[2]= '\0'; 
+d67 1
+a67 1
+    strncpy(ctemp,data,2); ctemp[3]= '\0';
+@
+
+
+1.8
+log
+@changed string assignment for compling WEB on alpha
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winsiz.c,v 1.7 1995/02/08 17:30:50 liy Exp $*/
+d61 1
+a61 1
+ char ctemp[2];
+d65 1
+a65 1
+    strncpy(ctemp,data,1); 
+d67 1
+a67 1
+    strncpy(ctemp,data,2); 
+d70 6
+a75 1
+
+d119 5
+a123 1
+
+@
+
+
+1.7
+log
+@modified (int)structure for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/winsiz.c,v 1.6 1994/09/12 14:22:59 leith Exp liy $*/
+d64 5
+a68 3
+    { 
+    ioper   = atoi(strncpy(ctemp,data,1));
+    iwintyp = atoi(data+1);
+@
+
+
+1.6
+log
+@ reworked color assignments
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winsiz.c,v 1.5 94/09/12 11:23:22 leith Exp Locker: leith $*/
+d147 1
+a147 1
+    if ((int)icontxx > 0) XFreeGC(idispl,icontxx);
+@
+
+
+1.5
+log
+@fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/winsiz.c,v 1.3 94/07/12 21:55:26 odesanya Exp Locker: leith $*/
+d82 2
+a83 2
+ /* set default green color for box in xor GC */
+ wicolor(icontxx,29);
+@
+
+
+1.4
+log
+@used routines.h
+@
+text
+@d56 1
+a56 1
+ /********************** winsiz ***************************/
+d63 1
+a63 1
+ if(data != NULL) 
+d74 1
+a74 1
+ /********************** winsiz1 ******************************/
+@
+
+
+1.3
+log
+@fixed the crashing caused by hitting the middle button
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/winsiz.c,v 1.2 93/11/23 10:52:58 leith Exp $*/
+d36 1
+d38 1
+a38 12
+ extern void     showbutx   (char *, char *, char *, int);
+ extern GC       setxor     (GC);
+ extern void     setacursor (int, int, int);
+ extern Widget   wid_posiz  (Widget, Widget, int, int, 
+                              int, int, char, void (* )());
+ extern void     xorbox     (Window, GC, int, int, int, int, int);
+ extern void     actions    (Widget, char *, void (*)(), char *);
+ extern int      wicolor    (GC, int);
+ extern void     getloc     (XEvent *, char, int *, int *);
+ extern void     winmov     (void);
+ extern void     winsel     (void);
+
+d45 1
+d51 4
+a54 3
+ static GC     icontxx;
+ int           iwintyp;
+ static Widget iw_posiz = 0;
+d64 1
+a64 1
+  { 
+d67 1
+a67 1
+  }
+a115 9
+#ifdef NEVER 
+        ELSEIF (IWINTYP .EQ. 4) THEN
+C          DESIRE TO USE LAST IMAGE POSITION AS WINDOW
+           IF (IOPER .EQ. 20) THEN
+C             MASKING OPERATION WITH INIMAG = TRUE
+              CALL WID_MASKMEN(.TRUE.,.TRUE.)
+           ENDIF
+         ENDIF
+#endif
+d242 1
+a242 1
+ /****************** for set size window    **************/
+d253 1
+a253 1
+ /****************** for set coordinate window    **************/
+@
+
+
+1.2
+log
+@after move loopback added
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/winsiz.c,v 1.1 93/11/10 10:11:23 leith Exp Locker: leith $*/
+d71 5
+a75 3
+ ioper   = atoi(strncpy(ctemp,data,1));
+
+ iwintyp = atoi(data+1);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 2
+a3 1
+/*$Header$*/
+a34 2
+#include "x.h"
+#include "std.h"
+d51 3
+a53 4
+ void winsiz1    ();
+ void winsel     ();
+ void winsiz3    ();
+ void winsiz4    ();
+d71 1
+a71 2
+ ioper = atoi(strncpy(ctemp,data,1));
+ /*  printf(" ioper: %d \n",ioper);  */
+a73 1
+ /*  printf(" iwintyp: %d \n",iwintyp);  */
+d82 1
+a82 1
+ void winsiz1()
+a84 1
+ char   * ctemp;
+a207 3
+/******************************
+    printf(" (%d ,%d) %d X %d \n", ixulw,iyulw,nsamw,nroww);  
+ ******************************/
+a214 1
+
+a231 1
+
+d260 1
+a260 1
+ void winsiz4()
+d271 1
+a271 1
+ void winsiz3()
+@

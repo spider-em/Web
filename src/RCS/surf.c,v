@@ -1,0 +1,3480 @@
+head	1.28;
+access;
+symbols
+	pre-tilt-improve:1.28
+	pre_surf_fromtop:1.26
+	pre_neednewmap:1.25
+	pre_apppluss_remove:1.24
+	pre_tiltpair_chng:1.24
+	pre_GPL:1.23;
+locks;
+comment	@ * @;
+
+
+1.28
+date	2011.11.01.15.54.37;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2011.10.25.19.05.33;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2011.10.21.12.20.54;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2011.09.14.17.53.35;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2005.10.18.16.59.48;	author leith;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	96.01.22.20.27.46;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	95.08.08.19.36.24;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	95.07.24.14.16.13;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	95.06.23.15.47.24;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	95.06.22.19.26.17;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	95.06.21.16.12.20;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	94.11.17.16.24.01;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	94.09.02.16.47.00;	author odesanya;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	94.09.02.12.28.37;	author odesanya;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	94.08.31.11.38.42;	author odesanya;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	94.06.23.15.01.28;	author odesanya;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.05.27.15.26.50;	author odesanya;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.05.19.17.13.55;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.04.05.16.47.36;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.01.21.10.36.06;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	93.12.31.13.40.13;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	93.12.07.11.44.25;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	93.11.24.14.22.20;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	93.11.24.12.26.04;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.11.24.12.12.40;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.16.15.08.58;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.14.44.24;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.34;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.28
+log
+@used redvol8_reform
+@
+text
+@
+/*
+C**************************************************************************
+C                                                                      *
+C   surf.for  -- Created as wid_surf.for                     Feb 92 al *
+C   surf.c       Converted to C                              Oct 92 al *
+C                Modified                                    Nov 93 lo *
+C                Modified to add color                       Jun 95    *
+C                Modified for view dir                       Oct 11 al *
+C                                                                      *
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2011  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C  surf(canrotate,sirdit,distit)
+C
+C  PURPOSE:     Reads spider 3-d picture file, creates 2-d 
+C               reflection image of left side view
+C
+C  PARAMETERS:  nslice1,nslice2     Sample range
+C               nsam1,nsam2     Row range
+C               nrow1,nrow2 Slice range
+C               thlev           Threshold desired
+C               refl            Reflection %
+C               fct             Attenuation %
+C               phi,theta,psi   Viewing angles
+C               canrotate       Logical flag for rotate in memory
+C
+C  RETURNS:     void
+C
+C  CALLED BY:   surfmen
+C
+C  NOTES:       For each pixel, the previous pixel on the row and the
+c               pixel one col. down are used to form a triangular tile
+c               the tile is shaded according to its orientation across
+c               the x axis and its distance along the x axis from the
+c               left end of the file.
+C
+C--*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ /* External function prototypes */
+ extern void  cantrot   (int, int, float *, unsigned char *,float,float,float);
+ extern float surfrot   (int *, int *, float, float, float, unsigned char *, 
+                         unsigned char, int, int);
+ extern float volval    (int, int, int, unsigned char *);    
+ extern int surfcolor   (unsigned char * colvol, int nvolcolors, int * ncolrange);
+ int redvol8_reform     (FILEDATA *, unsigned char * ,
+                         int, int, int, int, int,  float *, float *);                      
+
+ /* Externally defined variables used here */
+ extern float      phi, theta, psi, thlev;
+ extern XImage     *imagel;
+ extern int        nvolcolors;
+
+ /* Static variables for use here */
+ static unsigned char lthlev, lthlevo = 0;
+ static float fcto, reflo, thetao, phio, psio, csfact;
+ static float scaleo = 1.0;
+ static int   newsize = TRUE, npixo = 0, tnpixo = 0, nvoxelso = 0;
+ static int   nslice1o = 0, nslice2o = 0, nsliceo = 0, nsamo = 0, nrowo = 0;
+ static int   nrow1o = 0, nrow2o = 0, nsam1o = 0, nsam2o = 0;
+ static int   tnpixsirdo = 0, nvolcolorso = -1, ncolrange;
+ static unsigned char * colvol; /* the 3D texture mapping vol  buffer */
+
+ /* Variables defined for use here */
+ unsigned char  * vol,     * refmap;
+ float          * distbuf, * idistl, fd1, fd2;
+ float          * sirdbuf;
+
+ /* Variables that are used elsewhere also */
+
+ /******************************   surf   ****************************/
+
+ void surf(int canrotate, int sirdit, int distit, int colorit)
+
+ {
+ int            j, k, iloc, nsr, jlast, klast, iy;
+ int            kgo, kend, jgo, jend, N1, N2, ixxp1;
+ int            islicet, irow, jc, kc, jj, kk, irowp1, nvoxels;
+ int            ixx, rotate, npix, tnpix, NP, NC, islicetp1;
+ int            nslices, nsams, newang,   nslicewt;
+ float          a1, a2, a3, a4, a5, a6, a7, a8;
+ float          xb1, xf1, xb2, xf2, xb3, xf3, xb4, xf4;
+ float          xb5, xf5, xb6, xf6, xb7, xf7, xb8, xf8;
+ float          yb1, yf1, yb2, yf2, yb3, yf3, yb4, yf4;
+ float          yb5, yf5, yb6, yf6, yb7, yf7, yb8, yf8;
+ float          zb1, zf1, zb2, zf2, zb3, zf3, zb4, zf4;
+ float          zb5, zf5, zb6, zf6, zb7, zf7, zb8, zf8;
+ float          * pos, dj, dk, d1, d2, d3, d4, ft;
+ float          of1, of2, of1c, of2c, jslope, kslope;
+ float          nf1, nf2, nf1c, nf2c, nv, ov, u, v, w, dy;
+ float          Nx, Ny, Nz, bgx, bgy, bgz, fgx, fgy, fgz, ivall;
+ static float   fn, fncon;
+ static Boolean first_time = True;
+ unsigned char  * cptr,  * ptr,  *posit, *cloc;
+ unsigned char  *p1, *p2, *p3, *p4, *p5, *p6, *p7, *p8;
+ float          *positsird, *floc;
+ float          scaledis;
+ int            kkfactor, islicetnsr, positindx, itemp, islicetfact;
+ int            itempfact1, itempfact2, irowfact;
+ int            i;
+ /**********debug ***********/
+ int            nval   = 0;
+ int            valmin = 10000,   valmax = -10000;
+ int            valminc = 10000,  valmaxc = -10000;
+ int            valminf = 10000 , valmaxf = -10000 ;
+ int            numcolt[10];
+ /********** end debug ***********/
+
+ /* Find number of pixels in an end view of the volume */
+ npix    = nsam * nrow;
+
+ /* Find number of pixels on a slice */
+ nsr     = nslice * nsam;
+
+ /* Find original volume size */
+ nvoxels = nslice * nsam * nrow;
+
+ /* Find reflection image size */
+ tnpix   = scaleval * nsam * scaleval * nrow;
+
+ jslope = (1.0 - nsam*scaleval)   / (1.0 - nsam);
+ kslope = (1.0 - nrow*scaleval) / (1.0 - nrow);
+
+ N1     = nsam2 - nsam1 + 1;
+ N2     = nrow2 - nrow1 + 1;
+
+ nslices  = (nsam2 - nsam1)*jslope + 1;
+ nsams  = (nrow2 - nrow1)*kslope + 1;
+
+ nslicewt = nslice2 - nslice1 + 1;
+
+ /* Make clock cursor (#79) */
+ waitcursor(iwin,TRUE,79);
+ 
+ if (sirdit) 
+     { /* Sirds output wanted */
+     if (tnpix > tnpixsirdo)
+        {
+        tnpixsirdo = tnpix;
+        if (((sirdbuf = (float *) realloc(sirdbuf, tnpixsirdo*
+                   sizeof(float))) == (float *) 0))
+           {
+           spout("*** Unable to reallocate sirdbuf memory in surf.c");
+           return;
+           }
+        }
+     }
+ 
+ if (!gotsurf && canrotate)
+    {   /* do not have surface memory allocated, can rotate */
+    first_time = True;
+    /* allocate space for arrays */
+    if (nvoxelso == 0 && npixo == 0 && tnpixo == 0)
+       {
+       if (((vol   = (unsigned char *) malloc(nvoxels*
+             sizeof(unsigned char))) == (unsigned char *) 0) ||
+         ((distbuf = (float *) malloc(npix*sizeof(float))) 
+                                     == (float *) 0) ||
+         ((refmap  = (unsigned char *) malloc(tnpix*sizeof(unsigned char)))
+                                     ==   (unsigned char *) 0)||
+	 ((colvol  = (unsigned char *) malloc (nvoxels*sizeof(unsigned char)))
+				     == (unsigned char *) 0))
+          {
+          spout("*** Unable to allocate rotation memory in surf.c");
+          return;
+          }
+       nvoxelso = nvoxels; npixo = npix; tnpixo = tnpix;
+       }
+    else
+       {
+       if ( nvoxels > nvoxelso)
+          {   /* Must reallocate array space */
+          nvoxelso = nvoxels;
+          if (((vol = (unsigned char *) realloc(vol, nvoxels*
+                sizeof(unsigned char))) == (unsigned char *) 0) ||
+              ((colvol = (unsigned char *) realloc(colvol, nvoxels*
+                sizeof(unsigned char))) == (unsigned char *) 0) )
+             {
+             spout("*** Unable to reallocate vol memory in surf.c");
+             return;
+             }
+          }
+
+       if ( npix > npixo)
+          {   /* Number of pixels increased in distbuf */
+          npixo = npix;
+          if (((distbuf = (float *) realloc(distbuf, npix*
+             sizeof(float))) == (float *) 0))
+             {
+             spout("*** Unable to reallocate distbuf memory in surf.c");
+             return;
+             }
+          }
+       }
+
+    // Load volume data into 8 bit vol
+    //redvol8(filedata, vol, 1, nslice, 1, nsam, 1, nrow, 0, 255,
+    //        &fn, &fncon); 
+    redvol8_reform(filedata, vol, nsam,nrow,nslice, 0,255, &fn, &fncon);
+ 
+    if (colorit) nvolcolorso = -1;
+
+    }   /*  (!gotsurf && canrotate) */
+
+ if (colorit && (nvolcolorso != nvolcolors)) 
+    {  
+    /* Load color volume and set colormap */
+    if (!surfcolor(colvol, nvolcolors, &ncolrange)) return;
+    }
+
+ if (canrotate) 
+    {   /* Volume is small enough to rotate */
+    if (theta > 0.0 || phi > 0.0 || psi > 0.0) 
+       rotate = TRUE;
+    else
+       rotate = FALSE;
+    
+    newang = FALSE;
+
+    if (theta != thetao || phi != phio || psi != psio) 
+       {   /* Rotation angle changed since last render */
+       newang     = TRUE;
+       thetao     = theta;
+       phio       = phi;
+       psio       = psi;
+       first_time = True;
+       }
+
+    if (nslice != nsliceo || nsam != nsamo || nrow != nrowo)
+        {   /* Input vol. size changed since last render */
+        newsize    = TRUE;
+        nsliceo      = nslice;
+        nsamo      = nsam;
+        nrowo    = nrow;
+        first_time = True;
+        }
+
+    if (tnpix > tnpixo)
+       {  /* Output image size changed since last render */
+       tnpixo = tnpix;
+       if ((refmap = (unsigned char *) realloc(refmap, 
+                       tnpix*sizeof(unsigned char))) ==
+                                     (unsigned char *) 0 )
+          {
+          spout("*** Scale value is too large for memory allocation");
+          return;
+          }
+       }  /* if (tnpix > tnpixo) */
+    }     /* if (canrotate)      */
+
+  else
+    {  /* can not rotate this size volume */
+    if (first_time)
+       {  /* Must allocate space for output image */
+       if ((refmap = (unsigned char *) malloc(npix * 
+                        sizeof(unsigned char))) ==
+                                     (unsigned char *) 0 ||
+          (idistl = (float *) calloc((nsam+1), sizeof(float) )) ==
+                    (float *) 0 )
+          {
+          spout("*** Unable to allocate 'cantrot' memory in surf.c");
+          return;
+          }
+        }   /* if (first_time */
+    }       /* else  (can not rotate)          */
+
+ if (nsam1o   != nsam1   || nsam2o != nsam2 || nrow1o != nrow1 ||
+     nrow2o != nrow2 || nslice1o != nslice1 || nslice2o   != nslice2)
+    {
+    nsam1o = nsam1;
+    nsam2o = nsam2;
+    nrow1o = nrow1;
+    nrow2o = nrow2;
+    nslice1o = nslice1;
+    nslice2o = nslice2;
+    first_time = True;
+    }
+
+ /* NOTE: Distance shading is done according to original nslice     */
+ /*       not the windowed nslice1 dimension                        */
+
+ /* convert threshold to 8 bits */ 
+ lthlev = (unsigned char) (thlev * fn + fncon);
+
+ if (lthlevo != lthlev)
+    {
+    lthlevo = lthlev;
+    first_time = True;
+    }
+
+ /* When (first_time) the following will compute and save the voxel 
+    depths in the nslice direction for the specified threshold, with 
+    scaling of 1. This enables speed-up when scaling > 1  */
+
+ if (first_time && canrotate)
+    {
+    iloc   = -1;
+    itempfact1 = -nsr - nslice + nslice1 - 1;
+
+    for (islicet = nrow1; islicet <= nrow2; islicet++)
+       {
+       itempfact2 = islicet * nsr + itempfact1;
+
+       /* Set starting location for this row in reflection image */
+       for (irow = nsam1; irow <= nsam2; irow++)
+          {
+          if (!rotate)
+             {
+             /*  get ivall directly from data volume  */
+             /* cptr  = vol + (islicet - 1) * nsr 
+                        + (irow -1) * nslice + nslice1 - 1;  */
+             /* islicet * nsr - nsr + irow * nslice - nslice + nslice1 - 1 */
+             cptr = vol + itempfact2 + irow * nslice;
+
+             ivall = 0.0;
+             ixx   = nslice1 - 1;
+             for (ptr = cptr; ptr < (cptr + nslicewt); ptr++)
+                {
+                ixx++;
+                if (*ptr >= lthlev)
+		   {
+		   ivall = ixx;
+		   break;   
+                   }
+                }   /* for ptr  */
+             }      /* if (!rotate) */
+          else
+             {
+             ivall =  surfrot(&newang, &newsize, theta, phi, psi, vol,
+                       lthlev, irow, islicet); 
+             }
+          distbuf[++iloc] = ivall;
+
+          }  /*  irow    */
+       }     /*  islicet */
+    }        /* first_time && canrotate  */
+
+ if (!gotsurf || refl != reflo)
+     {  /* do not have a surface or have changed reflection ratio */
+     gotsurf    = TRUE;
+
+     /* find normalization factors for refmap formation */
+     fd1        = (imageend - imagego) * (1.0 - refl) / (1.0 - nslice);
+     fd2        = imagego - nslice * fd1;
+     csfact     = refl * (imageend - imagego);
+     if (colorit)
+        {
+        fd1     = (ncolrange-1) * (1.0 - refl) / (1.0 - nslice);
+        fd2     = imagego - nslice * fd1;
+        csfact  = refl * (ncolrange -1);
+        } 
+     reflo      = refl;
+     first_time = True;
+     }
+
+  if ( fcto != fct)
+     {  /* fct changed */
+     fcto       = fct;
+     first_time = True;
+     }
+
+  if ( colorit && (nvolcolorso != nvolcolors))
+     {  /* nvolcolors changed */
+     nvolcolorso = nvolcolors;
+     first_time  = True;
+     fd1         = (ncolrange-1) * (1.0 - refl) / (1.0 - nslice);
+     fd2         = imagego - nslice * fd1;
+     csfact      = refl * (ncolrange -1);
+     } 
+
+ if (first_time || scaleo != scaleval)
+    {  /* first time or scale changed */
+    first_time = False;
+    scaleo     = scaleval;
+
+    /***** put in surfmen al nov 2011
+    sprintf(output,
+        "Phi:%d Theta:%d Psi:%d  Scale:%4.1f  Threshold:(%f,%d)",
+        (int)phi, (int)theta, (int)psi, scaleval, thlev, lthlev);
+    spout(output);
+    *****/
+
+    if (canrotate)
+       {     /* have enough space to rotate volume */
+       /* initialize refmap to imagego at all pixels */
+       for (cloc = refmap; cloc < refmap + tnpix; cloc++)
+          *cloc = imagego;  
+
+       /********** debug *********/
+       for (iloc = 0; iloc < 10; iloc++)
+          numcolt[iloc]=0; 
+       /*********** end debug ********/
+
+       if (sirdit)
+          {  /* want SIRD display */
+          /* initialize sirdmap to 0 at all pixels */
+          for (floc = sirdbuf; floc < sirdbuf + tnpix; floc++)
+             *floc = 0.0;  
+          }
+
+       klast = kc = 0;
+       kgo   = 1 + kslope*(nrow1 - 1);
+
+       /* For each level of islicet, kgo and kend are the local starting and 
+          ending rows of pixels in refmap  */
+
+       for (islicet = nrow1; islicet < nrow2; islicet++)
+          {
+          islicetp1   = islicet + 1;
+          kend        = 1 + kslope * islicet;
+          dk          = 1.0 / (kend - kgo);
+          islicetnsr  = islicet * nsr;
+          islicetfact = islicetnsr - nslice - nsr;
+          irowfact    = islicetfact + nslice1 -1;
+
+          if (islicet == (nrow2 -1)) kend++;
+          kc++;
+
+          jlast = jc = 0;
+          jgo   = 1 + jslope*(nsam1 - 1);
+
+          /* For each irow, jgo and jend are the local starting and 
+             ending columns of pixels in refmap  */
+
+          for (irow = nsam1; irow < nsam2; irow++)
+             {
+             irowp1    = irow + 1;
+             jend      = 1 + jslope*irow;
+             dj        = 1.0/(jend - jgo);
+             /* positindx = islicetnsr + nslice * irow - nslice - nsr */
+             positindx = islicetfact + nslice * irow;
+
+             if (irow == (nsam2 -1) ) jend++;
+
+             jc++;
+             pos = distbuf + (kc - 1)*N1 + jc - 1;
+             d1  = *pos; 
+             d2  = *(pos + 1);
+             d3  = *(pos + N1 + 1);
+             d4  = *(pos + N1);
+
+             if (!d1 && !d2 && !d3 && !d4) /* the original corner pixels */
+                {                          /* returned 0 depth therefore */
+                jlast += (jend - jgo);     /* surface is not within here */
+                jgo = jend;
+                continue;
+                }
+
+             /* find pointer to position in original volume array */
+             /*** ptr = vol + (islicet - 1) * nsr 
+                          + (irow - 1) * nslice + nslice1 - 1;   */
+             /*** ptr = vol + islicet * nsr - nsr + irow * nslice - nslice + nslice1 -1 */
+             ptr = vol + irow * nslice + irowfact;
+
+             NP  = (kend - kgo)*(jend - jgo);
+             NC  = 0;
+
+             for (ixx = nslice1; ixx < nslice2; ixx++)
+                {  /* step back along row throuth the volume */
+                if (NC == NP) break;
+
+                /* find value in volume at * corners */
+                if (!rotate)
+                   { /* simple if rotation is zero! */
+                   p1 = ptr;        p5 = p1 + 1;
+                   p2 = p1 + nslice;  p6 = p2 + 1;  
+                   p3 = p2 + nsr;   p7 = p3 + 1;
+                   p4 = p1 + nsr;   p8 = p4 + 1;
+                
+                   a1 = *p1; a2 = *p2; a3 = *p3; a4 = *p4;
+                   a5 = *p5; a6 = *p6; a7 = *p7; a8 = *p8;
+                   }
+                else
+                   {   /* must rotate */
+                   ixxp1 = ixx + 1;
+                   if ( ixx == nslice1)
+                      {
+                      a1 = volval(ixx, irow, islicet, vol);
+                      a2 = volval(ixx, irowp1, islicet, vol);
+                      a3 = volval(ixx, irowp1, islicetp1, vol);
+                      a4 = volval(ixx, irow, islicetp1, vol);
+                      }
+                   else
+                      {
+                      a1 = a5;
+                      a2 = a6;
+                      a3 = a7;
+                      a4 = a8;
+                      }
+                   a5 = volval(ixxp1, irow, islicet, vol);
+                   a6 = volval(ixxp1, irowp1, islicet, vol);
+                   a7 = volval(ixxp1, irowp1, islicetp1, vol);
+                   a8 = volval(ixxp1, irow, islicetp1, vol);
+                   }  /* can rotate */
+   
+                /* If all 8 corner values are below threshold, the 
+                   surface is not here      */
+
+               if (a1 < lthlev && a2 < lthlev && a3 < lthlev && 
+                   a4 < lthlev && a5 < lthlev && a6 < lthlev && 
+                   a7 < lthlev && a8 < lthlev)
+                  {
+                  ptr++;
+                  continue;   
+                  }     
+            
+               /* Compute the forward difference parameters to use later
+                  for gradient estimation */
+
+               xf1 = a5; xf2 = a6; xf3 = a7; xf4 = a8;
+               yf1 = a2; yf4 = a3; yf5 = a6; yf8 = a7;
+               zf1 = a4; zf2 = a3; zf5 = a8; zf6 = a7;              
+   
+               xb1 = yb1 = zb1 = a1; xb2 = yb2 = zb2 = a2; 
+               xb3 = yb3 = zb3 = a3; xb4 = yb4 = zb4 = a4;
+               xb5 = yb5 = zb5 = a5; xb6 = yb6 = zb6 = a6; 
+               xb7 = yb7 = zb7 = a7; xb8 = yb8 = zb8 = a8;
+
+               if (islicet == (nrow - 1)) /* bottommost */
+                  {  /* use backward difference  */
+                  zb3 = a2; zf3 = a3;
+                  zb4 = a1; zf4 = a4;
+                  zb7 = a6; zf7 = a7;
+                  zb8 = a5; zf8 = a8;
+                  }
+               else if (irow == (nsam-1))  /* rightmost  */
+                  {  /* use backward difference  */
+                  yb2 = a1; yf2 = a2;
+                  yb3 = a4; yf3 = a3;
+                  yb6 = a5; yf6 = a6;
+                  yb7 = a8; yf7 = a7;
+                  }
+               else if (ixx == (nslice - 1))  /* frontmost  */
+                  {  /* use backward difference  */
+                  xb5 = a1; xf5 = a5;
+                  xb6 = a2; xf6 = a6;
+                  xb7 = a3; xf7 = a7;
+                  xb8 = a4; xf8 = a8;
+                  }
+               else
+                  {  /* use forward difference  */
+                  if (!rotate)
+                     {
+                     xf5 = *(p5 + 1);
+                     xf6 = *(p6 + 1);
+                     xf7 = *(p7 + 1);
+                     xf8 = *(p8 + 1);
+
+                     yf2 = *(p2 + nslice);
+                     yf3 = *(p3 + nslice);
+                     yf6 = *(p6 + nslice);
+                     yf7 = *(p7 + nslice);
+                    
+                     zf3 = *(p3 + nsr);
+                     zf4 = *(p4 + nsr);
+                     zf7 = *(p7 + nsr);
+                     zf8 = *(p8 + nsr);
+                     }
+                  else
+                     {
+                     xf5 = volval(ixxp1+1, irow, islicet, vol);
+                     xf6 = volval(ixxp1+1, irowp1, islicet, vol);
+                     xf7 = volval(ixxp1+1, irowp1, islicetp1, vol);
+                     xf8 = volval(ixxp1+1, irow, islicetp1, vol);
+
+                     yf2 = volval(ixx, irowp1+1, islicet, vol);
+                     yf3 = volval(ixx, irowp1+1, islicetp1, vol);
+                     yf6 = volval(ixxp1, irowp1+1, islicet, vol);
+                     yf7 = volval(ixxp1, irowp1+1, islicetp1, vol);
+                    
+                     zf3 = volval(ixx, irowp1, islicetp1+1, vol);
+                     zf4 = volval(ixx, irow, islicetp1+1, vol);
+                     zf7 = volval(ixxp1, irowp1, islicetp1+1, vol);
+                     zf8 = volval(ixxp1, irow, islicetp1+1, vol);
+                     }
+                  }  /* else   use forward difference  */
+
+               of1  = a1;           of2 = a2 - a1;
+               of1c = (a4 - a1)*dk; of2c = (a3 + a1 - a2 - a4)*dk;
+
+               nf1  = a5;           nf2 = a6 - a5;
+               nf1c = (a8 - a5)*dk; nf2c = (a7 + a5 - a6 - a8)*dk;
+
+               kk = klast;
+               /* Process all the pixels on the rectangle per ptr  */
+               for (k = kgo; k < kend; k++)
+                  {
+                  /* Scan down thru the rectangle */
+                  kk++;
+                  jj = jlast;
+                  kkfactor = (kk -1) * nslices - 1;
+
+                  /* Scan Across Rectangle  */
+                  for (j = jgo; j < jend; j++)
+                     {
+                     jj++;
+
+                     /* set position in output image(s) */
+                     /* posit  = refmap + (kk - 1) * nslices + jj - 1; */
+                     posit     = refmap + kkfactor + jj ; 
+                     if (sirdit)  
+                         positsird = sirdbuf + kkfactor + jj;
+
+                     /* if have already set this pixel, skip */
+                     if (*posit > imagego) continue;
+
+                     /* find surface depth within these 8 corners */
+                     /* at this region of the k,j rectangle       */
+                     ivall = 0.0;
+
+                     /* dy is %distance across rectangle */
+                     dy = (j - jgo)*dj;
+                     ov = of1 + dy*of2;
+                     nv = nf1 + dy*nf2;
+
+                     if ( ov >= lthlev ) ivall = ixx; 
+                     if ( ov <= lthlev && nv >= lthlev)
+                         { 
+                         ivall = ixx;
+                         if (ov != nv)
+		         ivall = ixx + (lthlev - ov)/(nv - ov);
+                         }
+
+                     /* if surface not found, skip rest of pixel assignment */
+                     if (ivall == 0.0)  continue;
+
+                      /* surface located, now find value for the reflection map buffer */
+
+                    NC++;
+
+                     /* (u,v,w) coressponds to fractional location */
+                     /* Within original source voxel (8 corners)   */
+                     u = ivall - ixx;        /* along row */
+                     v = dy;                 /* across rectangle */
+                     w = (k - kgo)*dk;       /* down   rectangel */
+
+                     /* Compute gradient at the back face for x, y & z */
+                     /* y gradient */                      
+                     d1 = yf1 - yb1;
+                     d2 = yf2 - yb2;
+                     d3 = yf3 - yb3;
+                     d4 = yf4 - yb4; 
+                     bgy = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+
+                     /* Z gradient */                      
+                     d1 = zf1 - zb1;
+                     d2 = zf2 - zb2;
+                     d3 = zf3 - zb3;
+                     d4 = zf4 - zb4; 
+                     bgz = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+
+                     /* X gradient */                      
+                     d1 = xf1 - xb1;
+                     d2 = xf2 - xb2;
+                     d3 = xf3 - xb3;
+                     d4 = xf4 - xb4; 
+                     bgx = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+
+                     /* Compute gradient at the front face for x, y & z */
+                     /* Y gradient */                      
+                     d1 = yf5 - yb5;
+                     d2 = yf6 - yb6;
+                     d3 = yf7 - yb7;
+                     d4 = yf8 - yb8; 
+                     fgy = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+
+                     /* Z gradient */                      
+                     d1 = zf5 - zb5;
+                     d2 = zf6 - zb6;
+                     d3 = zf7 - zb7;
+                     d4 = zf8 - zb8; 
+                     fgz = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+
+                     /* X gradient */                      
+                     d1 = xf5 - xb5;
+                     d2 = xf6 - xb6;
+                     d3 = xf7 - xb7;
+                     d4 = xf8 - xb8; 
+                     fgx = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+
+                     /* Find normals for this tile */
+                     Nx = u*(fgx - bgx) + bgx;
+
+                     
+                     if (fabs(Nx) >= 0.0005)
+                        {  /* set reflection contribution */
+                        /************
+                        Ny = (u*(fgy - bgy) + bgy) / Nx;
+                        Nz = (u*(fgz - bgz) + bgz) / Nx;
+                        ft = Ny*Ny + Nz*Nz;
+                        *************/
+
+                        Ny = (u*(fgy - bgy) + bgy);
+                        Nz = (u*(fgz - bgz) + bgz);
+                        ft = (Ny*Ny + Nz*Nz) / ( Nx * Nx) ;
+                  
+                        *posit = fd1 * ivall + fd2 
+                                 + csfact/sqrt((fct * ft) + 1.0);
+                        }
+                     else 
+                        {  /* Ignore reflection contribution (div. by 0) */
+                        *posit = fd1 * ivall + fd2;
+                        }
+               
+                     if (sirdit)
+                        { 
+                        /* Save distance in sirds buffer, if needed */
+                        *positsird = 1.0 - ((float) ivall / (float)nslice);
+                        }
+                     else if (colorit) 
+                        {    
+                        /* Set correct color and intensity  */ 
+                        itemp = *posit; 
+                  
+	                /************
+                        *posit = (*posit) + ncolrange *
+                                            colvol[positindx + (int) ivall] ; 
+                        *posit = (*posit) + colvol[(islicet -1 +w+0.5)*nsr +
+                                                   (irow    -1 +v+0.5)*nslice + ivall+0.5
+                        ***********/
+
+                        /* Find colvol value at closest voxel for this k,j location */
+	                *posit = (*posit) + ncolrange *
+                                  colvol[positindx + (int)(w + 0.5) * nsr  +
+                                                     (int)(v + 0.5) * nslice +
+                                                     (int)(ivall + 0.5)];
+
+                        /****** debug ********/
+                        nval++;
+                        if (colvol[positindx + (int) ivall] < valminc) valminc = colvol[positindx + (int) ivall];
+                        if (colvol[positindx + (int) ivall] > valmaxc) valmaxc = colvol[positindx + (int) ivall];
+                        numcolt[colvol[positindx + (int) ivall]] ++;
+                        if (*posit < valmin) valmin = *posit;
+                        if (*posit > valmax) valmax = *posit;
+
+                        if (itemp < valminf) valminf = itemp;
+                        if (itemp > valmaxf) valmaxf = itemp;
+
+                        /**************** removed
+                        if (nval > 3800 && nval < 4000)
+                           {
+                           printf(" Color from (%d,%d,%d) = %d  inten: %d -->%d \n",
+                                 ixx,irow,islicet, 
+                                 colvol[positindx + (int) ivall],  itemp,  *posit);
+                           }  ***************/ 
+                        /********* end debug ************/
+
+
+                        }      /* colorit   */
+                     }         /* for (j... */
+
+                  of1 += of1c;   of2 += of2c;
+                  nf1 += nf1c;   nf2 += nf2c;
+
+                  }            /* for (k... */
+               ptr++;
+               }               /* for (ixx... */
+            jlast += (jend - jgo);
+            jgo = jend;
+            }                  /* for (irow... */
+         klast += (kend - kgo);
+         kgo = kend;
+         }                     /* for (islicet...  */
+      }                        /* if (canrotate  */
+
+  else  /* will have to read directly from file  */
+     {
+     nslices = N1; nsams = N2;
+     cantrot(nslices, nsams, idistl, refmap, csfact, fd1, fd2); 
+     }
+  } /* if (first_time or scaleo != scaleval) */
+
+
+ /*  find location for reflection map display  */
+ locc(&ixul,&iyul,nslices,nsams,&ntop,&nbot,&nrit,
+      marx,mary,marlef,martop,iwidex,ihighx,placed,
+      newline,&nuscrn,force);
+
+
+ if (distit)
+    {    /* want distance map from sirdbuf */
+    scaledis =  (imageend - imagego) * imagego;
+    for (iy = 0; iy < nslices*nsams; iy++)
+       {
+       *(refmap+iy)= (*(sirdbuf+iy) * scaledis);
+       }
+    }
+
+ else if (sirdit)
+    {   /* Want to convert distances in sirdbuf to a sirdmap */
+    posit     = refmap;
+    positsird = sirdbuf;
+
+    /* Allocate memory used in sird1 */
+    sird(positsird, posit, nslices, nsams, 0, -1);
+
+    for (iy = 0; iy < nslices; iy++)
+       {  /* Call sird1 for each line of image */
+       sird(positsird, posit, nslices, nsams,iy,0);
+       posit     += nslices;
+       positsird += nslices;
+       }
+
+    /* Free memory used in sird1 */
+    sird(positsird, posit, nslices, nsams, 0, 1);
+    }
+
+ /*  Display the reflection, sird, or distance map  */
+ wipic(icontx,(char *) refmap,ixul,iyul,nslices,nsams,TRUE,FALSE,&imagel);  
+
+ /*  Remove clock cursor */
+ waitcursor(iwin,FALSE,0);
+
+/****** debug ********/
+if (colorit)
+   {
+   printf(" ncolrange in surf:     %d \n",ncolrange);
+   printf(" surface display range: %d...%d \n",valmin,valmax);
+   printf(" vol color range:       %d...%d \n",valminc,valmaxc);
+   printf(" vol intensity range:   %d...%d \n",valminf,valmaxf);
+   for (i=0; i < nvolcolors; i++)
+       printf(" suface voxels of color[%d]:  %d \n",i,numcolt[i]);
+   }
+/********* end debug ************/
+ 
+ }
+@
+
+
+1.27
+log
+@surf as viewed from top
+/
+@
+text
+@d74 2
+a75 1
+
+d224 5
+a228 4
+    /* Load volume data into 8 bit vol */
+    redvol8(filedata, vol, 1, nslice, 1, nsam, 1, nrow, 0, 255,
+            &fn, &fncon); 
+
+@
+
+
+1.26
+log
+@cosmetic
+@
+text
+@d9 1
+a9 1
+C                                                            Oct 11 al *
+d43 3
+a45 3
+C  PARAMETERS:  nsam1,nsam2     Sample range
+C               nrow1,nrow2     Row range
+C               nslice1,nslice2 Slice range
+d86 2
+a87 2
+ static int   nsam1o = 0, nsam2o = 0, nsamo = 0, nrowo = 0, nsliceo = 0;
+ static int   nslice1o = 0, nslice2o = 0, nrow1o = 0, nrow2o = 0;
+d107 1
+a107 1
+ int            nsams, nrows, newang,   nsamwt;
+a118 1
+ char           output[100];
+d137 1
+a137 1
+ npix    = nrow * nslice;
+d140 1
+a140 1
+ nsr     = nsam * nrow;
+d143 1
+a143 1
+ nvoxels = nsam * nrow * nslice;
+d146 1
+a146 1
+ tnpix   = scaleval * nrow * scaleval * nslice;
+d148 2
+a149 2
+ jslope = (1.0 - nrow*scaleval)   / (1.0 - nrow);
+ kslope = (1.0 - nslice*scaleval) / (1.0 - nslice);
+d151 2
+a152 2
+ N1     = nrow2 - nrow1 + 1;
+ N2     = nslice2 - nslice1 + 1;
+d154 2
+a155 2
+ nsams  = (nrow2 - nrow1)*jslope + 1;
+ nrows  = (nslice2 - nslice1)*kslope + 1;
+d157 1
+a157 1
+ nsamwt = nsam2 - nsam1 + 1;
+d224 1
+a224 1
+    redvol8(filedata, vol, 1, nsam, 1, nrow, 1, nslice, 0, 255,
+d255 1
+a255 1
+    if (nsam != nsamo || nrow != nrowo || nslice != nsliceo)
+d258 1
+d260 1
+a260 2
+        nrowo      = nrow;
+        nsliceo    = nslice;
+d284 1
+a284 1
+          (idistl = (float *) calloc((nrow+1), sizeof(float) )) ==
+d293 2
+a294 2
+ if (nrow1o   != nrow1   || nrow2o != nrow2 || nslice1o != nslice1 ||
+     nslice2o != nslice2 || nsam1o != nsam1 || nsam2o   != nsam2)
+d296 2
+a301 2
+    nsam1o = nsam1;
+    nsam2o = nsam2;
+d305 2
+a306 2
+ /* NOTE: Distance shading is done according to original nsam     */
+ /*       not the windowed nsam1 dimension                        */
+d318 1
+a318 1
+    depths in the nsam direction for the specified threshold, with 
+d324 1
+a324 1
+    itempfact1 = -nsr - nsam + nsam1 - 1;
+d326 1
+a326 1
+    for (islicet = nslice1; islicet <= nslice2; islicet++)
+d331 1
+a331 1
+       for (irow = nrow1; irow <= nrow2; irow++)
+d337 3
+a339 3
+                        + (irow -1) * nsam + nsam1 - 1;  */
+             /* islicet * nsr - nsr + irow * nsam - nsam + nsam1 - 1 */
+             cptr = vol + itempfact2 + irow * nsam;
+d342 2
+a343 2
+             ixx   = nsam1 - 1;
+             for (ptr = cptr; ptr < (cptr + nsamwt); ptr++)
+d369 2
+a370 2
+     fd1        = (imageend - imagego) * (1.0 - refl) / (1.0 - nsam);
+     fd2        = imagego - nsam * fd1;
+d374 2
+a375 2
+        fd1     = (ncolrange-1) * (1.0 - refl) / (1.0 - nsam);
+        fd2     = imagego - nsam * fd1;
+d392 2
+a393 2
+     fd1         = (ncolrange-1) * (1.0 - refl) / (1.0 - nsam);
+     fd2         = imagego - nsam * fd1;
+d402 1
+a402 6
+    /***** alterd al junk 95
+    sprintf(output,
+        "Phi:%d Theta:%d Psi:%d Scale:%4.1f Threshold:(%f,%d) Next_Threshold:(%f,%d)",
+        (int)phi, (int)theta, (int)psi, scaleval, thlev, 
+        lthlev, (lthlev + 1.0 - fncon)/fn,(int)(thlev + 1));
+    *****/
+d407 1
+d428 1
+a428 1
+       kgo   = 1 + kslope*(nslice1 - 1);
+d433 1
+a433 1
+       for (islicet = nslice1; islicet < nslice2; islicet++)
+d439 2
+a440 2
+          islicetfact = islicetnsr - nsam - nsr;
+          irowfact    = islicetfact + nsam1 -1;
+d442 1
+a442 1
+          if (islicet == (nslice2 -1)) kend++;
+d446 1
+a446 1
+          jgo   = 1 + jslope*(nrow1 - 1);
+d451 1
+a451 1
+          for (irow = nrow1; irow < nrow2; irow++)
+d456 2
+a457 2
+             /* positindx = islicetnsr + nsam * irow - nsam - nsr */
+             positindx = islicetfact + nsam * irow;
+d459 1
+a459 1
+             if (irow == (nrow2 -1) ) jend++;
+d477 3
+a479 3
+                          + (irow - 1) * nsam + nsam1 - 1;   */
+             /*** ptr = vol + islicet * nsr - nsr + irow * nsam - nsam + nsam1 -1 */
+             ptr = vol + irow * nsam + irowfact;
+d484 1
+a484 1
+             for (ixx = nsam1; ixx < nsam2; ixx++)
+d492 1
+a492 1
+                   p2 = p1 + nsam;  p6 = p2 + 1;  
+d502 1
+a502 1
+                   if ( ixx == nsam1)
+d522 1
+a522 1
+                /* if all 8 corner values are below threshold, the 
+d545 1
+a545 1
+               if (islicet == (nslice - 1)) /* bottommost */
+d552 1
+a552 1
+               else if (irow == (nrow-1))  /* rightmost  */
+d559 1
+a559 1
+               else if (ixx == (nsam - 1))  /* frontmost  */
+d575 4
+a578 4
+                     yf2 = *(p2 + nsam);
+                     yf3 = *(p3 + nsam);
+                     yf6 = *(p6 + nsam);
+                     yf7 = *(p7 + nsam);
+d614 1
+a614 1
+                  /* scan down thru the rectangle */
+d617 1
+a617 1
+                  kkfactor = (kk -1) * nsams - 1;
+d625 1
+a625 1
+                     /* posit  = refmap + (kk - 1) * nsams + jj - 1; */
+d658 1
+a658 1
+                     /* within original source voxel (8 corners)   */
+d663 1
+a663 1
+                     /* compute gradient at the back face for x, y & z */
+d671 1
+a671 1
+                     /* z gradient */                      
+d678 1
+a678 1
+                     /* x gradient */                      
+d685 2
+a686 2
+                     /* compute gradient at the front face for x, y & z */
+                     /* y gradient */                      
+d693 1
+a693 1
+                     /* z gradient */                      
+d700 1
+a700 1
+                     /* x gradient */                      
+d707 1
+a707 1
+                     /* find normals for this tile */
+d727 1
+a727 1
+                        {  /* ignore reflection contribution (div. by 0) */
+d733 2
+a734 2
+                        /* save distance in sirds buffer, if needed */
+                        *positsird = 1.0 - ((float) ivall / (float)nsam);
+d738 1
+a738 1
+                        /* set correct color and intensity  */ 
+d745 1
+a745 1
+                                                   (irow    -1 +v+0.5)*nsam + ivall+0.5
+d748 1
+a748 1
+                        /* find colvol value at closest voxel for this k,j location */
+d751 1
+a751 1
+                                                     (int)(v + 0.5) * nsam +
+d794 2
+a795 2
+     nsams = N1; nrows = N2;
+     cantrot(nsams, nrows, idistl, refmap, csfact, fd1, fd2); 
+d801 1
+a801 1
+ locc(&ixul,&iyul,nsams,nrows,&ntop,&nbot,&nrit,
+d809 1
+a809 1
+    for (iy = 0; iy < nsams*nrows; iy++)
+d816 1
+a816 1
+    {   /* want to convert distances in sirdbuf to a sirdmap */
+d820 2
+a821 2
+    /* allocate memory used in sird1 */
+    sird(positsird, posit, nsams, nrows, 0, -1);
+d823 5
+a827 5
+    for (iy = 0; iy < nsams; iy++)
+       {  /* call sird1 for each line of image */
+       sird(positsird, posit, nsams, nrows,iy,0);
+       posit     += nsams;
+       positsird += nsams;
+d830 2
+a831 2
+    /* free memory used in sird1 */
+    sird(positsird, posit, nsams, nrows, 0, 1);
+d834 2
+a835 2
+ /*  display the reflection, sird, or distance map  */
+ wipic(icontx,(char *) refmap,ixul,iyul,nsams,nrows,TRUE,FALSE,&imagel);  
+d837 1
+a837 1
+ /*  remove clock cursor */
+@
+
+
+1.25
+log
+@127 set to imageend
+@
+text
+@d4 7
+a10 6
+C
+C   SURF.FOR  -- CREATED FEB 92 as WID_SURF.FOR
+C   surf.c       CONVERTED TO C OCT 92 al
+C                MODIFIED NOV 93 lo
+C                MODIFIED JUNE 95 TO ADD COLOR al
+C
+d14 1
+a14 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d38 1
+a38 1
+C SURF(CANROTATE,SIRDIT,DISTIT)
+d40 2
+a41 2
+C  PURPOSE:     READS SPIDER 3-D PICTURE FILE, CREATES 2-D 
+C               REFLECTION IMAGE OF LEFT SIDE VIEW
+d43 8
+a50 8
+C  PARAMETERS:  NSAM1,NSAM2     SAMPLE RANGE
+C               NROW1,NROW2     ROW RANGE
+C               NSLICE1,NSLICE2 SLICE RANGE
+C               THLEV           THRESHOLD DESIRED
+C               REFL            REFLECTION %
+C               FCT             ATTENUATION %
+C               PHI,THETA,PSI   VIEWING ANGLES
+C               CANROTATE       LOGICAL FLAG FOR ROTATE IN MEMORY
+d52 1
+a52 1
+C  RETURNS:     VOID
+d54 1
+a54 1
+C  CALLED BY:   SURFMEN
+d56 5
+a60 5
+C  NOTES:       FOR EACH PIXEL, THE PREVIOUS PIXEL ON THE ROW AND THE
+C               PIXEL ONE COL. DOWN ARE USED TO FORM A TRIANGULAR TILE
+C               THE TILE IS SHADED ACCORDING TO ITS ORIENTATION ACROSS
+C               THE X AXIS AND ITS DISTANCE ALONG THE X AXIS FROM THE
+C               LEFT END OF THE FILE.
+d68 1
+a68 1
+ /* external function prototypes */
+d76 1
+a76 1
+ /* externally defined variables used here */
+d81 1
+a81 1
+ /* static variables for use here */
+d91 1
+a91 1
+ /* variables that are used here */
+d96 1
+a96 1
+ /* variables that are used elsewhere also */
+d137 1
+a137 1
+ /* find number of pixels in an end view of the volume */
+d140 1
+a140 1
+ /* find number of pixels on a slice */
+d143 1
+a143 1
+ /* find original volume size */
+d145 2
+a146 1
+ /* find reflection image size */
+d160 1
+a160 1
+ /* make clock cursor (#79) */
+d164 1
+a164 1
+     { /* sirds output wanted */
+d200 1
+a200 1
+          {   /* must reallocate array space */
+d213 1
+a213 1
+          {   /* number of pixels increased in distbuf */
+d224 1
+a224 1
+    /* load volume data into 8 bit vol */
+d234 1
+a234 1
+    /* load color volume and set colormap */
+d239 1
+a239 1
+    {   /* volume is small enough to rotate */
+d248 1
+a248 1
+       {   /* rotation angle changed since last render */
+d257 1
+a257 1
+        {   /* input vol. size changed since last render */
+d266 1
+a266 1
+       {  /* output image size changed since last render */
+d281 1
+a281 1
+       {  /* must allocate space for output image */
+d294 2
+a295 2
+ if (nrow1o != nrow1 || nrow2o != nrow2 || nslice1o != nslice1 ||
+     nslice2o != nslice2 || nsam1o != nsam1 || nsam2o != nsam2)
+d331 1
+a331 1
+       /* set starting location for this row in reflection image */
+@
+
+
+1.24
+log
+@GPL
+@
+text
+@d368 1
+a368 1
+     fd1        = (127.0 - imagego) * (1.0 - refl) / (1.0 - nsam);
+d370 1
+a370 1
+     csfact     = refl * (127.0 - imagego);
+@
+
+
+1.23
+log
+@used imagego..imagenend instead of mapgo..
+@
+text
+@d10 1
+a10 1
+C **************************************************************************
+d12 24
+a35 7
+C *  COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND RESEARCH     *
+C *    NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.              *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH  			   *
+C **************************************************************************
+@
+
+
+1.22
+log
+@ set showit in wipic call
+@
+text
+@d351 3
+a353 3
+     fd1        = (127.0 - mapgo) * (1.0 - refl) / (1.0 - nsam);
+     fd2        = mapgo - nsam * fd1;
+     csfact     = refl * (127.0 - mapgo);
+d357 1
+a357 1
+        fd2     = mapgo - nsam * fd1;
+d375 1
+a375 1
+     fd2         = mapgo - nsam * fd1;
+d397 1
+a397 1
+       /* initialize refmap to mapgo at all pixels */
+d399 1
+a399 1
+          *cloc = mapgo;  
+d617 1
+a617 1
+                     if (*posit > mapgo) continue;
+@
+
+
+1.21
+log
+@bug in comment
+@
+text
+@d821 1
+a821 1
+ wipic(icontx,(char *) refmap,ixul,iyul,nsams,nrows,FALSE,FALSE,&imagel);  
+@
+
+
+1.20
+log
+@changed interpolation of voxel position and added comments
+@
+text
+@d506 1
+a506 1
+                   }  /* can rotate *?
+@
+
+
+1.19
+log
+@surfcolor stuff
+surfcolor stuff
+@
+text
+@d97 1
+a97 1
+ float          * pos, dj, dk, d1, d2, d3, d4, d5, d6, d7, d8, ft;
+d104 1
+a104 1
+ unsigned char  * cptr,  * ptr, * ptrcol, *posit, *cloc;
+d110 1
+a110 1
+ int            i, nval=0;
+d112 1
+d119 1
+d121 2
+d124 2
+d127 1
+a129 1
+ /* find reflection image size */
+d370 1
+a370 1
+  if ( nvolcolorso != nvolcolors)
+d372 6
+a377 3
+     nvolcolorso       = nvolcolors;
+     first_time = True;
+     }
+d397 1
+a397 5
+       /* initialize refmap */
+       /************
+       for (iloc = 0; iloc < tnpix; iloc++)
+          *(refmap+iloc) = mapgo; 
+       ***********/ 
+d408 1
+a408 6
+          /* initialize sirdmap */
+          /************
+          for (iloc = 0; iloc < tnpix; iloc++)
+             *(sirdbuf+iloc) = 0.0;
+          ************/
+  
+d471 1
+a471 1
+                {
+d473 2
+d506 1
+a506 1
+                   }
+d588 1
+a588 1
+                  }  /* else */
+d600 1
+d616 1
+d619 2
+d623 1
+d636 4
+a639 1
+                     /* surface located, now find value for the reflection map buffer */
+d641 1
+a641 1
+                     if (ivall == 0.0)  continue;
+d643 5
+a647 4
+                     NC++;
+                     u = ivall - ixx;        
+                     v = dy;
+                     w = (k - kgo)*dk;
+d693 1
+d696 1
+d698 1
+a698 1
+                        {
+d713 1
+a713 1
+                        {
+d727 12
+a738 1
+	                *posit = (*posit) + colvol[positindx + (int) ivall] * ncolrange;
+d794 1
+a794 1
+    scaledis =  imageend - imagego;
+d797 1
+a797 1
+       *(refmap+iy)= (*(sirdbuf+iy) * scaledis * imagego);
+@
+
+
+1.18
+log
+@added surfcolor capability
+@
+text
+@a1 2
+
+
+d20 1
+a20 1
+C SURF(CANROTATE,SIRDIT,DISTIT,FILCOLVOL)
+d104 1
+a104 1
+ unsigned char  * cptr,  * ptr, * ptrcol, *posit;
+d106 1
+a106 1
+ float          * positsird;
+d108 2
+a109 2
+ int            kkfactor, islicetnsr, positindx, itemp;
+ int            itempfact1, itempfact2;
+d111 4
+a114 3
+ int            valmin=10000, valmax=-10000;
+ int            valminc=10000, valmaxc=-10000;
+ int            valminf=10000 , valmaxf=-10000 ;
+d116 1
+d375 1
+d380 4
+d388 12
+a399 2
+       for(iloc = 0; iloc < tnpix; iloc++)
+          *(refmap+iloc) = mapgo;  /* initialize refmap */
+d403 2
+d406 5
+a410 1
+             *(sirdbuf+iloc) = 0.0;  /* initialize sirdmap */
+d421 6
+a426 4
+          islicetp1  = islicet + 1;
+          kend       = 1 + kslope * islicet;
+          dk         = 1.0 / (kend - kgo);
+          islicetnsr = islicet * nsr;
+d442 2
+a443 1
+             positindx = islicetnsr + nsam * irow - nsam - nsr;
+d462 4
+a465 2
+             ptr = vol + (islicet - 1) * nsr 
+                          + (irow - 1) * nsam + nsam1 - 1;
+d686 1
+d689 2
+d692 3
+a694 1
+                        ft = Ny*Ny + Nz*Nz;
+d727 1
+d733 1
+a733 1
+                           }   /* nval      */
+@
+
+
+1.17
+log
+@added sird capability
+@
+text
+@d2 2
+a3 1
+/*$Header$*/
+d10 2
+a11 1
+C             
+d22 1
+a22 2
+C SURF(NSAM1,NSAM2,NROW1,NROW2,NSLICE1,NSLICE2,
+C      THLEV,REFL,FCT,PHI,THETA,PSI,CANROTATE)
+a33 1
+C               FASTSURF        LOGICAL FLAG NON-INTERPOLATE ROTS
+d57 1
+d59 1
+d62 2
+a63 1
+ extern XImage     * imagel;
+d69 1
+a69 1
+ static int   newsize = TRUE, npixo = 0, tnpixo = 0, ntoto = 0;
+d72 2
+a73 1
+ static int   tnpixsirdo = 0;
+d80 2
+d84 1
+a84 1
+ void surf(int canrotate, int sirdit, int distit)
+d89 1
+a89 1
+ int            islicet, irow, jc, kc, jj, kk, irowp1, ntot;
+d99 1
+a99 1
+ float          * pos, dj, dk, d1, d2, d3, d4, ft;
+d106 1
+a106 1
+ unsigned char  * cptr,  * ptr, *posit;
+d109 13
+a121 1
+ float           scalt, fm;
+a122 9
+/**************************/
+float ymintt = 1000000.0, ymaxtt = -1000000.0;
+/**************************/
+
+ npix   = nrow * nslice;
+ nsr    = nsam * nrow;
+ ntot   = nsam * nrow * nslice;
+ tnpix  = scaleval * nrow * scaleval * nslice;
+
+d124 2
+a125 2
+ jslope = (1.0 - nrow*scaleval)/(1.0 - nrow);
+ kslope = (1.0 - nslice*scaleval)/(1.0 - nslice);
+d153 1
+a153 1
+    {
+d156 1
+a156 1
+    if (ntoto == 0 && npixo == 0 && tnpixo == 0)
+d158 1
+a158 1
+       if (((vol = (unsigned char *) malloc(ntot*
+d160 6
+a165 4
+         ((distbuf   = (float *) malloc(npix*sizeof(float))) ==
+                                     (float *) 0) ||
+         ((refmap   = (unsigned char *) malloc(tnpix*sizeof(unsigned char)))
+                                     ==   (unsigned char *) 0))
+d170 1
+a170 1
+       ntoto = ntot; npixo = npix; tnpixo = tnpix;
+d174 7
+a180 5
+       if ( ntot > ntoto)
+          {
+          ntoto = ntot;
+          if (((vol = (unsigned char *) realloc(vol, ntot*
+             sizeof(unsigned char))) == (unsigned char *) 0))
+d188 1
+a188 1
+          {
+d201 4
+a204 1
+            &fn, &fncon);
+d207 6
+d214 1
+a214 1
+    {
+d223 1
+a223 1
+       {
+d232 1
+a232 1
+        {
+d241 1
+a241 1
+       {
+d243 2
+a244 2
+       if ( (refmap = (unsigned char *) realloc(refmap, 
+                        tnpix*sizeof(unsigned char))) ==
+d254 1
+a254 1
+    {
+d256 1
+a256 1
+       {
+d267 1
+a267 1
+    }       /* else           */
+d300 2
+d304 2
+d312 5
+a316 2
+             cptr  = vol + (islicet -1) * nsr 
+                        + (irow -1) * nsam + nsam1 - 1;
+d337 2
+a338 2
+       }    /*  islicet */
+    }       /* first_time && canrotate  */
+d341 1
+a341 1
+     {
+a342 2
+     fd1        = (127.0 - mapgo) * (1.0 - refl)/(1.0 - nsam);
+     fd2        = mapgo - nsam*fd1;
+d344 3
+d348 6
+d359 1
+a359 1
+     {
+d364 6
+d371 1
+a371 1
+    {
+d376 1
+a376 1
+        "Phi:%d Theta:%d Psi:%d Scale:%4.1f Threshold:(%f,%d) Next_Threshold:(%f,%d)\n",
+d382 1
+a382 2
+       { 
+
+d387 1
+a387 1
+          {
+d400 4
+a403 3
+          islicetp1 = islicet + 1;
+          kend      = 1 + kslope*islicet;
+          dk        = 1.0/(kend - kgo);
+d416 4
+a419 3
+             irowp1 = irow + 1;
+             jend   = 1 + jslope*irow;
+             dj     = 1.0/(jend - jgo);
+d437 1
+d448 1
+a448 1
+                   {
+d458 1
+a458 1
+                   {
+d574 2
+d580 6
+a585 2
+                     posit     = refmap + (kk - 1) * nsams + jj - 1; 
+                     positsird = sirdbuf + (kk - 1) * nsams + jj - 1;
+d658 1
+a658 1
+                     if (fabs(Nx) >= 0.0005 )
+d665 6
+a670 2
+                        *posit = fd1*ivall + fd2 
+                               + csfact/sqrt((fct * ft) + 1.0);
+d672 31
+a702 2
+                     else
+                        *posit = fd1*ivall + fd2;
+a703 2
+                     /* save distance in sirds buffer, if needed */
+                     if (sirdit) *positsird =1.0 - ((float) ivall / (float)nsam);
+d705 1
+d738 1
+a738 2
+    scalt =  imageend - imagego;
+
+d741 1
+a741 1
+       *(refmap+iy)= (*(sirdbuf+iy) * scalt * imagego);
+d770 12
+@
+
+
+1.16
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surf.c,v 1.14 1994/08/31 11:38:42 odesanya Exp odesanya $*/
+d50 1
+a52 5
+ extern void  waitcursor(Window, int, int);
+ extern int   redlin    (FILEDATA *, float *, int, int);
+ extern void  locc      (int *, int *, int, int, 
+                         int *, int *, int *, int, int, int, int, int,   
+                         int, int, int, int *, int);
+a56 6
+ extern void  spout     (char *);
+ extern int   redvol8   (FILEDATA *, unsigned char  *,
+                         int, int, int, int,  int, int, int, int, 
+                         float *, float *);
+ extern void  wipic     (GC, unsigned char *, int, int, int, int, 
+                         int, int, XImage **);
+a57 2
+
+
+d59 2
+a60 2
+ extern float phi, theta, psi, thlev;
+ extern XImage * imagel;
+a62 1
+ static float  fcto, reflo, thetao, phio, psio, csfact;
+d64 1
+d69 1
+d72 1
+a72 1
+ unsigned char  * vol,    * refmap;
+d74 1
+d76 1
+a76 1
+ /**************************   surf   ****************************/
+d78 1
+a78 1
+ void surf(int canrotate)
+d81 1
+a81 1
+ int            i, j, k, iloc, nsr, jlast, klast;
+d85 1
+a85 1
+ int            nsams, nrows, newang, irec, irect, nsamwt;
+d93 1
+a93 1
+ float          * buf, * pos, dj, dk, d1, d2, d3, d4, ft;
+d95 1
+a95 1
+ float          nf1, nf2, nf1c, nf2c, nv, ov, t, u, v, w, dy;
+d102 2
+d105 3
+a107 4
+ npix = nrow * nslice;
+ nsr  = nsam * nrow;
+ ntot = nsam * nrow * nslice;
+ tnpix = scaleval*nrow * scaleval*nslice;
+d109 5
+d118 2
+a119 2
+ N1 = nrow2 - nrow1 + 1;
+ N2 = nslice2 - nslice1 + 1;
+a125 3
+ /* find buf for redlin */
+ buf = filedata -> buf;
+
+d128 15
+a142 1
+  
+d144 1
+a144 1
+  {
+d146 4
+a149 4
+/* allocate space for arrays */
+    if(ntoto == 0 && npixo == 0 && tnpixo == 0)
+     {
+      if (((vol = (unsigned char *) malloc(ntot*
+d151 1
+a151 1
+         ((distbuf   = (float *)  malloc(npix*sizeof(float))) ==
+d153 6
+a158 6
+         ((refmap   = (unsigned char *)  malloc(tnpix*sizeof(unsigned char)))
+                                     ==   (unsigned char *) 0) )
+         {
+           spout(" *** Unable to allocate rotation memory in surf.c");
+           return;
+         }
+d160 1
+a160 1
+     }
+a161 2
+     {
+      if( ntot > ntoto )
+d163 4
+a166 2
+         ntoto = ntot;
+         if (((vol = (unsigned char *) realloc(vol, ntot*
+d168 4
+a171 3
+          {
+            spout(" *** Unable to reallocate vol memory in surf.c");
+            return;
+a172 1
+       }
+d174 4
+a177 4
+      if( npix > npixo )
+       {
+         npixo = npix;
+         if (((distbuf = (float *) realloc(distbuf, npix*
+d179 4
+a182 3
+          {
+            spout(" *** Unable to reallocate distbuf memory in surf.c");
+            return;
+d186 2
+a187 4
+     }
+
+/* load volume data into 8 bit vol */
+      redvol8(filedata, vol, 1, nsam, 1, nrow, 1, nslice, 0, 255,
+d189 1
+a189 1
+  }
+d191 6
+a196 6
+  if (canrotate) 
+   {
+      if (theta > 0.0 || phi > 0.0 || psi > 0.0) 
+        rotate = TRUE;
+      else
+        rotate = FALSE;
+d198 1
+a198 1
+      newang = FALSE;
+d200 1
+a200 1
+      if (theta != thetao || phi != phio || psi != psio) 
+d202 5
+a206 5
+         newang = TRUE;
+         thetao = theta;
+         phio   = phi;
+         psio   = psi;
+         first_time = True;
+d209 1
+a209 1
+      if (nsam != nsamo || nrow != nrowo || nslice != nsliceo)
+d211 5
+a215 5
+          newsize = TRUE;
+          nsamo   = nsam;
+          nrowo   = nrow;
+          nsliceo = nslice;
+          first_time = True;
+d218 1
+a218 1
+      if(tnpix > tnpixo)
+d220 2
+a221 2
+         tnpixo = tnpix;
+         if( (refmap = (unsigned char *) realloc(refmap, 
+d225 2
+a226 2
+           spout(" *** Scale value is too large for memory allocation");
+           return;
+d228 3
+a230 2
+       }
+   }
+d232 4
+a235 2
+   if(first_time)
+     if ((refmap = (unsigned char *) malloc(npix * 
+d238 1
+a238 1
+        (idistl = (float *) calloc((nrow+1), sizeof(float) )) ==
+d240 6
+a245 4
+       {
+         spout(" *** Unable to allocate 'cantrot' memory in surf.c");
+         return;
+       }
+d247 2
+a248 2
+  if(nrow1o != nrow1 || nrow2o != nrow2 || nslice1o != nslice1 ||
+      nslice2o != nslice2 || nsam1o != nsam1 || nsam2o != nsam2)
+d250 7
+a256 7
+      nrow1o = nrow1;
+      nrow2o = nrow2;
+      nslice1o = nslice1;
+      nslice2o = nslice2;
+      nsam1o = nsam1;
+      nsam2o = nsam2;
+      first_time = True;
+d259 2
+a260 2
+    /* NOTE: Distance shading is done according to original nsam     */
+    /*       not the windowed nsam1 dimension                        */
+d262 2
+a263 2
+    /* convert threshold to 8 bits */ 
+      lthlev = (unsigned char) (thlev * fn + fncon);
+d265 1
+a265 2
+
+   if(lthlevo != lthlev)
+d267 2
+a268 2
+      lthlevo = lthlev;
+      first_time = True;
+d271 3
+a273 3
+/* When (first_time) the following will compute and save the voxel 
+ depths in the nsam direction for the specified threshold, with 
+ scaling of 1. This enables speed-up when scaling > 1  */
+d275 4
+a278 4
+ if(first_time && canrotate)
+   {
+      iloc   = -1;
+      for (islicet = nslice1; islicet <= nslice2; islicet++)
+d280 4
+a283 11
+    /* set starting location for this row in reflection image */
+        for (irow = nrow1; irow <= nrow2; irow++)
+        {
+          if(!rotate)
+           {
+          /*  get ivall directly from data volume  */
+            cptr = vol + (islicet -1) * nsr 
+                          + (irow -1) * nsam + nsam1 - 1;
+            ivall = 0.0;
+            ixx = nsam1 - 1;
+            for (ptr = cptr; ptr < (cptr + nsamwt); ptr++)
+d285 15
+a299 8
+               ixx++;
+               if(*ptr >= lthlev)
+		{
+		  ivall = ixx;
+		  break;   
+                }
+             }   /* for ptr  */
+           }
+d301 2
+a302 1
+              ivall =  surfrot(&newang, &newsize, theta, phi, psi, vol,
+d304 2
+d307 3
+a309 1
+        distbuf[++iloc] = ivall;
+a310 4
+      }  /*  irow    */
+    }    /*  islicet */
+ } /* first_time && canrotate  */
+
+d312 4
+a315 1
+    {
+d317 4
+a320 1
+     gotsurf = TRUE;
+d322 3
+a324 5
+     fd1 = (127.0 - mapgo) * (1.0 - refl)/(1.0 - nsam);
+     fd2 = mapgo - nsam*fd1;
+
+     csfact = refl * (127.0 - mapgo);
+     reflo = refl;
+d326 1
+a326 1
+    }
+d328 4
+a331 5
+  if( fcto != fct)
+   {
+    fcto = fct;
+    first_time = True;
+   }
+d333 5
+a337 4
+ if(first_time || scaleo != scaleval)
+   {
+     first_time = False;
+     scaleo = scaleval;
+d339 2
+a340 5
+   sprintf(output,
+"Phi:%d Theta:%d Psi:%d Scale:%4.1f Threshold:(%f,%d) Next_Threshold:(%f,%d)\n",
+(int)phi, (int)theta, (int)psi, scaleval, thlev, lthlev, (lthlev + 1.0 - fncon)/fn,
+     lthlev + 1);
+   spout(output);
+d342 2
+a343 2
+    if(canrotate)
+     { 
+d345 5
+a349 2
+      for(iloc = 0; iloc < tnpix; iloc++)
+       *(refmap+iloc) = mapgo;  /* initialize refmap */
+d351 2
+a352 2
+      klast = kc = 0;
+      kgo = 1 + kslope*(nslice1 - 1);
+d354 2
+a355 2
+  /* For each level of islicet, kgo and kend are the local starting and 
+      ending rows of pixels in refmap  */
+d357 5
+a361 7
+      for (islicet = nslice1; islicet < nslice2; islicet++)
+       {
+        islicetp1 = islicet + 1;
+        kend = 1 + kslope*islicet;
+        dk = 1.0/(kend - kgo);
+        if(islicet == (nslice2 -1) ) kend++;
+        kc++;
+d363 2
+a364 2
+        jlast = jc = 0;
+        jgo = 1 + jslope*(nrow1 - 1);
+d366 2
+a367 2
+  /* For each irow, jgo and jend are the local starting and 
+      ending columns of pixels in refmap  */
+d369 2
+a370 6
+        for(irow = nrow1; irow < nrow2; irow++)
+         {
+          irowp1 = irow + 1;
+          jend = 1 + jslope*irow;
+          dj = 1.0/(jend - jgo);
+          if(irow == (nrow2 -1) ) jend++;
+d372 5
+a376 6
+          jc++;
+          pos = distbuf + (kc - 1)*N1 + jc - 1;
+          d1 = *pos; 
+          d2 = *(pos + 1);
+          d3 = *(pos + N1 + 1);
+          d4 = *(pos + N1);
+d378 1
+a378 6
+          if(!d1 && !d2 && !d3 && !d4) /* the original corner pixels */
+           {                           /* returned 0 depth therefore */
+             jlast += (jend - jgo);    /* surface is not within here */
+             jgo = jend;
+             continue;
+           }
+d380 15
+a394 1
+          ptr = vol + (islicet - 1) * nsr 
+d397 2
+a398 2
+          NP = (kend - kgo)*(jend - jgo);
+          NC = 0;
+d400 9
+a408 9
+          for (ixx = nsam1; ixx < nsam2; ixx++)
+           {
+             if(NC == NP) break;
+             if(!rotate)
+              {
+                p1 = ptr;        p5 = p1 + 1;
+                p2 = p1 + nsam;  p6 = p2 + 1;  
+                p3 = p2 + nsr;   p7 = p3 + 1;
+                p4 = p1 + nsr;   p8 = p4 + 1;
+d410 3
+a412 13
+                a1 = *p1; a2 = *p2; a3 = *p3; a4 = *p4;
+                a5 = *p5; a6 = *p6; a7 = *p7; a8 = *p8;
+              }
+             else
+              {
+                ixxp1 = ixx + 1;
+                if( ixx == nsam1)
+                 {
+                   a1 = volval(ixx, irow, islicet, vol);
+                   a2 = volval(ixx, irowp1, islicet, vol);
+                   a3 = volval(ixx, irowp1, islicetp1, vol);
+                   a4 = volval(ixx, irow, islicetp1, vol);
+                 }
+d414 24
+a437 14
+                 {
+                   a1 = a5;
+                   a2 = a6;
+                   a3 = a7;
+                   a4 = a8;
+                 }
+                a5 = volval(ixxp1, irow, islicet, vol);
+                a6 = volval(ixxp1, irowp1, islicet, vol);
+                a7 = volval(ixxp1, irowp1, islicetp1, vol);
+                a8 = volval(ixxp1, irow, islicetp1, vol);
+              }
+
+/* if all 8 corner values are below threshold, the 
+    surface is not here      */
+d439 10
+a448 10
+         if(a1 < lthlev && a2 < lthlev && a3 < lthlev && 
+            a4 < lthlev && a5 < lthlev && a6 < lthlev && 
+            a7 < lthlev && a8 < lthlev)
+          {
+            ptr++;
+            continue;   
+          }     
+         
+/* Compute the forward difference parameters to use later
+   for gradient estimation */
+d450 3
+a452 3
+             xf1 = a5; xf2 = a6; xf3 = a7; xf4 = a8;
+             yf1 = a2; yf4 = a3; yf5 = a6; yf8 = a7;
+             zf1 = a4; zf2 = a3; zf5 = a8; zf6 = a7;              
+d454 4
+a457 4
+             xb1 = yb1 = zb1 = a1; xb2 = yb2 = zb2 = a2; 
+             xb3 = yb3 = zb3 = a3; xb4 = yb4 = zb4 = a4;
+             xb5 = yb5 = zb5 = a5; xb6 = yb6 = zb6 = a6; 
+             xb7 = yb7 = zb7 = a7; xb8 = yb8 = zb8 = a8;
+d459 16
+a474 18
+             if(islicet == (nslice - 1)) /* bottommost */
+              {  /* use backward difference  */
+                zb3 = a2; zf3 = a3;
+                zb4 = a1; zf4 = a4;
+                zb7 = a6; zf7 = a7;
+                zb8 = a5; zf8 = a8;
+              }
+             else
+              if(irow == (nrow-1))  /* rightmost  */
+               {  /* use backward difference  */
+                 yb2 = a1; yf2 = a2;
+                 yb3 = a4; yf3 = a3;
+                 yb6 = a5; yf6 = a6;
+                 yb7 = a8; yf7 = a7;
+               }
+              else
+               if(ixx == (nsam - 1))  /* frontmost  */
+                {  /* use backward difference  */
+d479 5
+a483 5
+                 }
+                else
+                 {  /* use forward difference  */
+                  if(!rotate)
+                   {
+d498 1
+a498 1
+                   }
+d500 1
+a500 1
+                   {
+d515 2
+a516 2
+                   }
+                  }  
+d518 2
+a519 2
+             of1  = a1;           of2 = a2 - a1;
+             of1c = (a4 - a1)*dk; of2c = (a3 + a1 - a2 - a4)*dk;
+d521 2
+a522 2
+             nf1  = a5;           nf2 = a6 - a5;
+             nf1c = (a8 - a5)*dk; nf2c = (a7 + a5 - a6 - a8)*dk;
+d524 12
+a535 12
+             kk = klast;
+/* Process all the pixels on the rectangle per ptr  */
+             for(k = kgo; k < kend; k++)
+              {
+                kk++;
+                jj = jlast;
+/* Scan Across Rectangle  */
+                for (j = jgo; j < jend; j++)
+                 {
+                   jj++;
+                   posit = refmap + (kk - 1)*nsams + jj - 1; 
+                   if(*posit > mapgo) continue;
+d537 1
+a537 1
+                   ivall = 0.0;
+d539 1
+a539 3
+                   dy = (j - jgo)*dj;
+                   ov = of1 + dy*of2;
+                   nv = nf1 + dy*nf2;
+d541 9
+a549 5
+                   if( ov >= lthlev ) ivall = ixx; 
+                   if( ov <= lthlev && nv >= lthlev)
+                    { 
+                      ivall = ixx;
+                      if(ov != nv)
+d551 1
+a551 1
+                    }
+d553 1
+a553 1
+       /* surface located, now find value for the reflection map buffer */
+d555 1
+a555 1
+                if(ivall == 0.0)  continue;
+d557 4
+a560 4
+                   NC++;
+                   u = ivall - ixx;        
+                   v = dy;
+                   w = (k - kgo)*dk;
+d562 7
+a568 7
+/* compute gradient at the back face for x, y & z */
+/* y gradient */                      
+                   d1 = yf1 - yb1;
+                   d2 = yf2 - yb2;
+                   d3 = yf3 - yb3;
+                   d4 = yf4 - yb4; 
+                   bgy = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+d570 6
+a575 6
+/* z gradient */                      
+                   d1 = zf1 - zb1;
+                   d2 = zf2 - zb2;
+                   d3 = zf3 - zb3;
+                   d4 = zf4 - zb4; 
+                   bgz = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+d577 6
+a582 6
+/* x gradient */                      
+                   d1 = xf1 - xb1;
+                   d2 = xf2 - xb2;
+                   d3 = xf3 - xb3;
+                   d4 = xf4 - xb4; 
+                   bgx = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+d584 7
+a590 7
+/* compute gradient at the front face for x, y & z */
+/* y gradient */                      
+                   d1 = yf5 - yb5;
+                   d2 = yf6 - yb6;
+                   d3 = yf7 - yb7;
+                   d4 = yf8 - yb8; 
+                   fgy = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+d592 6
+a597 6
+/* z gradient */                      
+                   d1 = zf5 - zb5;
+                   d2 = zf6 - zb6;
+                   d3 = zf7 - zb7;
+                   d4 = zf8 - zb8; 
+                   fgz = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+d599 6
+a604 6
+/* x gradient */                      
+                   d1 = xf5 - xb5;
+                   d2 = xf6 - xb6;
+                   d3 = xf7 - xb7;
+                   d4 = xf8 - xb8; 
+                   fgx = d1 + w*(d4-d1) + v*(d2-d1 + w*(d3-d2-d4+d1));
+d606 1
+a606 1
+                   Nx = u*(fgx - bgx) + bgx;
+d608 4
+a611 4
+                   if( fabs(Nx) >= 0.0005 )
+                    {
+                      Ny = (u*(fgy - bgy) + bgy)/Nx;
+                      Nz = (u*(fgz - bgz) + bgz)/Nx;
+d613 1
+a613 1
+                      ft = Ny*Ny + Nz*Nz;
+d615 5
+a619 5
+                      *posit = fd1*ivall + fd2 
+                          + csfact/sqrt((fct * ft) + 1.0);
+                    }
+                   else
+                      *posit = fd1*ivall + fd2;
+d621 2
+a622 12
+          } /* j */
+         of1 += of1c;   of2 += of2c;
+         nf1 += nf1c;   nf2 += nf2c;
+        }  /* k */
+        ptr++;
+       } /* ixx */
+       jlast += (jend - jgo);
+       jgo = jend;
+      } /* irow */
+       klast += (kend - kgo);
+       kgo = kend;
+    } /* islicet  */
+d624 16
+a639 1
+   } /* canrotate  */
+d641 1
+a641 1
+   {
+d644 2
+a645 2
+   }
+  } /* if first_time or scaleo != scaleval */
+d647 1
+a652 2
+ /*  display the reflection map   */
+ wipic(icontx,refmap,ixul,iyul,nsams,nrows,FALSE,FALSE,&imagel);  
+d654 32
+d688 1
+@
+
+
+1.15
+log
+@*** empty log message ***
+@
+text
+@d78 2
+a79 2
+ static int   newsize = TRUE, nsamo = 0, tnpixo = 0;
+ static int   nsam1o = 0, nsam2o = 0, nrowo = 0, nsliceo = 0;
+d93 1
+a93 1
+ int            islicet, irow, jc, kc, jj, kk, irowp1;
+d115 1
+d138 1
+d140 3
+a142 1
+      if (((vol = (unsigned char *) realloc(vol, nslice*nsam*nrow*
+d144 13
+a156 2
+       ((distbuf   = (float *)  realloc(distbuf, npix*sizeof(float))) ==
+                                     (float *) 0))
+d158 7
+a164 2
+         spout(" *** Unable to allocate rotation memory in surf.c");
+         return;
+d166 13
+@
+
+
+1.14
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/surf.c,v 1.13 94/06/23 15:01:28 odesanya Exp $*/
+a137 1
+      tnpixo = tnpix;
+d141 1
+a141 4
+                                     (float *) 0) ||
+       ((refmap   = (unsigned char *) realloc(refmap, tnpix* 
+                                     sizeof(unsigned char))) ==
+                                     (unsigned char *) 0))
+@
+
+
+1.13
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/surf.c,v 1.12 94/05/27 15:26:50 odesanya Exp $*/
+d78 3
+a80 3
+ static int newsize = TRUE, nsamo = 0;
+ static int nsam1o = 0, nsam2o = 0, nrowo = 0, nsliceo = 0;
+ static int nslice1o = 0, nslice2o = 0, nrow1o = 0, nrow2o = 0;
+d114 1
+a114 1
+ nsr = nsam * nrow;
+a134 1
+
+d138 2
+a139 2
+
+      if (((vol = (unsigned char *) malloc(nslice * nsam * nrow *
+d141 1
+a141 1
+       ((distbuf   = (float *)  malloc(npix * sizeof(float))) ==
+d143 1
+a143 1
+       ((refmap   = (unsigned char *) malloc(tnpix * 
+d183 1
+a183 1
+      if(scaleo != scaleval)
+d185 1
+d189 4
+a192 4
+         {
+          spout(" *** Scale value is too large for memory allocation");
+          return;
+         }
+@
+
+
+1.12
+log
+@increase the dimension of output of strings to 100
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surf.c,v 1.11 94/05/19 17:13:55 leith Exp $*/
+a51 1
+ extern int   closefile(FILEDATA *);
+a154 2
+
+      closefile(filedata);
+@
+
+
+1.11
+log
+@print out some info
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surf.c,v 1.3 93/11/16 15:08:58 leith Exp $*/
+d108 1
+a108 1
+ char           output[80];
+@
+
+
+1.10
+log
+@tests to find change in nsam1 and nsam2
+@
+text
+@d108 1
+d228 1
+d297 6
+@
+
+
+1.9
+log
+@bugs fixed
+@
+text
+@d59 1
+a59 1
+ extern float surfrot   (int, int *, float, float, float, unsigned char *, 
+d79 2
+a80 1
+ static int newsize = TRUE, nsamo = 0, nrowo = 0, nsliceo = 0;
+d105 1
+a105 1
+ float          of1, of2, of1c, of2c, islope, jslope, kslope;
+a112 1
+
+a117 1
+ islope = (1.0 - nsam*scaleval)/(1.0 - nsam);
+d210 1
+a210 1
+      nslice2o != nslice2)
+d216 2
+d233 1
+a233 1
+/* When (firs_time) the following will compute and save the voxel 
+d263 1
+a263 1
+              ivall =  surfrot(newang, &newsize, theta, phi, psi, vol,
+@
+
+
+1.8
+log
+@added scaling by lekan
+@
+text
+@d58 4
+a61 3
+ extern void  cantrot   (int, int, float *, unsigned char *, float, float, float);
+ extern void surfrot   (int, int *, float, float, float, unsigned char *, 
+                       unsigned char, unsigned char *, float, float, float);
+d77 1
+a77 1
+ static unsigned char lthlev;
+d91 4
+a94 4
+ int            kgo, kend, jgo, jend, index, N1, N2;
+ int            islicet, irow, isam, it, jc, kc;
+ int            ixx, rotate, npix, tnpix, ix;
+ int            i, j, k, iloc, itemp, nsr;
+d96 11
+a106 11
+ float          * buf, * pos, dj, dk, d1, d2, d3, d4;
+ float          islope, jslope, kslope;
+ float          nv, ov, t, u, v, w, dy, dz, ivall;
+ float          a1, a2, a3, a4, a5, a6, a7, a8, ft;
+ float          xl1, xr1, xl2, xr2, xl3, xr3, xl4, xr4;
+ float          xl5, xr5, xl6, xr6, xl7, xr7, xl8, xr8;
+ float          yb1, yt1, yb2, yt2, yb3, yt3, yb4, yt4;
+ float          yb5, yt5, yb6, yt6, yb7, yt7, yb8, yt8;
+ float          zi1, zo1, zi2, zo2, zi3, zo3, zi4, zo4;
+ float          zi5, zo5, zi6, zo6, zi7, zo7, zi8, zo8;
+ float          Nx, Ny, Nz, bgx, bgy, bgz, fgx, fgy, fgz;
+d109 1
+a109 1
+ unsigned char  * cptr,  * ptr;
+d113 4
+a127 3
+ npix = nrow * nslice;
+ nsr = nsam * nrow;
+
+d135 1
+a139 1
+     tnpix = scaleval*nrow * scaleval*nslice;
+a188 1
+         tnpix = scaleval*nrow * scaleval*nslice;
+a208 1
+   
+d226 11
+a236 1
+ if(first_time && !rotate && canrotate)
+a237 2
+
+    /*  set starting location in reflection image */
+d244 2
+d251 1
+a251 1
+            for (ptr = cptr; ptr < (cptr + nsamwt) ; ptr++)
+d254 1
+a254 3
+               nv = *ptr;
+               if(ptr == cptr) ov = nv;
+               if(nv >= lthlev)
+d256 2
+a257 8
+                  if(ov == nv) 
+                    ivall = ixx;
+                  else
+	           {
+                     t = (lthlev - ov)/(nv - ov);
+		     ivall = ixx + t;
+                   }
+		  break;   /* out of the ptr loop */ 
+a258 1
+               ov = nv;
+d260 4
+d269 1
+a269 1
+ } /* if first_time  */
+d295 2
+a296 4
+   if(!rotate && canrotate)
+    { 
+      kc = 0;
+      iloc = -1;
+d298 4
+d303 4
+d309 1
+d315 2
+a316 2
+       for(k = kgo; k < kend; k++)
+        {
+d318 2
+a319 1
+         itemp = k*nsams - nsams;
+a320 4
+         dz = (k - kgo)*dk;
+         jc = 0;
+
+        jgo = 1 + jslope*(nrow1 - 1);
+d323 1
+a323 1
+          jc++;
+d328 6
+a333 11
+   /* set starting location for this row in reflection image */
+          for (j = jgo; j < jend; j++)
+           {
+            dy = (j - jgo)*dj;
+               if(j == jgo)
+                {
+                  pos = distbuf + (kc - 1)*N1 + jc - 1;
+                  d1 = *pos; 
+                  d2 = *(pos + 1);
+                  d3 = *(pos + N1 + 1);
+                  d4 = *(pos + N1);
+d335 8
+a342 1
+                  cptr = vol + (islicet - 1) * nsr 
+a343 4
+/* determine index */
+                  index = 1;
+                  if(!d1 && !d2 && !d3 && !d4) index = 0;
+                }
+d345 2
+a346 1
+           ivall = 0.0;
+d348 35
+a382 30
+           if(index)
+            {
+              ivall = 0.0;
+              ixx = nsam1 - 1;
+              for (ptr = cptr; ptr < (cptr + nsamwt) ; ptr++)
+               {
+                 ixx++;
+                 a1 = *ptr; 
+                 a2 = *(ptr + nsam);
+                 a3 = *(ptr + nsr + nsam);
+                 a4 = *(ptr + nsr);
+                 nv = a1 + dz*(a4-a1) 
+                         + dy*(a2-a1 + dz*(a3-a2-a4+a1));
+
+                 if(ptr == cptr) ov = nv;
+                 if(nv >= lthlev)
+		  {
+                    if(ov == nv) 
+                      ivall = ixx;
+                    else
+	             {
+                       t = (lthlev - ov)/(nv - ov);
+		       ivall = ixx + t;
+                     }
+                    v = dy;
+                    w = dz;
+		    break;   
+                  }
+                 ov = nv;
+               }   
+d384 2
+a385 1
+           } /* if index  */
+d387 10
+a396 1
+       /* surface located, now find value for the reflection map buffer */
+d398 8
+a405 5
+             if (ivall > 0)
+              {  
+ 
+               ix = ivall;
+               u = ivall - ix;        
+d407 31
+a437 4
+               p1 = ptr; 
+               p2 = p1 + nsam; 
+               p3 = p2 + nsr; 
+               p4 = p1 + nsr;
+d439 16
+a454 4
+               p5 = p1 + 1;
+               p6 = p2 + 1;
+               p7 = p3 + 1;
+               p8 = p4 + 1;
+d456 11
+a466 2
+               a1 = *p1; a2 = *p2; a3 = *p3; a4 = *p4; 
+               a5 = *p5; a6 = *p6; a7 = *p7; a8 = *p8; 
+d468 2
+a469 4
+               xl2 = yt4 = zi5 = a1;
+               xr1 = yt3 = zi6 = a2;
+               yb2 = xr4 = zi7 = a3;
+               yb1 = xl3 = zi8 = a4;
+d471 2
+a472 4
+               xl6 = yt8 = zo1 = a5;
+               xr5 = yt7 = zo2 = a6;
+               yb6 = xr8 = zo3 = a7;
+               yb5 = xl7 = zo4 = a8;
+d474 8
+a481 2
+   
+               if(islicet == 1)  /* topmost */
+d483 3
+a485 50
+		   yt1 = a1; 
+                   yt2 = a2;
+		   yt5 = a5; 
+                   yt6 = a6;
+                 }
+                else 
+                 if(islicet == (nslice - 1)) /* bottommost */
+                  {
+                    yb3 = a3;
+                    yb4 = a4;
+                    yb7 = a7;
+                    yb8 = a8;
+                  }
+                 else
+                  if(irow == 1)  /* leftmost  */
+                   {
+                     xl1 = a1;
+                     xl4 = a4;
+                     xl5 = a5;
+                     xl8 = a8;
+                   }
+                  else
+                   if(irow == (nrow-1))  /* rightmost  */
+                    {
+                      xr2 = a2;
+                      xr3 = a3;
+                      xr6 = a6;
+                      xr7 = a7;
+                    }
+                   else
+                   if(ix == 1)  /* backmost  */
+                    {
+                      zi1 = a1;
+                      zi2 = a2;
+                      zi3 = a3;
+                      zi4 = a4;
+                    }
+                   else
+                   if(ix == (nsam - 1))  /* frontmost  */
+                    {
+                      zo5 = a5;
+                      zo6 = a6;
+                      zo7 = a7;
+                      zo8 = a8;
+                    }
+                   else
+                    {
+                      xl1 = *(p1 - nsam);
+                      yt1 = *(p1 - nsr);
+                      zi1 = *(p1 - 1);
+d487 1
+a487 3
+                      xr2 = *(p2 + nsam);
+                      yt2 = *(p2 - nsr);
+                      zi2 = *(p2 - 1);
+d489 3
+a491 3
+                      xr3 = *(p3 + nsam);
+                      yb3 = *(p3 + nsr);
+                      zi3 = *(p3 - 1);
+d493 7
+a499 3
+                      xl4 = *(p4 - nsam);
+                      yb4 = *(p4 + nsr);
+                      zi4 = *(p4 - 1);
+d501 1
+a501 3
+                      xl5 = *(p5 - nsam);
+                      yt5 = *(p5 - nsr);
+                      zo5 = *(p5 + 1);
+d503 1
+a503 3
+                      xr6 = *(p6 + nsam);
+                      yt6 = *(p6 - nsr);
+                      zo6 = *(p6 + 1);
+d505 4
+a508 3
+                      xr7 = *(p7 + nsam);
+                      yb7 = *(p7 + nsr);
+                      zo7 = *(p7 + 1);
+a509 4
+                      xl8 = *(p8 - nsam);
+                      yb8 = *(p8 + nsr);
+                      zo8 = *(p8 + 1);
+                    }  
+d512 5
+a516 5
+            a1 = xr1 - xl1;
+            a2 = xr2 - xl2;
+            a3 = xr3 - xl3;
+            a4 = xr4 - xl4; 
+            bgy = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+d519 5
+a523 5
+            a1 = yt1 - yb1;
+            a2 = yt2 - yb2;
+            a3 = yt3 - yb3;
+            a4 = yt4 - yb4; 
+            bgz = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+d526 5
+a530 5
+            a1 = zo1 - zi1;
+            a2 = zo2 - zi2;
+            a3 = zo3 - zi3;
+            a4 = zo4 - zi4; 
+            bgx = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+d534 5
+a538 5
+            a1 = xr5 - xl5;
+            a2 = xr6 - xl6;
+            a3 = xr7 - xl7;
+            a4 = xr8 - xl8; 
+            fgy = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+d541 5
+a545 5
+            a1 = yt5 - yb5;
+            a2 = yt6 - yb6;
+            a3 = yt7 - yb7;
+            a4 = yt8 - yb8; 
+            fgz = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+d548 5
+a552 5
+            a1 = zo5 - zi5;
+            a2 = zo6 - zi6;
+            a3 = zo7 - zi7;
+            a4 = zo8 - zi8; 
+            fgx = a1 + w*(a4-a1) + v*(a2-a1 + w*(a3-a2-a4+a1));
+d554 1
+a554 5
+               Nx = u*(fgx - bgx) + bgx;
+               if(fabs(Nx) > 0.05)
+                {
+                  Ny = (u*(fgy - bgy) + bgy)/Nx;
+                  Nz = (u*(fgz - bgz) + bgz)/Nx;
+d556 4
+a559 1
+                  ft = Ny*Ny + Nz*Nz;
+d561 3
+a563 1
+                  refmap[++iloc] = fd1*ivall + fd2 
+d565 3
+a567 8
+                }
+               else
+                  refmap[++iloc] = fd1*ivall + fd2;
+            }
+          else
+            {   
+              refmap[++iloc] = mapgo;
+            }
+d569 3
+a571 3
+         } /* j */
+        jgo = jend;
+         } /* irow */
+d573 6
+d580 1
+a580 1
+      } /* islicet  */
+d582 6
+a587 10
+    } /* !rotate && canrotate  */
+   else if (canrotate) 
+         surfrot(newang, &newsize, theta, phi, psi, vol,
+                       lthlev, refmap, fd1, fd2, csfact); 
+       else
+        {
+          nsams = N1; nrows = N2;
+          cantrot(nsams, nrows, idistl, refmap, csfact, fd1, fd2); 
+        }
+
+@
+
+
+1.7
+log
+@ removed uncbuf from wipic
+@
+text
+@d2 1
+a2 2
+/*$Header: /alwyn/usr1/web//RCS/surf.c,v 1.6 93/11/24 14:22:20 leith Exp Locker: leith $*/
+
+d8 1
+a50 2
+#define NSQMAX 1001
+
+d58 3
+a60 2
+ extern int   surfrot   (int*, int*, float, float,float, unsigned char *, 
+                         unsigned char, int, int);
+d68 2
+d72 1
+d75 1
+a75 1
+ static float         fcto, reflo, thetao, phio, psio, csfact;
+d77 3
+a79 1
+ static int           newsize = TRUE, nsamo = 0, nrowo = 0, nsliceo = 0;
+d81 3
+a83 3
+ /* variables that are used in surfmen */
+ unsigned char        * vol,    * refmap;
+ int                  * isqlut, * idistlut, * idistl;
+a84 1
+ 
+d87 1
+a87 1
+ void surf(int fastsurf, int canrotate)
+d90 16
+a105 6
+ int            nsams, nrows, newang, irect, nsamwt;
+ int            imax, i, j, k, iloc, irown, itemp, ivall;
+ int            islicet, irow, isam, iv2, it, irefl, lastdl;
+ float          fsqmax, reflit, fd, fd1, fd2;
+ float          frefl, * buf;
+ int            rotate, isamn, npix;
+d107 1
+d109 1
+a109 1
+ char           outmsg[80];
+d111 1
+d113 3
+a115 3
+ nsams  = nrow2   - nrow1   + 1;
+ nrows  = nslice2 - nslice1 + 1;
+ npix   = nrow * nslice;
+d117 9
+d135 9
+a143 9
+    {
+    /* allocate space for arrays */
+    if (((isqlut = (int *) malloc((NSQMAX + 1) * sizeof(int))) == 
+                               (int *) 0) ||
+      ((idistlut = (int *) malloc((nsam +1)* sizeof(int))) == 
+                               (int *) 0) ||
+      ((idistl   = (int *) calloc((nrow +1),sizeof(int) )) == 
+                               (int *) 0) ||
+      ((vol      = (unsigned char *) malloc(nslice * nsam * nrow *
+a144 3
+                                     (unsigned char *) 0) ||
+      ((refmap   = (unsigned char *) malloc(npix * 
+                                     sizeof(unsigned char))) ==
+d147 2
+a148 2
+       spout(" *** Unable to allocate rotation memory in surf.c");
+       return;
+d151 3
+a153 3
+    /* load volume data into 8 bit vol */
+    redvol8(filedata, vol, 1, nsam, 1, nrow, 1, nslice, 0, 255,
+            &fn, & fncon);
+d155 9
+a163 14
+    closefile(filedata);
+    }
+ 
+ if (canrotate) 
+    {
+    if (theta > 0.0 || phi > 0.0 || psi > 0.0) 
+       rotate = TRUE;
+    else
+       {
+       rotate = FALSE;
+       sprintf(outmsg, "Rotation angles: %3d %3d %3d", 
+            (int) phi, (int)theta, (int)psi);
+       spout(outmsg);
+       }
+d165 1
+a165 1
+    newang = FALSE;
+d167 1
+a167 1
+    if (theta != thetao || phi != phio || psi != psio) 
+d169 5
+a173 4
+       newang = TRUE;
+       thetao = theta;
+       phio   = phi;
+       psio   = psi;
+d176 10
+a185 1
+    if (nsam != nsamo || nrow != nrowo || nslice != nsliceo)
+d187 8
+a194 4
+       newsize = TRUE;
+       nsamo   = nsam;
+       nrowo   = nrow;
+       nsliceo = nslice;
+d196 22
+d220 2
+d223 2
+a224 3
+ if (!gotsurf || fct != fcto || refl != reflo)
+    {
+    /* set up look-up-table for most sqrt calculations */
+d226 2
+a227 1
+    gotsurf = TRUE;
+d229 3
+a231 5
+    csfact = refl * (127.0 - mapgo);
+    fsqmax = NSQMAX;
+    imax   = sqrt(fsqmax);
+
+    for (i=0; i<=imax; i++)
+d233 9
+a241 5
+       for (j=i; j>= 0; j--)
+          {
+          k = i * i + j * j;
+ 
+          if (k < NSQMAX) 
+d243 16
+a258 9
+             /* reflit = (refl * (127 - mapgo)) / sqrt(fct * (i**2 + j**2) + 1) */
+             reflit    = csfact / sqrt( (fct * k) + 1);
+             isqlut[k] = reflit;
+             }
+          }
+       }
+    fd  = -(1.0 - refl) * (127.0 - mapgo) / (nsam - 1);
+    fd1 = (127 - mapgo) * (1.0 - refl); 
+    fd2 = fd1 - fd + mapgo;
+d260 1
+a260 7
+    for (i=0; i<=nsam; i++)
+       {
+       /* idistlut(i) =  ((127 - mapgo) * (1 - refl)) -              */
+       /*                ((i - 1)  *                                 */
+       /*                 (1 - refl) * (127 - mapgo)) / (nsam - 1) + */ 
+       /*                 mapgo                                      */
+       /*             = fd1 + i * fd - fd + mapgo                    */
+d262 3
+a264 5
+       idistlut[i] = (i * fd) + fd2;
+       }       
+    fcto  = fct;
+    reflo = refl;
+    }
+d266 2
+a267 2
+    /* NOTE: Distance shading is done according to original nsam     */
+    /*       not the windowed nsam1 dimension                        */
+d269 1
+d271 2
+a272 2
+ /* convert threshold to 8 bits */ 
+ lthlev = (unsigned char) (thlev * fn + fncon);
+d274 4
+a277 2
+ /*  set starting location in reflection image */
+ iloc   = -1;
+d279 5
+a283 4
+ for (islicet=nslice1; islicet <= nslice2; islicet++)
+    {
+    irown = islicet - nslice1 + 1;
+    itemp = islicet * nrow - nrow;
+d285 12
+a296 2
+    /* set starting location for this row in reflection image */
+    for (irow = nrow1; irow <= nrow2; irow++)
+d298 4
+a301 1
+       isamn = irow - nrow1; 
+d303 2
+d306 18
+a323 9
+       if (!rotate && canrotate) 
+          {
+          /*  get ivall directly from data volume  */
+          cptr = vol + (islicet -1) * nsam * nrow + (irow -1) * nsam + 
+                       nsam1 - 1; 
+          ivall = 0;
+          for (ptr = cptr; ptr < (cptr + nsamwt) ; ptr++)
+             {
+             if (*ptr >= lthlev)
+d325 5
+a329 18
+                /* return distance along the depth ray */
+                ivall = (int) (ptr - cptr) + nsam1;
+                break;
+                }
+             }
+          }
+   
+       else if (canrotate) 
+          {
+          /*  get ivall from rotation of data volume  */
+         ivall = surfrot(&newang, &newsize, theta, phi, psi,
+                     vol, lthlev, irow, islicet); 
+          }
+       else
+          {
+          /*  find file record for this distance ray  */
+          /*  irect = (islicet - 1) * nrow + irow     */
+          /*  irect = islicet * nrow - nrow + irow    */
+d331 5
+a335 10
+          irect = itemp + irow;   
+          redlin(filedata,buf,nsam,irect);
+          ivall = 0;
+          for (isam = nsam1-1; isam < nsam2; isam++)
+             {
+             if (buf[isam] >= thlev)
+                {
+                /*  voxel is at or above threshold, stop hunting */
+                ivall = isam + 1;
+                break;
+a336 2
+             }
+          }
+d338 1
+a338 1
+       /* surface located, now find value for the reflection map */
+d340 13
+a352 6
+       if (irown > 2 && irown <= nrows) 
+          {    
+          /* non-zero row in refmap, (filling preceeding row) */
+         
+          if (isamn > 0 && isamn < nsams-1) 
+             {    /* non-zero column in refmap */
+d354 16
+a369 8
+             iv2  = idistl[isamn];
+          
+             if (lastdl > 0 && iv2 > 0 && ivall > 0)
+                {  
+                /* all 3 corner pixels of tile have positive distance
+                   find reflection component of intensity and mix with the
+                   desired amount of distance shading and normalize to 0...127
+                **/
+d371 1
+a371 2
+                it   = (iv2 - lastdl) * (iv2 - lastdl) + 
+                       (iv2 - ivall)  * (iv2 - ivall);
+d373 49
+a421 6
+                if (it <= NSQMAX) 
+                   {    /* can use quick sqrt look-up-table */
+                   irefl          = isqlut[it];
+                   refmap[++iloc] = irefl + idistlut[iv2];
+                   }
+                else
+d423 4
+a426 7
+                   /* must use sqrt calculation instead (seldom) */
+                   frefl          = csfact / sqrt((fct * it) +1);
+                   refmap[++iloc] = frefl + idistlut[iv2];
+/***********************
+                   printf("sqrt used:it: %d, iv2: %d, lastdl: %d, ivall: %d\n",
+                           it,     iv2,     lastdl,     ivall);
+************************/
+d428 112
+d541 2
+a542 13
+             else
+                {   /* >= one corner pixel does not have + distance */
+                refmap[++iloc] = mapgo;
+                }
+
+             /* save the current idistl for use by next pixel to right */
+             lastdl = iv2;
+             }
+          else 
+             {
+             /*  first & last col of reflection image are always zero */
+             lastdl = idistl[isamn];
+             refmap[++iloc] = mapgo;
+d544 4
+a547 6
+          }
+       else if (irown == 2)
+          {
+          /*  first row of reflection image is always zeroed */
+          refmap[++iloc]  = mapgo;
+          }
+d549 6
+a554 4
+       /* record present distance for use by next row */
+       idistl[isamn] = ivall;
+       }
+    }
+d556 9
+a564 3
+ /* zero last row(s) of reflection image */
+ for (i = nsams*(nslice2-1); i < nsams*nrows; i++)
+      refmap[i] = mapgo;
+d566 1
+a566 5
+ if (nslice1 > 1)
+    {   /* fill top of image */
+    for (iloc=0; iloc < nslice1-1 * nrow; iloc++)
+       refmap[iloc] = mapgo;
+    }
+d573 2
+a574 2
+ /*  display the reflection map, destroy image structure  */
+ wipic(icontx,refmap,ixul,iyul,nsams,nrows,FALSE,TRUE,&imagel);  
+a578 2
+
+
+@
+
+
+1.6
+log
+@changed angle output
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surf.c,v 1.5 93/11/24 12:26:04 leith Exp Locker: leith $*/
+d353 2
+a354 2
+ /*  display the reflection map   */
+ wipic(icontx,refmap,ixul,iyul,nsams,nrows,FALSE,FALSE,&imagel);  
+@
+
+
+1.5
+log
+@idistl allocation should be nrow
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surf.c,v 1.4 93/11/24 12:12:40 leith Exp Locker: leith $*/
+d144 1
+a144 1
+       sprintf(outmsg, "new-angles: %3d %3d %3d", 
+@
+
+
+1.4
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surf.c,v 1.3 93/11/16 15:08:58 leith Exp Locker: leith $*/
+d117 1
+a117 1
+      ((idistl   = (int *) calloc((nsam +1),sizeof(int) )) == 
+@
+
+
+1.3
+log
+@>> wipic definition changed
+@
+text
+@d2 2
+a3 1
+/*$Header: /alwyn/usr1/web//RCS/surf.c,v 1.2 93/11/16 14:44:24 leith Exp Locker: leith $*/
+d60 1
+a60 1
+ extern int   surfrot   (int, int*, float, float,float, unsigned char *, 
+a68 2
+
+
+d73 1
+a73 1
+ static float  fcto, reflo, thetao, phio, psio, csfact;
+d75 1
+a75 1
+ static int newsize = TRUE, nsamo = 0, nrowo = 0, nsliceo = 0;
+d78 2
+a79 2
+ unsigned char  * vol,    * refmap;
+ int        *     isqlut, * idistlut, * idistl;
+d87 2
+a88 2
+ int            nsams, nrows, newang, irec, irect, ix, nsamwt;
+ int            imax, i, j, k, iloc, nsamp1, irown, itemp, ivall;
+d95 1
+d126 1
+a126 1
+       spout(" *** Unable to allocate rotation memory in surf.");
+a129 2
+
+
+a133 1
+
+a135 2
+
+
+d142 1
+d144 4
+a219 1
+ nsamp1 = -nsam1 + 1;
+d252 1
+a252 1
+         ivall = surfrot(newang, &newsize, theta, phi, psi,
+d306 1
+a306 1
+
+d309 1
+a358 2
+
+
+@
+
+
+1.2
+log
+@altered wipic call
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surf.c,v 1.1 93/11/10 10:11:34 leith Exp Locker: leith $*/
+d65 2
+a66 1
+ extern void  wipic     (GC, char *, int, int, int, int, int, int, XImage **);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a61 1
+ extern void  wipic     (GC, unsigned char *, int, int, int, int, int);
+d65 1
+a351 1
+
+d353 1
+a353 1
+ wipic(icontx,refmap,ixul,iyul,nsams,nrows,FALSE);  
+@

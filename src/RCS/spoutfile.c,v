@@ -1,0 +1,373 @@
+head	1.8;
+access;
+symbols
+	pre-tilt-improve:1.8
+	pre_surf_fromtop:1.8
+	pre_neednewmap:1.8
+	pre_apppluss_remove:1.8
+	pre_tiltpair_chng:1.8
+	pre_GPL:1.7;
+locks;
+comment	@ * @;
+
+
+1.8
+date	2005.10.18.17.00.03;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	96.05.10.14.59.53;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	96.05.07.15.01.34;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	96.04.12.16.59.43;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	95.02.08.16.48.47;	author liy;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.03.25.09.42.28;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.03.17.12.07.06;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.24.12.13.42;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@GPL
+@
+text
+@
+/*$Header: /net/ithaca/usr1/web/src/RCS/spoutfile.c,v 1.7 1996/05/10 14:59:53 leith Exp $*/
+
+/*
+ ***********************************************************************
+ *
+ * spoutfile.c
+ *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * spoutfile(useit)
+ * 
+ * PURPOSE:     uses a results file to trace web ouput
+ *
+ * PARAMETERS:   useit     T/F flag to write to  file
+ *
+ * RETURNS:      T/F  if successful 
+ * 
+ ***********************************************************************
+ */
+
+#include "std.h"
+#include "routines.h"
+
+ /* external common variables */
+ extern char      datexc[4];         /* file extension  */
+ extern int       trace_web;
+
+ /* global variables used elsewhere */
+ FILE   * resfp = NULL;
+
+ /**************************** spoutfile*******************************/
+
+ int spoutfile (int useit)
+   {
+   static char     resname[41];
+   char            * datentime;
+   time_t          now;
+
+   if (!useit)
+      {
+      trace_web = FALSE;
+      }
+   else
+      {
+      if (!resfp)
+         {    /* results file not available for restart */
+
+         /* add datexc to web_results.  */
+         strcpy(resname,"web_results.");
+         strcat(resname,datexc);
+
+         /* open for appending to end of file */
+         resfp = fopen(resname,"a");
+
+         if ( resfp == (FILE *) NULL)
+            {
+            spouts("*** Unable to open a results file: "); spout(resname); 
+            trace_web = FALSE;
+            return FALSE;
+            }
+
+         /* find current date and time */
+         now       = time(NULL);
+         datentime = ctime(&now);
+         /* should this pointer be freed later ? */
+
+         /* set time in file header */
+         fprintf(resfp," ; %3.3s  %s  %s", datexc, datentime, resname);
+         }
+      trace_web = TRUE;
+      }
+
+  return TRUE;
+  }
+
+
+ 
+@
+
+
+1.7
+log
+@used spouts
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/spoutfile.c,v 1.6 1996/05/07 15:01:34 leith Exp leith $*/
+d10 23
+a32 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.6
+log
+@used datentime for date.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/spoutfile.c,v 1.5 1996/04/12 16:59:43 leith Exp leith $*/
+d65 1
+a65 2
+            spout("*** Unable to open new results file:$"); 
+            spout(resname); 
+d76 2
+a77 3
+         fprintf(resfp," ; %3.3s  %s  %s",
+                datexc,  datentime, resname);
+          }
+@
+
+
+1.5
+log
+@changed access to file
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/spoutfile.c,v 1.4 1995/02/08 16:48:47 liy Exp leith $*/
+d18 1
+a18 1
+ * spoutfile(openit)
+d20 1
+a20 1
+ * PURPOSE:   opens/uses a results file to trace web ouput
+d22 1
+a22 1
+ * PARAMETERS: openit     flag to write to  file
+d44 2
+a46 4
+   char *  datentime;
+   char    datet[12], timet[9];
+   time_t  now;
+
+d72 1
+a72 1
+         now       = time(0);
+d74 1
+a74 8
+
+         /* set date for file header */
+         strncpy(&datet[0],datentime + 8,  2);
+         datet[2] = '-';
+         strncpy(&datet[3],datentime + 4,  3);
+         datet[6] = '-';
+         strncpy(&datet[7],datentime + 20, 4);
+         datet[11] = '\0';
+d77 3
+a79 6
+         strncpy(&timet[0],datentime + 11, 8);
+         timet[8] = '\0';
+
+         fprintf(resfp," ; %3.3s   %9.9s at %8.8s   %s\n",
+                datexc,datet,timet,resname);
+         }
+@
+
+
+1.4
+log
+@extent the array size of <timet>
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/spoutfile.c,v 1.3 1994/03/25 09:42:28 leith Exp liy $*/
+d20 1
+a20 1
+ * PURPOSE:   opens a results file to trace web ouput
+d22 1
+a22 1
+ * PARAMETERS: openit     flag to open file
+d24 1
+a24 1
+ * RETURNS:   int sucess  if successful 
+a25 2
+ * PARAMETERS:     
+ *
+d36 1
+a36 1
+ /* common variables */
+a37 1
+ static char     resname[41];
+d41 1
+a41 1
+ int spoutfile (int openit)
+d43 2
+d46 1
+a46 1
+   char    datet[12], timet[10];
+d49 1
+a49 1
+   if (!openit)
+a51 1
+      if (resfp) fclose(resfp);
+d55 2
+a56 7
+      trace_web = TRUE;
+  
+      if (resfp)
+         {    /* results file already available for restart */
+
+         /* open for appending to end of file */
+         resfp = fopen(resname,"a");
+d58 2
+a59 15
+         if ((int * ) resfp ==  NULL)
+           {
+           spout("*** Unable to open old results file:"); 
+           spout(resname); 
+           trace_web = FALSE;
+           return FALSE;
+           }
+         }
+   
+      else
+         {    /* first call for trace file */
+
+         /* add datexc to docnam if not already there */
+         resname[0] = '\0';
+         strcat(resname,"web_results.");
+d65 1
+a65 1
+         if ((int * ) resfp ==  NULL)
+d67 1
+a67 1
+            spout("*** Unable to open new results file:"); 
+d83 1
+a83 1
+         datet[11] = ' ';
+d87 1
+a87 1
+         timet[9] = '\0';
+d92 1
+@
+
+
+1.3
+log
+@removed functions
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/spoutfile.c,v 1.2 94/03/17 12:07:06 leith Exp Locker: leith $*/
+d47 1
+a47 1
+   char    datet[12], timet[9];
+@
+
+
+1.2
+log
+@put null in resname at start
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/spoutfile.c,v 1.1 93/11/24 12:13:42 leith Exp $*/
+d32 1
+a32 3
+
+ /* external prototypes */
+ extern void spout(char *);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d80 1
+@

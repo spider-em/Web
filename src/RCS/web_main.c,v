@@ -1,0 +1,2340 @@
+head	1.48;
+access;
+symbols
+	pre-tilt-improve:1.47
+	pre_surf_fromtop:1.47
+	pre_neednewmap:1.44
+	pre_apppluss_remove:1.38
+	pre_tiltpair_chng:1.36
+	pre_GPL:1.30;
+locks;
+comment	@ * @;
+
+
+1.48
+date	2015.09.01.18.37.56;	author leith;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2011.09.29.14.26.32;	author leith;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2011.09.28.17.35.12;	author leith;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2011.09.28.12.24.22;	author leith;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2011.09.15.19.53.11;	author leith;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2011.09.15.19.05.07;	author leith;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2011.09.15.19.03.08;	author leith;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2011.09.15.16.37.31;	author leith;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2011.07.26.15.47.25;	author leith;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2011.07.22.19.36.49;	author leith;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2011.07.20.14.05.57;	author leith;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2011.07.19.18.10.47;	author leith;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2011.06.10.16.22.56;	author leith;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2011.05.31.13.45.33;	author leith;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2011.05.27.13.40.25;	author leith;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2011.05.05.12.05.27;	author leith;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2011.02.28.15.22.57;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2005.10.18.17.00.04;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2005.10.12.16.32.39;	author leith;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2004.12.14.20.34.13;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	97.04.16.17.53.42;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	96.01.25.20.28.08;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	95.10.24.20.23.22;	author liy;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	95.08.07.18.26.19;	author leith;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	95.08.02.18.41.30;	author liy;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	95.07.21.20.16.18;	author liy;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	94.09.12.17.24.35;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	94.09.09.16.08.47;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	94.08.15.14.16.29;	author odesanya;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	94.07.19.19.33.56;	author odesanya;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	94.07.15.14.05.56;	author odesanya;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	94.07.05.15.35.31;	author odesanya;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	94.05.12.12.40.41;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	94.04.08.13.17.24;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	94.04.04.16.09.45;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	94.04.01.09.50.09;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.03.02.12.11.08;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.02.10.17.01.04;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.02.08.14.00.05;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.02.08.11.42.50;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.02.02.16.37.01;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.02.02.12.38.41;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.02.02.11.52.50;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.01.21.11.49.27;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.12.31.13.29.37;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.23.15.58.20;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.16.14.26.10;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.50;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.48
+log
+@copyright date,  HRI address
+@
+text
+@/*$Header: /usr8/web/src/RCS/web_main.c,v 1.47 2011/09/29 14:26:32 leith Exp $*/
+
+/*
+ ***********************************************************************
+ *                                                                     *
+ * web_main.c                                                          *
+ *               moved: realize all widgets now  Dec 2004 ArDean Leith *
+ *               _BGFG foreground & background   Oct 2005 ArDean Leith *
+ *               EXIT                            Feb 2011 ArDean Leith *
+ *               WEB_TRUE                        Sep 2011 ArDean Leith *
+ *               Copyright                       Sep 2015 ArDean Leith *
+ *                                                                     *
+ ***********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  Contact the *
+ C=* Free Software Foundation, Inc. for specific details on license.   *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * web_main(parent)
+ * 
+ * PURPOSE:     Initialize X Windows
+ *
+ * RETURNS:     iw_main
+ * 
+ * PARAMETERS:  parent       Parent widget   
+ *
+ ***********************************************************************
+*/
+
+#include "routines.h"
+#include "common.h"
+
+/*  Define web icon */
+#include "web_icon.xbm"  
+
+#include <Xm/Text.h>
+#include <Xm/Form.h>
+#include <Xm/ScrollBar.h>
+#include <Xm/ScrolledW.h>
+#include <Xm/DrawingA.h>
+#include <Xm/RowColumn.h>
+#include <Xm/PushBG.h>
+#include <X11/Xatom.h>
+
+#define MAX_ARGS     20
+
+ // Internal functions defined here
+ void      query_widget  (char * label, Widget iw_widget);
+
+ // File scope variables
+ char      outstr[80];
+
+#ifdef WEB_TRUE
+ 
+// **************************  web_main  ******************************
+
+ Widget web_main(Widget parent)          // parent = iw_top
+ { 
+ Arg                   args[MAX_ARGS];   // Arg list 
+ int                   n;                // Arg count 
+
+ Widget                iw_exit, iw_quickb;
+ Widget                iw_left;
+ Pixmap                icon_pixmap;
+ XWMHints              wm_hints;
+ Colormap              mapdef;
+ unsigned long         icon_fore, icon_back;
+ XTextProperty         windowName, iconName;
+ XColor                col_def, rgb_def;
+ XSetWindowAttributes  xswa;
+ Window                win_list[2];
+ char                * icon_name   = "WEB";
+ char                * window_name = 
+  "Web -- A SPIDER image viewer and analyzer       COPYRIGHT (c) 1992-2015 Health Research Inc.";
+
+ int                   icolorxtb,icolorxtf;
+
+ /* Set main window position and size -------------------------*/
+ ihighx = HeightOfScreen(iscreen) - 100;
+ iwidex = WidthOfScreen(iscreen)  - 100;
+ printf(" Screen size:        %d X %d\n",iwidex,ihighx);
+
+ n = 0;
+ XtSetArg(args[n], XmNx, 0);                n++;
+ XtSetArg(args[n], XmNy, 0);                n++;
+ XtSetArg(args[n], XmNwidth,  iwidex);      n++;
+ XtSetArg(args[n], XmNheight, ihighx);      n++;
+
+ if ((iw_main = XmCreateForm(parent, "main", args,n)) == 0)
+   { XtWarning("*** Web can not open main window!"); exit (-1); }
+ XtManageChild(iw_main);
+
+ XtSetArg(args[0], XmNbackground,  &icolorxtb);                       
+ XtSetArg(args[1], XmNforeground,  &icolorxtf);
+ XtGetValues(iw_main,args,2); 
+ printf(" GUI Background:     %#8x \n",icolorxtb);
+ printf(" GUI Foreground:     %#8x \n",icolorxtf);
+
+ icolorxmb = WhitePixelOfScreen(iscreen);
+ icolorxmf = BlackPixelOfScreen(iscreen);
+ printf(" White Pixel:        %#8x \n",icolorxmb);      
+ printf(" Black Pixel:        %#8x \n",icolorxmf);     
+ icolorxmb = 0xEEEEEE;      // jul 2011   
+
+ // Create a menu bar for top line commands ---------------------
+
+ n = 0;           
+ Setbgfg(args, MAX_ARGS, &n);  // Handles BGFG Args
+ XtSetArg(args[n], XmNtopAttachment,   XmATTACH_FORM); n++;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_FORM); n++;
+ XtSetArg(args[n], XmNorientation,     XmHORIZONTAL);  n++;
+ iw_left = XmCreateRowColumn(iw_main, "left", args, n);
+ if (iw_left == NULL)
+    { XtWarning("*** Can not create left menu widget!"); exit (-1);}
+ XtManageChild(iw_left);
+
+ n = 1;   // keep: XmNbackground =  icolorxmb
+ XtSetArg(args[n], XmNtopAttachment,  XmATTACH_FORM);  n++;
+ XtSetArg(args[n], XmNleftAttachment, XmATTACH_FORM);  n++;
+ XtSetArg(args[n], XmNshadowThickness, 0);             n++;
+ XtSetArg(args[n], XmNmarginHeight,    7);             n++;
+ iw_menub = XmCreateMenuBar(iw_left, "menub", args, n);
+ if (iw_menub == NULL)
+    { XtWarning("*** Can not create menu bar widget!"); exit (-1);}
+ XtManageChild(iw_menub);
+
+ // Create menu items under top menu bar ----------------------- 
+ web_com(iw_menub);
+
+ // Create a menu bar for QUICK PICKS selection -------------- QUICK
+ n = 1;            // Keeps: XmNbackground = icolorxmb
+ XtSetArg(args[n], XmNtopAttachment,   XmATTACH_FORM);   n++;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_WIDGET); n++;
+ XtSetArg(args[n], XmNleftWidget,      iw_menub);        n++;
+ XtSetArg(args[n], XmNrightAttachment, XmATTACH_FORM);   n++;
+ XtSetArg(args[n], XmNorientation,     XmHORIZONTAL);    n++;
+
+ iw_quickb = XmCreateRowColumn(iw_main, "quickb", args, n);
+ if (iw_quickb == NULL)
+    { XtWarning("*** Can not create quick menu widget!"); exit (-1);}
+ XtManageChild(iw_quickb);
+
+ // Create menu items under QUICK PICKS 
+ web_com2(iw_quickb);
+
+
+
+
+ // Create scrolled label window for error messages etc  ----- MESSAGES
+ n = 0;
+ Setbgfg(args, MAX_ARGS, &n);  // Handles BGFG Args
+ XtSetArg(args[n], XmNscrollingPolicy,    XmAUTOMATIC);       n++;
+ XtSetArg(args[n], XmNscrollBarDisplayPolicy, XmSTATIC);      n++;
+ XtSetArg(args[n], XmNscrollBarPlacement, XmBOTTOM_RIGHT);    n++;
+ XtSetArg(args[n], XmNvisualPolicy,       XmCONSTANT);        n++;
+ XtSetArg(args[n], XmNeditMode,           XmMULTI_LINE_EDIT); n++;
+ XtSetArg(args[n], XmNeditable,           False);             n++;
+ XtSetArg(args[n], XmNleftAttachment,     XmATTACH_FORM);     n++;
+ XtSetArg(args[n], XmNrightAttachment,    XmATTACH_FORM);     n++; 
+ XtSetArg(args[n], XmNbottomAttachment,   XmATTACH_FORM);     n++;
+ XtSetArg(args[n], XmNheight,             90);                n++;
+
+ iw_scroll = XmCreateScrolledText(iw_main, "comscroll", args, n);
+ XtManageChild(iw_scroll);
+
+ /* Find parent for the scrolling text window */
+ iw_scrollpar = XtParent(iw_scroll);
+
+
+ // Create spider image widget ------------------------------ IMAGES 
+
+ n = 0;
+ Setbgfg(args, MAX_ARGS, &n);  // Handles BGFG Args
+ XtSetArg(args[n], XmNtopWidget,        iw_menub);          n++;
+ XtSetArg(args[n], XmNtopAttachment,    XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XmNleftAttachment,   XmATTACH_FORM);     n++;
+ XtSetArg(args[n], XmNrightAttachment,  XmATTACH_FORM);     n++;
+ 
+ XtSetArg(args[n], XmNbottomWidget,     iw_scrollpar);      n++;
+ XtSetArg(args[n], XmNbottomAttachment, XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XtNcolormap,         map);               n++;
+
+ iw_win = XmCreateDrawingArea(iw_main, "win", args, n);
+ XtManageChild(iw_win);
+
+
+ /* Use expos_cb for redrawing the image widget contents */
+ XtAddCallback(iw_win,XmNexposeCallback, (XtCallbackProc) expos_cb,NULL);
+
+ // Find root window for this screen 
+ iroot = RootWindowOfScreen(iscreen);
+ //printf("*** RootWindowOfScreen: %d\n",iroot); 
+
+ /* Create an offscreen backing store for image & graphics window */
+ imagsav = XCreatePixmap(idispl,iroot,iwidex,ihighx,idepth);
+ if (imagsav <= 0)  
+    { XtWarning("*** Can not create image store!"); exit (-1); } 
+
+ // Realize all widgets now 
+ XtRealizeWidget(iw_top);
+
+ // Print opening output lines in iw_scroll 
+ if (trace_web) spoutfile(TRUE);
+ spout("This is Web;  An interactive display module for SPIDER");
+ spout("Output messages appear here");
+
+ sprintf(outstr,"Image ramp: %d...%d  Colors: %d...%d",
+         mapgo,mapend,colorgo,colorend);
+ spout(outstr);
+
+ // After realizing find window descriptor for the image widget
+ iwin  = XtWindow(iw_win);
+ //printf("*** iw_win: %d --> iwin: %d \n",iw_win,iwin); 
+
+ // Find window descriptor for the top widget */
+ iwtop  = XtWindow(iw_top);
+ //printf("*** iw_top: %d --> iwtop: %d \n",iw_top,itop); 
+
+ // Set default background drawing color. Sets both icolorb and icolorxb 
+ wicolor(icontx, -icolorb-1000000);   // Background (YES THIS IS OK)
+ printf(" Background color:   %#8x \n", ispicol[icolorb]);
+
+ // Set default foreground drawing color. Sets both icolor and icolorx 
+ wicolor(icontx,icolor+colorgo);
+
+ /* Set cursor foreground & background color */
+ setacursor(icursor,icolorcf,icolorcb); 
+
+ /* Set default initial image position */
+ nrit = iwidex;
+ nbot = ihighx;
+
+ // Create an icon for web 
+ mapdef      = DefaultColormapOfScreen(iscreen);
+ XAllocNamedColor(idispl, mapdef, "Gold", &col_def, &rgb_def);
+ icon_fore   = col_def.pixel;
+ XAllocNamedColor(idispl, mapdef, "Blue", &col_def, &rgb_def);
+ icon_back   = col_def.pixel;
+ icon_pixmap = XCreatePixmapFromBitmapData(idispl, iwtop, web_icon_bits, 
+                 web_icon_width, web_icon_height, icon_fore, icon_back, idepth);
+
+ XStringListToTextProperty(&icon_name,   1, &iconName);
+ XStringListToTextProperty(&window_name, 1, &windowName);
+
+ wm_hints.initial_state = NormalState;
+ wm_hints.icon_pixmap   = icon_pixmap;
+ wm_hints.flags         = StateHint | IconPixmapHint;
+
+ XSetWMProperties(idispl, iwtop, &windowName, &iconName, 
+                   NULL, 0, NULL, &wm_hints, NULL);
+
+
+ // Clear Display window to black
+ webclear(NULL,NULL,NULL);
+
+ //query_widget("main  widget",iw_main); 
+ //query_widget("menub widget",iw_menub); 
+ //query_widget("image widget",iw_win); 
+
+
+ return iw_main;
+}
+
+
+#ifdef NEVER
+  // Have been unable to apply new colormap to existing image window
+  // after realization even if I unmanage/manage again. 
+  // Have succeeded in altering menu widgets only!! al mar 2011
+  // Have exhustively tried following everywhere I could think of
+  //       in order to get colormap on OSX and Motif (nothing worked)
+
+  //setamap(map);    NOT USED ANYMORE ???
+
+  xswa.colormap = map;
+  XChangeWindowAttributes (idispl, iwtop, CWColormap, &xswa);
+  XChangeWindowAttributes (idispl, iwin,  CWColormap, &xswa);
+
+  /* Associate colormap with window */
+  XSetWindowColormap(idispl, iwin, map);
+
+  win_list[0] = iwin;
+  win_list[1] = iwtop;
+  XSetWMColormapWindows(idispl,iwtop,win_list,2);
+
+  XtSetArg(args[0], XmNcolormap, map);      
+  XtSetValues(parent, args, 1 );
+  printf(" Set colormap:       %#x \n",map); 
+
+  XmChangeColor(iw_menub, icolorxmb) ;
+
+ /* Install colormaps  */
+ XInstallColormap(idispl, map);
+
+#endif
+
+
+
+#else
+// NOT WEB_TRUE
+
+// **************************  web_main  ******************************
+
+ Widget web_main(Widget parent)          // parent = iw_top
+ { 
+ Arg                   args[MAX_ARGS];   // Arg list 
+ int                   n;                // Arg count 
+
+ Widget                iw_exit, iw_quickb;
+ Pixmap                icon_pixmap;
+ XWMHints              wm_hints;
+ Colormap              mapdef;
+ unsigned long         icon_fore, icon_back;
+ XTextProperty         windowName, iconName;
+ XColor                col_def, rgb_def;
+ XSetWindowAttributes  xswa;
+ Window                win_list[2];
+ char                * icon_name   = "WEB";
+ char                * window_name = 
+  "Web -- A SPIDER image viewer and analyzer       COPYRIGHT (c) 1992-2011 Health Research Inc., Menands, NY";
+
+ int                   icolorxtb,icolorxtf;
+
+ //int screen_num = XDefaultScreen(idispl);
+ //printf(" DefaultScreen(idispl):          %d  \n",DefaultScreen(idispl) );
+ //printf(" XDefaultScreen(idispl):         %d  \n",XDefaultScreen(idispl) );
+ //printf(" DefaultScreenOfDisplay(idispl): %d  \n",DefaultScreenOfDisplay(idispl) );
+
+ // Apply private colormap -------------------------------- 
+ //XtSetArg(args[0], XmNcolormap, map);     
+ //XtSetValues(parent, args, 1 );
+ //XtSetValues(iw_top, args, 1 );
+ //XtSetValues(iw_win, args, 1 );
+ //printf(" Set colormap:       %#x \n",map); 
+
+ /* Set main window position and size -------------------------*/
+ ihighx = HeightOfScreen(iscreen) - 100;
+ iwidex = WidthOfScreen(iscreen)  - 100;
+ printf(" Screen size:        %d X %d\n",iwidex,ihighx);
+
+ n = 0;
+ XtSetArg(args[n], XmNx, 0);                n++;
+ XtSetArg(args[n], XmNy, 0);                n++;
+ XtSetArg(args[n], XmNwidth,  iwidex);      n++;
+ XtSetArg(args[n], XmNheight, ihighx);      n++;
+
+ if ((iw_main = XmCreateForm(parent, "main", args,n)) == 0)
+   { XtWarning("*** Web can not open main window!"); exit (-1); }
+ XtManageChild(iw_main);
+
+ XtSetArg(args[0], XmNbackground,  &icolorxtb);                       
+ XtSetArg(args[1], XmNforeground,  &icolorxtf);
+ XtGetValues(iw_main,args,2); 
+ printf(" Background:         %d \n",icolorxtb);
+ printf(" Foreground:         %d \n",icolorxtf);
+
+ icolorxmb = WhitePixelOfScreen(iscreen);
+ icolorxmf = BlackPixelOfScreen(iscreen);
+ printf(" White Pixel:        %#8x \n",icolorxmb);      
+ printf(" Black Pixel:        %#8x \n",icolorxmf);     
+ icolorxmb = 0xEEEEEE;      // jul 2011   
+
+ // Create a menu bar for top line commands ---------------------
+
+ n = 0;           
+ Setbgfg(args,     MAX_ARGS, &n);      // Handles BGFG Args
+ XtSetArg(args[n], XmNtopAttachment,   XmATTACH_FORM); n++;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_FORM); n++;
+ XtSetArg(args[n], XmNorientation,     XmHORIZONTAL);  n++;
+ Widget iw_left;
+ iw_left = XmCreateRowColumn(iw_main, "left", args, n);
+ if (iw_left == NULL)
+    { XtWarning("*** Can not create left menu widget!"); exit (-1);}
+ XtManageChild(iw_left);
+
+ n = 1;   // keep: XmNbackground =  icolorxmb
+ XtSetArg(args[n], XmNtopAttachment,  XmATTACH_FORM);  n++;
+ XtSetArg(args[n], XmNleftAttachment, XmATTACH_FORM);  n++;
+ XtSetArg(args[n], XmNshadowThickness, 0);             n++;
+ XtSetArg(args[n], XmNmarginHeight,    7);             n++;
+ iw_menub = XmCreateMenuBar(iw_left, "menub", args, n);
+ if (iw_menub == NULL)
+    { XtWarning("*** Can not create menu bar widget!"); exit (-1);}
+ XtManageChild(iw_menub);
+
+ // Create menu items under top menu bar ----------------------- 
+ web_com(iw_menub);
+
+ // Create a menu bar for QUICK PICKS selection -------------- QUICK
+ n = 1;            // Keeps: XmNbackground = icolorxmb
+ XtSetArg(args[n], XmNtopAttachment,   XmATTACH_FORM);   n++;
+ XtSetArg(args[n], XmNleftAttachment,  XmATTACH_WIDGET); n++;
+ XtSetArg(args[n], XmNleftWidget,      iw_menub);        n++;
+ XtSetArg(args[n], XmNrightAttachment, XmATTACH_FORM);   n++;
+ XtSetArg(args[n], XmNorientation,     XmHORIZONTAL);    n++;
+
+ iw_quickb = XmCreateRowColumn(iw_main, "quickb", args, n);
+ if (iw_quickb == NULL)
+    { XtWarning("*** Can not create quick menu widget!"); exit (-1);}
+ XtManageChild(iw_quickb);
+
+ // Create menu items under QUICK PICKS 
+ web_com2(iw_quickb);
+
+
+
+
+ // Create scrolled label window for error messages etc  ----- MESSAGES
+ n = 0;
+#ifdef WEB_BGFGO
+ XtSetArg(args[n], XmNbackground,         icolorxmb);         n++;      
+#endif
+ XtSetArg(args[n], XmNscrollingPolicy,    XmAUTOMATIC);       n++;
+ XtSetArg(args[n], XmNscrollBarDisplayPolicy, XmSTATIC);      n++;
+ XtSetArg(args[n], XmNscrollBarPlacement, XmBOTTOM_RIGHT);    n++;
+ XtSetArg(args[n], XmNvisualPolicy,       XmCONSTANT);        n++;
+ XtSetArg(args[n], XmNeditMode,           XmMULTI_LINE_EDIT); n++;
+ XtSetArg(args[n], XmNeditable,           False);             n++;
+ XtSetArg(args[n], XmNleftAttachment,     XmATTACH_FORM);     n++;
+ XtSetArg(args[n], XmNrightAttachment,    XmATTACH_FORM);     n++; 
+ XtSetArg(args[n], XmNbottomAttachment,   XmATTACH_FORM);     n++;
+ XtSetArg(args[n], XmNheight,             90);                n++;
+
+ iw_scroll = XmCreateScrolledText(iw_main, "comscroll", args, n);
+ XtManageChild(iw_scroll);
+
+ /* Find parent for the scrolling text window */
+ iw_scrollpar = XtParent(iw_scroll);
+
+
+ // Create spider image widget ------------------------------ IMAGES 
+
+ n = 0;
+ XtSetArg(args[n], XmNtopWidget,        iw_menub);          n++;
+ XtSetArg(args[n], XmNtopAttachment,    XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XmNleftAttachment,   XmATTACH_FORM);     n++;
+ XtSetArg(args[n], XmNrightAttachment,  XmATTACH_FORM);     n++;
+ 
+ XtSetArg(args[n], XmNbottomWidget,     iw_scrollpar);      n++;
+ XtSetArg(args[n], XmNbottomAttachment, XmATTACH_WIDGET);   n++;
+ XtSetArg(args[n], XtNcolormap,         map);               n++;
+
+ iw_win = XmCreateDrawingArea(iw_main, "win", args, n);
+ XtManageChild(iw_win);
+
+
+ /* Use expos_cb for redrawing the image widget contents */
+ XtAddCallback(iw_win,XmNexposeCallback, (XtCallbackProc) expos_cb,NULL);
+
+ // Find root window for this screen 
+ iroot = RootWindowOfScreen(iscreen);
+ //printf("*** RootWindowOfScreen: %d\n",iroot); 
+
+ /* Create an offscreen backing store for image & graphics window */
+ imagsav = XCreatePixmap(idispl,iroot,iwidex,ihighx,idepth);
+ if (imagsav <= 0)  
+    { XtWarning("*** Can not create image store!"); exit (-1); } 
+
+ // Realize all widgets now 
+ XtRealizeWidget(iw_top);
+
+ // Print opening output lines in iw_scroll 
+ if (trace_web) spoutfile(TRUE);
+ spout("This is Web;  An interactive display module for SPIDER");
+ spout("Output messages appear here");
+
+ sprintf(outstr,"Image ramp: %d...%d  Colors: %d...%d",
+         mapgo,mapend,colorgo,colorend);
+ spout(outstr);
+
+ // After realizing find window descriptor for the image widget
+ iwin  = XtWindow(iw_win);
+ //printf("*** iw_win: %d --> iwin: %d \n",iw_win,iwin); 
+
+
+ // Find window descriptor for the top widget */
+ iwtop  = XtWindow(iw_top);
+ //printf("*** iw_top: %d --> iwtop: %d \n",iw_top,itop); 
+
+ // Set default drawing color 
+ //printf(" colorgo:: %d , icolor: %d\n",colorgo,icolor);
+ wicolor(icontx,icolor+colorgo);
+ //printf(" colorgo:: %d , icolor: %d\n",colorgo,icolor);
+
+  
+ // Set default background color 
+ icolorxb = ispicol[icolorb];
+
+ /* Set default cursor and its colors */
+ setacursor(icursor,colorgo+icolorcf,colorgo+icolorcb);
+
+ /* Set default initial image position */
+ nrit = iwidex;
+ nbot = ihighx;
+
+ // Create an icon for web 
+ mapdef      = DefaultColormapOfScreen(iscreen);
+ XAllocNamedColor(idispl, mapdef, "Gold", &col_def, &rgb_def);
+ icon_fore   = col_def.pixel;
+ XAllocNamedColor(idispl, mapdef, "Blue", &col_def, &rgb_def);
+ icon_back   = col_def.pixel;
+ icon_pixmap = XCreatePixmapFromBitmapData(idispl, iwtop, web_icon_bits, 
+                 web_icon_width, web_icon_height, icon_fore, icon_back, idepth);
+
+ XStringListToTextProperty(&icon_name,   1, &iconName);
+ XStringListToTextProperty(&window_name, 1, &windowName);
+
+ wm_hints.initial_state = NormalState;
+ wm_hints.icon_pixmap   = icon_pixmap;
+ wm_hints.flags         = StateHint | IconPixmapHint;
+
+ XSetWMProperties(idispl, iwtop, &windowName, &iconName, 
+                   NULL, 0, NULL, &wm_hints, NULL);
+
+
+ // Clear Display window to black
+ webclear(NULL,NULL,NULL);
+
+ //query_widget("main  widget",iw_main); 
+ //query_widget("menub widget",iw_menub); 
+ //query_widget("image widget",iw_win); 
+
+
+ return iw_main;
+}
+
+#ifdef NEVER
+  // Have been unable to apply new colormap to existing image window
+  // after realization even if I unmanage/manage again. 
+  // Have succeeded in altering menu widgets only!! al mar 2011
+  // Have exhustively tried following everywhere I could think of
+  //       in order to get colormap on OSX and Motif (nothing worked)
+
+  //setamap(map);    NOT USED ANYMORE ???
+
+  xswa.colormap = map;
+  XChangeWindowAttributes (idispl, iwtop, CWColormap, &xswa);
+  XChangeWindowAttributes (idispl, iwin,  CWColormap, &xswa);
+
+  /* Associate colormap with window */
+  XSetWindowColormap(idispl, iwin, map);
+
+  win_list[0] = iwin;
+  win_list[1] = iwtop;
+  XSetWMColormapWindows(idispl,iwtop,win_list,2);
+
+  XtSetArg(args[0], XmNcolormap, map);      
+  XtSetValues(parent, args, 1 );
+  printf(" Set colormap:       %#x \n",map); 
+
+  XmChangeColor(iw_menub, icolorxmb) ;
+
+ /* Install colormaps  */
+ XInstallColormap(idispl, map);
+
+#endif
+
+#endif
+
+
+
+/***********************  query_widget  ************************/
+
+ void query_widget(char * label, Widget iw_widget)
+ { 
+ Arg           args[3];               /* Arg list */
+ Colormap      mapt;
+ unsigned long icolorxtb,icolorxtf;
+
+ XtSetArg(args[0], XmNcolormap,    &mapt);                       
+ XtSetArg(args[1], XmNbackground,  &icolorxtb);                       
+ XtSetArg(args[2], XmNforeground,  &icolorxtf);
+                       
+ XtGetValues(iw_widget,args,3); 
+
+ printf(" %s  -- Colormap:%#x,  Background: %d  Foreground: %d\n",
+         label, mapt,icolorxtb,icolorxtf);
+ }
+@
+
+
+1.47
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.46 2011/09/28 17:35:12 leith Exp leith $*/
+d11 1
+d15 2
+a16 4
+ C=* Copyright (C) 1992-2011  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+d27 2
+a28 7
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+d61 1
+a61 1
+ void query_widget(char * label, Widget iw_widget);
+d64 1
+a64 1
+ char           outstr[80];
+d87 1
+a87 1
+  "Web -- A SPIDER image viewer and analyzer       COPYRIGHT (c) 1992-2011 Health Research Inc., Menands, NY";
+@
+
+
+1.46
+log
+@White Pixel:        %#8x
+Setbgfg used
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.45 2011/09/28 12:24:22 leith Exp leith $*/
+d239 1
+a239 1
+ wicolor(icontx, -icolorb-1000000);   // Background
+@
+
+
+1.45
+log
+@setacursor in web_24 needed
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.44 2011/09/15 19:53:11 leith Exp $*/
+d377 2
+a378 2
+ printf(" White Pixel:        %d \n",icolorxmb);      
+ printf(" Black Pixel:        %d \n",icolorxmf);     
+d384 1
+a384 3
+#ifdef WEB_BGFG
+ XtSetArg(args[n], XmNbackground,     icolorxmb);      n++;      
+#endif
+@
+
+
+1.44
+log
+@wicolor for foreground wrong
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.43 2011/09/15 19:05:07 leith Exp $*/
+d245 2
+a246 5
+ /* Set cursor background color */
+ setacursor(icursor,-1,icolorcb); 
+
+ /* Set cursor foreground color */
+ setacursor(icursor,icolorcf,-1); 
+d510 1
+a510 1
+ ///setacursor(icursor,icolorcf,icolorcb);
+@
+
+
+1.43
+log
+@order of foreground with wicolor bug
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.42 2011/09/15 19:03:08 leith Exp $*/
+d243 1
+a243 2
+ wicolor(icontx,icolor);
+ printf(" Foreground color:   %#8x \n", ispicol[icolor]);
+d321 1
+d504 3
+a506 1
+ ZZ(icontx,icolor);
+d508 1
+@
+
+
+1.42
+log
+@wicolor for foreground
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.41 2011/09/15 16:37:31 leith Exp leith $*/
+d238 4
+a245 4
+ // Set default background drawing color. Sets both icolorb and icolorxb 
+ wicolor(icontx, -icolorb-1000000);   // Background
+ printf(" Background color:   %#8x \n", ispicol[icolorb]);
+
+d504 1
+a504 1
+ wicolor(icontx,icolor);
+@
+
+
+1.41
+log
+@TRUE_COLOR added
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.40 2011/07/26 15:47:25 leith Exp leith $*/
+d242 1
+a242 1
+ // Set default foreground drawing color. Sets both icolorb and icolorxb 
+@
+
+
+1.40
+log
+@colormap install moved to web, cosmetic
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.39 2011/07/22 19:36:49 leith Exp leith $*/
+d5 7
+a11 6
+ *
+ * web_main.c
+ *                 moved: realize all widgets now  Dec 2004 ArDean Leith
+ *                 _BGFG foreground & background   Oct 2005 ArDean Leith
+ *                 EXIT                            Feb 2011 ArDean Leith
+ *
+d66 1
+a66 1
+ // Internal functions 
+d72 125
+d198 125
+a546 1
+
+d575 2
+@
+
+
+1.39
+log
+@moved defluts call to web.c
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.38 2011/07/20 14:05:57 leith Exp $*/
+d82 1
+a82 1
+ Colormap              mapdev;
+a86 1
+ Colormap              mapdef;
+d100 5
+a104 4
+ XtSetArg(args[0], XmNcolormap, map);     // APPLICATION COLORMAP SET!!!!!
+ XtSetValues(parent, args, 1 );
+ XtSetValues(iw_top, args, 1 );
+ printf(" Set colormap:       %#x \n",map); 
+d161 1
+a161 1
+ // Create a menu bar for QUICK PICKS selection ----------------- 
+d174 1
+a174 1
+ // Create menu items under QUICK PICKS ------------------------ 
+d180 1
+a180 1
+ // Create a scrolled label window in iw_main for error messages etc 
+d183 1
+a183 1
+ XtSetArg(args[n], XmNbackground,         icolorxmb);      n++;      
+d203 1
+a203 1
+ // Create spider image widget ------------------------------------ 
+d213 1
+d218 1
+d247 1
+d259 1
+a259 1
+ setacursor(icursor,icolorcf,icolorcb);
+d266 2
+a267 2
+ mapdev      = DefaultColormapOfScreen(iscreen);
+ XAllocNamedColor(idispl, mapdev, "Gold", &col_def, &rgb_def);
+d269 1
+a269 1
+ XAllocNamedColor(idispl, mapdev, "Blue", &col_def, &rgb_def);
+d279 1
+a279 1
+ wm_hints.flags = StateHint | IconPixmapHint;
+d284 1
+d290 2
+d301 2
+d323 2
+@
+
+
+1.38
+log
+@set menu background color to somewhat grey
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.37 2011/07/19 18:10:47 leith Exp leith $*/
+d86 3
+a91 3
+ Window                win_list[2];
+ XSetWindowAttributes  xswa;
+ Colormap              mapdef;
+a94 11
+ /* find default screen pointer */
+ if ((iscreen = DefaultScreenOfDisplay(idispl)) == 0)
+    {XtWarning("*** Web can not determine screen!"); exit (-1);}
+
+ /* find depth of screen (number of bit planes) */
+ if ((idepth = DefaultDepthOfScreen(iscreen)) < 8)
+    {XtWarning("*** Screen depth too shallow need >= 8 bits!"); exit (-1); }
+
+ /* Find default graphics context */
+ icontx = DefaultGCOfScreen(iscreen);
+
+d100 1
+a100 3
+ // Create private colormap -------------------------------- 
+ map = defluts(TRUE);
+
+@
+
+
+1.37
+log
+@WEB_BGFGO
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/new/RCS/web_main.c,v 1.36 2011/06/10 16:22:56 leith Exp $*/
+d144 1
+@
+
+
+1.36
+log
+@menub height
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/new/RCS/web_main.c,v 1.35 2011/05/31 13:45:33 leith Exp $*/
+d39 1
+a39 1
+ * PURPOSE:     initialize X windows
+d43 1
+a43 1
+ * PARAMETERS:  parent       parent widget   
+d194 3
+@
+
+
+1.35
+log
+@Set default background color
+icolorxb
+@
+text
+@d1 1
+a1 1
+/*$Header:  Exp $*/
+d164 1
+a164 1
+ XtSetArg(args[n], XmNmarginHeight,    5);             n++;
+@
+
+
+1.34
+log
+@*** empty log message ***
+@
+text
+@d258 1
+a258 1
+ /* Set default drawing color 
+d260 3
+@
+
+
+1.33
+log
+@-cmap_changes_etc
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/web_main.c,v 1.32 2011/02/28 15:22:57 leith Exp $*/
+a47 2
+#include "files.h"
+#include "x.h"
+d51 1
+a51 1
+/*  define web icon */
+d65 2
+a66 1
+ char          outstr[80];
+d68 2
+a69 1
+/**************************  web_main  ******************************/
+d71 4
+a74 1
+ Widget web_main(Widget parent)      // parent = iw_top
+d76 2
+a77 2
+ Arg               args[MAX_ARGS];   /* Arg list */
+ register int      n;                /* Arg count */
+d79 9
+a87 9
+ Widget            iw_exit, iw_quickb;
+ Pixmap            icon_pixmap;
+ XWMHints          wm_hints;
+ Colormap          mapdev;
+ unsigned long     icon_fore, icon_back;
+ XTextProperty     windowName, iconName;
+ XColor            col_def, rgb_def;
+ char            * icon_name   = "WEB";
+ char            * window_name = 
+d89 3
+a91 3
+  Window          win_list[2];
+  XSetWindowAttributes  xswa;
+ Colormap          mapdef;
+d93 1
+d111 1
+a111 1
+ /* Create private colormap */
+a118 4
+
+
+
+
+d134 27
+a160 2
+ /* Create a menu bar for command selection ------------------*/
+ n = 0;
+d163 3
+a165 5
+#ifdef WEB_BGFG
+ XtSetArg(args[n], XmNforeground,     BlackPixelOfScreen(iscreen)); n++;     
+ XtSetArg(args[n], XmNbackground,     WhitePixelOfScreen(iscreen)); n++;      
+#endif
+ iw_menub = XmCreateMenuBar(iw_main, "menub", args, n);
+d170 1
+a170 1
+ /* Create menu items under COMMANDS ----------------------- */ 
+d173 2
+a174 3
+
+ /* Create a menu bar for QUICK PICKS selection ----------------- */
+ n = 0;
+a180 4
+#ifdef WEB_BGFG
+ XtSetArg(args[n], XmNforeground,      BlackPixelOfScreen(iscreen)); n++;     
+ XtSetArg(args[n], XmNbackground,      WhitePixelOfScreen(iscreen)); n++;      
+#endif
+d186 1
+a186 1
+ /* Create menu items under QUICK PICKS ------------------------ */ 
+d189 4
+a192 1
+ /* create a scrolled label window in iw_main for error messages etc */
+d203 1
+a204 1
+ XtSetArg(args[n], XmNheight,             90);                n++;
+d211 2
+a212 1
+ /* Create spider image widget ------------------------------------ */
+d229 1
+a229 1
+ /* Find root window for this screen */
+d238 1
+a238 1
+ /* Realize all widgets now */
+d241 1
+a241 1
+/* Print opening output lines in iw_scroll */
+d250 1
+a250 1
+ /* After realizing find window descriptor for the image widget */
+d254 1
+a254 1
+ /* Find window descriptor for the top widget */
+d258 1
+a258 1
+ /* Set default drawing color */
+d268 1
+a268 1
+ /* Create an icon for web */
+d290 3
+d297 1
+a297 1
+#ifdef NEVR
+d318 4
+d323 20
+@
+
+
+1.32
+log
+@Quick image, exit buttons
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_main.c,v 1.31 2005/10/18 17:00:04 leith Exp $*/
+d13 1
+a13 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d63 1
+d71 1
+a71 1
+ Widget web_main(Widget parent)
+d73 2
+a74 3
+ Arg               args[MAX_ARGS];   /* arg list */
+ register          int  n;           /* arg count */
+ int               mapgop, mapendp, colorgop, colorendp;
+d86 4
+d102 6
+a107 3
+ /* Set default private colormap */
+ mapgop   = mapgo;   mapendp   = mapend;
+ colorgop = colorgo; colorendp = colorend;
+d109 9
+a117 3
+ n = 0;
+ XtSetArg(args[n], XmNcolormap, map);        n++;
+ XtSetValues(parent, args, n );
+a119 4
+ n = 0;
+ XtSetArg(args[n], XmNx, 0);                 n++;
+ XtSetArg(args[n], XmNy, 0);                 n++;
+
+d122 5
+a133 1
+
+a150 2
+
+
+a170 4
+
+
+
+
+d191 1
+d200 1
+d209 1
+d215 1
+a215 1
+ 
+d219 1
+a219 1
+ /* Print opening output lines in iw_scroll */
+a227 1
+
+d230 1
+d234 1
+a234 5
+ 
+ /* Write out visuals list */
+ /******** visuals(idispl,XDefaultScreen(idispl)); *********/   
+ /* type out some display/xwindows info */
+ /**** wid_info(); ********/
+d252 1
+a252 1
+ icon_pixmap =  XCreatePixmapFromBitmapData(idispl, iwtop, web_icon_bits, 
+d255 1
+a255 1
+ XStringListToTextProperty(&icon_name, 1, &iconName);
+d262 2
+a263 2
+ XSetWMProperties( idispl, iwtop, &windowName, &iconName, 
+                    NULL, 0, NULL, &wm_hints, NULL);
+d270 24
+@
+
+
+1.31
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_main.c,v 1.30 2005/10/12 16:32:39 leith Exp $*/
+d9 1
+d62 1
+d76 1
+d85 1
+a85 1
+  "Web -- A SPIDER image viewer and analyzer       COPYRIGHT (c) 1992, Health Research Inc., Albany, NY";
+d95 1
+a95 1
+ /* find default graphics context */
+d98 1
+a98 1
+ /* set default private colormap */
+d106 1
+a106 1
+ /* set main window position and size -------------------------*/
+d120 2
+a121 1
+ /* create a menu bar for command selection -----------------*/
+a124 1
+ XtSetArg(args[n], XmNrightAttachment,XmATTACH_FORM);  n++;
+d134 1
+a134 1
+ /* create menu items under COMMANDS ----------------- */ 
+d137 27
+d180 1
+a180 1
+ /* find parent for the scrolling text window */
+d183 1
+a183 1
+ /* create spider image widget ----------------------------- */
+d195 1
+a195 1
+ /* use expos_cb for redrawing the image widget contents */
+d198 1
+a198 1
+ /* find root window for this screen */
+d201 1
+a201 1
+ /* create an offscreen backing store for image & graphics window */
+d206 1
+a206 1
+ /* realize all widgets now */
+d209 1
+a209 1
+ /* print opening output lines in iw_scroll */
+d219 1
+a219 1
+ /* after realizing find window descriptor for the image widget */
+d222 1
+a222 1
+ /* find window descriptor for the top widget */
+d225 1
+a225 1
+ /* write out visuals list */
+d230 1
+a230 1
+ /* set default drawing color */
+d233 1
+a233 1
+ /* set default cursor and its colors */
+d236 1
+a236 1
+ /* set default initial image position */
+d240 1
+a240 1
+ /* create an icon for web */
+d259 3
+@
+
+
+1.30
+log
+@ _BGFG foreground & background
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_main.c,v 1.29 2004/12/14 20:34:13 leith Exp leith $*/
+d11 23
+a33 6
+ * COPYRIGHT (C)1992, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@
+
+
+1.29
+log
+@removed Proposed ramp & moved XtRealizeWidget
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/web_main.c,v 1.28 1997/04/16 17:53:42 leith Exp leith $*/
+d8 2
+a9 1
+
+d105 4
+@
+
+
+1.28
+log
+@added -trace to command line
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_main.c,v 1.27 1996/01/25 20:28:08 leith Exp leith $*/
+d7 2
+a8 1
+ *
+d154 3
+a161 5
+ /*************** does not mean anything?
+ sprintf(outstr,"Proposed ramp: %d...%d Colors: %d...%d",
+         mapgop,mapendp,colorgop,colorendp);
+ spout(outstr); ***************/
+
+a164 3
+
+ /* realize all widgets now */
+ XtRealizeWidget(iw_top);
+@
+
+
+1.27
+log
+@ for defaults and command lines
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_main.c,v 1.26 1995/10/24 20:23:22 liy Exp $*/
+d154 2
+a155 2
+ spout("This is Web");
+ spout("An interactive display module for Spider");
+@
+
+
+1.26
+log
+@added flags <ntimg> & <shownum> for marker program
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_main.c,v 1.25 1995/08/07 18:26:19 leith Exp $*/
+d21 1
+a21 1
+ * RETURNS:
+d31 1
+d33 1
+a33 1
+/*  lekan, define icon*/
+a43 1
+#define MAIN_WIN_POS 90
+a44 149
+#define MAXCOL 256
+
+ /* to use these variables include common.h in your source code */ 
+
+ Display        *idispl;           /* current display               */
+ Widget          iw_top;           /* top widget                    */
+ Screen         *iscreen;          /* current screen                */
+
+ Widget         iw_main ;          /* main box widget               */
+ Widget         iw_menub;          /* menu bar widget               */
+ Widget         iw_win;            /* image display widget          */
+ Widget         iw_files  = 0;     /* file selection widget         */
+ Widget         iw_scroll;         /* scrolled output widget        */
+ Widget         iw_scrollpar;      /* parent scrolled output widget */
+
+ Window         iwin, iroot, iwtop; /* image, root & top windows    */
+ Pixmap         imagsav;           /* image backing store           */
+ int            idepth;            /* display window depth          */
+ unsigned int   ihighx, iwidex;    /* display window x & Y dimen.   */
+ int            ixulx, iyulx;      /* display window location       */
+ GC             icontx;            /* usual graphics context        */
+ GC             icontxb  = 0;      /* blanking graphics context     */
+ Colormap       map;               /* current colormap              */
+ Visual         *visual;           /* visual                        */
+ FILEDATA *     filedata;          /* current image file info       */
+ Colormap       mapover;           /* overlay colormap              */
+ XColor         colort[MAXCOL];    /* temporary color setting array */
+ int            nsam,nrow,nslice;  /* last image size               */
+ int            islice;            /* current slice                 */
+ int            nsam1,nsam2;       /* col. range                    */
+ int            nrow1,nrow2;       /* row range                     */
+ int            nslice1,nslice2;   /* slice range                   */
+ double         fmin,fmax;         /* last image range              */
+ int            ixulw,iyulw;       /* window position               */
+ int            nsamw,nroww;       /* window size                   */
+ int            ixul,iyul;         /* upper left corner last image  */
+ int            ixuln,iyuln;       /* corner of next image          */
+ int            nprow=1;             /* pictures per row              */
+ int            nbot,nrit;         /* bottem & rit image position   */
+ char           axis;              /* axis of slicing               */
+ XImage  *      imagel = NULL, * imager = NULL;
+ int            nsaml,nrowl;
+ int            nsamr,nrowr;
+ int            nsam1l,nrow1l;
+ int            nsam2l,nrow2l;
+ int            nsam1r,nrow1r;
+ int            nsam2r,nrow2r;
+
+ int            ixull, iyull;
+ int            ixulr, iyulr;
+ int            ixulli,iyulli;
+ int            ixulri,iyulri;
+ int            ixullmin,ixlrlmax;
+ int            iyullmin,iylrlmax;
+ int            ixulrmin,ixlrrmax;
+ int            iyulrmin,iylrrmax;
+
+ int            ispicol[MAXCOL];   /* spider colormap values        */
+ Cursor         icursorx;          /* current x cursor number       */
+ XColor         colorcursf;        /* cursor foreground color       */
+ XColor         colorcursb;        /* cursor background color       */
+ float          param[102];        /* Spider registers              */ 
+ int            ioper    = 0;      /* current operation #           */
+ char           filnow[81] = "\0"; /* name of last image file       */ 
+ char           winnam[81] = "\0"; /* name of last window file      */ 
+ char           docnam[81] = "\0"; /* name of last doc    file      */ 
+ char           filnext[81]= "\0"; /* name of next image file       */ 
+ char           dirnow[81] = "\0"; /* name of current directory     */ 
+
+ /* following values should be made accessible from defaults file !! */
+
+#ifdef VMS
+ char           lutdir[81] = "RGB_LOC:*.RGB"; /* lut directory */ 
+#else
+ char           lutdir[81] = "\0"; 
+#endif
+
+#ifdef VMS
+ int            mapgo     = 20;    /* image start in colormap       */
+ int            colorend  = 238;   /* colors end in colormap        */
+#else
+ int            mapgo     = 48;    /* image start in colormap       */
+ int            colorend  = 256;   /* colors end in colormap        */
+#endif
+
+ int            colorgo   = 128;   /* colors start in colormap      */
+ int            mapend    = 127;   /* image  end in colormap        */
+
+ int            icursor   =  22;   /* current spider cursor         */
+ int            nmax      = 127;   /* colormap normalization range  */
+ int            imagego   =   0;   /* colormap normalization range  */
+ int            imageend  = 127;   /* colormap normalization range  */
+ int            ncolors   = 128;   /* number of defined colors      */
+ int            icolor    = 137;   /* current spider color          */
+ int            icolorx   = 137;   /* current x color               */
+ int            icolorb   =   0;   /* current background            */
+ int            icolorxb  =   0;   /* current x background color    */
+ int            icolorcf  = 147;   /* current curs. foreground      */
+ int            icolorxcf = 147;   /* current x curs. foreground    */
+ int            icolorcb  = 137;   /* current curs. background      */
+ int            icolorxcb = 137;   /* current x curs. background    */
+ int            icolorov  = 157;   /* current overlay color         */
+ int            icolorxov = 157;   /* current x overlay color       */
+ int            marx     = 1;      /* x image margin                */
+ int            mary     = 1;      /* y image margin                */
+ int            ntop     = 0;      /* top image position            */
+ int            marlef   = 0;      /* left window margins           */
+ int            martop   = 0;      /* top window margins            */
+ int            newline  = FALSE;  /* new line flag                 */
+ int		ntimg = FALSE;	   /* start next image (marker)	    */
+ int            nuscrn   = FALSE;  /* new screen flag               */
+ int            names    = FALSE;  /* print image names flag        */
+ int            iskip    = 1;      /* image mag. factor             */
+ int            lastskip = 1;      /* last image mag. factor        */
+ int            movie    = FALSE;  /* image movie flag              */
+ int            placed   = FALSE;  /* image position sent flag      */
+ int            force    = FALSE;  /* force images / row flag       */
+ int            listfi   = TRUE;   /* list files in selector        */
+ int            keepxy   = FALSE;  /* retain values of x & y        */
+ int            normit   = FALSE;  /* normalize each slice          */
+ int            xaxis    = FALSE;  /* X axis selected               */
+ int            yaxis    = FALSE;  /* Y axis selected               */
+ int            zaxis    = TRUE;   /* Z axis selected               */
+ int            gotsurf  = FALSE;  /* surface in memory now         */
+ int            samefile = FALSE;  /* filnow == filnex              */
+ int	        show_num = FALSE;  /* set show marker number flag */ 
+ int            leavit   = FALSE;  /* leave window at position      */
+ int            sayit    = TRUE ;  /* say window position           */
+ int            inimag   = FALSE;  /* inside image data only        */
+ int            getscreen = FALSE; /* get screen pixel value        */
+ int            getfile  = FALSE;  /* get file pixel value          */
+ int            docit    = FALSE;  /* store data in doc file        */
+ int            iradius  = 5;      /* location radius               */
+ int            ikey     = 1;      /* doc. file key                 */
+ float          scaleval = 1.0;    /* surface magnification         */
+ float          refl     = 0.5;    /* surface rendering reflection  */
+ float          fct      = 1.0;    /* surface rendering attenuation */
+ int            drawing  = FALSE;  /* flag for xor drawing          */
+ int            magsizx  = 64;     /* magnification size (x)        */
+ int            magsizy  = 64;     /* magnification size (y)        */
+ int            magfac   = 4;      /* magnification factor          */
+ int            marker   = 0;      /* set marker flag               */
+ int            trace_web = FALSE; /* does not make results file    */
+ char           datexc[] = "DAT";  /* file extensions               */ 
+ char           filwant[81] = "*"; /* new file search pattern       */
+ int            nsam8 = 940;       /* size for raw files            */
+ int            nrow8 = 940;       /* size for raw files            */
+ int            nslice8 = 1;       /* size for raw files            */
+
+d51 3
+a53 3
+ Arg           args[MAX_ARGS];   /* arg list */
+ register      int  n;           /* arg count */
+ int           mapgop, mapendp, colorgop, colorendp;
+a54 1
+/*  lekan  */
+d63 1
+a63 2
+  "Web -- A SPIDER image viewer and analyzer        COPYRIGHT (c) 1992, Health Research Inc., Albany, NY";
+/*  lekan  */
+d66 1
+a66 1
+ if((iscreen = DefaultScreenOfDisplay(idispl)) == 0)
+d70 2
+a71 2
+ if((idepth = DefaultDepthOfScreen(iscreen)) < 8)
+    {XtWarning("*** Screen depth is too shallow!"); exit (-1); }
+d94 1
+a94 1
+ if((iw_main = XmCreateForm(parent, "main", args,n)) == 0)
+d104 1
+a104 1
+ if(iw_menub == NULL)
+d108 1
+a108 1
+ /* create menu items under COMMANDS */ 
+d111 1
+a111 1
+/* create a scrolled label window in iw_main for error messages etc */
+d158 1
+d161 1
+a161 1
+ spout(outstr);
+d163 1
+a163 1
+ sprintf(outstr,"Ramp: %d...%d Colors: %d...%d",
+a178 1
+ 
+d192 2
+a193 1
+ mapdev = DefaultColormapOfScreen(iscreen);
+d195 1
+a195 1
+ icon_fore = col_def.pixel;
+d197 1
+a197 1
+ icon_back = col_def.pixel;
+d205 1
+a205 1
+ wm_hints.icon_pixmap = icon_pixmap;
+a209 1
+/*  lekan  */
+@
+
+
+1.25
+log
+@added null setting to imagel and imager
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_main.c,v 1.24 1995/08/02 18:41:30 liy Exp leith $*/
+d154 1
+d170 1
+@
+
+
+1.24
+log
+@fixed the bug to display a large 3D image(over 1200)
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_main.c,v 1.23 1995/07/21 20:16:18 liy Exp liy $*/
+d85 1
+a85 1
+ XImage  *      imagel, * imager;
+@
+
+
+1.23
+log
+@added shift image function
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/web_main.c,v 1.22 1994/09/12 17:24:35 leith Exp liy $*/
+d82 1
+a82 1
+ int            nprow;             /* pictures per row              */
+@
+
+
+1.22
+log
+@used new default colors.
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_main.c,v 1.21 94/09/09 16:08:47 leith Exp Locker: leith $*/
+d184 1
+@
+
+
+1.21
+log
+@changed default colors for cursor and foreground
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_main.c,v 1.20 94/08/15 14:16:29 odesanya Exp Locker: leith $*/
+d32 1
+a32 1
+/*  lekan  */
+a33 1
+/*  lekan  */
+d114 1
+a114 1
+ /* following values should be made accessable from defaults file !! */
+d133 1
+a133 1
+ int            icursor   = 22;    /* current spider cursor         */
+d135 1
+a135 1
+ int            imagego   = 0;     /* colormap normalization range  */
+d138 10
+a147 10
+ int            icolor    = 10;    /* current spider color          */
+ int            icolorx   = 10;    /* current x color               */
+ int            icolorb   =  0;    /* current background            */
+ int            icolorxb  =  0;    /* current x background color    */
+ int            icolorcf  = 20;    /* current curs. foreground      */
+ int            icolorxcf = 20;    /* current x curs. foreground    */
+ int            icolorcb  = 10;    /* current curs. background      */
+ int            icolorxcb = 10;    /* current x curs. background    */
+ int            icolorov  = 29;    /* current overlay color         */
+ int            icolorxov = 29;    /* current x overlay color       */
+d193 1
+a193 1
+/**************************  web_main  *****************************/
+d209 2
+a210 1
+ char            * window_name = "Web -- A SPIDER image viewer and analyzer      COPYRIGHT (c) 1993, Health Research Inc., Albany, NY";
+@
+
+
+1.20
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_main.c,v 1.19 94/07/19 19:33:56 odesanya Exp $*/
+d124 2
+a125 2
+ int            mapgo    = 20;     /* image start in colormap       */
+ int            colorend = 238;    /* colors end in colormap        */
+d127 2
+a128 2
+ int            mapgo    = 48;     /* image start in colormap       */
+ int            colorend = 256;    /* colors end in colormap        */
+d131 2
+a132 2
+ int            colorgo  = 128;    /* colors start in colormap      */
+ int            mapend   = 127;    /* image  end in colormap        */
+d134 7
+a140 7
+ int            icursor  = 22;     /* current spider cursor         */
+ int            nmax     = 127;    /* colormap normalization range  */
+ int            imagego  = 0;      /* colormap normalization range  */
+ int            imageend = 127;    /* colormap normalization range  */
+ int            ncolors  = 128;    /* number of defined colors      */
+ int            icolor    = 29;    /* current spider color          */
+ int            icolorx   = 29;    /* current x color               */
+d143 4
+a146 4
+ int            icolorcf  = 19;    /* current curs. foreground      */
+ int            icolorxcf = 19;    /* current x curs. foreground    */
+ int            icolorcb  =  9;    /* current curs. background      */
+ int            icolorxcb =  9;    /* current x curs. background    */
+@
+
+
+1.19
+log
+@redesigned the icon
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_main.c,v 1.17 1994/07/05 15:35:31 odesanya Exp $*/
+d210 1
+a210 1
+ char            * window_name = "Web -- A spider image viewer and analyzer";
+@
+
+
+1.18
+log
+@added icon
+@
+text
+@a202 2
+ char            * window_name = "Web -- A spider image viewer and analyzer";
+ char            * icon_name   = "WEB";
+d205 2
+d208 3
+d336 1
+a336 1
+ /* set default initial image postion */
+d340 5
+d346 2
+a347 3
+                 web_icon_width, web_icon_height, BlackPixelOfScreen(iscreen), 
+                 WhitePixelOfScreen(iscreen), idepth);
+ 
+@
+
+
+1.17
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/web_main.c,v 1.16 1994/05/12 12:40:41 leith Exp odesanya $*/
+d32 4
+d202 8
+d320 1
+a320 1
+
+d336 15
+@
+
+
+1.16
+log
+@ used imagego...imageend
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web/src/RCS/web_main.c,v 1.15 94/04/08 13:17:24 leith Exp Locker: leith $*/
+d276 1
+a276 1
+ XtAddCallback(iw_win,XmNexposeCallback,expos_cb,NULL);
+@
+
+
+1.15
+log
+@outstr defined
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.14 94/04/04 16:09:45 leith Exp Locker: leith $*/
+d132 2
+@
+
+
+1.14
+log
+@altered rgb loc stuff
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.13 94/04/01 09:50:09 leith Exp $*/
+d186 2
+a193 1
+ char          outstr[80];
+@
+
+
+1.13
+log
+@new order of colormap assignment to windows tried
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.12 94/03/02 12:11:08 leith Exp Locker: leith $*/
+d116 1
+a116 1
+ char           lutdir[81] = "/net/alwyn/usr1/web/rgb/*.RGB"; 
+@
+
+
+1.12
+log
+@added nsam8
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.11 94/02/10 17:01:04 leith Exp Locker: leith $*/
+d30 2
+d88 2
+a89 1
+ int             nsam2r,nrow2r;
+a185 12
+ /*  external function prototypes */
+ extern void     expos_cb     (Widget, caddr_t, caddr_t);
+ extern int      wid_lutinfo  (Colormap, int);
+ extern void     visuals      (Display *, int);
+ extern Colormap defluts      (int); 
+ extern void     wid_info     (void);
+ extern void     visual_info  (Display *, Visual *);
+ extern void     web_com      (Widget);
+ extern int      wicolor      (GC, int);
+ extern void     spout        (char *);
+ extern void     setacursor   (int, int, int);
+
+d192 2
+d206 8
+d216 2
+a217 2
+ XtSetArg(args[n], XmNx, 0);                                        n++;
+ XtSetArg(args[n], XmNy, 0);                                        n++;
+d288 8
+a305 1
+
+a307 3
+ 
+ /* set default private colormap */
+ map = defluts(TRUE);
+@
+
+
+1.11
+log
+@altered filwant
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.10 94/02/08 14:00:05 leith Exp Locker: leith $*/
+d179 3
+a181 1
+
+@
+
+
+1.10
+log
+@corrected RGBLOC spelling
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.9 94/02/08 11:42:50 leith Exp Locker: leith $*/
+d106 1
+d117 1
+a117 1
+ int            mapgo    = 20;     /* image start in colormap        */
+d178 1
+@
+
+
+1.9
+log
+@changed attachments for image window so scrolling window can be removed
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.8 94/02/02 16:37:01 leith Exp Locker: leith $*/
+d110 1
+a110 1
+ char           lutdir[81] = "RGBLOC:*.RGB"; /* lut directory */ 
+@
+
+
+1.8
+log
+@?
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.7 94/02/02 12:38:41 leith Exp Locker: leith $*/
+d53 1
+d80 16
+a177 11
+/***************new stuff ******************/
+ XImage  *        imagel;
+ XImage  *        imager;
+ int              nsaml,nrowl,nsamr,nrowr;
+ int              nsam1l,nrow1l,nsam2l,nrow2l;
+ int              nsam1r,nrow1r,nsam2r,nrow2r;
+ int              ixull, iyull, ixulr, iyulr;
+ int              ixulli,iyulli,ixulri,iyulri;
+ int              ixullmin,ixlrlmax,iyullmin,iylrlmax;
+ int              ixulrmin,ixlrrmax,iyulrmin,iylrrmax;
+/***************end new stuff ******************/
+a178 1
+
+a179 2
+ extern Widget   wid_pushg    (Widget, Widget, char *, void (*cb)
+                       (Widget,caddr_t,caddr_t), char *,int,int);
+d183 2
+a184 2
+ extern Colormap defluts      (int private); 
+ extern void     wid_info     ();
+a185 1
+ extern void     output       (char *);
+a197 2
+ Widget        iw_pb1, iw_pb2, iw_pb3;
+
+a205 3
+ ihighx = HeightOfScreen(iscreen);
+ iwidex = WidthOfScreen(iscreen);
+
+d214 2
+a215 7
+ iwidex = iwidex - 100;
+ ihighx = ihighx - 100;
+
+/* iwidex = 300;
+   ihighx = 300;
+*/
+
+a218 4
+ /* set next image postion */
+ nrit = iwidex;
+ nbot = ihighx;
+
+d220 1
+a220 4
+   { XtWarning("*** Web can not open main window!");
+   exit (-1);
+   }
+
+d236 11
+d248 7
+d257 1
+a257 1
+ XtSetArg(args[n], XmNtopWidget, iw_menub);                 n++;
+a258 2
+ XtSetArg(args[n], XmNbottomPosition,   MAIN_WIN_POS);      n++;
+ XtSetArg(args[n], XmNbottomAttachment, XmATTACH_POSITION); n++;
+d260 4
+a263 1
+ XtSetArg(args[n], XmNrightAttachment,   XmATTACH_FORM);    n++; 
+d267 1
+a269 1
+
+a276 17
+
+
+ /* create a scrolled label window in iw_main for error messages etc */
+ n = 0;
+ XtSetArg(args[n], XmNscrollingPolicy,    XmAUTOMATIC);       n++;
+ XtSetArg(args[n], XmNscrollBarDisplayPolicy, XmAS_NEEDED);   n++;
+ XtSetArg(args[n], XmNscrollBarPlacement, XmBOTTOM_RIGHT);    n++;
+ XtSetArg(args[n], XmNvisualPolicy,       XmCONSTANT);        n++;
+ XtSetArg(args[n], XmNeditMode,           XmMULTI_LINE_EDIT); n++;
+ XtSetArg(args[n], XmNeditable,           False);             n++;
+ XtSetArg(args[n], XmNtopPosition,      MAIN_WIN_POS);        n++;
+ XtSetArg(args[n], XmNtopAttachment,    XmATTACH_POSITION);   n++;
+ XtSetArg(args[n], XmNbottomAttachment, XmATTACH_FORM);       n++;
+ XtSetArg(args[n], XmNleftAttachment,   XmATTACH_FORM);       n++;
+ XtSetArg(args[n], XmNrightAttachment,  XmATTACH_FORM);       n++; 
+ iw_scroll = XmCreateScrolledText(iw_main, "comscroll", args, n);
+ XtManageChild(iw_scroll);
+d283 1
+d287 1
+a287 1
+ /* find window descriptor for the image & graphics widget */
+d297 1
+d300 1
+d308 4
+@
+
+
+1.7
+log
+@rearranged setable values
+set lutdir for VMS
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.6 94/02/02 11:52:50 leith Exp Locker: leith $*/
+d93 1
+a93 1
+ char           lutdir[81] = "/alwyn/usr1/web/rgb/*.RGB"; /* lut directory */ 
+d95 1
+a95 1
+ char           lutdir[81] = "RGBLOC:*.RGB"; /* lut directory */ 
+d99 3
+a103 3
+#else
+ int            mapgo    = 0;     /* image start in colormap        */
+ int            colorend = 238;    /* colors end in colormap        */
+d105 1
+@
+
+
+1.6
+log
+@added mapgo setting for vax, also added colorend stuff
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.5 94/01/21 11:49:27 leith Exp $*/
+d63 26
+d90 2
+d93 6
+d108 1
+a108 1
+ float          scaleval = 1.0;    /* surface magnification         */
+d121 2
+a122 29
+ int            ispicol[MAXCOL];   /* spider colormap values        */
+
+ int            icursor  = 22;     /* current spider cursor         */
+ Cursor         icursorx;          /* current x cursor number       */
+ XColor         colorcursf;        /* cursor foreground color       */
+ XColor         colorcursb;        /* cursor background color       */
+
+ char           datexc[] = "DAT";  /* file extensions               */ 
+ float          param[102];        /* Spider registers              */ 
+ int            ioper    = 0;      /* current operation #           */
+
+ char           filnow[81] = "\0"; /* name of last image file       */ 
+ char           winnam[81] = "\0"; /* name of last window file      */ 
+ char           docnam[81] = "\0"; /* name of last doc    file      */ 
+ char           filnext[81]= "\0"; /* name of next image file       */ 
+ char           lutdir[81] = "/alwyn/usr1/web/rgb/*.RGB"; /* lut directory */ 
+ FILEDATA *     filedata;          /* current image file info       */
+ int            nsam,nrow,nslice;  /* last image size               */
+ int            islice;            /* current slice                 */
+ int            nsam1,nsam2;       /* col. range                    */
+ int            nrow1,nrow2;       /* row range                     */
+ int            nslice1,nslice2;   /* slice range                   */
+ double         fmin,fmax;         /* last image range              */
+
+ int            ixul,iyul;         /* upper left corner last image  */
+ int            ixuln,iyuln;       /* corner of next image          */
+ int            nprow;             /* pictures per row              */
+ int            nbot,nrit;         /* bottem & rit image position   */
+ int            marx = 1,mary = 1; /* x & y image margins           */
+a135 1
+ int            cleared  = TRUE;   /* cleared screen flag           */
+a136 1
+ char           axis;              /* axis of slicing               */
+d142 3
+a144 5
+ int            ixulw,iyulw;       /* window position               */
+ int            nsamw,nroww;       /* window size                   */
+ int            leavit  = FALSE;   /* leave window at position      */
+ int            sayit   = TRUE ;   /* say window position           */
+ int            inimag  = FALSE;   /* inside image data only        */
+d146 11
+a156 13
+ int            getfile = FALSE;   /* get file pixel value          */
+ int            docit   = FALSE;   /* store data in doc file        */
+ int            iradius = 5;       /* location radius               */
+ int            ikey    = 1;       /* doc. file key                 */
+ float          refl    = .5;      /* surface rendering reflection  */
+ float          fct     = 1.;      /* surface rendering attenuation */
+ int            drawing = FALSE;   /* flag for xor drawing          */
+ Colormap       mapover;           /* overlay colormap              */
+ XColor         colort[MAXCOL];    /* temporary color setting array */
+
+ int            magsizx = 64;      /* magnification size (x)        */
+ int            magsizy = 64;      /* magnification size (y)        */
+ int            magfac  = 4;       /* magnification factor          */
+d158 1
+@
+
+
+1.5
+log
+@changed default for surface attenuation to 100%
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.4 93/12/31 13:29:37 leith Exp Locker: leith $*/
+d64 1
+a64 1
+ float          scaleval = 1.0;
+d66 6
+d73 2
+@
+
+
+1.4
+log
+@added scalval
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.3 93/11/23 15:58:20 leith Exp $*/
+d140 1
+a140 1
+ float          fct     = .5;      /* surface rendering distance    */
+@
+
+
+1.3
+log
+@added web_trace variable
+@
+text
+@d1 1
+a1 1
+/*$Header: /alwyn/usr1/web//RCS/web_main.c,v 1.2 93/11/16 14:26:10 leith Exp Locker: leith $*/
+d64 1
+@
+
+
+1.2
+log
+@imagel,ixull,etc added
+@
+text
+@d1 1
+a1 1
+/*$Header$*/
+d147 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a2 1
+/*$Header$*/
+d147 13
+@

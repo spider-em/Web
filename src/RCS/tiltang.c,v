@@ -1,0 +1,1030 @@
+head	1.16;
+access;
+symbols
+	pre-tilt-improve:1.14
+	pre_surf_fromtop:1.13
+	pre_neednewmap:1.13
+	pre_apppluss_remove:1.13
+	pre_tiltpair_chng:1.12
+	pre_GPL:1.12;
+locks;
+comment	@ * @;
+
+
+1.16
+date	2015.09.22.16.33.57;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2015.09.01.17.53.42;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2015.06.11.13.27.53;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2011.06.22.19.06.36;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	96.04.16.14.28.03;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	95.10.12.15.34.36;	author mladjadj;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	95.09.18.21.40.41;	author mladjadj;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	95.09.14.18.29.46;	author mladjadj;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	95.09.14.17.06.13;	author mladjadj;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	95.09.14.16.39.16;	author mladjadj;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	95.08.21.15.54.24;	author mladjadj;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.12.30.10.17.24;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.12.29.13.28.20;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.22.16.38.34;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.19.14.41.02;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.16.14.13.40;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@..
+@
+
+
+1.16
+log
+@Improved bad location determination
+@
+text
+@
+/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.15 2015/09/01 17:53:42 leith Exp $*/
+
+/*
+ C**********************************************************************
+ C                                                                     *
+ C tiltang.c                                                           *
+ C         Improved                              Jun 2015 ArDean Leith *
+ C         Considers all possible locations      Sep 2015 ArDean Leith *
+ C         Improved bad location determination   Sep 2015 ArDean Leith *
+ C                                                                     *
+ C**********************************************************************
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ C**********************************************************************
+ C
+ C   tiltang(x0,y0, xt,yt, npoints,theta,iarea,arealim, wantmsg)
+ C
+ C   PURPOSE:  Calculate the tiltangle between two images
+ C
+ C   CALLED BY: 
+ C
+ C   RETURNS:  0   OK
+ C             1   Not enough locations or area betweeen locations
+ C            -n   Last bad location = n
+ C  
+ C   ALSO RETURNS:  theta      Computed tilt angle
+ C                             (Theta only altered if ok)
+ C                  iarea      Number of triangles used to get tilt             
+ C                         
+ C*********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ int tiltang(float *x0,   float *y0, 
+             float *xt,   float *yt,
+	     int npoints, float * theta, 
+             int * iarea, float arealim, int wantmsg)
+ {
+ char        outmsg[80];
+ int         i, j, k, ntot, iflag;
+ float	     areau, areat, w, sum, temp;
+ float       x01, x02, y01, y02, xt1, xt2, yt1, yt2;
+ int         nbads[npoints+1];
+ int         maxbad, locbad;
+
+ const float pi = 3.14159;
+
+ sum    = 0.0;
+ *iarea = 0;
+ ntot   = 0;
+
+ // zero bad location tracking array
+ for (i = 0; i <= npoints; nbads[i]= 0, i++);
+
+ if (npoints < 3)
+    {             //123456789 123456789 123456789 123456789 123456789 123456789 1234567890
+    sprintf(outmsg,"*** Unable to compute tilt;  Need > 2 locations, Have only: %d", npoints); 
+    spout(outmsg); 
+    XBell(idispl,50);
+    return 1;
+    }
+
+ /* Set good locations return flag */
+ iflag = 0;
+
+ for       (i = 0;     i < npoints-2; i++)
+    {
+    for    (j = i + 1; j < npoints-1; j++)
+       {
+       for (k = j + 1; k < npoints;   k++)
+          {
+          /* Find area in untilted image: */
+	  x01   = x0[j] - x0[i];
+	  y01   = y0[j] - y0[i];
+	  x02   = x0[k] - x0[i];
+	  y02   = y0[k] - y0[i];
+	  areau = (float) fabs( (double)(x01 * y02 - x02 * y01));
+
+          ntot++;
+
+          //printf("*** Triangle: %d, %d, & %d  Area: %f \n", i+1, k+1, k+2, areau ); 
+
+          /* Default arealim is 5000 square pixels */
+	  if (areau >= arealim)
+	      {  /* Only triangles > arealim are considered */
+
+              /* Find area in tilted image: */
+              xt1   = xt[j] - xt[i];
+              yt1   = yt[j] - yt[i];
+              xt2   = xt[k] - xt[i];
+              yt2   = yt[k] - yt[i];
+              areat = (float) fabs( (double)(xt1 * yt2 - xt2 * yt1));
+
+              //printf("*** %d %d %d Areas: %6.2f, %6.2f   \n", i+1,j+1,k+1, areau,areat); 
+
+	      if (areat >= arealim)
+                 {  /* Only triangles > arealim are considered */
+
+                 /* Area in tilted image should be <= area in untilted */ 
+                 w = areat / areau;
+              
+                 if (w > 1.0)
+                    {     /* Set bad location return flag */
+                    nbads[i+1]++;
+                    nbads[j+1]++;
+                    nbads[k+1]++;
+
+                    //printf("*** Check locations: %4d, %4d & %d  for a bad value %d,%d,%d \n", i+1, j+1, k+1, 
+                    //        nbads[i+1],nbads[j+1],nbads[k+1]); 
+                    //printf("*** Areas: %6.2f, %6.2f  Lim: %6.2f \n", areau,areat,arealim); 
+                    }
+	         else
+	            {
+	   	    *theta = acos(w);
+		    sum    = sum + *theta;
+		    (*iarea)++;
+		    }
+	         }   // End of: if (areat >= arealim)
+              }      // End of: if (areau >= arealim)
+           }         // End of: for (k = j + 1; k < npoints-1; k++)
+        }            // End of: for (j = i + 1; k < npoints-2; j++)
+    }                // End of: for (i = 0;     i < npoints;   i++)
+
+ if (*iarea == 0) 
+    {
+    spout(" *** Unable to compute tilt angle, pick more locations.");
+    spout(" *** Choose locations distributed in both X & Y");
+    XBell(idispl,50);
+    return 1;
+    }
+
+ /* Find maximum bad */
+ maxbad = nbads[0];
+ locbad = 0;
+ for (i=1; i <= npoints; i++)
+    {
+    if (nbads[i] >= maxbad)
+      {
+      maxbad = nbads[i];
+      locbad = i;
+      }
+    }
+ 
+ if (locbad > 0 && maxbad > 0)
+    { // Bad location?
+    //for (i=0; i <= npoints; i++)
+    //      {printf("Location: %d  nbads: %d \n",i,nbads[i]);}
+    //sprintf(outmsg, "*** Check location: %d  for bad position!", locbad);
+    //spout(outmsg);
+    //XBell(idispl,50);
+
+    printf("*** Check location: %d  for bad position! \n",locbad);
+    iflag = -locbad;
+    } 
+
+ *theta = sum    / (*iarea);
+ *theta = *theta / pi * 180.0;
+
+ if (wantmsg)
+    {
+    sprintf(outmsg, "Locations: %d   Areas used for tilt: %d, out of possible: %d", 
+                    npoints, *iarea, ntot);
+    spout(outmsg);
+    } 
+
+ //printf("maxbad:   %d  Locbad: %d  \n",maxbad,locbad);
+ //printf("   \n"); 
+
+ return iflag;
+ }
+@
+
+
+1.15
+log
+@$2
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.14 2015/06/11 13:27:53 leith Exp $*/
+d8 4
+a11 1
+ C               Improved                        Jun 2015 ArDean Leith *
+d38 1
+a38 1
+ C   tiltang(x0,y0,xt,yt,npointss,theta,iarea,arealim,wantmsg)
+d46 1
+a46 1
+ C            -1   Some locations are bad
+d64 1
+a64 1
+ int         i, k, ntot, iflag;
+d67 2
+a68 1
+ int         nbad = 0;
+d70 1
+a70 1
+ const       float pi = 3.14159;
+d76 3
+d80 2
+a81 3
+    { 
+                  //123456789 123456789 123456789 123456789 123456789 123456789 1234567890
+    sprintf(outmsg,"*** Unable to compute tilt;  Need > 2 points, Have only: %d", npoints); 
+d90 1
+a90 1
+ for (i = 0; i < npoints; i++)
+d92 55
+a146 46
+    for (k = i + 1; k < npoints-1; k++)
+	{
+        /* Find area in untilted image: */
+	x01    = x0[k]   - x0[i];
+	y01    = y0[k]   - y0[i];
+	x02    = x0[k+1] - x0[i];
+	y02    = y0[k+1] - y0[i];
+	areau  = (float) fabs( (double)(x01 * y02 - x02 * y01));
+
+        ntot++;
+
+//printf("*** Triangle: %d, %d, & %d  Area: %f \n", i+1, k+1, k+2, areau ); 
+
+
+        /* Default arealim is 5000 square pixels */
+	if (areau >= arealim)
+	   {  /* Only triangles > arealim are considered */
+
+           /* Find area in tilted image: */
+           xt1   = xt[k]   - xt[i];
+           yt1   = yt[k]   - yt[i];
+           xt2   = xt[k+1] - xt[i];
+           yt2   = yt[k+1] - yt[i];
+           areat = (float) fabs( (double)(xt1 * yt2 - xt2 * yt1));
+
+	   if (areat >= arealim)
+              {
+              /* Area in tilted image should be <= area in untilted */ 
+              w = areat / areau;
+
+              if (w > 1.01)
+                 {     /* Set bad location return flag */
+                 iflag = -1;
+                 //printf("*** Areas: %6.2f, %6.2f  Lim: %6.2f \n", areau,areat,arealim); 
+                 printf("*** Check points: %4d, %4d & %d  for a bad value \n", i+1, k+1, k+2); 
+                 }
+	      else
+		 {
+		 *theta = acos(w);
+		 sum    = sum + *theta;
+		 (*iarea)++;
+		 }
+	      }   // End of: if (areat >= arealim)
+           }      // End of: if (areau >= arealim)
+        }         // End of: for (k = i + 1; k < npoints-1; k++)
+    }             // End of: for (i = 0; i < npoints; i++)
+d150 3
+a152 2
+    spout(" *** Unable to compute tilt angle; Need > 2 points with area > arealim!");
+    spout(" *** Choose points that are more triangular in distribution!");
+d156 24
+d185 1
+a185 1
+    sprintf(outmsg, "Points: %d   Areas used for theta: %d, out of possible: %d", 
+d190 3
+a194 1
+                      
+@
+
+
+1.14
+log
+@wantmsg parameter, output formatting
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.13 2011/06/22 19:06:36 leith Exp $*/
+d5 1
+a5 1
+ ***********************************************************************
+d33 1
+a33 1
+ ***********************************************************************
+d47 1
+a47 1
+ C                  iarea      Number of tiangles used to get tilt             
+d49 1
+a49 1
+ **********************************************************************
+d55 25
+a79 23
+int tiltang(float *x0, float *y0, float *xt, float *yt,
+	    int npoints, float * theta, 
+            int * iarea, float arealim, int wantmsg)
+
+{
+char	    outmsg[80];
+int	    i, k, ntot, iflag;
+float	    area0, areat, w, sum, temp;
+float       x01, x02, y01, y02, xt1, xt2, yt1, yt2;
+
+const       float pi = 3.14159;
+
+sum    = 0.0;
+*iarea = 0;
+ntot   = 0;
+
+if (npoints < 3)
+   { 
+   sprintf(outmsg,"*** Unable to compute tilt (theta); Have only: %d points.  Need > 2 points",npoints); 
+   spout(outmsg); 
+   XBell(idispl,50);
+   return 1;
+   }
+d81 4
+a84 2
+iflag = 0;
+for (i = 0; i < npoints; i++)
+d88 1
+a88 1
+        /* Area in untilted image: */
+d93 2
+a94 1
+	area0  = (float) fabs( (double)(x01 * y02 - x02 * y01));
+d97 41
+a137 70
+        /* Default arealim is 5000 sq. pixels */
+	if (area0 >= arealim)
+	    {  /* only triangles > arealim are considered */
+            /* area in tilted image: */
+	    xt1   = xt[k]   - xt[i];
+	    yt1   = yt[k]   - yt[i];
+	    xt2   = xt[k+1] - xt[i];
+	    yt2   = yt[k+1] - yt[i];
+            areat =  (float) fabs( (double)(xt1 * yt2 - xt2 * yt1));
+
+	    if (areat >= arealim)
+		{
+                /* Area in tilted image should be <= area in untilted */ 
+		w = areat / area0;
+ 
+		if (w <= 1.0)
+		   {
+		   *theta    = acos(w);
+		   sum       = sum + *theta;
+		   (*iarea)++;
+
+                   /***** Output removed
+		   temp      = *theta / pi * 180;
+	           sprintf(outmsg,
+                     " %6dth tilt angle: %5.1f  Area: %8.1f ---> %8.1f",
+		      *iarea,temp,area0,areat);
+		   spout(outmsg);
+                   ***********/
+		   }
+		else
+		   { /* Set bad location return flag */
+                   iflag = -1;
+		   sprintf(outmsg,
+                     "*** Check keys: %4d, %4d & %d  for a bad point",
+			i+1, k+1, k+2); 
+		   printf("%s \n",outmsg);
+		   spout(outmsg);
+       	             
+                   /* ***************** removed output
+		   spout("*** COORDINATES IN UNTILTED IMAGE:");
+		   sprintf(outmsg, " (%7.2f,%7.2f) (%7.2f,%7.2f) (%7.2f,%7.2f)",
+			   x0[i],y0[i], x0[k],y0[k], x0[k+1],y0[k+1]);
+		   printf("%s \n",outmsg);
+                   spout(outmsg);
+
+  		   spout("COORDINATES IN TILTED IMAGE:");
+		   sprintf(outmsg, " (%7.2f,%7.2f) (%7.2f,%7.2f) (%7.2f,%7.2f)",
+                            xt[i],yt[i], xt[k],yt[k], xt[k+1],yt[k+1]);
+		   printf("%s\n",outmsg);
+ 		   spout(outmsg); 
+                   sprintf(outmsg,
+                   "Untilted Area: %8.1f < tilted area:  %8.1f",area0,areat);
+		   printf("%s\n",outmsg);
+	           spout(outmsg);
+    
+		   spout("*** WARNING, ARGUMENT OF ARCCOS > 1"); 
+		   spout("DIFFERENCE VECTORS: ");
+		   sprintf(outmsg, " %7.2f %7.2f %7.2f %7.2f",x01,y01, x02,y02);
+		   printf("%s\n",outmsg);
+		   spout(outmsg);
+
+		   spout("DIFFERENCE VECTORS:"); 
+		   sprintf(outmsg, "%7.2f %7.2f %7.2f %7.2f", xt1,yt1, xt2,yt2);
+		   printf("%s\n",outmsg);
+ 		   spout(outmsg);
+                   ***************** */
+		   }
+		}
+	    }
+	}
+d140 2
+a141 15
+if (*iarea == 0) 
+   {
+   spout(" *** Unable to compute tilt angle; Need > 2 points with area > arealim!");
+   return 1;
+   }
+
+*theta = sum    / (*iarea);
+*theta = *theta / pi * 180.0;
+
+if (wantmsg)
+   {
+   sprintf(outmsg, "Points: %d   Areas used for theta: %d, out of possible: %d", 
+                 npoints, *iarea, ntot);
+   spout(outmsg);
+   } 
+d143 6
+a148 2
+return iflag;
+}
+d150 2
+@
+
+
+1.13
+log
+@messages
+@
+text
+@d2 1
+a2 1
+/*$Header:  Exp $*/
+d4 47
+a50 17
+/********************************************************************
+C
+C   tiltang(x0,y0,xt,yt,npoint,theta,iarea,b)
+C
+C   PURPOSE:  Calculate the tiltangle between two images
+C
+C   CALLED BY: 
+C
+C   RETURNS:  0   OK
+C             1   Not enough locations or area betweeen locations
+C            -1   Some locations are bad
+C  
+C   ALSO RETURNS:  theta      Computed tilt angle
+C                             (Theta only altered if ok)
+C                  iarea      Number of tiangles used to get tilt             
+C                         
+*********************************************************************/
+d52 1
+a52 1
+#include "std.h"
+d56 2
+a57 1
+	     int npoint, float * theta, int * iarea, float arealim)
+d60 4
+a63 4
+char	outmsg[80];
+int	i, k, ntot, iflag;
+float	area0, areat, w, sum, temp;
+float   x01, x02, y01, y02, xt1, xt2, yt1, yt2;
+d65 1
+a65 1
+const float pi = 3.14159;
+d71 1
+a71 1
+if (npoint < 3)
+d73 3
+a75 1
+   spout(" *** Unable to compute Theta; Need > 2 points!");
+d80 1
+a80 1
+for (i = 0; i < npoint; i++)
+d82 1
+a82 1
+    for (k = i + 1; k < npoint-1; k++)
+d166 1
+a166 2
+   spout(
+    " *** Unable to compute tilt angle; Need 3 points with area > arealim!");
+d173 6
+a178 3
+sprintf(outmsg, "Areas used for theta: %d, out of possible: %d", 
+                 *iarea,ntot);
+spout(outmsg); 
+@
+
+
+1.12
+log
+@message changed
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/tiltang.c,v 1.11 1995/10/12 15:34:36 mladjadj Exp leith $*/
+d6 1
+a6 1
+C   TILTANG(X0,Y0,XT,YT,NPOINT,THETA,IAREA,B)
+d8 1
+a8 1
+C   PURPOSE:  CALCULATE THE TILTANGLE BETWEEN TWO IMAGES
+d13 2
+a14 2
+C             1   NOT ENOUGH LOCATIONS OR AREA BETWEEEN LOCATIONS
+C            -1   SOME LOCATIONS ARE BAD
+d16 3
+a18 3
+C   ALSO RETURNS:  THETA      COMPUTED TILT ANGLE
+C                             (THETA ONLY ALTERED IF OK)
+C                  IAREA      NUMBER OF TIANGLES USED TO GET TILT             
+a24 4
+/* externally defined variables */
+
+/******************************* tiltang *****************************/
+
+d51 1
+a51 1
+        /* area in untilted image: */
+d59 1
+a59 1
+        /* default arealim is 5000 sq. pixels */
+d71 1
+a71 1
+                /* area in tilted image should be <= area in untilted */ 
+d80 1
+a80 1
+                   /***** output removed
+d89 1
+a89 1
+		   { /* set bad location return flag */
+d94 1
+d97 1
+a97 1
+                   /****************** removed output
+d101 2
+a102 1
+		   spout(outmsg);
+d107 1
+d111 1
+d117 1
+d122 1
+d124 1
+a124 1
+                   *******************/
+d141 1
+a141 1
+sprintf(outmsg, "Areas used for theta: %d ,out of possible: %d", 
+@
+
+
+1.11
+log
+@change fabsf(does not exists on sun sparc) to fabs
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/tiltang.c,v 1.10 1995/09/18 21:40:41 mladjadj Exp $*/
+d10 1
+a10 1
+C   CALLED BY: fitmen
+d12 8
+d23 1
+a24 3
+/* external routine prototypes */
+extern void spout(char *);
+
+a25 1
+extern float arealim;
+d30 1
+a30 1
+	     int npoint, float * theta, int * iarea)
+d34 1
+a34 1
+int	i, k, ntot;
+d44 7
+d55 1
+a55 1
+        /* AREA IN UNTILTED IMAGE: */
+d63 1
+d65 2
+a66 2
+	    {
+            /* AREA IN TILTED IMAGE: */
+d75 1
+d77 1
+a77 1
+
+a80 1
+		   temp      = *theta / pi * 180;
+a81 1
+
+d85 1
+a90 1
+
+d93 2
+a94 1
+		   {
+d96 2
+a97 2
+                     "*** Check keys: %4d & %4d (Wrong points?)",
+			i+2, k+2); 
+d100 2
+a101 7
+                   /**************
+	           sprintf(outmsg,"Area: %8.1f  --->  %8.1f",area0,areat);
+	           spout(outmsg);
+                      
+
+		   spout("*** WARNING, ARGUMENT OF ARCCOS > 1");
+		   spout("COORDINATES IN UNTILTED IMAGE:");
+d106 2
+a107 6
+		    spout("DIFFERENCE VECTORS: ");
+		    sprintf(outmsg, " %7.2f %7.2f %7.2f %7.2f",x01,y01, x02,y02);
+		    spout(outmsg);
+
+  		    spout("COORDINATES IN TILTED IMAGE:");
+		    sprintf(outmsg, " (%7.2f,%7.2f) (%7.2f,%7.2f) (%7.2f,%7.2f)",
+d109 9
+a117 1
+ 		    spout(outmsg); 
+d119 5
+a123 7
+		    spout("DIFFERENCE VECTORS:"); 
+		    sprintf(outmsg, "%7.2f %7.2f %7.2f %7.2f", xt1,yt1, xt2,yt2);
+ 		    spout(outmsg); 
+                    return 1;
+                    ***************/
+
+		    }
+d129 6
+a134 1
+if (*iarea == 0) return -1;
+d143 1
+a143 1
+return 0;
+@
+
+
+1.10
+log
+@put back variable temp
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/tiltang.c,v 1.8 1995/09/14 17:06:13 mladjadj Exp $*/
+d48 1
+a48 1
+	area0  = fabsf(x01 * y02 - x02 * y01);
+d58 1
+a58 1
+            areat = fabsf(xt1 * yt2 - xt2 * yt1);
+@
+
+
+1.9
+log
+@remove variable temp
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/tiltang.c,v 1.8 1995/09/14 17:06:13 mladjadj Exp mladjadj $*/
+d30 1
+a30 1
+float	area0, areat, w, sum;
+@
+
+
+1.8
+log
+@better change abs((int)()) to fabsf()
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/tiltang.c,v 1.7 1995/09/14 16:39:16 mladjadj Exp mladjadj $*/
+d30 1
+a30 1
+float	area0, areat, w, sum, temp;
+@
+
+
+1.7
+log
+@abs() changed to abs((int)())
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/tiltang.c,v 1.6 1995/08/21 15:54:24 mladjadj Exp mladjadj $*/
+d48 1
+a48 1
+	area0  = abs((int)(x01 * y02 - x02 * y01));
+d58 1
+a58 1
+            areat = abs((int)(xt1 * yt2 - xt2 * yt1));
+@
+
+
+1.6
+log
+@changed msg
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/tiltang.c,v 1.5 94/12/30 10:17:24 leith Exp $*/
+d48 1
+a48 1
+	area0  = abs(x01 * y02 - x02 * y01);
+d58 1
+a58 1
+            areat = abs(xt1 * yt2 - xt2 * yt1);
+@
+
+
+1.5
+log
+@ removed excess output
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/tiltang.c,v 1.4 94/12/29 13:28:20 leith Exp Locker: leith $*/
+d83 1
+a83 1
+                     "*** Check keys: %4d & %4d (images flipped?)",
+@
+
+
+1.4
+log
+@removed return if angle not right
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/tiltang.c,v 1.3 93/11/22 16:38:34 leith Exp Locker: leith $*/
+d29 1
+a29 1
+int	i, k;
+d37 1
+d49 1
+a59 1
+
+d62 2
+a63 1
+		w = areat /area0;
+d71 2
+d74 2
+a75 2
+                   " %6dth tilt angle: %5.1f  Area: %8.1f ---> %8.1f",
+		    *iarea,temp,area0,areat);
+d77 1
+d82 6
+d91 1
+a92 4
+		   sprintf(outmsg,"CHECK DOC FILE KEYS: %3d AND %3d",
+			i+2, k+2); 
+		   spout(outmsg);
+                   /************************
+d109 2
+d112 1
+a112 4
+                    spout(outmsg);
+		    spout("*** Hint: Tilted and untilted images interchanged?"); 
+                    
+                    /*** return 1; ***/
+d118 1
+d121 6
+a126 2
+*theta = sum    / *iarea;
+*theta = *theta / pi * 180;
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/tiltang.c,v 1.2 93/11/19 14:41:02 leith Exp Locker: leith $*/
+d79 1
+a79 1
+
+d84 1
+a84 1
+
+d101 1
+a101 1
+
+d104 2
+a105 2
+ 
+                    return 1; 
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/tiltang.c,v 1.1 93/11/16 14:13:40 leith Exp Locker: leith $*/
+d25 1
+a25 1
+	     int npoint, float * theta, int * iarea, float *b)
+a66 1
+		   b[*iarea] = temp;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a0 1
+/*$Header$*/
+d2 2
+d30 2
+a31 1
+float	a0, at, x01, x02, y01, y02, xt1, xt2, yt1, yt2, w, sum, temp;
+d43 5
+a47 5
+	x01 = x0[k]   - x0[i];
+	y01 = y0[k]   - y0[i];
+	x02 = x0[k+1] - x0[i];
+	y02 = y0[k+1] - y0[i];
+	a0  = abs(x01 * y02 - x02 * y01);
+d49 1
+a49 1
+	if (a0 >= arealim)
+d52 5
+a56 8
+	    xt1 = xt[k]   - xt[i];
+	    yt1 = yt[k]   - yt[i];
+	    xt2 = xt[k+1] - xt[i];
+	    yt2 = yt[k+1] - yt[i];
+            at = abs(xt1 * yt2 - xt2 * yt1);
+	    sprintf(outmsg,"Untilted and tilted areas: %f12.4 %f12.4 ",
+		    a0,at);
+	    spout(outmsg);
+d58 2
+a59 1
+	    if (at >= arealim)
+d61 1
+a61 1
+		w = at /a0;
+d63 5
+a67 5
+		    {
+		    *theta = acos(w);
+		    temp  = *theta / pi * 180;
+		    sum       = sum + *theta;
+		    b[*iarea] = temp;
+d69 5
+a73 4
+		    (*iarea)++;
+		    sprintf(outmsg, "%6dTH TILTED ANGLE: %f", 
+                           *iarea, temp);
+		    spout(outmsg);
+d75 1
+a75 1
+		    }
+d77 6
+a82 3
+		    {
+		    spout("*** WARNING, ARGUMENT OF ARCCOS > 1");
+		    sprintf(outmsg,"CHECK DOC FILE KEYS: %3d AND %3d",
+d84 1
+a84 1
+		    spout(outmsg);
+d86 2
+a87 2
+		    spout("COORDINATES IN 0 DEG. IMAGE:");
+		    sprintf(outmsg, " (%f,%f) (%f,%f) (%f,%f)",
+d89 1
+a89 1
+		    spout(outmsg);
+d92 1
+a92 1
+		    sprintf(outmsg, " %f %f %f %f",x01,y01, x02,y02);
+d96 1
+a96 1
+		    sprintf(outmsg, " (%f,%f) (%f,%f) (%f,%f)",
+d101 5
+a105 2
+		    sprintf(outmsg, "%f %f %f %f", xt1,yt1, xt2,yt2);
+		    spout(outmsg); 
+d114 1
+a114 1
+*theta = sum   / *iarea;
+@

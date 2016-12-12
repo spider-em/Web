@@ -1,0 +1,168 @@
+head	1.4;
+access;
+symbols
+	pre-tilt-improve:1.4
+	pre_surf_fromtop:1.4
+	pre_neednewmap:1.4
+	pre_apppluss_remove:1.4
+	pre_tiltpair_chng:1.4
+	pre_GPL:1.1;
+locks;
+comment	@ * @;
+
+
+1.4
+date	2007.11.28.16.18.41;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.16.59.54;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	99.07.29.15.07.08;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@fmin
+@
+text
+@
+/***********************************************************************
+ *
+ * scale32to8.c
+ *
+ ***********************************************************************
+ * author : ArDean Leith
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * scale32to8(float fmint, float fmaxt, int iskip,
+ *            int   nmint, int   nmaxt,
+ *            float * scal, float * offset)
+ * 
+ * PURPOSE:  finds factor to scale a floating point into 8 bit 
+ *           over range nmint..nmaxt.
+ *
+ * RETURNS:  true or false
+ *
+ * PARAMETERS: 
+ *
+ ***********************************************************************
+*/
+
+#include "std.h"
+#include "routines.h"
+
+ /****************************  scale32to8  *****************************/
+ 
+ int scale32to8(float fmint, float fmaxt, int iskip,
+              int   nmint, int   nmaxt,
+              float * scal, float * offset)
+ { 
+
+ if (fabs(fmaxt - fmint) < FLTZER)
+    { spout("*** Blank image"); return FALSE; }
+
+ /* CONVERSION FACTOR FROM FLOATING POINT TO LOGICAL * 1 RANGE */
+ *scal   = (float) (nmaxt - nmint) / (fmaxt - fmint);
+ *offset = -fmint * (*scal) + nmint + 0.5;
+
+ return TRUE;
+}
+
+@
+
+
+1.3
+log
+@fmin ->fmin_spi..
+@
+text
+@d33 1
+a33 1
+ * scale32to8(float fmin_spi, float fmax_spi, int iskip,
+d52 1
+a52 1
+ int scale32to8(float fmin_spi, float fmax_spi, int iskip,
+d57 1
+a57 1
+ if (fabs(fmax_spi - fmin_spi) < FLTZER)
+d61 2
+a62 2
+ *scal   = (float) (nmaxt - nmint) / (fmax_spi - fmin_spi);
+ *offset = -fmin_spi * (*scal) + nmint + 0.5;
+@
+
+
+1.2
+log
+@GPL
+@
+text
+@d33 1
+a33 1
+ * scale32to8(float fmin, float fmax, int iskip,
+d52 1
+a52 1
+ int scale32to8(float fmin, float fmax, int iskip,
+d57 1
+a57 1
+ if (fabs(fmax - fmin) < FLTZER)
+d61 2
+a62 2
+ *scal   = (float) (nmaxt - nmint) / (fmax - fmin);
+ *offset = -fmin * (*scal) + nmint + 0.5;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d8 23
+a30 6
+ * COPYRIGHT (C)1993, WADSWORTH CENTER FOR LABORATORIES AND
+ * RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      
+ * THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     
+ * LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  
+ * USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF 
+ * THE CENTER FOR LABORATORIES AND RESEARCH 			  
+@

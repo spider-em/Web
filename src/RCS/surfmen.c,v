@@ -1,0 +1,2660 @@
+head	1.32;
+access;
+symbols
+	pre-tilt-improve:1.32
+	pre_surf_fromtop:1.29
+	pre_neednewmap:1.28
+	pre_apppluss_remove:1.28
+	pre_tiltpair_chng:1.28
+	pre_GPL:1.26;
+locks;
+comment	@ * @;
+
+
+1.32
+date	2012.12.06.19.35.36;	author leith;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2011.11.01.15.55.06;	author leith;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2011.10.25.19.05.49;	author leith;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2011.10.21.12.11.11;	author leith;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2007.11.01.19.33.45;	author leith;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2005.10.18.16.59.56;	author leith;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2001.11.08.15.54.32;	author leith;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	97.11.05.15.59.33;	author liy;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	96.03.07.17.07.00;	author liy;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	96.01.30.15.27.12;	author liy;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	95.12.18.20.39.06;	author liy;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	95.07.11.17.28.16;	author mladjadj;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	95.06.23.16.25.26;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	95.06.22.19.27.11;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	95.06.21.16.12.34;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	95.04.24.19.03.18;	author liy;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	95.02.02.17.00.58;	author liy;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	95.01.26.20.25.02;	author liy;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	95.01.23.10.00.22;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	94.11.17.16.24.20;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	94.09.30.16.37.39;	author odesanya;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	94.09.09.09.22.09;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	94.06.23.15.02.02;	author odesanya;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	94.06.23.10.18.21;	author odesanya;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	94.05.27.15.25.49;	author odesanya;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	94.05.12.09.09.57;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	94.01.21.11.24.48;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	94.01.12.12.32.33;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	93.12.31.13.39.07;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	93.11.24.12.48.37;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	93.11.24.12.13.01;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	93.11.10.10.11.33;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.32
+log
+@iw_dums = wid_win(iw_rowcolv, &iw_scales[0],    reset for change in size
+if (nsam * nrow * nslice > 512 * 512 * 512) for bigger incore
+@
+text
+@
+/*
+C++********************************************************************
+  *                                                                   *
+  * surfmen  -- Created as wid_surfmen.f                              *
+  *             Converted to C                  Oct 1992 ArDean Leith *
+  *             Rewrite                         Sep 2011 ArDean Leith *
+  *                                                                   *
+C *********************************************************************
+C=* AUTHOR: A. LEITH                                                  *
+C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+C=* Copyright 1985-2012  Health Research Inc.,                        *
+C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+C=* Email:  spider@@wadsworth.org                                      *
+C=*                                                                   *
+C=* This program is free software; you can redistribute it and/or     *
+C=* modify it under the terms of the GNU General Public License as    *
+C=* published by the Free Software Foundation; either version 2 of    *
+C=* the License, or (at your option) any later version.               *
+C=*                                                                   *
+C=* This program is distributed in the hope that it will be useful,   *
+C=* but without any warranty; without even the implied warranty of    *
+C=* merchantability or fitness for a particular purpose.  See the GNU *
+C=* General Public License for more details.                          *
+C=* You should have received a copy of the GNU General Public License *
+C=* along with this program. If not, see <http://www.gnu.org/licenses>*
+C=*                                                                   *
+C *********************************************************************
+C
+C    surfmen
+C
+C    PURPOSE:         Display surface menu
+C
+C    CALLED BY:       imagemen
+C
+C        v----------------imnum=1---------------------------^
+C        v                                                  ^
+C    imagemen --> wid_files --> imagemen_cb ---> imagemen1 -^
+C                                                      v
+C               v -------------(imnum=2)---------------'
+C               v
+C           surfmen --> surfmen_buta --> surfmovie
+C               ^           v
+C               ^           v
+C               ^         surf ---------> surfcolor
+C               ^           v                v
+C               ^---------surf_pop        redvol
+C                           v
+C                         (end)   
+C
+C**********************************************************************
+*/
+
+#include <Xm/Scale.h>
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+#include "common.h"
+#include "routines.h"
+
+#define MAX_ARGS 5
+#define EULER	 1
+#define XYZ	 0
+
+ /* Function prototypes */
+ extern void   	surfmovie    (int);
+
+ /* Internal function prototypes */
+ void  surf_pop      (Widget, XEvent *, String *, Cardinal *);
+ void  surfmen_butf  (Widget, XtPointer, XtPointer);
+ void  surfmen_butc  (Widget, XtPointer, XtPointer);
+ void  surfmen_buta  (Widget, XtPointer, XtPointer);
+ void  angle_cb      (Widget, XtPointer, XtPointer);
+ void  savesurf_cb   (Widget, XtPointer, XtPointer);
+ void  surfmen_th_but(Widget, XtPointer, XtPointer);
+ void  setangles     (int, float, float, float, float, float, float);
+ 
+ /* Common variables defined elsewhere*/
+ extern unsigned char * refmap;
+
+ /* Common variables defined here*/
+ float          phi, theta, psi, thlev;
+ float          scalef, offsetf;  
+ int            canrotate;
+ int            nvolcolors = 3;
+ Widget         iw_thlev   = (Widget) 0;      // Float threshold value
+ int            ithreshmin = 0;
+ int            ithreshmax = 255;
+
+ /* Internal variables */
+ static Widget   iw_scales[6],iw_angs[6],iw_angsxyz[6],iw_rc,iw_mov;
+ static Widget   iw_refl, iw_fct, iw_fast;
+ static Widget   iw_pushf, iw_pushc, iw_pusha, iw_sc, iw_angle;
+ static Widget   iw_lab, iw_lab_nr, iw_rowcolh1, iw_rowcolh2, iw_rowcolv;
+ static Widget	 iw_euler, iw_xyz;
+ static Widget	 iw_text;		   /* Filename widget */
+ static Widget   iw_surfmen   = (Widget) 0;
+ static Widget   iw_thlevscal = (Widget) 0;    
+ static Widget   iw_colors    = (Widget) 0;
+
+ static int      ithresh;
+ static int      sirdit, distit, colorit;
+ static float	 ang_x, ang_y, ang_z;
+ static int	 first = TRUE;
+ char            cval[15];
+ Arg             args[MAX_ARGS];
+
+ /***************************   surfmen   ****************************/
+
+ void surfmen(int sirditt, int distitt, int coloritt)
+
+ { 
+ int     i, n, ifct, irefl, iscale;
+ Widget  iw_labb1,  iw_dum,  iw_dums;
+ char    cval[50];
+ 
+ /* Set flags for sirds or distance display */
+ sirdit = sirditt;   distit = distitt; colorit = coloritt;
+
+ //printf("colorit:%d\n",colorit);
+
+ canrotate = TRUE;
+ if (nsam * nrow * nslice > 512 * 512 * 512)
+    {   /* Probably too big to allocate rotation memory */
+    canrotate = FALSE;
+    }
+
+ // Conversion factor from floating point to integer
+ scalef   = (float) (ithreshmax - ithreshmin) / 
+           (filedata->fmax_spi - filedata -> fmin_spi);
+ offsetf = -filedata->fmax_spi * scalef + ithreshmax + 0.5;
+
+ if (iw_surfmen <= (Widget)0)
+    {   /* Create surface menu widget first */
+
+    iw_surfmen  = wid_dialog(iw_win, 0, "Surface options", -1, -1);
+    iw_rowcolv  = wid_rowcol(iw_surfmen, 'v', -1, -1);
+
+    phi      = 0.0;
+    theta    = 0.0;
+    psi      = 0.0;
+    gotsurf  = FALSE;
+
+    /* Create label box for view dir.  ---------------------- View dir */
+    sprintf(cval," Views top of volume now!! (nsam x nrow plane) ");
+    iw_labb1  = wid_labelg(iw_rowcolv, 0, cval, -1, -1);
+
+    /* Create horizontal rowcol for range and fast  */
+    iw_rowcolh1  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    /* Create label box for image range ------------------------ Range */
+    sprintf(cval,"Intensity range:  %f ...%f",filedata->fmin_spi,
+                                       filedata->fmax_spi);
+    iw_lab  = wid_labelg(iw_rowcolh1, 0, cval, -1, -1);
+
+    /* Create label box for spacing */
+    wid_labelg(iw_rowcolh1, 0,"   ", -1, -1);
+
+    /* Create toggle box for movie ----------------------------- Movie */
+    iw_mov = wid_togmen(iw_rowcolh1,0,"MOVIE",False,0,0);
+
+    /* Create label box for spacing */
+    iw_dum = wid_labelg(iw_rowcolh1, 0,"   ", -1, -1);
+
+    /* Create toggle box for angle conversion ------------- Angle type */
+    iw_angle = wid_toggleg (iw_rowcolh1,0,"Euler angles",
+                            False,angle_cb,"E",0,0);
+
+    /* Create horizontal rowcol for threshold and scaling */
+    iw_rc  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    /* Create scale widget for threshold ------------------- Threshold */
+    ithresh = (ithreshmax - ithreshmin) / 2;
+    iw_thlevscal = wid_scale(iw_rc, 0, "Threshold: ",
+                      ithreshmin,ithreshmax,ithresh,200,50,-1,-1); 
+
+    XtAddCallback(iw_thlevscal,XmNvalueChangedCallback,
+                 (XtCallbackProc) surfmen_th_but,"0");
+
+    // Create text box for thresh., default thresh. is mid range 
+    thlev = filedata -> fmin_spi + 
+           ((filedata->fmax_spi - filedata->fmin_spi) / 2.0);
+    sprintf(cval,"%11g",thlev);
+    iw_thlev = wid_textboxb(iw_rc,iw_thlev,"",cval,12);
+
+    /* Create scale widget for size scaling ------------------ Scaling */
+    iscale = scaleval * 10;
+    iw_sc = wid_scale(iw_rc, 0,"Size\nScaling: ",10,200,
+                      iscale,250,50,-1,-1); 
+
+    XtSetArg(args[0], XmNdecimalPoints, 1);
+    XtSetValues(iw_sc, args, 1);
+    XtAddCallback(iw_sc,XmNvalueChangedCallback,
+                 (XtCallbackProc) surfmen_buta,"0");
+
+    if (colorit) 
+       {
+       /* Create text box  for colors    ---------------------  Colors */
+       sprintf(cval,"%3d",nvolcolors);
+       iw_colors = wid_textboxb(iw_rowcolv,0,
+                                "Number of colors:",cval,10);
+       }
+
+    /* Create horizontal rowcol for refl and fct  */
+    iw_rowcolh2  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    /* Create scale widget for % reflection --------------------- Refl */
+    irefl   = 100 * refl;   
+    iw_refl = wid_scale(iw_rowcolh2, 0, "% Reflection ", 
+                        0,100,  irefl,  180,50, -1,-1);
+    XtAddCallback(iw_refl,XmNvalueChangedCallback,
+                 (XtCallbackProc) surfmen_buta,"0");
+
+    /* Create scale widget for fct  ------------------------------ Fct */
+    ifct = 100.0 * fct;
+    iw_fct  = wid_scale(iw_rowcolh2, 0, "Depth Attenuation(%)", 
+                        0,100,  ifct, 180,50, -1,-1);
+    XtAddCallback(iw_fct,XmNvalueChangedCallback,
+                 (XtCallbackProc) surfmen_buta,"0");
+
+    /* Create scale widgets for windowing volume -------------- Scales */
+    for (i=0; i < 6; iw_scales[i++]  = (Widget) 0);
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+                       nsam, nrow, nslice);
+
+    for (i=0; i < 6; i++)
+       {
+       XtAddCallback(iw_scales[i],XmNvalueChangedCallback,
+                    (XtCallbackProc) surfmen_buta,"0");
+       }
+
+    if (canrotate)
+       {
+       /* Create scale widgets for angles --------------------- Angles */
+       for (i=0; i < 6; iw_angs[i++]  = (Widget) 0);
+       iw_euler = wid_angles(iw_rowcolv, &iw_angs[0], EULER,
+                     (int) phi, (int) theta, (int) psi, -1,-1);
+
+       /* Create a sub-widget of XYZ angles for later use */
+       for (i=0; i < 6; iw_angsxyz[i++]  = (Widget) 0);
+       iw_xyz = wid_angles(iw_rowcolv, &iw_angsxyz[0],XYZ, 
+                 (int) ang_x, (int) ang_y, (int) ang_z, -1,-1);
+
+       for (i=0; i < 6; i++)
+          {
+          XtAddCallback(iw_angs[i],XmNvalueChangedCallback,
+                       (XtCallbackProc) surfmen_buta,"0");
+          XtAddCallback(iw_angsxyz[i],XmNvalueChangedCallback,
+                       (XtCallbackProc) surfmen_buta,"0");
+          }
+
+       XtUnmanageChild(iw_xyz);
+       }
+    else
+       {  /* Create non-rotate label */
+       for (i=0; i < 3; i++)
+          XtUnmanageChild(iw_angs[i]);
+       iw_lab_nr  = wid_labelg(iw_rowcolv, 0, 
+                             "Too large to rotate", -1, -1);
+       }
+
+    /* Create box for apply ----------------------------------- Apply */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_surfmen, 
+                 &iw_pushf, &iw_pushc, &iw_pusha, "KCA",
+                 surfmen_butf,surfmen_butc, surfmen_buta, NULL);
+    }   /* (iw_surfmen <= (Widget)0)  */
+
+ else
+    {   /* Surface menu widget already exists, update it */
+
+    /* Update label box for image range ----------------------  Range */
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin_spi,
+                                       filedata->fmax_spi);
+    iw_lab  = wid_labelg(iw_rowcolh1, iw_lab, cval, -1, -1);
+
+
+    //printf(" nsam: %d %d %d %d\n", nsam,nrow,iw_scales[0],iw_scales[1]);
+
+    /* Update scale widgets for windowing volume ------------- Scales */
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+                       nsam, nrow, nslice);
+
+    /* Update scale for threshold ------------------------  Threshold */
+    if (!gotsurf)
+       {
+       /* Must reset default threshold */
+       ithresh = (ithreshmax - ithreshmin) / 2;
+       iw_thlevscal = wid_scale(iw_rc, iw_thlevscal, "Threshold: ",
+                ithreshmin,ithreshmax,ithresh,200,50,-1,-1); 
+
+       thlev = filedata -> fmin_spi + 
+              ((filedata->fmax_spi - filedata->fmin_spi) / 2.0);
+       sprintf(cval,"%11g",thlev);
+       iw_thlev = wid_textboxb(iw_rc,iw_thlev,"",cval,12);
+       }
+
+    if (canrotate)
+       {
+       /* Update scale widgets for angles -------------------- Angles */
+       if (XmToggleButtonGadgetGetState(iw_angle)) 
+	   {XtManageChild(iw_xyz);}
+       else
+	   {XtManageChild(iw_euler);}       
+       }
+    else
+       {  /* Update non-rotate label */
+       for (i=0; i < 3; i++)
+          XtUnmanageChild(iw_angs[i]);
+
+       iw_lab_nr  = wid_labelg(iw_rowcolv, iw_lab_nr, 
+                             "Too large to rotate", -1, -1);
+       }
+    }   
+
+ XtManageChild(iw_surfmen);
+ }
+
+ /************* Threshold slider callback *****************************/
+
+ void surfmen_th_but(Widget iw_temp, XtPointer data, 
+                                     XtPointer call_data)
+
+ {
+ int  n;
+
+ // Get current threshold scale value (ithreshmin ... ithreshmax)
+ XmScaleGetValue(iw_temp, &ithresh);
+
+ // Update thlev
+ thlev = filedata->fmin_spi + 
+           (filedata->fmax_spi - filedata->fmin_spi) *
+           ((float)ithresh / (float) (ithreshmax - ithreshmin));
+
+ // Update surfmen text box for thlev
+ sprintf(cval,"%11g",thlev);
+ n = 0;
+ XtSetArg(args[n], XmNvalue, cval);         n++;
+ XtSetArg(args[n], XmNcolumns, (short) 12); n++;
+ XtSetValues(iw_thlev, args, n);
+
+ // Apply threshold and draw 
+ surfmen_buta(NULL, NULL, NULL);
+ }
+
+ /*********** File save button callback ********************************/
+
+ void surfmen_butf(Widget iw_temp, XtPointer data, 
+                                   XtPointer call_data)
+  {
+  /* Input the filename*/
+  iw_text = wid_text(iw_win, (Widget)0, 
+                  "Enter the filename:", docnam,
+                  savesurf_cb, NULL, ixulw+nsamw, iyulw+nroww);
+  }
+
+
+ /*********** Cancel button callback **********************************/
+
+ void surfmen_butc(Widget iw_temp, XtPointer data, 
+                                   XtPointer call_data)
+   {
+   if (first)
+      {
+      if ( filedata && filedata->fp ) 
+           closefile(filedata);
+      }
+   XtUnmanageChild(iw_surfmen);
+   }
+
+ /*********** Accept button callback **********************************/
+
+ void surfmen_buta(Widget iw_temp, XtPointer data, 
+                                   XtPointer call_data)
+ {
+ char * string;
+ int    iphi, itheta, ipsi, irefl, ifct, iscale;
+ int    iang_x,iang_y,iang_z; 		/* XYZ angles */
+ int    i, iang[6];
+ float  ang1[3], ang2[3], ang3[3], *angtmp, fiang[6];
+ float  anga[3], angb[3], angc[3], angd[3], ange[3];
+ float  t0,t1,t2;
+ float  phi1,theta1,psi1;
+ float  phi2,theta2,psi2;
+ float  phi3,theta3,psi3;
+ char   output[100];
+
+ /* Set the first open flag*/
+ first = FALSE;
+ 
+ /* Get nsam1 & nsam2 */
+ XmScaleGetValue(iw_scales[0],&nsam1);
+ XmScaleGetValue(iw_scales[1],&nsam2);
+ if (nsam2 < nsam1)
+    { spout("*** ENDING COL MUST BE > STARTING COL"); return; }
+
+ /* Get nrow1 & nrow2 */
+ XmScaleGetValue(iw_scales[2],&nrow1);
+ XmScaleGetValue(iw_scales[3],&nrow2);
+ if (nrow1 > nrow2)
+    { spout("*** ENDING ROW MUST BE > STARTING ROW"); return; }
+
+ /* Get nslice1 & nslice2 */
+ XmScaleGetValue(iw_scales[4],&nslice1);
+ XmScaleGetValue(iw_scales[5],&nslice2);
+ if (nslice1 > nslice2)
+    { spout("*** ENDING SLICE MUST BE > STARTING SLICE"); return; }
+
+ if (canrotate)
+    {
+    /* Get rotation angles */
+
+    if (XmToggleButtonGadgetGetState(iw_angle))
+        {                                  /* XYZ angles */
+        for (i=0; i<6; i++) 
+    	    XmScaleGetValue(iw_angsxyz[i],&iang[i]);
+	    
+        for (i=0; i<3; i++) 
+            {
+	    ang1[i] = (float)iang[i];
+	    ang2[i] = (float)iang[i+3];
+	    }
+
+        t0      = ang1[0];
+        t1      = ang1[1];
+        t2      = ang1[2];
+
+	//ang1[0] = t0; // z
+	//ang1[1] = t1; // x
+	//ang1[2] = t2; // y
+
+	//ang1[0] = t1; // y
+	//ang1[1] = t2; // z
+	//ang1[2] = t0; // x
+
+	ang1[0] = t2; // z-->x
+	ang1[1] = t0; // x-->y
+	ang1[2] = t1; // y-->z
+        //printf(" 0Euler: %f %f %f\n",ang1[0],ang1[1],ang1[2]);
+
+    	xyz_to_eul(&ang1[0], &ang1[1], &ang1[2]);
+    	xyz_to_eul(&ang2[0], &ang2[1], &ang2[2]);
+        //printf(" 1Euler: %f %f %f\n",ang1[0],ang1[1],ang1[2]);
+
+        angtmp = cald(ang2, ang1);  // Combine euler angles
+	for (i=0; i<3; i++)
+            {
+	    ang3[i] = *angtmp; // Just sets ang3 = angtmp!!?
+	    angtmp++;
+	    }
+
+	phi = ang3[0]; theta = ang3[1]; psi = ang3[2];
+        //printf(" 2Euler: %f %f %f\n",phi,theta,psi);
+	
+    	eul_to_xyz(&ang3[0], &ang3[1], &ang3[2]);
+	ang_x = ang3[0]; ang_y = ang3[1]; ang_z = ang3[2];
+
+        //printf(" 3Euler: %f %f %f\n",phi,theta,psi);
+
+        /* Reset the angle values */
+        //setangles(XYZ, ang_x, ang_y, ang_z, 0, 0, 0);
+    	}
+    else
+        {                               /* Euler angles */
+        for (i=0; i<6; i++)
+    	    {XmScaleGetValue(iw_angs[i],&iang[i]);}
+	    
+        for (i=0; i<3; i++)
+            { // Convert scale values to float 
+	    ang1[i] = (float)iang[i];   // 1..3
+	    ang2[i] = (float)iang[i+3]; // 4..6
+	    }
+
+        // Phi is now rotation around x
+        anga[0]=ang1[0];  anga[1]=0;  anga[2]=0;
+      	xyz_to_eul(&anga[0], &anga[1], &anga[2]);
+
+        // Theta is now rotation around 
+        angb[0]=0;  angb[1]=0;  angb[2]=ang1[1];
+       xyz_to_eul(&angb[0],&angb[1], &angb[2]);
+
+        // Psi is now rotation around x
+        angc[0]=ang1[2];  angc[1]=0;  angc[2]=0;
+        xyz_to_eul(&angc[0],&angc[1],&angc[2]);
+
+        //printf(" aEuler: %f %f %f\n",anga[0],anga[1],anga[2]);
+        //printf(" bEuler: %f %f %f\n",angb[0],angb[1],angb[2]);
+        //printf(" cEuler: %f %f %f\n",angc[0],angc[1],angc[2]);
+
+        // This order gives wrong summation
+        //angtmp = cald(anga, angb);  // Combine euler angles a+b->a
+        //angtmp = cald(anga, angc);  // Combine euler angles a+c->a
+        //phi = anga[0]; theta = anga[1]; psi = anga[2];
+
+        angtmp = cald(angb, anga);  // Combine euler angles b+a->b
+        angtmp = cald(angc, angb);  // Combine euler angles a+v->c
+	phi = angc[0]; theta = angc[1]; psi = angc[2];
+          
+        //printf(" Euler:  %f %f %f\n\n",phi,theta,psi);
+
+	if (ang2[0]!=0 || ang2[1]!=0 || ang2[2]!=0) 
+            {	// Increment is not zero, add it to current angle
+
+    	    xyz_to_eul(&ang2[0], &ang2[1], &ang2[2]); // Returns:phi...
+            angtmp = cald(ang2, angc);  // Combine euler angles
+
+	    phi = ang2[0]; theta = ang2[1]; psi = ang2[2];
+	    }
+
+        /* Reset the angle values */
+        //setangles(EULER, phi, theta, psi, 0, 0, 0);
+	}
+    }
+
+ /* Get scaling value */
+ XmScaleGetValue(iw_sc,&iscale);
+ scaleval = iscale / 10.0;
+
+ /* Get reflection percentage */
+ XmScaleGetValue(iw_refl,&irefl);
+ refl = (float) irefl / 100.0;
+
+ /* Get fct percentage */
+ XmScaleGetValue(iw_fct,&ifct);
+ fct = (float) ifct / 100.0; 
+
+ /* Find threshold */
+ string = XmTextGetString(iw_thlev);
+ sscanf(string,"%f",&thlev);
+ if (thlev > filedata -> fmax_spi) thlev = filedata -> fmax_spi;
+ if (thlev < filedata -> fmin_spi) thlev = filedata -> fmin_spi;
+ if (string) free(string);
+
+ if (colorit) 
+    {   /* Get number of colors to be used on surface */
+    string = XmTextGetString(iw_colors);
+    sscanf(string,"%d",&nvolcolors);
+    if (nvolcolors < 1)
+       { spout("*** NUMBER OF SURFACE COLORS MUST BE > 0"); return; }
+    if (nvolcolors > 99)
+       { spout("*** NUMBER OF SURFACE COLORS MUST BE < 100"); return; }
+    if (nvolcolors > 7)
+       { spout("*** SURFACE COLORMAP ONLY SUPPORTS 7 COLORS!!");}
+    }
+
+ /* Refresh screen */
+ expos_cb(NULL,NULL,NULL); 
+ XFlush(idispl);
+
+ XmUpdateDisplay(iw_win);
+
+ /* Display surfaces */
+ if (XmToggleButtonGadgetGetState(iw_mov))
+     {surfmovie(canrotate);}
+ else
+   {
+   sprintf(output,
+        "Phi:%d Theta:%d Psi:%d  Scale:%4.1f  Threshold:(%f,%d)",
+        (int)phi, (int)theta, (int)psi, scaleval, thlev, ithresh);
+   spout(output);
+
+   surf(canrotate,sirdit,distit,colorit);
+
+   /* Display menu */
+   showbutx("Recalls Menu.", 
+          "Save the current image.",
+          "Stop surfacing.",FALSE); 
+
+   /* Define buttons for menu retrieval or stop */
+   actions(iw_win, "surf_pop", surf_pop, "123");
+   }
+ }
+
+ 
+
+ /*************************** surf_pop *********************************/
+
+ void surf_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+
+ if (!(strcmp(*params,"1")))                  /* Button 1 pushed */ 
+    {                                       
+    surfmen(sirdit, distit, colorit);
+    }
+
+ else if (!(strcmp(*params,"2")))             /* Button 2 pushed */ 
+    {
+    /* Input the filename*/
+    iw_text = wid_text(iw_win, (Widget)0, 
+                    "Enter the filename:", docnam,
+                    savesurf_cb, NULL, 
+                    ixulw+nsamw, iyulw+nroww);
+    }
+                                       
+ else if (!(strcmp(*params,"3")))	      /* Button 3 pushed */ 
+    {
+    /* Uninstall translations */
+    XtUninstallTranslations(iw_t);
+ 
+    if ( filedata && filedata->fp!=NULL)
+        {
+	closefile(filedata);	   
+        first = TRUE;
+        }
+
+    /* Unmanage information box */
+    showbutx("","","",TRUE);
+    }
+ }
+
+ /*************************** savesurf_cb ******************************/
+ void savesurf_cb(Widget iw_temp, XtPointer data, 
+                                  XtPointer call_data)
+   {
+   float        jslope, kslope;
+   int		nsams,nrows;
+   float        *bufs;
+   int          i, j, k, kk, nlet, numfil, irec;
+   FILEDATA     *filedatat;
+   char		output[100];
+
+   XmSelectionBoxCallbackStruct * cbs;
+
+   cbs = (XmSelectionBoxCallbackStruct *) call_data;
+
+   /* Check the input name */
+   strcpy(docnam,extractstr(cbs -> value));
+
+   /* Check input filename */
+   if (strlen(docnam) == 0) 
+       {
+       spout("*** Must specify name for the file.");
+       return;
+       }
+
+   /* Add datexc to docnam if not already there */
+   if (strstr(docnam,datexc) == 0)
+      {
+      strcat(docnam,".");
+      strcat(docnam,datexc);
+      }                      
+         
+  XtUnmanageChild( iw_text );
+
+  /* Find reflection image size */
+  jslope = (1.0 - nrow*scaleval)/(1.0 - nrow);
+  kslope = (1.0 - nslice*scaleval)/(1.0 - nslice);
+  nsams  = (nrow2 - nrow1)*jslope + 1;
+  nrows  = (nslice2 - nslice1)*kslope + 1;
+
+  /* Locate the space for the saving image */
+  if((bufs = (float *) malloc(sizeof(float)*nsams)) == NULL)
+    {
+    spout("*** Allocation failed for writing to file in surfmovie!");
+    return;
+    }
+
+  /* Open new output file */
+  filedatat = opennew(docnam, nsams, nrows, 1, 1, "u");  
+
+  /* Put newimage in output file */
+  kk = 0;
+  for (irec = 1; irec <= nrows; irec++)
+     {
+     for(k = 0; k < nsams; k++) bufs[k] = (float) refmap[kk++];
+
+     if (!wrtlin(filedatat, bufs, nsams, irec)) 
+        {
+	sprintf(output,"*** Error writing to file in %s!", docnam);
+	spout(output);
+        closefile(filedatat); free(bufs); return;
+        }
+     }
+
+  closefile(filedatat);     
+  free(bufs);
+}
+
+// *********************** angle_cb ****************************
+
+// Convert between Euler angles and XYZ angles
+
+void angle_cb(Widget iw_temp, XtPointer data, 
+                              XtPointer callback)
+    {
+    Arg        	args[MAX_ARGS];   	/* Arg list */
+    int		iphi,itheta,ipsi; 	/* Euler angles */
+    int		iang_x,iang_y,iang_z; 	/* Xyz angles */
+    int		icang[3],i; 		/* Increased angles */
+    float	fcang[3]; 		/* Increased angles float*/
+
+    if (XmToggleButtonGadgetGetState(iw_angle))
+        {    /* Using XYZ angle */
+	/* Set label for toggle button */
+ 	XtSetArg(args[0], XmNlabelString, XmStringCreate("XYZ Angles",
+                              XmSTRING_DEFAULT_CHARSET));
+	XtSetValues(iw_angle, args, 1);
+	
+	/* Calculate the xyz angle */
+    	XmScaleGetValue(iw_angs[0],&iphi);
+    	XmScaleGetValue(iw_angs[1],&itheta);
+    	XmScaleGetValue(iw_angs[2],&ipsi);
+    	phi   = (float) iphi;		ang_x = phi;
+    	theta = (float) itheta;		ang_y = theta;
+    	psi   = (float) ipsi; 		ang_z = psi;
+
+	eul_to_xyz(&ang_x, &ang_y, &ang_z);
+
+	/* Get the increased angles */
+	for (i=0; i<3; i++)
+            {
+    	    XmScaleGetValue(iw_angs[i+3],&icang[i]);
+	    fcang[i] = (float) icang[i];
+	    }
+
+	eul_to_xyz(&fcang[0], &fcang[1], &fcang[2]);
+
+	setangles(XYZ, ang_x,ang_y,ang_z, 
+                  fcang[0], fcang[1], fcang[2]);
+
+	XtUnmanageChild(iw_euler);
+	XtManageChild(iw_xyz);
+        
+        printf(" To Euler: %f %f %f\n",phi,theta,psi);
+	}
+    else
+        {    /* Using Euler angle */
+ 	XtSetArg(args[0], XmNlabelString, XmStringCreate("Euler",
+                              XmSTRING_DEFAULT_CHARSET));
+	XtSetValues(iw_angle, args, 1);
+
+	/* Calculate the xyz angle */
+    	XmScaleGetValue(iw_angsxyz[0],&iang_x);
+    	XmScaleGetValue(iw_angsxyz[1],&iang_y);
+    	XmScaleGetValue(iw_angsxyz[2],&iang_z);
+    	ang_x = (float)iang_x;	phi   = ang_x;
+    	ang_y = (float)iang_y;	theta = ang_y;
+    	ang_z = (float)iang_z;  psi   = ang_z;
+
+	xyz_to_eul(&phi, &theta, &psi);
+
+	/* Get the increased angles */
+	for (i=0; i<3; i++)
+           {
+    	   XmScaleGetValue(iw_angs[i+3],&icang[i]);
+	   fcang[i] = (float) icang[i];
+	   }
+
+	xyz_to_eul(&fcang[0], &fcang[1], &fcang[2]);
+
+	setangles(XYZ, ang_x,ang_y,ang_z, 
+                  fcang[0], fcang[1], fcang[2]);
+
+	XtUnmanageChild(iw_xyz);
+	XtManageChild(iw_euler);
+
+        printf(" To XYZ: %f %f %f\n",phi,theta,psi);
+	}
+   }
+
+ /*************************** setangles ********************************/
+
+void setangles(int angtype, float t1,float t2,float t3, 
+	     		    float t4,float t5,float t6)
+    {
+    Arg        	args[MAX_ARGS];   	/* Arg list */
+    float	angles[6];
+    int 	i;
+
+    angles [0] = t1;
+    angles [1] = t2;
+    angles [2] = t3;
+    angles [3] = t4;
+    angles [4] = t5;
+    angles [5] = t6;
+
+    for (i=0; i<6; i++)
+        {
+	XtSetArg(args[0], XmNvalue, angles[i]);
+
+    	if (angtype) 	   /* Euler angtype */
+	   {XtSetValues(iw_angs[i], args, 1);}
+
+    	else 		  /* XYZ angtype */
+	   { XtSetValues(iw_angsxyz[i], args, 1);}
+	}
+   }
+	
+@
+
+
+1.31
+log
+@removed debug output
+@
+text
+@d3 26
+a28 32
+C++*********************************************************************
+ *                                                                     *
+ * surfmen  -- Created as wid_surfmen.f                                *
+ *             Converted to C                    Oct 1992 ArDean Leith *
+ *             Rewrite                           Sep 2011 ArDean Leith *
+ *                                                                     *
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                             *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2011  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+d39 11
+a49 11
+C                                  v
+C                                  v (imnum=2)
+C                                  v
+C                                surfmen --> surfmen_buta --> surfmovie
+C                                  ^           v
+C                                  ^           v
+C                                  ^         surf ---------> surfcolor
+C                                  ^           v                v
+C                                  ^---------surf_pop        redvol
+C                                              v
+C                                             (end)   
+d51 1
+a51 1
+C***********************************************************************
+d53 1
+d94 1
+a94 1
+ static Widget   iw_lab, iw_rowcolh1, iw_rowcolh2, iw_rowcolv;
+d114 1
+a114 2
+ Widget  iw_lab1, iw_labb1, iw_labb2,  iw_dum;
+ Widget  iw_dums;
+d123 1
+a123 1
+ if (nsam * nrow * nslice > 500 * 500 * 500)
+d258 1
+a258 1
+       iw_lab1  = wid_labelg(iw_rowcolv, 0, 
+d276 7
+d310 1
+a310 1
+       iw_lab1  = wid_labelg(iw_rowcolv, iw_lab1, 
+@
+
+
+1.30
+log
+@surf as viewed from top
+@
+text
+@d451 1
+a451 1
+        printf(" 2Euler: %f %f %f\n",phi,theta,psi);
+d456 1
+a456 1
+        printf(" 3Euler: %f %f %f\n",phi,theta,psi);
+@
+
+
+1.29
+log
+@active sliders and buttons
+@
+text
+@a1 1
+
+d5 1
+a5 1
+ * surfmen  -- Created as wid_surfmen.for                              *
+a69 1
+
+a73 4
+ void  surfmen_butf  (Widget iw_temp, XtPointer, XtPointer);
+ void  surfmen_butc  (Widget iw_temp, XtPointer, XtPointer);
+ void  surfmen_buta  (Widget iw_temp, XtPointer, XtPointer);
+ void  angle_cb      (Widget iw_temp, XtPointer, XtPointer);
+d75 4
+a78 1
+ void  setangles     (int, float, float, float, float, float, float);
+d81 1
+d84 1
+a84 1
+ extern unsigned char  * refmap;
+d91 3
+a93 3
+ Widget         iw_thlev  = (Widget) 0;        // Float threshold value
+ int            iscalemin = 0;
+ int            iscalemax = 255;
+d106 1
+d109 1
+a109 1
+ static int	 first     = TRUE;
+d118 5
+a122 5
+ int    i, n, ifct, irefl, iscale, inow;
+ Widget iw_lab1, iw_labb1, iw_labb2,  iw_dum;
+ Widget iw_dums;
+ char   cval[50];
+
+d135 1
+a135 1
+ scalef   = (float) (iscalemax - iscalemin) / 
+d137 1
+a137 1
+ offsetf = -filedata->fmax_spi * scalef + iscalemax + 0.5;
+d150 2
+a151 2
+    /* Create label box for view dir.  --------------------- View dir  */
+    sprintf(cval," Viewed along rows of volume (nrow x nslice plane)");
+d154 1
+a154 1
+    /* Create horizontal rowcol for range and fast */
+d158 1
+a158 1
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin_spi,
+d168 1
+a168 1
+    /* Create label box for spacing  */
+d171 2
+a172 2
+    /* Create toggle box for angle convertion-------- Angle conversion */
+    iw_angle = wid_toggleg (iw_rowcolh1,0,"Euler",
+d175 1
+a175 1
+    /* Create horizontal rowcol for threshold and scaling  */
+d179 1
+a179 1
+    inow = (iscalemax - iscalemin) / 2;
+d181 1
+a181 1
+                      iscalemin,iscalemax,inow,200,50,-1,-1); 
+d186 1
+a186 1
+    // Create text box for threshold, default threshold is 50% 
+d192 1
+a192 1
+    /* Create scale widget for scaling ----------------------- Scaling */
+d197 1
+a197 1
+    XtSetArg( args[0], XmNdecimalPoints, 1);
+d214 1
+a214 1
+    irefl = 100 * refl;   
+a216 3
+    XtSetArg( args[0], XmNdecimalPoints, 1);
+
+    XtSetValues(iw_refl, args, 1);
+d222 1
+a222 1
+    iw_fct  = wid_scale(iw_rowcolh2, 0, "% Attenuation", 
+a223 3
+    XtSetArg( args[0], XmNdecimalPoints, 1);
+
+    XtSetValues(iw_fct, args, 1);
+d286 1
+a286 1
+       inow = (iscalemax - iscalemin) / 2;
+d288 1
+a288 1
+                iscalemin,iscalemax,iscale,200,50,-1,-1); 
+a293 1
+
+a295 26
+    /* Update scale widget for scaling ---------------------- Scaling */
+    iscale = scaleval * 10;
+    iw_sc = wid_scale(iw_rc,iw_sc,"Scale: ",10,200,
+                      iscale,250,50,-1,-1); 
+
+    /* Update scale widget for % reflection -------------------- Refl */
+    irefl   = 100.0 * refl;
+    iw_refl = wid_scale(iw_rowcolh2, iw_refl, 
+                        "% Reflection ", 0,100, 
+                        irefl, 180, 50, -1, -1);
+
+    /* Update scale widget for fct  ----------------------------- Fct */
+    ifct   = 100.0 * fct;
+    iw_fct = wid_scale(iw_rowcolh2, iw_fct,  
+                       "% Attenuation", 0,100, 
+                        ifct, 225, 50, -1, -1);
+
+    /* Update scale widgets for windowing volume ------------- Scales */
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+                       nsam, nrow, nslice);
+
+    /* Update text box  for colors    ------------------------ Colors */
+    sprintf(cval,"%d",nvolcolors);
+    iw_colors = wid_textboxb(iw_rowcolv,iw_colors,
+                                "Number of colors:",cval,10);
+
+d300 3
+a302 3
+	   XtManageChild(iw_xyz);
+	else
+	   XtManageChild(iw_euler);       
+d308 1
+d312 1
+a312 1
+    }   /* else */
+d323 1
+a323 1
+ int  n, inow;
+d325 2
+a326 2
+ // Get current scale value (iscalemin ... iscalemax)
+ XmScaleGetValue(iw_temp, &inow);
+d331 1
+a331 1
+           ((float)inow / (float) (iscalemax - iscalemin));
+a334 1
+ 
+d338 1
+d340 1
+a340 2
+ XtSetValues(iw_thlev, args, n);
+ 
+d351 1
+a351 1
+                     "Enter the filename:", docnam,
+d374 3
+a376 3
+ char *string;
+ int  iphi, itheta, ipsi, irefl, ifct, iscale;
+ int  iang_x,iang_y,iang_z; 		/* xyz angles */
+d379 6
+d410 1
+a410 1
+   
+d412 1
+a412 1
+        {    /* XYZ angles */
+d416 2
+a417 1
+        for (i=0; i<3; i++) {
+d422 17
+d441 6
+a446 3
+        angtmp = cald(ang2, ang1);
+	for (i=0; i<3; i++) {
+	    ang3[i] = *angtmp;
+d451 1
+d456 2
+d459 1
+a459 1
+        setangles(XYZ, ang_x, ang_y, ang_z, 0, 0, 0);
+d462 1
+a462 1
+        {    /* Euler angles */
+d464 1
+a464 1
+    	    XmScaleGetValue(iw_angs[i],&iang[i]);
+d466 4
+a469 3
+        for (i=0; i<3; i++) {
+	    ang1[i] = (float)iang[i];
+	    ang2[i] = (float)iang[i+3];
+d472 34
+a505 3
+	if (ang2[0]==0 && ang2[1]==0 && ang2[2]==0) 
+            {	/* increment is 0 */
+	    phi = ang1[0]; theta = ang1[1]; psi = ang1[2];
+a506 10
+	else {
+    	    xyz_to_eul(&ang2[0], &ang2[1], &ang2[2]);
+            angtmp = cald(ang2, ang1);
+
+	    for (i=0; i<3; i++) {
+	    	ang3[i] = *angtmp;
+	    	angtmp++;
+	        }
+	phi = ang3[0]; theta = ang3[1]; psi = ang3[2];
+	}
+d509 1
+a509 1
+        setangles(EULER, phi, theta, psi, 0, 0, 0);
+d515 1
+a515 1
+ scaleval = iscale/10.0;
+a543 2
+ //XtUnmanageChild(iw_surfmen);
+
+d552 1
+a552 1
+     surfmovie(canrotate);
+d555 5
+d580 1
+a580 1
+ if (!(strcmp(*params,"1")))                    /* Button 1 pushed */ 
+d585 1
+a585 1
+ else if (!(strcmp(*params,"2")))               /* Button 2 pushed */ 
+d594 1
+a594 1
+ else if (!(strcmp(*params,"3")))	        /* Button 3 pushed */ 
+d599 1
+a599 1
+    if( filedata && filedata->fp!=NULL)
+a603 2
+    /* Return to narmal colormap */
+    setamap(map);
+d684 1
+a684 1
+{
+a690 1
+    /* The using XYZ angle */
+d692 1
+a692 1
+        {
+d694 1
+a694 1
+ 	XtSetArg(args[0], XmNlabelString, XmStringCreate("XYZ",
+d722 2
+d726 1
+a726 1
+        {
+d743 4
+a746 4
+            {
+    	    XmScaleGetValue(iw_angs[i+3],&icang[i]);
+	    fcang[i] = (float) icang[i];
+	    }
+d755 2
+d780 2
+a781 2
+    	if (angtype) 	 /* Eular angtype */
+	    XtSetValues(iw_angs[i], args, 1);
+d783 2
+a784 2
+    	else 		/* XYZ angtype */
+	    XtSetValues(iw_angsxyz[i], args, 1);
+@
+
+
+1.28
+log
+@fmin ->fmin_spi..
+@
+text
+@d4 6
+a9 5
+C++************************************************************************
+C
+C SURFMEN  -- CREATED AS WID_SURFMEN.FOR
+C             CONVERTED TO C -- OCT 92 al
+C
+d11 1
+a11 1
+C *  AUTHOR:  ArDean Leith                                                 *
+d13 1
+a13 1
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+d37 1
+a37 1
+C    SURFMEN
+d39 1
+a39 1
+C    PURPOSE:         DISPLAY SURFACE MENU
+d41 1
+a41 1
+C    CALLED BY:       IMAGEMEN
+a59 1
+
+d67 1
+a67 1
+#define MAX_ARGS 3
+d72 1
+a72 1
+ /* function prototypes */
+d75 9
+a83 7
+ /* internal function prototypes */
+ void          	surfmen_buta(Widget iw_temp, caddr_t, caddr_t);
+ void          	surfmen_butc(Widget iw_temp, caddr_t, caddr_t);
+ void          	angle_cb(Widget iw_temp, caddr_t, caddr_t);
+ void          	surf_pop(Widget, XEvent *, String *, Cardinal *);
+ void	       	setangles(int, float, float, float, float, float, float);
+ void          	savesurf_cb(Widget iw_temp, caddr_t, caddr_t);
+d85 1
+a85 4
+ /* external common variables */
+ float    phi, theta, psi, thlev;
+ int      canrotate;
+ int      nvolcolors = 3;
+d88 10
+a97 1
+ /* internal common variables */
+d99 2
+a100 3
+ static Widget   iw_thlev, iw_refl, iw_fct, iw_fast, iw_colors;
+ static Widget   iw_pushc, iw_pusha, iw_sc, iw_angle;
+ static Widget   iw_surfmen = (Widget) 0;
+d103 4
+a106 1
+ static Widget	 iw_text;		/* filename widget */
+d110 3
+a112 1
+ static int	first=TRUE;
+d119 1
+a119 1
+ int    i, n, ifct, irefl, iscale;
+a122 1
+ Arg    args[2];
+d124 1
+a124 1
+ /* set flags for sirds or distance display */
+d127 2
+d131 1
+a131 1
+    {   /* probably too big to allocate rotation memory */
+d135 5
+d141 1
+a141 1
+    {   /* create surface menu widget first */
+d151 1
+a151 1
+    /* create label box for view dir.  ---------------------  label  */
+d155 1
+a155 1
+    /* create horizontal rowcol for range and fast -----------------  */
+d158 3
+a160 2
+    /* create label box for image range ---------------------  range  */
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin_spi,filedata->fmax_spi);
+d163 1
+a163 1
+    /* create label box for spacing -----------------------  spacing  */
+d166 2
+a167 2
+    /* create toggle box for movie ---------------------------- movie */
+    iw_mov = wid_togmen (iw_rowcolh1,0,"MOVIE",False,0,0);
+d169 1
+a169 1
+    /* create label box for spacing -----------------------  spacing  */
+d172 3
+a174 2
+    /* create toggle box for angle convertion--------- angle conversion */
+    iw_angle = wid_toggleg (iw_rowcolh1,0,"Euler",False,angle_cb,"E",0,0);
+d176 1
+a176 1
+    /* create horizontal rowcol for threshold and scaling ------------  */
+d179 9
+a187 2
+    /* create text box  for threshold --------------------  threshold */
+    /* SET DEFAULT THRESHOLD TO 50% OF RANGE */
+d189 3
+a191 4
+                ((filedata->fmax_spi - filedata->fmin_spi) / 2.0);
+
+    sprintf(cval,"%f",thlev);
+    iw_thlev = wid_textboxb(iw_rc,0,"Threshold:",cval,10);
+d193 1
+a193 1
+    /* create scale widget for scaling ---------------------- scaling */
+d195 2
+a196 1
+    iw_sc = wid_scale(iw_rc, 0, "Scale: ",10,200,iscale,250,50,-1,-1); 
+d200 2
+d203 7
+a209 3
+    /* create text box  for colors    -----------------------  colors */
+    sprintf(cval,"%d",nvolcolors);
+    iw_colors = wid_textboxb(iw_rowcolv,0,"Number of colors:",cval,10);
+d211 1
+a211 1
+    /* create horizontal rowcol for refl and fct ------------------   */
+d214 1
+a214 1
+    /* create scale widget for % reflection -------------------- refl */
+d216 3
+a218 2
+    iw_refl = wid_scale(iw_rowcolh2, 0, "% Reflection ", 0,100,  irefl, 
+                       180,50, -1,-1);
+d220 5
+a224 1
+    /* create scale widget for fct  ----------------------------- fct */
+d226 3
+a228 2
+    iw_fct  = wid_scale(iw_rowcolh2, 0, "% Attenuation", 0,100,  ifct, 
+                       180,50, -1,-1);
+d230 5
+a234 1
+    /* create scale widgets for windowing volume ------------- scales */
+d236 8
+a243 1
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], nsam, nrow, nslice);
+d247 1
+a247 1
+       /* create scale widgets for angles -------------------- angles */
+d250 1
+a250 1
+                         (int) phi, (int) theta, (int) psi, -1,-1);
+d252 1
+a252 1
+       /* create a sub-widget of XYZ angles for later use */
+d255 10
+a264 1
+                         (int) ang_x, (int) ang_y, (int) ang_z, -1,-1);
+d268 1
+a268 1
+       {  /* create non-rotate label */
+d271 2
+a272 1
+       iw_lab1  = wid_labelg(iw_rowcolv, 0, "Too large to rotate", -1, -1);
+d275 1
+a275 1
+    /* create box for apply ----------------------------------- apply */
+d277 2
+a278 2
+                        &iw_dums, &iw_pushc, &iw_pusha,  "CA",
+                        fin_cb, surfmen_butc, surfmen_buta, NULL);
+a280 2
+
+
+d282 1
+a282 1
+    {   /* surface menu widget already exists, update it */
+d284 3
+a286 2
+    /* create label box for image range ---------------------  range  */
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin_spi,filedata->fmax_spi);
+d289 1
+a289 1
+    /* create text box for threshold ---------------------  threshold */
+d292 9
+a300 3
+       /* must reset default threshold */
+       thlev = filedata->fmin_spi + 
+                ((filedata->fmax_spi - filedata->fmin_spi) / 2.0);
+a301 2
+       sprintf(cval,"%f",thlev);
+       iw_thlev = wid_textboxb(iw_rc,iw_thlev,"Threshold:",cval,10);
+d304 1
+a304 1
+    /* create scale widget for scaling -------------------- scaling */
+d306 2
+a307 1
+    iw_sc = wid_scale(iw_rc,iw_sc,"Scale: ",10,200,iscale,250,50,-1,-1); 
+d309 1
+a309 1
+    /* create scale widget for % reflection -------------------- refl */
+d311 2
+a312 1
+    iw_refl = wid_scale(iw_rowcolh2, iw_refl, "% Reflection ", 0,100, 
+d315 1
+a315 1
+    /* create scale widget for fct  ----------------------------- fct */
+d317 2
+a318 1
+    iw_fct = wid_scale(iw_rowcolh2, iw_fct,  "% Attenuation", 0,100, 
+d321 3
+a323 2
+    /* create scale widgets for windowing volume ------------- scales */
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], nsam, nrow, nslice);
+d325 1
+a325 1
+    /* create text box  for colors    -----------------------  colors */
+d327 2
+a328 1
+    iw_colors = wid_textboxb(iw_rowcolv,iw_colors,"Number of colors:",cval,10);
+d332 1
+a332 1
+       /* create scale widgets for angles -------------------- angles */
+d339 1
+a339 1
+       {  /* create non-rotate label */
+a346 8
+ if (colorit)
+    {  /* show the color number widget */
+    XtManageChild(iw_colors); 
+    }
+ else 
+    {     /* remove unused colors widget */
+    XtUnmanageChild(iw_colors); 
+    } 
+d350 4
+a353 1
+ /*********** cancel button callback **********************************/
+d355 39
+a393 1
+ void surfmen_butc(Widget iw_temp, caddr_t data, caddr_t call_data)
+d395 5
+a399 4
+	if (first) {
+	    if( filedata && filedata->fp ) 
+		closefile(filedata);
+	}
+d403 1
+a403 1
+ /*********** accept button callback **********************************/
+d405 2
+a406 1
+ void surfmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d414 1
+a414 1
+ /* set the first open flag*/
+d417 1
+a417 1
+ /* get nsam1 & nsam2 */
+d423 1
+a423 1
+ /* get nrow1 & nrow2 */
+d429 1
+a429 1
+ /* get nslice1 & nslice2 */
+d437 1
+a437 1
+    /* get rotation angles */
+d462 1
+a462 1
+        /* reset the angle values */
+d466 1
+a466 1
+        {    /* euler angles */
+d475 2
+a476 1
+	if (ang2[0]==0 && ang2[1]==0 && ang2[2]==0) {	/* increment is 0 */
+d490 1
+a490 1
+        /* reset the angle values */
+d495 1
+a495 1
+ /* get scaling value */
+d499 1
+a499 1
+ /* get reflection percentage */
+d503 1
+a503 1
+ /* get fct percentage */
+d507 1
+a507 1
+ /* find threshold */
+d515 1
+a515 1
+    {   /* get number of colors to be used on surface */
+d526 1
+a526 1
+ XtUnmanageChild(iw_surfmen);
+d528 1
+a528 1
+ /* refresh screen */
+d534 1
+a534 1
+ /* display surfaces */
+d541 1
+a541 1
+   /* display menu */
+d546 1
+a546 1
+   /* define buttons for menu retrieval or stop */
+d551 3
+a553 1
+ /*************************** surf_pop **********************************/
+d559 1
+a559 1
+ if (!(strcmp(*params,"1")))            /* button 1 pushed */ 
+d564 1
+a564 1
+ else if (!(strcmp(*params,"2")))            /* button 2 pushed */ 
+d566 5
+a570 4
+    /* input the filename*/
+    iw_text = wid_text(iw_win, (Widget)0, "Enter the filename:", docnam,
+                    savesurf_cb, NULL, ixulw+nsamw, iyulw+nroww);
+
+d573 1
+a573 1
+ else if (!(strcmp(*params,"3")))	     /* button 3 pushed */ 
+d575 1
+a575 1
+    /* uninstall translations */
+d578 2
+a579 1
+    if( filedata && filedata->fp!=NULL)	{
+d581 3
+a583 3
+	first = TRUE;
+    }
+    /* return to narmal colormap */
+d586 1
+a586 1
+    /* unmanage information box */
+d591 4
+a594 3
+ /*************************** savesurf_cb **********************************/
+ void savesurf_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+d606 1
+a606 1
+   /* check the input name */
+d609 1
+a609 1
+   /* check input filename */
+d616 1
+a616 1
+   /* add datexc to docnam if not already there */
+d618 4
+a621 4
+       {
+        strcat(docnam,".");
+        strcat(docnam,datexc);
+       }                      
+d625 1
+a625 1
+  /* find reflection image size */
+d631 1
+a631 1
+  /* locate the space for the saving image */
+d633 1
+a633 1
+  {
+d636 1
+a636 1
+  }
+d638 1
+a638 1
+  /* open new output file */
+d641 1
+a641 1
+  /* put newimage in output file */
+d659 1
+a659 4
+/************** angle_cb ****************************
+ convert the angles between Euler angles or XYZ angles
+ ****************************************************
+ */
+d661 4
+a664 1
+void angle_cb(Widget iw_temp, caddr_t data, caddr_t callback)
+d666 5
+a670 5
+    Arg        	args[MAX_ARGS];   	/* arg list */
+    int		iphi,itheta,ipsi; 	/* euler angles */
+    int		iang_x,iang_y,iang_z; 	/* xyz angles */
+    int		icang[3],i; 		/* increased angles */
+    float	fcang[3]; 		/* increased angles float*/
+d672 1
+a672 1
+    /* the using XYZ angle */
+d675 1
+a675 1
+	/* set label for toggle button */
+d680 1
+a680 1
+	/* calculate the xyz angle */
+d690 3
+a692 2
+	/* get the increased angles */
+	for (i=0; i<3; i++) {
+d699 2
+a700 1
+	setangles(XYZ, ang_x,ang_y,ang_z, fcang[0], fcang[1], fcang[2]);
+d711 1
+a711 1
+	/* calculate the xyz angle */
+d721 3
+a723 2
+	/* get the increased angles */
+	for (i=0; i<3; i++) {
+d730 2
+a731 1
+	setangles(XYZ, ang_x,ang_y,ang_z, fcang[0], fcang[1], fcang[2]);
+d736 3
+a738 1
+}
+d742 2
+a743 2
+{
+    Arg        	args[MAX_ARGS];   	/* arg list */
+d754 2
+a755 2
+    for (i=0; i<6; i++) {
+	
+d758 1
+a758 1
+    	if (angtype) 	 /* elular angtype */
+d761 1
+a761 1
+    	else 		/* xyz angtype */
+d764 1
+a764 1
+}
+@
+
+
+1.27
+log
+@GPL
+@
+text
+@d141 1
+a141 1
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin,filedata->fmax);
+d161 2
+a162 2
+    thlev = filedata -> fmin + 
+                ((filedata->fmax - filedata->fmin) / 2.0);
+d227 1
+a227 1
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin,filedata->fmax);
+d234 2
+a235 2
+       thlev = filedata->fmin + 
+                ((filedata->fmax - filedata->fmin) / 2.0);
+d406 2
+a407 2
+ if (thlev > filedata -> fmax) thlev = filedata -> fmax;
+ if (thlev < filedata -> fmin) thlev = filedata -> fmin;
+@
+
+
+1.26
+log
+@increased cnrotate limit
+@
+text
+@d9 1
+a9 1
+C **************************************************************************
+d11 24
+a34 7
+C *  COPYRIGHT (C)1991, WADSWORTH CENTER FOR LABORATORIES AND              *
+C *  RESEARCH, NEW YORK STATE DEPARTMENT OF HEALTH, ALBANY, NY 12201.      *
+C *    THE CONTENTS OF THIS DOCUMENT ARE PROPRIETARY TO THE CENTER FOR     *
+C *    LABORATORIES AND RESEARCH AND ARE NOT TO BE DISCLOSED TO OTHERS OR  *
+C *    USED FOR PURPOSES OTHER THAN INTENDED WITHOUT WRITTEN APPROVAL OF   *
+C *    THE CENTER FOR LABORATORIES AND RESEARCH			           *
+C **************************************************************************
+@
+
+
+1.25
+log
+@fixed the bug that coredump happened when click CANCEL and STOP the surface program
+@
+text
+@d100 1
+a100 1
+ if (nsam * nrow * nslice > 256 * 256 * 256)
+@
+
+
+1.24
+log
+@added save single image function
+@
+text
+@d277 4
+a280 1
+   if (filedata && filedata->fp) closefile(filedata);
+d294 3
+d454 4
+a457 2
+    if( filedata && filedata->fp ) closefile(filedata);
+
+@
+
+
+1.23
+log
+@fixed the bug of rotation
+@
+text
+@d64 1
+d70 1
+a71 1
+
+d79 1
+d83 1
+d416 1
+a416 1
+          "Recalls Menu.",
+d430 14
+a443 1
+ if (!(strcmp(*params,"3")))            /* button 3 pushed */ 
+d456 13
+d470 54
+a523 5
+ else                                  /* button 1 or 2 pushed */        
+    {                                       
+    surfmen(sirdit, distit, colorit);
+    }
+ }
+@
+
+
+1.22
+log
+@added additional rotation function
+@
+text
+@d322 1
+a322 1
+        angtmp = cald(ang1, ang2);
+d346 6
+a351 2
+    	xyz_to_eul(&ang2[0], &ang2[1], &ang2[2]);
+        angtmp = cald(ang1, ang2);
+d353 4
+a356 4
+	for (i=0; i<3; i++) {
+	    ang3[i] = *angtmp;
+	    angtmp++;
+	    }
+d358 1
+@
+
+
+1.21
+log
+@static Widget = (Widget)0
+@
+text
+@d56 1
+a56 1
+ extern void   surfmovie    (int);
+d59 5
+a63 5
+ void          surfmen_buta(Widget iw_temp, caddr_t, caddr_t);
+ void          surfmen_butc(Widget iw_temp, caddr_t, caddr_t);
+ void          angle_cb(Widget iw_temp, caddr_t, caddr_t);
+ void          surf_pop(Widget, XEvent *, String *, Cardinal *);
+ void	       setangles(int, float, float, float);
+d72 1
+a72 1
+ static Widget   iw_scales[6],iw_angs[3],iw_angsxyz[3],iw_rc,iw_mov;
+d88 1
+a88 1
+ Widget iw_lab1, iw_labb,  iw_dum;
+d115 1
+a115 1
+    iw_labb  = wid_labelg(iw_rowcolv, 0, cval, -1, -1);
+d178 1
+a178 1
+       for (i=0; i < 3; iw_angs[i++]  = (Widget) 0);
+d183 1
+d284 3
+a286 1
+ int  iang_x,iang_y,iang_z; 	/* xyz angles */
+d312 20
+a331 6
+    	XmScaleGetValue(iw_angsxyz[0],&iang_x);
+    	XmScaleGetValue(iw_angsxyz[1],&iang_y);
+    	XmScaleGetValue(iw_angsxyz[2],&iang_z);
+    	ang_x = (float)iang_x;	phi   = ang_x;
+    	ang_y = (float)iang_y;	theta = ang_y;
+    	ang_z = (float)iang_z;  psi   = ang_z;
+d333 2
+a334 1
+    	xyz_to_eul(&phi, &theta, &psi);
+d338 19
+a356 6
+    	XmScaleGetValue(iw_angs[0],&iphi);
+    	XmScaleGetValue(iw_angs[1],&itheta);
+    	XmScaleGetValue(iw_angs[2],&ipsi);
+    	phi   = (float) iphi;
+    	psi   = (float) ipsi; 
+    	theta = (float) itheta;
+d452 2
+d472 8
+a479 1
+	setangles(XYZ, ang_x,ang_y,ang_z);
+d481 2
+d501 6
+a506 1
+	setangles(EULER, phi,theta,psi);
+d508 4
+d517 2
+a518 1
+void setangles(int angtype, float t1,float t2,float t3)
+d521 2
+d524 6
+a529 4
+    if (angtype) 
+        {          /* elular angtype */
+	XtSetArg(args[0], XmNvalue, t1);
+	XtSetValues(iw_angs[0], args, 1);
+d531 3
+a533 10
+	XtSetArg(args[0], XmNvalue, t2);
+	XtSetValues(iw_angs[1], args, 1);
+
+	XtSetArg(args[0], XmNvalue, t3);
+	XtSetValues(iw_angs[2], args, 1);
+	}
+    else 
+        {        /* xyz angtype */
+	XtSetArg(args[0], XmNvalue, t1);
+	XtSetValues(iw_angsxyz[0], args, 1);
+d535 2
+a536 2
+	XtSetArg(args[0], XmNvalue, t2);
+	XtSetValues(iw_angsxyz[1], args, 1);
+d538 2
+a539 2
+	XtSetArg(args[0], XmNvalue, t3);
+	XtSetValues(iw_angsxyz[2], args, 1);
+@
+
+
+1.20
+log
+@added comments
+@
+text
+@d74 2
+a75 1
+ static Widget   iw_surfmen, iw_pushc, iw_pusha, iw_sc, iw_angle;
+@
+
+
+1.19
+log
+@surfcolor stuff
+@
+text
+@d25 15
+@
+
+
+1.18
+log
+@added surfcolor capability
+@
+text
+@d35 1
+a35 1
+#define MAX_ARGS 2
+d57 1
+a57 1
+ static Widget   iw_scales[6],iw_angs[3],iw_angsxyz[3],iw_rc,iw_mov,iw_angle;
+d59 1
+a59 1
+ static Widget   iw_surfmen, iw_pushc, iw_pusha, iw_sc;
+d109 1
+a109 1
+    iw_dum = wid_labelg(iw_rowcolh1, 0,"   ", -1, -1);
+d117 1
+a117 1
+    /* create toggle box for angle convertion--------- angle convertion */
+d135 2
+a136 6
+    if (colorit)
+       {
+       /* create text box  for colors    --------------------  colors */
+       sprintf(cval,"%d",nvolcolors);
+       iw_colors = wid_textboxb(iw_rowcolv,0,"Number of colors:",cval,10);
+       }
+d138 3
+a140 3
+    n = 0;
+    XtSetArg( args[n], XmNdecimalPoints, 1); n++;
+    XtSetValues( iw_sc, args, n);
+a177 1
+
+d182 3
+a184 1
+    }
+d221 4
+d240 1
+d242 3
+a244 8
+    if (colorit)
+       {
+       XtManageChild(iw_colors); 
+       }
+    else if (!colorit && iw_colors > (Widget) 0)
+       {     /* remove unused colors widget */
+       XtUnmanageChild(iw_colors); 
+       }
+d246 4
+d340 2
+d382 3
+d450 1
+a450 1
+void setangles(int system, float t1,float t2,float t3)
+d454 2
+a455 2
+    if (system) 
+        {          /* elular system */
+d466 1
+a466 1
+        {        /* xyz system */
+@
+
+
+1.17
+log
+@modified and added angle_cb for euler and XYZ conversion
+@
+text
+@a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/surfmen.c,v 1.16 1995/02/02 17:00:58 liy Exp $*/
+d53 1
+d55 1
+d58 1
+a58 1
+ static Widget   iw_thlev, iw_refl, iw_fct, iw_fast;
+d63 1
+a63 1
+ static int      sirdit, distit;
+d68 1
+a68 1
+ void surfmen(int sirditt,int distitt)
+d72 1
+a72 1
+ Widget iw_lab1, iw_lab2, iw_labb;
+d78 1
+a78 1
+ sirdit = sirditt;   distitt = distit;
+d108 2
+a109 2
+    /* create label box for spacing ---------------------  spacing  */
+    iw_lab2 = wid_labelg(iw_rowcolh1, 0,"      ", -1, -1);
+d114 4
+a117 1
+    /* create toggle box for angle convertion------------ angle convertion */
+d120 1
+a120 1
+    /* create horizontal rowcol for threshold and scaling ---------------  */
+d125 1
+a125 1
+       thlev = filedata -> fmin + 
+d131 1
+a131 1
+    /* create scale widget for scaling -------------------- scaling */
+d135 7
+a162 1
+
+a195 1
+
+d217 2
+a218 2
+    ifct = 100.0 * fct;
+    iw_fct  = wid_scale(iw_rowcolh2, iw_fct,  "% Attenuation", 0,100, 
+d239 9
+a248 1
+
+a251 1
+
+d255 2
+a256 3
+ {
+
+  if( filedata && filedata->fp ) closefile(filedata);
+d258 1
+a258 2
+
+}
+d289 3
+a291 2
+    /* XYZ angles */
+    if(XmToggleButtonGadgetGetState(iw_angle)) {
+d301 2
+a302 3
+
+    /* euler angles */
+    else {
+d331 10
+d350 2
+a351 5
+ if(XmToggleButtonGadgetGetState(iw_mov))
+   surfmovie(canrotate);
+/*
+   puts("\asurfmovie requested");
+*/
+d353 2
+a354 2
+  {
+   surf(canrotate,sirdit,distit);
+d362 2
+a363 3
+    actions(iw_win, "surf_pop", surf_pop, "123");
+  }
+
+d366 1
+a367 2
+ /*********** surf_pop **********************************/
+
+a373 1
+
+d377 1
+a377 1
+   if( filedata && filedata->fp ) closefile(filedata);
+d385 1
+a385 1
+    surfmen(sirdit, distit);
+d393 1
+a396 1
+    register   	int  n;           	/* arg count */
+d401 2
+a402 1
+    if (XmToggleButtonGadgetGetState(iw_angle)) {
+d422 2
+a423 2
+    else {
+
+a446 1
+    register   	int  n;           	/* arg count */
+d448 2
+a449 2
+    /* elular system */
+    if(system) {
+d459 2
+a460 3
+    
+    /* xyz system */
+    else {
+@
+
+
+1.16
+log
+@modified (int)Widget again to keep web run on all machines
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/surfmen.c,v 1.15 1995/01/26 20:25:02 liy Exp liy $*/
+d37 2
+d47 1
+d49 1
+d56 1
+a56 1
+ static Widget   iw_scales[6], iw_angs[3], iw_rc, iw_mov;
+d60 1
+d63 1
+d113 3
+d157 1
+a157 1
+       iw_dums = wid_angles(iw_rowcolv, &iw_angs[0], 
+d159 5
+d218 4
+a221 2
+       iw_dums = wid_angles(iw_rowcolv, &iw_angs[0], 
+                        (int) phi, (int) theta, (int) psi, -1,-1);
+d252 1
+d275 21
+a295 6
+    XmScaleGetValue(iw_angs[0],&iphi);
+    XmScaleGetValue(iw_angs[1],&itheta);
+    XmScaleGetValue(iw_angs[2],&ipsi);
+    phi   = (float) iphi;
+    psi   = (float) ipsi; 
+    theta = (float) itheta;
+d371 84
+@
+
+
+1.15
+log
+@modified (int)widget for Onyx
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surfmen.c,v 1.14 1995/01/23 10:00:22 leith Exp liy $*/
+d79 1
+a79 1
+ if (iw_surfmen <= (void *)0)
+@
+
+
+1.14
+log
+@shortened wid_togglemen
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surfmen.c,v 1.13 94/11/17 16:24:20 leith Exp Locker: leith $*/
+d79 1
+a79 1
+ if ((int)iw_surfmen <= 0)
+@
+
+
+1.13
+log
+@added sird choice
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surfmen.c,v 1.12 94/09/30 16:37:39 odesanya Exp Locker: leith $*/
+d105 1
+a105 1
+    iw_mov = wid_togglemen (iw_rowcolh1,0,"MOVIE",False,0,0);
+@
+
+
+1.12
+log
+@added generation of movie sequences option
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surfmen.c,v 1.11 94/09/09 09:22:09 leith Exp $*/
+a28 1
+#include "common.h"
+d33 3
+a39 19
+ extern Widget wid_angles   (Widget, Widget[3], int, int, int, int, int);
+ extern Widget wid_scale    (Widget, Widget, char *, 
+                             int, int, int,  int, int, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_togglemen(Widget, Widget, char *, int, int, int);
+ extern Widget wid_textboxb (Widget, Widget, char *, char *,  int);
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_win      (Widget, Widget iw_its[6], int, int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern int    closefile    (FILEDATA *);
+ extern void   spout        (char *);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+ extern void   expos_cb     (Widget, caddr_t, caddr_t);
+ extern void   showbutx     (char *, char *, char *, int);
+ extern void   actions      (Widget, char *, void (*)(), char *);
+ extern void   surf         (int);
+d57 1
+a57 1
+ /********************   surfmen   ****************************/
+d59 1
+a59 1
+ void surfmen(void)
+d61 2
+d70 3
+d301 1
+a301 1
+   surf(canrotate);
+d335 1
+a335 1
+    surfmen();
+@
+
+
+1.11
+log
+@removed unused exter Widget wid_labelgt declaration
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/alwyn/usr1/web/src/RCS/surfmen.c,v 1.10 94/06/23 15:02:02 odesanya Exp Locker: leith $*/
+d57 1
+d69 1
+a69 1
+ static Widget   iw_scales[6], iw_angs[3], iw_rc;
+d116 3
+d306 8
+a313 1
+ surf(canrotate);
+d315 2
+a316 2
+ /* display menu */
+ showbutx("Recalls Menu.", 
+d320 3
+a322 2
+ /* define buttons for menu retrieval or stop */
+ actions(iw_win, "surf_pop", surf_pop, "123");
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/surfmen.c,v 1.8 94/05/27 15:25:49 odesanya Exp $*/
+a56 3
+
+ extern Widget wid_labelgt   (Widget, Widget, char *, int, int);
+
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d236 1
+a236 1
+  if( filedata->fp ) closefile(filedata);
+d330 2
+@
+
+
+1.8
+log
+@added prototype for closefile and deleted unnecessary code
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/src/RCS/surfmen.c,v 1.7 94/05/12 09:09:57 leith Exp $*/
+d174 51
+@
+
+
+1.7
+log
+@lekans cancel button fix
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfmen.c,v 1.6 94/01/21 11:24:48 leith Exp $*/
+d50 1
+d123 1
+a123 2
+    if (thlev < filedata -> fmin || thlev > filedata->fmax)
+        thlev = filedata -> fmin + 
+a173 51
+    }
+
+ else
+    {   /* surface menu widget already exists, update it */
+
+    /* create label box for image range ---------------------  range  */
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin,filedata->fmax);
+    iw_lab  = wid_labelg(iw_rowcolh1, iw_lab, cval, -1, -1);
+
+
+    /* create text box for threshold ---------------------  threshold */
+    if (!gotsurf)
+       {
+       /* must reset default threshold */
+       thlev = filedata->fmin + 
+                ((filedata->fmax - filedata->fmin) / 2.0);
+
+       sprintf(cval,"%f",thlev);
+       iw_thlev = wid_textboxb(iw_rc,iw_thlev,"Threshold:",cval,10);
+       }
+
+    /* create scale widget for scaling -------------------- scaling */
+    iscale = scaleval * 10;
+    iw_sc = wid_scale(iw_rc,iw_sc,"Scale: ",10,200,iscale,250,50,-1,-1); 
+
+    /* create scale widget for % reflection -------------------- refl */
+    irefl   = 100.0 * refl;
+    iw_refl = wid_scale(iw_rowcolh2, iw_refl, "% Reflection ", 0,100, 
+                        irefl, 180, 50, -1, -1);
+
+    /* create scale widget for fct  ----------------------------- fct */
+    ifct = 100.0 * fct;
+    iw_fct  = wid_scale(iw_rowcolh2, iw_fct,  "% Attenuation", 0,100, 
+                        ifct, 225, 50, -1, -1);
+
+    /* create scale widgets for windowing volume ------------- scales */
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], nsam, nrow, nslice);
+
+    if (canrotate)
+       {
+       /* create scale widgets for angles -------------------- angles */
+       iw_dums = wid_angles(iw_rowcolv, &iw_angs[0], 
+                        (int) phi, (int) theta, (int) psi, -1,-1);
+       }
+    else
+       {  /* create non-rotate label */
+       for (i=0; i < 3; i++)
+          XtUnmanageChild(iw_angs[i]);
+       iw_lab1  = wid_labelg(iw_rowcolv, iw_lab1, 
+                             "Too large to rotate", -1, -1);
+       }
+@
+
+
+1.6
+log
+@added viewing direction label
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfmen.c,v 1.5 94/01/12 12:32:33 leith Exp Locker: leith $*/
+d62 1
+d173 1
+a173 1
+                        fin_cb,fin_cb ,surfmen_buta, NULL);
+d230 10
+@
+
+
+1.5
+log
+@removed thlev=.7 debugging statment
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfmen.c,v 1.4 93/12/31 13:39:07 leith Exp Locker: leith $*/
+d80 1
+a80 1
+ Widget iw_lab1, iw_lab2;
+d82 1
+a82 1
+ char   cval[40];
+d101 4
+@
+
+
+1.4
+log
+@added scaling by Lekan
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfmen.c,v 1.3 93/11/24 12:48:37 leith Exp $*/
+a119 2
+
+         thlev = 0.7;
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfmen.c,v 1.2 93/11/24 12:13:01 leith Exp Locker: leith $*/
+d55 1
+a55 1
+ extern void   surf         (int,int);
+d66 1
+a66 1
+ int      fastsurf, canrotate;
+d69 1
+a69 2
+ static Widget   iw_scales[6], iw_angs[3];
+ static Widget   iw_surfmen, iw_pushc, iw_pusha;
+d71 1
+d79 1
+a79 1
+ int    i, ifct,irefl;
+d83 1
+a99 1
+
+a100 1
+    fastsurf = TRUE;
+d112 2
+a113 2
+    /* create toggle box for fast  ----------------------------- fast */
+    iw_fast = wid_togglemen(iw_rowcolh1,0,"Fast",fastsurf,-1,-1);
+a114 1
+
+d124 1
+a124 1
+    iw_thlev = wid_textboxb(iw_rowcolv,0,"Threshold:",cval,10);
+d126 3
+d130 4
+d148 1
+a148 2
+    for (i=0; i < 6; iw_scales[i++]  = (Widget) 0)
+        ;
+d155 1
+a155 2
+       for (i=0; i < 3; iw_angs[i++]  = (Widget) 0)
+           ;
+d189 1
+a189 1
+       iw_thlev = wid_textboxb(iw_rowcolv,iw_thlev,"Threshold:",cval,10);
+d192 4
+d204 1
+a204 1
+                        ifct, 180, 50, -1, -1);
+d233 1
+a233 1
+ int  iphi, itheta, ipsi, irefl, ifct;
+d264 4
+d274 1
+a274 1
+ fct = (float) ifct / 100.0;
+a275 3
+ fastsurf = XmToggleButtonGadgetGetState(iw_fast);
+ 
+
+d292 1
+a292 1
+ surf(fastsurf,canrotate);
+@
+
+
+1.2
+log
+@improved
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/surfmen.c,v 1.1 93/11/10 10:11:33 leith Exp Locker: leith $*/
+a214 1
+
+d281 1
+a281 1
+ XmUpdateDisplay(iw_top);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+d55 1
+a55 1
+ extern int    surf         (int,int);
+a221 1
+
+a228 1
+
+d233 1
+a233 4
+    {
+    spout("ENDING COL MUST BE > STARTING COL");
+    return;
+    }
+d239 1
+a239 4
+    {
+    spout("ENDING ROW MUST BE > STARTING ROW");
+    return;
+    }
+d245 1
+a245 4
+    {
+    spout("ENDING SLICE MUST BE > STARTING SLICE");
+    return;
+    }
+d274 1
+d278 9
+a291 3
+ /* refresh screen */
+  expos_cb(NULL,NULL,NULL); 
+
+d293 1
+a293 1
+  actions(iw_win, "surf_pop", surf_pop, "123");
+a294 3
+ /* display surfaces */
+ surf(fastsurf,canrotate);
+
+a295 1
+
+@

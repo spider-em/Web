@@ -1,0 +1,488 @@
+head	1.1;
+access;
+symbols
+	pre-tilt-improve:1.1
+	pre_surf_fromtop:1.1
+	pre_neednewmap:1.1
+	pre_apppluss_remove:1.1
+	pre_tiltpair_chng:1.1;
+locks;
+comment	@ * @;
+
+
+1.1
+date	2005.10.18.16.59.54;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@GPL
+@
+text
+@
+
+/*
+C++************************************************************************
+C
+C PROJMEN  -- CREATED  May 2004 ArDean Leith
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* along with this program; if not, write to the                     *
+ C=* Free Software Foundation, Inc.,                                   *
+ C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=*                                                                   *
+C **********************************************************************
+C
+C    PROJMEN
+C
+C    PURPOSE:         DISPLAY PROJECTION MENU
+C
+C    CALLED BY:       IMAGEMEN
+C
+C        v----------------imnum=1---------------------------^
+C        v                                                  ^
+C    imagemen --> wid_files --> imagemen_cb ---> imagemen1 -^
+C                                  v
+C                                  v (imnum=2)
+C                                  v
+C                                projmen --> projmen_buta --> projmovie
+C                                  ^           v
+C                                  ^           v
+C                                  ^         proj ---------> projcolor
+C                                  ^           v                v
+C                                  ^---------proj_pop        redvol
+C                                              v
+C                                             (end)   
+C
+C***********************************************************************
+*/
+
+#include <Xm/Scale.h>
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+
+#include "common.h"
+#include "routines.h"
+
+#define MAX_ARGS 3
+#define EULER	 1
+#define XYZ	 0
+
+ /* function prototypes */
+ extern void   	projmovie    (int);
+ extern void    angle_cb(Widget iw_temp, caddr_t, caddr_t);
+ extern void    setangles(int, float, float, float, float, float, float);
+
+ /* internal function prototypes */
+ void          	projmen_buta(Widget iw_temp, caddr_t, caddr_t);
+ void          	projmen_butc(Widget iw_temp, caddr_t, caddr_t);
+ void          	proj_pop(Widget, XEvent *, String *, Cardinal *);
+ void          	saveproj_cb(Widget iw_temp, caddr_t, caddr_t);
+ 
+ /* external common variables */
+ float                  phi, theta, psi ;
+ int                    canrotate;
+ extern unsigned char * refmap;
+
+ /* internal common variables */
+ static Widget   iw_scales[6],iw_angs[6],iw_angsxyz[6],iw_rc,iw_mov;
+ static Widget   iw_pushc, iw_pusha, iw_sc, iw_angle;
+ static Widget   iw_projmen = (Widget) 0;
+ static Widget   iw_lab, iw_rowcolh1, iw_rowcolh2, iw_rowcolv;
+ static Widget	 iw_euler, iw_xyz;
+ static Widget	 iw_text;		/* filename widget */
+
+ static int      maxit;
+ static float	 ang_x, ang_y, ang_z;
+ static int	 first=TRUE;
+
+ /***************************   projmen   ****************************/
+
+ void projmen(int maxitt)
+
+ { 
+ int    i, n, iscale;
+ Widget iw_lab1, iw_labb1, iw_labb2,  iw_dum;
+ Widget iw_dums;
+ char   cval[50];
+ Arg    args[2];
+
+ /* set flags for max display */
+ maxit = maxitt; 
+
+ canrotate = TRUE;
+ if (nsam * nrow * nslice > 500 * 500 * 500)
+    {   /* probably too big to allocate rotation memory */
+    canrotate = FALSE;
+    }
+
+ if (iw_projmen <= (Widget)0)
+    {   /* create projace menu widget first */
+
+    iw_projmen  = wid_dialog(iw_win, 0, "Projection options", -1, -1);
+    iw_rowcolv  = wid_rowcol(iw_projmen, 'v', -1, -1);
+
+    phi      = 0.0;
+    theta    = 0.0;
+    psi      = 0.0;
+    gotproj  = FALSE;
+
+    /* create label box for view dir.  ---------------------  label  */
+    sprintf(cval," Viewed along rows of volume (nrow x nslice plane)");
+    iw_labb1  = wid_labelg(iw_rowcolv, 0, cval, -1, -1);
+
+    /* create horizontal rowcol for range and fast -----------------  */
+    iw_rowcolh1  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    /* create label box for image range ---------------------  range  */
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin,filedata->fmax);
+    iw_lab  = wid_labelg(iw_rowcolh1, 0, cval, -1, -1);
+
+    /* create label box for spacing -----------------------  spacing  */
+    wid_labelg(iw_rowcolh1, 0,"   ", -1, -1);
+
+    /* create toggle box for movie ---------------------------- movie */
+    iw_mov = wid_togmen (iw_rowcolh1,0,"MOVIE",False,0,0);
+
+    /* create label box for spacing -----------------------  spacing  */
+    iw_dum = wid_labelg(iw_rowcolh1, 0,"   ", -1, -1);
+
+    /* create toggle box for angle convertion--------- angle conversion */
+    iw_angle = wid_toggleg (iw_rowcolh1,0,"Euler",False,angle_cb,"E",0,0);
+
+    /* create horizontal rowcol for threshold and scaling ------------  */
+    iw_rc  = wid_rowcol(iw_rowcolv, 'h', -1, -1);
+
+    /* create scale widget for scaling ---------------------- scaling */
+    iscale = scaleval * 10;
+    iw_sc = wid_scale(iw_rc, 0, "Scale: ",10,200,iscale,250,50,-1,-1); 
+
+    XtSetArg( args[0], XmNdecimalPoints, 1);
+    XtSetValues(iw_sc, args, 1);
+
+    /* create scale widgets for windowing volume ------------- scales */
+    for (i=0; i < 6; iw_scales[i++]  = (Widget) 0);
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], nsam, nrow, nslice);
+
+    if (canrotate)
+       {
+       /* create scale widgets for angles -------------------- angles */
+       for (i=0; i < 6; iw_angs[i++]  = (Widget) 0);
+       iw_euler = wid_angles(iw_rowcolv, &iw_angs[0], EULER,
+                         (int) phi, (int) theta, (int) psi, -1,-1);
+
+       /* create a sub-widget of XYZ angles for later use */
+       for (i=0; i < 6; iw_angsxyz[i++]  = (Widget) 0);
+       iw_xyz = wid_angles(iw_rowcolv, &iw_angsxyz[0],XYZ, 
+                         (int) ang_x, (int) ang_y, (int) ang_z, -1,-1);
+       XtUnmanageChild(iw_xyz);
+       }
+    else
+       {  /* create non-rotate label */
+       for (i=0; i < 3; i++)
+          XtUnmanageChild(iw_angs[i]);
+       iw_lab1  = wid_labelg(iw_rowcolv, 0, "Too large to rotate", -1, -1);
+       }
+
+    /* create box for apply ----------------------------------- apply */
+    iw_dums = wid_stdbut(iw_rowcolv, iw_projmen, 
+                        &iw_dums, &iw_pushc, &iw_pusha,  "CA",
+                        fin_cb, projmen_butc, projmen_buta, NULL);
+    }   /* (iw_projmen <= (Widget)0)  */
+
+
+
+ else
+    {   /* projace menu widget already exists, update it */
+
+    /* create label box for image range ---------------------  range  */
+    sprintf(cval,"Range:     %f ...%f",filedata->fmin,filedata->fmax);
+    iw_lab  = wid_labelg(iw_rowcolh1, iw_lab, cval, -1, -1);
+
+    /* create scale widget for scaling -------------------- scaling */
+    iscale = scaleval * 10;
+    iw_sc = wid_scale(iw_rc,iw_sc,"Scale: ",10,200,iscale,250,50,-1,-1); 
+
+
+    /* create scale widgets for windowing volume ------------- scales */
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], nsam, nrow, nslice);
+
+    if (canrotate)
+       {
+       /* create scale widgets for angles -------------------- angles */
+       if (XmToggleButtonGadgetGetState(iw_angle)) 
+	   XtManageChild(iw_xyz);
+	else
+	   XtManageChild(iw_euler);       
+       }
+    else
+       {  /* create non-rotate label */
+       for (i=0; i < 3; i++)
+          XtUnmanageChild(iw_angs[i]);
+       iw_lab1  = wid_labelg(iw_rowcolv, iw_lab1, 
+                             "Too large to rotate", -1, -1);
+       }
+    }   /* else */
+
+ XtManageChild(iw_projmen);
+ }
+
+ /*********** cancel button callback **********************************/
+
+ void projmen_butc(Widget iw_temp, caddr_t data, caddr_t call_data)
+   {
+	if (first) {
+	    if( filedata && filedata->fp ) 
+		closefile(filedata);
+	}
+   XtUnmanageChild(iw_projmen);
+   }
+
+ /*********** accept button callback **********************************/
+
+ void projmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+ char   *string;
+ int    iphi, itheta, ipsi, iscale;
+ int    iang_x,iang_y,iang_z; 		/* xyz angles */
+ int    i, iang[6];
+ float  ang1[3], ang2[3], ang3[3], *angtmp, fiang[6];
+
+ /* set the first open flag*/
+ first = FALSE;
+ 
+ /* get nsam1 & nsam2 */
+ XmScaleGetValue(iw_scales[0],&nsam1);
+ XmScaleGetValue(iw_scales[1],&nsam2);
+ if (nsam2 < nsam1)
+    { spout("*** ENDING COL MUST BE > STARTING COL"); return; }
+
+ /* get nrow1 & nrow2 */
+ XmScaleGetValue(iw_scales[2],&nrow1);
+ XmScaleGetValue(iw_scales[3],&nrow2);
+ if (nrow1 > nrow2)
+    { spout("*** ENDING ROW MUST BE > STARTING ROW"); return; }
+
+ /* get nslice1 & nslice2 */
+ XmScaleGetValue(iw_scales[4],&nslice1);
+ XmScaleGetValue(iw_scales[5],&nslice2);
+ if (nslice1 > nslice2)
+    { spout("*** ENDING SLICE MUST BE > STARTING SLICE"); return; }
+
+ if (canrotate)
+    {
+    /* get rotation angles */
+   
+    if (XmToggleButtonGadgetGetState(iw_angle))
+        {    /* XYZ angles */
+        for (i=0; i<6; i++) 
+    	    XmScaleGetValue(iw_angsxyz[i],&iang[i]);
+	    
+        for (i=0; i<3; i++) {
+	    ang1[i] = (float)iang[i];
+	    ang2[i] = (float)iang[i+3];
+	    }
+
+    	xyz_to_eul(&ang1[0], &ang1[1], &ang1[2]);
+    	xyz_to_eul(&ang2[0], &ang2[1], &ang2[2]);
+        angtmp = cald(ang2, ang1);
+	for (i=0; i<3; i++) {
+	    ang3[i] = *angtmp;
+	    angtmp++;
+	    }
+
+	phi = ang3[0]; theta = ang3[1]; psi = ang3[2];
+	
+    	eul_to_xyz(&ang3[0], &ang3[1], &ang3[2]);
+	ang_x = ang3[0]; ang_y = ang3[1]; ang_z = ang3[2];
+
+        /* reset the angle values */
+        setangles(XYZ, ang_x, ang_y, ang_z, 0, 0, 0);
+    	}
+    else
+        {    /* euler angles */
+        for (i=0; i<6; i++)
+    	    XmScaleGetValue(iw_angs[i],&iang[i]);
+	    
+        for (i=0; i<3; i++) {
+	    ang1[i] = (float)iang[i];
+	    ang2[i] = (float)iang[i+3];
+	    }
+
+	if (ang2[0]==0 && ang2[1]==0 && ang2[2]==0) {	/* increment is 0 */
+	    phi = ang1[0]; theta = ang1[1]; psi = ang1[2];
+	    }
+	else {
+    	    xyz_to_eul(&ang2[0], &ang2[1], &ang2[2]);
+            angtmp = cald(ang2, ang1);
+
+	    for (i=0; i<3; i++) {
+	    	ang3[i] = *angtmp;
+	    	angtmp++;
+	        }
+	phi = ang3[0]; theta = ang3[1]; psi = ang3[2];
+	}
+
+        /* reset the angle values */
+        setangles(EULER, phi, theta, psi, 0, 0, 0);
+	}
+    }
+
+ /* get scaling value */
+ XmScaleGetValue(iw_sc,&iscale);
+ scaleval = iscale/10.0;
+
+ XtUnmanageChild(iw_projmen);
+
+ /* refresh screen */
+ expos_cb(NULL,NULL,NULL); 
+ XFlush(idispl);
+
+ XmUpdateDisplay(iw_win);
+
+ /* display projaces */
+ if (XmToggleButtonGadgetGetState(iw_mov))
+     projmovie(canrotate);
+ else
+   {
+   proj(canrotate,sirdit,distit,colorit);
+
+   /* display menu */
+   showbutx("Recalls Menu.", 
+          "Save the current image.",
+          "Stop projecting.",FALSE); 
+
+   /* define buttons for menu retrieval or stop */
+   actions(iw_win, "proj_pop", proj_pop, "123");
+   }
+ }
+
+ /*************************** proj_pop **********************************/
+
+ void proj_pop(Widget iw_t, XEvent *event, String *params,
+                   Cardinal *num_params)
+ {
+
+ if (!(strcmp(*params,"1")))            /* button 1 pushed */ 
+    {                                       
+    projmen(maxit);
+    }
+
+ else if (!(strcmp(*params,"2")))            /* button 2 pushed */ 
+    {
+    /* input the filename*/
+    iw_text = wid_text(iw_win, (Widget)0, "Enter the filename:", docnam,
+                    saveproj_cb, NULL, ixulw+nsamw, iyulw+nroww);
+    }
+                                       
+ else if (!(strcmp(*params,"3")))	     /* button 3 pushed */ 
+    {
+    /* uninstall translations */
+    XtUninstallTranslations(iw_t);
+ 
+    if( filedata && filedata->fp!=NULL)	{
+	closefile(filedata);	   
+	first = TRUE;
+    }
+    /* return to narmal colormap */
+    setamap(map);
+
+    /* unmanage information box */
+    showbutx("","","",TRUE);
+    }
+ }
+
+ /*************************** saveproj_cb **********************************/
+ void saveproj_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ {
+   float        jslope, kslope;
+   int		nsams,nrows;
+   float        *bufs;
+   int          i, j, k, kk, nlet, numfil, irec;
+   FILEDATA     *filedatat;
+   char		output[100];
+
+   XmSelectionBoxCallbackStruct * cbs;
+
+   cbs = (XmSelectionBoxCallbackStruct *) call_data;
+
+   /* check the input name */
+   strcpy(docnam,extractstr(cbs -> value));
+
+   /* check input filename */
+   if (strlen(docnam) == 0) 
+       {
+       spout("*** Must specify name for the file.");
+       return;
+       }
+
+   /* add datexc to docnam if not already there */
+   if (strstr(docnam,datexc) == 0)
+       {
+        strcat(docnam,".");
+        strcat(docnam,datexc);
+       }                      
+         
+  XtUnmanageChild( iw_text );
+
+  /* find projection image size */
+  jslope = (1.0 - nrow*scaleval)/(1.0 - nrow);
+  kslope = (1.0 - nslice*scaleval)/(1.0 - nslice);
+  nsams  = (nrow2 - nrow1)*jslope + 1;
+  nrows  = (nslice2 - nslice1)*kslope + 1;
+
+  /* locate the space for the saving image */
+  if((bufs = (float *) malloc(sizeof(float)*nsams)) == NULL)
+  {
+    spout("*** Allocation failed for writing to file in projmovie!");
+    return;
+  }
+
+  /* open new output file */
+  filedatat = opennew(docnam, nsams, nrows, 1, 1, "u");  
+
+  /* put newimage in output file */
+  kk = 0;
+  for (irec = 1; irec <= nrows; irec++)
+     {
+     for(k = 0; k < nsams; k++) bufs[k] = (float) refmap[kk++];
+
+     if (!wrtlin(filedatat, bufs, nsams, irec)) 
+        {
+	sprintf(output,"*** Error writing to file in %s!", docnam);
+	spout(output);
+        closefile(filedatat); free(bufs); return;
+        }
+     }
+
+  closefile(filedatat);     
+  free(bufs);
+}
+
+@
