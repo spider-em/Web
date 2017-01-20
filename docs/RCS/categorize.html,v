@@ -1,0 +1,238 @@
+head	1.5;
+access;
+symbols
+	pre_24bitonly:1.4;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2017.01.13.14.51.10;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2008.09.08.12.41.08;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2001.08.08.16.19.59;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	99.10.08.18.10.37;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	99.08.04.16.52.37;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@<html>
+<head>
+  <title>Web: Categorize Images </title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web: Categorize Images 
+</h1> 
+<p><hr /> <p>
+
+
+<p>
+<h3>Interactively categorize images from an image montage.</h3>
+
+Displays montage of images.  The montage can be created from:
+
+<dl>
+<dt> A series of sequentially named images. </dt>
+<dd> Web Asks for beginning image file name.  Then Web asks
+     for the Last File number in the montage.  One can optionally
+     specify the starting location for the first image and the
+     number of frames (images) displayed on a row. Note: This
+     does not work for a series of stacked images. If you have
+     stacked images use the next option.  If you do not have a
+     selection document file you can create one using the SPIDER : 
+     <a href="../../spider/docs/man/doccreate.html">DOC CREATE</a>
+     operation.
+<dd><p>
+
+<dt> A selection document file list containing image or stacked
+     image numbers.</dt>
+<dd> Web Asks for document file name.  The document file
+     must have the image numbers in the first register (not in the
+     key).  Then Web asks for the Image file template, which is the
+     template for naming the series of files whose numbers are listed
+     in the selection document file.  This template can either be for a
+     series of individual images or for a single stack (e.g.: AVG*** or
+     avgstk@@***).  One can optionally limit the range of images
+     selected from the document file.  Also one can optionally specify
+     the starting location for the first image and the number of frames
+     (images) displayed on a row.  <dd> </dl>
+
+<p>
+     Web now asks for an output SPIDER document file name.  The
+     categorizations will be written into this file.  Web also asks the
+     starting key number for the document file and the number of
+     categories which can be assigned.</p>
+
+<p>  User can now assign a category to any image in the 
+     montage by using the left mouse button to select images.  
+     The current 
+     category number is toggled using the middle mouse button.
+     The image file numbers and their corresponding categories are 
+     stored in a document file. 
+</p>
+
+<hr /> 
+
+<small>
+Last updated : 9/8/08 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ArDean Leith
+</small>
+
+</body>
+</html>
+@
+
+
+1.4
+log
+@doc create use
+@
+text
+@d3 1
+a3 1
+<title>Web: Categorize Images </title>
+d7 8
+d60 3
+a62 2
+<hr>
+<small> 
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d1 8
+a8 9
+<HTML>
+<HEAD>
+<TITLE>WEB: CATEGORIZE IMAGES </TITLE>
+</HEAD>
+<BODY>
+
+<P>
+<P>
+<H3>Interactively categorize images from an image montage</H3>
+d12 3
+a14 3
+<DL>
+<DT> A Sequential List </DT>
+<DD> If so, Web Asks for beginning image file name.  Then Web asks
+d17 20
+a36 1
+     number of frames (images) displayed on a row. <DD><P>
+d38 1
+a38 15
+<DT> From a selection document file list containing image numbers.</DT>
+<DD> If so, Web Asks for document file name.  The document file
+     must have the image numbers in the first register (not in the key).
+     Then Web asks for the Image file template, which is the
+     template for naming the series of files whose numbers are listed in
+     the selection document file.  This template can either be for
+     a series of individule image or for a single stack
+     (e.g.: AVG*** or avgstk@@***).  
+     One can optionally limit the range of images selected from the
+     document file. 
+     Also one can optionally specify the starting location for the first image and the
+     number of frames (images) displayed on a row.  <DD>
+</DL>
+ 
+<P>
+d40 3
+a42 3
+     categorizations will be written into this file.  Web also
+     asks the starting key number for the document file and the 
+     number of categories which can be assigned.</P>
+d44 1
+a44 1
+<P>  User can now assign a category to any image in the 
+d50 1
+a50 1
+</P>
+d52 3
+a54 3
+<HR>
+<SMALL> 
+Last updated : 8/8/01 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+d56 1
+a56 1
+</SMALL>
+d58 2
+a59 2
+</BODY>
+</HTML>
+@
+
+
+1.2
+log
+@stacks supported
+@
+text
+@d11 1
+a11 1
+Displays montage of images.  The montage can be from:
+d16 1
+a16 1
+     for the Last File number in the montage, and one can optionally
+d20 1
+a20 1
+<DT> From a selection document file list </DT>
+d24 7
+a30 4
+     template for the series of files whose numbers are listed in
+     the selection document file (e.g.: AVG*** or AVGSTACK@@***)  
+     One can optionally
+     specify the starting location for the first image and the
+d37 1
+a37 1
+     asks the starting key number for the doc. file and the 
+d50 1
+a50 1
+Last updated : 10/8/99 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d25 1
+a25 1
+     the selection document file e.g.: AVG***  
+d47 1
+a47 1
+Last updated : 8/3/99 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+@

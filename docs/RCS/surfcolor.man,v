@@ -1,0 +1,78 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	97.08.11.16.01.36;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+Colored Surface-- Display a surface view with colored voxels        
+                                                            6/21/95
+
+PURPOSE:  Display a shaded surface from a volume and color the voxels
+          which appear on the surface according to colors specified in
+          a second color volume.
+
+ USAGE:   Similar to the surface operation,  except that the user is
+          prompted for both the SPIDER volume to be surfaced and a 
+          second SPIDER volume which contains a color assignment for 
+          each voxel.  Both volumes must have the same dimensions.
+
+          Colors should be 0 --> 7.  The more colors requested, the
+          less the intensity range available within each color.  For 
+          three colors about 58 intensities are available.  
+          Currently the opteration will load a default color assignment
+          as follows:  0 = blue,  1 = green,   2 = red,  3 = yellow,
+                       4 = cyan,  5 = magenta, 6 = white. 
+          The actual color can be changed by creating and loading
+          a colormap having a intensity ramp for each of the desired 
+          colors.  For example, with the following web output:
+          Number of colors:3   Initial lut index: 64 Indices/color: 58;
+          you should create a color-look-up-table having
+          colors for specified indices as follows:
+                 64  r0  g0 b0     | 
+                 65  r1  g1 b1     |
+                  .                |  ( intensity ramp for color zero)
+                  .                |  ( r*,g* & b* ar in range 0...255)
+                121  r58 g58 b58   |
+
+                122  r0  g0 b0     | 
+                123  r1  g1 b1     |
+                  .                |  ( intensity ramp for color one)
+                  .                |  ( r,g, & b values are different
+                179  r58 g58 b58   |     than above)
+
+                180  r0  g0 b0     | 
+                181  r1  g1 b1     |
+                  .                |  ( intensity ramp for color two)
+                  .                |
+                137  r58 g58 b58   |
+
+
+          Load the color-ramp using the "LUT" operation under "OPTIONS"
+
+
+NOTE      The operation can also accept a arbitrarily ranged color volume
+          and will automatically partition the color range into the number of
+          colors requested in the surface munu.  However I do not recommend 
+          this method of use, as it may disappear in the future.
+
+NOTE:     This operation is still under construction and may not work 
+          properly  twice in the same WEB session.  If you have problems 
+          please restart WEB.
+@

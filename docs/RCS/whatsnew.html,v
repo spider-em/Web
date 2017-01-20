@@ -1,0 +1,1048 @@
+head	1.23;
+access;
+symbols
+	pre_24bitonly:1.19;
+locks; strict;
+comment	@# @;
+
+
+1.23
+date	2017.01.13.15.04.50;	author leith;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2015.06.11.15.03.40;	author leith;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2012.11.09.20.10.01;	author leith;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2011.07.18.14.32.17;	author leith;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2008.08.15.20.02.51;	author leith;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2007.12.20.17.49.04;	author leith;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2007.12.05.15.58.21;	author leith;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2005.10.20.15.12.23;	author leith;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.03.18.20.59.05;	author leith;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2001.12.19.14.48.27;	author leith;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2001.12.14.19.28.43;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2001.11.05.16.04.31;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2001.09.14.18.15.23;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2001.09.04.19.34.31;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2001.08.10.15.14.30;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	99.10.08.18.10.22;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	99.09.14.14.13.03;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	99.08.04.17.57.11;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	99.08.04.16.52.28;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.10.21.12.59.52;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.02.10.20.52.13;	author liy;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	97.12.31.18.45.07;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	97.08.11.16.01.36;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.23
+log
+@*** empty log message ***
+@
+text
+@<html>
+<head>
+   <title>Web : Whats New </title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web : Whats New 
+</h1> 
+<p><hr /> <p>
+   
+<dl>
+
+<dt><b><a href="particles.html">Particle picking improved.</a></b></dt>
+  <dd>Can start picking of particles from either tilted or untilted image.</dd>
+  <dd>Reports current tilt for first 32 particles picked.</dd>
+  <dd>6/11/15 AL </dd>
+<p />
+
+<dt><b>Updated</b></dt>
+  <dd>New convenience operations on menu line,  decreased colormap flashing, 
+      improved tilt pair particle picking, altered colormap, misc. bug fixes on
+      24 bit color platforms.  Web for 8 bit color retired.</dd>
+  <dd>7/20/11 AL</dd>
+<p />
+
+
+<p>
+<dt> <b> <i>Web</i> Now released under GPL "Free Software" license.</b></dt>
+  <dd> <i>Web</i> is now released under 
+  <a href="copyright.html">GPL license</a>.</dd>
+  <dd> 10/20/05  AL </dd>
+</p>
+
+<p>
+<dt> <b> <i>Web</i> supports either byte ordering now.</b></dt>
+  <dd> <i>Web</i> will read SPIDER files of either byte ordering now. </dd>
+  <dd> 3/20/03  AL </dd>
+</p>
+
+<p>
+<dt> <b> Java Web available  
+     <a href="jweb-inst-linux.html">for Linux</a> and 
+     <a href="jweb-inst-win.html">Windows</a></b> </b></dt>
+        <dd> New</dd>
+        <dd> 10/20/01  BR </dd>
+</p>
+
+<p>
+<dt> <b>The <a href="./movie.html">Movie </a> operation has been improved.</b></dt>
+  <dd> Added a "Large Images" sub-operation which
+       displays <i>movies</i> of a series of images or a volume.
+  </dd>
+  <dd> 9/4/01  AL </dd>
+</p>
+
+<p>
+<dt> <b><i>Web</i> has been <a href="./web-inst-linux.html">
+     modified for Use on Linux 24 bit Visual</a> </b> </b></dt>
+  <dd> Modifications provided by Dr. Erik Vogan allow use of WEB
+       on a 24 bit Visual under Linux.</dd>
+  <dd> 8/10/01  AL </dd>
+</p>
+
+<p>
+<dt> <b>The <a href="./docmontage.html">Montage from document file</a> 
+ and        <a href="./categorize.html">Categorize from document file</a>
+     operations handle image stacks.</b> </b></dt>    
+        <dd> Stacked images can be displayed by specifying appropriate
+        template  (e.g. <I> stackfile@@***</I>) for the image name</dd>
+        <dd> 10/7/99  AL </dd>
+</p>
+
+<p>
+<dt> <b>The "Image display" operation now handles image stacks.</b> </b></dt>    
+        <dd> A single stacked image can be displayed by specifying the
+        stacked image name (e.g. <i> stackfile@@34) </i> </dd>
+        <dd> 10/7/99  AL </dd>
+</p>
+
+<p>
+<dt> <b>"Pixel" and "Profile" operations work with magnified images.</b> </dt>    
+        <dd> The Pixel and Profile Operations now work with magnified
+             or shrunken images.</dd>
+        <dd> 9/14/99  AL </dd>
+</p>
+
+<p>
+<dt> <b>Montage and categorize from document file.</b> </dt>    
+        <dd> The filenumbers for the 
+            <a href="./docmontage.html">"Montage from document file"</a> 
+        and <a href="./categorize.html">"Categorize from document file"</a> 
+        operations must be in the first register (not keys) of the document file now.
+        It is now possible to limit the filenumbers to be displayed.</dd>
+        <dd> 8/06/99  AL </dd>
+</p>
+
+<p>
+
+<dt> <b>CTF from Doc. File</b> </dt>    
+        <dd> A new operation "CTF from Doc. File" has been added which
+        interactively studies the Contrast Transfer Function curve. 
+        <a href="./ctf.html"> Details</a>.</dd>
+        <dd> 7/06/99  AL </dd>
+</p>
+
+<p>
+<dt> <b>General Filter</b> </b></dt>    
+        <dd> A new operation "General Filter" has been added which
+        interactively creates a mask based on a power spectrum
+        which can be used for Fourier filtering. 
+        <a href="./foufilt.html"> Details</a>.</dd>
+        <dd> 10/19/98  AL </dd>
+</p>
+
+<p>
+<dt> <b>Display stack images</b> </dt>     
+        <dd>  Now, WEB can display the stack images by using "Image" 
+              operation. WEB will automatically 
+              check if the input file is a stack file or not. 
+              If "display the image name" has been selected, the image
+              number in stack will been displayed under each image 
+              as "@@012". The operation works for 2D and 3D stacks. 
+              If the file is a 3D stack file, the image number will 
+              only display once for each 3D image.</dd> 
+        <dd> 2/10/98  YH </dd>
+</p>
+
+<p>
+<dt> <b>Categorize images from a montage specified in document file</b>  </dt>    
+        <dd>  The images which are used in the 'Categorize' operation
+              can now be taken from a Document file Montage (see below)
+              as well as a standard sequential file image montage.
+              <a href="./categorize.html"> Details</a>.</dd>
+        <dd> 2/26/97  AL </dd>
+</p>
+
+<p>
+<dt> <b>Montage of images specified in document file</b> </dt>     
+        <dd>  New operation 'Montage from doc. file' makes a montage 
+              of 2-D images by looking up the image numbers in a 
+              document file.  The register number cantaining the image 
+              number in the doc. file is solicited.
+              All images must have same prefix in their name (e.g.
+              IMA***.DAT).  Can also determine, display, and save
+              the average of all the montaged files.</dd>
+        <dd> 6/10/96  AL</dd>
+</p>
+
+<p> 
+<dt> <b>Picking markers</b> </dt>     
+        <dd>  The 'Markers' operation has been altered to save 
+              marker locations to a doc file as soon as the marker
+              is selected.  Thus a system failure will not lose
+              any markers which have already been picked.
+              <a href="./markers.html"> Details</a>.</dd>
+        <dd> 5/2/96  AL</dd>
+</p>
+
+<p> 
+<dt> <b>Denoise </b>  </dt>   
+     <dd>  The 'Convolve' operation has a new filter choice  
+              available called 'Denoise'.  This filter replaces
+              pixels which have values below a solicited threshold
+              with average of the 8 surrounding pixels.
+              <a href="./convolve.html"> Details</a>.</dd>
+        <dd> 4/20/96  AL</dd>
+</p>
+
+<p>  
+<dt> <b>File name selection</b>  </dt>    
+        <dd>  The filenames specified in the look-up-table file
+              name widget no longer reset the file location
+              used for images.</dd>
+        <dd> 4/10/96  AL  </dd>
+</p>
+
+<p>
+<dt> <b>Command line variables</b>  </dt>    
+        <dd>  Certain variables in <i>Web</i> can now be initialized from 
+              the <a href="./webopt.html">command line</a> or in 
+              your home directory <i>.Xdefaults</i>  
+              <a href="./webopt.html#resouces">Xt resource file</a>. 
+             </dd>
+         <dd> 1/26/96  AL </dd>
+</p>
+
+<p> 
+<dt> <b>Colored surfaces </b> </dt>    
+	<dd>  Colored Surface Operation added.  Does fast surface
+	      display of 3D file. Colors surface according to values
+	      found in asecond 3D file.  Specify surface level,
+	      contribution from depth and surface
+	      reflectivity, and number of colors.  The
+	      values in the color volume are divided into
+	      the specified number of colors. A private
+	      color-map can be used to alter the
+	      correspondence between colors and intensities
+	      in the color volume.  Can only handle less
+	      than six colors. 
+              <a href="./surfcolor.html">details</a>.</dd>
+	<dd>AL</dd>
+</p>
+
+</dl>
+ 
+<hr/>
+
+<small>
+  Source: whatsnew.html &nbsp;&nbsp;&nbsp;
+  Updated: 7/11/16      &nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+
+</body>
+</html>
+@
+
+
+1.22
+log
+@particle picking improvements
+@
+text
+@d3 1
+a3 1
+   <title>WEB : Whats New </title>
+d7 7
+a13 1
+
+d17 3
+a19 8
+<dd>Can start picking of particles from either tilted or untilted image.</dd>
+<dd>Reports current tilt for first 32 particles picked.</dd>
+<dd>6/11/15 AL </dd>
+<p />
+
+<dt><b>Can display MRC files.</b></dt>
+<dd>Web can now input and display standard 8 and 32 bit MRC format files.</dd>
+<dd>11/11/12 AL </dd>
+d23 4
+a26 4
+<dd>New convenience operations on menu line,  decreased colormap flashing, 
+    improved tilt pair particle picking, altered colormap, misc. bug fixes on
+    24 bit color platforms.  Web for 8 bit color retired.</dd>
+<dd>7/20/11 AL</dd>
+a28 6
+<dt><a href="../../web/docs/web-inst-osx.html">Web for use on Intel based OSX</a></dt>
+<dd>Executables for X-Window Web for use on Intel based OSX are 
+    now supplied. Thanks to Dr. Ngai Shing Mogk and 
+    Dr. Neil Ranson from the University of Leeds for porting Web 
+    for use on this platform. </dd>
+<dd>11/30/07 AL</dd>
+d32 3
+a34 3
+        <dd> <i>Web</i> is now released under 
+        <a href="copyright.html">GPL license</a>.</dd>
+        <dd> 10/20/05  AL </dd>
+d39 2
+a40 2
+        <dd> <i>Web</i> will read SPIDER files of either byte ordering now. </dd>
+        <dd> 3/20/03  AL </dd>
+d52 5
+a56 6
+<dt> <b>The <a href="./movie.html">Movie </a> operation
+         has been improved.</b></dt>
+        <dd> Added a "Large Images" sub-operation which
+         displays <i>movies</i> of a series of images or a volume.
+        </dd>
+        <dd> 9/4/01  AL </dd>
+d60 5
+a64 5
+<dt> <b><i>Web</i> has been <a href="./web-inst-linux24.html">
+     Modified for Use on Linux 24 bit Visual</a> </b> </b></dt>
+        <dd> Modifications provided by Dr. Erik Vogan allow use of WEB
+             on a 24 bit Visual under Linux.</dd>
+        <dd> 8/10/01  AL </dd>
+d69 1
+a69 1
+ and         <a href="./categorize.html">Categorize from document file</a>
+d213 1
+a213 1
+  Updated: 6/11/15      &nbsp;&nbsp;&nbsp;
+@
+
+
+1.21
+log
+@MRC
+@
+text
+@d3 1
+a3 1
+<title>WEB : Whats New </title>
+d10 7
+a16 1
+<dt><b>Can now display MRC files.</b></dt>
+d18 1
+a18 1
+<dd>11/11/12 AL</dd>
+a34 1
+
+d67 1
+a67 1
+Modified for Use on Linux 24 bit Visual</a> </b> </b></dt>
+d218 3
+a220 3
+Source: whatsnew.html &nbsp;&nbsp;&nbsp;
+Updated: 11/11/12      &nbsp;&nbsp;&nbsp;
+ArDean Leith
+@
+
+
+1.20
+log
+@new 24 bit only
+@
+text
+@d10 5
+d214 1
+a214 1
+Updated: 7/20/11      &nbsp;&nbsp;&nbsp;
+@
+
+
+1.19
+log
+@icon
+@
+text
+@d10 7
+d39 4
+a42 5
+<dt> <b> Java Web  
+<a href="jweb-inst-linux.html">for Linux</a> and 
+<a href="jweb-inst-win.html">Windows</a></b> </b></dt>
+        <dd> Perhaps eventually Java Web will replace the current X Window based
+             <i>Web</i>. </dd>
+d209 1
+a209 1
+Updated: 12/20/07     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.18
+log
+@acknowledgement
+@
+text
+@a6 1
+<h1 align="center">WEB : Whats New </h1>
+d202 2
+a203 2
+source: whatsnew.html &nbsp;&nbsp;&nbsp;
+updated: 12/20/07     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.17
+log
+@osx web
+@
+text
+@d13 3
+a15 1
+    now supplied.</dd>
+d204 1
+a204 1
+updated: 12/04/07     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.16
+log
+@*** empty log message ***
+@
+text
+@d11 6
+d34 1
+a34 1
+        <dd> Eventually Java Web will replace the current X Window based
+d202 1
+a202 1
+updated: 10/17/05     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.15
+log
+@byte ordering
+@
+text
+@d11 10
+a20 2
+<dt> <h4> Web supports either byte ordering now.</dt>
+        <dd> Web will read SPIDER files of either byte ordering now. </dd>
+d22 1
+d24 2
+a25 1
+<dt> <h4> Java Web  
+d27 3
+a29 4
+<a href="jweb-inst-win.html">Windows</a></h4> </dt>
+        <dd> A beta release is now available. Eventually
+             Java Web will replace the current X Window based
+             Web. </dd>
+d31 1
+d33 3
+a35 2
+<dt> <h4>The <a href="./movie.html">Movie </a> operation
+         has been improved.</dt>
+d40 1
+d42 3
+a44 2
+<dt> <h4>Web has been <a href="./web-inst-linux24.html">
+Modified for Use on Linux 24 bit Visual</a> </h4> </dt>
+d46 1
+a46 2
+             on a 24 bit Visual under Linux.  Only common WEB
+             operations work at this time.  </dd>
+d48 1
+d50 2
+a51 1
+<dt> <h4>The <a href="./docmontage.html">Montage from document file</a> 
+d53 1
+a53 1
+     operations handle image stacks.</h4> </dt>    
+d55 1
+a55 1
+        template  (e.g. <I> stackfile@@***</I>) for the image name  </dd>
+d57 1
+d59 2
+a60 1
+<dt> <h4>The "Image display" operation now handles image stacks.</h4> </dt>    
+d64 1
+d66 2
+a67 1
+<dt> <h4>"Pixel" and "Profile" operations work with magnified images.</h4> </dt>    
+d71 1
+d73 2
+a74 1
+<dt> <h4>Montage and categorize from document file.</h4> </dt>    
+d81 1
+d83 3
+a85 1
+<dt> <h4>CTF from Doc. File</h4> </dt>    
+d90 1
+d92 2
+a93 1
+<dt> <h4>General Filter</h4> </dt>    
+d99 1
+d101 2
+a102 1
+<dt> <h4>Display stack images</h4> </dt>     
+d112 1
+d114 2
+a115 1
+<dt> <h4>Categorize images from a montage specified in document file</h4>  </dt>    
+d118 1
+a118 1
+              as well as a standard sequential file image montage.</dd>
+d121 1
+d123 2
+a124 1
+<dt> <h4>Montage of images specified in document file</h4> </dt>     
+d132 2
+a133 1
+        <dd> 6/10/96  AL</dd> 
+d135 2
+a136 1
+<dt> <h4>Picking markers</h4> </dt>     
+d142 2
+a143 1
+        <dd> 5/2/96  AL</dd> 
+d145 2
+a146 1
+<dt> <h4>Denoise </h4>  </dt>   
+d152 2
+a153 1
+        <dd> 4/20/96  AL</dd>  
+d155 2
+a156 1
+<dt> <h4>File name selection</h4>  </dt>    
+d161 1
+a161 5
+
+<dt> <h4>File name selection</h4> </dt>     
+        <dd>  Toggling OFF of 'OPTIONS', 'IMAGES', 
+              'LIST FILES IN FILE-SELECTOR' now works on VAX/VMS.</dd>
+        <dd> 4/5/96  AL </dd><p> 
+d163 3
+a165 2
+<dt> <h4>Command line variables</h4>  </dt>    
+        <dd>  Certain variables in Web can now be initialized from 
+d167 1
+a167 1
+              your home directory .Xdefaults  
+d169 3
+a171 2
+              (WEB.DAT on VAX/VMS)</dd>
+         <dd> 1/26/96  AL </dd> 
+d173 2
+a174 1
+<dt> <h4>Colored surfaces </h4> </dt>    
+d187 3
+a189 1
+	<dd>   al</dd>
+d192 1
+a192 1
+<hr>
+d196 1
+a196 1
+updated: 3/17/03     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.14
+log
+@*** empty log message ***
+@
+text
+@d11 4
+d19 1
+a19 1
+             Java Web will replace the current XWindow based
+d155 1
+d158 1
+a158 1
+updated: 12/20/01     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.13
+log
+@*** empty log message ***
+@
+text
+@d11 6
+a16 4
+<dt> <h4> Java Based Web  
+<a href="jweb_inst_linux.html">for Linux</a> and 
+<a href="README.jweb.win">Windows</a></h4> </dt>
+        <dd> A beta release is now available. </dd>
+d153 1
+a153 1
+updated: 12/15/01     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.12
+log
+@jweb
+@
+text
+@d11 4
+a14 3
+<dt> <h4>  
+<a href="../jweb/jweb_inst_linux.html"> Java Based Web for Linux</a></h4> </dt>
+        <dd> A beta release is now available.  </dd>
+d151 1
+a151 1
+updated: 11/05/01     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.11
+log
+@movie
+@
+text
+@d11 5
+d150 1
+a150 1
+updated: 9/12/01     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.10
+log
+@movie
+@
+text
+@d13 2
+a14 2
+        <dd> Added a "Big Movie" sub-operation which
+         can display <i>movies</i> of a series of large images.
+d145 1
+a145 1
+updated: 9/4/01     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d7 1
+a7 1
+<h1>WEB : Whats New </h1>
+d11 7
+d145 1
+a145 1
+updated: 8/14/01     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.8
+log
+@stacks supported
+@
+text
+@d1 38
+a38 31
+<HTML>
+
+<HEAD>
+<TITLE>WEB : WHATS NEW</TITLE>
+</HEAD>
+
+<BODY>
+
+<DL>
+
+<DT> <H4>The <A HREF="./docmontage.html">Montage from document file</A> 
+ and <A HREF="./categorize.html">Categorize from document file</A>
+     operations now handle image stacks.</H4> </DT>    
+        <DD> Stacked images can be displayed by specifying appropriate
+        template  (e.g. <I> stackfile@@***</I>) for the image name  </DD>
+        <DD> 10/7/99  AL </DD>
+
+<DT> <H4>The "Image display" operation now handles image stacks.</H4> </DT>    
+        <DD> A single stacked image can be displayed by specifying the
+        stacked image name (e.g. <I> stackfile@@34) </I> </DD>
+        <DD> 10/7/99  AL </DD>
+
+<DT> <H4>"Pixel" and "Profile" operations work with magnified images.</H4> </DT>    
+        <DD> The Pixel and Profile Operations now work with magnified
+             or shrunken images.</DD>
+        <DD> 9/14/99  AL </DD>
+
+<DT> <H4>Montage and categorize from document file.</H4> </DT>    
+        <DD> The filenumbers for the 
+            <A HREF="./docmontage.html">"Montage from document file"</A> 
+        and <A HREF="./categorize.html">"Categorize from document file"</A> 
+d40 2
+a41 2
+        It is now possible to limit the filenumbers to be displayed.</DD>
+        <DD> 8/06/99  AL </DD>
+d43 2
+a44 2
+<DT> <H4>CTF from Doc. File</H4> </DT>    
+        <DD> A new operation "CTF from Doc. File" has been added which
+d46 2
+a47 2
+        <A HREF="./ctf.html"> Details</A>.</DD>
+        <DD> 7/06/99  AL </DD>
+d49 2
+a50 2
+<DT> <H4>General Filter</H4> </DT>    
+        <DD> A new operation "General Filter" has been added which
+d53 2
+a54 2
+        <A HREF="./foufilt.html"> Details</A>.</DD>
+        <DD> 10/19/98  AL </DD>
+d56 2
+a57 2
+<DT> <H4>Display stack images</H4> </DT>     
+        <DD>  Now, WEB can display the stack images by using "Image" 
+d64 2
+a65 2
+              only display once for each 3D image.</DD> 
+        <DD> 2/10/98  YH </DD>
+d67 2
+a68 2
+<DT> <H4>Categorize images from a montage specified in document file</H4>  </DT>    
+        <DD>  The images which are used in the 'Categorize' operation
+d70 3
+a72 3
+              as well as a standard sequential file image montage.</DD>
+              <A HREF="./categorize.html"> Details</A>.</DD>
+        <DD> 2/26/97  AL </DD>
+d74 2
+a75 2
+<DT> <H4>Montage of images specified in document file</H4> </DT>     
+        <DD>  New operation 'Montage from doc. file' makes a montage 
+d81 2
+a82 2
+              the average of all the montaged files.</DD>
+        <DD> 6/10/96  AL</DD> 
+d84 2
+a85 2
+<DT> <H4>Picking markers</H4> </DT>     
+        <DD>  The 'Markers' operation has been altered to save 
+d89 2
+a90 2
+              <A HREF="./markers.html"> Details</A>.</DD>
+        <DD> 5/2/96  AL</DD> 
+d92 2
+a93 2
+<DT> <H4>Denoise </H4>  </DT>   
+     <DD>  The 'Convolve' operation has a new filter choice  
+d97 2
+a98 2
+              <A HREF="./convolve.html"> Details</A>.</DD>
+        <DD> 4/20/96  AL</DD>  
+d100 2
+a101 2
+<DT> <H4>File name selection</H4>  </DT>    
+        <DD>  The filenames specified in the look-up-table file
+d103 2
+a104 2
+              used for images.</DD>
+        <DD> 4/10/96  AL  </DD>
+d106 8
+a113 8
+<DT> <H4>File name selection</H4> </DT>     
+        <DD>  Toggling OFF of 'OPTIONS', 'IMAGES', 
+              'LIST FILES IN FILE-SELECTOR' now works on VAX/VMS.</DD>
+        <DD> 4/5/96  AL </DD><P> 
+
+<DT> <H4>Command line variables</H4>  </DT>    
+        <DD>  Certain variables in Web can now be initialized from 
+              the <A HREF="./webopt.html">command line</A> or in 
+d115 3
+a117 3
+              <A HREF="./webopt.html#resouces">Xt resource file</A>. 
+              (WEB.DAT on VAX/VMS)</DD>
+         <DD> 1/26/96  AL </DD> 
+d119 2
+a120 2
+<DT> <H4>Colored surfaces </H4> </DT>    
+	<DD>  Colored Surface Operation added.  Does fast surface
+d129 1
+a129 1
+	      in the color volume. Can only handle less
+d131 3
+a133 3
+              <A HREF="./surfcolor.html">Details</A>.</DD>
+	<DD>   AL</DD>
+</DL>
+d135 4
+a138 4
+<HR>
+<SMALL>
+Source: whatsnew.html &nbsp;&nbsp;&nbsp;
+Updated: 9/14/99     &nbsp;&nbsp;&nbsp;
+d140 1
+a140 1
+</SMALL>
+d142 2
+a143 2
+</BODY>
+</HTML>
+@
+
+
+1.7
+log
+@updated
+@
+text
+@d11 13
+a23 1
+<DT> <H4>Pixel and Profile Operations work with magnified images.</H4> </DT>    
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d11 5
+d26 1
+a26 1
+        interactively studies CTF curve. 
+d119 1
+a119 1
+Updated: 8/4/99     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.5
+log
+@added notes on categorize
+@
+text
+@d15 2
+a16 1
+        operations must be in the first register (not keys) of the document file now.</DD>
+@
+
+
+1.4
+log
+@added general filter operation
+@
+text
+@d11 13
+d46 1
+d113 1
+a113 1
+Updated: 10/19/98     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.3
+log
+@added info about displaying stack files
+@
+text
+@d11 8
+a18 1
+<DT> <H4>Display stack images</H4>     
+d24 4
+a27 4
+              as "@@012". The operation works for 2D and 3D stack. If the file 
+              is a 3D stack file, the image number will only display 
+              once for each 3D image. 
+        <DD> 2/10/98  YH 
+d29 1
+a29 1
+<DT> <H4>Categorize images from a montage specified in document file</H4>     
+d32 2
+a33 2
+              as well as a standard sequential file image montage.
+        <DD> 2/26/97  AL 
+d35 1
+a35 1
+<DT> <H4>Montage of images specified in document file</H4>     
+d42 2
+a43 2
+              the average of all the montaged files.
+        <DD> 6/10/96  AL 
+d45 1
+a45 1
+<DT> <H4>Picking markers</H4>     
+d50 2
+a51 2
+              <A HREF="./markers.html"> Details</A>.
+        <DD> 5/2/96  AL 
+d53 1
+a53 1
+<DT> <H4>Denoise </H4>    
+d58 2
+a59 2
+              <A HREF="./convolve.html"> Details</A>.
+        <DD> 4/20/96  AL  
+d61 1
+a61 1
+<DT> <H4>File name selection</H4>     
+d64 2
+a65 2
+              used for images.
+        <DD> 4/10/96  AL  
+d67 1
+a67 1
+<DT> <H4>File name selection</H4>     
+d69 2
+a70 2
+              'LIST FILES IN FILE-SELECTOR' now works on VAX/VMS.
+        <DD> 4/5/96  AL <P> 
+d72 1
+a72 1
+<DT> <H4>Command line variables</H4>     
+d77 2
+a78 2
+              (WEB.DAT on VAX/VMS)
+         <DD> 1/26/96  AL  
+d80 1
+a80 1
+<DT> <H4>Colored surfaces </H4>    
+d92 2
+a93 2
+              <A HREF="./surfcolor.html">Details</A>.
+	<DD>   AL
+d99 1
+a99 1
+Updated: 12/26/97     &nbsp;&nbsp;&nbsp;
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d11 11
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 1
+a4 1
+<TITLE>WHATS NEW : WEB</TITLE>
+a8 6
+<HR>
+<H1><IMG WIDTH=103 HEIGHT=78 ALT="Web Icon" SRC="web_icon.xbm"></A> 
+ &nbsp;&nbsp;WHATS &nbsp;NEW : WEB</H1>
+
+<HR>
+
+a78 1
+
+d81 1
+a81 1
+Updated: 02/26/97     &nbsp;&nbsp;&nbsp;
+@

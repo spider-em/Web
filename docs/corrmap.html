@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>Web : Correspondence map</title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web : Correspondence map 
+</h1> 
+<p><hr /> <p>
+
+<h3>Correspondence map</h3> 
+ 
+Displays a correspondence map containing numerical labels
+for images on the screen. The user can then draw a polygon 
+enclosing a group of image numbers. The average of the group of images
+contained within the polygon can be displayed, and the average image
+can stored in a file.  
+The average image display can be temporary or permanent. 
+Additionally a list of the image numbers in the group can be
+saved to a document file.
+<p>
+
+Input for this command:
+<dl>
+<dt> document file name
+<dd> file contains a list of image numbers (as document file keys).  
+   The document file is created by converting the 
+   IMC*** file (from correspondance analysis) to a document 
+   format using the 
+   <a href="../../spider/docs/index.html">SPIDER</A> operation : 
+   <a href="../../spider/docs/man/sdc.html">SD C</A> .
+<p>  
+<dt>Image file name template
+<dd>Template for the images whose numbers are listed in the document file
+<p>
+
+<dt>First image key
+<dd>First image number included in  map
+<p>
+
+<dt>Last image key
+<dd>Last image number included in  map.  (This allows skipping some
+    images listed in the document file).
+<p>
+
+<dt>X axis factor register
+<dd>Register in document file which contains factor to be plotted on
+    X axis.
+<p>
+
+<dt>Y axis factor register
+<dd>Register in document file which contains factor to be plotted on
+    Y axis.
+<p>
+
+<dt>Extent (std. dev.)
+<dd>The extent of outlying image
+    locations which are included in the displayed map. 
+<p>
+
+<dt>Lower image Threshold
+<dt>Upper image Threshold
+<dd>Thresholds (in std. deviation units)
+    which can be applied to the average image created from a group. 
+
+
+<dt>Marker radius
+<dd>Radius used for image locations when image numbers are not displayed. 
+<p>
+
+<dt>Show Image Numbers
+<dd>A toggle to specify whether image number of only locations are
+shown on the map. 
+<p>
+</dl>
+
+<hr />
+
+<small> 
+  Last updated : 10/8/99 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+
+</body>
+</html>

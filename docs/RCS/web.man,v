@@ -1,0 +1,228 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	97.08.11.16.01.36;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/net/ithaca/usr1/web/docs/web.html
+-------------------------------------------------------------------------------
+
+                                   WEB
+
+INTRODUCTION
+
+WEB is a graphical user interface for displaying and interacting with SPIDER
+images developed at the Biological Microscopy and Image Reconstruction Resource
+(BMIRR) located in the Wadsworth Laboratories, Albany, New York. WEB is written
+in C and runs under the X/Motif system. WEB was developed by A. Leith with
+contributions from L. Odesanya, Y.H. Li, M. Ladjadj, A. Dent, M. Radermacher,
+and J. Frank. WEB has been in use since 1990 and contains more than 35,000
+lines of code.
+
+VARIABLE INITIALIZATION
+
+Certain variables in Web can be initialized from the command line or in Xt
+resource files.
+
+   *  COMMAND LINE ARGUMENTS
+   *  Xt RESOURCES
+
+OPERATIONS
+
+Operations are grouped under five main menu headings: OPTIONS, COMMANDS, EDIT,
+INFO, SYSTEM
+
+   *  "OPTIONS" alter the way information is diplayed during a WEB session.
+   *  "COMMANDS" provide the main display and analysis of 2D & 3D images.
+   *  "EDIT" provides further commands which edit 2D or 3D images.
+   *  "INFO" provides information on workstation and WEB capabilities.
+   *  "SYSTEM" provides settings for file searching and for stopping the
+              application.
+
+Operations are selected by pointing at the relevant menu heading and then
+selecting the menu sub-option (and sub-sub-option) using the left mouse button.
+
+   *  OPTIONS
+        o  Image
+           Alters image display charactaristics:
+             + left & top margin around image display area
+             + X & Y margin around each image
+             + size reduction for image display (-2 is a magnification of 2X)
+             + montage movie flag (keeps next image in same location as current
+               image)
+             + list file names below images
+             + start new row or screen of images
+             + toggle for listing files in file-selector (toggle off if you
+               have hundreds of files!).
+        o  Contrast
+           Enhances contrast of image using thresholding.
+        o  Cursor
+           Selects cursor style from a pallette.
+        o  Display
+           Turns off scrolling text window.
+        o  Font
+           Selects font for drawing text.
+        o  Magnify
+           Sets magnification area and magnification factor.
+        o  Color
+          Selects color for graphics characteristics:
+             +  Foreground -- color for following graphics
+             +  Background -- image & graphics surround
+             +  Overlay -- overlay color (for masking)
+             +  Cursor -- cursor colors.
+        o  Line Style
+           Alters line style (in some operations only).
+        o  Line Width
+           Alters line width (in some operations only).
+        o  Lut
+           Applies a color look-up table to current screen.
+   *  COMMANDS
+        o  Clear
+           Clears screen.
+        o  Image
+           Shows an image. Will try to place the image on the screen so that it
+           does not overlap previous images.
+        o  Montage
+           Shows a montage of 2-D images or 3-D slices. Use the movie toggle in
+           the Image Option menu to force all images to be displayed at the same
+           location.
+        o  Surface
+           Does fast surface display of 3D file. User specifies surface level
+           and relative contribution from depth and surface reflectivity. The
+           movie option allows the creation of several files representing
+           individual frames, which can then be played back as a movie. User can
+           specifies the rotation angles to rotate the volume. This rotation can
+           be done according to the original system or the current system.
+        o  Shift
+           Pans previously displayed image within its original display area. Can
+           be used for images too large for the WEB window.
+        o  Annotate
+           Draws circles and numerical labels on top of an image. Positions for
+           circles and values for labels are read from a SPIDER document file.
+           User can specify registers for x & y coordinates and label.
+        o  Blackout
+           Blacks out screen margins. (You may have to maximize the display
+           window before selecting this option on some machines).
+        o  Categorize
+           Displays montage of images. Asks for new SPIDER document file name.
+           User can assign a category to each image using mouse to select
+           images. The category is toggled using the middle mouse button.
+           Categories and file numbers are stored in a document file.
+        o  Colored Surface
+           Does fast surface display of 3D file. Colors surface according to
+           values found in a second 3D file. Specify surface level, contribution
+           from depth and surface reflectivity, and number of colors. The values
+           in the color volume are divided into the specified number of colors.
+           A private color-map can be used to alter the correspondence between
+           colors and intensities in the color volume. Can only handle less than
+           six colors. Further details.
+        o  Convolve
+           Does some discrete convolutions on an image. Further details.
+        o  Corr-map
+           Displays correspondance map. Can then outline areas and query images
+           found within areas.  Further details.
+        o  Dendrogram
+           Performs a "dendrogram" plot with input taken from a SPIDER document
+           file. Can also display the averaged images of a given threshold
+           setting.
+        o  Distance
+           Interactively queries a pair of pixel locations to determine their
+           separation distance. Can record distances in a document file. Can
+           record up to six distances from each starting point on a line of the
+           document file.
+        o  Histogram
+           Draws image histogram on screen.
+        o  Magnify
+           Interactively magnifies an area of the screen.
+        o  Markers
+           Interactively selects marker locations and stores locations relative
+           to image in a SPIDER document file. Can edit marker selections before
+           they are stored.   Further details.
+        o  Mask
+           Interactively draws polygons on screen to make a binary mask image.
+           The mask image is stored in a file. This mask file can then be used
+           in SPIDER for masking a grey scale image by multiplication.
+        o  Particles
+           Interactively selects coordinates from an untilted/tilted pair of
+           micrographs, determines tilt angle and tilt-axis direction by a
+           least-sqare fit of all selected particle locations. Further details.
+        o  Pixel
+           Queries a pixel for location and color. Can place pixel location,
+           color index value, or file value in a document file. Color of marker
+           for location is controlled by previous color foreground selection
+           operation.
+        o  Power Spectrum
+           Shows a power spectrum of enclosed area in a user drawn window. The
+           spectrum is from screen data not file data. Does not work for some
+           window sizes.
+        o  Profile
+           Displays the profile of an image along a row or column.  Further details..
+        o  Reflections
+           Interactively picks reflections from a diffraction pattern and places
+           indices and locations in a document file.
+        o  Record Screen
+           Records an area of screen in a SPIDER image file.
+        o  Show Recording
+           Shows a screen recording (including color) made with the Record
+           Screen operation.
+        o  Show Contourfile
+           Displays a contour metafile.
+        o  SIRDS
+           Creates and displays a "single image relative displacement
+           stereogram" from a volume.
+   *  EDIT
+        o  Bars
+           Draws horizontal or vertical bars on screen using previously set
+           foreground color.
+        o  Lines
+           Draws lines on screen using previously set foreground color.
+        o  Text
+           Draws text on screen using previously set foreground color.
+        o  Draw Boxes
+           Draws boxes on screen using previously set foreground color.
+        o  Move Area
+           Moves or copies an area of the screen from one position to another.
+           Useful also for editing labels, etc. for photography.
+        o  Window Last File
+           Interactively windows a displayed file and saves window from original
+           file in a new SPIDER image file.
+        o  Drill-n-fill
+           Interactively edits a volume while viewing a surface view of volume.
+           Volume is viewed along X axis. Surface view is same as surface
+           operation. Mouse buttons control movement of a tool which drills or
+           fills areas of the volume. Further details.
+   *  INFO
+        o  X info
+           Prints some debugging information in terminal window.
+        o  Manual
+          Shows manual in a window.
+   *  SYSTEM
+        o  File Extension
+           Sets extension to associate with file names e.g. DAT
+        o  Current Directory
+           Sets current working directory. File searches begin from here.
+        o  File Pattern
+           Selects pattern to use in searching for files eg. T*ST**0
+        o  EXIT
+           Stops WEB and closes WEB window.
+
+-------------------------------------------------------------------------------
+
+Last updated on April 26, 1996 al
+@

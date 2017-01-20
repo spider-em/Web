@@ -1,0 +1,294 @@
+head	1.6;
+access;
+symbols
+	pre_24bitonly:1.5;
+locks; strict;
+comment	@# @;
+
+
+1.6
+date	2017.01.13.15.04.43;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2008.08.15.19.58.33;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2001.09.17.15.24.45;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2001.09.14.19.08.15;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.09.05.12.38.29;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.09.04.19.34.25;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@<html>
+<head>
+   <title>Web: Movie</title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web: Movie 
+</h1> 
+<p><hr /> <p>
+
+
+Displays a movie from a series of images or a volume.  
+There are two choices:
+
+<dl> 
+<p>
+<dt>Small images.</dt>
+<dd>First displays a series of small images in a montage. Then pans 
+thru the montage to show a  <i>movie</i>.
+</dd></p>
+
+<p><dt>Large images.</dt>
+<dd>Displays a series of 2D or 3D (volume) images directly in a <i>movie</i>.
+Can step thru the movie in forwards and backwards direction.  A
+toggle for <i> twoways</i> sets the movie in to run
+"forwards then backwards" through the image series.  <br />
+For volumes, the axis of the view, the displayed region, and
+normalization by slice can be set.
+</p>
+</dd>  
+</dl>
+
+<h4> Creating interleaved <i>movie</i>  from two series of surface views. </h4>
+<ul>
+
+</p>
+<li> Use the Web <a href="./web.html#OPERATIONS">Surface</a>.
+     operation to create the desired surface movies.  Can specify
+     initial starting view, threshold, rotation angle, number of 
+     views, initial file number, etc. </li></p> 
+
+</p>
+<li> Use following SPIDER batch file to create an interleaved volume
+     from the two surface movies. </li></p> 
+
+<h4> SPIDER Batch file  </h4>
+<p>
+
+<pre>
+; Interleave two consecutively numbered image series into a volume
+; Sept 13 2001   ArDean Leith
+;
+MO 3                     ; Create a blank volume of desired size
+  merged_movie           ; Volume name
+  390 390                ; x & y size
+  72                     ; Number of frames (Total number of images)
+  B                      ; Blank volume
+  0.0                    ; Voxel value
+;
+[slice] = 0
+DO [n]=0,35              ; Number of frames in each series
+      [slice]=[slice]+1  ; Increment slice number
+      ;
+      SK R               ; Put image into volume
+      merged_movie       ; Volume
+      movie_one{***[n]}  ; Image
+      [slice]            ; Slice
+      *                  ; Finished
+      ;
+      [slice]=[slice]+1  ; Increment slice number
+      ;
+      SK R               ; Put image into volume
+      merged_movie       ; Volume
+      movie_two{***[n]}  ; Image
+      [slice]            ; Slice
+      *                  ; Finished
+      ;
+ENDDO
+
+</pre>
+
+</p>
+<li> Use  movie -- Large Images operation to display the alternating 
+    surface movie. 
+</li></p> 
+
+<p>
+
+</p>
+</ul>
+
+<hr /> 
+
+<small>
+  source: movie.html       &nbsp;&nbsp;&nbsp;  
+  last update: 1/14/2017 &nbsp;&nbsp;&nbsp;
+  ArDean Leith  
+</small>
+
+</body>
+</html>
+@
+
+
+1.5
+log
+@web icon
+@
+text
+@d3 1
+a3 1
+<title>Web: Movie</title>
+d7 6
+d29 1
+a29 1
+"forwards then backwards" through the image series.  <br>
+d52 1
+a52 1
+<PRE>
+d56 6
+a61 6
+MO 3         ; Create a blank volume of desired size
+merged_movie ; Volume name
+390 390      ; x & y size
+72           ; Number of frames (Total number of images)
+B            ; Blank volume
+0.0          ; Voxel value
+d63 3
+a65 3
+X11=0
+DO LB1 I=0,35           ; Number of frames in each series
+      X11=X11+1         ; Increment slice number
+d67 5
+a71 5
+      SK R              ; Put image into volume
+      merged_movie      ; Volume
+      movie_one{***X0}  ; Image
+      X11               ; Slice
+      *                 ; Finished
+d73 1
+a73 1
+      X11=X11+1         ; Increment slice number
+d75 5
+a79 5
+      SK R              ; Put image into volume
+      merged_movie      ; Volume
+      movie_two{***X0}  ; Image
+      X11               ; Slice
+      *                 ; Finished
+d81 3
+a83 2
+LB1
+</PRE>
+d95 1
+a96 1
+<hr> 
+d98 3
+a100 3
+source: movie.html       &nbsp;&nbsp;&nbsp;  
+last update: 9/17/2001 &nbsp;&nbsp;&nbsp;
+ArDean Leith  
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@a7 1
+<H4>     Movie </H4>
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d28 2
+d80 1
+a80 1
+<li> Use this movie operation to display the alternating 
+a88 2
+</dd>  
+</dl>
+d93 1
+a93 1
+last update: 9/14/2001 &nbsp;&nbsp;&nbsp;
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d10 2
+a11 2
+Displays a movie from a series of images.  
+There are two sub-operations:
+d14 1
+a14 1
+
+d18 1
+a18 1
+</dd>
+d20 2
+a21 2
+<dt>Large images.</dt>
+<dd>Displays a series of large 2D images directly in a <i>movie</i>.
+d23 65
+a87 3
+toggle for <i> twoways</i> allows setting the movie in to run
+"forwards then backwards" through the image series.
+</dd>
+d93 1
+a93 1
+last update: 9/5/2001 &nbsp;&nbsp;&nbsp;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d15 1
+a15 1
+<dt>Small movie.</dt>
+d20 1
+a20 1
+<dt>Big movie.</dt>
+a27 5
+
+
+ 
+
+
+d31 1
+a31 1
+last update: 9/4/2001 &nbsp;&nbsp;&nbsp;
+@

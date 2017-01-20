@@ -1,0 +1,174 @@
+head	1.5;
+access;
+symbols
+	pre_24bitonly:1.4;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2017.01.13.15.04.38;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2008.08.15.20.04.33;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.10.05.19.39.59;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.10.05.13.06.48;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.10.05.13.03.34;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@new
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@<html>
+<head>
+<title>Web: General Filter</title>
+</head>
+
+<body>
+
+<hr /> 
+
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web: General Filter 
+</h1> 
+<p><hr /> <p>
+
+This operation interactively creates a mask based on a power spectrum
+which can be used for Fourier filtering.  The operation solicits name 
+of a power spectrum image which is displayed.  It also solicits name of
+the output file which is in Fourier format.  Using the mouse, user can
+create a mask on the power spectum space.  Mask consists of circular
+Gaussians with values from 0...1.0.  Up to 200 circles are
+allowed on each mask.  The Gaussian circle sizes can be set with
+the initial menu and altered with the up-arrow and down-arrow keys
+while drawing masks.  The final mask is <em> saved </em> to the 
+output file only when the center mouse button is pushed to terminate
+the masking.<p>
+
+This operation replaces the old SPIDER <I>'GF</I> operation for 
+<I>quasi-optical Fourier Filtration </I>.  It can be used to 
+masks out Fourier coefficients from the input file in the
+vicinity of specified reflections, and transfers these coefficients
+into the output Fourier filter file.  This filter file can then
+ be multipled by a Fourier file for filtering.
+
+<hr />
+ 
+<small>
+  Last update: 10/4/1998 &nbsp;&nbsp;&nbsp;
+  ArDean Leith  
+</small>
+
+</body>
+</html>
+@
+
+
+1.4
+log
+@icon
+@
+text
+@d3 1
+a3 1
+<title>WEB: General Filter</title>
+d8 8
+d35 2
+a36 1
+<hr> 
+d38 2
+a39 2
+Last update: 10/4/1998 &nbsp;&nbsp;&nbsp;
+ArDean Leith  
+@
+
+
+1.3
+log
+@more info added
+@
+text
+@d1 4
+a4 4
+<HTML>
+<HEAD>
+<TITLE>WEB: GENERAL FILTER</TITLE>
+</HEAD>
+d6 1
+a6 1
+<BODY>
+a7 1
+<H3> General Filter </H3>
+d18 1
+a18 1
+the masking.<P>
+d27 2
+a28 2
+<HR> 
+<SMALL>
+d31 1
+a31 1
+</SMALL>
+d33 2
+a34 2
+</BODY>
+</HTML>
+@
+
+
+1.2
+log
+@new
+@
+text
+@d17 3
+a19 1
+while drawing masks.<P>
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d10 1
+a10 1
+which can be used for fourier filtering.  The operation solicits name 
+d12 4
+a15 4
+the output file which is in fourier format.  Using the mouse, user can
+create a mask on the poweer spectum space.  Mask consists of circular
+gaussians with values from 0...1.0.  Up to 200 circular gaussians are
+allowed on each mask.  The gaussian circle sizes can be set with
+d20 1
+a20 1
+<I>quasi optical Fourier Filtration </I>.  It can be used to 
+d23 2
+a24 1
+into the output Fourier file.
+@

@@ -1,0 +1,236 @@
+head	1.3;
+access;
+symbols
+	pre_24bitonly:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2017.01.13.15.04.36;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2000.07.05.12.50.53;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	99.09.13.13.37.35;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@<html>
+<head>
+<title>Web: CTF Parameters</title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web: CTF Parameters 
+</h1> 
+<p><hr /> <p>
+
+<h3> CTF From Document FIle</h3>
+The purpose of this operation is to help the user to determine the CTF 
+parameters (Contrast transfer function) based on 1D rotationally averaged
+power spectrum of a micrograph.  Further details on this 
+operation are available in the SPIDER manual page for
+<a href="../../spider/docs/man/tf.html"><STRONG>TF</STRONG></A> and
+<a href="../../spider/docs/man/tfd.html"><STRONG>TF D</STRONG></A>.
+<p>
+
+The operation initially solicits name 
+of a document file containing 1D rotationally averaged power
+spectrum.  The power spectrum should be placed in the first
+column of this document file.  A batch program that estimates
+power spectra for a series of micrographs is included in
+the <a href="../../spider/docs/techs/recon/mr.html">techniques page/recon/mr.html</A>
+: Three Dimensional Reconstruction of
+Single Particle Specimens using Reference Projections.<p> 
+
+After the document file name is provided, the user specifies the
+following input parameters: <br />
+
+<ul>
+<dl>
+
+<dt>Pixel size (A)                     </dt>
+
+<dt>Spherical abberation constant (mm) </dt>
+
+<dt>Electon energy (kev)               </dt>
+
+<dt>Source size (1/A)                  </dt>
+
+
+<dt>Defocus spread (A)                 </dt>
+
+<dt>Astigmatism (A)                   </dt>
+   <dd>Defocus difference due to axial astigmatism. 
+    The default value given indicates a defocus range of +/- 400A
+    around the nominal value as the azimuth is varied.</DD> 
+
+<dt>Azimuth (Deg.)                     </dt>
+    <dd> Angle, in degrees, that characterizes the direction of
+    astigmatism.  The angle defines the origin direction where the 
+    astigmatism has no effect.</DD> 
+
+<dt>Amplitude contrast ratio (0..1)    </dt>
+
+<dt>Gaussian envelope halfwidth (A^1)  </dt>
+    <dd> Halfwidth in reciprocal Angstroms.</DD> 
+</dl>
+</ul>
+
+The user can now interactively adjust the following parameters to
+obtain plots. <br />
+<ul>
+<dl>
+<dt>Defocus (A)                        </dt>
+   <dd>Amount of defocus, in Angstroms. Positive values 
+    correspond to underfocus (the preferred region); negative
+    values correspond to overfocus.    </DD>
+
+<dt>Plot cutoff (%)                    </dt>
+</dl>
+</ul>
+<p>
+ <B>How to proceed:</B> the defocus value and amplitude contrast
+(usually set to 0.1) have to be adjusted such that the vertical
+lines (corresponding to locations of zero crossings of the CTF)
+coincide with the minima of the power spectrum.  Usually the initial
+10% of the power spectrum curve length oscillates widely and can
+be ignored by setting the plot cutoff.
+<br />
+
+<hr /> 
+<small>
+  Last update: 7/05/2000 &nbsp;&nbsp;&nbsp;
+  ArDean Leith  
+</small>
+
+</html>
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 12
+a12 4
+<HTML>
+<HEAD>
+<TITLE>WEB: CTF Parameters</TITLE>
+</HEAD>
+d14 1
+a14 3
+<BODY>
+
+<H3> CTF From Document FIle</H3>
+d19 3
+a21 3
+<A HREF="../../spider/docs/man/tf.html"><STRONG>TF</STRONG></A> and
+<A HREF="../../spider/docs/man/tfd.html"><STRONG>TF D</STRONG></A>.
+<P>
+d28 1
+a28 1
+the <A HREF="../../spider/docs/techs/recon/mr.html">techniques page/recon/mr.html</A>
+d30 1
+a30 1
+Single Particle Specimens using Reference Projections.<P> 
+d33 1
+a33 1
+following input parameters: <BR>
+d35 2
+a36 2
+<UL>
+<DL>
+d38 1
+a38 1
+<DT>Pixel size (A)                     </DT>
+d40 1
+a40 1
+<DT>Spherical abberation constant (mm) </DT>
+d42 1
+a42 1
+<DT>Electon energy (kev)               </DT>
+d44 1
+a44 1
+<DT>Source size (1/A)                  </DT>
+d47 1
+a47 1
+<DT>Defocus spread (A)                 </DT>
+d49 2
+a50 2
+<DT>Astigmatism (A)                   </DT>
+   <DD>Defocus difference due to axial astigmatism. 
+d54 2
+a55 2
+<DT>Azimuth (Deg.)                     </DT>
+    <DD> Angle, in degrees, that characterizes the direction of
+d59 1
+a59 1
+<DT>Amplitude contrast ratio (0..1)    </DT>
+d61 4
+a64 4
+<DT>Gaussian envelope halfwidth (A^1)  </DT>
+    <DD> Halfwidth in reciprocal Angstroms.</DD> 
+</DL>
+</UL>
+d67 5
+a71 5
+obtain plots. <BR>
+<UL>
+<DL>
+<DT>Defocus (A)                        </DT>
+   <DD>Amount of defocus, in Angstroms. Positive values 
+d75 4
+a78 4
+<DT>Plot cutoff (%)                    </DT>
+</DL>
+</UL>
+<P>
+d85 1
+a85 1
+<BR>
+d87 5
+a91 5
+<HR> 
+<SMALL>
+Last update: 7/05/2000 &nbsp;&nbsp;&nbsp;
+ArDean Leith  
+</SMALL>
+d93 1
+a93 1
+</HTML>
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d38 1
+a38 1
+<DT>Source size (A)                    </DT>
+d83 1
+a83 1
+Last update: 9/13/1999 &nbsp;&nbsp;&nbsp;
+@

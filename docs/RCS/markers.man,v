@@ -1,0 +1,50 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	97.08.11.16.01.36;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+                   MARKER SELECTION  
+ 
+     Interactively selects marker locations and stores locations 
+relative to image in a SPIDER document file. 
+
+     User is prompted for name of an image file (often one image
+of a tilt series).  User is then prompted for the tilt angle 
+of the image and name of a document file which will store the 
+locations.   If the document file already exists, any locations
+which are present in the file will be displayed on the image.
+User can now pick locations of markers on the image and 
+locations will be stored in the document file. 
+
+     A marker numbering widget allows easy access to set the 
+current marker number.  This widget is usefull when marker 
+numbers are not consecutive.  The user can erase and redraw 
+chosen locations. 
+
+A button is available to automatically increment tilt angles
+and file names in preparation for the next image in a series. 
+
+     Data is stored in the document file whenever a point is 
+selected.  To remove a marker which has already been selected 
+it is necessary to edit the document file. 
+
+Last updated on 04/29/96 al
+@

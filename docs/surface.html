@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Web: Surface</title>
+</head>
+
+<body>
+
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web: Surface 
+</h1> 
+<p><hr /> <p>
+
+<h4> Purpose</h4>
+<dl>
+
+<dt>
+<p> Does a fast surface display from a 3D file. Surface is created at
+a user selected threshold.  Surface is viusalized by shining
+"light" on a tile at the desired surface.  Can add depth shading.
+Can capture surface views while rotating.
+Volume is <b>NOW</b> viewed along the nslice (Z) axis, thus the 
+view is <i> nsam x nrow</i>.
+</p>
+
+
+</dt> 
+
+<dt>
+<h4> User can specify:</h4>
+</dt>
+<p>
+ 
+<dd>Surface level (threshold).</dd>
+</p>
+
+<p>
+<dd> Depth shading .</dd>
+</p>
+
+<p>
+<dd> Surface reflectivity.</dd>
+</p>
+
+<p>
+<dd>Scaling or magnification.</dd>
+</p>
+
+<p>
+<dd>Rotation angle.</dd>
+</p>
+
+<p>
+<dd>Rotation Angle convention. <br \>
+    Either Euler angles similar to the convention used in 
+    <i>SPIDER</i> or rotations around simple file axes. </dd>
+</p>
+
+<p>
+<dd>Movie creation.<br \>
+    Captures files at specified rotations or thresholds which can
+    be played with the movie operation of <i>Web</i>. </dl>
+</p>
+
+<h4> Angle conventions</h4>
+To make a movie of a <i>SPIDER</i> volume rotating around Z-axis:
+
+<ol>
+
+<p>
+<li>Using <i>Surface</i> operation of <i>Web</i>, specifiy Euler angle rotation 
+    convention and find the desired starting orientation of the volume. <br \> 
+   (Change the PHI, THETA and PSI values until you get the desired view).</li>
+</p>
+
+<p>
+<li> Note the PHI, THETA and PSI values from <i>Web</i> <i>Surface</i> operation 
+     for which you get the desired orientation.</li>
+</p>
+
+<p>
+<li>Use <i>SPIDER</i> operation:
+<a href="../../spider/docs/man/rt3d.html"><strong>RT 3D</strong></A>  
+ to rotate the <i>SPIDER</i> volume to the PHI, THETA and PSI 
+   values that you have noted above.</li>
+</p>
+
+<p>
+<li>Load the new <i>SPIDER</i> volume (rotated one) in <i>Web</i> and the
+    use <i>Surface</i> operation with Euler angles 
+    PHI = 0, THETA = 0 and PSI = 0.</li>
+</p>
+
+<p>
+<li>Using the movie toggle in <i>Surface</i> operation, change 
+    the value of PHI 
+    from 0-360 degrees at the desired intervals and create frames of
+    movie.</li>
+</p>
+</ol>
+
+   To obtain same view as <i>SPIDER</i> 
+   <a href="../../spider/docs/man/pj3.html"><strong>PJ 3</strong></A>
+   shows:
+
+   <ol>
+
+   <p>
+   <li>Use 
+      <a href="../../spider/docs/man/rt3d.html"><strong>RT 3D</strong></A>
+      to rotate the volume with the same euler angles as used for
+      <a href="../../spider/docs/man/pj3.html"><strong>PJ 3</strong></A>
+   </li>
+   </p>
+
+</ul>
+
+<hr /> 
+<small>
+  Source: surface.html       &nbsp;&nbsp;&nbsp;  
+  Last update: 10/27/2011    &nbsp;&nbsp;&nbsp;
+  ArDean Leith  
+</small>
+
+</body>
+</html>

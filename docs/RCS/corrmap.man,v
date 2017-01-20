@@ -1,0 +1,40 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	97.08.11.16.01.36;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@  
+                        CORRMAP OPERATION
+
+Displays a correspondence map containing numerical labels
+for images on the screen. The user can then draw a polygon 
+around a group of images and display, or store in a file, 
+the average image created from the grouped set of images.  
+The average image display can be temporary or permanent. 
+
+Input to this command is a document file and a number of 
+images.  The document file is created by copying the 
+IMC*** file (from correspondance analysis) to a document 
+format using the SPIDER command: 'SD C'.
+
+------------------------------------------------------------
+
+Last updated on Mar 10, 1995 al
+@

@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>Web: CTF Parameters</title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web: CTF Parameters 
+</h1> 
+<p><hr /> <p>
+
+<h3> CTF From Document FIle</h3>
+The purpose of this operation is to help the user to determine the CTF 
+parameters (Contrast transfer function) based on 1D rotationally averaged
+power spectrum of a micrograph.  Further details on this 
+operation are available in the SPIDER manual page for
+<a href="../../spider/docs/man/tf.html"><STRONG>TF</STRONG></A> and
+<a href="../../spider/docs/man/tfd.html"><STRONG>TF D</STRONG></A>.
+<p>
+
+The operation initially solicits name 
+of a document file containing 1D rotationally averaged power
+spectrum.  The power spectrum should be placed in the first
+column of this document file.  A batch program that estimates
+power spectra for a series of micrographs is included in
+the <a href="../../spider/docs/techs/recon/mr.html">techniques page/recon/mr.html</A>
+: Three Dimensional Reconstruction of
+Single Particle Specimens using Reference Projections.<p> 
+
+After the document file name is provided, the user specifies the
+following input parameters: <br />
+
+<ul>
+<dl>
+
+<dt>Pixel size (A)                     </dt>
+
+<dt>Spherical abberation constant (mm) </dt>
+
+<dt>Electon energy (kev)               </dt>
+
+<dt>Source size (1/A)                  </dt>
+
+
+<dt>Defocus spread (A)                 </dt>
+
+<dt>Astigmatism (A)                   </dt>
+   <dd>Defocus difference due to axial astigmatism. 
+    The default value given indicates a defocus range of +/- 400A
+    around the nominal value as the azimuth is varied.</DD> 
+
+<dt>Azimuth (Deg.)                     </dt>
+    <dd> Angle, in degrees, that characterizes the direction of
+    astigmatism.  The angle defines the origin direction where the 
+    astigmatism has no effect.</DD> 
+
+<dt>Amplitude contrast ratio (0..1)    </dt>
+
+<dt>Gaussian envelope halfwidth (A^1)  </dt>
+    <dd> Halfwidth in reciprocal Angstroms.</DD> 
+</dl>
+</ul>
+
+The user can now interactively adjust the following parameters to
+obtain plots. <br />
+<ul>
+<dl>
+<dt>Defocus (A)                        </dt>
+   <dd>Amount of defocus, in Angstroms. Positive values 
+    correspond to underfocus (the preferred region); negative
+    values correspond to overfocus.    </DD>
+
+<dt>Plot cutoff (%)                    </dt>
+</dl>
+</ul>
+<p>
+ <B>How to proceed:</B> the defocus value and amplitude contrast
+(usually set to 0.1) have to be adjusted such that the vertical
+lines (corresponding to locations of zero crossings of the CTF)
+coincide with the minima of the power spectrum.  Usually the initial
+10% of the power spectrum curve length oscillates widely and can
+be ignored by setting the plot cutoff.
+<br />
+
+<hr /> 
+<small>
+  Last update: 7/05/2000 &nbsp;&nbsp;&nbsp;
+  ArDean Leith  
+</small>
+
+</html>

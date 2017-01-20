@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Web: Colored Surfaces 6/21/95 </title>
+</head>
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="Web_icon.gif"></a> 
+   &nbsp;&nbsp;   >Web: Colored Surfaces 
+</h1> 
+<p><hr /> <p>
+
+<pre>
+Colored Surface-- Display a surface view with colored voxels   
+
+PURPOSE:  Display a shaded surface from a volume and color the voxels
+          which appear on the surface according to colors specified in
+          a second color volume.
+
+ USAGE:   Similar to the surface operation,  except that the user is
+          prompted for both the SPIDER volume to be surfaced and a 
+          second SPIDER volume which contains a color assignment for 
+          each voxel.  Both volumes must have the same dimensions.
+
+          Colors should be 0 --> 7.  The more colors requested, the
+          less the intensity range available within each color.  For 
+          three colors about 58 intensities are available.  
+          Currently the opteration will load a default color assignment
+          as follows:  0 = blue,  1 = green,   2 = red,  3 = yellow,
+                       4 = cyan,  5 = magenta, 6 = white. 
+
+NOTE:     The operation can also accept a arbitrarily ranged color volume
+          and will automatically partition the color range into the number of
+          colors requested in the surface munu.  However I do not recommend 
+          this method of use, as it may disappear in the future.
+
+NOTE:     This operation is a bit buggy and may not work 
+          properly  twice in the same Web session.  If you have problems 
+          please restart Web.
+
+</pre>
+<hr /> 
+  Last updated : 12/31/97 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+
+</body>
+</html>

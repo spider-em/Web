@@ -1,0 +1,214 @@
+head	1.4;
+access;
+symbols
+	pre_24bitonly:1.3;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2017.01.13.15.04.36;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2001.08.08.16.38.28;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	99.10.08.18.10.32;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	99.08.04.16.52.39;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@<html>
+<head>
+<title>Web: Montage of images from doc file</title>
+</head>
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web: Montage of images from doc file 
+</h1> 
+<p><hr /> <p>
+
+<big>
+
+<p>
+<p>
+<h3>Montage of Images From Document File</h3>
+
+Displays montage of individule or stacked images, where the image numbers are obtained from
+a SPIDER document file. <p>
+
+Web asks for selection document file name.
+A selection document file  
+contains the image numbers in the first register (not in the key).  <p>
+
+Then Web asks for: <br />
+The Image file template, which is the template for
+the series of files whose numbers are listed in the selection document
+file (e.g.: AVG***)  This operation can also show a montage of images
+from a stack file with the appropriate template (e.g. stackfile@@***).
+<p>
+
+One can optionally : 
+<ul>
+<li> Limit the range of images selected from the
+     document file. </li><p>
+
+<li>Specify starting location for the first image. </li><p>
+
+<li>Specify number of frames (images) displayed on a row. </li><p>
+
+<li>Request a "movie" in which case the images are displayed
+    on top of each other. </li><p>
+
+<li>Request creation of an averaged image of the series, 
+    specifying  an output file name for the average image.<p>
+</ul>
+
+<hr />
+</big>
+
+<small> 
+  Last updated : 8/8/01 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+
+</body>
+</html>
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d3 1
+a3 1
+<title>WEB: MONTAGE OF IMAGES FROM DOC. FILE</title>
+d6 6
+d14 1
+d26 1
+a26 1
+Then Web asks for: <br>
+d49 1
+a49 1
+<hr>
+d51 1
+d53 2
+a54 2
+Last updated : 8/8/01 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ArDean Leith
+@
+
+
+1.2
+log
+@stacks supported
+@
+text
+@d1 10
+a10 10
+<HTML>
+<HEAD>
+<TITLE>WEB: MONTAGE OF IMAGES FROM DOC. FILE</TITLE>
+</HEAD>
+<BODY>
+
+<BIG>
+<P>
+<P>
+<H3>Montage of Images From Document File</H3>
+d12 2
+a13 2
+Displays montage of images where the image numbers are obtained from
+a SPIDER document file. <P>
+d16 2
+a17 2
+A selection document file must 
+contain the image numbers in the first register (not in the key).  <P>
+d19 1
+a19 1
+Then Web asks for: <BR>
+d23 2
+a24 2
+from a stack file with the appropriate template (e.g. STACKFILE@@***).
+<P>
+d26 4
+a29 1
+One can optionally specify the: <BR>
+d31 1
+a31 2
+Starting location for the first image. <BR>
+Number of frames (images) displayed on a row. <BR><P>
+d33 1
+a33 2
+The user can request a "movie" in which case the images are displayed
+on top of each other. <BR><P>
+d35 2
+a36 3
+The user can also request creation of an
+averaged image of the series, If this is requested, Web needs
+an output file name for the average image.<P>
+d38 3
+d42 4
+a45 4
+<HR>
+</BIG>
+<SMALL> 
+Last updated : 10/9/99 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+d47 1
+a47 1
+</SMALL>
+d49 2
+a50 2
+</BODY>
+</HTML>
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d12 2
+a13 13
+Displays montage of images.  The montage is taken from a selection 
+document file list. Web Asks for document file name.  The document file
+     must have the image numbers in the first register (not in the key).
+     Then Web asks for the Image file template, which is the
+     template for the series of files whose numbers are listed in
+     the selection document file e.g.: AVG***  
+     One can optionally
+     specify the starting location for the first image and the
+     number of frames (images) displayed on a row. The user can
+     request a "movie" in which case the images are displayed on
+     top of each other.  The user can also request creation of
+     an averaged image of the series, If this is requested, Web
+     will then neeed an output file name for the average image.
+d15 3
+d19 20
+d42 1
+a42 1
+Last updated : 8/3/99 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+@

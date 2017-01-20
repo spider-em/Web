@@ -1,0 +1,426 @@
+<html>
+
+<head>
+   <title>Web: Installation on Linux</title>
+</head>
+
+<body>
+
+<hr \> 
+  <h1>
+  <img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+    &nbsp;&nbsp;   Web: Installation on Linux
+   </h1> 
+<p><hr> <p>
+
+<ul>
+
+<p>
+<li><h3><a name="general">GENERAL </a></h3>
+   <i>Web</i> is a point-and-click interface for display and interaction
+   with SPIDER images and data.  <i>Web</i> is written in <i>C</i> for use with the 
+   X WINDOW system with Motif Widgets.  
+   <i>JWeb</i> written in <i>Java</i> is also 
+   available for <a href="./jweb-inst-linux.html">installation</a> on GNU/Linux
+   but lacks much functionality present in <i>Web</i>.
+</li> 
+</p>
+
+<li> <h3><a name="loading">Web INSTALLATION </a></h3>
+
+  
+  <ol> 
+
+  <li><b> <a href="../../spider/docs/spi-register.html">Download    </a> and
+          <a href="../../spider/docs/spider-inst-linux.html">install</a> 
+        the SPIDER/Web distribution </b> and place it in
+        an appropriate directory: <i>PARENT-DIR</i>.
+   <p />
+
+   The following <i>Web</i> directories will be created under: 
+       <i>PARENT-DIR</i> (along with other directories for SPIDER, etc.):
+   <p />
+
+   <table border="1" cellpadding="4" cellspacing="4">
+     <tr> <th halign="left">Directory</th> <th halign="left">Contents             </th></tr> 
+
+     <tr><td>web/src </td>  <td><i>Web</i> source code, libraries        </td></tr>
+     <tr><td>web/bin </td>  <td><i>Web</i> executables                   </td></tr>
+     <tr><td>web/docs</td>  <td><i>Web</i> documentation, html pages     </td></tr>
+     <tr><td>web/lib </td>  <td><i>Web</i> Sample Motif object libraries </td></tr>
+     <tr><td>web/jweb</td>  <td>           JWeb directory                </td></tr>  
+   </table>
+
+   <p>
+   The <i>PARENT-DIR/web/bin</i> directory contains following GNU/Linux 
+   executable binary files, <b>use whichever one works best </b> on
+   your system.
+   </p>  
+
+   <p>
+   <table border="1" cellpadding="4" cellspacing="5">
+   <tr>
+      <th halign="left"><i>Web</i></th>
+      <th halign="left">For <br /> Desktop Environment</th>
+      <th halign="left">Visual    </th>
+      <th halign="left">Executable</th>
+      <th halign="left">Optimal   </th>
+      <th halign="left">Linkage   </th>
+   </tr>
+   <tr>
+      <td>web_linux_dir        </td>
+      <td>KDE and most others  </td>
+      <td>24 bit DirectColor   </td>
+      <td>32 bits              </td>
+      <td>Big-endian           </td>
+      <td>X-window libs dynamic</td>
+   </tr>
+   <tr>
+      <td>web_linux_dirs       </td>
+      <td>KDE and most others  </td>
+      <td>24 bit DirectColor   </td>
+      <td>32 bits              </td>
+      <td>Big-endian           </td>
+      <td>All libs static      </td>
+   </tr>
+
+
+   <tr>
+      <td>web_linux_tru        </td>
+      <td>Gnome                </td>
+      <td>24 bit TrueColor     </td>
+      <td>32 bits              </td>
+      <td>Big-endian           </td>
+      <td>X-window libs dynamic</td>
+   </tr>
+   <tr>
+      <td>web_linux_trus       </td>
+      <td>Gnome                </td>
+      <td>24 bit TrueColor     </td>
+      <td>32 bits              </td>
+      <td>Big-endian           </td>
+      <td>All libs static      </td>
+   </tr>
+
+   <tr>
+      <td>web_linux_tru64      </td>
+      <td>Gnome                </td>
+      <td>24 bit TrueColor     </td>
+      <td>32 bits              </td>
+      <td>Big-endian           </td>
+      <td>X-window libs dynamic</td>
+   </tr>
+
+  </table>
+   </p>
+
+  <li><h4><a name="web">Set <i>"web"</i>  Command</a></h4>
+
+      You can define an alias for your <i>Web</i> location.  Assuming you  
+      are  using the  <i>'C' </i> shell, you would put a line similar to 
+      the  following in the <i>.cshrc</i> startup file in your home directory:
+      <blockquote>  <kbd>
+           alias  web    PARENT-DIR/web/bin/web_linux_dir       <br />
+            or                                                  <br />
+           alias  web    PARENT-DIR/web/bin/web_linux_tru       <br />
+      </kbd> </blockquote>
+      If you do not have a .cshrc file in your home directory you can create it
+      with any text editor. <br />
+
+      Alternatively, you could place the web executable in:
+      <i>/usr/local/bin</i> which is probably already on your search PATH or 
+      you could modify your search path to include the 
+      <i>PARENT-DIR/web/bin </i> directory. 
+   </li>
+
+  <li><h4><a name="setting">Set environment variables.</a> </h4>
+
+      If you are using <i>web_linux_dir/</i> and wish to use color tables
+      you will also need to tell <i>Web</i> the location of your <i>*.rgb</i> 
+      color-look-up-table files.  If you are using the 
+      <i>'C'</i> shell, place following line in your
+      <i>.cshrc</i> startup file:
+
+      <blockquote><kbd>
+      setenv SPRGB_DIR  "PARENT-DIR/web/rgb"     <br /> 
+      </kbd></blockquote> 
+  </li>
+  </ol>
+
+  <p>
+</li>
+
+<li>
+  <h3><a name="running">Using <i>Web</i></a></h3>
+ 
+  <p>To control <i>Web</i>: USE MOUSE TO SELECT MENU ITEMS FROM PULL-DOWN MENUS</p>
+
+  <p>Further information is given in the <a href="web.html"><i>Web</i> manual</a>.</p>
+
+  <p>You may enter the file extension on the command line, e.g.:
+       <blockquote> <kbd>
+       web   dat         <br />
+       </kbd></blockquote></p>
+</li>
+
+<li>
+  <h3>If <i>Web</i> does not run</h3></p>
+ 
+  <ul>
+
+  <p><li><dl> 
+      <dt>If you get an error message like: <i>Command not found</i> </dt>
+
+      <dd>See "<a href="#web">Set Web command</a>" above to
+          ensure that your desired executable is accessible.</dd>
+  </dl></li> </p>
+
+  <p><li><dl> 
+      <dt>If you get an error message about a <i>Missing library ...</i>:</dt>
+
+      <dd>
+      Your system may not have the standard 32 bit run-time X Window libraries. 
+      Web requires the following standard X Window 32 bit libraries:
+      libXt.so.6,  libX11.so.6, libm.so.6, libSM.so.6, 
+      libICE.so.6, libxcb.so.1, and libXau.so.6.
+      (Web has been statically linked with the Motif libraries and no
+      longer requires that you install Motif libraries).<br />
+      
+      If you have a 64 bit OS and have not installed the 32 bit X Window libraries
+      you will need to do so to use the precompiled executables
+      For distributions which use <i>apt-get</i> this can be done: 
+      <p />
+
+      <p>
+      <dl> 
+      <dd><kbd> sudo apt-get install libxmu6:i386 </kbd></dd>
+      </dl>
+      <p /></dd>
+  </dl></li> </p>
+
+  <p><li><dl> 
+      <dt>If you still get an error message about a <i>Missing library ...</i>:</dt>
+
+      <dd> Your system can not find the location of the standard run-time X Window libraries. 
+      <p>
+      On Redhat and SUSE Linux for 32 bit applications
+      these libraries are often in: <i>/usr/X11R6/lib</i> 
+      (or more recently in: <i>/usr/lib/</i>). 
+      If your system does not know the location of your X Window libraries 
+      and you are using the <i>'C' </i> shell, add the following lines to your 
+      <i>.cshrc</i> startup file:</dt>
+      <p />
+      <dl> 
+        <dd><kbd> if ( $?LD_LIBRARY_PATH ) then </kbd></dd>
+        <dd><kbd> &nbsp;&nbsp;&nbsp; setenv LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/X11R6/lib</kbd></dd>
+        <dd><kbd> else</kbd></dd>
+        <dd><kbd> &nbsp;&nbsp;&nbsp; setenv LD_LIBRARY_PATH /usr/X11R6/lib</kbd></dd>
+        <dd><kbd> endif</kbd></dd>
+      </dl>
+      <p /></dd>
+  </dl></li> </p>
+ 
+  <p><li><dl> 
+     <dt>If you get an X Window error message like: <i>Bad Match  ....</i></dt>
+
+     <dd>You have a bad X Window - Visual selection. <br />
+         A possible reason for this message is that you have an Nvidia graphics 
+         card and are trying to use the default open source graphics driver that 
+         came with your Linux distribution.  Download the appropriate FREE driver from Nvidia
+         and you will get better graphics for both SPIDER and other programs.
+         If you still get this error message after restarting your graphics system then
+         your graphics card fails to support the necessary visual or 
+         your X-Window installation has limited your machines visual support.  
+         You may be able to use the alternative Web executable (see above table) or use  
+         <a href="jweb-inst-linux.html"> JWeb</a> instead.
+         </dd>
+  </dl></li></p>
+
+  <p><li><dl> 
+     <dt>If you get an message listing the <i>Screen depth as 16 bits</i> 
+         followed by  an error message like:  
+         <i>XError of failed request: Bad Value ......</i></dt>
+
+     <dd>You need to change the number of colors displayed by your graphics card
+         from: 16 bits to: 24 bits.<br />
+   
+       <i> E.g. if you are using SUSE </i>    <br/>
+       <dl><dd><i>
+         'Start up YAST'     --               <br/>
+         'Under: Hardware'   --               <br/>
+         'Under: Graphics Card & Monitor' --  <br/>
+         'Change colors to (24 bit)' </i>     <br/>
+         You may have to login as <i>root</i> to do this.</dd>
+       </dl> 
+  </dl></li> </p>
+
+  <p><li><dl> 
+     <dt>If you get an error message like: No 24bit, directcolor visual! <br />
+          XError of failed request: Bad Color (invalid colormap parameter).</dt>
+
+     <dd>The usual reason for this message is that you have an Nvidia graphics 
+         card and are trying to use the default open source graphics driver that 
+         came with your Linux distribution.  Download the appropriate FREE driver from Nvidia
+         and you will get better graphics for both Web and other programs.
+         If you still get this error message after restarting you graphics system then
+         your graphics card fails to support the necessary visual or your X-Window installation has
+         limited your machines visual support.  You can use  
+         <a href="jweb-inst-linux.html"> JWeb</a> instead. </dd>
+  </dl></li></p>
+
+  <p><li><dl> 
+     <dt>If Web still fails to run:</dt>
+
+     <a name="VNC"></a>
+     <dd>Use <a href="http://www.realvnc.com">vnc</a> 
+     (Virtual Network Computing) to create a virtual display.</dd>
+
+     <dd>Most GNU/Linux distributions include <i>vnc</i> in their default 
+     installation which can be used to create a virtual display in a window 
+     on your current desktop.<br/>
+
+     When  <i>vnc</i> is installed:
+     <blockquote>
+     <p><kbd> vncserver -cc 3 -depth 24</kbd><br/>
+     Provide a password if prompted.<br/></p>
+
+     <p>Returns "New 'X' desktop is hostname:number"<br/>
+     e.g.: "New 'X' desktop is green:1"<br/></p>
+
+     <p><kbd> vncviewer :1</kbd><br/>
+     Provide a password if prompted.<br/></p>
+
+     <p>Opens new desktop within a window<br/>
+     Here you can start <i>web_linux_dir</i>   normally or you can 
+     start it automatically by editing your vnc viewer startup file: 
+     <a href="~/.vnc/xstartup">~/.vnc/xstartup</a> </p>
+
+     <kbd> vncserver -kill  :1</kbd><br/>
+     Kills the vnc server.  (The vnc server will usually keep the
+     same passwords you specified for the next invocation.) <br/></p>
+     </dd>
+  </dl></li> </p>
+
+  <p><li><dl> 
+      <dt>If Web still does not run:</dt>
+
+      <dd>Try <a href="compilew-linux.html">compiling and linking Web</a> 
+         on your system. This is usually easy if you have already installed 
+         the necessary  X-window and Motif development headers and 
+         libraries on your system</dd>
+  </dl></li></p>
+
+
+  <p><li><dl> 
+     <dt>If Web still fails to run:</dt>
+     <dd>Use <a href="jweb-inst-linux.html">JWeb</a> instead. </dd>
+  </dl></li></p>
+  </ul>
+  </li>
+
+<li>
+  <h3>If <i>Web</i> runs but has problems/bugs </h3></p>
+ 
+  <ul>
+  <p><li><dl> 
+     <dt>If you are using <i>Web-linux_dir</i> and it runs and but the other windows 
+     on the screen have strange colors when the Web window is in use (has focus).</dt>
+    
+     <dd><strong>This is expected.</strong> <i>Web-linux_dir</i> 
+          installs its own colormap so that it can use
+          private colormaps for intensity display.  This is
+          an old (and powerfull) technique for visualization
+          which is disappearing these days but still exists in Web.</dd>
+     <dd>If you dislike the color flashing you can use: <i>Web-linux_tru</i> 
+         instead.</dd>
+  </dl></li></p>
+
+
+  <p><li><dl> 
+     <dt>If <i>Web</i> runs and but the pulldown menus have boxes instead
+     of letters on SUSE 11.0</dt>
+     <dd><strong>SUSE X11.0 XWindow fonts are broken. </strong></dd>
+     <dd>Update to SUSE 11.1+  or just update following packages:</dd>
+     <dd><i> xorg-x11-fonts-core, xorg-x11, xorg-x11-fonts,xorg-x11-server </i> </dd>
+  </dl></li></p>
+
+
+  <li><dl> 
+     <dt>If <i>Web-linux_dir</i> runs but the pulldown menus become invisible:</dt>
+
+     <dd>
+
+     <ul>
+     <li> 
+     <dl>
+     <dt>If you are using the KDE Window Manager, the Window Manager is      
+          installing its own color choices
+          for <i>Web</i> menus and you must override this. <br />
+     <i> For KDE 3.* access the setting under: </i>    
+     <dd><i>
+         'Control center'      --               <br />
+         'Appearance & Themes' --               <br />
+         'Colors'              --               <br />
+         'Apply colors to non-KDE applications' <br/></i>
+          And insure it is set: <b>OFF</b>
+     </dd>
+
+     <i> For KDE 4.* access the setting under: </i>    
+     <dd><i>
+         'Personal Settings (Configure Desktop)'-- <br />
+         'Appearance' or 'Application' --          <br />
+         'Colors' or 'Color Settings'  --          <br />
+         'Options'                     --          <br />
+         'Apply colors to non-KDE applications'    <br/></i>
+          And insure it is set: <b>OFF</b>
+     </dd>
+     </dl></li>
+     <p />
+
+
+     <li> <dl> 
+     <dt>If you are using GNOME window manager and you still are having problems
+         with invisible menus:</dt>
+         <dd>You can:</dd>
+         <dd>Switch to KDE window manager,                        </dd> 
+         <dd>Use: <i>web_linux_tru</i>, or </dd>
+         <dd>Use: <a href="jweb-inst-linux.html">JWeb</a> instead. </dd>
+     </dl> </li>
+     <p />
+  </ul>
+  </li>
+  <p />
+
+   <li><dl> 
+   <dt> If you are still unable to get <i>Web</i> to run properly or have suggestions,
+        Please contact us and enclose the following info: </dt>
+   <dd>
+     What you are trying to do, 
+     exact error messages (if any), 
+     Linux distribution type, 
+     platform (AMD or Intel,etc), 
+     Window Manager in use (KDE, GNOME, etc.),
+     the value of environment variable: <i>LD_LIBRARY_PATH</i>, and
+     the output from: <kbd> xrdb -query</kbd> system command. </dd>
+
+    <p>
+    <dl><p>
+    ArDean Leith                                                          <br />
+    Phone: 518-486-5604                                                   <br />
+    Email: <a href="mailto:spider@wadsworth.org">spider@wadsworth.org</a> <br />
+    </dd>
+    </dl></li>
+</ul>
+
+<br />
+
+<hr />
+
+<small>
+  Source: web-inst-linux.html  &nbsp;&nbsp;&nbsp; 
+  Updated: 12/13/13            &nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+
+</body> 
+</html>

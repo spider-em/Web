@@ -1,0 +1,784 @@
+head	1.13;
+access;
+symbols
+	pre_24bitonly:1.10;
+locks; strict;
+comment	@# @;
+
+
+1.13
+date	2017.01.13.14.50.49;	author leith;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2011.07.26.15.54.36;	author leith;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2011.07.18.14.30.37;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2008.08.15.19.52.31;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2006.03.22.20.16.43;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2005.10.19.14.07.46;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.10.21.16.45.52;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2004.07.21.16.06.37;	author leith;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.07.13.15.51.07;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.26.15.22.40;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.25.19.51.33;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.20.18.55.49;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.03.18.20.45.29;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@*** empty log message ***
+@
+text
+@<html>
+
+<head>
+   <title>Web Compilation and Linking on Linux</title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web Compilation and Linking on Linux 
+</h1> 
+<p><hr /> <p>
+
+<hr />
+
+<ul>
+
+<li>
+   <h3><a name="executables">EXECUTABLES</a></h3>
+   <p>
+
+   <table border="1" cellpadding="4" cellspacing="5">
+    <tr>
+        <th halign="left">Executable</th>
+        <th halign="left">Optimal byte-ordering</th>
+        <th halign="left">Visual</th>
+        <th halign="left">Makefile</th>
+        <th halign="left">Compiler</th>
+        <th halign="left">Notes</th>
+    </tr>
+    <tr>
+        <td>web_linux_24</td>
+        <td>Big-endian</td>
+        <td>24 bit DirectColor</td>
+        <td> <a href="../src/Makefile_linux">Makefile_linux_24</a></td>
+        <td>gcc</td>
+        <td>32 bit AMD or Intel</td>
+    </tr>
+     <tr>
+        <td>web_linux_24_64</td>
+        <td>Big-endian</td>
+        <td>24 bit DirectColor</td>
+        <td> <a href="../src/Makefile_linux">Makefile_linux_24_64</a></td>
+        <td>gcc</td>
+        <td>64 bit AMD or Intel</td>
+    </tr>
+ </table>
+</li>
+</p>
+
+<p>
+<li>
+   <h3><a name="compiling">COMPILING AND LINKING</a></h3>
+   <p>
+   In the documention that follows <i>WEB_DIR</i> refers
+   to the location of Web on your system and a <i>'?'</i>
+   inside a filename refers to the suffix of one of the 
+   specific Web distributions available e.g. <i>_linux_24</i>
+   or <i>_linux_24_64</i>.
+   </p>
+   <p>
+   The directory: <i>WEB_DIR/src</i> contains <i>Makefiles</i>:
+
+   </p>
+   These makefiles can be used to compile the source code, 
+   place the object code in an object library, 
+   link the object code with system object libraries, and 
+   create an executable binary file. 
+   </p>
+
+
+   <ol>
+      <p>
+      <li> Save copies of the original executables and libraries under
+           an alternative name, e.g.
+
+           <blockquote>  <kbd>
+           cd WEB_DIR/src          <br />
+           mv  web?  web?_orig     <br />
+           mv   web?.a  web?_orig.a     <br />
+           </kbd> </blockquote>
+      </li>
+      </p>
+
+
+      <p><li> Edit source directory Makefile? as necessary (e.g. change processor flags or
+            optimization levels). </li></p>
+
+      <p><li>Compile and /or link <i>Web</i> using the provided Makefiles
+            e.g. 
+
+            <blockquote> <kbd>
+            make -f Makefile?          <br />
+            </kbd> </blockquote>
+
+            If the <i>make</i> operation fails due to a missing 
+            header file: <i>Xm.h</i> then you will have to install
+            the XWindow/Motif Development and headers files.  Some
+            Linux distributions do not install this by default. <br /><br />
+
+            If the <i>make</i> operation still fails to compile or 
+            the new executable does not 
+            run contact us at the address below. 
+      </li></p>
+   </ol>
+</li>
+
+<p> <li>
+   <h3><a name="flags">SOME COMPILATION AND LINKING FLAGS</a></h3>
+
+   <table border="0" cellpadding="4" cellspacing="3">
+    <tr>
+    <td>-DFUNCPROTO</td><td> Require function prototypes                   </td></tr>
+    <td>-O2        </td><td> Optimization level                            </td></tr> 
+    <td>-woff      </td><td> Ignore enumerated warnings                    </td></tr>
+    <td>-fullwarn  </td><td> List verbose warnings                         </td></tr>
+    <td>-P_SGIOSF  </td><td> Our cpp flag for SGI byte ordering                        </td></tr> 
+    <td>-DSP_SUNSP </td><td> Our cpp flag for selective compilation on Sun             </td></tr>
+    <td>-DWEB_BGFG </td><td> Our cpp flag for selective compilation for 24 bit visual  </td></tr>  
+    <td>-I/usr/X11R6/include </td><td> Set location of Xwindow headers                 </td></tr>  
+    </table>
+</li> </p>
+
+<p> <li>
+   <h3><a name="libraries">SHARED RUN-TIME LIBRARIES</a></h3>
+   When we compile <i>Web</i> requires the following shared run time libraries:
+
+   <table border="0" cellpadding="0" cellspacing="8">
+    <tr>
+    <td>-Xmu </td><td> Misc. X11 </td></tr>
+    <td>-Xt  </td><td> X Toolkit </td></tr>
+    <td>-X11 </td><td> X11       </td></tr>
+    <td>-m   </td><td> Math      </td></tr>
+    <td>-Xm  </td><td> Motif     </td></tr>
+    <td>-Xp  </td><td> Motif     </td></tr>
+  </table>
+  Our Makefiles specify static linkage versus the Motif libraries.
+</li> </p>
+
+<p /> <li>
+   <h3><a name="bugs">BUGS, SUGGESTIONS</a></h3>
+    In the event that you have questions or wish
+    to report bugs please send us <b>complete info</b> on what you are trying
+    to do, including any error messages. <p />     
+    Send such info to:<p />
+
+    ArDean Leith                                         <br />
+    Wadsworth Labs, P.O. Box 509, Albany, New York 12201 <br />
+    Phone: 518-486-5604                                  <br />
+    Email:  <a href= "mailto:spider@@wadsworth.org">spider@@wadsworth.org</a><br />
+</li> <p />
+
+</ul>
+
+<hr />
+
+<p> 
+<small>
+  Source file: compilew-linux.html &nbsp;&nbsp;&nbsp;  
+  Updated:  15 Jul. 2011  &nbsp;&nbsp;&nbsp; 
+  ArDean Leith 
+</small>
+</p>
+
+</body>
+</html>
+@
+
+
+1.12
+log
+@no apppluss now
+@
+text
+@d8 6
+d15 1
+a15 1
+<hr>
+d156 1
+a156 1
+<hr>
+d158 6
+a163 4
+<p> <small>
+Source file: compilew-linux.html &nbsp;&nbsp;&nbsp;  
+Updated:  15 Jul. 2011  &nbsp;&nbsp;&nbsp; 
+ArDean Leith </small>
+@
+
+
+1.11
+log
+@updated for 24 bit only
+@
+text
+@a79 13
+      <p><li> First you must compile the AppPlusS widget in its own directory 
+              (either: <i>WEB_DIR/AppPlusS</i> or <i>WEB_DIR/AppPlusS_64</i>, e.g.
+
+            <p> <blockquote> 
+            <kbd>
+            cd   WEB_DIR/AppPlusS   <br />
+            xmkmf -a ; make ;       <br />
+            cd   WEB_DIR/src        <br />
+            </kbd>
+            </p>
+      </li></p>
+ 
+ 
+a113 1
+    <td>-app_plus  </td><td> Our cpp flag for selective compilation for Appplus widget </td></tr>  
+@
+
+
+1.10
+log
+@web icon used
+@
+text
+@a8 8
+<h2>CONTENTS</h2>
+
+<ol>
+    <li>  <a href="#executables">   EXECUTABLES</a>              </li>
+    <li>  <a href="#compiling">     COMPILING & LINKING</a>      </li>
+    <li>  <a href="#flags">         COMPILATION FLAGS</a>         </li>
+    <li>  <a href="#libraries">     SHARED RUN-TIME LIBRARIES</a> </li>
+</ol>
+d28 1
+a28 1
+        <td>SGI</td>
+d36 1
+a36 1
+        <td>SGI</td>
+d40 1
+a40 17
+        <td>64 bit AMD OS</td>
+    </tr>
+    <tr>
+        <td>web_linux</td>
+        <td>SGI</td>
+        <td>8 bit PseudoColor</td>
+        <td> <a href="../src/Makefile_linux">Makefile_linux</a></td>
+        <td>gcc</td>
+        <td><a href="./web8onlinux.html">setting separate server</a></td>
+    </tr>
+    <tr>
+        <td>-</td>
+        <td>native Intel</td>
+        <td>8 bit PseudoColor</td>
+        <td> <a href="../src/Makefile_linux_le">Makefile_linux_le</a></td>
+        <td>gcc</td>
+        <td><a href="./web8onlinux.html">setting separate server</a></td>
+d42 1
+a42 9
+    <tr>
+        <td>-</td>
+        <td>SGI</td>
+        <td>8 bit PseudoColor</td>
+        <td><a href="../src/Makefile_linux_pg">Makefile_linux_pg</a></td>
+        <td>Portland Group</a></td>
+        <td><a href="./web8onlinux.html">setting separate server</a>.</td>
+    </tr>
+   </table>
+d53 2
+a54 3
+   specific Web distributions available e.g. <i>_linux, _linux_le, </i>
+     or
+   <i>_linux_24</i>.
+d61 3
+a63 3
+   place the object code in an object 
+   library, link the object code with system object 
+   libraries, and create an executable binary file. 
+d73 3
+a75 3
+           cd WEB_DIR/src          <br>
+           mv  web?  web?_orig     <br>
+           mv   web?.a  web?_orig.a     <br>
+d80 2
+a81 4
+      <p><li> If you are compiling for 24-bit visual e.g. using 
+         <i>Makefile_linux_24</i> or <i>Makefile_linux_24_64</i>  
+           first you must compile the AppPlusS widget in its own directory (either: 
+           <i>WEB_DIR/AppPlusS</i> or <i>WEB_DIR/AppPlusS_64</i>, e.g.
+d85 3
+a87 3
+            cd   WEB_DIR/AppPlusS   <br/>
+            xmkmf -a ; make ;       <br/>
+            cd   WEB_DIR/src        <br/>
+d101 1
+a101 1
+            make -f Makefile?          <br>
+d107 1
+a107 2
+            Linux distributions do not install this by default, but
+            it usually is present in the distribution. <br /><br />
+d121 9
+a129 11
+    <td>-DFUNCPROTO</td><td> require function prototypes                   </td></tr>
+    <td>-O2        </td><td> optimization level                            </td></tr> 
+    <td>-woff      </td><td> ignore enumerated warnings                    </td></tr>
+    <td>-fullwarn  </td><td> list verbose warnings                         </td></tr>
+    <td>-P_SGIOSF  </td><td> cpp flag for SGI byte ordering                </td></tr> 
+    <td>-DSP_SUNSP </td><td> cpp flag for selective compilation on Sun     </td></tr>
+    <td>-DSP_NT    </td><td> cpp flag for selective compilation on NT      </td></tr>  
+    <td>-app_plus  </td><td> cpp flag for selective compilation for 24 bit visual      </td></tr>  
+    <td>-DWEB_24   </td><td> cpp flag for selective compilation for Appplus widget     </td></tr>  
+    <td>-DWEB_BGFG </td><td> cpp flag for selective compilation with fixed color menus </td></tr>  
+    <td>-I/usr/X11R6/include </td><td> set location of Xwindow headers        </td></tr>  
+d135 1
+a135 1
+  <i>Web</i> requires the following shared run time libraries:
+d139 1
+a139 1
+    <td>-Xm  </td><td> Motif     </td></tr>
+d142 3
+a144 2
+    <td>-Xmu </td><td> Window    </td></tr>
+    <td>-m   </td><td> math      </td></tr>
+d146 1
+d149 1
+a149 1
+<p> <li>
+d153 2
+a154 2
+    to do, including any error messages. <p>     
+    Send such info to:<p>
+d156 5
+a160 8
+    ArDean Leith                                         <br>
+    Wadsworth Labs, P.O. Box 509, Albany, New York 12201 <br>
+    phone: 518-486-5604                                  <br>
+    fax:   518-474-7992                                  <br>
+    email:  <a href= "mailto:spider@@wadsworth.org">spider@@wadsworth.org</a><br>
+    WWW:   <a href="http://www.wadsworth.org/spider_doc/web/docs/web.html"> 
+                           www.wadsworth.org/spider_doc/web/docs/web.html</a>
+</li> </p>
+d168 1
+a168 1
+Updated:  22 Mar. 2006  &nbsp;&nbsp;&nbsp; 
+@
+
+
+1.9
+log
+@Xm.h
+@
+text
+@d4 1
+a4 1
+   <title>Web Compilation and Linking on GNU/Linux</title>
+a7 4
+
+<h1 align="center">Web Compilation and Linking on GNU/Linux</h1>
+
+<hr>
+@
+
+
+1.8
+log
+@_24
+@
+text
+@d4 1
+a4 1
+<title>Web Compilation and Linking on GNU/Linux</title>
+d143 9
+a151 2
+            If the <i>make</i> operation fails or the new executable does not 
+            run contact us at the address below.</p> 
+d211 1
+a211 1
+Updated:  13 Oct. 2005  &nbsp;&nbsp;&nbsp; 
+@
+
+
+1.7
+log
+@*** empty log message ***
+@
+text
+@d39 16
+d60 1
+a60 2
+        <td>May require 
+            <a href="./web8onlinux.html">setting separate server</a></td>
+d68 1
+a68 10
+        <td>May require 
+           <a href="./web8onlinux.html">setting separate server</a></td>
+    </tr>
+    <tr>
+        <td>web_linux_24</td>
+        <td>SGI</td>
+        <td>24 bit DirectColor</td>
+        <td> <a href="../src/Makefile_linux">Makefile_linux_24</a></td>
+        <td>gcc</td>
+        <td>Must set <a href=".web-inst-linux-24.html">xrdb</a>.</td>
+d76 1
+a76 1
+        <td>May require <a href="./web8onlinux.html">setting separate server</a>.</td>
+d105 1
+d117 17
+a133 1
+      <li> Edit Makefile? as necessary (e.g. change processor or
+d136 1
+a136 1
+      <li> Compile and /or link <i>Web</i> using the provided Makefiles
+d140 1
+a140 1
+            make -f Makefile?            <br>
+d145 1
+a145 7
+
+      <li> Note: The archive <i>ar</i> command in the Makefile will
+            use a lot of space in your TMPDIR.  If you get a message
+            about no space being left on your device I suggest you
+            redefine TMPDIR to a directory that has space (e.g.): <br>
+            <i>setenv TMPDIR /usr/tmp</i> </p>
+   </li>
+a147 1
+<p>
+d149 1
+a149 1
+<li>
+d152 1
+a152 1
+   <table border="0" cellpadding="0" cellspacing="8">
+d154 11
+a164 7
+    <td>-P_SGIOSF  </td><td>&nbsp;&nbsp; cpp flag used for SGI byte ordering           </td></tr> 
+    <td>-DSP_SUNSP </td><td>&nbsp;&nbsp; cpp flag used for selective compilation on Sun</td></tr>
+    <td>-DSP_NT    </td><td>&nbsp;&nbsp; cpp flag for selective compilation on NT      </td></tr>  
+    <td>-O2        </td><td>&nbsp;&nbsp; optimization level                            </td></tr> 
+    <td>-woff      </td><td>&nbsp;&nbsp; ignore enumerated warnings  </td></tr>
+    <td>-DFUNCPROTO</td><td>&nbsp;&nbsp; require function prototypes </td></tr>
+    <td>-fullwarn  </td><td>&nbsp;&nbsp; list verbose warnings       </td></tr>
+d166 1
+a166 2
+</li>
+<p>
+d168 1
+a168 1
+<li>
+d174 5
+a178 5
+    <td>-Xm  </td><td>&nbsp;&nbsp; Motif </td></tr>
+    <td>-Xt </td><td>&nbsp;&nbsp; X Toolkit </td></tr>
+    <td>-X11 </td><td>&nbsp;&nbsp; X11 </td></tr>
+    <td>-Xmu </td><td>&nbsp;&nbsp; Window </td></tr>
+    <td>-m </td><td>&nbsp;&nbsp; math </td></tr>
+d180 1
+a180 2
+</li>
+<p>
+d182 1
+a182 1
+<li>
+d196 1
+a196 1
+</li>
+d204 1
+a204 1
+Updated:  21 Oct. 2004  &nbsp;&nbsp;&nbsp; 
+@
+
+
+1.6
+log
+@notes
+@
+text
+@d2 1
+d16 3
+a18 3
+    <li>  <a href="#executables">   EXECUTABLES</a> </li>
+    <li>  <a href="#compiling">     COMPILING & LINKING</a> </li>
+    <li>  <a href="#flags">         COMPILATION FLAGS</a> </li>
+d83 2
+a84 1
+   specific Web distributions available e.g. <i>_linux, _linux_le, </i>or
+a141 1
+    <td>-g         </td><td>&nbsp;&nbsp; for debug use               </td></tr>
+d186 1
+a186 1
+Updated:  21 Jul. 2004  &nbsp;&nbsp;&nbsp; 
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d44 1
+a44 1
+            <a href="../../spider/docs/web8onlinux.html">setting separate server</a></td>
+d53 1
+a53 1
+           <a href="../../spider/docs/web8onlinux.html">setting separate server</a></td>
+d61 1
+a61 1
+        <td>Some operations do not work in 24 bits</td>
+d69 1
+a69 1
+        <td>May require <a href="../../spider/docs/web8onlinux.html">setting separate server</a></td>
+d185 1
+a185 1
+Updated:  14 Jul 2004  &nbsp;&nbsp;&nbsp; 
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@a0 1
+
+d43 2
+a44 1
+        <td>May require <a href="../../spider/docs/web8onlinux.html">setting separate server</a></td>
+d52 2
+a53 1
+        <td>May require <a href="../../spider/docs/web8onlinux.html">setting separate server</a></td>
+d58 1
+a58 1
+        <td>24 bit TrueColor</td>
+d175 2
+a176 2
+    WWW:   <a href="http://www.wadsworth.org/spider_doc/web/docs/web.html"><br>
+                       http://www.wadsworth.org/spider_doc/web/docs/web.html</a>
+d185 1
+a185 1
+Updated:  26 Mar 2003  &nbsp;&nbsp;&nbsp; 
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d16 4
+a19 4
+    <li>  <a href="#executables">   EXECUTABLES</a> 
+    <li>  <a href="#compiling">     COMPILING & LINKING</a> 
+    <li>  <a href="#flags">         COMPILATION FLAGS</a> 
+    <li>  <a href="#libraries">     SHARED RUN-TIME LIBRARIES</a> 
+d23 1
+a24 1
+<ul>
+d26 2
+a27 3
+
+<h3><a name="executables">EXECUTABLES</a></h3>
+<p>
+d29 1
+a29 1
+<table border="1" cellpadding="4" cellspacing="5">
+d41 1
+a41 1
+        <td>8 bit</td>
+d49 1
+a49 1
+        <td>8 bit</td>
+d57 2
+a58 2
+        <td>24 bit</td>
+        <td> <a href="../src/Makefile_linux">Makefile_linux</a></td>
+d63 1
+a63 1
+        <td>web_linux_pg</td>
+d65 1
+a65 1
+        <td>8</td>
+d70 3
+a72 1
+</table>
+d74 1
+a74 3
+ </p>
+ <p>
+
+d76 1
+a76 1
+   <h3><a name="compiling">Compiling and Linking</a></h3>
+d131 1
+a131 1
+   <h3><a name="flags">Some Compilation and Linking flags</a></h3>
+d148 2
+a149 1
+   <h3><a name="libraries">SHARED LIBRARIES LINKED</a></h3>
+d184 1
+a184 1
+Updated:  25 Mar 2003  &nbsp;&nbsp;&nbsp; 
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d32 1
+a32 1
+        <th halign="left">Web</th>
+d35 2
+d41 1
+a41 1
+        <td>native Intel</td>
+d43 2
+d48 2
+a49 2
+        <td>web_linux_le</td>
+        <td>SGI</td>
+d51 2
+d59 2
+d63 8
+d78 8
+a85 1
+
+a87 32
+   <table border="1" cellpadding="4" cellspacing="5">
+    <tr>
+        <th halign="left">Makefile</th>
+        <th halign="left">Optimal byte-ordering</th>
+        <th halign="left">Visual</th>
+        <th halign="left">Notes</th>
+    </tr>
+    <tr>
+        <td> <a href="../src/Makefile_linux">Makefile_linux</a></td>
+        <td>SGI</td>
+        <td>8 bit</td>
+        <td>gcc compiler</td>
+    </tr>
+    <tr>
+        <td><a href="../src/Makefile_linux_pg">Makefile_linux_pg</a></td>
+        <td>SGI</td>
+        <td>8 bit</td>
+        <td>Portland Group compiler</a></td>
+    </tr>
+    <tr>
+        <td><a href="../src/Makefile_linux_le">Makefile_linux_be</a> </td>
+        <td>native Intel</td>
+        <td>24 bit</td>
+        <td>gcc compiler</td>
+    </tr>
+    <tr>
+        <td><a href="../src/Makefile_linux_24be">Makefile_linux_24be</a></td>
+        <td>SGI</td>
+        <td>24 bit</td>
+        <td>gcc compiler</td>
+    </tr>
+   </table>
+a94 6
+   In the documention that follows <i>WEB_DIR</i> refers
+   to the location of Web on your system and a <i>'?'</i>
+   inside a filename refers to the suffix of one of the 
+   specific Web distributions available e.g. <i>_linux, _linux_be, or
+   _linux_24be</i>.
+   </p>
+d184 1
+a184 1
+Updated:  18 Mar 2003  &nbsp;&nbsp;&nbsp; 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d19 1
+a19 1
+    <li>  <a href="#libraries">     LIBRARIES</a> 
+d44 1
+a44 1
+        <td>web_linux_sgi</td>
+d74 1
+a74 1
+        <td>native Intel</td>
+d85 2
+a86 2
+        <td><a href="../src/Makefile_linux_be">Makefile_linux_be</a> </td>
+        <td>SGI</td>
+a129 1
+            cd   WEB_DIR/src             <br>
+d164 1
+a164 1
+   <h3><a name="libraries">AUXILIARY LIBRARIES LINKED</a></h3>
+d179 1
+a179 1
+    In the event that you have questionsor wish
+d188 1
+a188 1
+    email:  <a href= "mailto:spider@@wadsworth.org">spider@@wadsworth.org</a>
+@

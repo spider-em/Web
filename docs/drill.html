@@ -1,0 +1,57 @@
+<html>
+<head>
+  <title>Web: Drill-n-fill</title>
+</head>
+
+<body>
+
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;  Web: Drill-n-fill 
+</h1> 
+<p><hr /> <p>
+
+Displays a surface view of a SPIDER volume using the same algorithm as
+the "Surface" operation.  The volume is viewed along the X axis from
+the "left" side.  The user sets the threshold where the displayed
+surface is located, and the percent influence of reflectivity and depth on
+the rendering.  After the surface is rendered, another menu appears 
+where the can user set parameters for the drilling tool.  These
+parameters include: The density which is given to drilled/filled voxels;
+the depth, width, and length of the drilling tool; and the movement 
+increment for 
+the drilling tool when the middle mouse button is pressed. <p> 
+ 
+The tool edits an 8 bit volume which corresponds to the input volume.
+The input volume densities are mapped over the range 1..254 in the
+editable volume.  If the user wishes to add
+densities to the editable volume which are never found otherwise in the
+volume he/she can set the tool density value to 0 or 255.  <p>
+
+     The left mouse button replaces the voxels starting at the current 
+depth with voxels of the specified density.  All voxels within the
+tool dimension are replaced.  The middle mouse button moves the tool
+by one movement increment on each push.  Note that the movement 
+increment can be poisitive or negative.   The right button sets the
+current depth of the tool to the depth of the threshold surface at
+that cursor location. <p>
+
+After modifying the editable volume with the drill/fill tool the
+user can save the volume in an SPIDER format output file.  The density 
+values in the output file will be in the range 1..254 (unless the 
+user set values of 0 or 255).  <p>
+
+     This is an experimental operation and will only be improved or
+enhanced if there is sufficent user demand.  Magnification of the 
+surface view is not provided due to ambiguities which would arise
+in the editting.  If you wish a magnified view use voxel replication
+on the SPIDER volume before starting this operation. 
+
+<hr /> 
+  Last updated : 12/31/97 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ArDean Leith
+</small>
+
+</body>
+</html>

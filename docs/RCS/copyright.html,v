@@ -1,0 +1,181 @@
+head	1.5;
+access;
+symbols
+	pre_24bitonly:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2017.01.13.15.04.34;	author leith;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2015.06.11.15.03.32;	author leith;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2011.07.18.14.30.51;	author leith;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2008.08.15.19.53.11;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.20.15.01.01;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+<head>
+    <title>Web: Copyright Notice</title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   Web: Copyright Notice 
+</h1> 
+<p><hr /> <p>
+
+<h3><i>Web</i> Source Code</h3>
+
+<p><i>Web</i> contains 
+   <a href="http://www.gnu.org/copyleft/gpl.html">GPL licensed</a> 
+   source code (C)1981-2015, Health Research Inc.                  <br\> 
+   Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.   <br\> 
+   Email: <a href="mailto:spider@@wadsworth.org">spider@@wadsworth.org</a>
+</p>
+
+<p>Additionally <i>Web</i> contains a very small number of non-GPL licensed open source
+   or public domain source code files which may be copyright by other authors.  
+   These files have been marked marked with the 
+   copyright holder's name in the text. 
+</p>
+
+<p>
+<h3>GPL license.</h3>
+</p>
+
+<p>
+   This program is free software; you can redistribute it and/or 
+   modify it under the terms of the GNU General Public License as  
+   published by the Free Software Foundation; either version 2 of the  
+   License, or (at your option) any later version.   
+</p>
+
+<p>
+   This program is distributed in the hope that it will be useful, 
+   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+   General Public License for more details.       
+</p>
+
+<p>
+   You should have received a copy of the 
+   <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a>
+   along with this program. If not, 
+   see: <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>
+</p>
+
+<hr/>
+<h3><i>Web</i> Documentation </h3>
+
+<p>
+<h3><i>Web</i> Documentation is released under the GNU Free Documentation License </h3>
+</p>
+
+<p>Copyright (C) 1992-2015, Health Research, Inc. at
+   Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.   <br\> 
+   Email: <a href="mailto:spider@@wadsworth.org">spider@@wadsworth.org</a>
+</p>
+
+<p>
+ Permission is granted to copy, distribute and/or modify this document
+ under the terms of the GNU Free Documentation License, Version 1.2
+ or any later version published by the Free Software Foundation;
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+ Texts.  A copy of the license is included in the section entitled 
+ "GNU Free Documentation License".
+</p>
+
+<hr/>
+
+</body>
+</html>
+
+@
+
+
+1.4
+log
+@date
+@
+text
+@d8 6
+@
+
+
+1.3
+log
+@updated
+@
+text
+@d13 1
+a13 1
+   source code (C)1981-2011, Health Research Inc.                  <br\> 
+d56 1
+a56 1
+<p>Copyright (C) 1992-2011, Health Research, Inc. at
+@
+
+
+1.2
+log
+@web icon used
+@
+text
+@d13 2
+a14 3
+   source code (C)1981-2005, Health Research Inc. <br\> 
+   Health Research Incorporated (HRI),   
+   One University Place, Rensselaer, NY 12144-3455.<br\> 
+d45 2
+a46 3
+   along with this program; if not, write to the 
+   Free Software Foundation, Inc., 
+   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA. 
+d56 3
+a58 2
+<p>Copyright (C) 1992-2005, Health Research, Inc. at
+   One University Place, Rensselaer, NY 12144
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a7 1
+<h1 align="center">COPYRIGHT NOTICES</h1>
+a8 1
+<hr/>
+@

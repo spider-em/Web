@@ -1,0 +1,37 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	97.08.11.16.01.36;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+                      PROFILE OPERATION
+
+Display the profile of an image along a row or a column. A 
+display menu allows the setting of different options.
+The profile can be displayed temporarily or permanently on 
+the screen.  The profile can be normalized relative to 
+original image or relative to its row (column).  The row or 
+column where the profile is taken is indicated by a line over 
+the image and by its row or column number.
+
+--------------------------------------------------------------------
+
+Last updated on Mar 10, 1995
+@

@@ -1,0 +1,610 @@
+head	1.11;
+access;
+symbols
+	pre_24bitonly:1.9;
+locks; strict;
+comment	@# @;
+
+
+1.11
+date	2017.01.13.15.04.40;	author leith;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2013.05.09.14.02.41;	author leith;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2008.08.15.19.39.06;	author leith;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2008.08.08.18.51.24;	author leith;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2008.08.01.15.31.18;	author leith;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2005.10.27.17.29.30;	author bimal;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2005.10.27.17.19.45;	author bimal;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.06.29.20.14.43;	author bimal;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2004.12.14.22.39.51;	author bimal;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.12.19.14.36.25;	author leith;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.12.17.16.02.56;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.11
+log
+@*** empty log message ***
+@
+text
+@<html>
+<head>
+<title>JWeb : Installation on Windows</title>
+</head>
+
+<body>
+<hr /> 
+<h1>
+<img align="left" width="103" height="78" alt="Web Icon" src="web_icon.gif"></a> 
+   &nbsp;&nbsp;   JWeb : Installation on Windows
+</h1> 
+<p><hr /> <p>
+
+<ol>
+<h3><li><a name="general">INTRODUCTION </a></li></h3>
+    JWeb is a point-and-click interface for display and interaction
+    with SPIDER images and data written by <b>Dr. Bimal Rath</b>.  
+    JWeb is a Java application which was developed and tested on  Linux &
+    Windows computers. </p>
+
+<h3><li><a name="loading">LOADING JWeb</a></h3>
+
+    <ol>
+    <li>Create a directory in desired location for <b>JWeb</b>, 
+        hereafter referred to as: <i>JWEB_DIR</i> </li>
+
+   <p> <li>If you already have a 
+       <a href="../../spider/docs/spi-register.html">download</a> of
+       SPIDER/Web on a location accessible to your Windows machine copy the
+       files from that location's:  <i>spider/web/jweb/win </i> to 
+      <i>JWEB_DIR/win</i>.</p> </li
+
+   <p> <li>If you do not have an accessible source of SPIDER/Web you can 
+       <a href="../../spider/docs/spi-register.html">Download</a> and
+       <a href="../../spider/docs/spider-inst-linux.html">install</a> 
+        the SPIDER/Web distribution</b> using WinZip or a similar Windows
+        utility, and place it in an appropriate location: <i>PARENT-DIR</i>. 
+        Then navigate to SPIDER's <i>web/jweb/win</i> directory. </li>
+   <p />
+
+
+
+   </ol> 
+    
+<h3><li><a name="installation"> INSTALLATION </a></li></h3>
+    <ol> 
+
+    <p>
+    <li> Install the <i>Java Run Time Environment</i></li>
+       <ol>
+       <li> Double click on: 
+            <b>j2re-1_4_2_06-windows-i586-p.exe</b> </li> 
+       <li> Agree to license terms by clicking on <b>YES</b>. </li>
+       </ol>
+       </p>
+
+    <p>
+    <li> Install the <i>Java Advanced Imaging Run Time Environment</i></li> 
+       <ol>
+       <li> Double click on: 
+            <b>jai-1_1_2_01-lib-windows-i586-jre.exe</b> </li> 
+       <li> Click on: <b>NEXT</b></b> </dt> 
+       <li> Agree to license terms by clicking on <b>YES</b>. </li>
+       <li> Install the software at default location by clicking on 
+            <b>NEXT</b>.</li>
+       </ol>
+    </p>
+
+    <p> 
+    <li> Add win.WEB.jar file to <i>CLASSPATH</i> </li> <br />
+    (Note: You may need administrator's privilage to edit the <i>CLASSPATH</i> variable)  <br />
+        <p>
+        <ol> 
+        <li> Click on <b>START</b>.</li>
+        <li> Move cursor to <b>SETTINGS</b>.</dd>
+        <li> Click on <b>CONTROL PANEL</b>.</li>
+        <li> Double click on <b>SYSTEM</b>.</li>
+        <li> Set <i>CLASSPATH</i>.</li>
+
+           <ul>
+ 
+           <li> <h4>For Windows2000</h4> </li>
+              <ol>
+              <li> Click on <b>ADVANCED</b>.</li>
+              <li> Click on <b>ENVIRONMENT VARIABLES</b>.</li>
+
+                 <ul> 
+                 <li> If <i>CLASSPATH</i> variable is already defined: </li>
+                    <ol>
+                    <li> Click on <b>CLASSPATH</b>.</li>
+                    <li> Click on <b>EDIT</b>.</li>
+                    <li> Append the location of the <b>JWeb</b> files in the 
+                         <b>VARIABLE VALUE</b> field. <br />
+                         E.g. &nbsp; <b>C:\WINNT\system32;C:\JWEB\win.WEB.jar</b></li> <br />
+
+                         Note: Here the win.WEB.jar file was downloaded to: &nbsp; <b>C:\JWEB\</b>  and <br />
+                                <i>CLASSPATH</i> variable was already defined as:
+                               <i>C:\WINNT\system32 </i>
+                    </ol>
+                    </p>
+                    <p>
+
+                 <li> If <i>CLASSPATH</i> variable is not already defined:</li>
+                    <ol>
+                    <li>Inside the <b>SYSTEM VARIABLES</b> menu click on <b>NEW</b>
+                    <li>For <b>VARIABLE NAME</b> type: <b>CLASSPATH</b>
+        
+                    <li>Type the location of the <b>JWeb</b> files in the 
+                        <b>VARIABLE VALUE</b> field.  <br />
+                         E.g. &nbsp; <b>C:\JWEB\win.WEB.jar</b> </li>
+                     </ol>
+                     </p>
+                     <p>
+                  </ul>
+
+               <li> Click on <b>OK</b>.</li>
+               <li> Click on <b>OK</b>.</li>
+               <li> Click on <b>OK</b>.</li>
+               </ul>
+           </ol>
+        
+    </p>
+
+    <p> 
+    <li> Create shortcut to start <b>JWeb</b> with desired run-time
+         memory allocation.</li>
+         <ol>
+         <li> Right click mouse in an empty area of desktop
+              and select menu item: <b>NEW</b>.</li>
+         <li> Click on <b>SHORTCUT</b>.</li>
+         <li> Enter location of <b>JWeb</b> startup file:</li>
+              <i>JWEB_DIR\jweb.cmd</i> <br />
+              E.g.: &nbsp; <b>C:\JWEB\jweb.cmd</b> </li>
+         <li> Click on <b>NEXT</b>.</li>
+         <li> Click on <b>FINISH</b>.</li>
+         <li> Note: in: </i>C:\JWEB\jweb.cmd</i> the value: <i>512m</i> represents the 
+                    maximum megabytes memory allowed for this JAVA application. 
+                    If your machine has more or less installed memory, you should 
+                    change it accordingly.</li>
+        </ol>
+    </ol>
+   </ol> 
+
+<h3><li><a name="testing"> TESTING</a></li></h3>
+ 
+    <p>
+    Test <b>JWeb</b> : <br />
+        <ol>
+        <li>Double click on <b>JWeb</b> to start. </li> 
+        <li><b>USE MOUSE TO SELECT MENU ITEMS FROM PULL-DOWN MENUS </b></li>
+        </p>
+
+        <p>
+        <li>Further information on the use of <b>JWeb</b> is given in the   
+            <a href="jweb.html">JWeb manual</a>. </p></li>
+        </p>
+        </ol>
+<h3><li><a name="bugs"> BUGS, SUGGESTIONS </a></li></h3>
+        
+    <dl>
+    <dl>
+    <p><dt>Send any bug reports or suggestions to: 
+       <a href="mailto:spider@@wadsworth.org">spider@@wadsworth.org</a> <br />
+    </dl>
+  
+</ol>
+
+<hr /> 
+  Source: jweb-inst-win.html   &nbsp;&nbsp;&nbsp; 
+  Last update: 5/08/13 &nbsp;&nbsp;&nbsp;&nbsp;
+</small>
+
+</body> 
+</html>
+
+
+
+
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d7 6
+d70 2
+a71 2
+    <li> Add win.WEB.jar file to <i>CLASSPATH</i> </li> <br>
+    (Note: You may need administrator's privilage to edit the <i>CLASSPATH</i> variable)  <br>
+d93 2
+a94 2
+                         <b>VARIABLE VALUE</b> field. <br>
+                         E.g. &nbsp; <b>C:\WINNT\system32;C:\JWEB\win.WEB.jar</b></li> <br>
+d96 1
+a96 1
+                         Note: Here the win.WEB.jar file was downloaded to: &nbsp; <b>C:\JWEB\</b>  and <br>
+d109 1
+a109 1
+                        <b>VARIABLE VALUE</b> field.  <br>
+d132 1
+a132 1
+              <i>JWEB_DIR\jweb.cmd</i> <br>
+d147 1
+a147 1
+    Test <b>JWeb</b> : <br>
+d163 1
+a163 1
+       <a href="mailto:spider@@wadsworth.org">spider@@wadsworth.org</a> <br>
+d168 3
+a170 4
+<hr>
+<small> 
+Source: jweb-inst-win.html   &nbsp;&nbsp;&nbsp; 
+Last update: 5/08/13 &nbsp;&nbsp;&nbsp;&nbsp;
+@
+
+
+1.9
+log
+@web icon used
+@
+text
+@d25 1
+a25 1
+      <i>JWEB_DIR/win</i>.</p>
+d28 9
+a36 7
+       download Jweb for Windows from our internet site.  Get the files:
+       <ul> 
+       <li><a href="http://www.wadsworth.org/spider_doc/spider/download/win/j2re-1_4_2_06-windows-i586-p.exe">j2re-1_4_2_06-windows-i586-p.exe</a> </li>
+       <li><a href="http://www.wadsworth.org/spider_doc/spider/download/win/jai-1_1_2_01-lib-windows-i586-jre.exe">jai-1_1_2_01-lib-windows-i586-jre.exe</a> </li>
+       <li><a href="http://www.wadsworth.org/spider_doc/spider/download/win/win.WEB.jar">win.WEB.jar</a> </li>
+       <li><a href="http://www.wadsworth.org/spider_doc/spider/download/win/jweb.cmd ">jweb.cmd </a> </li>
+       </ul>
+d165 1
+a165 1
+Last update: 8/08/08 &nbsp;&nbsp;&nbsp;&nbsp;
+@
+
+
+1.8
+log
+@win dir
+@
+text
+@a7 5
+<h1 align="center">JWeb : Installation on Windows</h1>
+
+
+<hr>
+
+@
+
+
+1.7
+log
+@was out-of-date
+@
+text
+@d35 4
+a38 4
+       <li><a href="http://www.wadsworth.org/spider_doc/spider/download/j2re-1_4_2_06-windows-i586-p.exe">j2re-1_4_2_06-windows-i586-p.exe</a> </li>
+       <li><a href="http://www.wadsworth.org/spider_doc/spider/download/jai-1_1_2_01-lib-windows-i586-jre.exe">jai-1_1_2_01-lib-windows-i586-jre.exe</a> </li>
+       <li><a href="http://www.wadsworth.org/spider_doc/spider/download/win.WEB.jar">win.WEB.jar</a> </li>
+       <li><a href="http://www.wadsworth.org/spider_doc/spider/download/jweb.cmd ">jweb.cmd </a> </li>
+d168 1
+a168 1
+Last update: 8/01/08 &nbsp;&nbsp;&nbsp;&nbsp;
+@
+
+
+1.6
+log
+@cosmetic
+@
+text
+@a9 1
+<h3>Contents of this document</h3>
+a10 9
+<blockquote>
+<ol>
+    <li>  <a href="#general">       INTRODUCTION</a> 
+    <li>  <a href="#loading">       LOADING JWeb</a> 
+    <li>  <a href="#installation">  INSTALLATION</a> 
+    <li>  <a href="#testing">       TESTING </a> 
+    <li>  <a href="#bugs">          BUGS</a> 
+</ol>
+</blockquote>
+d15 4
+a18 4
+    <b>JWeb</b> is a point-and-click interface for display and interaction
+    with SPIDER images and data written by <b>Dr. Bimal Rath</b>.<br>  
+    <b>JWeb</b> is written in Java and was developed and tested on SGI Irix, 
+       Intel Linux, & Intel Windows NT computers. </p>
+d20 1
+a20 1
+<h3><li><a name="loading">LOADING JWeb</a> </li> </h3>
+d26 15
+a40 20
+    <p>
+    <li> Load files. </li>
+       <ul>
+       <li>LOADING FROM CDROM </li> <br>
+        Copy files from your CDROM into: <i>JWEB_DIR</i> </dd> 
+       </p>
+   
+       <p> 
+       <li>LOADING FROM FTP DISTRIBUTION </li><br>
+        Download following files into:  <i>JWEB_DIR</i>
+          <ol> 
+          <li> j2re-1_4_2_06-windows-i586-p.exe    </li>
+          <li> jai-1_1_2_01-lib-windows-i586-jre.exe</li>
+          <li> WEB.jar                  </li>
+          <li> jweb.cmd                 </li>
+          <li> README.jweb.win          </li>
+          </ol>
+       </ul> 
+    </p>  
+    </ol>
+d67 2
+a68 3
+    <li> Add WEB.jar file to <i>CLASSPATH</i> </li> <br>
+    (Note: You should have administrator's privilage to edit the <i>CLASSPATH</i> 
+           variable)  <br>
+d78 1
+a78 30
+           <li> <h4>For WindowsNT</h4> </li>
+              <ol>
+              <li> Click on <b>ENVIRONMENT</b>.</li>
+
+                 <ul> 
+                 <li> If <i>CLASSPATH</i> variable is already defined: </li>
+                    <ol>
+                    <li> Click on <b>CLASSPATH</b>.</li>
+                    <li> Append the location of the <b>JWeb</b> files in the 
+                         <b>VALUE</b> field. <br>
+                         E.g. &nbsp; <b>C:\WINNT\system32;C:\JWEB\WEB.jar</b></li> <br>
+                         Note: Here the WEB.jar file was downloaded to: &nbsp; <b>C:\JWEB\</b>  and
+                              <i>CLASSPATH</i> variable was already defined as:
+                              <i>C:\WINNT\system32</i> </li>
+                    </p>
+                    </ol>
+
+                 <p>
+                 <li> If <i>CLASSPATH</i> variable is not already defined:</li>
+                    <ol>
+                    <li> For <b>VARIABLE</b> type: <b>CLASSPATH</b>.  </li>
+                    <li> For <b>VALUE</b> type the location of the <b>JWeb</b> files.<br>
+                          E.g. &nbsp; <b>C:\JWEB\WEB.jar</b> </li>
+                    </ol>
+                 </ul>
+              <li> Click on <b>SET</b>.</li>
+              <li> Click on <b>OK</b>.</li>
+              </ol>
+              </p>
+
+d91 1
+a91 1
+                         E.g. &nbsp; <b>C:\WINNT\system32;C:\JWEB\WEB.jar</b></li> <br>
+d93 1
+a93 1
+                         Note: Here the WEB.jar file was downloaded to: &nbsp; <b>C:\JWEB\</b>  and <br>
+d107 1
+a107 1
+                         E.g. &nbsp; <b>C:\JWEB\WEB.jar</b> </li>
+d158 3
+a160 9
+    <p><dt>Send any bug reports or suggestions to:</p></dt>
+
+    <p>
+    <dd> Dr. Bimal Rath                    <br>
+       phone: 518-486-2529                 <br>
+       fax:   518-486-2191                 <br>
+       email: <a href="mailto:spider@@wadsworth.org">spider@@wadsworth.org</A> <br>
+       www:   <a href="http://www.wadsworth.org/spider_doc/">
+                       http://www.wadsworth.org/spider_doc/</a> </dd></p>
+d168 1
+a168 2
+Last update: 12/14/04 &nbsp;&nbsp;&nbsp;&nbsp;
+ArDean Leith
+@
+
+
+1.5
+log
+@edited JWeb manual info.
+@
+text
+@d196 1
+a196 1
+        <li>Further information on the use of <b>JWeb</b> will be given in the   
+@
+
+
+1.4
+log
+@typo
+@
+text
+@d197 1
+a197 1
+            <a href="jweb.html">JWeb manual</a>. <b>(to be written)</b></p></li>
+@
+
+
+1.3
+log
+@updated for new versions of java JRE and JAI
+@
+text
+@d152 1
+a152 1
+                         E.g. &nbsp; <b>C:\JWEB\jweb.jar</b> </li>
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d47 2
+a48 2
+          <li> j2re-1_3_1_01-win.exe    </li>
+          <li> jai-1_1_1-lib-win-jre.exe</li>
+d64 1
+a64 1
+            <b>j2re-1_3_1_01-win.exe</b> </li> 
+d73 1
+a73 1
+            <b>jai-1_1_1-lib-win-jre.exe</b> </li> 
+d219 1
+a219 1
+Last update: 12/17/01 &nbsp;&nbsp;&nbsp;&nbsp;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d25 4
+a28 4
+    JWeb is a point-and-click interface for display and interaction
+    with SPIDER images and data written by <b>Dr. Bimal Rath</b>.  
+    JWeb is written in Java was developed and tested on SGI, Linux, &
+    Windows computers. </p>
+d62 6
+a67 4
+    <dd> Double click on: 
+         <b>j2re-1_3_1_01-win.exe</b> </dd> 
+    <dd> Agree to license terms by clicking on <b>YES</b>. </dd>
+    </p>
+d71 8
+a78 6
+    <dd> Double click on: 
+         <b>jai-1_1_1-lib-win-jre.exe</b> </dd> 
+    <dd> Click on: <b>NEXT</b></b> </dt> 
+    <dd> Agree to license terms by clicking on <b>YES</b>. </dd>
+    <dd> Install the software at default location by clicking on 
+         <b>NEXT</b>.</dd>
+d102 1
+a102 1
+                    <li> Append the location of the JWeb files in the 
+d104 2
+a105 2
+                         E.g. </b>C:\WINNT\system32;C:\JWEB\WEB.jar</b></li> <br>
+                         Note: Here the WEB.jar file was downloaded to C:\JWEB\  and
+d107 3
+a109 3
+                              <i>C:\WINNT\system32<i> </li>
+                     </p>
+                     </ol>
+d111 8
+a118 8
+                  <p>
+                  <li> If <i>CLASSPATH</i> variable is not already defined:</li>
+                     <ol>
+                     <li> For <b>VARIABLE</b> type: <b>CLASSPATH</b>.  </li>
+                     <li> For <b>VALUE</b> type the location of the JWeb files.<br>
+                          E.g. </b>C:\JWEB\WEB.jar</b> </li>
+                     </ol>
+                  </ul>
+d123 1
+d134 1
+a134 1
+                    <li> Append the location of the JWeb files in the 
+d136 1
+a136 1
+                         E.g. </b>C:\WINNT\system32;C:\JWEB\WEB.jar</b></li> <br>
+d138 3
+a140 3
+                         Note: Here the WEB.jar file was downloaded to C:\JWEB\  and
+                               <i>CLASSPATH</i> variable was already defined as:
+                               <i>C:\WINNT\system32</i>
+d148 1
+a148 1
+                    <li>For <b>VARIABLE NAME</b> type <b>CLASSPATH</b>
+d150 3
+a152 3
+                    <li>Type the location of the JWeb files in the 
+                        <b>VARIABLE VALUE</b> field. <br>
+                         E.g. </b>C:\JWEB\jweb.jar</b></li>
+d163 1
+a163 1
+        </ol>
+d173 3
+a175 3
+         <li> Enter the location of Jweb startup file:</li>
+              <i>$JWEB_DIR\jweb.cmd</i> <br>
+              E.g.:</b>C:\JWEB\jweb.cmd</b> </li>
+d182 1
+a182 2
+         </dl>
+         </ol>
+d184 1
+a187 1
+    <ul>
+d189 1
+a189 1
+    <li>Test <i>JWeb</i> : </li><br>
+d192 2
+a193 2
+        <li><b>USE MOUSE TO SELECT MENU ITEMS FROM PULL-DOWN MENUS </b></li> 
+    </p>
+d195 5
+a199 6
+    <p>
+    <li>Further information on the use of JWeb will be given in the   
+    <a href="jweb.html">JWeb manual</a>. <b>(to be written)</b></p></li>
+    </ul>
+    </p>
+    
+@
