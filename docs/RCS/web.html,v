@@ -1,10 +1,15 @@
-head	1.42;
+head	1.43;
 access;
 symbols
 	pre_24bitonly:1.35;
 locks; strict;
 comment	@# @;
 
+
+1.43
+date	2017.01.25.15.52.41;	author leith;	state Exp;
+branches;
+next	1.42;
 
 1.42
 date	2017.01.13.15.04.47;	author leith;	state Exp;
@@ -221,9 +226,9 @@ desc
 @@
 
 
-1.42
+1.43
 log
-@*** empty log message ***
+@no more jweb for windows
 @
 text
 @<html>
@@ -338,8 +343,7 @@ div.optab {
          <a href="web-inst-linux.html">  Linux</a>      <br />
       </p>
       <p class="mh5"> 
-         <a href="jweb-inst-linux.html"> JWeb (Linux)</a> <br />
-         <a href="jweb-inst-win.html">   JWeb (Windows)</a>
+         <a href="jweb-inst-linux.html"> JWeb for Linux</a> <br />
       </p>
 </div>
 
@@ -366,10 +370,9 @@ with contributions from  L. Odesanya, Y.H. Li, M. Ladjadj, A. Dent,
 <a href="http://www.wadsworth.org/resnres/bios/frank.htm">J. Frank</a>.  
 X-Window/Motif <i>Web</i> has been in use since 1990 and contains  
 50,000 lines of code.
-A <a href="jweb.html">Java based <i>Web</i></a> with fewer operations, 
-written by Bimal Rath, is also available for use on 
-<a href="jweb-inst-win.html">Windows</a> and 
-<a href="jweb-inst-linux.html">Linux</a>.
+
+A <a href="jweb.html">Java based <i>Web</i></a> with limited operations, 
+written by Bimal Rath, is also available.
 </p>
 </div>
 
@@ -717,11 +720,32 @@ Additionally the main menu has an area for often used operations:
  
 <small>
 Source: web.html       &nbsp;&nbsp;&nbsp;  
-Last update: 4/20/2015 &nbsp;&nbsp;&nbsp;
+Last update: 1/20/2017 &nbsp;&nbsp;&nbsp;
 </small>
 
 </body>
 </html>
+@
+
+
+1.42
+log
+@*** empty log message ***
+@
+text
+@d113 1
+a113 2
+         <a href="jweb-inst-linux.html"> JWeb (Linux)</a> <br />
+         <a href="jweb-inst-win.html">   JWeb (Windows)</a>
+d140 3
+a142 4
+A <a href="jweb.html">Java based <i>Web</i></a> with fewer operations, 
+written by Bimal Rath, is also available for use on 
+<a href="jweb-inst-win.html">Windows</a> and 
+<a href="jweb-inst-linux.html">Linux</a>.
+d490 1
+a490 1
+Last update: 4/20/2015 &nbsp;&nbsp;&nbsp;
 @
 
 

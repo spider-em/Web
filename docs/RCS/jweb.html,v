@@ -1,10 +1,15 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre_24bitonly:1.4;
 locks; strict;
 comment	@# @;
 
+
+1.6
+date	2017.01.25.15.47.52;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2017.01.13.15.04.38;	author leith;	state Exp;
@@ -37,9 +42,9 @@ desc
 @
 
 
-1.5
+1.6
 log
-@*** empty log message ***
+@removed windows edition
 @
 text
 @
@@ -70,11 +75,7 @@ text
     <li>  <a href="#OVERVIEW">          OVERVIEW</a></li>     
     <li>  <a href="#OPERATIONS">        OPERATIONS</a> </li>
     <li>  <a href="whatsnew.html">      WHATS NEW</a> </li>
-    <li>  INSTALLATION 
-       <ul>
-       <li>  <a href="jweb-inst-linux.html"> On Linux</a></li> 
-       <li>  <a href="jweb-inst-win.html">   On Windows</a></li> 
-       </ul>
+    <li>  <a href="jweb-inst-linux.html">INSTALLATION ON LINUX </a></li> 
     <li>  <a href="../../spider/docs/faq.html">FAQ for SPIDER and Web</a> </li>
 </ol>
 </blockquote>
@@ -86,19 +87,16 @@ text
 <strong>JWeb</strong></a> is a graphical point-and-click user interface for displaying 
 and interacting with <a href="../../spider/docs/master.html"> 
 <i>SPIDER </i></a> 
-images developed at the <b>Resource for the Visualization of Biological
-complexity </b> 
-(<a href="http://www.wadsworth.org/rvbc/index.html ">RVBC</a>) 
-located in the Wadsworth Laboratories,
-Albany, New York.  <i>JWeb </i> is written in "JAVA" using Java Advance Imaging (JAI)
-and runs under the <i> LINUX</i>, <i> WINDOWS</i> and <i> IRIX</i> systems.  
+images.
+<i>JWeb </i> is written in "JAVA" using Java Advance Imaging (JAI)
+and runs on <i> Linux</i>systems.  
 <i>JWeb </i> was developed by Dr. Bimal Rath and contains more than 16,000 lines 
 of code.
 </p>
 
 <p>
 
-<H2><A NAME="OVERVIEW">OVERVIEW </a></H2>
+<h2><a name="OVERVIEW">OVERVIEW </a></h2>
 
 To visualize and analyze SPIDER images using JWeb, the implemented operations have been 
 divided into three categories e.g.
@@ -254,12 +252,41 @@ As described earlier, the Operations are grouped under 3 main categories:
 
 <small>
   Source: jweb.html       &nbsp;&nbsp;&nbsp;  
-  Last update: 08/08/08   &nbsp;&nbsp;&nbsp;
+  Last update: 01/25/17   &nbsp;&nbsp;&nbsp;
   Bimal Rath  
 </small>
 
 </body>
 </html>
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d29 1
+a29 5
+    <li>  INSTALLATION 
+       <ul>
+       <li>  <a href="jweb-inst-linux.html"> On Linux</a></li> 
+       <li>  <a href="jweb-inst-win.html">   On Windows</a></li> 
+       </ul>
+d41 3
+a43 6
+images developed at the <b>Resource for the Visualization of Biological
+complexity </b> 
+(<a href="http://www.wadsworth.org/rvbc/index.html ">RVBC</a>) 
+located in the Wadsworth Laboratories,
+Albany, New York.  <i>JWeb </i> is written in "JAVA" using Java Advance Imaging (JAI)
+and runs under the <i> LINUX</i>, <i> WINDOWS</i> and <i> IRIX</i> systems.  
+d50 1
+a50 1
+<H2><A NAME="OVERVIEW">OVERVIEW </a></H2>
+d206 1
+a206 1
+  Last update: 08/08/08   &nbsp;&nbsp;&nbsp;
 @
 
 

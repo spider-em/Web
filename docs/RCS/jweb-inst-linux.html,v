@@ -1,10 +1,15 @@
-head	1.22;
+head	1.23;
 access;
 symbols
 	pre_24bitonly:1.20;
 locks; strict;
 comment	@# @;
 
+
+1.23
+date	2017.01.25.15.43.33;	author leith;	state Exp;
+branches;
+next	1.22;
 
 1.22
 date	2017.01.13.15.04.39;	author leith;	state Exp;
@@ -121,9 +126,9 @@ desc
 @@
 
 
-1.22
+1.23
 log
-@*** empty log message ***
+@removed jweb windows
 @
 text
 @<html>
@@ -145,8 +150,7 @@ text
 <li><h3><a name="general">GENERAL </a></h3>
     <i>JWeb</i> is a point-and-click interface for display and interaction
     with SPIDER images and data written by <b>Dr. Bimal Rath</b>.  
-    <i>JWeb</i> is written in Java and was developed and tested on  Linux and
-    Windows computers. 
+    <i>JWeb</i> is written in Java for use on  Linux  computers. 
 <li>     
 
 <p />
@@ -278,7 +282,7 @@ text
 
 <small> 
   Source: jweb-inst-linux.html   &nbsp;&nbsp;&nbsp; 
-  Last update: 5/03/13           &nbsp;&nbsp;&nbsp;&nbsp;
+  Last update: 1/25/17           &nbsp;&nbsp;&nbsp;&nbsp;
 </small>
 
 </body> 
@@ -287,6 +291,21 @@ text
 
 
 
+@
+
+
+1.22
+log
+@*** empty log message ***
+@
+text
+@d20 1
+a20 2
+    <i>JWeb</i> is written in Java and was developed and tested on  Linux and
+    Windows computers. 
+d152 1
+a152 1
+  Last update: 5/03/13           &nbsp;&nbsp;&nbsp;&nbsp;
 @
 
 
