@@ -1,7 +1,8 @@
 
-/*$Header: /usr8/web/src/RCS/visuals.c,v 1.2 1994/02/14 10:07:57 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/visuals.c,v 1.3 2018/12/07 17:03:34 leith Exp $*/
 #include "std.h"
 #include "x.h"
+#include "routines.h"
 
  void visuals(Display *idispl, int iscreen)
  {
@@ -31,51 +32,51 @@
 
    if (class == DirectColor)
       {
-      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8p \n",
         class, visualList[i].depth, visualList[i].colormap_size,
-        visualList[i].visual);
+        (void *)visualList[i].visual);
       }
    else if (class == GrayScale)
       {
-      printf("GreyScale    %3d, Depth: %3d,  Map: %5d  %8d \n",
+      printf("GreyScale    %3d, Depth: %3d,  Map: %5d  %8p \n",
         class, visualList[i].depth ,visualList[i].colormap_size,
-        visualList[i].visual);
+        (void *)visualList[i].visual);
       }
    else if (class == PseudoColor)
       {
-      printf("PseudoColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+      printf("PseudoColor: %3d, Depth: %3d,  Map: %5d  %8p \n",
          class, visualList[i].depth ,visualList[i].colormap_size,
-         visualList[i].visual);;
+         (void *)visualList[i].visual);;
       }
    else if (class == StaticColor)
       {
-      printf("StaticColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+      printf("StaticColor: %3d, Depth: %3d,  Map: %5d  %8p \n",
          class, visualList[i].depth, visualList[i].colormap_size,
-         visualList[i].visual);
+         (void *)visualList[i].visual);
       }
    else if (class == StaticGray)
       {
-      printf("StaticGray:  %3d, Depth: %3d,  Map: %5d  %8d \n",
+      printf("StaticGray:  %3d, Depth: %3d,  Map: %5d  %8p \n",
          class, visualList[i].depth, visualList[i].colormap_size,
-         visualList[i].visual);
+         (void *)visualList[i].visual);
       }
    else if (class == TrueColor)
       {
-      printf("TrueColor:   %3d, Depth: %3d,  Map: %5d  %8d \n",
+      printf("TrueColor:   %3d, Depth: %3d,  Map: %5d  %8p \n",
          class, visualList[i].depth, visualList[i].colormap_size,
-         visualList[i].visual);
+         (void *)visualList[i].visual);
       }
    else if (class == GrayScale)
       {
-      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8p \n",
          class, visualList[i].depth ,visualList[i].colormap_size,
-         visualList[i].visual);
+         (void *)visualList[i].visual);
       }
    else if (class == GrayScale)
       {
-      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8d \n",
+      printf("DirectColor: %3d, Depth: %3d,  Map: %5d  %8p \n",
          class, visualList[i].depth ,visualList[i].colormap_size,
-         visualList[i].visual);
+         (void *)visualList[i].visual);
       }
 
    }
@@ -89,9 +90,9 @@
  
  class = visualList[0].class;
 
- printf("Default    : %3d, Depth: %3d,  Map: %5d %8d\n ",
+ printf("Default    : %3d, Depth: %3d,  Map: %5d %8p\n ",
          class, visualList[0].depth, visualList[0].colormap_size,
-         visualList[i].visual);
+         (void *)visualList[i].visual);
  XFree((char *) visualList);
 
 }

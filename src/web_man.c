@@ -1,17 +1,14 @@
 
-/*$Header: /usr8/web/src/RCS/web_man.c,v 1.2 2005/10/18 16:59:54 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/web_man.c,v 1.3 2018/12/07 17:03:35 leith Exp $*/
 /*
-C++*************************************************************************
-C
-C  web_man.c     by Lekan Odesanya
-C **********************************************************************
+ C++*************************************************************************
+ C
+ C  web_man.c     by Lekan Odesanya
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -28,20 +25,16 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C  web_man 
-C
-C  PURPOSE:  DISPLAYS THE TEXT OF FILE FOR VIEWING ONLY
-C
-C--*******************************************************************
+ C *********************************************************************
+ C
+ C  web_man 
+ C
+ C  PURPOSE:  Displays the text of file for viewing only
+ C
+ C--*******************************************************************
 */
 #include <Xm/Text.h>
-#ifdef VMS
-#include <stat.h>
-#else
 #include <sys/stat.h>
-#endif
 
 #include "common.h"
 #include "routines.h"
@@ -53,7 +46,7 @@ C--*******************************************************************
 Widget          iw_manview, iw_manual = 0;
 static char     filenameo[135] = "\0";
 
-void  web_man(Widget iw_tempt, caddr_t data, caddr_t call_data )
+void  web_man(Widget iw_tempt, void * data, void * call_data )
 {
  FILE        *fp = NULL;
  struct stat file_info;

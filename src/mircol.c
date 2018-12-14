@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/mircol.c,v 1.5 1995/08/21 15:51:59 mladjadj Exp $*/
+/*$Header: /usr16/software/web/src/RCS/mircol.c,v 1.6 2018/12/07 17:03:32 leith Exp $*/
 /*************************************************************************
 *									 *
 * Transfered from mircol.for by Jing Su 8/30/93	
@@ -9,6 +9,7 @@
 *************************************************************************/
 
 #include "std.h"
+#include "routines.h"
 
 /*** willsq.c: if ((ier = mircol(4,1,5,sqa,eps,r)) != NULL ) call!! */
 

@@ -1,4 +1,4 @@
-head	1.21;
+head	1.22;
 access;
 symbols
 	pre-tilt-improve:1.20
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.22
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.21;
 
 1.21
 date	2015.09.08.18.09.02;	author leith;	state Exp;
@@ -121,13 +126,13 @@ desc
 @@
 
 
-1.21
+1.22
 log
-@XBell, cosmetic, formatting
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.20 2015/07/27 16:24:17 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.21 2015/09/08 18:09:02 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -170,25 +175,15 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "pixel.h"
+#include "extras.h"
 
  /* Internal function prototypes */
- void              pixel_in_pop   (Widget, XEvent *, String *, Cardinal *);
 
  // Externally defined common variables 
- extern char       outstr[80];
- extern FILEDATA * filedatap;
 
- extern int        ixreg_pix, iyreg_pix;    // From: pixelmen_sc
- extern int        isreg_pix, ivreg_pix;    // From: pixelmen_sc
- extern int        iradius_pix;             // From: pixelmen_sc 
  
- extern XImage *   imagep_in;               // From: pixelmen_in
- extern int        docit_in;                // From: pixelmen_in 
- extern int        getscreen_in;            // From: pixelmen_in 
- extern int        leavit_in;               // From: pixelmen_in 
- extern int        ikey_in;                 // From: pixelmen_in 
 
- extern float *    fimage;                  // From: imagemen 
 
  /* Internally defined common  variables */
  FILE *            fpdocpix_in = NULL;
@@ -227,6 +222,7 @@ text
  int   iloc;
  float fpix;
  float dlist[7];
+ char  outstr[81];
 
  getloc(event,'m',&ixs,&iys);
  
@@ -369,6 +365,36 @@ text
         { free(fimage); fimage = NULL; }
     }
  }
+@
+
+
+1.21
+log
+@XBell, cosmetic, formatting
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.20 2015/07/27 16:24:17 leith Exp $*/
+d45 2
+a48 1
+ void              pixel_in_pop   (Widget, XEvent *, String *, Cardinal *);
+a50 2
+ extern char       outstr[80];
+ extern FILEDATA * filedatap;
+a51 3
+ extern int        ixreg_pix, iyreg_pix;    // From: pixelmen_sc
+ extern int        isreg_pix, ivreg_pix;    // From: pixelmen_sc
+ extern int        iradius_pix;             // From: pixelmen_sc 
+a52 5
+ extern XImage *   imagep_in;               // From: pixelmen_in
+ extern int        docit_in;                // From: pixelmen_in 
+ extern int        getscreen_in;            // From: pixelmen_in 
+ extern int        leavit_in;               // From: pixelmen_in 
+ extern int        ikey_in;                 // From: pixelmen_in 
+a53 1
+ extern float *    fimage;                  // From: imagemen 
+d92 1
 @
 
 

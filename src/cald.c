@@ -35,11 +35,11 @@ C23456789012345678901234567890123456789012345678901234567890123456789012
 C--************************************************************************
 C
 */
+#include <math.h>
 #include "common.h"
 #include "routines.h"
 #include "x.h"
 #include "std.h"
-#include <math.h>
 
 /* Constants */
 #define	DEPS	1.0e-7

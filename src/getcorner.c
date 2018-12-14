@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/getcorner.c,v 1.3 2005/10/18 16:59:40 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/getcorner.c,v 1.4 2018/12/07 17:03:32 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -44,16 +44,12 @@ C
 C***********************************************************************
 */
 
+#include <Xm/Text.h>
 #include "std.h"
 #include "x.h"
-#include <Xm/Text.h>
+#include "common.h"
+#include "routines.h"
 
- extern int            placed;            /* image position sent flag    */
- extern unsigned int   ihighx, iwidex;    /* display window dimensions   */
- extern int            nsam,nrow,nslice;  /* image size                  */
- extern int            marlef,martop;     /* left and top window margins */
- extern int            ntop,nbot,nrit;    /* top, bottem & rit side      */
- extern int            marx,mary;         /* x & y image margins         */
 
 
  /********************** getcorner  *********************************/

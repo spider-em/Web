@@ -15,19 +15,20 @@ C P.O. BOX 20708, HOUSTON, TX 77225.
 C*--------------------------------------------------------------------*         
 */      
 
+#include <Xm/Scale.h>
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
 /* Common variables */
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
-#include <Xm/ToggleBG.h>
+#include "fit.h"
 
  /* External global variables */
- extern int    maxpart;
 
  /* Internal function prototypes */
- void      dendromen_buta(Widget iw_temp, XtPointer, XtPointer);
- void      dendro_pop    (Widget, XEvent *, String *, Cardinal *);
- void      dendromen_d   (Widget, XtPointer, XtPointer);
+ static void      dendromen_buta(Widget iw_temp, XtPointer, XtPointer);
+ static void      dendro_pop    (Widget, XEvent *, String *, Cardinal *);
+ static void      dendromen_d   (Widget, XtPointer, XtPointer);
 
  /* Internal common variables  */
  int            icut;

@@ -1,4 +1,4 @@
-head	1.14;
+head	1.15;
 access;
 symbols
 	pre-tilt-improve:1.14
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.15
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.14;
 
 1.14
 date	2011.07.22.19.33.40;	author leith;	state Exp;
@@ -86,13 +91,13 @@ desc
 @@
 
 
-1.14
+1.15
 log
-@removed imagego imageend
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/imoptmen.c,v 1.13 2005/10/18 16:59:43 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/imoptmen.c,v 1.14 2011/07/22 19:33:40 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -147,7 +152,7 @@ C***********************************************************************
 #include "routines.h"
 
  /* Function prototypes */
- void          imoptmen_buta(Widget, caddr_t, caddr_t);
+ static void   imoptmen_buta(Widget, void *, void *);
 
  /* File variables */
  Widget   iw_names,  iw_keepxy, iw_newline, iw_nuscrn, iw_listfi;
@@ -158,7 +163,7 @@ C***********************************************************************
 
  /**************************  imoptmen *******************************/
 
- void imoptmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void imoptmen(Widget iw_temp, void * data, void * call_data)
  { 
  char     cval[5];
  Widget   iw_marlefl, iw_martopl, iw_marxl, iw_maryl, iw_iskipl;
@@ -231,7 +236,7 @@ C***********************************************************************
 
  /************ accept button callback *********************************/
 
- void imoptmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void imoptmen_buta(Widget iw_temp, void * data, void * call_data)
  {
 
  /* names_height: pixel height of the filename */
@@ -260,6 +265,26 @@ C***********************************************************************
  }
 
 
+@
+
+
+1.14
+log
+@removed imagego imageend
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/imoptmen.c,v 1.13 2005/10/18 16:59:43 leith Exp leith $*/
+d57 1
+a57 1
+ void          imoptmen_buta(Widget, caddr_t, caddr_t);
+d68 1
+a68 1
+ void imoptmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d141 1
+a141 1
+ void imoptmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
 @
 
 

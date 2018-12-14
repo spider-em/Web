@@ -1,0 +1,33 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2018.12.07.16.33.29;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@extern XtAppContext app_context;
+extern int colvmap[4][256];
+extern char filcolvol[81];
+extern float * fimage;
+extern Pixmap imapsav;
+extern int iwintyp;
+extern int ncat;
+extern FILE * resfp;
+extern Boolean use3colors;
+extern int vmap[256];
+@

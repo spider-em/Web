@@ -1,4 +1,4 @@
-head	1.11;
+head	1.12;
 access;
 symbols
 	pre-tilt-improve:1.10
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.12
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.11;
 
 1.11
 date	2015.09.01.17.53.27;	author leith;	state Exp;
@@ -72,13 +77,13 @@ desc
 @
 
 
-1.11
+1.12
 log
-@$2
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/pickbackmen.c,v 1.10 2011/09/23 19:46:07 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pickbackmen.c,v 1.11 2015/09/01 17:53:27 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -124,25 +129,21 @@ text
  C*********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 
+#include "common.h"
+#include "routines.h"
+#include "pick.h"
+#include "fit.h"
+
  /* External function prototypes */
- int            pickbackave (char *);
 
  /* Internal function prototypes */
- void           pickbackmen_buts (Widget, XtPointer, XtPointer);
- void           pickbackmen_buta (Widget, XtPointer, XtPointer);
- void           pickbackmen_butcl(Widget, XtPointer, XtPointer);
+ static void    pickbackmen_buts (Widget, XtPointer, XtPointer);
+ static void    pickbackmen_buta (Widget, XtPointer, XtPointer);
+ static void    pickbackmen_butcl(Widget, XtPointer, XtPointer);
   
  /* Externally defined global variables */
- extern char    dfil4[12], dfil5[12];
- extern int     back_win_now;
- extern int     openit1, openit2;
- extern FILE *  fpdoc4 ;
- extern FILE *  fpdoc5;
 
  /* Internally defined global variables */
  int            firstback;      /* Set by fitdoc */
@@ -297,6 +298,35 @@ text
  }
 
 
+@
+
+
+1.11
+log
+@$2
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/pickbackmen.c,v 1.10 2011/09/23 19:46:07 leith Exp $*/
+d48 2
+d52 2
+a53 2
+
+#include <Xm/Text.h>
+a55 1
+ int            pickbackave (char *);
+d58 3
+a60 3
+ void           pickbackmen_buts (Widget, XtPointer, XtPointer);
+ void           pickbackmen_buta (Widget, XtPointer, XtPointer);
+ void           pickbackmen_butcl(Widget, XtPointer, XtPointer);
+a62 5
+ extern char    dfil4[12], dfil5[12];
+ extern int     back_win_now;
+ extern int     openit1, openit2;
+ extern FILE *  fpdoc4 ;
+ extern FILE *  fpdoc5;
 @
 
 

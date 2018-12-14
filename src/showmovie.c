@@ -36,19 +36,18 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
+#include "movie.h"
 
 /* internal function prototypes */
-void         movie_popb       (Widget, XEvent *, String *, Cardinal *);
-void         movie_showframe  (int, int);
-void         movie_wait       (Widget, XtIntervalId *);
-int          movie_setframe   (int , int , int * , int );
+static void  movie_popb       (Widget, XEvent *, String *, Cardinal *);
+static void  movie_showframe  (int, int);
+static void  movie_wait       (Widget, XtIntervalId *);
+static int   movie_setframe   (int , int , int * , int );
 
 /* external function prototypes */
-extern void  showmoviemen     (int);
 
 /* external variables used/or set elsewhere */
-extern int  movie_delay, movie_frame, movie_inc, movie_twoways, ndone;
-extern int  nsami,nrowi,nslicei;   /* from mont3.c */
 
 /* variables also used/set elsewhere */
 XImage *    ximagelist[1000];

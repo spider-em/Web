@@ -1,4 +1,4 @@
-head	1.16;
+head	1.17;
 access;
 symbols
 	pre-tilt-improve:1.16
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.17
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.16;
 
 1.16
 date	2005.10.18.16.59.56;	author leith;	state Exp;
@@ -96,13 +101,13 @@ desc
 @@
 
 
-1.16
+1.17
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/montmen3.c,v 1.15 1996/03/26 15:07:51 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/montmen3.c,v 1.16 2005/10/18 16:59:56 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -154,12 +159,13 @@ C**************************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 #define MAX_ARGS 2
 
  /* internal function prototypes */
- void          montmen3_buta(Widget iw_temp, XtPointer, XtPointer);
- void          montmen3_butc(Widget iw_temp, XtPointer, XtPointer);
+ static void   montmen3_buta(Widget iw_temp, XtPointer, XtPointer);
+ static void   montmen3_butc(Widget iw_temp, XtPointer, XtPointer);
 
  /* file scope variables */
  static Widget   iw_scales[6];
@@ -440,6 +446,22 @@ C**************************************************************************
  filedata = NULL;
  }
 
+@
+
+
+1.16
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/montmen3.c,v 1.15 1996/03/26 15:07:51 leith Exp $*/
+d54 1
+d59 2
+a60 2
+ void          montmen3_buta(Widget iw_temp, XtPointer, XtPointer);
+ void          montmen3_butc(Widget iw_temp, XtPointer, XtPointer);
 @
 
 

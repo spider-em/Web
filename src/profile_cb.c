@@ -22,10 +22,11 @@ C--*********************************************************************
 */
 
 #include <Xm/ToggleBG.h>
+#include "routines.h"
 
  /********************  profile_cb   ****************************/
 
- void  profile_cb(Widget iw_temp, int *data, caddr_t call_data)
+ void  profile_cb(Widget iw_temp, int *data, void * call_data)
  {
    *data = XmToggleButtonGadgetGetState(iw_temp); 
  }

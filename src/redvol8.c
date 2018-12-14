@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/redvol8.c,v 1.5 2007/11/01 19:33:45 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/redvol8.c,v 1.6 2018/12/07 17:03:34 leith Exp $*/
 /*
 C**************************************************************************
 C
@@ -53,13 +53,10 @@ C--*********************************************************************
 */
 
 #include "files.h"
+#include "routines.h"
 
 
  /* external function prototypes */
- extern int   closefile(FILEDATA *);
- extern int   redlin    (FILEDATA *, float *, int, int);
- extern void  spout     (char *);
-
 
  /* externally defined variables */
  

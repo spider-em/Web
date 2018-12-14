@@ -1,4 +1,4 @@
-head	1.4;
+head	1.5;
 access;
 symbols
 	pre-tilt-improve:1.4
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.5
+date	2018.12.07.17.06.44;	author leith;	state Exp;
+branches;
+next	1.4;
 
 1.4
 date	2005.10.18.16.59.50;	author leith;	state Exp;
@@ -36,30 +41,26 @@ desc
 @@
 
 
-1.4
+1.5
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/wrtname.c,v 1.3 2004/07/23 15:32:13 leith Exp $*/
-
+/*$Header: /web/RCS/wrtname.c,v 1.4 2005/10/18 16:59:50 leith Exp $*/
 
 /*
 C++*********************************************************************
-C
-C WRTNAME.C -- CREATED MAY 2002 ArDean Leith
-C                no / no name bug Jul 04 ArDean Leith
-C
-C **********************************************************************
-C * WEB.    AUTHOR: ARDEAN LEITH                                       *
+ C
+ C WRTNAME.C -- CREATED MAY 2002 ArDean Leith
+ C              no / no name bug                     Jul 04 ArDean Leith
+ C
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -76,21 +77,21 @@ C * WEB.    AUTHOR: ARDEAN LEITH                                       *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    WRTNAME
-C
-C    PURPOSE:    print names below images     
-C
-C    VARIABLES:       NAMES      LOGICAL FLAG TO PRINT NAMES
-C
-C***********************************************************************
+ C *********************************************************************
+ C
+ C    WRTNAME
+ C
+ C    PURPOSE:    Print names below images     
+ C
+ C    VARIABLES:  NAMES      LOGICAL FLAG TO PRINT NAMES
+ C
+ C**********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
 
- /* external variables used here */
+ /* External variables used here */
  
 /******************************  wrtname *****************************/
    
@@ -101,15 +102,15 @@ C***********************************************************************
  int       iypn;
 
  if (ix < 0 && iy < 0) 
-    { /* query names_height */
+    { /* Query names_height */
     return names_height + 2;
     }
 
 
- /* set background color */
+ /* Set background color */
  wicolor(icontx, -1000000);
 
- /* find y-offset needed for name label */
+ /* Find y-offset needed for name label */
  iypn = iy + names_height + 2;
 
  if (inum >= 0) 
@@ -123,7 +124,7 @@ C***********************************************************************
  else
     {     /* print image file name below image */
 
-     /* unix specific line follows */
+     /* Unix specific line follows */
      s = strrchr(name,'/');
 
     if (s) 
@@ -146,6 +147,60 @@ C***********************************************************************
    }
  return names_height;
  }
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d2 1
+a2 2
+/*$Header: /net/bali/usr1/web/src/RCS/wrtname.c,v 1.3 2004/07/23 15:32:13 leith Exp $*/
+
+d6 6
+a11 6
+C
+C WRTNAME.C -- CREATED MAY 2002 ArDean Leith
+C                no / no name bug Jul 04 ArDean Leith
+C
+C **********************************************************************
+C * WEB.    AUTHOR: ARDEAN LEITH                                       *
+d13 3
+a15 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d32 9
+a40 9
+C **********************************************************************
+C
+C    WRTNAME
+C
+C    PURPOSE:    print names below images     
+C
+C    VARIABLES:       NAMES      LOGICAL FLAG TO PRINT NAMES
+C
+C***********************************************************************
+d46 1
+a46 1
+ /* external variables used here */
+d57 1
+a57 1
+    { /* query names_height */
+d62 1
+a62 1
+ /* set background color */
+d65 1
+a65 1
+ /* find y-offset needed for name label */
+d79 1
+a79 1
+     /* unix specific line follows */
 @
 
 

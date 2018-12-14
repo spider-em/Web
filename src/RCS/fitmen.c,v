@@ -1,4 +1,4 @@
-head	1.35;
+head	1.36;
 access;
 symbols
 	pre-tilt-improve:1.33
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.36
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.35;
 
 1.35
 date	2015.09.18.16.17.27;	author leith;	state Exp;
@@ -191,13 +196,13 @@ desc
 @@
 
 
-1.35
+1.36
 log
-@Removed fitdoc call
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.34 2015/09/01 17:53:12 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.35 2015/09/18 16:17:27 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -252,28 +257,18 @@ text
  C*********************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
+#include "fit.h"
 
  // Internal function prototypes 
- void          fit_buttilt  (Widget, XtPointer, XtPointer);
- void          fit_butfit   (Widget, XtPointer, XtPointer);
- void          fit_butdraw2 (Widget, XtPointer, XtPointer);
- void          fit_butsavang(Widget, XtPointer, XtPointer);
- void          fitmen_butok (Widget, XtPointer, XtPointer);
- void          fitmen_butk  (Widget, XtPointer, XtPointer);
+ static void   fit_buttilt  (Widget, XtPointer, XtPointer);
+ static void   fit_butfit   (Widget, XtPointer, XtPointer);
+ static void   fitmen_butok (Widget, XtPointer, XtPointer);
+ static void   fitmen_butk  (Widget, XtPointer, XtPointer);
 
  // Externally defined global variables 
- extern int    maxpart;
- extern float  xu0t,  yu0t,  xs0t,  ys0t;    // From: fitorigin
- extern float  * xim, * xu0, * yu0; 
- extern float  * xs,  * ys, * xs2, * ys2; 
- extern int    fitted;                       // From: pickp
- extern int    orgkey;                       // From: pickmen
- extern int    numm;                         // From: pickp
- extern Widget iw_parlabel;                  // From: pickmen
- extern Widget iw_rowcolh0;                  // From: pickmen
 	       
  // Global variables defined here, used here & elsewhere 
  float         phif          = 0.0;
@@ -290,7 +285,7 @@ text
 
  /****************************  fitmen_adv   ***********************/
 
- void fitmen_adv(void)
+ void fitmen_adv(Widget w, XtPointer c, XtPointer u)
 
  { 
  static Widget iw_rowcolv, iw_rowcolh1, iw_rowcolh2, iw_rowcolh3;
@@ -462,7 +457,7 @@ text
 
  // Update text boxes
  XtUnmanageChild(iw_fitmen_adv); 
- fitmen_adv();
+ fitmen_adv((Widget) 0, NULL, NULL);
 
  }
 
@@ -511,7 +506,7 @@ text
  spoutfile(FALSE);
 
  /* Restart the advanced fitting menu */
- fitmen_adv(); 
+ fitmen_adv((Widget) 0, NULL, NULL); 
  }
 
 
@@ -546,7 +541,7 @@ text
  spoutfile(FALSE);
 
  /* Restart the fitting menu so values of angles will change */
- fitmen_adv(); 
+ fitmen_adv((Widget) 0, NULL, NULL); 
  }
 
 
@@ -589,6 +584,51 @@ text
  }
 
 
+@
+
+
+1.35
+log
+@Removed fitdoc call
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.34 2015/09/01 17:53:12 leith Exp $*/
+d57 1
+d60 1
+a60 1
+#include <Xm/Text.h>
+d63 4
+a66 6
+ void          fit_buttilt  (Widget, XtPointer, XtPointer);
+ void          fit_butfit   (Widget, XtPointer, XtPointer);
+ void          fit_butdraw2 (Widget, XtPointer, XtPointer);
+ void          fit_butsavang(Widget, XtPointer, XtPointer);
+ void          fitmen_butok (Widget, XtPointer, XtPointer);
+ void          fitmen_butk  (Widget, XtPointer, XtPointer);
+a68 9
+ extern int    maxpart;
+ extern float  xu0t,  yu0t,  xs0t,  ys0t;    // From: fitorigin
+ extern float  * xim, * xu0, * yu0; 
+ extern float  * xs,  * ys, * xs2, * ys2; 
+ extern int    fitted;                       // From: pickp
+ extern int    orgkey;                       // From: pickmen
+ extern int    numm;                         // From: pickp
+ extern Widget iw_parlabel;                  // From: pickmen
+ extern Widget iw_rowcolh0;                  // From: pickmen
+d85 1
+a85 1
+ void fitmen_adv(void)
+d257 1
+a257 1
+ fitmen_adv();
+d306 1
+a306 1
+ fitmen_adv(); 
+d341 1
+a341 1
+ fitmen_adv(); 
 @
 
 

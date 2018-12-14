@@ -1,0 +1,361 @@
+
+/*$Header: web/src/RCS/shift.c,v 1.24 2015/09/08 18:14:11 leith Exp $*/
+
+/***********************************************************************
+ *                                                                     *
+ * shift.c                                                             *
+ *          Removed wicolor                      Sep 2011 ArDean Leith *
+ *          copyarea                             Sep 2011 ArDean Leith *
+ *          Redraw locs after shifting tilt pair Jul 2015 ArDean Leith *
+ *          Pixelmen_in_nod parameters           Sep 2015 ArDean Leith *
+ *          mask_draw_polys parameters missing   Dec 2018 ArDean Leith *
+ *                                                                     *
+ ***********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email: spider@health.ny.gov                                       *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU  *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* with this program. If not, see <http://www.gnu.org/licenses>      *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * PURPOSE:     Shift a large image on the screen within original 
+ *              image boundaries
+ * 
+ * PARAMETERS:	 
+ *
+ ***********************************************************************
+*/
+
+#include "common.h"
+#include "routines.h"
+
+ // Internal functions 
+ void           shift_pop (Widget, XEvent *, String *, Cardinal *);
+
+ // External functions not in routines.h
+ void           gold_pop       (Widget, XEvent *, String *, Cardinal *);
+ void           pixel_in_pop   (Widget, XEvent *, String *, Cardinal *);
+ void           mask_pop       (Widget, XEvent *, String *, Cardinal *);
+ void           mask_draw_polys(Pixmap, GC      , int ,     int);
+ void           goldmen_butm   (Widget, XtPointer, XtPointer);
+
+ // Externally defined file variables 
+ extern int     nmark;
+ extern int     *pixellist;           // Variables for  pixel 
+ extern int     pixelnum;             // Picking list 
+ extern GC      icontxb;              // Background clear GC
+ extern Pixmap  masksav;              // Mask store 
+
+ // Internal file common  variables 
+ static  int    down = FALSE;         // Button one position      
+ static  int    leftside;             // Currently want left side 
+ static  int    picking;              // Called by particle pgm.  
+ static  int    ix0t, iy0t;           // Last mouse location      
+ static  int    lxd, lyd, rxd, ryd;
+
+ /***********************  shift  ***********************************/
+
+ void shift(int picktemp)
+
+ {
+ /* Open a message window with the following strings  */
+ showbutx("Hold to move. Release to set image location.", 
+          "Stop moving", 
+          "Stop moving ", FALSE);
+
+ /* Set the actions for right, left, and center buttons */
+ actions(iw_win, "shift_pop", shift_pop,"M123L");
+
+ /* Initialize button one position */
+ down    = FALSE;
+
+ /* Set flag that identifies calling program */
+ picking = picktemp;
+ }
+
+ /************************* shift_pop **************************/
+
+ void shift_pop(Widget iw_t, XEvent *event, String *params,
+               Cardinal *num_params)
+ {
+ int        ixd,iyd,ixs,iys,nsamlt,nrowlt,nsamrt,nrowrt;
+ int	    loop;		/* The variables for pixel picking */
+ char       outstr[80];
+
+
+ if ((!(strcmp(*params, "M")) && down))
+    {                         /*  Mouse moved with button #1 down */
+    getloc(event,'m',&ixs,&iys);
+
+    /* Find change in mouse position */
+    ixd = ixs - ix0t;  iyd = iys - iy0t;
+
+    if (ixd != 0 || iyd != 0)
+       {    /* Move image */
+
+       if (leftside) 
+          {
+          ixulli += ixd;    iyulli += iyd;
+
+          /* Find displayed row and col limits */
+          nsam1l = MYMAX(1,ixullmin-ixulli);
+          nsam2l = MYMIN(nsaml,ixlrlmax-ixulli+1);
+
+          nrow1l = MYMAX(1,iyullmin-iyulli);
+          nrow2l = MYMIN(nrowl,iylrlmax-iyulli+1);
+
+          /* Find shifted target location */
+          lxd = MYMAX(ixullmin,ixulli);  
+          lyd = MYMAX(iyullmin,iyulli);
+
+          ixull = lxd; iyull = lyd;
+
+          /* Find diplayed size */
+          nsamlt = nsam2l - nsam1l+1; 
+          nrowlt = nrow2l - nrow1l+1;
+
+
+          /* Clear left side rectangle in imagsav (use icontxb) */
+          /* display, drawable, gc,   
+                     x,     y,  
+                     width, height */
+
+          XFillRectangle(idispl, imagsav, icontxb, 
+                     ixullmin,            iyullmin,
+                     ixlrlmax - ixullmin, iylrlmax - iyullmin);
+
+          /* Transfer image from imagel to imagsav location */
+          /*  display,drawable,gc,image,  srcx,  srcy, 
+                                          destx, desty, 
+                                          width, height */
+          XPutImage(idispl,imagsav,icontx,imagel, 
+                    nsam1l, nrow1l,
+                    lxd,  lyd, 
+                    nsamlt, nrowlt);
+
+          /* Copy from imagsav to window */
+          /* display, src, dest, gc,   
+                    srcx,  srcy, 
+                    width, height,  
+                    destx, desty */
+
+          copyarea(idispl, imagsav, iwin, icontx, 
+                    ixullmin,            iyullmin, 
+                    ixlrlmax - ixullmin, iylrlmax - iyullmin,
+                    ixullmin,            iyullmin);
+
+          /******************
+          printf("li:(%d,%d) s:(%d,%d) d:(%d,%d) 0t:(%d,%d) iul:(%d,%d)\n",
+          ixulli,iyulli, ixs,iys,  ixd,iyd,  ix0t,iy0t, nsam1l,nrow1l);
+          ******************/
+          neednewmap = TRUE;
+
+          ix0t = ixs;  iy0t = iys;
+
+          }
+
+       else if (picking)
+          {    /* Right side picking */
+          ixulri += ixd;  iyulri += iyd;
+
+          nsam1r = MYMAX(1,ixulrmin-ixulri);
+          nsam2r = MYMIN(nsamr,ixlrrmax-ixulri+1);
+
+          nrow1r = MYMAX(1,iyulrmin-iyulri);
+          nrow2r = MYMIN(nrowr,iylrrmax-iyulri+1);
+
+          nsamrt = nsam2r - nsam1r + 1; 
+          nrowrt = nrow2r - nrow1r + 1;
+
+          /* Find shifted target location */
+          rxd = MYMAX(ixulrmin,ixulri);  
+          ryd = MYMAX(iyulrmin,iyulri);
+
+          ixulr = rxd;   iyulr = ryd;
+
+
+          /* Clear left side rectangle in imagsav (use icontxb) */
+          XFillRectangle(idispl, imagsav, icontxb, 
+                     ixulrmin,            iyulrmin,
+                     ixlrrmax - ixulrmin, iylrrmax - iyulrmin);
+
+          /* Transfer image from imager to imagsav location */
+          XPutImage(idispl,imagsav,icontx,imager, 
+                    nsam1r,  nrow1r,
+                    rxd,     ryd, 
+                    nsamrt,  nrowrt);
+
+          /* Copy from imagsav to onscreen window */
+          copyarea(idispl, imagsav, iwin, icontx, 
+                     ixulrmin,            iyulrmin, 
+                     ixlrrmax - ixulrmin, iylrrmax - iyulrmin,
+                     ixulrmin,            iyulrmin);
+ 
+          neednewmap = TRUE;
+          ix0t = ixs;  iy0t = iys; 
+          }
+       }
+    } 
+
+ else if (!strcmp(*params, "1"))
+    {                                /*  -- Button 1 pushed down */
+    getloc(event,'B',&ix0t,&iy0t);
+
+    down    = TRUE;
+
+    nsamlt = nsam2l - nsam1l + 1; 
+    nrowlt = nrow2l - nrow1l + 1;
+
+    nsamrt = nsam2r - nsam1r + 1; 
+    nrowrt = nrow2r - nrow1r + 1;
+
+    if ((ix0t >= ixull && ix0t < ixull + nsamlt  && 
+         iy0t >= iyull && iy0t < iyull + nrowlt))
+       {    /* Cursor is inside  left image */
+       leftside = TRUE;
+       }
+
+    else if (picking &&
+       (ix0t >= ixulr && ix0t < ixulr + nsamrt  && 
+        iy0t >= iyulr && iy0t < iyulr + nrowrt))
+       {    /* Cursor is inside  right image */
+       leftside = FALSE;
+       }
+
+    else 
+       {   
+       down = FALSE;
+       }          
+    }
+
+ else if (!strcmp(*params, "L"))
+    {                                /*  -- Button 1 released */
+    down = FALSE;   
+    }
+
+ else if (!(strcmp(*params, "2")) || 
+         (!(strcmp(*params, "3"))))
+    {                               /*  --  Button 2 or 3 pushed */
+    /*  Remove message */
+    showbutx("","","",TRUE);
+
+    /* Remove all translations from iw_win */
+    XtUninstallTranslations(iw_win);
+
+    if (picking == TILT) 
+        {  /* Call pickp because buttons need to be reassigned */
+
+        pickp(FALSE);
+
+        /* Draw locations */
+        pickmen_butl(NULL, NULL, NULL);
+
+        /* Draw particle numbers at their location */
+        pickmen_butn(NULL, NULL, NULL);
+        }
+
+    else if (picking == IMAGE ) 
+        { /* Only shift image, return to imagemen */
+	ixul = ixulli;
+	iyul = iyulli;
+	}
+
+    else if (picking == MARKER) 
+        {  /* Setting markers, return to marker menu */
+	ixul = ixulli;
+	iyul = iyulli;
+
+ 	showbutx("Set marker location.",
+                 "Menu.",
+                 "Save locations in doc file.",FALSE);
+
+ 	actions(iw_win, "gold_pop", gold_pop, "123");
+     
+        // Draw existing markers from doc file
+        goldmen_butm((Widget) NULL, NULL, NULL);
+	}
+
+    else if (picking == MASK) 
+        { /*  Masking, return to mask buttons */
+	ixul = ixulli;
+	iyul = iyulli;
+
+        showbutx("Starts / sets line segment.",
+                 "Menu.",
+                 "Close this polygon.",FALSE);
+
+        actions(iw_win, "mask_pop", mask_pop, "M123");
+
+        // Draw existing masks   al 2018 F F added
+        mask_draw_polys(imagsav, icontx, FALSE, FALSE);
+        mask_draw_polys(iwin,    icontx, FALSE, FALSE);
+
+        //printf(" Shifted size: %d x %d To: %d %d\n",
+        //         nsam, nrow, ixul,iyul);
+
+        /*  Refresh screen  */
+        expos_cb(NULL,NULL,NULL);
+	}
+	
+    else if (picking == PIXEL) 
+        {
+	ixul = ixulli;
+	iyul = iyulli;
+
+	/* Redraw the markers */
+     	for(loop=0; loop<pixelnum; loop=loop+2)
+            {
+            /* Adjust for any resizing and or shift */
+            iskipundo(pixellist[loop], pixellist[loop+1],iskip,
+                      ixul, iyul, &ixs, &iys);
+
+	    /* Leave the markers */
+            xorc(iwin,    icontx, TRUE, ixs, iys, iradius);
+            xorc(imagsav, icontx, TRUE, ixs, iys, iradius);
+	    }
+
+	if (pixelnum == 0)
+            pixelmen_in_nod();
+	else 
+            {
+	    showbutx("Query location.",
+          	     "menu.",
+          	     "Stop this routine.",FALSE);
+
+ 	    actions(iw_win, "pixel_pop", pixel_in_pop, "M123");
+	    }
+	}
+	
+    else { }
+
+    if (leftside)
+       {
+       sprintf(outstr,
+               "Origin: (%d,%d) UL: (%d,%d) Size:(%d,%d)\n",
+               ixulli,iyulli, lxd,lyd,  nsaml,nrowl);
+       }
+    else
+       {
+       sprintf(outstr,
+               "Origin: (%d,%d) UL: (%d,%d) Size:(%d,%d)\n",
+               ixulri,iyulri, rxd,ryd,  nsamr,nrowr);
+       }
+    spout(outstr);
+
+    }
+
+ }

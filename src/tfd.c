@@ -12,8 +12,9 @@
 
 
 #include "std.h"
+#include "routines.h"
   /* internal function prottype */
-  float tfd(float cs, float dz,  float lambda, float q, float ds,
+  static float tfd(float cs, float dz,  float lambda, float q, float ds,
              double ak, float wgh, float env);
  
   void trafc(float cs, float dz, float lambda, float km, float q, 

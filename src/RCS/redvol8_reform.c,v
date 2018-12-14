@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -6,6 +6,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.2
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.1;
 
 1.1
 date	2011.10.25.19.01.19;	author leith;	state Exp;
@@ -17,9 +22,9 @@ desc
 @@
 
 
-1.1
+1.2
 log
-@Initial revision
+@bollingers_email_and_cosmetic
 @
 text
 @/*                                                                            
@@ -71,9 +76,9 @@ C--*********************************************************************
 */                                                                      
 
 #include "files.h"
+#include "routines.h"
 
  /* External function prototypes */
- extern int   redlin(FILEDATA *, float *, int, int);
                                    
  /*************************   redvol8   ****************************/
 
@@ -123,4 +128,15 @@ C--*********************************************************************
     }        // End of: for (islice = 0
  return TRUE;
  }
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d50 1
+a52 1
+ extern int   redlin(FILEDATA *, float *, int, int);
 @

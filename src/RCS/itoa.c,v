@@ -1,4 +1,4 @@
-head	1.2;
+head	1.3;
 access;
 symbols
 	pre-tilt-improve:1.2
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.3
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.2;
 
 1.2
 date	2005.10.18.16.59.47;	author leith;	state Exp;
@@ -26,13 +31,13 @@ desc
 @@
 
 
-1.2
+1.3
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /alwyn/usr1/web/RCS/itoa.c,v 1.1 93/11/10 10:11:43 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/itoa.c,v 1.2 2005/10/18 16:59:47 leith Exp $*/
 /*
 C **********************************************************************
 C
@@ -76,8 +81,7 @@ C **********************************************************************
 */
 
 #include "std.h"
-
- extern int numdig(int, int);
+#include "routines.h"
 
  /************************* itoa *******************************/
 
@@ -95,6 +99,21 @@ C **********************************************************************
  sprintf(cval,"%*d",leni,ivalue);
  return cval; 
  }  
+@
+
+
+1.2
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web/RCS/itoa.c,v 1.1 93/11/10 10:11:43 leith Exp $*/
+d46 1
+a46 2
+
+ extern int numdig(int, int);
 @
 
 

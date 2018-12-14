@@ -1,16 +1,13 @@
 
-/*$Header: /usr8/web/src/RCS/wid_text.c,v 1.8 2011/09/14 15:37:50 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_text.c,v 1.9 2018/12/07 17:06:44 leith Exp $*/
 /*
  * wid_text.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -45,20 +42,19 @@
  ***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/SelectioB.h>
+#include "common.h"
+#include "routines.h"
 
 #define  MAX_ARGS 9
 
  /* Function prototypes */
- extern void fin_cb  (Widget, caddr_t, caddr_t);
- extern void widpos  (int *, int *);
 
  /**********************************************************************/
 
  Widget wid_text(Widget iw_parent, Widget iw_text, char *prompt, 
                  char * text,
-                void (*cb)(), caddr_t cbdata, int ix, int iy)
+                 XtCallbackProc cb, void * cbdata, int ix, int iy)
  {
    Arg           args[MAX_ARGS];              /* Arg list      */
    Arg           arg1[MAX_ARGS] ;             /* Arg list      */

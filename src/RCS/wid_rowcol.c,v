@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.35;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2011.05.10.13.34.37;	author leith;	state Exp;
@@ -41,26 +46,23 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@menu colors
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/wid_rowcol.c,v 1.4 2005/10/18 16:59:49 leith Exp $*/
+/*$Header: /usr8/web/new/RCS/wid_rowcol.c,v 1.5 2011/05/10 13:34:37 leith Exp $*/
 /*
-C **********************************************************************
-C
-C WID_ROWCOL  -- JULY 92 al
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                 
+ C *********************************************************************
+ C
+ C WID_ROWCOL  -- JULY 92 al
+ C *********************************************************************
+ C * AUTHOR:  ArDean Leith                                 
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -77,28 +79,27 @@ C *  AUTHOR:  ArDean Leith
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C  WID_ROWCOL
-C
-C  PURPOSE:        Creates a row col widget
-C
-C  PARAMETERS      IW_PARENT       Parent widget
-C                  IW_IT           Dialog widget
-C                  TYPE            Row or column
-C                  IX,IY           Position (in pixels)
-C
-C  CALLED BY:      imoptmen   montmen3   others
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C  WID_ROWCOL
+ C
+ C  PURPOSE:        Creates a row col widget
+ C
+ C  PARAMETERS      IW_PARENT       Parent widget
+ C                  IW_IT           Dialog widget
+ C                  TYPE            Row or column
+ C                  IX,IY           Position (in pixels)
+ C
+ C  CALLED BY:      imoptmen   montmen3   others
+ C
+ C--*********************************************************************
 */
 
-#include<Xm/RowColumn.h>
+#include <Xm/RowColumn.h>
 #include "common.h"
+#include "routines.h"
 
 #define MAX_ARGS 6
-
- extern void  spout(char *);
 
 /************************************************************/
 
@@ -145,6 +146,55 @@ C--*********************************************************************
  return iw_rowcol;
  }
  
+@
+
+
+1.5
+log
+@menu colors
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/wid_rowcol.c,v 1.4 2005/10/18 16:59:49 leith Exp $*/
+d4 5
+a8 5
+C **********************************************************************
+C
+C WID_ROWCOL  -- JULY 92 al
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                 
+d10 3
+a12 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d29 14
+a42 14
+C **********************************************************************
+C
+C  WID_ROWCOL
+C
+C  PURPOSE:        Creates a row col widget
+C
+C  PARAMETERS      IW_PARENT       Parent widget
+C                  IW_IT           Dialog widget
+C                  TYPE            Row or column
+C                  IX,IY           Position (in pixels)
+C
+C  CALLED BY:      imoptmen   montmen3   others
+C
+C--*********************************************************************
+d45 1
+a45 1
+#include<Xm/RowColumn.h>
+d47 1
+a49 2
+
+ extern void  spout(char *);
 @
 
 

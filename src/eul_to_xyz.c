@@ -1,15 +1,12 @@
 /***********************************************************************
  * 
- * 	eul_to_xyz.c     (created April 24, 1995)
- *                       round --> round_spi    May 17 2007 ArDean Leith
- **************************************************************************
- *  AUTHOR:  YANHONG LI                                                *
+ *    eul_to_xyz.c    created April 24, 1995
+ *                    round --> round_spi     May 17 2007 ArDean Leith
+ *
+ ***********************************************************************
+ C   AUTHOR:  YANHONG LI                                               *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1995-2007  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -27,22 +24,23 @@
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- **************************************************************************
-
- 	PURPOSE: The program used to transfer euler angles (Phi, Theta 
- 	and Psi) to XYZ angles(theta1, theta2, theta3) or (t1,t2,t3) 
-
-    	CALLED BY:       surfmen
-
-***********************************************************************
+ C**********************************************************************
+ *
+ * 	PURPOSE: Used to transfer euler angles (Phi, Theta and Psi) to 
+ *               XYZ angles(theta1, theta2, theta3) or (t1,t2,t3) 
+ *
+ *  	CALLED BY:       surfmen
+ *
+ ***********************************************************************
 */
 
 #include <stdio.h>
 #include <math.h>
+#include "routines.h"
 
 #define	PI	3.1415926
 
-/* internal functions */
+/* external functions */
 float	angle(float x) { x = 180*x/PI; return x; }
 float 	antiang(float x) { x = x*PI/180; return x; }
 float   round_spi(float x) {

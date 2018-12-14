@@ -1,4 +1,4 @@
-head	1.7;
+head	1.8;
 access;
 symbols
 	pre-tilt-improve:1.7
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.8
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.7;
 
 1.7
 date	2011.05.05.12.05.27;	author leith;	state Exp;
@@ -51,13 +56,13 @@ desc
 @@
 
 
-1.7
+1.8
 log
-@-cmap_changes_etc
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/setamap.c,v 1.6 2005/10/18 16:59:56 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/setamap.c,v 1.7 2011/05/05 12:05:27 leith Exp $*/
 /*
 C***************************************************************************
 C
@@ -103,9 +108,9 @@ C--********************************************************************
 
 #include "std.h"
 #include "x.h"
+#include "common.h"
+#include "routines.h"
 
- extern Display   *idispl;
- extern Window    iwin, iwtop;
 
  /**************************  setamap   *****************************/
 
@@ -124,6 +129,21 @@ C--********************************************************************
  return ;
  }
 
+@
+
+
+1.7
+log
+@-cmap_changes_etc
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/setamap.c,v 1.6 2005/10/18 16:59:56 leith Exp $*/
+d48 2
+a50 2
+ extern Display   *idispl;
+ extern Window    iwin, iwtop;
 @
 
 

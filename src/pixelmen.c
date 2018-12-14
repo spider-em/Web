@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pixelmen.c,v 1.23 2015/09/08 18:10:47 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pixelmen.c,v 1.24 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -48,23 +48,24 @@
  C**********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
+
+#include "common.h"
+#include "routines.h"
+#include "pixel.h"
 
 #define  MAXREGM1 6
 
  /* Internal functions */
- void          pixelmen_buta(Widget, XtPointer, XtPointer);
- void          pixelmen_buts(Widget, XtPointer, XtPointer);
- void          pixelmen_l(Widget,    XtPointer, XtPointer);
- void          pixelmen_d(Widget,    XtPointer, XtPointer);
- void          pixelmen_sh(Widget,   XtPointer, XtPointer);
- void          pixelmen_s(Widget,    XtPointer, XtPointer);
- void          pixelmen_f(Widget,    XtPointer, XtPointer);
- void          pixelmen_i(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_buta(Widget, XtPointer, XtPointer);
+ static void   pixelmen_buts(Widget, XtPointer, XtPointer);
+ static void   pixelmen_l(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_d(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_sh(Widget,   XtPointer, XtPointer);
+ static void   pixelmen_s(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_f(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_i(Widget,    XtPointer, XtPointer);
 
  /* Common variables */
  XImage *      imagep;

@@ -1,4 +1,4 @@
-head	1.9;
+head	1.10;
 access;
 symbols
 	pre-tilt-improve:1.9
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.10
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.9;
 
 1.9
 date	2005.10.18.16.59.51;	author leith;	state Exp;
@@ -62,9 +67,9 @@ desc
 @
 
 
-1.9
+1.10
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @/*$Header $*/
@@ -111,10 +116,11 @@ text
  ***********************************************************************
 */
 
-#include "x.h"
 #include <Xm/MessageB.h>
+#include "x.h"
+#include "common.h"
+#include "routines.h"
 
-extern  Widget   iw_win;
 
 /****************************** Str2XmString *************************/
 
@@ -141,7 +147,7 @@ void RemoveDialButton( Widget widget, int which_button )
  
 /******************************  pop_errmsg_buto *********************/
 
-void pop_errmsg_buto(Widget widget, caddr_t client_data, 
+void pop_errmsg_buto(Widget widget, void * client_data, 
                            XmAnyCallbackStruct * call_data)
    {
    XtRemoveGrab( widget );
@@ -178,6 +184,23 @@ void pop_errmsg( char message[] )
    XmStringFree(motif_string );
    }      
 
+@
+
+
+1.9
+log
+@GPL
+@
+text
+@d45 1
+d47 2
+a48 1
+#include <Xm/MessageB.h>
+a49 1
+extern  Widget   iw_win;
+d76 1
+a76 1
+void pop_errmsg_buto(Widget widget, caddr_t client_data, 
 @
 
 

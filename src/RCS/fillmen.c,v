@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.16.59.58;	author leith;	state Exp;
@@ -47,13 +52,13 @@ desc
 @
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/fillmen.c,v 1.5 1996/04/19 19:48:36 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fillmen.c,v 1.6 2005/10/18 16:59:58 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -102,17 +107,14 @@ C***********************************************************************
 #include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
 
  /* external function prototypes */
 
  /* internal function prototypes */
- void                 fillmen_buta  (Widget, XtPointer, XtPointer);
+ static void     fillmen_buta  (Widget, XtPointer, XtPointer);
 
  /* external common variables used here */
- extern char       outstr[80];
- extern float      fminnew, fmaxnew;
- extern float      fminold, fmaxold;
- extern int        nsamold, nrowold;
 
  /* common variables used here and elsewhere*/
  int             ixseed = 2;
@@ -227,6 +229,26 @@ C***********************************************************************
  filter_but(iw_temp, (XtPointer) filtertype, call_data);
  }
 
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/fillmen.c,v 1.5 1996/04/19 19:48:36 leith Exp $*/
+d51 1
+d56 1
+a56 1
+ void                 fillmen_buta  (Widget, XtPointer, XtPointer);
+a58 4
+ extern char       outstr[80];
+ extern float      fminnew, fmaxnew;
+ extern float      fminold, fmaxold;
+ extern int        nsamold, nrowold;
 @
 
 

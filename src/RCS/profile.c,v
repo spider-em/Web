@@ -1,4 +1,4 @@
-head	1.15;
+head	1.16;
 access;
 symbols
 	pre-tilt-improve:1.15
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.16
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.15;
 
 1.15
 date	2011.09.23.19.30.08;	author leith;	state Exp;
@@ -92,12 +97,12 @@ desc
 @
 
 
-1.15
+1.16
 log
-@wicolor(icontxm,colorgo.
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /usr8/web/new/RCS/profile.c,v 1.14 2011/05/17 17:30:33 leith Exp $*/
+@/*$Header: /usr8/web/src/RCS/profile.c,v 1.15 2011/09/23 19:30:08 leith Exp $*/
 /*
 ************************************************************************
 *  profile.c         6/10/93
@@ -142,23 +147,22 @@ C **********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "profile.h"
 
 /* Internal subroutine prototypes */
- void  profile_pop     (Widget, XEvent *, String *, Cardinal *);
- void  profile_plot    (float *);
- void  profilemen      (void);
- void  profilemen_buts (int, int, int);
- void  profile_line    (int);
+ static void  profile_plot    (float *);
+ static void  profile_line    (int);
 
  /* Internal common variables */
- int   first , horizbar , leavebar, normbar, permbar, doxyaxis, permxyaxis ;
- int   spline;		/* the special line flag */
- int   linenum;		/* the line number of the special line */
- float *buft;
- int   LS0, ls;           /* line style of the icontxm GC */
- int   LW0, lw;           /* line width of the icontxm GC */
+ static int   first , doxyaxis, permxyaxis ;
+ static float *buft;
+ static int   LS0, ls;           /* line style of the icontxm GC */
+ static int   LW0, lw;           /* line width of the icontxm GC */
 
  /* External common variables */
+ int    horizbar, leavebar, normbar, permbar;
+ int    spline;		/* the special line flag */
+ int    linenum;	/* the line number of the special line */
  GC     icontxm;
 
  /***************************  profile  *******************************/
@@ -433,7 +437,7 @@ C **********************************************************************
        if (buft) free(buft);
 
        /* Stop this routine */
-       profilemen_buts(idum,idum,idum);
+       profilemen_buts(NULL, NULL, NULL);
        }
 
  return;
@@ -628,6 +632,37 @@ C **********************************************************************
 //*** ixori: 50 iyori: 729
 //*** ixgo: 899 iygo: 778
 //*** ix: 899 iy: 778
+@
+
+
+1.15
+log
+@wicolor(icontxm,colorgo.
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/new/RCS/profile.c,v 1.14 2011/05/17 17:30:33 leith Exp $*/
+d46 1
+d49 2
+a50 5
+ void  profile_pop     (Widget, XEvent *, String *, Cardinal *);
+ void  profile_plot    (float *);
+ void  profilemen      (void);
+ void  profilemen_buts (int, int, int);
+ void  profile_line    (int);
+d53 4
+a56 6
+ int   first , horizbar , leavebar, normbar, permbar, doxyaxis, permxyaxis ;
+ int   spline;		/* the special line flag */
+ int   linenum;		/* the line number of the special line */
+ float *buft;
+ int   LS0, ls;           /* line style of the icontxm GC */
+ int   LW0, lw;           /* line width of the icontxm GC */
+d59 3
+d336 1
+a336 1
+       profilemen_buts(idum,idum,idum);
 @
 
 

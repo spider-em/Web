@@ -1,4 +1,4 @@
-head	1.24;
+head	1.25;
 access;
 symbols
 	pre-tilt-improve:1.23
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.25
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.24;
 
 1.24
 date	2015.09.08.18.13.32;	author leith;	state Exp;
@@ -136,13 +141,13 @@ desc
 @@
 
 
-1.24
+1.25
 log
-@Doc file input bug, bell on error, cosmetic
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/pixelmen_in.c,v 1.23 2015/07/27 16:23:29 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixelmen_in.c,v 1.24 2015/09/08 18:13:32 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -193,28 +198,24 @@ text
  C**********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
+
+#include "common.h"
+#include "routines.h"
+#include "pixel.h"
 
 #define  MAXREGM1 6
 
  /* Internal functions */
- void          pixelmen_in_buta(Widget, XtPointer, XtPointer);
- void          pixelmen_in_buts(Widget, XtPointer, XtPointer);
- void          pixelmen_in_l   (Widget, XtPointer, XtPointer);
- void          pixelmen_in_d   (Widget, XtPointer, XtPointer);
- void          pixelmen_in_sh  (Widget, XtPointer, XtPointer);
- void          pixelmen_in_s   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_buta(Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_l   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_d   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_sh  (Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_s   (Widget, XtPointer, XtPointer);
 
  /* Externally defined  common variables used here */
- extern int    ixreg_pix, iyreg_pix;    // From pixelmen_sc
- extern int    isreg_pix, ivreg_pix;    // From pixelmen_sc
- extern int    iradius_pix;
 
- extern FILE * fpdocpix_in;             // From pixel_in
 
  // Common variables defined here
  XImage *      imagep_in    = 0;
@@ -241,7 +242,7 @@ text
 
  /************************* pixelmen_in_nod **********************************/
 
- void pixelmen_in_nod()
+ void pixelmen_in_nod(void)
  { 
  char            cval[5];
  static Widget   iw_rowcol;
@@ -480,7 +481,7 @@ text
       
  if (!old_docit && docit_in) 
     {  // Display docit menu instead
-    if( iw_pixelmen_in_nod > 0) XtUnmanageChild(iw_pixelmen_in_nod); 
+    if( iw_pixelmen_in_nod != NULL) XtUnmanageChild(iw_pixelmen_in_nod); 
 
         pixelmen_in_doc(NULL, NULL, NULL);
     ikey_in = 1;
@@ -488,7 +489,7 @@ text
 
  else if (  old_docit && ! docit_in)
     {  // Display non-docit menu instead
-    if( iw_pixelmen_in_doc > 0) XtUnmanageChild(iw_pixelmen_in_doc); 
+    if( iw_pixelmen_in_doc != NULL) XtUnmanageChild(iw_pixelmen_in_doc); 
 
     pixelmen_in_nod();
     ikey_in = 1;
@@ -652,6 +653,46 @@ text
 
  }
 
+@
+
+
+1.24
+log
+@Doc file input bug, bell on error, cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/pixelmen_in.c,v 1.23 2015/07/27 16:23:29 leith Exp $*/
+d53 3
+d58 1
+a58 3
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+d63 5
+a67 6
+ void          pixelmen_in_buta(Widget, XtPointer, XtPointer);
+ void          pixelmen_in_buts(Widget, XtPointer, XtPointer);
+ void          pixelmen_in_l   (Widget, XtPointer, XtPointer);
+ void          pixelmen_in_d   (Widget, XtPointer, XtPointer);
+ void          pixelmen_in_sh  (Widget, XtPointer, XtPointer);
+ void          pixelmen_in_s   (Widget, XtPointer, XtPointer);
+a69 3
+ extern int    ixreg_pix, iyreg_pix;    // From pixelmen_sc
+ extern int    isreg_pix, ivreg_pix;    // From pixelmen_sc
+ extern int    iradius_pix;
+a70 1
+ extern FILE * fpdocpix_in;             // From pixel_in
+d97 1
+a97 1
+ void pixelmen_in_nod()
+d336 1
+a336 1
+    if( iw_pixelmen_in_nod > 0) XtUnmanageChild(iw_pixelmen_in_nod); 
+d344 1
+a344 1
+    if( iw_pixelmen_in_doc > 0) XtUnmanageChild(iw_pixelmen_in_doc); 
 @
 
 

@@ -1,4 +1,4 @@
-head	1.20;
+head	1.21;
 access;
 symbols
 	pre-tilt-improve:1.20
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.21
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.20;
 
 1.20
 date	2015.07.27.16.24.29;	author leith;	state Exp;
@@ -116,13 +121,13 @@ desc
 @@
 
 
-1.20
+1.21
 log
-@Doc file close bug
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/pixel_sc.c,v 1.19 2011/06/10 12:15:16 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixel_sc.c,v 1.20 2015/07/27 16:24:29 leith Exp $*/
 /*
  C pixel_sc.c
  C               Pixel rewrite                   Jun 2011 ArDean Leith
@@ -161,21 +166,14 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "pixel.h"
 
  // Internal functions 
- void    pixel_sc_pop (Widget, XEvent *, String *, Cardinal *);
+ static void    pixel_sc_pop (Widget, XEvent *, String *, Cardinal *);
 
  // Externally defined common variables 
- extern char       outstr[80];
 
- extern int        ixreg_pix, iyreg_pix, isreg_pix;  // From pixelmen_sc 
- extern int        iradius_pix;                      // From pixelmen_sc 
 
- extern XImage   * imagep_sc;                        // From pixelmen_sc 
- extern int        docit_sc;                         // From pixelmen_sc 
- extern int        getscreen_sc;                     // From pixelmen_sc 
- extern int        leavit_sc;                        // From pixelmen_sc 
- extern int        ikey_sc;                          // From pixelmen_sc 
 
  // Internally defined common variables 
  FILE            * fpdocpix_sc = NULL;
@@ -215,6 +213,7 @@ text
  int    ixs, iys, ipix, i, savdocit;
  float  fval;
  float  dlist[7];
+ char   outstr[81];
 
  getloc(event,'m',&ixs,&iys);
  //printf("  %d,%d  \n",ixs,iys);   
@@ -315,6 +314,33 @@ text
     pixelnum = 0;
     }
  }
+@
+
+
+1.20
+log
+@Doc file close bug
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/pixel_sc.c,v 1.19 2011/06/10 12:15:16 leith Exp $*/
+d41 1
+d44 1
+a44 1
+ void    pixel_sc_pop (Widget, XEvent *, String *, Cardinal *);
+a46 1
+ extern char       outstr[80];
+a47 2
+ extern int        ixreg_pix, iyreg_pix, isreg_pix;  // From pixelmen_sc 
+ extern int        iradius_pix;                      // From pixelmen_sc 
+a48 5
+ extern XImage   * imagep_sc;                        // From pixelmen_sc 
+ extern int        docit_sc;                         // From pixelmen_sc 
+ extern int        getscreen_sc;                     // From pixelmen_sc 
+ extern int        leavit_sc;                        // From pixelmen_sc 
+ extern int        ikey_sc;                          // From pixelmen_sc 
+d88 1
 @
 
 

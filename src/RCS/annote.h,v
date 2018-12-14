@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2018.12.07.16.32.41;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@extern int iarad;
+extern int ix_reg;
+extern int iy_reg;
+extern int lab_reg;
+extern int tkey1;
+extern int tkey2;
+@

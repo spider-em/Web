@@ -1,4 +1,4 @@
-head	1.28;
+head	1.29;
 access;
 symbols
 	pre-tilt-improve:1.28
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.29
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.28;
 
 1.28
 date	2011.11.01.15.54.37;	author leith;	state Exp;
@@ -156,9 +161,9 @@ desc
 @@
 
 
-1.28
+1.29
 log
-@used redvol8_reform
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -227,20 +232,11 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "surf.h"
 
  /* External function prototypes */
- extern void  cantrot   (int, int, float *, unsigned char *,float,float,float);
- extern float surfrot   (int *, int *, float, float, float, unsigned char *, 
-                         unsigned char, int, int);
- extern float volval    (int, int, int, unsigned char *);    
- extern int surfcolor   (unsigned char * colvol, int nvolcolors, int * ncolrange);
- int redvol8_reform     (FILEDATA *, unsigned char * ,
-                         int, int, int, int, int,  float *, float *);                      
 
  /* Externally defined variables used here */
- extern float      phi, theta, psi, thlev;
- extern XImage     *imagel;
- extern int        nvolcolors;
 
  /* Static variables for use here */
  static unsigned char lthlev, lthlevo = 0;
@@ -1015,6 +1011,27 @@ if (colorit)
 /********* end debug ************/
  
  }
+@
+
+
+1.28
+log
+@used redvol8_reform
+@
+text
+@d67 1
+a69 7
+ extern void  cantrot   (int, int, float *, unsigned char *,float,float,float);
+ extern float surfrot   (int *, int *, float, float, float, unsigned char *, 
+                         unsigned char, int, int);
+ extern float volval    (int, int, int, unsigned char *);    
+ extern int surfcolor   (unsigned char * colvol, int nvolcolors, int * ncolrange);
+ int redvol8_reform     (FILEDATA *, unsigned char * ,
+                         int, int, int, int, int,  float *, float *);                      
+a71 3
+ extern float      phi, theta, psi, thlev;
+ extern XImage     *imagel;
+ extern int        nvolcolors;
 @
 
 

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pixelmen_sc.c,v 1.23 2015/07/27 16:23:57 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pixelmen_sc.c,v 1.24 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -46,20 +46,20 @@
  C**********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
+
+#include "common.h"
+#include "routines.h"
+#include "pixel.h"
 
 #define  MAXREGM1 6
 
  // Internal functions 
- void          pixelmen_sc_buta(Widget, XtPointer, XtPointer);
- void          pixelmen_sc_buts(Widget, XtPointer, XtPointer);
- void          pixelmen_sc_l   (Widget, XtPointer, XtPointer);
- void          pixelmen_sc_d   (Widget, XtPointer, XtPointer);
- void          pixelmen_sc_s   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_sc_buta(Widget, XtPointer, XtPointer);
+ static void   pixelmen_sc_l   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_sc_d   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_sc_s   (Widget, XtPointer, XtPointer);
 
  // Common variables defined here
  int           ixreg_pix    = 1, iyreg_pix = 2;
@@ -67,14 +67,12 @@
  int           iradius_pix  = 5;
 
  // Externally defined variables used here
- extern FILE   * fpdocpix_sc;             // From pixel_sc
 
  // Common variables defined here
  XImage     *  imagep_sc    = 0;
  int           docit_sc     = FALSE;
  int           getscreen_sc = TRUE;
  int           leavit_sc    = TRUE;
- int           ikey_sc      = 1;
 
  Widget        iw_radius_sc_nod, iw_getscreen_sc_nod;
  Widget        iw_docit_sc_nod;
@@ -87,6 +85,7 @@
  Widget        iw_docit_sc_doc;
 
  // Static file scope variables 
+ static int     ikey_sc            = 1;
  static Widget  iw_pixelmen_sc_nod = (Widget)0;
  static Widget  iw_pixelmen_sc_doc = (Widget)0;
 
@@ -296,14 +295,14 @@
                      
  if (!old_docit && docit_sc) 
     {  // Display docit menu instead
-    if( iw_pixelmen_sc_nod > 0) XtUnmanageChild(iw_pixelmen_sc_nod); 
+    if( iw_pixelmen_sc_nod != NULL) XtUnmanageChild(iw_pixelmen_sc_nod); 
 
     pixelmen_sc_doc(NULL,NULL,NULL);
     ikey_sc = 1;
     }
  else if (  old_docit && ! docit_sc)
     {  // Display non-docit menu instead
-    if( iw_pixelmen_sc_doc > 0) XtUnmanageChild(iw_pixelmen_sc_doc); 
+    if( iw_pixelmen_sc_doc != NULL) XtUnmanageChild(iw_pixelmen_sc_doc); 
 
     pixelmen_sc_nod(NULL,NULL,NULL);
     ikey_sc = 1;

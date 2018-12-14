@@ -1,36 +1,46 @@
-/*
-C wid_movie.for  Created                       feb 93
-C                Ported to: c               7/14/94 Mahieddine Ladjadj *
-C
-C
-C **************************************************************************
-C *  author:  ardean leith                                                 *
-C *  copyright (c)1993, wadsworth center for laboratories and              *
-C *  research, new york state department of health, albany, ny 12201.      *
-C *    the contents of this document are proprietary to the center for     *
-C *    laboratories and research and are not to be disclosed to others or  *
-C *    used for purposes other than intended without written approval of   *
-C *    the center for laboratories and research			           *
-C **************************************************************************
-C
-C***************************************************************************
+
+/***********************************************************************
+ * wid_movie.for  Created               feb 93                         *
+ *                Ported to: c          7/14/94 Mahieddine Ladjadj     *
+ *
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
+ C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email: spider@health.ny.gov                                       *
+ C=*                                                                   *
+ C=* This program is free software; you can redistribute it and/or     *
+ C=* modify it under the terms of the GNU General Public License as    *
+ C=* published by the Free Software Foundation; either version 2 of    *
+ C=* the License, or (at your option) any later version.               *
+ C=*                                                                   *
+ C=* This program is distributed in the hope that it will be useful,   *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU  *
+ C=* General Public License for more details.                          *
+ C=*                                                                   *
+ C=* You should have received a copy of the GNU General Public License *
+ C=* with this program. If not, see <http://www.gnu.org/licenses>      *
+ C=*                                                                   *
+ ***********************************************************************
+ *
+ * PURPOSE:     
+ * 
+ * PARAMETERS:	 
+ *
+ ***********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
+#include "movie.h"
 
-void         movie_pop      (Widget, XEvent *, String *, Cardinal *);
-void         wid_movierun   (void);
-void         movie_doit     (Widget, XtIntervalId *);
-extern void  moviemen_buts  (Widget, caddr_t, caddr_t);
-extern void  glass          (Window , Window , int , int ,
-	                    int , int , int *, int *, int );
+static void  movie_pop      (Widget, XEvent *, String *, Cardinal *);
+static void  movie_doit     (Widget, XtIntervalId *);
+static void  wid_movierun   (void);
 
-
-extern int  ixulmon,iyulmon;          /* First image of montage */ 
-extern int  numfil;		      /* Last file number+1     */ 
-extern int  setupbuttons, moviedelay, moviemagni, moviecycl, imno, forward,
-            movie_step, twoway,moviemenu, ndone, ixulmv,iyulmv;
 int         ixulm, iyulm, iskipm, ixoffm, iyoffm, ixulmm, iyulmm; 
 int	    icycles, movierun, nisams, nirows, checkmag, cyclnbr;
 

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fillmen.c,v 1.6 2005/10/18 16:59:58 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/fillmen.c,v 1.7 2018/12/07 17:03:31 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -48,17 +48,14 @@ C***********************************************************************
 #include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
 
  /* external function prototypes */
 
  /* internal function prototypes */
- void                 fillmen_buta  (Widget, XtPointer, XtPointer);
+ static void     fillmen_buta  (Widget, XtPointer, XtPointer);
 
  /* external common variables used here */
- extern char       outstr[80];
- extern float      fminnew, fmaxnew;
- extern float      fminold, fmaxold;
- extern int        nsamold, nrowold;
 
  /* common variables used here and elsewhere*/
  int             ixseed = 2;

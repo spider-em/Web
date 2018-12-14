@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/setmag.c,v 1.8 2011/09/23 12:46:42 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/setmag.c,v 1.9 2018/12/07 17:03:34 leith Exp $*/
 /*
 C++*************************************************************************
 C
@@ -43,23 +43,20 @@ C
 C--********************************************************************
 */
 
-#include "common.h"
 #include <Xm/RowColumn.h>
 #include <Xm/Scale.h>
+#include "common.h"
+#include "routines.h"
 
 #define  MAX_ARGS 13
 
  /* External function  prototypes */
- extern Widget wid_labelg   (Widget, Widget, char *, int, int);
- extern Widget wid_dialog   (Widget,...);
- extern Widget wid_stdbut   (Widget,...);
- extern void   fin_cb	    (Widget, caddr_t, caddr_t);
  
  /* Internal function  prototypes */
- Widget scalev	(Widget iw_parent,Widget iw_its,int imin,int imax,
+ static Widget scalev	(Widget iw_parent,Widget iw_its,int imin,int imax,
 		int inow,int iwid,int ihi,int ixdum,int iydum);
 
- void   pushbuta(Widget iw_temp, XtPointer data, XtPointer callback);
+ static void   pushbuta(Widget iw_temp, XtPointer data, XtPointer callback);
 
  /* Internal file variables */
  static  Widget	 iw_magx, iw_magy, iw_magf, iw_setmag = 0;

@@ -38,27 +38,19 @@ C
 C***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/List.h>
+#include "common.h"
+#include "routines.h"
 
 #define MAX_ITEMS 12
 
 
  /* external function prototypes */
 
- extern Widget wid_rowcol   (Widget, char , int, int);
- extern Widget wid_labelg   (Widget, Widget, char *, int, int);
- extern Widget wid_dialog   (Widget, Widget, char *, int, int);
- extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
-                             char *, void (*)(), void (*)(), void (*)(),
-                             void (*)());
- extern void   spout        (char *);
- extern void   fin_cb       (Widget, caddr_t, caddr_t);
-
 
  /* internal function prototypes */
- void          fontmen_buta(Widget, caddr_t, caddr_t);
- void          fontmen_sel(Widget, int, XmListCallbackStruct *);
+ static void   fontmen_buta(Widget, void *, void *);
+ static void   fontmen_sel(Widget, int, XmListCallbackStruct *);
  
 
  /* internal common variables */
@@ -82,7 +74,7 @@ C***********************************************************************
 */
  /********************   fontmen   ****************************/
 
-void fontmen(Widget iw_caller, caddr_t data, caddr_t call_data)
+void fontmen(Widget iw_caller, void * data, void * call_data)
 { 
  Widget iw_rcvt, iw_rcht, iw_rch, iw_rcv;
  Widget iw_pushc, iw_pusha,iw_dums, iw_list;
@@ -328,7 +320,7 @@ void fontmen_sel(Widget iw_temp, int data, XmListCallbackStruct * call_data)
 
  }
 
-void fontmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+void fontmen_buta(Widget iw_temp, void * data, void * call_data)
    {
    XtUnmanageChild(iw_fontmen);
    XSetFont( idispl, icontx, fontptr->fid );

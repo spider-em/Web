@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/setbgfg.c,v 1.1 2011/09/14 15:36:31 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/setbgfg.c,v 1.2 2018/12/07 17:03:34 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -41,6 +41,7 @@
 */
 
 #include "common.h"
+#include "routines.h"
  
 /***********************  Setbgfg  ************************/
 
@@ -55,7 +56,7 @@
     *n = *n + 1; 
     }
  else
-    { printf("*** Arg overflow pgm. error: %d \n",n); }
+    { printf("*** Arg overflow pgm. error: %d \n",*n); }
 #endif
  }
 

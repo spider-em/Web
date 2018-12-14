@@ -1,4 +1,4 @@
-head	1.4;
+head	1.5;
 access;
 symbols
 	pre-tilt-improve:1.4
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.5
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.4;
 
 1.4
 date	2011.05.05.12.05.27;	author leith;	state Exp;
@@ -36,13 +41,13 @@ desc
 @@
 
 
-1.4
+1.5
 log
-@-cmap_changes_etc
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header:  Exp $*/
+/*$Header: /usr8/web/src/RCS/rubberline.c,v 1.4 2011/05/05 12:05:27 leith Exp $*/
 /*
 C***************************************************************************
 C
@@ -91,7 +96,7 @@ C--*********************************************************************
 #include "routines.h"
  
  /* internal subroutines */
- void rubber_pop(Widget, XEvent *, String *, Cardinal *);
+ static void rubber_pop(Widget, XEvent *, String *, Cardinal *);
  
  /* global variables */
  static int firstpt;
@@ -100,7 +105,7 @@ C--*********************************************************************
 
 /*********************  rubberline  *******************************/
 
- void rubberline(void)
+ void rubberline(Widget w, XtPointer c, XtPointer u)
  {
  
  /* open a message window with the following strings */
@@ -170,6 +175,23 @@ C--*********************************************************************
     return;
     }
  }
+@
+
+
+1.4
+log
+@-cmap_changes_etc
+@
+text
+@d2 1
+a2 1
+/*$Header:  Exp $*/
+d51 1
+a51 1
+ void rubber_pop(Widget, XEvent *, String *, Cardinal *);
+d60 1
+a60 1
+ void rubberline(void)
 @
 
 

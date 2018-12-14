@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/wicolor.c,v 1.10 2015/09/01 17:54:34 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wicolor.c,v 1.11 2018/12/07 17:03:35 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -9,16 +9,14 @@
  C             Added background                           May  2002 al
  C             Rewrite                                    Sept 2011 al 
  C             Cosmetic                                   July 2015 al 
+ C             colort bug                                 Dec  2018 al 
  C                                   
  C**********************************************************************
  C=* AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2015  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email: spider@health.ny.gov                                       *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -27,15 +25,13 @@
  C=*                                                                   *
  C=* This program is distributed in the hope that it will be useful,   *
  C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
- C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU  *
  C=* General Public License for more details.                          *
  C=*                                                                   *
  C=* You should have received a copy of the GNU General Public License *
- C=* along with this program; if not, write to the                     *
- C=* Free Software Foundation, Inc.,                                   *
- C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=* with this program. If not, see <http://www.gnu.org/licenses>      *
  C=*                                                                   *
- C**********************************************************************
+ C*********************************************************************
  C
  C wicolor(icontx,color)
  C
@@ -46,15 +42,15 @@
  C
  C CALLED BY:    Many routines
  C
- C*********************************************************************
+ C**********************************************************************
 */
- 
-#ifdef WEB_TRUE
 
 #include "common.h"
+#include "routines.h"
+
+#ifdef WEB_TRUE
 
  /* Externally defined common variables */
- extern Display *idispl;
 
  int wicolor(GC icontxt, int icolort)
  {
@@ -77,10 +73,12 @@
        }
     }
  
- else if (colort  < -999999) 
+ else if (icolort  < -999999)    /* colort bug 2018 al */
     {
     /* Set background to specified Web color */
     icolort  = icolort + 1000000;
+    if (icolort < 0)        icolort = -icolort;
+    if (icolort >= MAXCOL)  icolort = 0;
     XSetBackground(idispl,icontxt, ispicol[icolort]);
      
 #ifdef DEBUG
@@ -108,9 +106,6 @@
 
 
 #else
-
-
-#include "common.h"
 
 #define NIMAGE  128
  

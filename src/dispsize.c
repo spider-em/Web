@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/dispsize.c,v 1.7 2005/10/18 17:00:03 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/dispsize.c,v 1.8 2018/12/07 17:03:31 leith Exp $*/
 
 /***********************************************************************
  *
@@ -46,6 +46,7 @@
  /****************************  dispsize  *****************************/
  
 #include <math.h>
+#include "routines.h"
 
  void dispsize(int nsam1t,  int nsam2t, 
                int nrow1t,  int nrow2t, 

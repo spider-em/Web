@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -6,6 +6,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.2
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.1;
 
 1.1
 date	2011.09.22.16.17.26;	author leith;	state Exp;
@@ -17,9 +22,9 @@ desc
 @@
 
 
-1.1
+1.2
 log
-@Initial revision
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -66,14 +71,11 @@ text
 
 #include "x.h"
 #include "std.h"
+#include "routines.h"
 
  // Functions used here
 
  // External common variables
- extern int            mapgo,mapend;      // Image start & end in colormap 
-
- // Internally defined common variables
- int                   vmap[256];          // Virtual colormap
 
  void newvmap(int mapgot,int mapendt, int * vmap)
 
@@ -96,4 +98,18 @@ text
   //printf("  New vmap: \n");
   }
 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d45 1
+a49 4
+ extern int            mapgo,mapend;      // Image start & end in colormap 
+
+ // Internally defined common variables
+ int                   vmap[256];          // Virtual colormap
 @

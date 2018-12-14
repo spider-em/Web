@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fitmen.c,v 1.35 2015/09/18 16:17:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/fitmen.c,v 1.36 2018/12/07 17:03:32 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -54,28 +54,18 @@
  C*********************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
+#include "fit.h"
 
  // Internal function prototypes 
- void          fit_buttilt  (Widget, XtPointer, XtPointer);
- void          fit_butfit   (Widget, XtPointer, XtPointer);
- void          fit_butdraw2 (Widget, XtPointer, XtPointer);
- void          fit_butsavang(Widget, XtPointer, XtPointer);
- void          fitmen_butok (Widget, XtPointer, XtPointer);
- void          fitmen_butk  (Widget, XtPointer, XtPointer);
+ static void   fit_buttilt  (Widget, XtPointer, XtPointer);
+ static void   fit_butfit   (Widget, XtPointer, XtPointer);
+ static void   fitmen_butok (Widget, XtPointer, XtPointer);
+ static void   fitmen_butk  (Widget, XtPointer, XtPointer);
 
  // Externally defined global variables 
- extern int    maxpart;
- extern float  xu0t,  yu0t,  xs0t,  ys0t;    // From: fitorigin
- extern float  * xim, * xu0, * yu0; 
- extern float  * xs,  * ys, * xs2, * ys2; 
- extern int    fitted;                       // From: pickp
- extern int    orgkey;                       // From: pickmen
- extern int    numm;                         // From: pickp
- extern Widget iw_parlabel;                  // From: pickmen
- extern Widget iw_rowcolh0;                  // From: pickmen
 	       
  // Global variables defined here, used here & elsewhere 
  float         phif          = 0.0;
@@ -92,7 +82,7 @@
 
  /****************************  fitmen_adv   ***********************/
 
- void fitmen_adv(void)
+ void fitmen_adv(Widget w, XtPointer c, XtPointer u)
 
  { 
  static Widget iw_rowcolv, iw_rowcolh1, iw_rowcolh2, iw_rowcolh3;
@@ -264,7 +254,7 @@
 
  // Update text boxes
  XtUnmanageChild(iw_fitmen_adv); 
- fitmen_adv();
+ fitmen_adv((Widget) 0, NULL, NULL);
 
  }
 
@@ -313,7 +303,7 @@
  spoutfile(FALSE);
 
  /* Restart the advanced fitting menu */
- fitmen_adv(); 
+ fitmen_adv((Widget) 0, NULL, NULL); 
  }
 
 
@@ -348,7 +338,7 @@
  spoutfile(FALSE);
 
  /* Restart the fitting menu so values of angles will change */
- fitmen_adv(); 
+ fitmen_adv((Widget) 0, NULL, NULL); 
  }
 
 

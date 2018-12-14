@@ -1,4 +1,4 @@
-head	1.17;
+head	1.18;
 access;
 symbols
 	pre-tilt-improve:1.17
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.18
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.17;
 
 1.17
 date	2012.04.17.18.30.05;	author leith;	state Exp;
@@ -102,11 +107,9 @@ desc
 @
 
 
-1.17
+1.18
 log
-@Make a list of displayed images for cat.c
-nprow = setnprow(nsam) active
-..
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -157,25 +160,11 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
  /* External routines */
- extern int   sumum(float * first, float * second, float * output, 
-                    int npix);
- extern int   average(float * input,  float * output,
-                      int npix, float divisor);
- extern int   avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
- extern void  showmoviemen  (int);
 
  /* External variables */
- extern int   stkgo, stkend;       /* From stackmen for montage only*/
- extern int   *docimgnums;         /* Doc file image numbers */
- extern int   docimgtotal;         /* Number of images from doc file */
- extern int   montaverage;         /* Want montage average */
- extern char  avgnam[128];         /* Name for montage average file */
- extern int   ndone;               /* Used by cat.c & movie, from mont2 */
- extern char  *cmont3buf;          /* From mont3 */
- extern int   nsami,nrowi,nslicei; /* From mont3 */
- extern XImage * ximagelist[1000]; /* From showmovie */
 
  /* Externally used variables */
  int imagelist[1000];              /* Used by: cat.c */
@@ -411,6 +400,34 @@ C***********************************************************************
 
 
  
+@
+
+
+1.17
+log
+@Make a list of displayed images for cat.c
+nprow = setnprow(nsam) active
+..
+@
+text
+@d49 1
+a51 6
+ extern int   sumum(float * first, float * second, float * output, 
+                    int npix);
+ extern int   average(float * input,  float * output,
+                      int npix, float divisor);
+ extern int   avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
+ extern void  showmoviemen  (int);
+a53 9
+ extern int   stkgo, stkend;       /* From stackmen for montage only*/
+ extern int   *docimgnums;         /* Doc file image numbers */
+ extern int   docimgtotal;         /* Number of images from doc file */
+ extern int   montaverage;         /* Want montage average */
+ extern char  avgnam[128];         /* Name for montage average file */
+ extern int   ndone;               /* Used by cat.c & movie, from mont2 */
+ extern char  *cmont3buf;          /* From mont3 */
+ extern int   nsami,nrowi,nslicei; /* From mont3 */
+ extern XImage * ximagelist[1000]; /* From showmovie */
 @
 
 

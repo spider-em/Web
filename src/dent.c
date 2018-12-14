@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/dent.c,v 1.6 2005/10/18 16:59:48 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/dent.c,v 1.7 2018/12/07 17:03:31 leith Exp $*/
 
 /*
 C**************************************************************************
@@ -51,24 +51,15 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "dent.h"
 #include <assert.h>
 
  /* internal functions */
- void    dent_actions (Widget, XEvent *, String *, Cardinal *);
+ static void    dent_actions (Widget, XEvent *, String *, Cardinal *);
 
  /* external function prototypes */
- void distoref(int idepth, int nsams, int nrows, int * distimg, 
-          unsigned char * refmap, float fct, float csfact, 
-          float fd1, float fd2,
-          int nsam1t, int nsam2t, int nrow1t, int nrow2t,
-          int mapgot);        
-
- void dentmen2(void);
 
  /* externally defined variables used here */
- extern XImage     *imagel;
- extern char        outstr[80];
- extern float       dentrefl, dentfct, dentthlev;
 
  /* static variables for use here */
  static unsigned char lthlev;
@@ -212,6 +203,7 @@ assert(ivall <= nsam);
  int           * distptr;
  unsigned char * cptr, *dentvolptr;
  int           ivall;
+ char outstr[81];
 
  if (!(strcmp(*params, "M")))
     {                        /* List location ---- mouse moved */

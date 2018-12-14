@@ -1,4 +1,4 @@
-head	1.4;
+head	1.5;
 access;
 symbols
 	pre-tilt-improve:1.4
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.5
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.4;
 
 1.4
 date	2005.10.18.16.59.44;	author leith;	state Exp;
@@ -37,9 +42,9 @@ desc
 @
 
 
-1.4
+1.5
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @/*$Header $*/
@@ -90,6 +95,7 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "dent.h"
 
  /* internal function prototypes */
  static void dentmen2_buts(Widget, XtPointer, XtPointer);
@@ -99,13 +105,8 @@ C***********************************************************************
  static void dentfile_cb  (Widget, XtPointer, XtPointer);
  
  /* external global variables  */
- extern char  outstr[80];
 
  /* external global variables (from dent.c) */
- extern unsigned char  * dentvol, * dentrefmap;
- extern int            * dentdistmap;
- extern int            dentdensity, dentdepth,  dentwidth;   
- extern int            dentheight,  dentmovement;
 
  /* file scope static variables */
  static Widget  iw_dentmen2  = (Widget) 0;
@@ -219,6 +220,7 @@ C***********************************************************************
  char *string;
  int   ival;
  struct xcall * xptr;
+ char outstr[81];
 
  /* find threshold */
  string = XmTextGetString(iw_temp);
@@ -292,7 +294,7 @@ C***********************************************************************
           }
 
       /* convert single bit volume to spider format */
-      cptr = (char *) dentvol;
+      cptr = (unsigned char *) dentvol;
       for (irow=1; irow <= nrow*nslice; irow++)
          {
          /* use default read / write buffer from filedatad */
@@ -343,6 +345,26 @@ C***********************************************************************
  
 
 	
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d49 1
+a58 1
+ extern char  outstr[80];
+a60 4
+ extern unsigned char  * dentvol, * dentrefmap;
+ extern int            * dentdistmap;
+ extern int            dentdensity, dentdepth,  dentwidth;   
+ extern int            dentheight,  dentmovement;
+d174 1
+d248 1
+a248 1
+      cptr = (char *) dentvol;
 @
 
 

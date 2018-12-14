@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2007.11.01.19.33.45;	author leith;	state Exp;
@@ -41,13 +46,13 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@fmin ->fmin_spi..
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/redvol8.c,v 1.4 2005/10/18 16:59:52 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/redvol8.c,v 1.5 2007/11/01 19:33:45 leith Exp $*/
 /*
 C**************************************************************************
 C
@@ -101,13 +106,10 @@ C--*********************************************************************
 */
 
 #include "files.h"
+#include "routines.h"
 
 
  /* external function prototypes */
- extern int   closefile(FILEDATA *);
- extern int   redlin    (FILEDATA *, float *, int, int);
- extern void  spout     (char *);
-
 
  /* externally defined variables */
  
@@ -162,6 +164,23 @@ C--*********************************************************************
 
 
 
+
+@
+
+
+1.5
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/redvol8.c,v 1.4 2005/10/18 16:59:52 leith Exp $*/
+d56 1
+a59 4
+ extern int   closefile(FILEDATA *);
+ extern int   redlin    (FILEDATA *, float *, int, int);
+ extern void  spout     (char *);
 
 @
 

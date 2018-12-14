@@ -1,19 +1,15 @@
 
-/*$Header: /usr8/web/src/RCS/annote.c,v 1.6 2005/10/18 17:00:04 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/annote.c,v 1.7 2018/12/07 17:03:30 leith Exp $*/
 
 /***********************************************************************
  * annote.c
  *
- * ported WID_ANNOTE.FOR (VAX) to unix.
+ * Ported WID_ANNOTE.FOR (VAX) to Unix.
  *
  ***********************************************************************
  * author : Mahieddine Ladjadj
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -46,13 +42,11 @@
 
 #include "common.h"
 #include "routines.h"
+#include "annote.h"
 
 
 /* external common variables */
-  extern  int ix_reg, iy_reg, lab_reg, tkey1, tkey2, iarad;
-  extern  char outstr[80];
   
-  extern int iskip;    /* dgm addition so non-1:1 images anontate properly*/
 
 /***********************  annote *************************************/
 
@@ -64,8 +58,8 @@ int annote(char *filnam)
   float    *dbuf, plist[8], x, y;
   int      labno;
   float    *ptr;
-  
   float    scale;   /* dgm adds scale and the following lines */
+  char outstr[81];
   
   if ( iskip < 1 ) {
      scale = -iskip ;

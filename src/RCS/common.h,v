@@ -1,6 +1,7 @@
 head	1.24;
 access;
 symbols
+	pre-bollinger:1.24
 	pre-tilt-improve:1.22
 	pre_neednewmap:1.20
 	pre_tiltpair_chng:1.19

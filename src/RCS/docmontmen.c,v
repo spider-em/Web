@@ -1,4 +1,4 @@
-head	1.20;
+head	1.21;
 access;
 symbols
 	pre-tilt-improve:1.20
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.21
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.20;
 
 1.20
 date	2012.04.17.18.35.31;	author leith;	state Exp;
@@ -117,13 +122,13 @@ desc
 @
 
 
-1.20
+1.21
 log
-@docimgtotal = -1  error return for unreadable doc file access
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/docmontmen.c,v 1.19 2011/08/01 15:49:32 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/docmontmen.c,v 1.20 2012/04/17 18:35:31 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -186,12 +191,13 @@ C**************************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
  /* Internal function prototypes */
- void     docmontmen_buta    (Widget, XtPointer, XtPointer);
- void     docmontmen_buta_stk(Widget, XtPointer, XtPointer);
- void     docmontmen_a       (Widget, XtPointer, XtPointer);
- void     docmontmen_a_stk   (Widget, XtPointer, XtPointer);
+ static void     docmontmen_buta    (Widget, XtPointer, XtPointer);
+ static void     docmontmen_buta_stk(Widget, XtPointer, XtPointer);
+ static void     docmontmen_a       (Widget, XtPointer, XtPointer);
+ static void     docmontmen_a_stk   (Widget, XtPointer, XtPointer);
 
  /* File variables */
  static Widget   iw_template, iw_nprow, iw_movie;
@@ -210,14 +216,12 @@ C**************************************************************************
 
  /* Externally used variables (For use in mont2) */
  int * docimgnums;
- int   docimgtotal, numnext, numnextout;
+ int   docimgtotal, numnext;
  int   montaverage = FALSE;
  char  avgnam[128];
 
- /* Externally defined variables (For use in mont2) */
- extern int    lastfile;           
- extern char   filego[81];     /* Name of first image in montage   */
- extern int    minfile, maxfile;
+ /* Internal variables */
+ static int   numnextout;
 
  /***********  docmontmen0  (called from imagemen) ********/
 
@@ -514,6 +518,33 @@ else
 
 
 
+@
+
+
+1.20
+log
+@docimgtotal = -1  error return for unreadable doc file access
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/docmontmen.c,v 1.19 2011/08/01 15:49:32 leith Exp $*/
+d65 1
+d68 4
+a71 4
+ void     docmontmen_buta    (Widget, XtPointer, XtPointer);
+ void     docmontmen_buta_stk(Widget, XtPointer, XtPointer);
+ void     docmontmen_a       (Widget, XtPointer, XtPointer);
+ void     docmontmen_a_stk   (Widget, XtPointer, XtPointer);
+d90 1
+a90 1
+ int   docimgtotal, numnext, numnextout;
+d94 2
+a95 4
+ /* Externally defined variables (For use in mont2) */
+ extern int    lastfile;           
+ extern char   filego[81];     /* Name of first image in montage   */
+ extern int    minfile, maxfile;
 @
 
 

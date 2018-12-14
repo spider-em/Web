@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/new/RCS/lut.c,v 1.6 2005/10/18 17:00:00 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/lut.c,v 1.7 2018/12/07 17:03:32 leith Exp $*/
 /*
 C++*************************************************************************
 C                                                                      *
@@ -48,9 +48,8 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
- extern int      colvmap[4][256];    // Virtual colormap
- extern Boolean  use3colors;         // Lut virtual colormap in use
 
  /*************************** lut ************************************/
 

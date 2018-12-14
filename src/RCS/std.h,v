@@ -1,6 +1,7 @@
 head	1.6;
 access;
 symbols
+	pre-bollinger:1.6
 	pre-tilt-improve:1.6
 	pre_neednewmap:1.6
 	pre_tiltpair_chng:1.6

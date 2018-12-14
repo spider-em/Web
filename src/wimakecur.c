@@ -1,19 +1,16 @@
 
-/*$Header: /usr8/web/new/RCS/wimakecur.c,v 1.4 2005/10/18 17:00:00 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wimakecur.c,v 1.5 2018/12/07 17:06:44 leith Exp $*/
 /*
-C++*************************************************************************
-C
-C  WIMAKECUR.FOR  -- CREATED MAR 91
-C                                                                     
-C **********************************************************************
-C *  AUTHOR: A. LEITH                                                      *
+ C++********************************************************************
+ C
+ C  WIMAKECUR.FOR  -- CREATED MAR 91
+ C                                                                     
+ C *********************************************************************
+ C * AUTHOR: A. LEITH                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -30,25 +27,26 @@ C *  AUTHOR: A. LEITH                                                      *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    WIMAKECUR(ICUR,LFORE,LBACK,COLORF,COLORB,IXHOT,IYHOT)
-C
-C    PARAMETERS:   ICUR        CURSOR NUMBER             WRITES
-C                  LFORE       CURSOR FORGROUND DATA     READS
-C                  LBACK       CURSOR BACKGROUND DATA    READS
-C                  COLORF      CURSOR FOREGROUND COLOR   READS
-C                  COLORB      CURSOR BACKGROUND DATA    READS
-C                  IXHOT,IYHOT CURSOR HOT SPOT COOR.     READS
-C
-C    PURPOSE:      SETS UP A CURSOR FROM BITMAP DATA
-C
-C    CALLED BY:    CURSOR_BUT
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C    WIMAKECUR(ICUR,LFORE,LBACK,COLORF,COLORB,IXHOT,IYHOT)
+ C
+ C    PARAMETERS:   ICUR        CURSOR NUMBER             WRITES
+ C                  LFORE       CURSOR FORGROUND DATA     READS
+ C                  LBACK       CURSOR BACKGROUND DATA    READS
+ C                  COLORF      CURSOR FOREGROUND COLOR   READS
+ C                  COLORB      CURSOR BACKGROUND DATA    READS
+ C                  IXHOT,IYHOT CURSOR HOT SPOT COOR.     READS
+ C
+ C    PURPOSE:      SETS UP A CURSOR FROM BITMAP DATA
+ C
+ C    CALLED BY:    CURSOR_BUT
+ C
+ C--*********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  /* external function prototypes */
 

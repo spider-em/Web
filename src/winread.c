@@ -1,20 +1,16 @@
 
-/*$Header:    $*/
 /*
-C **********************************************************************
-C
-C WINREAD  -- CREATED MAY 91 FROM WIREAD al
-C             CONVERTED TO C -- SEPT 92 al
-*               24 bit display bug fixed ArDean Leith         11/8/07
-C **********************************************************************
-C *  AUTHOR: ArDean Leith                                              *
+ C *********************************************************************
+ C
+ C WINREAD  -- CREATED MAY 91 FROM WIREAD al
+ C             CONVERTED TO C -- SEPT 92 al
+ C             24 bit display bug fixed ArDean Leith           11/8/07
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2007  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -31,17 +27,17 @@ C *  AUTHOR: ArDean Leith                                              *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C  WINREAD()
-C
-C  PURPOSE:      Readsback window, stores in a image file
-C
-C  PARAMETERS:   None
-C
-C  CALLED BY:    WINSEL    MASKMEN
-C
---**********************************************************************
+ C *********************************************************************
+ C
+ C  WINREAD()
+ C
+ C  PURPOSE:      Readsback window, stores in a image file
+ C
+ C  PARAMETERS:   None
+ C
+ C  CALLED BY:    WINSEL    MASKMEN
+ C
+ C--********************************************************************
 */
 
 #include <Xm/SelectioB.h>
@@ -49,10 +45,9 @@ C
 #include "routines.h"
 
  /* internal functions */
- void winread_cb(Widget, XtPointer, XtPointer);
+ static void winread_cb(Widget, XtPointer, XtPointer);
 
  /* External common variables */
- extern char      outstr[80];
 
  /* File variables */
  static char     prompt[] = "Enter window file name"; 
@@ -106,6 +101,7 @@ C
  int            i, j, k, ipad, itemp, ilen;
  char           *text;
  unsigned char  cit;
+ char           outstr[81];
 
 /* Add datexc to winnam if not already there */
  if (strstr(winnamt,datexc) == 0)
@@ -132,7 +128,7 @@ C
     }
  else
     {
-    printf(" ipmask: %#x = %d,  zmap F: %d \n",ipmask,ipmask,zmap);
+    printf(" ipmask: %#lx = %lu,  zmap F: %d \n",ipmask,ipmask,zmap);
 
     imagerec = XGetImage(idispl, imagsav, ixulw,iyulw, nsamw,nroww,
                          ipmask, XYPixmap);

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/newext.c,v 1.8 2011/06/10 13:52:26 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/newext.c,v 1.9 2018/12/07 17:03:33 leith Exp $*/
 
 /***********************************************************************
  *
@@ -44,7 +44,7 @@
 #include "routines.h"
 
  /* Internal functions */
- void            newext_cb   (Widget, XtPointer,  XtPointer);
+ static void     newext_cb   (Widget, XtPointer,  XtPointer);
 
  /* Static file scope variables */
  static char       label_string[] = "Enter file extension";  

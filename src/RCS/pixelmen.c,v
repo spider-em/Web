@@ -1,4 +1,4 @@
-head	1.23;
+head	1.24;
 access;
 symbols
 	pre-tilt-improve:1.22
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.24
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.23;
 
 1.23
 date	2015.09.08.18.10.47;	author leith;	state Exp;
@@ -131,13 +136,13 @@ desc
 @@
 
 
-1.23
+1.24
 log
-@Doc file input bug, cosmetic, bell on error
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/pixelmen.c,v 1.22 2015/07/27 16:23:00 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/pixelmen.c,v 1.23 2015/09/08 18:10:47 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -186,23 +191,24 @@ text
  C**********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
+
+#include "common.h"
+#include "routines.h"
+#include "pixel.h"
 
 #define  MAXREGM1 6
 
  /* Internal functions */
- void          pixelmen_buta(Widget, XtPointer, XtPointer);
- void          pixelmen_buts(Widget, XtPointer, XtPointer);
- void          pixelmen_l(Widget,    XtPointer, XtPointer);
- void          pixelmen_d(Widget,    XtPointer, XtPointer);
- void          pixelmen_sh(Widget,   XtPointer, XtPointer);
- void          pixelmen_s(Widget,    XtPointer, XtPointer);
- void          pixelmen_f(Widget,    XtPointer, XtPointer);
- void          pixelmen_i(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_buta(Widget, XtPointer, XtPointer);
+ static void   pixelmen_buts(Widget, XtPointer, XtPointer);
+ static void   pixelmen_l(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_d(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_sh(Widget,   XtPointer, XtPointer);
+ static void   pixelmen_s(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_f(Widget,    XtPointer, XtPointer);
+ static void   pixelmen_i(Widget,    XtPointer, XtPointer);
 
  /* Common variables */
  XImage *      imagep;
@@ -620,6 +626,33 @@ text
     { showbutx("","","",TRUE);  pixelmen_showing = FALSE; }
  }
 
+@
+
+
+1.23
+log
+@Doc file input bug, cosmetic, bell on error
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/pixelmen.c,v 1.22 2015/07/27 16:23:00 leith Exp $*/
+d51 3
+d56 1
+a56 3
+
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+d61 8
+a68 8
+ void          pixelmen_buta(Widget, XtPointer, XtPointer);
+ void          pixelmen_buts(Widget, XtPointer, XtPointer);
+ void          pixelmen_l(Widget,    XtPointer, XtPointer);
+ void          pixelmen_d(Widget,    XtPointer, XtPointer);
+ void          pixelmen_sh(Widget,   XtPointer, XtPointer);
+ void          pixelmen_s(Widget,    XtPointer, XtPointer);
+ void          pixelmen_f(Widget,    XtPointer, XtPointer);
+ void          pixelmen_i(Widget,    XtPointer, XtPointer);
 @
 
 

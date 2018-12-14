@@ -1,4 +1,4 @@
-head	1.13;
+head	1.14;
 access;
 symbols
 	pre-tilt-improve:1.13
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.14
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.13;
 
 1.13
 date	2005.10.18.16.59.50;	author leith;	state Exp;
@@ -81,13 +86,13 @@ desc
 @@
 
 
-1.13
+1.14
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/showimage.c,v 1.12 2002/05/17 13:33:16 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/showimage.c,v 1.13 2005/10/18 16:59:50 leith Exp $*/
 
 /***********************************************************************
  *
@@ -133,8 +138,8 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
-extern int nsami,nrowi,nslicei; /* from mont3.c */
 
 /***********************  showimage **********************************/
 
@@ -200,6 +205,20 @@ int showimage(FILEDATA *filedatat, int keepcimage, char** cimage,
  }
 
  
+@
+
+
+1.13
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/showimage.c,v 1.12 2002/05/17 13:33:16 leith Exp $*/
+d48 1
+a49 1
+extern int nsami,nrowi,nslicei; /* from mont3.c */
 @
 
 

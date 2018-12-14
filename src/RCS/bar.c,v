@@ -1,4 +1,4 @@
-head	1.4;
+head	1.5;
 access;
 symbols
 	pre-tilt-improve:1.4
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.5
+date	2018.12.07.17.03.30;	author leith;	state Exp;
+branches;
+next	1.4;
 
 1.4
 date	2011.05.05.11.57.30;	author leith;	state Exp;
@@ -36,49 +41,24 @@ desc
 @@
 
 
-1.4
+1.5
 log
-@ci  barmen.c
-ci  colmen.c
-ci  defluts.c
-ci  defluts_new.c
-ci  expos_cb.c
-ci  imagemen.c
-ci  mask.c
-ci  maskmen.c
-ci  overlut.c
-ci  querylut.c
-ci  rubberline.c
-ci  setamap.c
-ci  shift.c
-ci  visual_info.c
-ci  web.c
-ci  web_com.c
-ci  web_info.c
-ci  web_main.c
-ci  wicolor.c
-ci  winread.c
-ci  wirubberline.c
-ci  wisetplanes.c
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header:  $*/
+/*$Header: web/src/RCS/bar.c,v 1.4 2011/05/05 11:57:30 leith Exp $*/
 
 /*
-C***************************************************************************
-C
-C  WID_BAR.FOR  -- CREATED DEC 89
-C                  REWRITTEN MAR 91 al
-C  BAR.C           NOV 92                                                               
-C **********************************************************************
-C *  AUTHOR: ArDean Leith                                                  *
+C***********************************************************************
+ C
+ C  WID_BAR.FOR  -- CREATED DEC 89
+ C                  REWRITTEN MAR 91 al
+ C  bar.c           NOV 92                                                               
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -96,32 +76,31 @@ C *  AUTHOR: ArDean Leith                                                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    BAR
-C
-C    PURPOSE:      DRAWS VERTICAL OR HORIZONTAL BAR AT CURSOR
-C
-C    PARAMETERS:   NONE 
-C
-C    CALLED BY:    WEB_COM
-C
-C--*********************************************************************
+ C **********************************************************************
+ C
+ C    bar(Widget, void *, void *)
+ C
+ C    PURPOSE:      Draws vertical or horizontal bar at cursor
+ C
+ C    PARAMETERS:   None 
+ C
+ C    CALLED BY:    web_com
+ C
+ C--*********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
+#include "bar.h"
 
  /* internal subroutines */
- void bar_pop(Widget, XEvent *, String *, Cardinal *);
+ static void bar_pop(Widget, XEvent *, String *, Cardinal *);
 
  /* External common variables */
- extern Widget  iw_barmen;
- extern int     idx, idy;
  
 /**************************  bar  *******************************/
 
- void bar(Widget iw_caller, caddr_t data, caddr_t call_data)
+ void bar(Widget iw_caller, void * data, void * call_data)
 
  {
  /* Put up menu */
@@ -184,6 +163,75 @@ C--*********************************************************************
     } 
  }
 
+@
+
+
+1.4
+log
+@ci  barmen.c
+ci  colmen.c
+ci  defluts.c
+ci  defluts_new.c
+ci  expos_cb.c
+ci  imagemen.c
+ci  mask.c
+ci  maskmen.c
+ci  overlut.c
+ci  querylut.c
+ci  rubberline.c
+ci  setamap.c
+ci  shift.c
+ci  visual_info.c
+ci  web.c
+ci  web_com.c
+ci  web_info.c
+ci  web_main.c
+ci  wicolor.c
+ci  winread.c
+ci  wirubberline.c
+ci  wisetplanes.c
+@
+text
+@d2 1
+a2 1
+/*$Header:  $*/
+d5 7
+a11 7
+C***************************************************************************
+C
+C  WID_BAR.FOR  -- CREATED DEC 89
+C                  REWRITTEN MAR 91 al
+C  BAR.C           NOV 92                                                               
+C **********************************************************************
+C *  AUTHOR: ArDean Leith                                                  *
+a13 4
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d31 11
+a41 11
+C **********************************************************************
+C
+C    BAR
+C
+C    PURPOSE:      DRAWS VERTICAL OR HORIZONTAL BAR AT CURSOR
+C
+C    PARAMETERS:   NONE 
+C
+C    CALLED BY:    WEB_COM
+C
+C--*********************************************************************
+d46 1
+d49 1
+a49 1
+ void bar_pop(Widget, XEvent *, String *, Cardinal *);
+a51 2
+ extern Widget  iw_barmen;
+ extern int     idx, idy;
+d55 1
+a55 1
+ void bar(Widget iw_caller, caddr_t data, caddr_t call_data)
 @
 
 

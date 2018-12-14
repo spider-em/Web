@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/contrastmen.c,v 1.18 2011/09/27 13:45:31 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/contrastmen.c,v 1.19 2018/12/07 17:03:31 leith Exp $*/
 
 /*C++*******************************************************************
 C                                                                      *
@@ -48,26 +48,27 @@ C
 C--********************************************************************
 */
 
+#include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
 
 #ifdef WEB_TRUE 
 //     WEB_TRUE ------------------------------------------------------
 
  // Internal function prototypes 
- void          contrastmen_buta(Widget, XtPointer, XtPointer);
+ static void    contrastmen_buta(Widget, XtPointer, XtPointer);
 
  // File scope static variables 
 static Widget  iw_contrastmen = (Widget)0;
 static Widget  iw_ngo, iw_nend;
 
 // Common variables used here
-extern int     vmap[256];          // Virtual colormap
 
  /**********************   contrastmen   ******************************/
 
- Widget contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+ void contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
 
  { 
  Widget iw_lab1, iw_rowcolv, iw_rowcolh;
@@ -119,7 +120,6 @@ extern int     vmap[256];          // Virtual colormap
     }
  XtManageChild(iw_contrastmen);
 
- return iw_contrastmen;
 }
 
  /************* Contrast changed callback ********************************/
@@ -160,7 +160,6 @@ extern int     vmap[256];          // Virtual colormap
 #else
 // WEB_24 --------------------------------------------------------------
 
-#include <Xm/Scale.h>
 #include <Xm/ToggleBG.h>
 
  /* Internal function prototypes */
@@ -175,7 +174,7 @@ extern int     vmap[256];          // Virtual colormap
 
  /**********************   contrastmen   ******************************/
 
- Widget contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+ void contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
 
  { 
  Widget iw_lab1, iw_rowcolv, iw_rowcolh;
@@ -235,7 +234,6 @@ extern int     vmap[256];          // Virtual colormap
 
  XtManageChild(iw_contrastmen);
 
- return iw_contrastmen;
  }
 
 

@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2005.10.18.16.59.50;	author leith;	state Exp;
@@ -41,13 +46,13 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/strtoint.c,v 1.4 1996/05/16 17:35:03 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/strtoint.c,v 1.5 2005/10/18 16:59:50 leith Exp $*/
 /*
  * strtoint.c
  *
@@ -90,15 +95,14 @@ text
  **********************************************************************
 */
 
-#include "std.h"
-#include "x.h"
 #include <Xm/TextF.h>
 #include <Xm/Text.h>
+#include "std.h"
+#include "x.h"
+#include "routines.h"
 
 
 /* function prototypes */
- extern void spout(char *);
- extern void spouts(char *);
 
  /*********************** strtoint ******************************/
  
@@ -126,6 +130,25 @@ text
  return TRUE;
  }
 
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/strtoint.c,v 1.4 1996/05/16 17:35:03 leith Exp $*/
+d45 2
+d49 1
+a49 2
+#include <Xm/TextF.h>
+#include <Xm/Text.h>
+a52 2
+ extern void spout(char *);
+ extern void spouts(char *);
 @
 
 

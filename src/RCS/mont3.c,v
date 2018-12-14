@@ -1,4 +1,4 @@
-head	1.25;
+head	1.26;
 access;
 symbols
 	pre-tilt-improve:1.25
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.26
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.25;
 
 1.25
 date	2012.12.05.17.10.27;	author leith;	state Exp;
@@ -141,13 +146,13 @@ desc
 @@
 
 
-1.25
+1.26
 log
-@cosmetic & copyrigtt
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/mont3.c,v 1.24 2007/11/01 19:33:45 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/mont3.c,v 1.25 2012/12/05 17:10:27 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -192,6 +197,7 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 #define MAXDIM 32000000
 
@@ -200,9 +206,6 @@ C***********************************************************************
  int       nsami, nrowi, nslicei;
 
  /* External variables used here */
- extern int      ixulmon, iyulmon, ndone;
- extern int      endfile;           
- extern XImage * ximagelist[1000]; /* from showmovie */
 
 /******************************  mont3 *******************************/
    
@@ -702,6 +705,22 @@ C***********************************************************************
  }
 
 
+@
+
+
+1.25
+log
+@cosmetic & copyrigtt
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/mont3.c,v 1.24 2007/11/01 19:33:45 leith Exp leith $*/
+d47 1
+a55 3
+ extern int      ixulmon, iyulmon, ndone;
+ extern int      endfile;           
+ extern XImage * ximagelist[1000]; /* from showmovie */
 @
 
 

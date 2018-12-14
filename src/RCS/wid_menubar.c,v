@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -10,6 +10,11 @@ locks;
 comment	@ * @;
 
 
+1.2
+date	2018.12.07.17.03.35;	author leith;	state Exp;
+branches;
+next	1.1;
+
 1.1
 date	2011.05.09.19.21.22;	author leith;	state Exp;
 branches;
@@ -20,24 +25,21 @@ desc
 @@
 
 
-1.1
+1.2
 log
-@Initial revision
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header:  Exp $*/
+/*$Header: web/src/RCS/wid_menubar.c,v 1.1 2011/05/09 19:21:22 leith Exp $*/
 /*
  * wid_menubar.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -69,10 +71,9 @@ text
 */
 
 
+#include <Xm/RowColumn.h>
 #include "common.h"
-#include<Xm/RowColumn.h>
-
-void query_widget(char * label, Widget iw_widget);
+#include "routines.h"
 
 #define MAX_ARGS 3
 
@@ -111,4 +112,29 @@ n=0;
  return iw_menubar;
  }
  
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header:  Exp $*/
+d8 3
+a10 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d42 1
+d44 1
+a44 3
+#include<Xm/RowColumn.h>
+
+void query_widget(char * label, Widget iw_widget);
 @

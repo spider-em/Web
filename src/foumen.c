@@ -38,20 +38,20 @@ C **********************************************************************
 ****************************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
 
 #define MAXLOCS 50
 
  /* external subroutine prototypes */
 
  /* internal subroutine prototypes */
- void  foumen_buts(Widget, XtPointer, XtPointer);
- void  foumen_buta(Widget, XtPointer, XtPointer);
- void  fou        (void);
- void  fou_pop    (Widget, XEvent *, String *, Cardinal *);
- void foufilt     (void);
+ static void  foumen_buts(Widget, XtPointer, XtPointer);
+ static void  foumen_buta(Widget, XtPointer, XtPointer);
+ static void  fou        (void);
+ static void  fou_pop    (Widget, XEvent *, String *, Cardinal *);
+ static void foufilt     (void);
                             
  /* internal file variables */
  static Widget       iw_foumen = (Widget) 0;
@@ -261,7 +261,6 @@ void foumen_buts(Widget iw_temp, XtPointer data, XtPointer call_data)
   void foufilt(void)
   {                       
   int     iloc, ixmask, iymask, isam, irow, k, irowm, ipix, isamf;
-  char    outstr[80];
   float * buf  = (float *) NULL;
   float * fbuf = (float *) NULL;
   float   gausscon, diff2;

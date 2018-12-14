@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2005.10.18.17.00.02;	author leith;	state Exp;
@@ -42,13 +47,13 @@ desc
 @
 
 
-1.5
+1.6
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/filterfill.c,v 1.4 1996/07/31 19:51:18 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/filterfill.c,v 1.5 2005/10/18 17:00:02 leith Exp $*/
 
 /***********************************************************************
  *
@@ -94,11 +99,12 @@ text
 
 #include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
 #include "routines.h"
+#include "filter.h"
  
- void flood (int);
+ static void flood (int);
 
  static int     nsamtt, connect8;
  static float   thresht, fvalt;
@@ -235,6 +241,24 @@ text
  }
 
 
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filterfill.c,v 1.4 1996/07/31 19:51:18 leith Exp $*/
+d48 1
+a48 1
+#include "float.h"
+d51 1
+d53 1
+a53 1
+ void flood (int);
 @
 
 

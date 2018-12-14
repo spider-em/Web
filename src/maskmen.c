@@ -1,20 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/maskmen.c,v 1.15 2011/09/21 13:33:37 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/maskmen.c,v 1.16 2018/12/07 17:03:32 leith Exp $*/
 /*
-C+**********************************************************************
-C
-C WID_MASKMEN.FOR -- CREATED MAY 91
-C maskmen.c                  DEC 92
-C
-C **********************************************************************
+ C+*********************************************************************
+ C
+ C WID_MASKMEN.FOR -- CREATED MAY 91
+ C maskmen.c                                                   DEC 92
+ C
+ C *********************************************************************
  C=* AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email: spider@health.ny.gov                                       *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -23,44 +20,37 @@ C **********************************************************************
  C=*                                                                   *
  C=* This program is distributed in the hope that it will be useful,   *
  C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
- C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU  *
  C=* General Public License for more details.                          *
  C=*                                                                   *
  C=* You should have received a copy of the GNU General Public License *
- C=* along with this program; if not, write to the                     *
- C=* Free Software Foundation, Inc.,                                   *
- C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=* with this program. If not, see <http://www.gnu.org/licenses>      *
  C=*                                                                   *
-C **********************************************************************
-C
-C MASKMEN
-C
-C PARAMETERS:  none    
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C maskmen
+ C
+ C PARAMETERS:  none    
+ C
+ C--*******************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
 #include <Xm/ToggleBG.h>
 #include <Xm/SelectioB.h>
+#include "common.h"
+#include "routines.h"
+#include "mask.h"
 
  /* Internal function prototypes */
- void          maskmen_butcl  (Widget, XtPointer, XtPointer);
- void          maskmen_buts   (Widget, XtPointer, XtPointer);
- void          maskmen_butshf (Widget, XtPointer, XtPointer);
- void          maskmen_butn   (Widget, XtPointer, XtPointer);
- void          maskmen1       (Widget, XtPointer, XtPointer);
- void          maskmen1_buta  (Widget, XtPointer, XtPointer);
- void          maskread       (char *, Pixmap, int, int, unsigned long);
- void          mask_draw_polys(Pixmap, GC, int, int);
- void          mask_reset     ();
+ static void   maskmen_butcl  (Widget, XtPointer, XtPointer);
+ static void   maskmen_buts   (Widget, XtPointer, XtPointer);
+ static void   maskmen_butshf (Widget, XtPointer, XtPointer);
+ static void   maskmen_butn   (Widget, XtPointer, XtPointer);
+ static void   maskmen1       (Widget, XtPointer, XtPointer);
+ static void   maskmen1_buta  (Widget, XtPointer, XtPointer);
+ static void   maskread       (char *, Pixmap, int, int, unsigned long);
   
  /* External common variables used here */
- extern int      filler;
- extern char     outstr[80];
- extern GC       icontxmask;       // Mask GC 
- extern Pixmap   masksav;          // Mask store 
 
  /* File variables */
  static Widget   iw_maskmen  = 0;
@@ -82,7 +72,7 @@ C--*********************************************************************
     iw_rowcolv = wid_rowcol(iw_maskmen, 'v', -1, -1);
 
                  wid_toggleg(iw_rowcolv,0,"Fill inside",filler,
-                        toggle2_cb, (void *) &filler, -1,-1);
+                        toggle2_cb, &filler, -1,-1);
 
                  wid_pushg(iw_rowcolv, 0, "Shift the image",
                            maskmen_butshf, NULL, -1,-1);
@@ -106,7 +96,7 @@ C--*********************************************************************
 
  }
 
-// -------------------   maskmen_butshf -------------- Shift button callback  
+// -------------------   maskmen_butshf ------------ Shift button callback  
 
  void maskmen_butshf(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
@@ -289,6 +279,7 @@ C--*********************************************************************
  int            i, j, k, ipad, itemp, bpl, byord;
  unsigned char  cit;
  XImage         *imagerec = NULL;
+ char           outstr[81];
 
 /* Add datexc to winnam if not already there */
  if (strstr(winnamt,datexc) == 0)

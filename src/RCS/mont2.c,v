@@ -1,4 +1,4 @@
-head	1.38;
+head	1.39;
 access;
 symbols
 	pre-tilt-improve:1.38
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.39
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.38;
 
 1.38
 date	2012.12.05.17.02.40;	author leith;	state Exp;
@@ -206,13 +211,13 @@ desc
 @@
 
 
-1.38
+1.39
 log
-@sent disp q to openold to skip unable to open msg on last montage img.
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/mont2.c,v 1.37 2007/11/28 16:17:59 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/mont2.c,v 1.38 2012/12/05 17:02:40 leith Exp $*/
 
 /*
 C++********************************************************************
@@ -255,25 +260,11 @@ C**********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
  /* External routines */
- extern int sumum(float * first, float * second, float * output, 
-                  int npix);
- extern int average(float * input,  float * output,
-                    int npix, float divisor);
- extern int avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
- extern int setnprow(int nsam);
 
  /* External variables used here */
- extern int      lastfile;           
- extern int    * docimgnums;       /* doc file image numbers */
- extern int      docimgtotal;      /* number of images from doc file */
- extern int      montaverage;      /* want montage average */
- extern char     avgnam[128];      /* name for montage average file */
- extern int      numnext;          /* from docmontmen */
- extern int      numnextout;       /* from docmontmen */
- extern int      stkgo, stkend;
- extern XImage * ximagelist[1000]; /* from showmovie */
 
  /* Internal variables used elsewhere */
  int          ndone;             /* used by cat.c & movie            */
@@ -548,6 +539,35 @@ C**********************************************************************
 
 
  
+@
+
+
+1.38
+log
+@sent disp q to openold to skip unable to open msg on last montage img.
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/mont2.c,v 1.37 2007/11/28 16:17:59 leith Exp leith $*/
+d45 1
+a47 6
+ extern int sumum(float * first, float * second, float * output, 
+                  int npix);
+ extern int average(float * input,  float * output,
+                    int npix, float divisor);
+ extern int avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
+ extern int setnprow(int nsam);
+a49 9
+ extern int      lastfile;           
+ extern int    * docimgnums;       /* doc file image numbers */
+ extern int      docimgtotal;      /* number of images from doc file */
+ extern int      montaverage;      /* want montage average */
+ extern char     avgnam[128];      /* name for montage average file */
+ extern int      numnext;          /* from docmontmen */
+ extern int      numnextout;       /* from docmontmen */
+ extern int      stkgo, stkend;
+ extern XImage * ximagelist[1000]; /* from showmovie */
 @
 
 

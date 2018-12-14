@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/redlin8.c,v 1.4 2012/11/27 19:13:15 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/redlin8.c,v 1.5 2018/12/07 17:03:33 leith Exp $*/
 /*
 C***********************************************************************
 C
@@ -43,9 +43,9 @@ C--*********************************************************************
 */
 
 #include "files.h"
+#include "routines.h"
 
  /* External function prototypes */
- extern void  spout     (char *);
 
  /* Externally defined variables */
  
@@ -77,8 +77,8 @@ if ((fileptr -> iform) > 99)
 
  if ((igot = fseek(fp,ioff,SEEK_SET)) != 0) 
      {       // Offset seek failed 
-     printf("*** seek failed in redlin8: %d \n",igot);
-     printf(" igot: % d, ioff: %d ,nx: %d \n",igot,ioff,nx);
+     printf("*** seek failed in redlin8: %zu \n",igot);
+     printf(" igot: %zu, ioff: %d ,nx: %d \n",igot,ioff,nx);
      return FALSE;
      }
 
@@ -88,7 +88,7 @@ if ((fileptr -> iform) > 99)
  if (feof(fp))
       {
       printf("*** End of file in redlin8 \n");
-      printf("igot: %d, ioff: %d ,nx: %d \n",igot,ioff,nx);
+      printf("igot: %zu, ioff: %d ,nx: %d \n",igot,ioff,nx);
       return FALSE;
       }          
 

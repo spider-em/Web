@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.35;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2011.07.19.18.06.32;	author leith;	state Exp;
@@ -41,27 +46,24 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@WEB_BGFGO
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/new/RCS/wid_scale.c,v 1.3 2005/10/18 17:00:04 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/wid_scale.c,v 1.5 2011/07/19 18:06:32 leith Exp $*/
 /*
-C++************************************************************************
-C
-C wid_scale
-C
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                                 *
+ C++********************************************************************
+ C
+ C wid_scale
+ C
+ C *********************************************************************
+ C * AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -97,14 +99,12 @@ C
 C***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/Scale.h>
+#include "common.h"
+#include "routines.h"
 
 #define  MAX_ARGS 12
 
- extern Widget wid_labelg   (Widget, Widget, char *, int, int);
- extern Widget wid_rowcol   (Widget, char , int, int);
- 
 /*****************  wid_scale  ***************************/
 
  Widget wid_scale(Widget iw_parent, Widget iw_its, char * label,
@@ -166,6 +166,41 @@ C***********************************************************************
  return iw_its;
 
  }
+@
+
+
+1.5
+log
+@WEB_BGFGO
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/wid_scale.c,v 1.3 2005/10/18 17:00:04 leith Exp $*/
+d4 6
+a9 6
+C++************************************************************************
+C
+C wid_scale
+C
+C **********************************************************************
+C *  AUTHOR:  ArDean Leith                                                 *
+d11 3
+a13 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d49 1
+d51 1
+a51 1
+#include <Xm/Scale.h>
+a54 3
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ 
 @
 
 

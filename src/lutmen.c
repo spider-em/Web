@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/new/RCS/lutmen.c,v 1.13 2005/10/18 17:00:01 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/lutmen.c,v 1.14 2018/12/07 17:03:32 leith Exp $*/
 /*
 C++*************************************************************************
 C
@@ -51,8 +51,8 @@ C--********************************************************************
 #include "routines.h"
 
  /* Internal function  prototypes */
- void            lutmen_cb (Widget, XtPointer, XtPointer);
- void            lutmen1   (char *);
+ static void     lutmen_cb (Widget, XtPointer, XtPointer);
+ static void     lutmen1   (char *);
 
  /* Internal file variables */
  static char   * fillutp;

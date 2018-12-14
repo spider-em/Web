@@ -1,4 +1,4 @@
-head	1.7;
+head	1.8;
 access;
 symbols
 	pre-tilt-improve:1.7
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.8
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.7;
 
 1.7
 date	2011.09.23.12.46.54;	author leith;	state Exp;
@@ -51,13 +56,13 @@ desc
 @@
 
 
-1.7
+1.8
 log
-@up key stops mag in truecolor
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/mag.c,v 1.6 2011/09/21 13:31:12 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/mag.c,v 1.7 2011/09/23 12:46:54 leith Exp $*/
 /*
 C++*************************************************************************
 C
@@ -107,9 +112,7 @@ C--********************************************************************
 #include "routines.h"
 
  /* Internal function  prototypes */
- void 	      mag_pop(Widget, XEvent *, String *, Cardinal *);
- extern void  glass  (Window , Window , int , int ,
-                      int , int , int *, int *, int );
+ static void mag_pop(Widget, XEvent *, String *, Cardinal *);
 
  /* Internal file variables */
  static GC     icontxx;
@@ -121,7 +124,7 @@ C--********************************************************************
 
 /*****************************  mag  *********************************/
 
- void mag(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void mag(Widget iw_temp, void * data, void * call_data)
 
  {
  /* Make a xor graphics context (icontxx)	*/
@@ -356,6 +359,25 @@ void glass(Window iwsrc, Window iwdest, int ixuls, int iyuls,
     return;
 }
 
+@
+
+
+1.7
+log
+@up key stops mag in truecolor
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/mag.c,v 1.6 2011/09/21 13:31:12 leith Exp leith $*/
+d52 1
+a52 3
+ void 	      mag_pop(Widget, XEvent *, String *, Cardinal *);
+ extern void  glass  (Window , Window , int , int ,
+                      int , int , int *, int *, int );
+d64 1
+a64 1
+ void mag(Widget iw_temp, caddr_t data, caddr_t call_data)
 @
 
 

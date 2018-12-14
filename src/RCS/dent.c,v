@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.16.59.48;	author leith;	state Exp;
@@ -47,12 +52,12 @@ desc
 @
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /net/bali/usr1/web/src/RCS/dent.c,v 1.5 2005/04/29 18:23:58 leith Exp leith $*/
+@/*$Header: /usr8/web/src/RCS/dent.c,v 1.6 2005/10/18 16:59:48 leith Exp $*/
 
 /*
 C**************************************************************************
@@ -105,24 +110,15 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "dent.h"
 #include <assert.h>
 
  /* internal functions */
- void    dent_actions (Widget, XEvent *, String *, Cardinal *);
+ static void    dent_actions (Widget, XEvent *, String *, Cardinal *);
 
  /* external function prototypes */
- void distoref(int idepth, int nsams, int nrows, int * distimg, 
-          unsigned char * refmap, float fct, float csfact, 
-          float fd1, float fd2,
-          int nsam1t, int nsam2t, int nrow1t, int nrow2t,
-          int mapgot);        
-
- void dentmen2(void);
 
  /* externally defined variables used here */
- extern XImage     *imagel;
- extern char        outstr[80];
- extern float       dentrefl, dentfct, dentthlev;
 
  /* static variables for use here */
  static unsigned char lthlev;
@@ -266,6 +262,7 @@ assert(ivall <= nsam);
  int           * distptr;
  unsigned char * cptr, *dentvolptr;
  int           ivall;
+ char outstr[81];
 
  if (!(strcmp(*params, "M")))
     {                        /* List location ---- mouse moved */
@@ -386,6 +383,34 @@ assert(ivall <= nsam);
     }
  }
 
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/dent.c,v 1.5 2005/04/29 18:23:58 leith Exp leith $*/
+d54 1
+d58 1
+a58 1
+ void    dent_actions (Widget, XEvent *, String *, Cardinal *);
+a60 7
+ void distoref(int idepth, int nsams, int nrows, int * distimg, 
+          unsigned char * refmap, float fct, float csfact, 
+          float fd1, float fd2,
+          int nsam1t, int nsam2t, int nrow1t, int nrow2t,
+          int mapgot);        
+
+ void dentmen2(void);
+a62 3
+ extern XImage     *imagel;
+ extern char        outstr[80];
+ extern float       dentrefl, dentfct, dentthlev;
+d206 1
 @
 
 

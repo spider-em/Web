@@ -40,10 +40,11 @@ C***********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  /************************   setline   ******************************/
 
- void setline( Widget widget, caddr_t data, caddr_t call_data )
+ void setline( Widget widget, void * data, void * call_data )
  {
 
  int           request;

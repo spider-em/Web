@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/filtere.c,v 1.8 2005/10/18 16:59:44 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/filtere.c,v 1.9 2018/12/07 17:03:31 leith Exp $*/
 
 /***********************************************************************
  *
@@ -45,10 +45,12 @@
  ***********************************************************************
 */
 
-#include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
+#include "std.h"
+#include "routines.h"
+#include "filter.h"
 
  /******************************  filtere **************************/
 

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/monn.c,v 1.12 2005/10/18 17:00:04 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/monn.c,v 1.13 2018/12/07 17:03:32 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -48,6 +48,7 @@ C****************************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 #define  FLTZER 10e-10
 

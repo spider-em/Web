@@ -1,4 +1,4 @@
-head	1.16;
+head	1.17;
 access;
 symbols
 	pre-tilt-improve:1.14
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.17
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.16;
 
 1.16
 date	2015.09.22.16.33.57;	author leith;	state Exp;
@@ -97,13 +102,13 @@ desc
 @
 
 
-1.16
+1.17
 log
-@Improved bad location determination
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.15 2015/09/01 17:53:42 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.16 2015/09/22 16:33:57 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -158,6 +163,7 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "fit.h"
 
  int tiltang(float *x0,   float *y0, 
              float *xt,   float *yt,
@@ -296,6 +302,18 @@ text
 
  return iflag;
  }
+@
+
+
+1.16
+log
+@Improved bad location determination
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.15 2015/09/01 17:53:42 leith Exp $*/
+d57 1
 @
 
 

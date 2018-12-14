@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/setprm.c,v 1.9 2012/11/27 19:12:42 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/setprm.c,v 1.10 2018/12/07 17:03:34 leith Exp $*/
 /*
  C++********************************************************************
  C
@@ -43,11 +43,9 @@
 */
 
 #include "files.h"
+#include "routines.h"
 
  /* External subroutines */
- extern int    redlin (FILEDATA *, float *, int, int);
- extern int    wrtlin (FILEDATA *, float *, int, int);
- extern void   spout  (char *);
 
  /********************** setprm  **********************************/
 

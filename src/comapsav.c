@@ -38,21 +38,12 @@ C **********************************************************************
 C **********************************************************************
 */
 
-#include "common.h"
 #include <Xm/Text.h>
 #include <stdlib.h>
+#include "common.h"
 #include "routines.h"
+#include "comap.h"
 
-
-  extern char   docnammo[81], filnamm[81], imnamm[81];  
-  extern int    nline, ixmar, iymar, ixsize, iysize, gotbin, gotav,
-                nowbin, gotavim;
-  extern float  *bufx, *bufy;
-  extern int    *nkey, ovrlap;
-  extern double factxa, factxb,factya, factyb;
-  extern int    itxrego, ityrego, labrego;
-  extern float  rangel, rangeu;
-  extern Pixmap msksav;
 
 /********************** comapsav ***********************************/
 
@@ -201,7 +192,7 @@ void comapsav(int itag)
           }
 
       /* set next filename for doc file */
-      filnam[nlet] = (char) NULL;
+      filnam[nlet] = '\0';
       strcpy(docnammo,filnam);
 
       /* increment the NEXT filename */
@@ -210,7 +201,7 @@ void comapsav(int itag)
            sprintf(outstr,"*** Error - could not increment filename: %s",docnammo);
            spout(outstr); waitcursor(iwin, FALSE, 0); return;
            }
-      filnam[nlet] = (char) NULL;
+      filnam[nlet] = '\0';
       strcpy(docnammo,filnam);     
   
       if(fp) 
@@ -483,13 +474,13 @@ void comapsav(int itag)
             closefile(ptrdoc);
 
             /* increment the NEXT filename */
-            filnam[nlet] = (char) NULL;
+            filnam[nlet] = '\0';
             strcpy(imnamm,filnam);
             if(filinc(imnamm,filnam,&nlet,&numfil) != 2)
               { sprintf(outstr,"*** Error - Could not increment filename: %s",imnamm);
                 spout(outstr); waitcursor(iwin, FALSE, 0); return;       }
 
-            filnam[nlet] = (char) NULL;
+            filnam[nlet] = '\0';
             strcpy(imnamm,filnam); 
             }
       else

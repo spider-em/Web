@@ -34,6 +34,7 @@
  extern unsigned int   ihighx, iwidex;    /* display window X & Y dim      */
  extern int            ixulx, iyulx;      /* display window location       */
  extern GC             icontx;            /* usual graphics context        */
+ extern GC             icontxb;           /* blanking graphics context     */
  extern Window         iwin, iroot,iwtop; /* image, root & top windows     */
  extern Pixmap         imagsav;           /* image backing store           */
  extern Colormap       map;               /* current colormap              */

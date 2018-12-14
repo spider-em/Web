@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2007.11.01.19.33.45;	author leith;	state Exp;
@@ -47,9 +52,9 @@ desc
 @
 
 
-1.6
+1.7
 log
-@fmin ->fmin_spi..
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -102,11 +107,11 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
  /* external function prototypes */
 
  /* externally defined variables used here */
- extern char filcolvol[81];
 
  /* static variables for use here */
  static Colormap mapsurf;
@@ -333,6 +338,17 @@ C--*********************************************************************
 
     return TRUE; 
  }
+@
+
+
+1.6
+log
+@fmin ->fmin_spi..
+@
+text
+@d51 1
+a55 1
+ extern char filcolvol[81];
 @
 
 

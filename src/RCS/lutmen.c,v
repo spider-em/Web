@@ -1,4 +1,4 @@
-head	1.13;
+head	1.14;
 access;
 symbols
 	pre-tilt-improve:1.13
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.14
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.13;
 
 1.13
 date	2005.10.18.17.00.01;	author leith;	state Exp;
@@ -81,18 +86,17 @@ desc
 @@
 
 
-1.13
+1.14
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/lutmen.c,v 1.12 2000/01/31 16:38:36 leith Exp $*/
+/*$Header: /usr8/web/new/RCS/lutmen.c,v 1.13 2005/10/18 17:00:01 leith Exp $*/
 /*
 C++*************************************************************************
 C
-C created from imagemen.c          Nov  92
-C lutmen.c
+C lutmen.c   Created from imagemen.c                    Nov  92
 C                                                                    
 C **********************************************************************
 C *  AUTHOR: A. LEITH                                                      *
@@ -123,12 +127,14 @@ C **********************************************************************
 C
 C    LUTMEN
 C
-C    PARAMETERS:   iw_temp, data, call_data (usual callback data)
+C    PARAMETERS:   iw_temp, data, call_data (Usual callback data)
 C
-C    PURPOSE:      MAKES A FILE WIDGET, INTERROGATES FILE WIDGET AND
-C                  CALLS LUT DISPLAY ROUTINE
+C    PURPOSE:      Makes a file widget, interrogates file widget and
+c                  calls lut display routine
 C
 C    CALLED BY:    web_com
+C
+C    Note: need to add *.RGB to filter box!!!!
 C
 C--********************************************************************
 */
@@ -137,13 +143,13 @@ C--********************************************************************
 #include "common.h"
 #include "routines.h"
 
- /* internal function  prototypes */
- void               lutmen_cb (Widget, XtPointer, XtPointer);
- void               lutmen1   (char *);
+ /* Internal function  prototypes */
+ static void     lutmen_cb (Widget, XtPointer, XtPointer);
+ static void     lutmen1   (char *);
 
- /* internal file variables */
+ /* Internal file variables */
  static char   * fillutp;
- static char     fillut[81]  = "\0";
+ static char     fillut[81]  = "\0";  // Sets selected file
  static Widget   iw_lutfiles = 0;
  static char     coper[1];
  static char     lutdirstr[81];
@@ -154,7 +160,7 @@ C--********************************************************************
  { 
  char * lutdirptr;
 
- /* create a lut file selector widget */
+ /* Create a lut file selector widget */
  strncpy(coper, data,1);
 
 if (iw_lutfiles == (Widget) 0)
@@ -165,37 +171,35 @@ if (iw_lutfiles == (Widget) 0)
        lutdirstr[0] = '\0';
        }
    else
-       {
-       strcpy(lutdirstr,lutdirptr);
-       }
+       { strcpy(lutdirstr,lutdirptr); }
     }
 
- /* create a file selector box */
+ /* Create a file selector box */
  iw_lutfiles =  wid_file(iw_win, iw_lutfiles , "Look-up-table",
                &fillut[0], lutdirstr, *lutmen_cb, -1, -1);
 
- /* kludge to keep filename in selection box */
+ /* Kludge to keep filename in selection box */
  wid_fileset(iw_lutfiles,fillut);
  }
 
 
 /************************** lutmen_cb ****************************/
 
- void lutmen_cb(Widget iw_temp, XtPointer data,  XtPointer call_data)
+ void lutmen_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
  { 
  XmFileSelectionBoxCallbackStruct *cbs;
  Colormap                          mapt;
  unsigned long                     cells[256];
  
- /* get file name from file selector widget */
+ /* Get file name from file selector widget */
  cbs = (XmFileSelectionBoxCallbackStruct *) call_data;
 
  fillutp = extractstr(cbs -> value);
 
- /* get rid of file selector */
+ /* Get rid of file selector */
  XtUnmanageChild(iw_lutfiles);
  
- /* apply the lut */
+ /* Apply the lut */
  if (!strcmp(coper, "0"))
     lut(&fillutp[0], map, mapgo, mapend);
  else
@@ -206,7 +210,7 @@ if (iw_lutfiles == (Widget) 0)
     XFreeColormap(idispl, mapt);
     }
 
- /* start lutmen again */
+ /* Start lutmen again */
  strcpy(fillut,extractstr(cbs -> value));
 
  lutmen(NULL,coper,NULL);
@@ -214,6 +218,69 @@ if (iw_lutfiles == (Widget) 0)
  return;
  }
 
+@
+
+
+1.13
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/lutmen.c,v 1.12 2000/01/31 16:38:36 leith Exp $*/
+d6 1
+a6 2
+C created from imagemen.c          Nov  92
+C lutmen.c
+d37 1
+a37 1
+C    PARAMETERS:   iw_temp, data, call_data (usual callback data)
+d39 2
+a40 2
+C    PURPOSE:      MAKES A FILE WIDGET, INTERROGATES FILE WIDGET AND
+C                  CALLS LUT DISPLAY ROUTINE
+d44 2
+d53 3
+a55 3
+ /* internal function  prototypes */
+ void               lutmen_cb (Widget, XtPointer, XtPointer);
+ void               lutmen1   (char *);
+d57 1
+a57 1
+ /* internal file variables */
+d59 1
+a59 1
+ static char     fillut[81]  = "\0";
+d70 1
+a70 1
+ /* create a lut file selector widget */
+d81 1
+a81 3
+       {
+       strcpy(lutdirstr,lutdirptr);
+       }
+d84 1
+a84 1
+ /* create a file selector box */
+d88 1
+a88 1
+ /* kludge to keep filename in selection box */
+d95 1
+a95 1
+ void lutmen_cb(Widget iw_temp, XtPointer data,  XtPointer call_data)
+d101 1
+a101 1
+ /* get file name from file selector widget */
+d106 1
+a106 1
+ /* get rid of file selector */
+d109 1
+a109 1
+ /* apply the lut */
+d120 1
+a120 1
+ /* start lutmen again */
 @
 
 

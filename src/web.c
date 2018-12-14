@@ -8,9 +8,9 @@
  C *********************************************************************
  C=* PACKAGE AUTHOR: A. LEITH                                          *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright 1985-2012  Health Research Inc.,                        *
+ C=* Copyright 1985-2018  Health Research Inc.,                        *
  C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -37,6 +37,8 @@
 
 #include "x.h"
 #include "files.h"
+#include "routines.h"
+#include "extras.h"
 
 #ifdef app_plus
 #include "../AppPlusS/AppPlusS.h"
@@ -48,7 +50,6 @@
 #define XtCFontPath "FontPath"
 
  /* External function prototypes */
- extern Widget        web_main(Widget);
  
  /* Command line option recovery structure */
  static XrmOptionDescRec options[] = {
@@ -365,11 +366,11 @@
 
 /********************* main  ***********************/
 
- int main(unsigned int argc, char **argv)
+ int main(int argc, char **argv)
  
  { 
- int           i, n;
- char          whichweb[6]; 
+ int           i, n, temp;
+ char          whichweb[8]; 
 
  Arg           args[4];         /* Arg list */
  XVisualInfo   visual_data;
@@ -409,7 +410,7 @@
  */
 
  // Open dummy widget to get visual info needed for non-default visual
- iw_dummy = XtAppInitialize(&app_context,"Dummy", NULL, 0, (int *) &argc, argv,
+ iw_dummy = XtAppInitialize(&app_context,"Dummy", NULL, 0, &argc, argv,
 			   (String *) NULL, args, 0);
 
  idispl = XtDisplay(iw_dummy);
@@ -421,7 +422,7 @@
     {XtWarning("*** Web can not determine screen!"); exit (-1);}
 
  /* Find depth of screen (number of bit planes) */
- if ((idepth = DefaultDepthOfScreen(iscreen)) < idepth)
+ if (temp = idepth, idepth = DefaultDepthOfScreen(iscreen), idepth < temp)
     {XtWarning("*** Screen depth too shallow need24 bits!"); exit (-1); }
 
 
@@ -460,7 +461,7 @@
  XtSetArg(args[n], XtNcolormap, map);                n++;
 
  iw_top = XtOpenApplication(&app_context, whichweb,options,
-                            XtNumber(options), (int *) &argc, argv, NULL, 
+                            XtNumber(options), &argc, argv, NULL, 
                             applicationShellWidgetClass, args, n);
 
  /* Cache the display pointer */ 
@@ -558,7 +559,7 @@
  /* Check scaleval */
  if (AppData.scaleval <= 0.0)
    {
-   printf("In resources, ScaleVal: %d must be > zero\n",
+   printf("In resources, ScaleVal: %f must be > zero\n",
           AppData.scaleval);
    AppData.scaleval = scaleval;
    }
@@ -567,7 +568,7 @@
  /* Check scaleval */
  if (AppData.scaleval <= 0.0)
    {
-   printf("In resources, ScaleVal: %d must be > zero\n",
+   printf("In resources, ScaleVal: %f must be > zero\n",
           AppData.scaleval);
    AppData.scaleval = scaleval;
    }
@@ -576,7 +577,7 @@
  /* Check refl */
  if (AppData.refl < 0.0)
    {
-   printf("In resources, ReflectionFactor: %d must be >= zero.\n",
+   printf("In resources, ReflectionFactor: %f must be >= zero.\n",
           AppData.refl);
    AppData.refl = refl;
    }
@@ -585,7 +586,7 @@
  /* Check fct */
  if (AppData.fct < 0.0)
    {
-   printf("In resources, Fct: %d must be >= zero.\n",
+   printf("In resources, Fct: %f must be >= zero.\n",
           AppData.fct);
    AppData.fct = fct;
    }

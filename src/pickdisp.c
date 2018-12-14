@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickdisp.c,v 1.4 2011/09/21 13:39:28 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pickdisp.c,v 1.5 2018/12/07 17:03:33 leith Exp $*/
 
 /*C++*************************************************************************
 C
@@ -45,8 +45,6 @@ C--********************************************************************
 #include "routines.h"
  
  /* external commmon variables */
- extern XImage*    imager;
- extern XImage*    imagel;
 
  /***************************** pickdisp *****************************/
 

@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/closefile.c,v 1.5 2005/10/18 17:00:03 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/closefile.c,v 1.6 2018/12/07 17:03:31 leith Exp $*/
 /*
  *************************************************************************
  *
@@ -40,6 +40,7 @@
  *********************************************************************/
 
 #include "files.h"
+#include "routines.h"
 
  int closefile(FILEDATA *fileptr)
 

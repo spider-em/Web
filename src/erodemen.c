@@ -1,19 +1,15 @@
 
-/*$Header: /usr8/web/src/RCS/erodemen.c,v 1.2 2005/10/18 16:59:43 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/erodemen.c,v 1.3 2018/12/07 17:03:31 leith Exp $*/
 
 /*
-C++*********************************************************************
-C
-C erodemen
-C
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                                 *
+ C++********************************************************************
+ C
+ C erodemen
+ C
+ C *********************************************************************
+ C *  AUTHOR:  ArDean Leith                                            *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -31,45 +27,43 @@ C *  AUTHOR:  ArDean Leith                                                 *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    threshmen
-C
-C    PURPOSE:         display erodemen menu
-C
-C    CALLED BY:       imagemen
-C
-C    CALL TREE:
-
-                  
-   imagemen       
-      |          
-      v           
-  imagemen_cb     
-      |           
-      v           
-   imagemen1      
-      |            
-      v           
-   filtermen --> erodemen --> erodemen_buta --> filter_but --> erode
-                                                           --> dilate
-
-C***********************************************************************
+ C *********************************************************************
+ C
+ C    erodemen
+ C
+ C    PURPOSE:         Display erodemen menu
+ C
+ C    CALLED BY:       imagemen
+ C
+ C    CALL TREE:
+ C
+ C     imagemen       
+ C        |          
+ C        v           
+ C    imagemen_cb     
+ C        |           
+ C        v           
+ C     imagemen1      
+ C        |            
+ C        v           
+ C     filtermen --> erodemen --> erodemen_buta --> filter_but --> erode
+ C                                                             --> dilate
+ C
+ C***********************************************************************
 */
 
 #include <Xm/Text.h>
 #include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
 
- /* internal function prototypes */
- void          erodemen_buta(Widget, XtPointer, XtPointer);
+ /* Internal function prototypes */
+ static void    erodemen_buta(Widget, XtPointer, XtPointer);
 
- /* external global variables used here */
- extern float    fminold, fmaxold;
- extern float    erodethresh;
+ /* External global variables used here */
 
- /* common variables used here */
+ /* Common variables used here */
  static Widget   iw_erodemen = NULL, iw_lower = NULL;
 
  /* file scope variables */

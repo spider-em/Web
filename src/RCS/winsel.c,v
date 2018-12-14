@@ -1,4 +1,4 @@
-head	1.9;
+head	1.10;
 access;
 symbols
 	pre-tilt-improve:1.9
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.10
+date	2018.12.07.17.06.44;	author leith;	state Exp;
+branches;
+next	1.9;
 
 1.9
 date	2011.09.23.19.01.48;	author leith;	state Exp;
@@ -61,27 +66,25 @@ desc
 @@
 
 
-1.9
+1.10
 log
-@added call tree
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/winsel.c,v 1.8 2011/05/18 18:22:03 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/winsel.c,v 1.9 2011/09/23 19:01:48 leith Exp $*/
 /*
 
-C++*************************************************************************
-C
-C  WID_WINSEL.FOR -- CREATED MAY 91 al
-C                    CONVERTED TO C -- SEPT 92 al 
-C **********************************************************************
+ C++********************************************************************
+ C
+ C  WID_WINSEL.FOR -- CREATED MAY 91 al
+ C                    CONVERTED TO C -- SEPT 92 al 
+ C
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -98,26 +101,26 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C WINSEL
-C
-C PURPOSE:       Selects windowed operations 
-C
-C PARAMETERS:    Void
-C
-C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
-C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
-C                     \ wid_posiz  --> winsiz3    /
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C winsel
+ C
+ C PURPOSE:       Selects windowed operations 
+ C
+ C PARAMETERS:    Void
+ C
+ C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
+ C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
+ C                     \ wid_posiz  --> winsiz3    /
+ C
+ C--*********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
  /* Global variables */
- extern int iwintyp;
 
 
  /****************************  winsel  *******************************/
@@ -152,6 +155,50 @@ C--*********************************************************************
    powermen();
    }
  }
+@
+
+
+1.9
+log
+@added call tree
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/winsel.c,v 1.8 2011/05/18 18:22:03 leith Exp $*/
+d5 6
+a10 5
+C++*************************************************************************
+C
+C  WID_WINSEL.FOR -- CREATED MAY 91 al
+C                    CONVERTED TO C -- SEPT 92 al 
+C **********************************************************************
+d12 3
+a14 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d31 13
+a43 13
+C **********************************************************************
+C
+C WINSEL
+C
+C PURPOSE:       Selects windowed operations 
+C
+C PARAMETERS:    Void
+C
+C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
+C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
+C                     \ wid_posiz  --> winsiz3    /
+C
+C--*********************************************************************
+d48 1
+a50 1
+ extern int iwintyp;
 @
 
 

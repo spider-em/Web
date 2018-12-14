@@ -33,21 +33,18 @@ C **********************************************************************
 C **********************************************************************
 */
 
+#include <Xm/ToggleBG.h>
 #include "common.h"
 #include "std.h"
 #include "x.h"
 #include "routines.h" 
-#include <Xm/ToggleBG.h>
+#include "comap.h"
   
  /* Internal functions */
- void     comapmen2_but  (Widget, XtPointer, XtPointer);
- void     comapmen2_buts (Widget, XtPointer, XtPointer);
- void     ovrlap_cb      (Widget, XtPointer, XtPointer);
+ static void     comapmen2_but  (Widget, XtPointer, XtPointer);
+ static void     ovrlap_cb      (Widget, XtPointer, XtPointer);
 
  /* External variables */
- extern GC     icontmx;
- extern float  *bufx, *bufy;
- extern int    *nkey;
  Pixmap        msksav;
  Widget        iw_comapmen2;
  int           ovrlap;

@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2005.10.18.16.59.51;	author leith;	state Exp;
@@ -41,13 +46,13 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/scaleimg.c,v 1.4 1999/07/29 15:05:36 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/scaleimg.c,v 1.5 2005/10/18 16:59:51 leith Exp $*/
 
 /***********************************************************************
  *
@@ -96,10 +101,10 @@ text
 */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
 
  /* externally defined variables */
- extern int imagego, imageend;        /* set norm. range for image */
 
  /****************************  scaleimg  *****************************/
  
@@ -204,6 +209,20 @@ text
  return TRUE;
  }
 
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/scaleimg.c,v 1.4 1999/07/29 15:05:36 leith Exp $*/
+d51 1
+a54 1
+ extern int imagego, imageend;        /* set norm. range for image */
 @
 
 

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/opennew.c,v 1.21 2007/11/28 16:18:14 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/opennew.c,v 1.22 2018/12/07 17:03:33 leith Exp $*/
 /*
  * opennew.c
  *
@@ -70,11 +70,9 @@
  *********************************************************************/
 
 #include "files.h"
+#include "routines.h"
 
  /* external file prototypes */
- extern   int    wrtlin(FILEDATA *, float *, int, int);
- extern   int    closefile(FILEDATA *);
- extern   void   spout(char *);
 
 
 /*************************  opennew  ****************************/
@@ -94,7 +92,7 @@
 
  FILEDATA * fileptr;
  time_t     now;
- char     * datentime ,type[3], output[80];
+ char     * datentime ,type[4], output[80];
  FILE     * fp;
  int        nlabel,reclen,headrec,headbyt;
  int        k,imami,iangle,k1;

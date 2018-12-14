@@ -1,18 +1,14 @@
 
-/*$Header: /usr8/web/src/RCS/addext.c,v 1.3 2005/10/18 16:59:49 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/addext.c,v 1.4 2018/12/07 17:02:24 leith Exp $*/
 /*
-C++************************************************************************
-C
-C addext.c
-C
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                                 *
+ C++********************************************************************
+ C
+ C addext.c
+ C
+ C *********************************************************************
+ C * AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -30,14 +26,14 @@ C *  AUTHOR:  ArDean Leith                                                 *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C addext(char * filnam, char * datexc, int lennam)
-C
-C PURPOSE: Adds datexc onto filnam if not already there.
-C           Returns TRUE if all OK.
-C
-C**************************************************************************
+ C *********************************************************************
+ C
+ C addext(char * filnam, char * datexc, int lennam)
+ C
+ C PURPOSE: Adds datexc onto filnam if not already there.
+ C           Returns TRUE if all OK.
+ C
+ C*********************************************************************
 */
 
 #include "common.h"

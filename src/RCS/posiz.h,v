@@ -1,0 +1,27 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2018.12.07.16.34.27;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@extern int icols_posiz;
+extern int irows_posiz;
+extern int ix_posiz;
+extern int iy_posiz;
+@

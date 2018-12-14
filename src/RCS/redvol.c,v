@@ -1,4 +1,4 @@
-head	1.13;
+head	1.14;
 access;
 symbols
 	pre-tilt-improve:1.13
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.14
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.13;
 
 1.13
 date	2011.09.27.17.13.55;	author leith;	state Exp;
@@ -81,13 +86,13 @@ desc
 @@
 
 
-1.13
+1.14
 log
-@removed dbug output
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/redvol.c,v 1.12 2011/09/27 13:37:09 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/redvol.c,v 1.13 2011/09/27 17:13:55 leith Exp $*/
 
 /*
 C***********************************************************************
@@ -150,13 +155,13 @@ C--*********************************************************************
 */
 
 #include "files.h"
+#include "common.h"
 #include "routines.h"
 
  /* Externally defined variables */
- extern int imagego, imageend;        /* Set norm. range for image */
 
  /* Common variables used here */
- int nsams, nrows, nslices;
+ static int nsams, nrows, nslices;
 
  /*************************   redvol   ****************************/
 
@@ -537,6 +542,23 @@ C--*********************************************************************
 
 
 
+@
+
+
+1.13
+log
+@removed dbug output
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/redvol.c,v 1.12 2011/09/27 13:37:09 leith Exp leith $*/
+d65 1
+a68 1
+ extern int imagego, imageend;        /* Set norm. range for image */
+d71 1
+a71 1
+ int nsams, nrows, nslices;
 @
 
 

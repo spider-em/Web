@@ -1,19 +1,15 @@
 
-/*$Header: /usr8/web/src/RCS/his.c,v 1.10 2007/11/01 19:33:45 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/his.c,v 1.11 2018/12/07 17:03:32 leith Exp $*/
 
 /*
-C++************************************************************************
-C
-C  WID_HIS.FOR 
-C  his.c                    NOV 92 al
-C
-C **********************************************************************
+ C++********************************************************************
+ C
+ C  WID_HIS.FOR 
+ C  his.c                    NOV 92 al
+ C
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -31,28 +27,25 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    HIS(filedata,jhist)
-C
-C    PURPOSE:    COMPUTE NHIST PLACE HISTOGRAM FROM IMAGE RECORDS, STORE 
-C                HISTOGRAM IN THE HISTOGRAM RECORDS
-C
-C    PARAMETERS:  filedata      file info
-C                 jhist         histogram data
-C
-C--*******************************************************************
+ C *********************************************************************
+ C
+ C    his(filedata,jhist)
+ C
+ C    PURPOSE:     Compute nhist place histogram from image records, 
+ C                 store histogram in the histogram records
+ C
+ C    PARAMETERS:  filedata      file info
+ C                 jhist         histogram data
+ C
+ C--*******************************************************************
 */
 
 #include "files.h"
 #include "common.h"
+#include "routines.h"
+#include "filter.h"
 
 #define  NHIST 128
-
- extern int   redlin     (FILEDATA *, float *, int, int);
- extern void  spout      (char *);
- extern int   closefile  (FILEDATA *);
- extern int   setprm     (FILEDATA *, char *);
 
 /**************************  his   ***************************/
 

@@ -1,4 +1,4 @@
-head	1.12;
+head	1.13;
 access;
 symbols
 	pre-tilt-improve:1.11
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.13
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.12;
 
 1.12
 date	2015.09.01.17.52.51;	author leith;	state Exp;
@@ -76,13 +81,13 @@ desc
 @@
 
 
-1.12
+1.13
 log
-@$2
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/curmen.c,v 1.11 2005/10/18 17:00:01 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/curmen.c,v 1.12 2015/09/01 17:52:51 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -140,7 +145,7 @@ text
 #define MAXCURS 77
 
  /* Internal function prototypes */
- void          curmen_but(Widget iw_temp, XtPointer, XtPointer);
+ static void    curmen_but(Widget iw_temp, XtPointer, XtPointer);
  
  /* Externally used common variables */
 
@@ -326,6 +331,20 @@ text
  }
 
 
+@
+
+
+1.12
+log
+@$2
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/curmen.c,v 1.11 2005/10/18 17:00:01 leith Exp $*/
+d60 1
+a60 1
+ void          curmen_but(Widget iw_temp, XtPointer, XtPointer);
 @
 
 

@@ -1,4 +1,4 @@
-head	1.2;
+head	1.3;
 access;
 symbols
 	pre-tilt-improve:1.2
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.3
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.2;
 
 1.2
 date	2005.10.18.16.59.50;	author leith;	state Exp;
@@ -27,13 +32,13 @@ desc
 @
 
 
-1.2
+1.3
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /alwyn/usr1/web//RCS/exitexit.c,v 1.1 94/02/18 14:40:56 leith Exp $*/
+/*$Header: web/src/RCS/exitexit.c,v 1.2 2005/10/18 16:59:50 leith Exp $*/
 
 /***********************************************************************
  *
@@ -42,10 +47,6 @@ text
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -65,20 +66,20 @@ text
  C=*                                                                   *
  ***********************************************************************
  * 
- * PURPOSE:  exits web     
+ * PURPOSE:  Exits web     
  * 
  * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
- *		caddr_t		data		label text string
- *		caddr_t		call_data	not used 
+ *		void *		data		label text string
+ *		void *		call_data	not used 
  *
- ***********************************************************************
+ **********************************************************************
 */
 #include "common.h"
-
+#include "routines.h"
 
 /************************  exitexit  *********************************/
 
- void exitexit(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void exitexit(Widget iw_temp, void * data, void * call_data)
  {
 
  /* exit */
@@ -87,6 +88,38 @@ text
  }
 
 
+@
+
+
+1.2
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/exitexit.c,v 1.1 94/02/18 14:40:56 leith Exp $*/
+a10 4
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d30 1
+a30 1
+ * PURPOSE:  exits web     
+d33 2
+a34 2
+ *		caddr_t		data		label text string
+ *		caddr_t		call_data	not used 
+d36 1
+a36 1
+ ***********************************************************************
+d39 1
+a39 1
+
+d43 1
+a43 1
+ void exitexit(Widget iw_temp, caddr_t data, caddr_t call_data)
 @
 
 

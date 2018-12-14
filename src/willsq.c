@@ -1,9 +1,9 @@
 
-/*$Header: /usr8/web/new/RCS/willsq.c,v 1.12 1996/05/06 16:24:37 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/willsq.c,v 1.13 2018/12/07 17:06:44 leith Exp $*/
 /*
-C   TRANSFERED FROM WILLSQ.FOR BY JING SU 8/31/93
+C   Transfered from willsq.for by                     JING SU 8/31/93
 C 
-C++****************************************************************************
+C++**********************************************************************
 C   PROGRAM TO CALCULATE A LINEAR LEAST SQUARE FIT TO DETERMINE
 C   THE DIRECTION OF THE TILT-AXIS, THE TILT ANGLE AND THE RELATIVE
 C   POSITION OF A TILT PAIR (0 DEG VERSUS TILTED)
@@ -61,12 +61,8 @@ c-*****************************************************************************
 #include "std.h"
 #include "common.h"
 #include "routines.h"
-
-extern int mircol(int n, int m, int mm, float a[4][5], 
-                    float eps, float x[]);
-
-extern float  xu0t, yu0t, xs0t, ys0t;
-extern FILE * resfp;
+#include "fit.h"
+#include "extras.h"
 
 /****************************** willsq ******************************/
 

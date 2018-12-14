@@ -57,37 +57,33 @@ C**********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "surf.h"
 
 #define MAX_ARGS 5
 #define EULER	 1
 #define XYZ	 0
 
  /* Function prototypes */
- extern void   	surfmovie    (int);
 
  /* Internal function prototypes */
- void  surf_pop      (Widget, XEvent *, String *, Cardinal *);
- void  surfmen_butf  (Widget, XtPointer, XtPointer);
- void  surfmen_butc  (Widget, XtPointer, XtPointer);
- void  surfmen_buta  (Widget, XtPointer, XtPointer);
- void  angle_cb      (Widget, XtPointer, XtPointer);
- void  savesurf_cb   (Widget, XtPointer, XtPointer);
- void  surfmen_th_but(Widget, XtPointer, XtPointer);
- void  setangles     (int, float, float, float, float, float, float);
+ static void  surfmen_butf  (Widget, XtPointer, XtPointer);
+ static void  surfmen_butc  (Widget, XtPointer, XtPointer);
+ static void  surfmen_buta  (Widget, XtPointer, XtPointer);
+ static void  savesurf_cb   (Widget, XtPointer, XtPointer);
+ static void  surfmen_th_but(Widget, XtPointer, XtPointer);
  
  /* Common variables defined elsewhere*/
- extern unsigned char * refmap;
 
  /* Common variables defined here*/
  float          phi, theta, psi, thlev;
- float          scalef, offsetf;  
- int            canrotate;
  int            nvolcolors = 3;
- Widget         iw_thlev   = (Widget) 0;      // Float threshold value
- int            ithreshmin = 0;
- int            ithreshmax = 255;
 
  /* Internal variables */
+ static float    scalef, offsetf;  
+ static int      canrotate;
+ static Widget   iw_thlev   = (Widget) 0;      // Float threshold value
+ static int      ithreshmin = 0;
+ static int      ithreshmax = 255;
  static Widget   iw_scales[6],iw_angs[6],iw_angsxyz[6],iw_rc,iw_mov;
  static Widget   iw_refl, iw_fct, iw_fast;
  static Widget   iw_pushf, iw_pushc, iw_pusha, iw_sc, iw_angle;
@@ -102,8 +98,6 @@ C**********************************************************************
  static int      sirdit, distit, colorit;
  static float	 ang_x, ang_y, ang_z;
  static int	 first = TRUE;
- char            cval[15];
- Arg             args[MAX_ARGS];
 
  /***************************   surfmen   ****************************/
 
@@ -113,7 +107,8 @@ C**********************************************************************
  int     i, n, ifct, irefl, iscale;
  Widget  iw_labb1,  iw_dum,  iw_dums;
  char    cval[50];
- 
+ Arg     args[MAX_ARGS];
+
  /* Set flags for sirds or distance display */
  sirdit = sirditt;   distit = distitt; colorit = coloritt;
 
@@ -220,7 +215,7 @@ C**********************************************************************
 
     /* Create scale widgets for windowing volume -------------- Scales */
     for (i=0; i < 6; iw_scales[i++]  = (Widget) 0);
-    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+    wid_win(iw_rowcolv, &iw_scales[0], 
                        nsam, nrow, nslice);
 
     for (i=0; i < 6; i++)
@@ -277,7 +272,7 @@ C**********************************************************************
     //printf(" nsam: %d %d %d %d\n", nsam,nrow,iw_scales[0],iw_scales[1]);
 
     /* Update scale widgets for windowing volume ------------- Scales */
-    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+    wid_win(iw_rowcolv, &iw_scales[0], 
                        nsam, nrow, nslice);
 
     /* Update scale for threshold ------------------------  Threshold */
@@ -322,6 +317,8 @@ C**********************************************************************
 
  {
  int  n;
+ Arg  args[MAX_ARGS];
+ char cval[15];
 
  // Get current threshold scale value (ithreshmin ... ithreshmax)
  XmScaleGetValue(iw_temp, &ithresh);

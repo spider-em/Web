@@ -1,4 +1,4 @@
-head	1.11;
+head	1.12;
 access;
 symbols
 	pre-tilt-improve:1.11
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.12
+date	2018.12.07.17.03.30;	author leith;	state Exp;
+branches;
+next	1.11;
 
 1.11
 date	2011.06.10.14.14.39;	author leith;	state Exp;
@@ -72,13 +77,13 @@ desc
 @
 
 
-1.11
+1.12
 log
-@update
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/new/RCS/changedir.c,v 1.10 2005/10/18 16:59:41 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/changedir.c,v 1.11 2011/06/10 14:14:39 leith Exp $*/
 
 /***********************************************************************
  *
@@ -119,15 +124,13 @@ text
  ***********************************************************************
 */
 
-#include "common.h"
-//#include "routines.h"
-
 #include <unistd.h>
-
 #include <Xm/FileSB.h>
+#include "common.h"
+#include "routines.h"
 
  /* Internal functions */
- void            changedir_cb(Widget, XtPointer, XtPointer);
+ static void     changedir_cb(Widget, XtPointer, XtPointer);
 
  /* File scope variables */
  static Widget     iw_text = (Widget)0;
@@ -179,6 +182,27 @@ text
     }
  }
 
+@
+
+
+1.11
+log
+@update
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/changedir.c,v 1.10 2005/10/18 16:59:41 leith Exp $*/
+a42 3
+#include "common.h"
+//#include "routines.h"
+
+a43 1
+
+d45 2
+d49 1
+a49 1
+ void            changedir_cb(Widget, XtPointer, XtPointer);
 @
 
 

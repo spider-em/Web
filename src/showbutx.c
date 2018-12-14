@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.17 2015/09/10 13:17:48 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/showbutx.c,v 1.18 2018/12/07 17:03:34 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -48,24 +48,20 @@
 
 #include <Xm/LabelG.h>
 #include <Xm/BulletinB.h>
+#include <string.h>
 #include "common.h"
 #include "routines.h"
-#include <strings.h>
 
 #define MAX_MESSAGE_LENGTH 240
 
 /* External global variables */
-extern Widget     iw_win;    /* Image window widget  */
-extern Display *  idispl;
 
 /* Internal file variables */
 static Widget     iw_mess   = (Widget) 0 ;  /* Dialog widget   */
 static Widget     iw_labelg = (Widget) 0 ;  /* Label widget    */
 
 // Internal function prototypes
-void              ForceUpdate (Widget w);   // unused
-void              showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr, 
-                       char *but1, char *but2, char *but3, int manage);
+static void       ForceUpdate (Widget w);   // unused
 
 /********************** showbuts_str ***************************/
 // Can redefine strings within a widget
@@ -98,7 +94,7 @@ void showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr,
  if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
     {
     message[MAX_MESSAGE_LENGTH - 1] = '\0';
-    printf("*** Showbuts got an overlength string: %d \n",ilen);
+    printf("*** Showbuts got an overlength string: %lu \n",ilen);
     printf("*** String:%s \n",message); 
     XBell(idispl,50);
     }
@@ -167,7 +163,7 @@ void showbutx(char *but1, char *but2, char *but3, int unmanage)
     if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
        {
        message[MAX_MESSAGE_LENGTH - 1] = '\0';
-       printf("*** Showbutx got an overlength string: %d \n",ilen);
+       printf("*** Showbutx got an overlength string: %lu \n",ilen);
        printf("*** String:%s \n",message); XBell(idispl,50);
        XBell(idispl,50);
        }
@@ -244,7 +240,7 @@ Widget showbuts(Widget iw_buts,
     if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
        {
        message[MAX_MESSAGE_LENGTH - 1] = '\0';
-       printf("*** Showbuts got an overlength string: %d \n",ilen);
+       printf("*** Showbuts got an overlength string: %lu \n",ilen);
        printf("*** String:%s \n",message); XBell(idispl,50);
        XBell(idispl,50);
        }

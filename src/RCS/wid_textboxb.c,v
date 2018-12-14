@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.06.44;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2011.07.19.18.08.37;	author leith;	state Exp;
@@ -46,26 +51,23 @@ desc
 @@
 
 
-1.6
+1.7
 log
-@WEB_BGFGO
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/new/RCS/wid_textboxb.c,v 1.5 2005/10/18 16:59:40 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/wid_textboxb.c,v 1.6 2011/07/19 18:08:37 leith Exp $*/
 /*
-C **********************************************************************
-*
-*  TEXTBOXB
-*
-C **********************************************************************
+ C **********************************************************************
+ *
+ *  TEXTBOXB
+ *
+ C **********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -99,10 +101,9 @@ C **********************************************************************
 **************************************************************************
 */
 
-#include "common.h"
 #include <Xm/Text.h>
 #include <Xm/RowColumn.h>
-
+#include "common.h"
 #include "routines.h"
 
 /************************  wid_textboxb   ***********************/
@@ -162,6 +163,37 @@ C **********************************************************************
  return (iw_text);
  }
 
+
+@
+
+
+1.6
+log
+@WEB_BGFGO
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/wid_textboxb.c,v 1.5 2005/10/18 16:59:40 leith Exp $*/
+d4 5
+a8 5
+C **********************************************************************
+*
+*  TEXTBOXB
+*
+C **********************************************************************
+d10 3
+a12 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+a45 1
+#include "common.h"
+d48 1
+a48 1
 
 @
 

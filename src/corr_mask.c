@@ -48,11 +48,11 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "comap.h"
 
- void   corr_mask_pop  (Widget, XEvent *, String *, Cardinal *);
+ static void   corr_mask_pop  (Widget, XEvent *, String *, Cardinal *);
 
  /* Externally defined common variables */
- extern Pixmap  msksav;
 
  /* Internal common variables */
  GC             icontmx;

@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -10,6 +10,11 @@ locks;
 comment	@ * @;
 
 
+1.2
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.1;
+
 1.1
 date	2005.10.18.16.59.48;	author leith;	state Exp;
 branches;
@@ -20,13 +25,13 @@ desc
 @@
 
 
-1.1
+1.2
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header$*/
+/*$Header: /usr8/web/src/RCS/invert.c,v 1.1 2005/10/18 16:59:48 leith Exp $*/
 
 /***********************************************************************
  *
@@ -70,10 +75,11 @@ text
  ***********************************************************************
 */
 
-#include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
+#include "std.h"
+#include "routines.h"
 
  /******************************  notit *****************************/
 
@@ -96,4 +102,21 @@ text
  }
 
 
+@
+
+
+1.1
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header$*/
+a45 1
+#include "std.h"
+d47 1
+a47 1
+#include "float.h"
+d49 2
 @

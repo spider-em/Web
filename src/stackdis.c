@@ -46,25 +46,11 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
  /* External routines */
- extern int   sumum(float * first, float * second, float * output, 
-                    int npix);
- extern int   average(float * input,  float * output,
-                      int npix, float divisor);
- extern int   avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
- extern void  showmoviemen  (int);
 
  /* External variables */
- extern int   stkgo, stkend;       /* From stackmen for montage only*/
- extern int   *docimgnums;         /* Doc file image numbers */
- extern int   docimgtotal;         /* Number of images from doc file */
- extern int   montaverage;         /* Want montage average */
- extern char  avgnam[128];         /* Name for montage average file */
- extern int   ndone;               /* Used by cat.c & movie, from mont2 */
- extern char  *cmont3buf;          /* From mont3 */
- extern int   nsami,nrowi,nslicei; /* From mont3 */
- extern XImage * ximagelist[1000]; /* From showmovie */
 
  /* Externally used variables */
  int imagelist[1000];              /* Used by: cat.c */

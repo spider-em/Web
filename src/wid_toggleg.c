@@ -1,16 +1,13 @@
 
-/*$Header: /usr8/web/new/RCS/wid_toggleg.c,v 1.5 2005/10/18 16:59:45 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_toggleg.c,v 1.6 2018/12/07 17:06:44 leith Exp $*/
 /*
  * wid_toggleg.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -40,16 +37,16 @@
  ***********************************************************************
 */
 
-
-#include "x.h"
 #include <Xm/ToggleBG.h>
+#include "x.h"
 #include "std.h"
+#include "routines.h"
 
 /******************  wid_toggleg  ******************************/
 
  Widget wid_toggleg(Widget iw_parent, Widget iw_toggleg, 
                char *label, int value,
-               void (*cb)(), char *data, int ix, int iy)
+               XtCallbackProc cb, void *data, int ix, int iy)
  { 
  Arg           args[6];   /* arg list */
  register      int  n;           /* arg count */

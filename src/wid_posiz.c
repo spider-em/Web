@@ -1,16 +1,13 @@
 
-/*$Header: /usr8/web/new/RCS/wid_posiz.c,v 1.13 2011/05/18 18:24:48 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_posiz.c,v 1.14 2018/12/07 17:03:35 leith Exp $*/
 /*
  * wid_posiz.c
  *
- **********************************************************************
+ ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -27,7 +24,7 @@
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- **********************************************************************
+ ***********************************************************************
  *
  * PURPOSE:	Creates a position and size widget
  *
@@ -45,12 +42,11 @@
 #include "std.h"
 #include "x.h"
 #include "routines.h"
+#include "posiz.h"
 
  /* Internal functions */
- void          wid_posiz_buta(Widget, XtPointer, XtPointer);
- void          junk          ();
- void          subit         (void (*)());
- void          doit	     (void);
+ static void   wid_posiz_buta(Widget, XtPointer, XtPointer);
+ static void   junk          (void);
  
  /* File variables */
  static Widget        iw_ix = (Widget)0,  iw_iy = (Widget)0,
@@ -69,7 +65,7 @@
  /******************************************************************/
  
  Widget wid_posiz(Widget iw_parent, Widget iw_posiz, int ixt, int iyt, 
-                  int icolst, int irowst, char ctype, void (* call)())
+                  int icolst, int irowst, char ctype, void (*call)(void))
  {
  Widget        iw_rowcol, iw_dum; 
  char          cval[5];
@@ -131,7 +127,7 @@
    wid_sep(iw_rowcol);
 
    iw_dum = wid_stdbut(iw_rowcol, iw_posiz, &iw_dum, &iw_pushc, &iw_pusha, 
-                       "CA",fin_cb,fin_cb, wid_posiz_buta, (char *) call);
+                       "CA",fin_cb,fin_cb, wid_posiz_buta, (void *) call);
    }
 
  else 
@@ -141,7 +137,7 @@
 
     XtRemoveAllCallbacks(iw_pusha,XmNactivateCallback); 
     XtAddCallback(iw_pusha,XmNactivateCallback,
-                   (XtCallbackProc) wid_posiz_buta, (XtPointer) call);
+                   wid_posiz_buta, (XtPointer) call);
 
     if (ctype == 'p' || ctype == 'b' || ctype == 'P' || ctype == 'B' )
        {
@@ -207,25 +203,15 @@
  /* Unmanage wid_posiz widget */
  XtUnmanageChild(iw_posizt);
 
- /* Kludge to get it to call routine passed in data */
- subit((void (*)()) data); 
+ /* call routine passed in data */
+ (*(void (*)(void)) data)(); 
  }
-
-
- /****************** Kludge routine to activate data *****************/
-
-
- void subit(void (*doit)())
- {
- doit();
- }
-
 
 
  /****************** Sample kludge routine    ************************/
 
 
- void junk()
+ void junk(void)
  {
  printf(" in junk, SUCCESS \n");
  printf(" ix,iy: %d %d \n",ix_posiz,iy_posiz);

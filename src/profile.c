@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/profile.c,v 1.15 2011/09/23 19:30:08 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/profile.c,v 1.16 2018/12/07 17:03:33 leith Exp $*/
 /*
 ************************************************************************
 *  profile.c         6/10/93
@@ -43,23 +43,22 @@ C **********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "profile.h"
 
 /* Internal subroutine prototypes */
- void  profile_pop     (Widget, XEvent *, String *, Cardinal *);
- void  profile_plot    (float *);
- void  profilemen      (void);
- void  profilemen_buts (int, int, int);
- void  profile_line    (int);
+ static void  profile_plot    (float *);
+ static void  profile_line    (int);
 
  /* Internal common variables */
- int   first , horizbar , leavebar, normbar, permbar, doxyaxis, permxyaxis ;
- int   spline;		/* the special line flag */
- int   linenum;		/* the line number of the special line */
- float *buft;
- int   LS0, ls;           /* line style of the icontxm GC */
- int   LW0, lw;           /* line width of the icontxm GC */
+ static int   first , doxyaxis, permxyaxis ;
+ static float *buft;
+ static int   LS0, ls;           /* line style of the icontxm GC */
+ static int   LW0, lw;           /* line width of the icontxm GC */
 
  /* External common variables */
+ int    horizbar, leavebar, normbar, permbar;
+ int    spline;		/* the special line flag */
+ int    linenum;	/* the line number of the special line */
  GC     icontxm;
 
  /***************************  profile  *******************************/
@@ -334,7 +333,7 @@ C **********************************************************************
        if (buft) free(buft);
 
        /* Stop this routine */
-       profilemen_buts(idum,idum,idum);
+       profilemen_buts(NULL, NULL, NULL);
        }
 
  return;

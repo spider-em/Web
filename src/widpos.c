@@ -1,16 +1,13 @@
 
-/*$Header: /usr8/web/new/RCS/widpos.c,v 1.3 2005/10/18 16:59:40 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/widpos.c,v 1.4 2018/12/07 17:03:35 leith Exp $*/
 /*
  * widpos.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -44,6 +41,7 @@
 #include "x.h"
 #include "std.h"
 #include "common.h"
+#include "routines.h"
 
  /***************************** widpos *****************************/
 

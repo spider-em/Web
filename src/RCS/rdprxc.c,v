@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2015.08.03.18.50.32;	author leith;	state Exp;
@@ -41,13 +46,13 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@typo fixed
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/rdprxc.c,v 1.4 2005/10/18 16:59:43 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/rdprxc.c,v 1.5 2015/08/03 18:50:32 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -91,13 +96,10 @@ C
 C***********************************************************************
 */
 
+#include <Xm/Text.h>
 #include "std.h"
 #include "x.h"
-#include <Xm/Text.h>
-
-extern void   spout         (char *);
-extern void   spouts        (char *);
-extern void   spouti        (int);
+#include "routines.h"
 
 
  /******************  rdprxc  *******************************/
@@ -131,6 +133,25 @@ extern void   spouti        (int);
  return (int) slent;
  }
  
+@
+
+
+1.5
+log
+@typo fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/rdprxc.c,v 1.4 2005/10/18 16:59:43 leith Exp $*/
+d46 1
+d49 1
+a49 5
+#include <Xm/Text.h>
+
+extern void   spout         (char *);
+extern void   spouts        (char *);
+extern void   spouti        (int);
 @
 
 

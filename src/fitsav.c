@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fitsav.c,v 1.27 2015/09/01 17:53:12 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/fitsav.c,v 1.28 2018/12/07 17:03:32 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -46,21 +46,11 @@
 #include "common.h"
 #include "x.h"
 #include "routines.h"
+#include "fit.h"
 
  /* Function prototypes */
 
  /* External common variables used here */
- extern char    dfil3[12], dfil6[12] ;       /* Doc file names   */
- extern int     iredu ;                      /* Image reduction  */
- extern int     fitted ;                     /* Fitted flag      */
- extern float   phif, thetaf, gammaff ;      /* Tilt angles      */
- extern float   xu0t, yu0t, xs0t, ys0t ;     /* Tilt origins     */
- extern float * xu0 ; 
- extern float * yu0 ; 
- extern float * xs2 ; 
- extern float * ys2 ; 
- extern int     maxpart ;
- extern char    datexc[4] ;                  /* File extension   */    
      
 
  char     str121[] =

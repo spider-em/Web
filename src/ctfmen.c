@@ -56,26 +56,23 @@ C***********************************************************************
 
 
  /* external function prototypes */
- extern void trafc(float cs, float dz, float lambda, float km, 
-               float q, float ds, float dza, float azz, float wgh, 
-               float env, int nsam, float * tf);
 
  /* internal function prototypes */
- int          	ctfnormal (void);
- int          	ctfnormal1(void);
- void          	ctfmen (void);
- void          	ctfmen1(void);
- void          	ctfmen_buts (Widget iw_temp, XtPointer, XtPointer);
- void          	ctfmen_buta (Widget iw_temp, XtPointer, XtPointer);
- void          	ctfmen1_buta(Widget iw_temp, XtPointer, XtPointer);
- void          	ctfmen1set(void);
- void          	ctfmen1f_buta(Widget iw_temp, XtPointer, XtPointer);
- void          	ctfplot(float xrange, float yrange, float valmin);
- int            plotit(float * linearray, int nval, 
+ static int   	ctfnormal (void);
+ static int   	ctfnormal1(void);
+ static void   	ctfmen (void);
+ static void   	ctfmen1(void);
+ static void   	ctfmen_buts (Widget iw_temp, XtPointer, XtPointer);
+ static void   	ctfmen_buta (Widget iw_temp, XtPointer, XtPointer);
+ static void   	ctfmen1_buta(Widget iw_temp, XtPointer, XtPointer);
+ static void   	ctfmen1set(void);
+ static void   	ctfmen1f_buta(Widget iw_temp, XtPointer, XtPointer);
+ static void   	ctfplot(float xrange, float yrange, float valmin);
+ static int     plotit(float * linearray, int nval, 
                        float xoffset, float yoffset, 
                        float xscale,  float yscale, 
                        float xmin, float ymin);
- int            plotvert(float * linearray, int nval, 
+ static int     plotvert(float * linearray, int nval, 
                        int iygo, int iyend, 
                        float xoffset, float xscale, float xmin);
   

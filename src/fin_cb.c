@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fin_cb.c,v 1.2 2005/10/18 17:00:04 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/fin_cb.c,v 1.3 2018/12/07 17:03:32 leith Exp $*/
 /*
  * fin_cb.c
  *
@@ -42,10 +42,9 @@
 
 #include "x.h"
 #include "std.h"
+#include "routines.h"
 
-
-
- void fin_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void fin_cb(Widget iw_temp, void * data, void * call_data)
 
  { /************************************************************/
 

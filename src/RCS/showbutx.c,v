@@ -1,4 +1,4 @@
-head	1.17;
+head	1.18;
 access;
 symbols
 	pre-tilt-improve:1.16
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.18
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.17;
 
 1.17
 date	2015.09.10.13.17.48;	author leith;	state Exp;
@@ -101,12 +106,12 @@ desc
 @@
 
 
-1.17
+1.18
 log
-@Reposition button menu
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.16 2011/09/23 19:33:02 leith Exp $*/
+@/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.17 2015/09/10 13:17:48 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -156,24 +161,20 @@ text
 
 #include <Xm/LabelG.h>
 #include <Xm/BulletinB.h>
+#include <string.h>
 #include "common.h"
 #include "routines.h"
-#include <strings.h>
 
 #define MAX_MESSAGE_LENGTH 240
 
 /* External global variables */
-extern Widget     iw_win;    /* Image window widget  */
-extern Display *  idispl;
 
 /* Internal file variables */
 static Widget     iw_mess   = (Widget) 0 ;  /* Dialog widget   */
 static Widget     iw_labelg = (Widget) 0 ;  /* Label widget    */
 
 // Internal function prototypes
-void              ForceUpdate (Widget w);   // unused
-void              showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr, 
-                       char *but1, char *but2, char *but3, int manage);
+static void       ForceUpdate (Widget w);   // unused
 
 /********************** showbuts_str ***************************/
 // Can redefine strings within a widget
@@ -206,7 +207,7 @@ void showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr,
  if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
     {
     message[MAX_MESSAGE_LENGTH - 1] = '\0';
-    printf("*** Showbuts got an overlength string: %d \n",ilen);
+    printf("*** Showbuts got an overlength string: %lu \n",ilen);
     printf("*** String:%s \n",message); 
     XBell(idispl,50);
     }
@@ -275,7 +276,7 @@ void showbutx(char *but1, char *but2, char *but3, int unmanage)
     if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
        {
        message[MAX_MESSAGE_LENGTH - 1] = '\0';
-       printf("*** Showbutx got an overlength string: %d \n",ilen);
+       printf("*** Showbutx got an overlength string: %lu \n",ilen);
        printf("*** String:%s \n",message); XBell(idispl,50);
        XBell(idispl,50);
        }
@@ -352,7 +353,7 @@ Widget showbuts(Widget iw_buts,
     if ((ilen + 57) >=  MAX_MESSAGE_LENGTH)
        {
        message[MAX_MESSAGE_LENGTH - 1] = '\0';
-       printf("*** Showbuts got an overlength string: %d \n",ilen);
+       printf("*** Showbuts got an overlength string: %lu \n",ilen);
        printf("*** String:%s \n",message); XBell(idispl,50);
        XBell(idispl,50);
        }
@@ -456,6 +457,37 @@ Widget showbuts(Widget iw_buts,
         XmUpdateDisplay (topshell);
         }
 
+@
+
+
+1.17
+log
+@Reposition button menu
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/showbutx.c,v 1.16 2011/09/23 19:33:02 leith Exp $*/
+d51 1
+a53 1
+#include <strings.h>
+a57 2
+extern Widget     iw_win;    /* Image window widget  */
+extern Display *  idispl;
+d64 1
+a64 3
+void              ForceUpdate (Widget w);   // unused
+void              showbuts_str(Widget * iw_buts_ptr, Widget * iw_labelg_str_ptr, 
+                       char *but1, char *but2, char *but3, int manage);
+d97 1
+a97 1
+    printf("*** Showbuts got an overlength string: %d \n",ilen);
+d166 1
+a166 1
+       printf("*** Showbutx got an overlength string: %d \n",ilen);
+d243 1
+a243 1
+       printf("*** Showbuts got an overlength string: %d \n",ilen);
 @
 
 

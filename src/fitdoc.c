@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fitdoc.c,v 1.35 2015/09/22 14:21:53 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/fitdoc.c,v 1.36 2018/12/07 17:03:32 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -67,18 +67,12 @@
 
 #include "std.h"
 #include "x.h"
+#include "common.h"
 #include "routines.h"
-
- // Internal function prototypes 
- int           fitdoc_addpart(int n,  int iwhich, int xu, int yu, int xt, int yt);
+#include "pick.h"
+#include "fit.h"
 
  /* External global variables */
- extern char   dfil1[12], dfil2[12], dfil3[12], dfil4[12], dfil5[12];
- extern int    numm, back_win_now, iredu;
- extern int    fitted;
- extern float  phif, thetaf, gammaff;
- extern float  xu0t, yu0t, xs0t, ys0t;
- extern char   datexc[4];                 /* File extension  */
 
  /* Global variables used elsewhere */
  int           limfit, ifit;

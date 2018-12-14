@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/openold.c,v 1.50 2015/09/01 17:53:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/openold.c,v 1.51 2018/12/07 17:03:33 leith Exp $*/
 
 /***********************************************************************
  *                                                                     *
@@ -54,7 +54,10 @@
  *
  *********************************************************************/
 
+#include <stdlib.h>
+#include <ctype.h>
 #include "files.h"
+#include "common.h"
 #include "routines.h"
 
 // Byte flipping 
@@ -66,17 +69,15 @@
            (((unsigned int)(B) << 8) & 0xff0000)
 
  /* Externally defined global variables */
- extern int   nsam8, nrow8, nslice8;
- extern int   nstack, inuse, maxim, imginstack;
 
  /* Internal function prototypes */
- int          opensmall8      (char *, FILEDATA  *, int *,   int * ,  int * , 
+ static int   opensmall8      (char *, FILEDATA  *, int *,   int * ,  int * , 
                                int ,   int , int , int * );
- int          is_spider_header(float[]);
- int          is_mrc_header   (float[]);
- int          IsLittleEndian  ();
- int          IsBigEndian     ();
- float        ReverseFloat    ( const float inFloat );
+ static int   is_spider_header(float[]);
+ static int   is_mrc_header   (float[]);
+ static int   IsLittleEndian  (void);
+ static int   IsBigEndian     (void);
+ static float ReverseFloat    ( const float inFloat );
 
 
  /* Internal file scope variables */
@@ -96,7 +97,7 @@
 
  FILEDATA  *fileptr;
 
- char           type[4], output[160], ctemp[10], typefl[1];
+ char           type[6], output[160], typefl[2] = " ";
  FILE *         fp;
  int            nsam,nrow,nslice,iform,headbyt,headrec;
  int            lentitle, k1, locat, lennum, iflag;
@@ -110,19 +111,19 @@
  imginstack = 0;
  inuse      = 0;
  maxim      = 0;
- strcpy(ctemp,"          ");
 
  locat = strcspn(filnam,"@");
- if (locat < strlen(filnam))
+ if (filnam[locat])
     { /* Has @ in filnam denoting image stack */
-    lennum     = strspn(&filnam[locat+1],"0123456789");
-    if (lennum > 0)
+    char *tailptr = filnam + locat + 1;
+
+    if (isdigit(*tailptr))
        {  /* Has number after @ in filnam, stacked image requested */
-       strncpy(ctemp,&filnam[locat+1],lennum);
-       imginstack = atoi(ctemp);
+       imginstack = strtol(tailptr, &tailptr, 10);
        }
-    /* Remove @ and stacked image number from filnam */
-    strcpy(&filnam[locat],&filnam[locat+1+lennum]);
+    /* Remove @ and any stacked image number from filnam */
+    /* Overlapping src and dest requires memmove().  Include the string terminator. */
+    memmove(filnam + locat, tailptr, strlen(tailptr) + 1);
     }
 
  /* Open file */
@@ -377,8 +378,7 @@
  fileptr -> ximage = NULL;
 
  /* Print file opening information */
- strcpy(typefl," ");
- if (fileptr -> flip > 0) strcpy(typefl,"F" );
+ if (fileptr -> flip > 0) typefl[0] = 'F';
  
  iform = fileptr -> iform;
 
@@ -707,7 +707,7 @@ float ReverseFloat( const float inFloat )
  }
 
 
- int IsLittleEndian()
+ int IsLittleEndian(void)
  {
  int n = 1;
  // Little endian if true
@@ -715,7 +715,7 @@ float ReverseFloat( const float inFloat )
  return FALSE;
  }
 
- int IsBigEndian()
+ int IsBigEndian(void)
  {
  int n = 1;
  // Little endian if true

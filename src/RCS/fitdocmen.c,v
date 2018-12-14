@@ -1,4 +1,4 @@
-head	1.22;
+head	1.23;
 access;
 symbols
 	pre-tilt-improve:1.20
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.23
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.22;
 
 1.22
 date	2015.09.18.16.25.21;	author leith;	state Exp;
@@ -126,13 +131,13 @@ desc
 @@
 
 
-1.22
+1.23
 log
-@fitdoc call removed (unused??)
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.21 2015/09/01 17:53:12 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.22 2015/09/18 16:25:21 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -183,13 +188,14 @@ text
  C**********************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
+#include "fit.h"
 
  // Internal subroutine prototypes 
- void           fitdocmen_butc(Widget, XtPointer, XtPointer);
- void           fitdocmen_buta(Widget, XtPointer, XtPointer);
+ static void    fitdocmen_butc(Widget, XtPointer, XtPointer);
+ static void    fitdocmen_buta(Widget, XtPointer, XtPointer);
 
  //  Global variables (see pickp) 
  int            nfd   = -1;            // Doc file number         
@@ -199,8 +205,6 @@ text
  char           dfil5[12],dfil6[12];
 
  // External global variables used here ??
- extern float   phif, thetaf, gammaff; // Defined in: fitmen
- extern int     fitted;                // Defined in: pickp
 
  // Internal file scope variables 
  static Widget  iw_redu, iw_nfd;
@@ -303,6 +307,28 @@ text
  expos_cb(NULL,NULL,NULL);
  }
 
+@
+
+
+1.22
+log
+@fitdoc call removed (unused??)
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.21 2015/09/01 17:53:12 leith Exp $*/
+d53 1
+d56 1
+a56 1
+#include <Xm/Text.h>
+d59 2
+a60 2
+ void           fitdocmen_butc(Widget, XtPointer, XtPointer);
+ void           fitdocmen_buta(Widget, XtPointer, XtPointer);
+a69 2
+ extern float   phif, thetaf, gammaff; // Defined in: fitmen
+ extern int     fitted;                // Defined in: pickp
 @
 
 

@@ -1,5 +1,5 @@
  
-/*$Header: /usr8/web/src/RCS/movearea.c,v 1.11 2011/09/23 19:00:58 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/movearea.c,v 1.12 2018/12/07 17:03:33 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -47,15 +47,15 @@ C--********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
  /* Internal function prototypes */
- void            movearea_pop (Widget, XEvent *, String *, Cardinal *);
+ static void     movearea_pop (Widget, XEvent *, String *, Cardinal *);
 
  /* Internal common variables */
  static GC       icontxx;
 
  /* External common variables */
- extern int      iwintyp;
 
  /**************************************************************/
 

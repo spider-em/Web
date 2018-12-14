@@ -1,0 +1,40 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2018.12.07.16.30.20;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@extern int bins;
+extern int border;
+extern float erodethresh;
+extern int fillconnect;
+extern float fillval;
+extern float fmaxold;
+extern float fminold;
+extern int ixseed;
+extern int iyseed;
+extern float lower;
+extern float lowerval;
+extern float noiselowerlim;
+extern int nrowold;
+extern int nsamold;
+extern float threshval;
+extern float upper;
+extern float upperval;
+@

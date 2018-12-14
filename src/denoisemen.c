@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/denoisemen.c,v 1.6 2005/10/18 16:59:57 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/denoisemen.c,v 1.7 2018/12/07 17:03:31 leith Exp $*/
 
 /*
 C++********************************************************************
@@ -46,19 +46,19 @@ C *********************************************************************
 */
 
 
+#include <Xm/Text.h>
 #include "std.h"
 #ifndef VMS
 #include "float.h"
 #endif
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
+#include "filter.h"
 
  /* externally defined global variables used here */
- extern float      fminold, fmaxold;
 
  /* internal subroutines */
- void denoisemen_buta(Widget, XtPointer, XtPointer);
+ static void denoisemen_buta(Widget, XtPointer, XtPointer);
 
  /* global variable defined here */
  float noiselowerlim;

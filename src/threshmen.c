@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/threshmen.c,v 1.3 2011/09/26 12:14:23 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/threshmen.c,v 1.4 2018/12/07 17:03:34 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -61,14 +61,12 @@ C***********************************************************************
 #include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
 
  /* Internal function prototypes */
- void          threshmen_buta(Widget, XtPointer, XtPointer);
- void          threshmen     (Widget, XtPointer, XtPointer);
+ static void   threshmen_buta(Widget, XtPointer, XtPointer);
 
  /* External global variables used here */
- extern float    fminold, fmaxold;
- extern float    lower, lowerval, upper,  upperval;
 
  /* Common variables used here */
  static Widget   iw_threshmen, iw_lower,    iw_lowerval,  

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/changepat.c,v 1.5 2005/10/18 16:59:50 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/changepat.c,v 1.6 2018/12/07 17:03:31 leith Exp $*/
 
 /***********************************************************************
  *
@@ -34,19 +34,19 @@
  * PURPOSE:  Change current filename search pattern     
  * 
  * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
- *		caddr_t		data		label text string
- *		caddr_t		call_data	not used 
+ *		void *		data		label text string
+ *		void *		call_data	not used 
  *
  ***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/FileSB.h>
+#include "common.h"
 #include "routines.h"
 
 
  /* internal functions */
- void            changepat_cb   (Widget, caddr_t, caddr_t);
+ static void     changepat_cb   (Widget, void *, void *);
 
 
  /* file variables */
@@ -58,7 +58,7 @@
 
 /************************  changepat  ***********************************/
 
- void changepat(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void changepat(Widget iw_temp, void * data, void * call_data)
  {
 
  /* create new directory input box */
@@ -69,7 +69,7 @@
 
  /**********************  changepat_cb  *********************************/
 
- void changepat_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void changepat_cb(Widget iw_temp, void * data, void * call_data)
  {
  XmString      txt_string;
  Arg           args[1];   /* arg list */

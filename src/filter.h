@@ -1,0 +1,17 @@
+extern int bins;
+extern int border;
+extern float erodethresh;
+extern int fillconnect;
+extern float fillval;
+extern float fmaxold;
+extern float fminold;
+extern int ixseed;
+extern int iyseed;
+extern float lower;
+extern float lowerval;
+extern float noiselowerlim;
+extern int nrowold;
+extern int nsamold;
+extern float threshval;
+extern float upper;
+extern float upperval;

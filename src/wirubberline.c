@@ -1,23 +1,20 @@
 
-/*$Header: /usr8/web/src/RCS/wirubberline.c,v 1.5 2011/09/23 11:54:11 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wirubberline.c,v 1.6 2018/12/07 17:06:44 leith Exp $*/
 
 /*
-C***************************************************************************
-C                                                                      *                                                             
-C  wid_bar.for     Created                         DEC 89 ArDean Leith *
-C                  Rewritten                       MAR 91 ArDean Leith *
-C  wirubberline    Ported to C                     NOV 92 ArDean Leith *                                                             
-C                  For Directcolor                 NOV 10 ArDean Leith *                                                             
-C                                                                      *                                                             
-C **********************************************************************
-C *  AUTHOR: ArDean Leith                                                  *
+ C**********************************************************************
+ C                                                                     *                                                             
+ C  wid_bar.for     Created                        DEC 89 ArDean Leith *
+ C                  Rewritten                      MAR 91 ArDean Leith *
+ C  wirubberline    Ported to C                    NOV 92 ArDean Leith *                                                             
+ C                  For Directcolor                NOV 10 ArDean Leith *                                                             
+ C                                                                     *                                                             
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -34,20 +31,21 @@ C *  AUTHOR: ArDean Leith                                                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    wirubberline(win, icontxt, draw, perm,ixs,   iys,ixe,   iye)
-C
-C    PURPOSE:      Draws rubber line
-C
-C    PARAMETERS:    
-C
-C    CALLED BY:    
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C    wirubberline(win, icontxt, draw, perm,ixs,   iys,ixe,   iye)
+ C
+ C    PURPOSE:      Draws rubber line
+ C
+ C    PARAMETERS:    
+ C
+ C    CALLED BY:    
+ C
+ C--********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  /**********************  wirubberline  *****************************/
 

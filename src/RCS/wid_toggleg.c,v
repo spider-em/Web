@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.06.44;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2005.10.18.16.59.45;	author leith;	state Exp;
@@ -41,24 +46,21 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/wid_toggleg.c,v 1.4 1996/03/26 13:59:40 leith Exp $*/
+/*$Header: web/new/RCS/wid_toggleg.c,v 1.5 2005/10/18 16:59:45 leith Exp $*/
 /*
  * wid_toggleg.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -88,16 +90,16 @@ text
  ***********************************************************************
 */
 
-
-#include "x.h"
 #include <Xm/ToggleBG.h>
+#include "x.h"
 #include "std.h"
+#include "routines.h"
 
 /******************  wid_toggleg  ******************************/
 
  Widget wid_toggleg(Widget iw_parent, Widget iw_toggleg, 
                char *label, int value,
-               void (*cb)(), char *data, int ix, int iy)
+               XtCallbackProc cb, void *data, int ix, int iy)
  { 
  Arg           args[6];   /* arg list */
  register      int  n;           /* arg count */
@@ -145,6 +147,34 @@ text
  return iw_toggleg;
  }
  
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_toggleg.c,v 1.4 1996/03/26 13:59:40 leith Exp $*/
+d8 3
+a10 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d40 1
+a40 1
+
+a41 1
+#include <Xm/ToggleBG.h>
+d43 1
+d49 1
+a49 1
+               void (*cb)(), char *data, int ix, int iy)
 @
 
 

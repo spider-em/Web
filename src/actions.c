@@ -1,15 +1,13 @@
 
-/*$Header: /usr8/web/src/RCS/actions.c,v 1.6 2005/10/18 16:59:53 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/actions.c,v 1.7 2018/12/07 16:58:50 leith Exp $*/
 /*
- * actions.c
- *
- **********************************************************************
+ C*********************************************************************
+ C
+ C actions.c
+ C
+ C**********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -27,16 +25,16 @@
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- **********************************************************************
+ C=*********************************************************************
  *
+ * actions(Widget, char *, XtActionProc, char *)
  * 
- * 
- * PURPOSE:     adds actions to iw_t's translation table for remaping
+ * PURPOSE:     Adds actions to iw_t's translation table for remaping
  *		the specified mouse buttons
  *
  * RETURNS:
  * 
- * PARAMETERS:	iw_t		widget whose translation table is
+ * PARAMETERS:	iw_t		Widget whose translation table is
  *				to be modified
  * 		keys		string consisting of:
  *				   1 = left mouse button click
@@ -46,80 +44,78 @@
  **********************************************************************
 */
 
+#include "routines.h"
 #include "std.h"
 #include "x.h"
+#include "extras.h"
 
-
-extern XtAppContext app_context;        /* application context   */
-
-/* function prototypes */
-extern void action  (Widget, char *, char *, char *);
+/* Function prototypes */
 
 /************************  actions ***********************************/
 
-void actions(Widget iw_t, char *act_name, void (*act)(), char *keys)
+void actions(Widget iw_t, char *act_name, XtActionProc act, char *keys)
 {
-   char *compare;              /* string used in comparisons */
+   char *compare;              /* String used in comparisons */
 
-   struct XtActionsRec         /* action list                */
+   struct XtActionsRec         /* Action list                */
       {
       String       string;    
       XtActionProc act_prop;
       } acts[1]; 
 
-   /* setup action list */
+   /* Setup action list */
    acts[0].string   = act_name;
    acts[0].act_prop = act;
 
-   /* remove all previous translations from iw_t */
+   /* Remove all previous translations from iw_t */
    XtUninstallTranslations(iw_t);
 
-   /* add new actions to context */
+   /* Add new actions to context */
    XtAppAddActions(app_context, (XtActionList) acts, XtNumber(acts));
 
-   /* set up action on mouse movement */
+   /* Set up action on mouse movement */
    compare = strchr(keys, 'M');
    if (compare != NULL)
       {
       action(iw_t, "<MotionNotify> : ", act_name, "(M)");
       }
 
-   /* set up action on button 1 down (left button) */
+   /* Set up action on button 1 down (left button) */
    compare = strchr(keys, '1');
    if (compare != NULL) 
       {
       action(iw_t, "<Btn1Down> : ", act_name, "(1)");
       }
 
-   /* set up action on button 2 (middle button) */
+   /* Set up action on button 2 (middle button) */
    compare = strchr(keys, '2');
    if (compare != NULL) 
       {
       action(iw_t, "<Btn2Down> : ", act_name, "(2)");
       }
 
-   /* set up action on button 3 (right button) */
+   /* Set up action on button 3 (right button) */
    compare = strchr(keys, '3');
    if (compare != NULL) 
       {
       action(iw_t, "<Btn3Down> : ", act_name, "(3)");
       }
 
-   /* set up action on button 1 up (left button) */
+   /* Set up action on button 1 up (left button) */
    compare = strchr(keys, 'L');
    if (compare != NULL) 
       {
       action(iw_t, "<Btn1Up> : ", act_name, "(L)");
       }
 
-   /* set up action on key up-arrow  */
+   /* Set up action on key up-arrow  */
    compare = strchr(keys, 'u');
    if (compare != NULL) 
       {
       action(iw_t, "<Key>Up : ", act_name, "(u)");
       }
 
-   /* set up action on key down-arrow  */
+   /* Set up action on key down-arrow  */
    compare = strchr(keys, 'd');
    if (compare != NULL) 
       {

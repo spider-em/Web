@@ -1,20 +1,17 @@
 
-/*$Header: /usr8/web/new/RCS/wrtvol.c,v 1.3 2005/10/18 16:59:50 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wrtvol.c,v 1.4 2018/12/07 17:06:44 leith Exp $*/
 
 /*
-C**************************************************************************
-C
-C   WRTVOL.C  -- CREATED NOV 13 1993
-C             
-C **********************************************************************
-C *  AUTHOR: ArDean Leith                                                  *
+ C**************************************************************************
+ C
+ C   WRTVOL.C  -- CREATED NOV 13 1993
+  C             
+ C **********************************************************************
+ C * AUTHOR: ArDean Leith                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -31,26 +28,23 @@ C *  AUTHOR: ArDean Leith                                                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C  WRTVOL(filedata,  float * data)
-C           
-C
-C  PURPOSE:     WRITES SPIDER IMAGE INTO 8 / OR 32 BIT ARRAY .
-C
-C  PARAMETERS:  filedata           image file structure pointer
-C               data               floating point data
-C
-C  RETURNS:     TRUE OR FALSE 
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C  WRTVOL(filedata,  float * data)
+ C           
+ C
+ C  PURPOSE:     WRITES SPIDER IMAGE INTO 8 / OR 32 BIT ARRAY .
+ C
+ C  PARAMETERS:  filedata           image file structure pointer
+ C               data               floating point data
+ C
+ C  RETURNS:     TRUE OR FALSE 
+ C
+ C--********************************************************************
 */
 
 #include "files.h"
-
- /* external function prototypes */
- extern int   wrtlin    (FILEDATA *, float *, int, int);
-
+#include "routines.h"
 
  /*************************   wrtvol   ****************************/
 

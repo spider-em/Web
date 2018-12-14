@@ -1,4 +1,4 @@
-head	1.12;
+head	1.13;
 access;
 symbols
 	pre-tilt-improve:1.12
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.13
+date	2018.12.07.17.06.44;	author leith;	state Exp;
+branches;
+next	1.12;
 
 1.12
 date	96.05.06.16.24.37;	author leith;	state Exp;
@@ -76,17 +81,17 @@ desc
 @@
 
 
-1.12
+1.13
 log
-@rewritten with pointers for aval, allocates aval,xsfm, & ysfm.
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/willsq.c,v 1.11 1996/04/16 14:28:20 leith Exp $*/
+/*$Header: web/RCS/willsq.c,v 1.12 1996/05/06 16:24:37 leith Exp $*/
 /*
-C   TRANSFERED FROM WILLSQ.FOR BY JING SU 8/31/93
+C   Transfered from willsq.for by                     JING SU 8/31/93
 C 
-C++****************************************************************************
+C++**********************************************************************
 C   PROGRAM TO CALCULATE A LINEAR LEAST SQUARE FIT TO DETERMINE
 C   THE DIRECTION OF THE TILT-AXIS, THE TILT ANGLE AND THE RELATIVE
 C   POSITION OF A TILT PAIR (0 DEG VERSUS TILTED)
@@ -144,12 +149,8 @@ c-*****************************************************************************
 #include "std.h"
 #include "common.h"
 #include "routines.h"
-
-extern int mircol(int n, int m, int mm, float a[4][5], 
-                    float eps, float x[]);
-
-extern float  xu0t, yu0t, xs0t, ys0t;
-extern FILE * resfp;
+#include "fit.h"
+#include "extras.h"
 
 /****************************** willsq ******************************/
 
@@ -370,6 +371,31 @@ int willsq(float *x, float *y, float *xs, float *ys,
 
  return 0;
  } 
+@
+
+
+1.12
+log
+@rewritten with pointers for aval, allocates aval,xsfm, & ysfm.
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/willsq.c,v 1.11 1996/04/16 14:28:20 leith Exp $*/
+d4 1
+a4 1
+C   TRANSFERED FROM WILLSQ.FOR BY JING SU 8/31/93
+d6 1
+a6 1
+C++****************************************************************************
+d64 2
+a65 6
+
+extern int mircol(int n, int m, int mm, float a[4][5], 
+                    float eps, float x[]);
+
+extern float  xu0t, yu0t, xs0t, ys0t;
+extern FILE * resfp;
 @
 
 

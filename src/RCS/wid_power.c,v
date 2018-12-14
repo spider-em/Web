@@ -1,4 +1,4 @@
-head	1.11;
+head	1.12;
 access;
 symbols
 	pre-tilt-improve:1.11
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.12
+date	2018.12.07.17.03.35;	author leith;	state Exp;
+branches;
+next	1.11;
 
 1.11
 date	2011.09.27.17.23.09;	author leith;	state Exp;
@@ -72,26 +77,23 @@ desc
 @
 
 
-1.11
+1.12
 log
-@true color support
+@bollingers_email_and_cosmetic
 @
 text
 @/*
-************************************************************************
-*  WID_POWER.FOR  -- CREATED FEB 93
-*  Translated to wid_power.c by          Mahieddine Ladjadj   5/24/94
-*               24 bit display bug fixed ArDean Leith         11/8/07
-*
-*C *********************************************************************
-*C *  AUTHOR: ArDean Leith                                             *
+ ***********************************************************************
+ *  WID_POWER.FOR  -- CREATED FEB 93
+ *  Translated to wid_power.c by          Mahieddine Ladjadj   5/24/94
+ *               24 bit display bug fixed ArDean Leith         11/8/07
+ *
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2007  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -108,18 +110,18 @@ text
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-*C *********************************************************************
-*C
-*C  int wid_power(perm, chktsiz)
-*C
-*C  PURPOSE:    Readsback window, stores in a image file
-*C
-*C  PARAMETERS: perm         Permanent or temporary spectrum
-*C              chktsiz      Checks size of window
-*C
-*C  CALLED BY:  powerbut_pop()
-*C
-*C  CALLS:      power   X-Windows routines
+ C *********************************************************************
+ C
+ C  int wid_power(perm, chktsiz)
+ C
+ C  PURPOSE:    Readsback window, stores in a image file
+ C
+ C  PARAMETERS: perm         Permanent or temporary spectrum
+ C              chktsiz      Checks size of window
+ C
+ C  CALLED BY:  powerbut_pop()
+ C
+ C  CALLS:      power   X-Windows routines
 *
 ************************************************************************
 */
@@ -428,6 +430,44 @@ int wid_power(int perm, int *chktsiz)
  
    return 0;  
    }             
+@
+
+
+1.11
+log
+@true color support
+@
+text
+@d2 7
+a8 7
+************************************************************************
+*  WID_POWER.FOR  -- CREATED FEB 93
+*  Translated to wid_power.c by          Mahieddine Ladjadj   5/24/94
+*               24 bit display bug fixed ArDean Leith         11/8/07
+*
+*C *********************************************************************
+*C *  AUTHOR: ArDean Leith                                             *
+d11 2
+a12 5
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d29 12
+a40 12
+*C *********************************************************************
+*C
+*C  int wid_power(perm, chktsiz)
+*C
+*C  PURPOSE:    Readsback window, stores in a image file
+*C
+*C  PARAMETERS: perm         Permanent or temporary spectrum
+*C              chktsiz      Checks size of window
+*C
+*C  CALLED BY:  powerbut_pop()
+*C
+*C  CALLS:      power   X-Windows routines
 @
 
 

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickbackmen.c,v 1.11 2015/09/01 17:53:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pickbackmen.c,v 1.12 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -45,25 +45,21 @@
  C*********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 
+#include "common.h"
+#include "routines.h"
+#include "pick.h"
+#include "fit.h"
+
  /* External function prototypes */
- int            pickbackave (char *);
 
  /* Internal function prototypes */
- void           pickbackmen_buts (Widget, XtPointer, XtPointer);
- void           pickbackmen_buta (Widget, XtPointer, XtPointer);
- void           pickbackmen_butcl(Widget, XtPointer, XtPointer);
+ static void    pickbackmen_buts (Widget, XtPointer, XtPointer);
+ static void    pickbackmen_buta (Widget, XtPointer, XtPointer);
+ static void    pickbackmen_butcl(Widget, XtPointer, XtPointer);
   
  /* Externally defined global variables */
- extern char    dfil4[12], dfil5[12];
- extern int     back_win_now;
- extern int     openit1, openit2;
- extern FILE *  fpdoc4 ;
- extern FILE *  fpdoc5;
 
  /* Internally defined global variables */
  int            firstback;      /* Set by fitdoc */

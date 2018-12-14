@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/redlin8f.c,v 1.3 2005/10/18 16:59:51 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/redlin8f.c,v 1.4 2018/12/07 17:03:33 leith Exp $*/
 /*
  * redlin8.c
  *
@@ -43,6 +43,7 @@
  *********************************************************************/
 
 #include "files.h"
+#include "routines.h"
 
  int redlin8f(FILEDATA *fileptr, float *buf, int nsam, int irec)
  {
@@ -64,8 +65,8 @@
 
  if ((igot = fseek(fp,ioff,SEEK_SET)) != 0) 
      {       /* offset seek failed */
-     printf("*** Seek failed in redlin8f: %d \n",igot);
-     printf(" igot: % d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+     printf("*** Seek failed in redlin8f: %zu \n",igot);
+     printf(" igot: %zu, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
      return FALSE;
      }
 
@@ -76,7 +77,7 @@
  if (feof(fp))
       {
       printf("*** End of file in redlin8f. \n");
-      printf("igot: %d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+      printf("igot: %zu, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
       printf("headbyt: %d, irec: %d ,offset: %d \n",
               fileptr->headbyt,irec,fileptr->offset);
       return FALSE;

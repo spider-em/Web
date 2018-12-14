@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/defluts_true.c,v 1.1 2011/09/15 16:30:25 leith Exp leith $*/
+/*$Header: /usr16/software/web/src/RCS/defluts_true.c,v 1.2 2018/12/07 17:03:31 leith Exp $*/
 /*
 C***********************************************************************
 C
@@ -79,7 +79,7 @@ Colormap defluts_true(int dummy)
  printf(" Web ----------------------\n" );
  printf(" Default Screen:     %d  \n",screen);
  printf(" Screen depth:       %d  \n",idepth);
- printf(" Default visual:     %#X \n",visualdef);
+ printf(" Default visual:     %p \n",(void *)visualdef);
 
  // Write out shared colormap info 
  //lut_info("shared",mapdef,24,0,256); 
@@ -109,7 +109,7 @@ Colormap defluts_true(int dummy)
 #endif
  mappriv = mapdef; // Use default colormap
 
- printf(" Current colormap    %#x \n",mappriv );
+ printf(" Current colormap    %p \n",(void *)mappriv );
  printf(" # Colormap colors:  %d  \n",ncolors);
  
  //Write out private colormap info 

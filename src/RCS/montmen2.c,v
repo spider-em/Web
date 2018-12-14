@@ -1,4 +1,4 @@
-head	1.13;
+head	1.14;
 access;
 symbols
 	pre-tilt-improve:1.13
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.14
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.13;
 
 1.13
 date	2005.10.18.16.59.56;	author leith;	state Exp;
@@ -81,13 +86,13 @@ desc
 @@
 
 
-1.13
+1.14
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/montmen2.c,v 1.12 1999/08/04 16:54:30 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/montmen2.c,v 1.13 2005/10/18 16:59:56 leith Exp $*/
 /*
 
 C++************************************************************************
@@ -140,10 +145,11 @@ C**************************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 /* internal function prototypes */
- void          montmen2_buta(Widget iw_temp, XtPointer, XtPointer);
- void          montmen2_butc(Widget iw_temp, XtPointer, XtPointer);
+ static void   montmen2_buta(Widget iw_temp, XtPointer, XtPointer);
+ static void   montmen2_butc(Widget iw_temp, XtPointer, XtPointer);
 
  /* file variables */
  static Widget   iw_ixul, iw_iyul, iw_nprow, iw_numfil, iw_movie;
@@ -153,7 +159,6 @@ C**************************************************************************
  int             lastfile;           /* used in mont2 */
 
  /* externally defined variables */
- extern int      icattyp;            /* defined in imagemen.c */
 
  /************************************************************/
 
@@ -323,6 +328,24 @@ C**************************************************************************
  closefile(filedata);
  filedata = NULL;
  }
+@
+
+
+1.13
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/montmen2.c,v 1.12 1999/08/04 16:54:30 leith Exp $*/
+d55 1
+d58 2
+a59 2
+ void          montmen2_buta(Widget iw_temp, XtPointer, XtPointer);
+ void          montmen2_butc(Widget iw_temp, XtPointer, XtPointer);
+a68 1
+ extern int      icattyp;            /* defined in imagemen.c */
 @
 
 

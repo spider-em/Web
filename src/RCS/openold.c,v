@@ -1,4 +1,4 @@
-head	1.50;
+head	1.51;
 access;
 symbols
 	pre-tilt-improve:1.49
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.51
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.50;
 
 1.50
 date	2015.09.01.17.53.27;	author leith;	state Exp;
@@ -266,13 +271,13 @@ desc
 @@
 
 
-1.50
+1.51
 log
-@$2
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/openold.c,v 1.48 2013/03/12 19:08:51 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.50 2015/09/01 17:53:27 leith Exp $*/
 
 /***********************************************************************
  *                                                                     *
@@ -327,7 +332,10 @@ text
  *
  *********************************************************************/
 
+#include <stdlib.h>
+#include <ctype.h>
 #include "files.h"
+#include "common.h"
 #include "routines.h"
 
 // Byte flipping 
@@ -339,17 +347,15 @@ text
            (((unsigned int)(B) << 8) & 0xff0000)
 
  /* Externally defined global variables */
- extern int   nsam8, nrow8, nslice8;
- extern int   nstack, inuse, maxim, imginstack;
 
  /* Internal function prototypes */
- int          opensmall8      (char *, FILEDATA  *, int *,   int * ,  int * , 
+ static int   opensmall8      (char *, FILEDATA  *, int *,   int * ,  int * , 
                                int ,   int , int , int * );
- int          is_spider_header(float[]);
- int          is_mrc_header   (float[]);
- int          IsLittleEndian  ();
- int          IsBigEndian     ();
- float        ReverseFloat    ( const float inFloat );
+ static int   is_spider_header(float[]);
+ static int   is_mrc_header   (float[]);
+ static int   IsLittleEndian  (void);
+ static int   IsBigEndian     (void);
+ static float ReverseFloat    ( const float inFloat );
 
 
  /* Internal file scope variables */
@@ -369,7 +375,7 @@ text
 
  FILEDATA  *fileptr;
 
- char           type[4], output[160], ctemp[10], typefl[1];
+ char           type[6], output[160], typefl[2] = " ";
  FILE *         fp;
  int            nsam,nrow,nslice,iform,headbyt,headrec;
  int            lentitle, k1, locat, lennum, iflag;
@@ -383,19 +389,19 @@ text
  imginstack = 0;
  inuse      = 0;
  maxim      = 0;
- strcpy(ctemp,"          ");
 
  locat = strcspn(filnam,"@@");
- if (locat < strlen(filnam))
+ if (filnam[locat])
     { /* Has @@ in filnam denoting image stack */
-    lennum     = strspn(&filnam[locat+1],"0123456789");
-    if (lennum > 0)
+    char *tailptr = filnam + locat + 1;
+
+    if (isdigit(*tailptr))
        {  /* Has number after @@ in filnam, stacked image requested */
-       strncpy(ctemp,&filnam[locat+1],lennum);
-       imginstack = atoi(ctemp);
+       imginstack = strtol(tailptr, &tailptr, 10);
        }
-    /* Remove @@ and stacked image number from filnam */
-    strcpy(&filnam[locat],&filnam[locat+1+lennum]);
+    /* Remove @@ and any stacked image number from filnam */
+    /* Overlapping src and dest requires memmove().  Include the string terminator. */
+    memmove(filnam + locat, tailptr, strlen(tailptr) + 1);
     }
 
  /* Open file */
@@ -650,8 +656,7 @@ text
  fileptr -> ximage = NULL;
 
  /* Print file opening information */
- strcpy(typefl," ");
- if (fileptr -> flip > 0) strcpy(typefl,"F" );
+ if (fileptr -> flip > 0) typefl[0] = 'F';
  
  iform = fileptr -> iform;
 
@@ -980,7 +985,7 @@ float ReverseFloat( const float inFloat )
  }
 
 
- int IsLittleEndian()
+ int IsLittleEndian(void)
  {
  int n = 1;
  // Little endian if true
@@ -988,7 +993,7 @@ float ReverseFloat( const float inFloat )
  return FALSE;
  }
 
- int IsBigEndian()
+ int IsBigEndian(void)
  {
  int n = 1;
  // Little endian if true
@@ -1083,6 +1088,62 @@ c__________________________________________________________
 c---------------------------------------------------
 #endif
 
+@
+
+
+1.50
+log
+@$2
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/openold.c,v 1.48 2013/03/12 19:08:51 leith Exp $*/
+d57 2
+d60 1
+a71 2
+ extern int   nsam8, nrow8, nslice8;
+ extern int   nstack, inuse, maxim, imginstack;
+d74 1
+a74 1
+ int          opensmall8      (char *, FILEDATA  *, int *,   int * ,  int * , 
+d76 5
+a80 5
+ int          is_spider_header(float[]);
+ int          is_mrc_header   (float[]);
+ int          IsLittleEndian  ();
+ int          IsBigEndian     ();
+ float        ReverseFloat    ( const float inFloat );
+d100 1
+a100 1
+ char           type[4], output[160], ctemp[10], typefl[1];
+a113 1
+ strcpy(ctemp,"          ");
+d116 1
+a116 1
+ if (locat < strlen(filnam))
+d118 3
+a120 2
+    lennum     = strspn(&filnam[locat+1],"0123456789");
+    if (lennum > 0)
+d122 1
+a122 2
+       strncpy(ctemp,&filnam[locat+1],lennum);
+       imginstack = atoi(ctemp);
+d124 3
+a126 2
+    /* Remove @@ and stacked image number from filnam */
+    strcpy(&filnam[locat],&filnam[locat+1+lennum]);
+d381 1
+a381 2
+ strcpy(typefl," ");
+ if (fileptr -> flip > 0) strcpy(typefl,"F" );
+d710 1
+a710 1
+ int IsLittleEndian()
+d718 1
+a718 1
+ int IsBigEndian()
 @
 
 

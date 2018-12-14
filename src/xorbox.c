@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/xorbox.c,v 1.7 2011/09/23 12:47:48 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/xorbox.c,v 1.7 2011/09/23 12:47:48 leith Exp $*/
 /*
 C***********************************************************************
 C                                                                      *

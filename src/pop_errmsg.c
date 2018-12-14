@@ -42,10 +42,11 @@
  ***********************************************************************
 */
 
-#include "x.h"
 #include <Xm/MessageB.h>
+#include "x.h"
+#include "common.h"
+#include "routines.h"
 
-extern  Widget   iw_win;
 
 /****************************** Str2XmString *************************/
 
@@ -72,7 +73,7 @@ void RemoveDialButton( Widget widget, int which_button )
  
 /******************************  pop_errmsg_buto *********************/
 
-void pop_errmsg_buto(Widget widget, caddr_t client_data, 
+void pop_errmsg_buto(Widget widget, void * client_data, 
                            XmAnyCallbackStruct * call_data)
    {
    XtRemoveGrab( widget );

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/filinc.c,v 1.3 2005/10/18 16:59:53 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/filinc.c,v 1.4 2018/12/07 17:03:31 leith Exp $*/
 /*
 C++*************************************************************************
 C
@@ -53,6 +53,7 @@ C--*********************************************************************
 */
 
 #include "files.h"
+#include "routines.h"
 
 
  /************************  filinc  ************************************/
@@ -76,7 +77,7 @@ C--*********************************************************************
  if (*nlet  <= 0)
     {
     /* empty filename, can not increment name */
-    strcpy(filnew,NULL);
+    *filnew = '\0';
     *nlet   = 0;
     *numfil = 0;
     return 0;

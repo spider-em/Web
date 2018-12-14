@@ -63,22 +63,17 @@
 #include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
+#include "pick.h"
+#include "fit.h"
 
  /* Externally defined function prototypes */
 
  /* Internally defined function prototypes */
- void          tiltp_deletemen     (Widget, XtPointer, XtPointer);
- void          tiltp_deletemen_buta(Widget, XtPointer, XtPointer);
- void          tiltp_deletemen_butc(Widget, XtPointer, XtPointer);
- int           tiltp_delete        (int);
+ static void   tiltp_deletemen_buta(Widget, XtPointer, XtPointer);
+ static void   tiltp_deletemen_butc(Widget, XtPointer, XtPointer);
+ static int    tiltp_delete        (int);
 
  /* External common global variables used here */
- extern char   dfil1[12];       // Doc file 
- extern char   dfil2[12];       // Doc file 
- extern char   strcom1[];       // Doc file comment
- extern char   strcom2[];       // Doc file comment
- extern int    numm ;           // From: fitdoc
- extern int    maxpart;
 
  /* Common global variables defined here */
 
@@ -88,8 +83,7 @@
 
 /*********************************** tiltp_deletemen **********************/
 
- void tiltp_deletemen(Widget iw_temp, XtPointer data, 
-                                      XtPointer call_data)
+ void tiltp_deletemen(void)
  { 
  char     cval9[9];
  Widget   iw_rowcol;

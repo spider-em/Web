@@ -36,31 +36,30 @@ C **********************************************************************
 *****************************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "std.h"
 #include "x.h"
-#include <Xm/Text.h>
 #include "routines.h"
+#include "comap.h"
 
-  extern char   datexc[4];         /* file extension           */
 
   static Widget iw_im = (Widget)0;
   char imnamm[81] = "avgimg001"; 
-  extern Widget iw_comapmen2;
-  void     comapmen5_buta  (Widget iw_t, caddr_t itag, caddr_t call_data);
+  static void     comapmen5_buta  (Widget iw_t, void * itag, void * call_data);
                                                                          
 /********************** comapmen5 ***********************************/
 
-void comapmen5(Widget iw_t, caddr_t itag, caddr_t callpar)
+void comapmen5(Widget iw_t, void * itag, void * callpar)
   {
   /* create a text box for image name input */
   iw_im = wid_text(iw_win, iw_im, "New Average Image", imnamm,
-                   *comapmen5_buta,(caddr_t) NULL,20,20);
+                   *comapmen5_buta,(void *) NULL,20,20);
   }
                                                                
 /********************** comapmen5_buta ***********************************/
 
-void comapmen5_buta(Widget iw_t, caddr_t itag, caddr_t call_data)
+void comapmen5_buta(Widget iw_t, void * itag, void * call_data)
   {
   XmSelectionBoxCallbackStruct * cbs;
 

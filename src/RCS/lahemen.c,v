@@ -1,4 +1,4 @@
-head	1.3;
+head	1.4;
 access;
 symbols
 	pre-tilt-improve:1.3
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.4
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.3;
 
 1.3
 date	2005.10.18.16.59.56;	author leith;	state Exp;
@@ -32,13 +37,13 @@ desc
 @
 
 
-1.3
+1.4
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/lahemen.c,v 1.2 1996/07/31 20:28:20 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/lahemen.c,v 1.3 2005/10/18 16:59:56 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -97,15 +102,12 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
 
  /* function prototypes */
- void         lahemen       (Widget, XtPointer, XtPointer);
- void         lahemen_buta  (Widget, XtPointer, XtPointer);
+ static void  lahemen_buta  (Widget, XtPointer, XtPointer);
  
  /* common global set elsewhere */
- extern int      nsamold, nrowold;
- extern int      bins;
- extern int      border;
 
  /* file level variables used here */
  static Widget   iw_lahemen, iw_border, iw_bins;
@@ -166,6 +168,26 @@ C***********************************************************************
  filter_but(iw_temp, (XtPointer) filtertype, call_data);
  }
 
+@
+
+
+1.3
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/lahemen.c,v 1.2 1996/07/31 20:28:20 leith Exp $*/
+d61 1
+d64 1
+a64 2
+ void         lahemen       (Widget, XtPointer, XtPointer);
+ void         lahemen_buta  (Widget, XtPointer, XtPointer);
+a66 3
+ extern int      nsamold, nrowold;
+ extern int      bins;
+ extern int      border;
 @
 
 

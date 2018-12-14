@@ -1,5 +1,5 @@
  
-/*$Header: /usr8/web/src/RCS/setacursor.c,v 1.10 2011/09/28 12:25:06 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/setacursor.c,v 1.11 2018/12/07 17:03:34 leith Exp $*/
 /*
 
 C++*********************************************************************
@@ -48,11 +48,11 @@ C--*********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
 #define MAXCURSOR 75
 
  /* External function prototypes */
- extern Cursor newcursor (int, int);
 
  /* Internal static variables */
  static int first = TRUE;

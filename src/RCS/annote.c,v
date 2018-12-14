@@ -1,6 +1,7 @@
-head	1.6;
+head	1.7;
 access;
 symbols
+	pre-bollinger:1.6
 	pre-tilt-improve:1.6
 	pre_surf_fromtop:1.6
 	pre_neednewmap:1.6
@@ -10,6 +11,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.30;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.17.00.04;	author leith;	state Exp;
@@ -46,27 +52,23 @@ desc
 @@
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/annote.c,v 1.5 2004/05/17 16:42:31 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/annote.c,v 1.6 2005/10/18 17:00:04 leith Exp $*/
 
 /***********************************************************************
  * annote.c
  *
- * ported WID_ANNOTE.FOR (VAX) to unix.
+ * Ported WID_ANNOTE.FOR (VAX) to Unix.
  *
  ***********************************************************************
  * author : Mahieddine Ladjadj
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -99,13 +101,11 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "annote.h"
 
 
 /* external common variables */
-  extern  int ix_reg, iy_reg, lab_reg, tkey1, tkey2, iarad;
-  extern  char outstr[80];
   
-  extern int iskip;    /* dgm addition so non-1:1 images anontate properly*/
 
 /***********************  annote *************************************/
 
@@ -117,8 +117,8 @@ int annote(char *filnam)
   float    *dbuf, plist[8], x, y;
   int      labno;
   float    *ptr;
-  
   float    scale;   /* dgm adds scale and the following lines */
+  char outstr[81];
   
   if ( iskip < 1 ) {
      scale = -iskip ;
@@ -226,6 +226,34 @@ int annote(char *filnam)
   spout(outstr);
   return TRUE;
 }
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/annote.c,v 1.5 2004/05/17 16:42:31 leith Exp $*/
+d7 1
+a7 1
+ * ported WID_ANNOTE.FOR (VAX) to unix.
+a12 4
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+d45 1
+a48 2
+  extern  int ix_reg, iy_reg, lab_reg, tkey1, tkey2, iarad;
+  extern  char outstr[80];
+a49 1
+  extern int iskip;    /* dgm addition so non-1:1 images anontate properly*/
+a60 1
+  
+d62 1
 @
 
 

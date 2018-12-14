@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/lahemen.c,v 1.3 2005/10/18 16:59:56 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/lahemen.c,v 1.4 2018/12/07 17:03:32 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -58,15 +58,12 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
 
  /* function prototypes */
- void         lahemen       (Widget, XtPointer, XtPointer);
- void         lahemen_buta  (Widget, XtPointer, XtPointer);
+ static void  lahemen_buta  (Widget, XtPointer, XtPointer);
  
  /* common global set elsewhere */
- extern int      nsamold, nrowold;
- extern int      bins;
- extern int      border;
 
  /* file level variables used here */
  static Widget   iw_lahemen, iw_border, iw_bins;

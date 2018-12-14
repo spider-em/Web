@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/invert.c,v 1.1 2005/10/18 16:59:48 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/invert.c,v 1.2 2018/12/07 17:03:32 leith Exp $*/
 
 /***********************************************************************
  *
@@ -43,10 +43,11 @@
  ***********************************************************************
 */
 
-#include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
+#include "std.h"
+#include "routines.h"
 
  /******************************  notit *****************************/
 

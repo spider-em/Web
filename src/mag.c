@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/mag.c,v 1.7 2011/09/23 12:46:54 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/mag.c,v 1.8 2018/12/07 17:03:32 leith Exp $*/
 /*
 C++*************************************************************************
 C
@@ -49,9 +49,7 @@ C--********************************************************************
 #include "routines.h"
 
  /* Internal function  prototypes */
- void 	      mag_pop(Widget, XEvent *, String *, Cardinal *);
- extern void  glass  (Window , Window , int , int ,
-                      int , int , int *, int *, int );
+ static void mag_pop(Widget, XEvent *, String *, Cardinal *);
 
  /* Internal file variables */
  static GC     icontxx;
@@ -63,7 +61,7 @@ C--********************************************************************
 
 /*****************************  mag  *********************************/
 
- void mag(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void mag(Widget iw_temp, void * data, void * call_data)
 
  {
  /* Make a xor graphics context (icontxx)	*/

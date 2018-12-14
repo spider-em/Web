@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/mont3.c,v 1.25 2012/12/05 17:10:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/mont3.c,v 1.26 2018/12/07 17:03:32 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -44,6 +44,7 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 #define MAXDIM 32000000
 
@@ -52,9 +53,6 @@ C***********************************************************************
  int       nsami, nrowi, nslicei;
 
  /* External variables used here */
- extern int      ixulmon, iyulmon, ndone;
- extern int      endfile;           
- extern XImage * ximagelist[1000]; /* from showmovie */
 
 /******************************  mont3 *******************************/
    

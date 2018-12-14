@@ -1,4 +1,4 @@
-head	1.3;
+head	1.4;
 access;
 symbols
 	pre-tilt-improve:1.2
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.4
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.3;
 
 1.3
 date	2015.09.01.18.58.21;	author leith;	state Exp;
@@ -32,13 +37,13 @@ desc
 @
 
 
-1.3
+1.4
 log
-@cosmetic
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/radcur.c,v 1.2 2005/10/18 16:59:45 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/radcur.c,v 1.3 2015/09/01 18:58:21 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -86,22 +91,19 @@ text
 */
 
 #include "common.h"
+#include "routines.h"
 
  /* External function prototypes */
- extern void   spout        (char *);
- extern int    wimakecur    (Cursor *, char * , char *,
-                             XColor *, XColor *, int, int);
- extern void   setacursor   (int, int, int);
  
  /* Externally defined common variables */
- extern Cursor   icurrad;
 
  /* Internal common variables */
+ static Cursor icurrad;
 
  /*  USE A 16X16 GRID FOR CURSORS.  USE A ENDIAN NUMBERING SYSTEM
      THAT STARTS WITH ONE AT LEFT END OF EACH BYTE!  */
 
- static char lfore[] = {
+ static unsigned char lfore[] = {
       0X01, 0X80,   0X02, 0X40, 
       0X04, 0X20,   0X08, 0X10, 
       0X10, 0X08,   0X00, 0X00, 
@@ -111,7 +113,7 @@ text
       0X08, 0X10,   0X04, 0X20, 
       0X02, 0X40,   0X01, 0X80 };
 
- static char lback[] = {
+ static unsigned char lback[] = {
       0X03, 0XC0,   0X07, 0XE0, 
       0X0E, 0X70,   0X1C, 0X38, 
       0X18, 0X18,   0X00, 0X00, 
@@ -131,12 +133,41 @@ text
     {
     /* Make cursor before it can be used */
 
-    wimakecur(&icurrad,lfore,lback,
+    wimakecur(&icurrad,(char *)lfore,(char *)lback,
               &colorcursf,&colorcursb, 8,8);
     }
  }
 
 
+@
+
+
+1.3
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/radcur.c,v 1.2 2005/10/18 16:59:45 leith Exp $*/
+d50 1
+a52 4
+ extern void   spout        (char *);
+ extern int    wimakecur    (Cursor *, char * , char *,
+                             XColor *, XColor *, int, int);
+ extern void   setacursor   (int, int, int);
+a54 1
+ extern Cursor   icurrad;
+d57 1
+d62 1
+a62 1
+ static char lfore[] = {
+d72 1
+a72 1
+ static char lback[] = {
+d92 1
+a92 1
+    wimakecur(&icurrad,lfore,lback,
 @
 
 

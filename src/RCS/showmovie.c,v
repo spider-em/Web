@@ -1,4 +1,4 @@
-head	1.7;
+head	1.8;
 access;
 symbols
 	pre-tilt-improve:1.7
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.8
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.7;
 
 1.7
 date	2005.10.18.16.59.24;	author leith;	state Exp;
@@ -51,9 +56,9 @@ desc
 @@
 
 
-1.7
+1.8
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @/*
@@ -94,19 +99,18 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
+#include "movie.h"
 
 /* internal function prototypes */
-void         movie_popb       (Widget, XEvent *, String *, Cardinal *);
-void         movie_showframe  (int, int);
-void         movie_wait       (Widget, XtIntervalId *);
-int          movie_setframe   (int , int , int * , int );
+static void  movie_popb       (Widget, XEvent *, String *, Cardinal *);
+static void  movie_showframe  (int, int);
+static void  movie_wait       (Widget, XtIntervalId *);
+static int   movie_setframe   (int , int , int * , int );
 
 /* external function prototypes */
-extern void  showmoviemen     (int);
 
 /* external variables used/or set elsewhere */
-extern int  movie_delay, movie_frame, movie_inc, movie_twoways, ndone;
-extern int  nsami,nrowi,nslicei;   /* from mont3.c */
 
 /* variables also used/set elsewhere */
 XImage *    ximagelist[1000];
@@ -257,6 +261,26 @@ int movie_setframe(int next, int twoways, int * increment, int ntot)
 
    return iframe;
    }
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d39 2
+d43 4
+a46 4
+void         movie_popb       (Widget, XEvent *, String *, Cardinal *);
+void         movie_showframe  (int, int);
+void         movie_wait       (Widget, XtIntervalId *);
+int          movie_setframe   (int , int , int * , int );
+a48 1
+extern void  showmoviemen     (int);
+a50 2
+extern int  movie_delay, movie_frame, movie_inc, movie_twoways, ndone;
+extern int  nsami,nrowi,nslicei;   /* from mont3.c */
 @
 
 

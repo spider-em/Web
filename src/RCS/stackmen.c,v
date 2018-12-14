@@ -1,4 +1,4 @@
-head	1.12;
+head	1.13;
 access;
 symbols
 	pre-tilt-improve:1.12
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.13
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.12;
 
 1.12
 date	2015.06.16.16.25.58;	author leith;	state Exp;
@@ -77,9 +82,9 @@ desc
 @
 
 
-1.12
+1.13
 log
-@removed the menu non-removal
+@bollingers_email_and_cosmetic
 @
 text
 @/*
@@ -132,13 +137,14 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 /* Internal function prototypes */
- void          stackmen_buta(Widget, XtPointer, XtPointer);
- void          stackmen_butc(Widget, XtPointer, XtPointer);
- void          stackmen_toga(Widget, XtPointer, XtPointer);
- void          stackmen_togb(Widget, XtPointer, XtPointer);
- void          stackmen_togc(Widget, XtPointer, XtPointer);
+ static void   stackmen_buta(Widget, XtPointer, XtPointer);
+ static void   stackmen_butc(Widget, XtPointer, XtPointer);
+ static void   stackmen_toga(Widget, XtPointer, XtPointer);
+ static void   stackmen_togb(Widget, XtPointer, XtPointer);
+ static void   stackmen_togc(Widget, XtPointer, XtPointer);
 
  /* File variables */
  static Widget   iw_all, iw_single, iw_section;
@@ -151,7 +157,6 @@ text
  int             stkend;           /* Used in stack display */
  static int      all=TRUE, single=FALSE, section=FALSE;    
 
- extern int      montaverage;      /* Want montage average */
 
  /************************************************************/
 
@@ -346,6 +351,24 @@ text
     filedata = NULL;
     }
 
+@
+
+
+1.12
+log
+@removed the menu non-removal
+@
+text
+@d51 1
+d54 5
+a58 5
+ void          stackmen_buta(Widget, XtPointer, XtPointer);
+ void          stackmen_butc(Widget, XtPointer, XtPointer);
+ void          stackmen_toga(Widget, XtPointer, XtPointer);
+ void          stackmen_togb(Widget, XtPointer, XtPointer);
+ void          stackmen_togc(Widget, XtPointer, XtPointer);
+a70 1
+ extern int      montaverage;      /* Want montage average */
 @
 
 

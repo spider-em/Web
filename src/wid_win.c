@@ -1,19 +1,16 @@
 
-/*$Header: /usr8/web/src/RCS/wid_win.c,v 1.6 2011/07/19 19:41:45 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_win.c,v 1.7 2018/12/07 17:06:44 leith Exp $*/
 /*
-C++************************************************************************
-C
-C WID_WIN
-C
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                                 *
+ C++********************************************************************
+ C
+ C WID_WIN
+ C
+ C**********************************************************************
+ C * AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -30,34 +27,32 @@ C *  AUTHOR:  ArDean Leith                                                 *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C WID_WIN
-C
-C PURPOSE:      SET UP A WINDOWING SCALE WIDGET FOR 3-D VOLS
-C
-C PARAMETERS:   IW_PARENT         PARENT WIDGET         READ
-C               IW_ITS            WIDGET NUMBERS        WRITE
-C               NSAM,NROW,NSLICE  VOLUME EXTENT         READ
-C               IXC               UPPER LEFT X          READ
-C               IYT               UPPER LEFT Y,LOWER Y  READ/WRITE
-C
-C CALLED BY:    SURFMEN
-C
-C NOTE:         SLIDER IS ONLY CREATED IF CORRESPONDING VALUE OF
-C               NSAM, NROW, OR NSLICE IS > 0.
-C
-C***********************************************************************
+ C *********************************************************************
+ C
+ C WID_WIN
+ C
+ C PURPOSE:      SET UP A WINDOWING SCALE WIDGET FOR 3-D VOLS
+ C
+ C PARAMETERS:   IW_PARENT         PARENT WIDGET         READ
+ C               IW_ITS            WIDGET NUMBERS        WRITE
+ C               NSAM,NROW,NSLICE  VOLUME EXTENT         READ
+ C               IXC               UPPER LEFT X          READ
+ C               IYT               UPPER LEFT Y,LOWER Y  READ/WRITE
+ C
+ C CALLED BY:    SURFMEN
+ C
+ C NOTE:         SLIDER IS ONLY CREATED IF CORRESPONDING VALUE OF
+ C               NSAM, NROW, OR NSLICE IS > 0.
+ C
+ C***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/Scale.h>
+#include "common.h"
+#include "routines.h"
 
 #define  MAX_ARGS 11
 
- extern Widget wid_labelg   (Widget, Widget, char *, int, int);
- extern Widget wid_rowcol   (Widget, char , int, int);
- 
 
 /************************************************************/
 

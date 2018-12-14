@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/savdn1.c,v 1.20 2011/06/10 12:15:42 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/savdn1.c,v 1.21 2018/12/07 17:03:34 leith Exp $*/
 
 /*
 C++*************************************************************************
@@ -53,9 +53,7 @@ C--*******************************************************************
 */
 
 #include "std.h"
-
-extern void  spout(char *);
-extern void  spouts(char *);
+#include "routines.h"
 
 /*************************  savdn1  ****************************/
 

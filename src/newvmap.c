@@ -42,14 +42,11 @@
 
 #include "x.h"
 #include "std.h"
+#include "routines.h"
 
  // Functions used here
 
  // External common variables
- extern int            mapgo,mapend;      // Image start & end in colormap 
-
- // Internally defined common variables
- int                   vmap[256];          // Virtual colormap
 
  void newvmap(int mapgot,int mapendt, int * vmap)
 

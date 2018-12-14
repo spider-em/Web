@@ -20,8 +20,8 @@
    <i>Web</i> is a point-and-click interface for display and interaction
    with SPIDER images and data.  <i>Web</i> is written in <i>C</i> for use with the 
    X WINDOW system with Motif Widgets.  
-   <i>JWeb</i> written in <i>Java</i> is also 
-   available for <a href="./jweb-inst-linux.html">installation</a> on GNU/Linux
+   <i>JWeb</i> written in <i>Java</i> is also available for 
+   <a href="./jweb-inst-linux.html">installation</a> on GNU/Linux
    but lacks much functionality present in <i>Web</i>.
 </li> 
 </p>
@@ -42,13 +42,13 @@
    <p />
 
    <table border="1" cellpadding="4" cellspacing="4">
-     <tr> <th halign="left">Directory</th> <th halign="left">Contents             </th></tr> 
+     <tr><th halign="left">Directory</th> <th halign="left">Contents     </th></tr> 
 
-     <tr><td>web/src </td>  <td><i>Web</i> source code, libraries        </td></tr>
-     <tr><td>web/bin </td>  <td><i>Web</i> executables                   </td></tr>
-     <tr><td>web/docs</td>  <td><i>Web</i> documentation, html pages     </td></tr>
-     <tr><td>web/lib </td>  <td><i>Web</i> Sample Motif object libraries </td></tr>
-     <tr><td>web/jweb</td>  <td>           JWeb directory                </td></tr>  
+     <tr><td>web/src  </td> <td><i>Web</i> Source code, libraries        </td></tr>
+     <tr><td>web/bin  </td> <td><i>Web</i> Executables                   </td></tr>
+     <tr><td>web/docs </td> <td><i>Web</i> Documentation                 </td></tr>
+     <tr><td>web/xlibs</td> <td><i>Web</i> Sample Motif object libraries </td></tr>
+     <tr><td>web/jweb </td> <td>           JWeb directory                </td></tr>  
    </table>
 
    <p>
@@ -60,91 +60,76 @@
    <p>
    <table border="1" cellpadding="4" cellspacing="5">
    <tr>
-      <th halign="left"><i>Web</i></th>
+      <th halign="left"><i>Web</i>        </th>
       <th halign="left">For <br /> Desktop Environment</th>
-      <th halign="left">Visual    </th>
-      <th halign="left">Executable</th>
-      <th halign="left">Optimal   </th>
-      <th halign="left">Linkage   </th>
+      <th halign="left">Visual            </th>
+      <th halign="left">Executable        </th>
+      <th halign="left">Library linkage   </th>
    </tr>
    <tr>
-      <td>web_linux_dir        </td>
+      <td><i>web_linux_dir</i> </td>
       <td>KDE and most others  </td>
       <td>24 bit DirectColor   </td>
       <td>32 bits              </td>
-      <td>Big-endian           </td>
-      <td>X-window libs dynamic</td>
+      <td>Dynamic              </td>
    </tr>
    <tr>
-      <td>web_linux_dirs       </td>
+      <td><i>web_linux_dirs</i></td>
       <td>KDE and most others  </td>
       <td>24 bit DirectColor   </td>
       <td>32 bits              </td>
-      <td>Big-endian           </td>
-      <td>All libs static      </td>
-   </tr>
-
-
-   <tr>
-      <td>web_linux_tru        </td>
-      <td>Gnome                </td>
-      <td>24 bit TrueColor     </td>
-      <td>32 bits              </td>
-      <td>Big-endian           </td>
-      <td>X-window libs dynamic</td>
-   </tr>
-   <tr>
-      <td>web_linux_trus       </td>
-      <td>Gnome                </td>
-      <td>24 bit TrueColor     </td>
-      <td>32 bits              </td>
-      <td>Big-endian           </td>
-      <td>All libs static      </td>
+      <td>Static               </td>
    </tr>
 
    <tr>
-      <td>web_linux_tru64      </td>
+      <td><i>web_linux_tru</i> </td>
       <td>Gnome                </td>
       <td>24 bit TrueColor     </td>
       <td>32 bits              </td>
-      <td>Big-endian           </td>
-      <td>X-window libs dynamic</td>
+      <td>Dynamic</td>
+   </tr>
+   <tr>
+      <td><i>web_linux_trus</i></td>
+      <td>Gnome                </td>
+      <td>24 bit TrueColor     </td>
+      <td>32 bits              </td>
+      <td>Static               </td>
+   </tr>
+
+   <tr>
+      <td><i>web_linux_trud64</i> </td>
+      <td>KDE/Gnome/Etc           </td>
+      <td>24 bit TrueColor        </td>
+      <td>64 bits                 </td>
+      <td>Dynamic                 </td>
    </tr>
 
   </table>
    </p>
 
-  <li><h4><a name="web">Set <i>"web"</i>  Command</a></h4>
+  <li><h4><a name="web">Set <i>"web"</i>Command</a> using one of these options:</h4>
 
-      You can define an alias for your <i>Web</i> location.  Assuming you  
+      <ol>
+      <li>You can define an alias for your <i>Web</i> location.  Assuming you  
       are  using the  <i>'C' </i> shell, you would put a line similar to 
       the  following in the <i>.cshrc</i> startup file in your home directory:
       <blockquote>  <kbd>
-           alias  web    PARENT-DIR/web/bin/web_linux_dir       <br />
-            or                                                  <br />
-           alias  web    PARENT-DIR/web/bin/web_linux_tru       <br />
-      </kbd> </blockquote>
-      If you do not have a .cshrc file in your home directory you can create it
-      with any text editor. <br />
+           alias  web    PARENT-DIR/web/bin/web_linux_dir    <br />
+            or                                               <br />
+           alias  web    PARENT-DIR/web/bin/web_linux_tru    <br />
+      </kbd> </blockquote>                                   
+      </li>
 
-      Alternatively, you could place the web executable in:
-      <i>/usr/local/bin</i> which is probably already on your search PATH or 
-      you could modify your search path to include the 
-      <i>PARENT-DIR/web/bin </i> directory. 
+      <li>
+      Place the web executable(s) in: <i>/usr/local/bin</i> 
+      which is probably already in your search PATH.
+      </li><br />
+
+      <li> Modify your search path to include the 
+      <i>PARENT-DIR/web/bin </i> directory.
+      </li>
+      </ol> 
    </li>
-
-  <li><h4><a name="setting">Set environment variables.</a> </h4>
-
-      If you are using <i>web_linux_dir/</i> and wish to use color tables
-      you will also need to tell <i>Web</i> the location of your <i>*.rgb</i> 
-      color-look-up-table files.  If you are using the 
-      <i>'C'</i> shell, place following line in your
-      <i>.cshrc</i> startup file:
-
-      <blockquote><kbd>
-      setenv SPRGB_DIR  "PARENT-DIR/web/rgb"     <br /> 
-      </kbd></blockquote> 
-  </li>
   </ol>
 
   <p>
@@ -158,9 +143,9 @@
   <p>Further information is given in the <a href="web.html"><i>Web</i> manual</a>.</p>
 
   <p>You may enter the file extension on the command line, e.g.:
-       <blockquote> <kbd>
-       web   dat         <br />
-       </kbd></blockquote></p>
+       <blockquote> 
+       <kbd>web   dat      </kbd> <br />
+       </blockquote></p>
 </li>
 
 <li>
@@ -169,8 +154,7 @@
   <ul>
 
   <p><li><dl> 
-      <dt>If you get an error message like: <i>Command not found</i> </dt>
-
+      <dt>If you get an error  like: <i>Command not found</i> </dt>
       <dd>See "<a href="#web">Set Web command</a>" above to
           ensure that your desired executable is accessible.</dd>
   </dl></li> </p>
@@ -179,42 +163,36 @@
       <dt>If you get an error message about a <i>Missing library ...</i>:</dt>
 
       <dd>
-      Your system may not have the standard 32 bit run-time X Window libraries. 
-      Web requires the following standard X Window 32 bit libraries:
-      libXt.so.6,  libX11.so.6, libm.so.6, libSM.so.6, 
-      libICE.so.6, libxcb.so.1, and libXau.so.6.
-      (Web has been statically linked with the Motif libraries and no
-      longer requires that you install Motif libraries).<br />
-      
-      If you have a 64 bit OS and have not installed the 32 bit X Window libraries
-      you will need to do so to use the precompiled executables
-      For distributions which use <i>apt-get</i> this can be done: 
-      <p />
+      Your system may not have the standard run-time X Window libraries. <br />
+      <i>Web</i> executables: <i>web_linux_trus</i> and <i>web_linux_dirs</i> have been statically 
+      linked with X and Motif libraries and should not have a problem with missing libraries. <br />
 
-      <p>
-      <dl> 
-      <dd><kbd> sudo apt-get install libxmu6:i386 </kbd></dd>
-      </dl>
-      <p /></dd>
+      However the other <i>Web</i> executables require the following X Window libraries:
+      libXt.so.6,  libX11.so.6, libm.so.6, libSM.so.6, 
+      libICE.so.6, libxcb.so.1, and libXau.so.6.                   <br />        d
+      And the following Motif libraries:  libXmu.so, and libXp.so  <br /> <br />
+ 
+      If <i>web_linux_trus</i> or <i>web_linux_dirs</i> does not preform satisfactorily on your
+      sytem you will have to install X Window and Motif libraries.
+      </dd>
   </dl></li> </p>
 
   <p><li><dl> 
-      <dt>If you still get an error message about a <i>Missing library ...</i>:</dt>
+      <dt>If you still get an error message about a <i>Missing library ...</i>: </dt>
 
-      <dd> Your system can not find the location of the standard run-time X Window libraries. 
+      <dd> Perhaps <i>Web</i> can not find the location of the standard run-time X Window libraries. 
       <p>
-      On Redhat and SUSE Linux for 32 bit applications
-      these libraries are often in: <i>/usr/X11R6/lib</i> 
-      (or more recently in: <i>/usr/lib/</i>). 
+      On Redhat and SUSE Linux for 32 bit applications these libraries are often in: 
+      <i>/usr/X11R6/lib</i> (or more recently in: <i>/usr/lib/</i>). 
       If your system does not know the location of your X Window libraries 
       and you are using the <i>'C' </i> shell, add the following lines to your 
-      <i>.cshrc</i> startup file:</dt>
+      <i>.cshrc</i> startup file:                                                </dt>
       <p />
       <dl> 
         <dd><kbd> if ( $?LD_LIBRARY_PATH ) then </kbd></dd>
         <dd><kbd> &nbsp;&nbsp;&nbsp; setenv LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/X11R6/lib</kbd></dd>
         <dd><kbd> else</kbd></dd>
-        <dd><kbd> &nbsp;&nbsp;&nbsp; setenv LD_LIBRARY_PATH /usr/X11R6/lib</kbd></dd>
+        <dd><kbd> &nbsp;&nbsp;&nbsp; setenv LD_LIBRARY_PATH /usr/X11R6/lib </kbd></dd>
         <dd><kbd> endif</kbd></dd>
       </dl>
       <p /></dd>
@@ -223,7 +201,7 @@
   <p><li><dl> 
      <dt>If you get an X Window error message like: <i>Bad Match  ....</i></dt>
 
-     <dd>You have a bad X Window - Visual selection. <br />
+     <dd>You have a bad X Window - Visual selection.                    <br />
          A possible reason for this message is that you have an Nvidia graphics 
          card and are trying to use the default open source graphics driver that 
          came with your Linux distribution.  Download the appropriate FREE driver from Nvidia
@@ -231,9 +209,8 @@
          If you still get this error message after restarting your graphics system then
          your graphics card fails to support the necessary visual or 
          your X-Window installation has limited your machines visual support.  
-         You may be able to use the alternative Web executable (see above table) or use  
-         <a href="jweb-inst-linux.html"> JWeb</a> instead.
-         </dd>
+         You may be able to use the alternative Web executable (see above table).
+      </dd>
   </dl></li></p>
 
   <p><li><dl> 
@@ -255,7 +232,7 @@
   </dl></li> </p>
 
   <p><li><dl> 
-     <dt>If you get an error message like: No 24bit, directcolor visual! <br />
+     <dt>If you get an error message like: No 24 bit, directcolor visual! <br />
           XError of failed request: Bad Color (invalid colormap parameter).</dt>
 
      <dd>The usual reason for this message is that you have an Nvidia graphics 
@@ -339,7 +316,7 @@
   <p><li><dl> 
      <dt>If <i>Web</i> runs and but the pulldown menus have boxes instead
      of letters on SUSE 11.0</dt>
-     <dd><strong>SUSE X11.0 XWindow fonts are broken. </strong></dd>
+     <dd><strong>SUSE X11.0 X Window fonts are broken. </strong></dd>
      <dd>Update to SUSE 11.1+  or just update following packages:</dd>
      <dd><i> xorg-x11-fonts-core, xorg-x11, xorg-x11-fonts,xorg-x11-server </i> </dd>
   </dl></li></p>
@@ -379,46 +356,42 @@
 
 
      <li> <dl> 
-     <dt>If you are using GNOME window manager and you still are having problems
-         with invisible menus:</dt>
-         <dd>You can:</dd>
-         <dd>Switch to KDE window manager,                        </dd> 
-         <dd>Use: <i>web_linux_tru</i>, or </dd>
-         <dd>Use: <a href="jweb-inst-linux.html">JWeb</a> instead. </dd>
+     <dt>If you are using GNOME window manager and you still are having 
+         problems with invisible menus:            </dt>
+         <dd>You can try:                          </dd>
+         <dd>Switch to KDE window manager,         </dd> 
+         <dd>Use: <i>web_linux_tru</i> instead,    </dd>
+         <dd>Use: <i>web_linux_trud64</i> instead. </dd>
      </dl> </li>
      <p />
   </ul>
   </li>
   <p />
 
-   <li><dl> 
-   <dt> If you are still unable to get <i>Web</i> to run properly or have suggestions,
-        Please contact us and enclose the following info: </dt>
-   <dd>
-     What you are trying to do, 
-     exact error messages (if any), 
-     Linux distribution type, 
-     platform (AMD or Intel,etc), 
-     Window Manager in use (KDE, GNOME, etc.),
-     the value of environment variable: <i>LD_LIBRARY_PATH</i>, and
-     the output from: <kbd> xrdb -query</kbd> system command. </dd>
+  <li>
+  <dl> 
+  <dt>If you are still unable to get <i>Web</i> to run properly or have suggestions,
+      Please contact us at <a href="mailto:spider@health.ny.gov">spider@health.ny.gov</a>
+      and enclose the following info:                                    </dt>
+  <dd>What you are trying to do,&nbsp; 
+      exact error messages (if any), &nbsp;
+      Linux distribution type,&nbsp; 
+      platform (AMD or Intel, etc),&nbsp; 
+      Window Manager in use (KDE, GNOME, etc.),&nbsp;
+      the value of environment variable: <i>LD_LIBRARY_PATH</i>,&nbsp; and
+      the output from: <kbd> xrdb -query</kbd> system command.           </dd>
+  </dl>
+  </li>
+  <p />
 
-    <p>
-    <dl><p>
-    ArDean Leith                                                          <br />
-    Phone: 518-486-5604                                                   <br />
-    Email: <a href="mailto:spider@wadsworth.org">spider@wadsworth.org</a> <br />
-    </dd>
-    </dl></li>
 </ul>
 
 <br />
-
 <hr />
 
 <small>
   Source: web-inst-linux.html  &nbsp;&nbsp;&nbsp; 
-  Updated: 12/13/13            &nbsp;&nbsp;&nbsp;
+  Updated: 12/10/18            &nbsp;&nbsp;&nbsp;
   ArDean Leith
 </small>
 

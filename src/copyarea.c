@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/copyarea.c,v 1.2 2011/09/28 12:07:31 leith Exp leith $*/
+/*$Header: /usr16/software/web/src/RCS/copyarea.c,v 1.3 2018/12/07 17:03:31 leith Exp $*/
 
 /*
 C***********************************************************************
@@ -45,13 +45,12 @@ C--*********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
+#include "extras.h"
 
 #ifdef WEB_TRUE                                                                    
 // WEB_TRUE ---------------------------------------------------------
 
- extern Pixmap        imapsav;        // Virtual cmpa backing store
- extern Boolean       use3colors;     // lut colormap in use
- extern int           mapgo,mapend;   // Image start & end in colormap 
 
  void copyarea(Display * idis, Drawable src, Drawable dest,
                GC gc,  int srcx_ulc, int srcy_ulc, 

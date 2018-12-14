@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.16.59.53;	author leith;	state Exp;
@@ -46,9 +51,9 @@ desc
 @@
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @/*
@@ -93,17 +98,16 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "dist.h"
 
 #define  MAXREG	7
 
  /* external  functions */
- extern void distmen_buts(Widget , XtPointer, XtPointer);
 
  /* internal functions */
- void    dist_pop (Widget, XEvent *, String *, Cardinal *);
+ static void dist_pop (Widget, XEvent *, String *, Cardinal *);
 
  /* external global variables */
- extern FILE    *fpdocpix;
 
  /* global variables used elsewhere (distmen.c) */
  int     opendistdoc = TRUE;
@@ -292,6 +296,22 @@ text
  
 
        
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d43 1
+a47 1
+ extern void distmen_buts(Widget , XtPointer, XtPointer);
+d50 1
+a50 1
+ void    dist_pop (Widget, XEvent *, String *, Cardinal *);
+a52 1
+ extern FILE    *fpdocpix;
 @
 
 

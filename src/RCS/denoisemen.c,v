@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.16.59.57;	author leith;	state Exp;
@@ -47,13 +52,13 @@ desc
 @
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/denoisemen.c,v 1.5 1996/08/02 18:03:05 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/denoisemen.c,v 1.6 2005/10/18 16:59:57 leith Exp $*/
 
 /*
 C++********************************************************************
@@ -100,19 +105,19 @@ C *********************************************************************
 */
 
 
+#include <Xm/Text.h>
 #include "std.h"
 #ifndef VMS
 #include "float.h"
 #endif
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
+#include "filter.h"
 
  /* externally defined global variables used here */
- extern float      fminold, fmaxold;
 
  /* internal subroutines */
- void denoisemen_buta(Widget, XtPointer, XtPointer);
+ static void denoisemen_buta(Widget, XtPointer, XtPointer);
 
  /* global variable defined here */
  float noiselowerlim;
@@ -283,6 +288,26 @@ C *********************************************************************
   return TRUE;
 }
 
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/denoisemen.c,v 1.5 1996/08/02 18:03:05 leith Exp $*/
+d49 1
+d56 1
+a56 1
+#include <Xm/Text.h>
+a58 1
+ extern float      fminold, fmaxold;
+d61 1
+a61 1
+ void denoisemen_buta(Widget, XtPointer, XtPointer);
 @
 
 

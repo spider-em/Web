@@ -1,19 +1,16 @@
 
-/*$Header: /usr8/web/new/RCS/widisp.c,v 1.15 2007/11/01 19:33:45 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/widisp.c,v 1.16 2018/12/07 17:03:35 leith Exp $*/
 
 /*
-C++*************************************************************************
-C
-C    WIDISP
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                  *
+ C++********************************************************************
+ C
+ C    WIDISP
+ C *********************************************************************
+ C * AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -30,27 +27,28 @@ C *  AUTHOR:  ArDean Leith                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C WIDISP(ICONTX,FILEDATA,NROW1,NROW2,fmax_spi,fmin_spi,IXUL,IYUL,ISKIP)
-C
-C    PURPOSE:    TO DISPLAY AN IMAGE FROM fp AT IXUL,IYUL
-C
-C    PARAMETERS:    ICONTX       GRAPHICS CONTEXT
-C                   NSAM         NUMBER OF PIXELS ON A LINE
-C                   NSAM1        COL IN FILE OF IMAGE START
-C                   NSAM2        COL IN FILE OF IMAGE START
-C                   NROW1        ROW (RECORD) IN FILE OF IMAGE START
-C                   NROW2        ROW OF END OF IMAGE
-C                   fmax_spi         MAX. VALUE OF IMAGE
-C                   fmin_spi         MIN. VALUE OF IMAGE
-C                   IXUL         POSITION OF LEFT SIDE OF IMAGE ON SCREEN
-C                   IYUL         POSITION OF TOP OF IMAGE ON SCREEN
-C                   NMAX         MAX VALUE OF INDEX WRITTEN TO SCREEN
-C                   ISKIP        INCREMENT FOR DO LOOP TO SKIP PIXELS
-C
-C    CALLED BY:     mont3 image
-C--*******************************************************************
+ C *********************************************************************
+ C
+ C widisp(icontx,filedata,nrow1,nrow2,fmax_spi,fmin_spi,ixul,iyul,iskip)
+ C
+ C    PURPOSE:    TO DISPLAY AN IMAGE FROM fp AT IXUL,IYUL
+ C
+ C    PARAMETERS:    ICONTX       GRAPHICS CONTEXT
+ C                   NSAM         NUMBER OF PIXELS ON A LINE
+ C                   NSAM1        COL IN FILE OF IMAGE START
+ C                   NSAM2        COL IN FILE OF IMAGE START
+ C                   NROW1        ROW (RECORD) IN FILE OF IMAGE START
+ C                   NROW2        ROW OF END OF IMAGE
+ C                   fmax_spi         MAX. VALUE OF IMAGE
+ C                   fmin_spi         MIN. VALUE OF IMAGE
+ C                   IXUL         POSITION OF LEFT SIDE OF IMAGE ON SCREEN
+ C                   IYUL         POSITION OF TOP OF IMAGE ON SCREEN
+ C                   NMAX         MAX VALUE OF INDEX WRITTEN TO SCREEN
+ C                   ISKIP        INCREMENT FOR DO LOOP TO SKIP PIXELS
+ C
+ C    CALLED BY:     mont3 image
+ C
+ C--*******************************************************************
 */
 
 #include "routines.h"

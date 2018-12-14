@@ -47,9 +47,9 @@ C--*********************************************************************
 */                                                                      
 
 #include "files.h"
+#include "routines.h"
 
  /* External function prototypes */
- extern int   redlin(FILEDATA *, float *, int, int);
                                    
  /*************************   redvol8   ****************************/
 

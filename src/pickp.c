@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickp.c,v 1.35 2015/09/24 15:12:57 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pickp.c,v 1.36 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -52,33 +52,17 @@
 
 #include "common.h"
 #include "routines.h"
+#include "pick.h"
+#include "fit.h"
 
  /* External function prototypes */
- extern int       det_tilt      (int wantmsg, int wantlabel);                            /* From pickmen */
- extern void      witran_rev    (float *, float *, float, float,int,float,float, float); /* From witran */
- extern int       fitdoc_addpart(int n,  int iwhich, int xu, int yu, int xt, int yt );   /* From fitdoc */
- extern void      pickmen_butdet(Widget, XtPointer, XtPointer);                          /* From pickmen */
- extern void      showbuts_str  (Widget *, Widget *, char *, char *, char *,  int);
 
  /* Internal function prototypes */
- void             pick_pop (Widget, XEvent *, String *, Cardinal *);
- Widget           showbuts (Widget, char *, char *, char *, int );
+ static void      pick_pop (Widget, XEvent *, String *, Cardinal *);
+ static Widget    showbuts (Widget, char *, char *, char *, int );
            
  /* Externally defined global variables */
- extern int       firstback;
- extern int       nsaml,   nrowl, nsamr, nrowr;
- extern int       nsam1l,  nrow1l,nsam2l,nrow2l;
- extern int       nsam1r,  nrow1r,nsam2r,nrow2r;
- extern int       ixull,   iyull, ixulr, iyulr;
- extern int       ixulli,  iyulli,ixulri,iyulri;
- extern int       ixullmin,ixlrlmax, iyullmin,iylrlmax;
- extern int       ixulrmin,ixlrrmax, iyulrmin,iylrrmax;
- extern float     phif, thetaf, gammaff;
- extern char      dfil1[12], dfil2[12];
- extern int       maxpart;              // Max particle in doc file or xim file 
- extern int       iredu ;               // Image reduction factor 
 
- extern float   * xu0, * yu0, * xs, * ys, * xs2, * ys2, * xim;
  
  // Internally defined global variables 
  int              openit1, openit2;

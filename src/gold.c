@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/gold.c,v 1.27 2011/05/17 17:29:22 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/gold.c,v 1.28 2018/12/07 17:03:32 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -56,23 +56,19 @@ C             |--R--> filinc -- goldmen_buts --> imagemen
 C
 C--*********************************************************************
 */
+#include <stdlib.h>
+#include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
-#include <stdlib.h>
+#include "gold.h"
 
  /* Externally defined protypes */
- extern void   goldmen_buts(Widget, XtPointer, XtPointer);
- extern int    goldmen_mark(void);
 
  /* Internal subroutine prototypes */
- void          gold       (void);
- void          gold_pop   (Widget,  XEvent *,  String *, Cardinal *);
- void          gold_buta  (Widget, XtPointer, XtPointer);
- int           gold_delete(int);
+ static void   gold_buta  (Widget, XtPointer, XtPointer);
+ static int    gold_delete(int);
 
  /* External global variables */
- extern Widget    iw_deant;             /* Text part of iw_dean */
 
  /* Internal file variables */
  static Widget    iw_phi, iw_theta, iw_docg;

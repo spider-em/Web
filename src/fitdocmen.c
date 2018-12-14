@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/fitdocmen.c,v 1.22 2015/09/18 16:25:21 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/fitdocmen.c,v 1.23 2018/12/07 17:03:32 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -50,13 +50,14 @@
  C**********************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
+#include "fit.h"
 
  // Internal subroutine prototypes 
- void           fitdocmen_butc(Widget, XtPointer, XtPointer);
- void           fitdocmen_buta(Widget, XtPointer, XtPointer);
+ static void    fitdocmen_butc(Widget, XtPointer, XtPointer);
+ static void    fitdocmen_buta(Widget, XtPointer, XtPointer);
 
  //  Global variables (see pickp) 
  int            nfd   = -1;            // Doc file number         
@@ -66,8 +67,6 @@
  char           dfil5[12],dfil6[12];
 
  // External global variables used here ??
- extern float   phif, thetaf, gammaff; // Defined in: fitmen
- extern int     fitted;                // Defined in: pickp
 
  // Internal file scope variables 
  static Widget  iw_redu, iw_nfd;

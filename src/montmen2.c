@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/montmen2.c,v 1.13 2005/10/18 16:59:56 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/montmen2.c,v 1.14 2018/12/07 17:03:33 leith Exp $*/
 /*
 
 C++************************************************************************
@@ -52,10 +52,11 @@ C**************************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 /* internal function prototypes */
- void          montmen2_buta(Widget iw_temp, XtPointer, XtPointer);
- void          montmen2_butc(Widget iw_temp, XtPointer, XtPointer);
+ static void   montmen2_buta(Widget iw_temp, XtPointer, XtPointer);
+ static void   montmen2_butc(Widget iw_temp, XtPointer, XtPointer);
 
  /* file variables */
  static Widget   iw_ixul, iw_iyul, iw_nprow, iw_numfil, iw_movie;
@@ -65,7 +66,6 @@ C**************************************************************************
  int             lastfile;           /* used in mont2 */
 
  /* externally defined variables */
- extern int      icattyp;            /* defined in imagemen.c */
 
  /************************************************************/
 

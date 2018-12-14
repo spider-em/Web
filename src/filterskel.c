@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/filterskel.c,v 1.2 2005/10/18 16:59:59 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/filterskel.c,v 1.3 2018/12/07 17:03:32 leith Exp $*/
 
 /***********************************************************************
  *
@@ -43,12 +43,13 @@
  ***********************************************************************
 */
 
-#include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
+#include "std.h"
 #include "routines.h"
 #include "common.h"
+#include "filter.h"
 
  static char*    cimage     = NULL;
 

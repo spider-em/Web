@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/itex.c,v 1.4 2005/10/18 16:59:47 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/itex.c,v 1.5 2018/12/07 17:03:32 leith Exp $*/
 
 /*
  * itex.c
@@ -36,30 +36,27 @@
  *           menu     
  * 
  * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
- *		caddr_t		data		label text string
- *		caddr_t		call_data	not used 
+ *		void *		data		label text string
+ *		void *		call_data	not used 
  *
  ***********************************************************************
 */
 
 #include "x.h"
 #include "std.h"
+#include "common.h"
 #include "routines.h"
+#include "posiz.h"
 
 
 
  /* internal functions */
- void            itex_cb   (Widget, caddr_t, caddr_t);
- void            itex_pop  (Widget, XEvent *, String *, Cardinal *);
- void            itex3     ();
+ static void     itex_cb   (Widget, void *, void *);
+ static void     itex_pop  (Widget, XEvent *, String *, Cardinal *);
+ static void     itex3     (void);
 
  /* common variables */
- extern Widget   iw_win;           /* image window           */
- extern Display  *idispl;          /* current display        */
- extern GC       icontx;           /* usual graphics context */
 
- extern int      ix_posiz;         /* x coord from wid_posiz */
- extern int      iy_posiz;         /* y coord from wid_posiz */
 
 
  /* file variables */
@@ -72,7 +69,7 @@
 
 /************************  itex  ************************************/
 
- void itex(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void itex(Widget iw_temp, void * data, void * call_data)
  {
 
  /* open a message window with the following strings */
@@ -129,7 +126,7 @@
 
  /**********************  itex_cb  *********************************/
 
- void itex_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void itex_cb(Widget iw_temp, void * data, void * call_data)
  {
  XmString    txt_string;
  char        *text;
@@ -147,7 +144,7 @@
 
  /****************  itex3 (runs after wid_posiz) *****************/
 
- void itex3()
+ void itex3(void)
  {
 
  ixtext = ix_posiz;

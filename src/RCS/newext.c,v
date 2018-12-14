@@ -1,4 +1,4 @@
-head	1.8;
+head	1.9;
 access;
 symbols
 	pre-tilt-improve:1.8
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.9
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.8;
 
 1.8
 date	2011.06.10.13.52.26;	author leith;	state Exp;
@@ -57,13 +62,13 @@ desc
 @
 
 
-1.8
+1.9
 log
-@alloc bug fixed
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/new/RCS/newext.c,v 1.7 2005/10/18 16:59:49 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/newext.c,v 1.8 2011/06/10 13:52:26 leith Exp $*/
 
 /***********************************************************************
  *
@@ -108,7 +113,7 @@ text
 #include "routines.h"
 
  /* Internal functions */
- void            newext_cb   (Widget, XtPointer,  XtPointer);
+ static void     newext_cb   (Widget, XtPointer,  XtPointer);
 
  /* Static file scope variables */
  static char       label_string[] = "Enter file extension";  
@@ -142,6 +147,20 @@ text
  
  }
 
+@
+
+
+1.8
+log
+@alloc bug fixed
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/newext.c,v 1.7 2005/10/18 16:59:49 leith Exp $*/
+d47 1
+a47 1
+ void            newext_cb   (Widget, XtPointer,  XtPointer);
 @
 
 

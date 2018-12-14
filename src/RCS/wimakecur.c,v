@@ -1,4 +1,4 @@
-head	1.4;
+head	1.5;
 access;
 symbols
 	pre-tilt-improve:1.4
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.5
+date	2018.12.07.17.06.44;	author leith;	state Exp;
+branches;
+next	1.4;
 
 1.4
 date	2005.10.18.17.00.00;	author leith;	state Exp;
@@ -36,27 +41,24 @@ desc
 @@
 
 
-1.4
+1.5
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /alwyn/usr1/web//RCS/wimakecur.c,v 1.3 94/02/16 12:21:49 leith Exp $*/
+/*$Header: /usr8/web/new/RCS/wimakecur.c,v 1.4 2005/10/18 17:00:00 leith Exp $*/
 /*
-C++*************************************************************************
-C
-C  WIMAKECUR.FOR  -- CREATED MAR 91
-C                                                                     
-C **********************************************************************
-C *  AUTHOR: A. LEITH                                                      *
+ C++********************************************************************
+ C
+ C  WIMAKECUR.FOR  -- CREATED MAR 91
+ C                                                                     
+ C *********************************************************************
+ C * AUTHOR: A. LEITH                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -73,25 +75,26 @@ C *  AUTHOR: A. LEITH                                                      *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    WIMAKECUR(ICUR,LFORE,LBACK,COLORF,COLORB,IXHOT,IYHOT)
-C
-C    PARAMETERS:   ICUR        CURSOR NUMBER             WRITES
-C                  LFORE       CURSOR FORGROUND DATA     READS
-C                  LBACK       CURSOR BACKGROUND DATA    READS
-C                  COLORF      CURSOR FOREGROUND COLOR   READS
-C                  COLORB      CURSOR BACKGROUND DATA    READS
-C                  IXHOT,IYHOT CURSOR HOT SPOT COOR.     READS
-C
-C    PURPOSE:      SETS UP A CURSOR FROM BITMAP DATA
-C
-C    CALLED BY:    CURSOR_BUT
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C    WIMAKECUR(ICUR,LFORE,LBACK,COLORF,COLORB,IXHOT,IYHOT)
+ C
+ C    PARAMETERS:   ICUR        CURSOR NUMBER             WRITES
+ C                  LFORE       CURSOR FORGROUND DATA     READS
+ C                  LBACK       CURSOR BACKGROUND DATA    READS
+ C                  COLORF      CURSOR FOREGROUND COLOR   READS
+ C                  COLORB      CURSOR BACKGROUND DATA    READS
+ C                  IXHOT,IYHOT CURSOR HOT SPOT COOR.     READS
+ C
+ C    PURPOSE:      SETS UP A CURSOR FROM BITMAP DATA
+ C
+ C    CALLED BY:    CURSOR_BUT
+ C
+ C--*********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  /* external function prototypes */
 
@@ -133,6 +136,52 @@ C--*********************************************************************
  return TRUE;
  }
 
+@
+
+
+1.4
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /alwyn/usr1/web//RCS/wimakecur.c,v 1.3 94/02/16 12:21:49 leith Exp $*/
+d4 6
+a9 6
+C++*************************************************************************
+C
+C  WIMAKECUR.FOR  -- CREATED MAR 91
+C                                                                     
+C **********************************************************************
+C *  AUTHOR: A. LEITH                                                      *
+d11 3
+a13 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d30 16
+a45 16
+C **********************************************************************
+C
+C    WIMAKECUR(ICUR,LFORE,LBACK,COLORF,COLORB,IXHOT,IYHOT)
+C
+C    PARAMETERS:   ICUR        CURSOR NUMBER             WRITES
+C                  LFORE       CURSOR FORGROUND DATA     READS
+C                  LBACK       CURSOR BACKGROUND DATA    READS
+C                  COLORF      CURSOR FOREGROUND COLOR   READS
+C                  COLORB      CURSOR BACKGROUND DATA    READS
+C                  IXHOT,IYHOT CURSOR HOT SPOT COOR.     READS
+C
+C    PURPOSE:      SETS UP A CURSOR FROM BITMAP DATA
+C
+C    CALLED BY:    CURSOR_BUT
+C
+C--*********************************************************************
+d49 1
 @
 
 

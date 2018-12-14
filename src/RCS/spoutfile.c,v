@@ -1,4 +1,4 @@
-head	1.8;
+head	1.9;
 access;
 symbols
 	pre-tilt-improve:1.8
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.9
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.8;
 
 1.8
 date	2005.10.18.17.00.03;	author leith;	state Exp;
@@ -56,13 +61,13 @@ desc
 @@
 
 
-1.8
+1.9
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/spoutfile.c,v 1.7 1996/05/10 14:59:53 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/spoutfile.c,v 1.8 2005/10/18 17:00:03 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -107,11 +112,11 @@ text
  */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
+#include "extras.h"
 
  /* external common variables */
- extern char      datexc[4];         /* file extension  */
- extern int       trace_web;
 
  /* global variables used elsewhere */
  FILE   * resfp = NULL;
@@ -163,6 +168,22 @@ text
 
 
  
+@
+
+
+1.8
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/spoutfile.c,v 1.7 1996/05/10 14:59:53 leith Exp $*/
+d47 1
+d49 1
+a51 2
+ extern char      datexc[4];         /* file extension  */
+ extern int       trace_web;
 @
 
 

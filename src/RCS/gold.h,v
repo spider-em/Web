@@ -1,0 +1,32 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2018.12.07.16.30.39;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#include <stdio.h>
+#include <X11/Intrinsic.h>
+
+extern char docnamg[81];
+extern FILE * fpdocg;
+extern int iradg;
+extern Widget iw_dean;
+extern Widget iw_deant;
+extern Widget iw_gold;
+@

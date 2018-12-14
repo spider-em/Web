@@ -1,4 +1,4 @@
-head	1.32;
+head	1.33;
 access;
 symbols
 	pre-tilt-improve:1.32
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.33
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.32;
 
 1.32
 date	2012.12.06.19.35.36;	author leith;	state Exp;
@@ -176,10 +181,9 @@ desc
 @@
 
 
-1.32
+1.33
 log
-@iw_dums = wid_win(iw_rowcolv, &iw_scales[0],    reset for change in size
-if (nsam * nrow * nslice > 512 * 512 * 512) for bigger incore
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -241,37 +245,33 @@ C**********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "surf.h"
 
 #define MAX_ARGS 5
 #define EULER	 1
 #define XYZ	 0
 
  /* Function prototypes */
- extern void   	surfmovie    (int);
 
  /* Internal function prototypes */
- void  surf_pop      (Widget, XEvent *, String *, Cardinal *);
- void  surfmen_butf  (Widget, XtPointer, XtPointer);
- void  surfmen_butc  (Widget, XtPointer, XtPointer);
- void  surfmen_buta  (Widget, XtPointer, XtPointer);
- void  angle_cb      (Widget, XtPointer, XtPointer);
- void  savesurf_cb   (Widget, XtPointer, XtPointer);
- void  surfmen_th_but(Widget, XtPointer, XtPointer);
- void  setangles     (int, float, float, float, float, float, float);
+ static void  surfmen_butf  (Widget, XtPointer, XtPointer);
+ static void  surfmen_butc  (Widget, XtPointer, XtPointer);
+ static void  surfmen_buta  (Widget, XtPointer, XtPointer);
+ static void  savesurf_cb   (Widget, XtPointer, XtPointer);
+ static void  surfmen_th_but(Widget, XtPointer, XtPointer);
  
  /* Common variables defined elsewhere*/
- extern unsigned char * refmap;
 
  /* Common variables defined here*/
  float          phi, theta, psi, thlev;
- float          scalef, offsetf;  
- int            canrotate;
  int            nvolcolors = 3;
- Widget         iw_thlev   = (Widget) 0;      // Float threshold value
- int            ithreshmin = 0;
- int            ithreshmax = 255;
 
  /* Internal variables */
+ static float    scalef, offsetf;  
+ static int      canrotate;
+ static Widget   iw_thlev   = (Widget) 0;      // Float threshold value
+ static int      ithreshmin = 0;
+ static int      ithreshmax = 255;
  static Widget   iw_scales[6],iw_angs[6],iw_angsxyz[6],iw_rc,iw_mov;
  static Widget   iw_refl, iw_fct, iw_fast;
  static Widget   iw_pushf, iw_pushc, iw_pusha, iw_sc, iw_angle;
@@ -286,8 +286,6 @@ C**********************************************************************
  static int      sirdit, distit, colorit;
  static float	 ang_x, ang_y, ang_z;
  static int	 first = TRUE;
- char            cval[15];
- Arg             args[MAX_ARGS];
 
  /***************************   surfmen   ****************************/
 
@@ -297,7 +295,8 @@ C**********************************************************************
  int     i, n, ifct, irefl, iscale;
  Widget  iw_labb1,  iw_dum,  iw_dums;
  char    cval[50];
- 
+ Arg     args[MAX_ARGS];
+
  /* Set flags for sirds or distance display */
  sirdit = sirditt;   distit = distitt; colorit = coloritt;
 
@@ -404,7 +403,7 @@ C**********************************************************************
 
     /* Create scale widgets for windowing volume -------------- Scales */
     for (i=0; i < 6; iw_scales[i++]  = (Widget) 0);
-    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+    wid_win(iw_rowcolv, &iw_scales[0], 
                        nsam, nrow, nslice);
 
     for (i=0; i < 6; i++)
@@ -461,7 +460,7 @@ C**********************************************************************
     //printf(" nsam: %d %d %d %d\n", nsam,nrow,iw_scales[0],iw_scales[1]);
 
     /* Update scale widgets for windowing volume ------------- Scales */
-    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+    wid_win(iw_rowcolv, &iw_scales[0], 
                        nsam, nrow, nslice);
 
     /* Update scale for threshold ------------------------  Threshold */
@@ -506,6 +505,8 @@ C**********************************************************************
 
  {
  int  n;
+ Arg  args[MAX_ARGS];
+ char cval[15];
 
  // Get current threshold scale value (ithreshmin ... ithreshmax)
  XmScaleGetValue(iw_temp, &ithresh);
@@ -970,6 +971,51 @@ void setangles(int angtype, float t1,float t2,float t3,
 	}
    }
 	
+@
+
+
+1.32
+log
+@iw_dums = wid_win(iw_rowcolv, &iw_scales[0],    reset for change in size
+if (nsam * nrow * nslice > 512 * 512 * 512) for bigger incore
+@
+text
+@d60 1
+a66 1
+ extern void   	surfmovie    (int);
+d69 5
+a73 8
+ void  surf_pop      (Widget, XEvent *, String *, Cardinal *);
+ void  surfmen_butf  (Widget, XtPointer, XtPointer);
+ void  surfmen_butc  (Widget, XtPointer, XtPointer);
+ void  surfmen_buta  (Widget, XtPointer, XtPointer);
+ void  angle_cb      (Widget, XtPointer, XtPointer);
+ void  savesurf_cb   (Widget, XtPointer, XtPointer);
+ void  surfmen_th_but(Widget, XtPointer, XtPointer);
+ void  setangles     (int, float, float, float, float, float, float);
+a75 1
+ extern unsigned char * refmap;
+a78 2
+ float          scalef, offsetf;  
+ int            canrotate;
+a79 3
+ Widget         iw_thlev   = (Widget) 0;      // Float threshold value
+ int            ithreshmin = 0;
+ int            ithreshmax = 255;
+d82 5
+a100 2
+ char            cval[15];
+ Arg             args[MAX_ARGS];
+d110 2
+a111 1
+ 
+d218 1
+a218 1
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+d275 1
+a275 1
+    iw_dums = wid_win(iw_rowcolv, &iw_scales[0], 
+d320 2
 @
 
 

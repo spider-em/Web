@@ -46,6 +46,7 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "dent.h"
 
  /* internal function prototypes */
  static void dentmen2_buts(Widget, XtPointer, XtPointer);
@@ -55,13 +56,8 @@ C***********************************************************************
  static void dentfile_cb  (Widget, XtPointer, XtPointer);
  
  /* external global variables  */
- extern char  outstr[80];
 
  /* external global variables (from dent.c) */
- extern unsigned char  * dentvol, * dentrefmap;
- extern int            * dentdistmap;
- extern int            dentdensity, dentdepth,  dentwidth;   
- extern int            dentheight,  dentmovement;
 
  /* file scope static variables */
  static Widget  iw_dentmen2  = (Widget) 0;
@@ -175,6 +171,7 @@ C***********************************************************************
  char *string;
  int   ival;
  struct xcall * xptr;
+ char outstr[81];
 
  /* find threshold */
  string = XmTextGetString(iw_temp);
@@ -248,7 +245,7 @@ C***********************************************************************
           }
 
       /* convert single bit volume to spider format */
-      cptr = (char *) dentvol;
+      cptr = (unsigned char *) dentvol;
       for (irow=1; irow <= nrow*nslice; irow++)
          {
          /* use default read / write buffer from filedatad */

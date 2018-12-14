@@ -1,4 +1,4 @@
-head	1.22;
+head	1.23;
 access;
 symbols
 	pre-tilt-improve:1.22
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.23
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.22;
 
 1.22
 date	2013.03.28.18.52.43;	author leith;	state Exp;
@@ -127,9 +132,9 @@ desc
 @
 
 
-1.22
+1.23
 log
-@instant cutoff slider display
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -149,19 +154,20 @@ C P.O. BOX 20708, HOUSTON, TX 77225.
 C*--------------------------------------------------------------------*         
 */      
 
+#include <Xm/Scale.h>
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
 /* Common variables */
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
-#include <Xm/ToggleBG.h>
+#include "fit.h"
 
  /* External global variables */
- extern int    maxpart;
 
  /* Internal function prototypes */
- void      dendromen_buta(Widget iw_temp, XtPointer, XtPointer);
- void      dendro_pop    (Widget, XEvent *, String *, Cardinal *);
- void      dendromen_d   (Widget, XtPointer, XtPointer);
+ static void      dendromen_buta(Widget iw_temp, XtPointer, XtPointer);
+ static void      dendro_pop    (Widget, XEvent *, String *, Cardinal *);
+ static void      dendromen_d   (Widget, XtPointer, XtPointer);
 
  /* Internal common variables  */
  int            icut;
@@ -594,6 +600,26 @@ void dendromen( char * dfil)
     }
 
  }
+@
+
+
+1.22
+log
+@instant cutoff slider display
+@
+text
+@d18 3
+d24 1
+a24 2
+#include <Xm/Text.h>
+#include <Xm/ToggleBG.h>
+a26 1
+ extern int    maxpart;
+d29 3
+a31 3
+ void      dendromen_buta(Widget iw_temp, XtPointer, XtPointer);
+ void      dendro_pop    (Widget, XEvent *, String *, Cardinal *);
+ void      dendromen_d   (Widget, XtPointer, XtPointer);
 @
 
 

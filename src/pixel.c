@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pixel.c,v 1.19 2015/07/27 16:24:37 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pixel.c,v 1.20 2018/12/07 17:03:33 leith Exp $*/
 /*
  C pixel.c
  C               Doc file close bug              Jul 2015 ArDean Leith
@@ -37,16 +37,12 @@
 
 #include "common.h"
 #include "routines.h"
+#include "pixel.h"
 
  /* Internal functions */
- void    pixel_pop (Widget, XEvent *, String *, Cardinal *);
+ static void    pixel_pop (Widget, XEvent *, String *, Cardinal *);
 
  /* External variables */
- extern XImage     * imagep;
- extern char       outstr[80];
- extern int        ixreg, iyreg, isreg, ivreg;
- extern int        pixelmen_showing;
- extern FILEDATA   * filedatap;
 
  /* Internal common variables */
  FILE             * fpdocpix_p = NULL;
@@ -84,6 +80,7 @@
  int   ixi, iyi, ixs, iys, ipix, irect, i, savdocit, inside;
  float fval;
  float dlist[7];
+ char  outstr[81];
 
  if (!(strcmp(*params, "M")))
     {                           /* List location ------- mouse moved */

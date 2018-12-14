@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/rdprx.c,v 1.3 2005/10/18 16:59:40 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/rdprx.c,v 1.4 2018/12/07 17:03:33 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -43,11 +43,10 @@ C
 C***********************************************************************
 */
 
+#include <Xm/Text.h>
 #include "std.h"
 #include "x.h"
-#include <Xm/Text.h>
-
-extern void   spout         (char *);
+#include "routines.h"
 
 
  /******************  rdprx   *******************************/

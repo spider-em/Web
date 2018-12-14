@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/cantrot.c,v 1.3 2005/10/18 16:59:47 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/cantrot.c,v 1.4 2018/12/07 17:03:30 leith Exp $*/
 
 /*
 C**************************************************************************
@@ -64,11 +64,11 @@ C--*********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
+#include "surf.h"
 
  /* external function prototype */
- extern int   redlin    (FILEDATA *, float *, int, int);
 
- extern float thlev;
 
  
  /**************************   cantrot   ****************************/

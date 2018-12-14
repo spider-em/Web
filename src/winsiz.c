@@ -1,19 +1,19 @@
 
-/*$Header: /usr8/web/src/RCS/winsiz.c,v 1.16 2011/09/23 19:06:56 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/winsiz.c,v 1.17 2018/12/07 17:06:44 leith Exp $*/
 
 /*
-C++*************************************************************************
-C
-C WINSIZ -- CREATED JAN 90 al
-C           CONVERTED TO C -- AUG 92 al
-C **********************************************************************
+ C++********************************************************************
+ C
+ C WINSIZ -- CREATED JAN 90 al
+ C           CONVERTED TO C -- AUG 92 al
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
  C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -30,40 +30,37 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C WINSIZ
-C
-C PURPOSE:       Returns window coordinates and size
-C
-C VARIABLES:     iwintyp       window type ifs
-c                ioper         operation
-C
-C CALLED BY:     web_com  
-C
-C
-C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
-C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
-C                     \ wid_posiz  --> winsiz3    /
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C winsiz
+ C
+ C PURPOSE:       Returns window coordinates and size
+ C
+ C VARIABLES:     iwintyp       window type ifs
+ c                ioper         operation
+ C
+ C CALLED BY:     web_com  
+ C
+ C
+ C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
+ C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
+ C                     \ wid_posiz  --> winsiz3    /
+ C
+ C--*********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
+#include "posiz.h"
+#include "extras.h"
 
  /* Internal function prototypes */
- void winsiz_pop (Widget, XEvent *, String *, Cardinal *);
- void winsiz_pop2(Widget, XEvent *, String *, Cardinal *);
- void winsiz1    (void);
- void winsiz3    (void);
- void winsiz4    (void);
+ static void winsiz_pop (Widget, XEvent *, String *, Cardinal *);
+ static void winsiz_pop2(Widget, XEvent *, String *, Cardinal *);
+ static void winsiz3    (void);
+ static void winsiz4    (void);
 
  /* Externally defined variables */
- extern int      ix_posiz;         /* x coord from wid_posiz */
- extern int      iy_posiz;         /* y coord from wid_posiz */
- extern int      icols_posiz;      /* Columns from wid_posiz */
- extern int      irows_posiz;      /* Rows    from wid_posiz */
 
  /* Internally or externally used variables */
  static GC       icontxx;

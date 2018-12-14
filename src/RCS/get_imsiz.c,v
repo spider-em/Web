@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.16.59.59;	author leith;	state Exp;
@@ -47,13 +52,13 @@ desc
 @
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/get_imsiz.c,v 1.5 1996/05/14 15:48:14 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/get_imsiz.c,v 1.6 2005/10/18 16:59:59 leith Exp $*/
 /*
  **********************************************************************
  *
@@ -98,21 +103,12 @@ text
 
 #include "files.h"
 #include "common.h"
+#include "routines.h"
 
 /* external function prototypes */
- extern Widget wid_dialog    (Widget, Widget, char *, int, int);
- extern Widget wid_rowcol    (Widget, char , int, int);
- extern Widget wid_textboxb  (Widget, Widget, char *, char *,  int);
- extern Widget wid_labelg    (Widget, Widget, char *, int, int);
- extern Widget wid_sep       (Widget);
- extern Widget wid_stdbut    (Widget, Widget, Widget*, Widget*, Widget*,
-                             char *, void (*)(), void (*)(), void (*)(),
-                             void (*)());
- extern void   fin_cb        (Widget, caddr_t, caddr_t);
- extern int    strtoint      (Widget, char *, int *);
 
  /* internal functions */
- void          get_imsiz_buta(Widget, XtPointer, XtPointer);
+ static void   get_imsiz_buta(Widget, XtPointer, XtPointer);
 
  /* file variables */
  static Widget        iw_cols = 0, iw_rows = 0;
@@ -120,11 +116,10 @@ text
  static Widget        iw_imsiz = (Widget) 0, iw_slices;
 
  /* common variables */
- extern int nsam8, nrow8, nslice8;
 
  /*********************  get_imsiz  *********************************/
  
- void get_imsiz(void)
+ void get_imsiz(Widget w, XtPointer c, XtPointer u)
  {
  Widget        iw_dum; 
  char          cval[5];
@@ -186,6 +181,37 @@ text
 
 
 
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/get_imsiz.c,v 1.5 1996/05/14 15:48:14 leith Exp $*/
+d47 1
+a49 10
+ extern Widget wid_dialog    (Widget, Widget, char *, int, int);
+ extern Widget wid_rowcol    (Widget, char , int, int);
+ extern Widget wid_textboxb  (Widget, Widget, char *, char *,  int);
+ extern Widget wid_labelg    (Widget, Widget, char *, int, int);
+ extern Widget wid_sep       (Widget);
+ extern Widget wid_stdbut    (Widget, Widget, Widget*, Widget*, Widget*,
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern void   fin_cb        (Widget, caddr_t, caddr_t);
+ extern int    strtoint      (Widget, char *, int *);
+d52 1
+a52 1
+ void          get_imsiz_buta(Widget, XtPointer, XtPointer);
+a59 1
+ extern int nsam8, nrow8, nslice8;
+d63 1
+a63 1
+ void get_imsiz(void)
 @
 
 

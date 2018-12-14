@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/dispmen.c,v 1.6 2005/10/18 16:59:57 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/dispmen.c,v 1.7 2018/12/07 17:03:31 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -43,17 +43,16 @@ C
 C***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/ToggleBG.h>
+#include "common.h"
 #define MAX_ARGS     3
 #include "routines.h"
 
 
  /* internal function prototypes */
- void          dispmen_buta(Widget, caddr_t, caddr_t);
+ static void    dispmen_buta(Widget, void *, void *);
 
  /* common variables */
- extern Widget    iw_scrollpar;     /* scroll window widget */
 
  /* local file variables */
  static Widget  iw_wantscroll;
@@ -62,7 +61,7 @@ C***********************************************************************
 
  /*************************  dispmen  ********************************/
 
- void dispmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void dispmen(Widget iw_temp, void * data, void * call_data)
  { 
  Widget   iw_rowcol, iw_dums, iw_dum, iw_pushc, iw_pusha;
 
@@ -91,7 +90,7 @@ C***********************************************************************
 
  /************ accept button callback *********************************/
 
- void dispmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void dispmen_buta(Widget iw_temp, void * data, void * call_data)
  {
  int    n, scrolling;
  Arg      args[MAX_ARGS]; 

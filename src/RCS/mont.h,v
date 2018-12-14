@@ -1,0 +1,45 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2018.12.07.16.34.01;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@extern char avgnam[128];
+extern char * cmont3buf;
+extern int * docimgnums;
+extern int docimgtotal;
+extern int endfile;
+extern char filego[81];
+extern int imagelist[1000];
+extern int ixulmon;
+extern int iyulmon;
+extern int lastfile;
+extern int maxfile;
+extern int minfile;
+extern int montaverage;
+extern int ndone;
+extern int nimage;
+extern int nrowi;
+extern int nsami;
+extern int nslicei;
+extern int numnext;
+extern int stkend;
+extern int stkgo;
+extern XImage * ximagelist[1000];
+@

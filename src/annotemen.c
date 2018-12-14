@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/annotemen.c,v 1.5 2005/10/18 16:59:57 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/annotemen.c,v 1.6 2018/12/07 17:03:30 leith Exp $*/
 
 /***********************************************************************
  * annotemen.c                      7/93
@@ -9,11 +9,7 @@
  ***********************************************************************
  * author : Mahieddine Ladjadj
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -40,10 +36,10 @@
  ***********************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
-
+#include "annote.h"
 
   /* internal function prototypes */
   void   annotemen_buta       (Widget, XtPointer, XtPointer);

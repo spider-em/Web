@@ -1,4 +1,4 @@
-head	1.87;
+head	1.88;
 access;
 symbols
 	pre-tilt-improve:1.86
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.88
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.87;
 
 1.87
 date	2015.09.08.18.16.07;	author leith;	state Exp;
@@ -451,13 +456,13 @@ desc
 @@
 
 
-1.87
+1.88
 log
-@Pixelmen_in docit_in set
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.86 2015/06/16 15:36:08 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.87 2015/09/08 18:16:07 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -509,22 +514,20 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "pixel.h"
+#include "pick.h"
+#include "filter.h"
+#include "mont.h"
+#include "extras.h"
 
  /* External function  prototypes */
- extern void   dendromen  (char * );
- extern void   ctfmen0    (char * );
- extern void   showmovmen2(void);
 
  /* Internal function  prototypes */
- void          imagemen_cb    (Widget, XtPointer, XtPointer);
- void          imagemennol_cb (Widget, XtPointer, XtPointer);
- void          imagemen_cb_com(void);
+ static void   imagemen_cb    (Widget, XtPointer, XtPointer);
+ static void   imagemennol_cb (Widget, XtPointer, XtPointer);
+ static void   imagemen_cb_com(void);
 
  /* Externally defined common variables */
- extern char   outstr[80];
- extern float  erodethresh;  /* Used in filtermen, erodemen */
- extern int    docimgtotal;  /* From: docmontmen */
- extern int    docit_in;     // From: pixelmen_in
 
 
  /* Common variables defined here and used elsewhere */
@@ -535,9 +538,9 @@ text
 
  char *       cptrduml = NULL; /* Data used by image right &  left */
  char *       cptrdumr = NULL; 
- int          icattyp;
 
  /* File scope variables used here */
+ static int    icattyp;
  static char   filnew[128];
  static int    imnum = 1;
  static char   ops[] = "123456789abcdefghijklmnop"; // 25 opers
@@ -774,6 +777,7 @@ text
   float*      fptrdum = NULL;
   XRectangle  rect;
   int         nsams, nrows;   /* Size of the image on screen*/
+  char        outstr[81];
 
   /* Set waitcursor */
   waitcursor(iwin, TRUE, 79);
@@ -1347,6 +1351,36 @@ text
   return TRUE;
   }
 
+@
+
+
+1.87
+log
+@Pixelmen_in docit_in set
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.86 2015/06/16 15:36:08 leith Exp $*/
+d54 5
+a60 3
+ extern void   dendromen  (char * );
+ extern void   ctfmen0    (char * );
+ extern void   showmovmen2(void);
+d63 3
+a65 3
+ void          imagemen_cb    (Widget, XtPointer, XtPointer);
+ void          imagemennol_cb (Widget, XtPointer, XtPointer);
+ void          imagemen_cb_com(void);
+a67 4
+ extern char   outstr[80];
+ extern float  erodethresh;  /* Used in filtermen, erodemen */
+ extern int    docimgtotal;  /* From: docmontmen */
+ extern int    docit_in;     // From: pixelmen_in
+a77 1
+ int          icattyp;
+d80 1
+d317 1
 @
 
 

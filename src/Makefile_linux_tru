@@ -25,7 +25,7 @@ PGM    = web_linux_tru
 LIB    = lib$(PGM).a
 
 # Links X dynamic and Motif static: libXm.a libXp.a
- OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm    
+OTHERLIBS = -L/usr/X11R6/lib /usr/X11R6/lib/libXm.a /usr/X11R6/lib/libXp.a -lXt -lX11 -lXmu -lm    
 
 .PRECIOUS : $(LIB) $(PGM)
 

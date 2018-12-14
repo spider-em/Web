@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2005.10.18.17.00.03;	author leith;	state Exp;
@@ -41,12 +46,12 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /net/ithaca/usr1/web/src/RCS/closefile.c,v 1.4 1995/08/08 17:57:37 leith Exp $*/
+@/*$Header: /usr8/web/src/RCS/closefile.c,v 1.5 2005/10/18 17:00:03 leith Exp $*/
 /*
  *************************************************************************
  *
@@ -88,6 +93,7 @@ text
  *********************************************************************/
 
 #include "files.h"
+#include "routines.h"
 
  int closefile(FILEDATA *fileptr)
 
@@ -107,6 +113,18 @@ text
  
  return TRUE;
  }
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/closefile.c,v 1.4 1995/08/08 17:57:37 leith Exp $*/
+d43 1
 @
 
 

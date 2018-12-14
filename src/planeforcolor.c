@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/planeforcolor.c,v 1.1 2011/06/10 14:06:12 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/planeforcolor.c,v 1.2 2018/12/07 17:03:33 leith Exp $*/
 /*
 C+**********************************************************************
 C
@@ -42,6 +42,7 @@ C--*********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  unsigned long planeforcolor(int icolort)
  {

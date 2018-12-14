@@ -1,4 +1,4 @@
-head	1.17;
+head	1.18;
 access;
 symbols
 	pre-tilt-improve:1.17
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.18
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.17;
 
 1.17
 date	2012.11.27.19.12.31;	author leith;	state Exp;
@@ -101,12 +106,12 @@ desc
 @@
 
 
-1.17
+1.18
 log
-@MRC support
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /usr8/web/src/RCS/redlin.c,v 1.15 2007/03/02 17:59:36 leith Exp $*/
+@/*$Header: /usr8/web/src/RCS/redlin.c,v 1.17 2012/11/27 19:12:31 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -148,6 +153,8 @@ text
  **********************************************************************/
 
 #include "files.h"
+#include "common.h"
+#include "routines.h"
 
 // Byte flipping
 #define CONVERT_4( A, B )                        \
@@ -157,10 +164,6 @@ text
            (((unsigned int)(B) >> 8) & 0xff00) | \
            (((unsigned int)(B) << 8) & 0xff0000)
 
- int redlin8f( FILEDATA *fileptr, float *buf, int nx, int irec);
- int redlin16f(FILEDATA *fileptr, float *buf, int nx, int irec);
-
- extern int  nsam8,nrow8,nslice8; /* size of raw files           */
 
 
  // *************************** redlin *********************************
@@ -174,7 +177,6 @@ text
  size_t         igot;
  unsigned int * pt;
 
- extern int  nsam8,nrow8,nslice8; /* size of raw files */
 
  if ((fileptr -> iform) > 99)
     {    // MRC file should start at lower left) 
@@ -204,8 +206,8 @@ text
 
  if ((igot = fseek(fp,ioff,SEEK_SET)) != 0) 
      {       /* Offset seek failed */
-     printf("*** Seek failed in redlin: %d \n",igot);
-     printf(" igot: % d, ioff: %d ,nx: %d \n",igot,ioff,nx);
+     printf("*** Seek failed in redlin: %zu \n",igot);
+     printf(" igot: %zu, ioff: %ld ,nx: %d \n",igot,ioff,nx);
      return FALSE;
      }
 
@@ -223,7 +225,7 @@ text
  if (feof(fp) && nsam8 > 0 && nrow8 > 0)
       {
       printf("*** End of file in redlin \n");
-      printf("igot: %d, ioff: %d ,nx: %d irec: %d\n",
+      printf("igot: %zu, ioff: %ld ,nx: %d irec: %d\n",
               igot,ioff,nx,irec);
       printf(" fp->nrow: %d, fp->offset: %d \n",
                 fileptr->nrow, fileptr->offset);
@@ -239,6 +241,32 @@ text
  return TRUE;
  }
 
+@
+
+
+1.17
+log
+@MRC support
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/src/RCS/redlin.c,v 1.15 2007/03/02 17:59:36 leith Exp $*/
+d43 2
+a53 4
+ int redlin8f( FILEDATA *fileptr, float *buf, int nx, int irec);
+ int redlin16f(FILEDATA *fileptr, float *buf, int nx, int irec);
+
+ extern int  nsam8,nrow8,nslice8; /* size of raw files           */
+a66 1
+ extern int  nsam8,nrow8,nslice8; /* size of raw files */
+d96 2
+a97 2
+     printf("*** Seek failed in redlin: %d \n",igot);
+     printf(" igot: % d, ioff: %d ,nx: %d \n",igot,ioff,nx);
+d115 1
+a115 1
+      printf("igot: %d, ioff: %d ,nx: %d irec: %d\n",
 @
 
 

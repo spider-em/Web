@@ -19,18 +19,14 @@ c
 c--*********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
 #include <Xm/Scale.h>
 #include <Xm/ToggleBG.h>
+#include "common.h"
+#include "routines.h"
+#include "movie.h"
 
-void   moviemen_buts    (Widget, caddr_t, caddr_t); 
-void   moviemen_buta    (Widget, caddr_t, caddr_t);
-extern void  glass          (Window , Window , int , int ,
-	                    int , int , int *, int *, int );
+static void   moviemen_buta    (Widget, void *, void *);
 
-extern int   ixulmon,iyulmon;   /* first image of montage */
-extern int   ndone;   /* total number of images */
 
 Widget    iw_moviemen, iw_delay, iw_magni, iw_cycl, iw_twoway;
 int       setupbuttons, moviedelay, moviemagni, moviecycl,
@@ -63,7 +59,7 @@ void moviemen(int first)
                                                     
       /* create toggle box for twoway --------------------- twoway */
       iw_twoway = wid_toggleg(iw_rowcol,0,"two-way",twoway,    
-                        toggle2_cb, (char *) &twoway, -1, -1);
+                        toggle2_cb, &twoway, -1, -1);
 
       /* create a scale widget for delay ------------------- delay */
       iw_delay = wid_scale(iw_rowcol,iw_delay,"delay (msecs):",
@@ -101,7 +97,7 @@ void moviemen(int first)
 **   accept button
 */
  
-void moviemen_buta(Widget iw_t, caddr_t data, caddr_t call_data)
+void moviemen_buta(Widget iw_t, void * data, void * call_data)
    {
    /* get delay */
    XmScaleGetValue(iw_delay,&moviedelay);
@@ -128,7 +124,7 @@ void moviemen_buta(Widget iw_t, caddr_t data, caddr_t call_data)
 **  stop button
 **/
 
-void moviemen_buts(Widget iw_t, caddr_t data, caddr_t call_data)
+void moviemen_buts(Widget iw_t, void * data, void * call_data)
     {
 
     /* remove the movie menu widget */

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/scaleimg.c,v 1.5 2005/10/18 16:59:51 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/scaleimg.c,v 1.6 2018/12/07 17:03:34 leith Exp $*/
 
 /***********************************************************************
  *
@@ -48,10 +48,10 @@
 */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
 
  /* externally defined variables */
- extern int imagego, imageend;        /* set norm. range for image */
 
  /****************************  scaleimg  *****************************/
  

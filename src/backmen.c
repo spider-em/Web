@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/backmen.c,v 1.32 2015/09/01 17:52:41 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/backmen.c,v 1.33 2018/12/07 17:03:30 leith Exp $*/
 
 /*C++*******************************************************************
  C                                                                     *
@@ -11,11 +11,7 @@
  C**********************************************************************
  C * AUTHOR: A. LEITH                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2015  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -56,26 +52,18 @@
  C--********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Scale.h>
 
- /* Internal function prototypes */
- void                backmen_buta(Widget, XtPointer, XtPointer);
- void                backmen_butm(Widget, XtPointer, XtPointer);
+#include "common.h"
+#include "routines.h"
+#include "pick.h"
+#include "extras.h"
 
- /* External function prototypes */
- void                wid_contrast_but(Widget, XtPointer, XtPointer);
+ /* Internal function prototypes */
+ static void         backmen_buta(Widget, XtPointer, XtPointer);
+ static void         backmen_butm(Widget, XtPointer, XtPointer);
 
  /* Externally defined global variables */
- extern XImage     * imager;
- extern XImage     * imagel;
- extern FILEDATA   * filedatal;
- extern FILEDATA   * filedatar;
- extern char       * cptrduml;   // Data used by right image 
- extern char       * cptrdumr;   // Data used by left  image  
- extern int          vmap[256];  // Virtual colormap
 
  /* Internal file variables */
  static Widget       iw_backmen = (Widget) 0, iw_ngob, iw_nendb;

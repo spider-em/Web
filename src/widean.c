@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/widean.c,v 1.9 2015/09/01 17:54:34 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/widean.c,v 1.10 2018/12/07 17:03:35 leith Exp $*/
 /*
  C**********************************************************************
  C
@@ -11,11 +11,8 @@
  C   AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -43,21 +40,16 @@
  C*********************************************************************
 */
 
-#include "common.h"
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
+#include "common.h"
+#include "routines.h"
+#include "gold.h"
 
  /* External function prototypes */
- extern Widget wid_rowcol   (Widget, char , int, int);
- extern Widget wid_textboxb (Widget, Widget, char *, char *,  int);
- extern Widget wid_dialog   (Widget, Widget, char *, int, int);
- extern Widget wid_pushg    (Widget, Widget, char *, void (*) (), 
-                             char *,int,int);
- extern void   spout        (char *);
-
 
  /* Internal function prototypes */
- void     widean_cb   (Widget, XtPointer, XtPointer);
+ static void     widean_cb   (Widget, XtPointer, XtPointer);
 
  /* Global variables defined here */
  char   cval_d[12] = "b0123456789";

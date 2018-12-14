@@ -1,4 +1,4 @@
-head	1.10;
+head	1.11;
 access;
 symbols
 	pre-tilt-improve:1.10
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.11
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.10;
 
 1.10
 date	2011.09.28.12.25.06;	author leith;	state Exp;
@@ -66,13 +71,13 @@ desc
 @@
 
 
-1.10
+1.11
 log
-@comments
+@bollingers_email_and_cosmetic
 @
 text
 @ 
-/*$Header: /usr8/web/new/RCS/setacursor.c,v 1.9 2005/10/18 16:59:48 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/setacursor.c,v 1.10 2011/09/28 12:25:06 leith Exp $*/
 /*
 
 C++*********************************************************************
@@ -121,11 +126,11 @@ C--*********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
 #define MAXCURSOR 75
 
  /* External function prototypes */
- extern Cursor newcursor (int, int);
 
  /* Internal static variables */
  static int first = TRUE;
@@ -259,6 +264,20 @@ C      #(107) /'uppointing         '/#(108) /'rightpointing      '/
 C      #(109) /'check               '/
 *******************************************************************/
 
+@
+
+
+1.10
+log
+@comments
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/new/RCS/setacursor.c,v 1.9 2005/10/18 16:59:48 leith Exp $*/
+d51 1
+a55 1
+ extern Cursor newcursor (int, int);
 @
 
 

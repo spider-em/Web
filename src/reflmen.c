@@ -40,18 +40,18 @@ C **********************************************************************
 *****************************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
 
  /* internal subroutine prototypes */
- void  reflmen_buts (Widget, caddr_t, caddr_t);
- void  reflmen_buta (Widget, caddr_t, caddr_t);
- void  refl0        (void);
- void  refl_pop     (Widget, XEvent *, String *, Cardinal *);
- void  refl1        (void);
- void  getvals      (char *, char *, char *);
- void  getvals_buta (Widget, caddr_t , caddr_t);
+ static void  reflmen_buts (Widget, void *, void *);
+ static void  reflmen_buta (Widget, void *, void *);
+ static void  refl0        (void);
+ static void  refl_pop     (Widget, XEvent *, String *, Cardinal *);
+ static void  refl1        (void);
+ static void  getvals      (char *, char *, char *);
+ static void  getvals_buta (Widget, void * , void *);
                             
  /* internal file variables */
  static Widget   iw_reflmen = (Widget) 0;
@@ -102,7 +102,7 @@ C **********************************************************************
                                               
      /* create a toggle box for LEAVE OT */              
      iw_leavit = wid_toggleg(iw_rowcol,iw_leavit,"  Leave marker",
-                        leavitt,toggle2_cb,(char *) &leavitt,-1,-1);
+                        leavitt, toggle2_cb, &leavitt,-1,-1);
 
      /* create a push button for stop, cancel & apply */
      iw_dum = wid_stdbut(iw_rowcol,iw_reflmen,
@@ -117,7 +117,7 @@ C **********************************************************************
 
 /*********************** reflmen_buts   ******************************/
 
-void reflmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+void reflmen_buts(Widget iw_temp, void * data, void * call_data)
   {
   /* remove popup button menu */
   showbutx("","","",TRUE);
@@ -139,7 +139,7 @@ void reflmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
                                 
  /*******************************   reflmen_buta  *********************/
                                                                
- void reflmen_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
+ void reflmen_buta(Widget iw_t, void * itag, void * callpar)
  {
  char * string;
 
@@ -296,7 +296,7 @@ void reflmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
        iw_ival1 = wid_textboxb(iw_rowcol,iw_ival1,label1,cval,4);
 
        /* create a box for kind input */
-       if( *label2 != (char) NULL)
+       if( *label2 )
            {
            itype2 = 1;           
            sprintf(cval,"%4d",kind);
@@ -318,7 +318,7 @@ void reflmen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
 
  /**************************  getvals_buta   *************************/
 
- void getvals_buta(Widget iw_temp, caddr_t client_data, caddr_t call_data)
+ void getvals_buta(Widget iw_temp, void * client_data, void * call_data)
  {
  char * string;
  int  errors;

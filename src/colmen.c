@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/colmen.c,v 1.22 2011/09/14 15:47:04 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/colmen.c,v 1.23 2018/12/07 17:03:31 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -53,8 +53,8 @@ C--********************************************************************
 #define MAX_ARGS   12
 
  /* Internal function prototypes */
- void            colmen_but(Widget, XtPointer, XtPointer);
- void            colset    (Widget, XtPointer, XtPointer);
+ static void     colmen_but(Widget, XtPointer, XtPointer);
+ static void     colset    (Widget, XtPointer, XtPointer);
  
  /* Internal common variables */
  static Widget   iw_colmen = (Widget)0;

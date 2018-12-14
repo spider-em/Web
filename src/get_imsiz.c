@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/get_imsiz.c,v 1.6 2005/10/18 16:59:59 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/get_imsiz.c,v 1.7 2018/12/07 17:03:32 leith Exp $*/
 /*
  **********************************************************************
  *
@@ -44,21 +44,12 @@
 
 #include "files.h"
 #include "common.h"
+#include "routines.h"
 
 /* external function prototypes */
- extern Widget wid_dialog    (Widget, Widget, char *, int, int);
- extern Widget wid_rowcol    (Widget, char , int, int);
- extern Widget wid_textboxb  (Widget, Widget, char *, char *,  int);
- extern Widget wid_labelg    (Widget, Widget, char *, int, int);
- extern Widget wid_sep       (Widget);
- extern Widget wid_stdbut    (Widget, Widget, Widget*, Widget*, Widget*,
-                             char *, void (*)(), void (*)(), void (*)(),
-                             void (*)());
- extern void   fin_cb        (Widget, caddr_t, caddr_t);
- extern int    strtoint      (Widget, char *, int *);
 
  /* internal functions */
- void          get_imsiz_buta(Widget, XtPointer, XtPointer);
+ static void   get_imsiz_buta(Widget, XtPointer, XtPointer);
 
  /* file variables */
  static Widget        iw_cols = 0, iw_rows = 0;
@@ -66,11 +57,10 @@
  static Widget        iw_imsiz = (Widget) 0, iw_slices;
 
  /* common variables */
- extern int nsam8, nrow8, nslice8;
 
  /*********************  get_imsiz  *********************************/
  
- void get_imsiz(void)
+ void get_imsiz(Widget w, XtPointer c, XtPointer u)
  {
  Widget        iw_dum; 
  char          cval[5];

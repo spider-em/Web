@@ -1,4 +1,4 @@
-head	1.21;
+head	1.22;
 access;
 symbols
 	pre-tilt-improve:1.21
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.22
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.21;
 
 1.21
 date	2007.11.28.16.18.14;	author leith;	state Exp;
@@ -121,13 +126,13 @@ desc
 @@
 
 
-1.21
+1.22
 log
-@*** empty log message ***
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/opennew.c,v 1.20 2007/11/01 19:33:45 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/opennew.c,v 1.21 2007/11/28 16:18:14 leith Exp $*/
 /*
  * opennew.c
  *
@@ -198,11 +203,9 @@ text
  *********************************************************************/
 
 #include "files.h"
+#include "routines.h"
 
  /* external file prototypes */
- extern   int    wrtlin(FILEDATA *, float *, int, int);
- extern   int    closefile(FILEDATA *);
- extern   void   spout(char *);
 
 
 /*************************  opennew  ****************************/
@@ -222,7 +225,7 @@ text
 
  FILEDATA * fileptr;
  time_t     now;
- char     * datentime ,type[3], output[80];
+ char     * datentime ,type[4], output[80];
  FILE     * fp;
  int        nlabel,reclen,headrec,headbyt;
  int        k,imami,iangle,k1;
@@ -423,6 +426,25 @@ text
  return fileptr;
 
 }
+@
+
+
+1.21
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/opennew.c,v 1.20 2007/11/01 19:33:45 leith Exp $*/
+d73 1
+a75 3
+ extern   int    wrtlin(FILEDATA *, float *, int, int);
+ extern   int    closefile(FILEDATA *);
+ extern   void   spout(char *);
+d95 1
+a95 1
+ char     * datentime ,type[3], output[80];
 @
 
 

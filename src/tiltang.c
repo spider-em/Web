@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/tiltang.c,v 1.16 2015/09/22 16:33:57 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/tiltang.c,v 1.17 2018/12/07 17:03:34 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -54,6 +54,7 @@
 
 #include "common.h"
 #include "routines.h"
+#include "fit.h"
 
  int tiltang(float *x0,   float *y0, 
              float *xt,   float *yt,

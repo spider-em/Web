@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/wipic.c,v 1.16 2011/09/21 13:42:19 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wipic.c,v 1.17 2018/12/07 17:06:44 leith Exp $*/
 
 /***********************************************************************
  *
@@ -7,12 +7,9 @@
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -43,17 +40,13 @@
 */
 
 #include "common.h"
+#include "routines.h"
 
  /* Common variables used here */
- extern Display       *idispl;
- extern Screen        *iscreen;
- extern Visual        *visual;
- extern Window        iwin;
- extern Pixmap        imagsav;
 
  /*******************  wipic   **************************/
 
- void wipic(GC icontx, unsigned char * cbuf, 
+ void wipic(GC icontx, char * cbuf, 
               int ixul, int iyul, int nsam, int nrow, int showit,
               int keepimage, XImage ** imaget)
  { 

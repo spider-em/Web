@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/showbimage.c,v 1.8 2005/10/18 17:00:02 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/showbimage.c,v 1.9 2018/12/07 17:03:34 leith Exp $*/
 
 /***********************************************************************
  *
@@ -46,7 +46,6 @@
 #include "routines.h"
 
  /* externally defined variables used here*/
- extern int imagego, imageend;        /* set norm. range for image */
  
 /****************************  showbimage  ****************************/
 
@@ -56,7 +55,7 @@ int showbimage(float * fbuf, int keepcimage, char** cimage,
                              float fmint, float fmaxt)
 {   
  int        nsams, nrows, nrowlab, iytot=0;
- int        idum;
+ int        idum = 0;
  float      scal, offset;
 
  /* find nsams, nrows in displayed image */

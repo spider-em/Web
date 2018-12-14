@@ -1,4 +1,4 @@
-head	1.2;
+head	1.3;
 access;
 symbols
 	pre-tilt-improve:1.2
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.3
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.2;
 
 1.2
 date	2005.10.18.16.59.59;	author leith;	state Exp;
@@ -27,9 +32,9 @@ desc
 @
 
 
-1.2
+1.3
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -74,6 +79,7 @@ C***********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  /************************   pixlen  ******************************/
 
@@ -85,6 +91,15 @@ C***********************************************************************
   return XTextWidth( XQueryFont(idispl, theId), strg, strlen(strg) );
 
  }
+@
+
+
+1.2
+log
+@GPL
+@
+text
+@d43 1
 @
 
 

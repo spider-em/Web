@@ -1,4 +1,4 @@
-head	1.18;
+head	1.19;
 access;
 symbols
 	pre-tilt-improve:1.18
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.19
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.18;
 
 1.18
 date	2011.09.21.13.28.10;	author leith;	state Exp;
@@ -106,13 +111,13 @@ desc
 @@
 
 
-1.18
+1.19
 log
-@neednewmap = TRUE;
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/goldmen.c,v 1.17 2011/05/17 17:29:28 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/goldmen.c,v 1.18 2011/09/21 13:28:10 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -156,26 +161,18 @@ C    CALLed BY:  web_com
 C
 C--*********************************************************************
 */
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/ToggleBG.h>
 
+#include "common.h"
+#include "routines.h"
+#include "gold.h"
+
  /* Internal function prototypes */
- void          goldmen_buts  (Widget, XtPointer, XtPointer);
- void          goldmen_butshf(Widget, XtPointer, XtPointer);
- void          goldmen_butm  (Widget, XtPointer, XtPointer);
- void          goldmen_butum (Widget, XtPointer, XtPointer);
- int           goldmen_mark  (void);
- void          goldmen_tgcb(Widget,caddr_t,caddr_t);
+ static void   goldmen_butshf(Widget, XtPointer, XtPointer);
+ static void   goldmen_butum (Widget, XtPointer, XtPointer);
+ static void   goldmen_tgcb(Widget,void *,void *);
   
  /* External common variables */
- extern Widget   iw_dean;
- extern Widget   iw_gold;
- extern FILE *   fpdocg;
- extern char     docnamg[81];
- extern int      markg;
- extern int      iradg;
 
  /* Internal common variables */
  static Widget iw_goldmen = NULL;
@@ -216,7 +213,7 @@ C--*********************************************************************
 
 /************** Goldmen_tgcb ************************************/
 
-void goldmen_tgcb(Widget iw_temp,caddr_t data,caddr_t call_data)
+void goldmen_tgcb(Widget iw_temp,void * data,void * call_data)
   {
   if (iw_num)
     show_num = XmToggleButtonGadgetGetState(iw_num);
@@ -378,6 +375,40 @@ void goldmen_tgcb(Widget iw_temp,caddr_t data,caddr_t call_data)
  if (fpdocg) fclose(fpdocg); fpdocg = NULL;
  }
 
+@
+
+
+1.18
+log
+@neednewmap = TRUE;
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/goldmen.c,v 1.17 2011/05/17 17:29:28 leith Exp leith $*/
+d46 2
+d50 1
+a50 2
+
+#include <Xm/ToggleBG.h>
+d53 3
+a55 6
+ void          goldmen_buts  (Widget, XtPointer, XtPointer);
+ void          goldmen_butshf(Widget, XtPointer, XtPointer);
+ void          goldmen_butm  (Widget, XtPointer, XtPointer);
+ void          goldmen_butum (Widget, XtPointer, XtPointer);
+ int           goldmen_mark  (void);
+ void          goldmen_tgcb(Widget,caddr_t,caddr_t);
+a57 6
+ extern Widget   iw_dean;
+ extern Widget   iw_gold;
+ extern FILE *   fpdocg;
+ extern char     docnamg[81];
+ extern int      markg;
+ extern int      iradg;
+d98 1
+a98 1
+void goldmen_tgcb(Widget iw_temp,caddr_t data,caddr_t call_data)
 @
 
 

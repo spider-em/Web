@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/spout.c,v 1.8 2005/10/18 17:00:05 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/spout.c,v 1.9 2018/12/07 17:03:34 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -50,15 +50,14 @@
  ***********************************************************************
  */
 
+#include <Xm/Text.h>
 #include "std.h"
 #include "x.h"
+#include "common.h"
 #include "routines.h"
-#include <Xm/Text.h>
+#include "extras.h"
 
  /* externally defined global variables */
- extern FILE      * resfp;           /* web_results file */
- extern Widget    iw_scroll;         /* scroll window widget */
- extern int       trace_web;
 
  /* internal static variables */
  static XmTextPosition igo  = 0; 

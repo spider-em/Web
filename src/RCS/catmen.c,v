@@ -1,4 +1,4 @@
-head	1.13;
+head	1.14;
 access;
 symbols
 	pre-tilt-improve:1.13
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.14
+date	2018.12.07.17.03.30;	author leith;	state Exp;
+branches;
+next	1.13;
 
 1.13
 date	2012.04.17.18.32.04;	author leith;	state Exp;
@@ -82,13 +87,13 @@ desc
 @
 
 
-1.13
+1.14
 log
-@output dialog labels.
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/catmen.c,v 1.12 2005/10/18 17:00:01 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/catmen.c,v 1.13 2012/04/17 18:32:04 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -131,19 +136,18 @@ C    CALLED BY:  mont2
 C
 C--*********************************************************************
 */
+#include <Xm/ToggleBG.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/ToggleBG.h>
+#include "extras.h"
 
  /* External function prototypes */
- extern void   cat          (void);
 
  /* Internal function prototypes */
- void          catmen_buts(Widget, XtPointer, XtPointer);
- void          catmen_buta(Widget, XtPointer, XtPointer);
+ static void       catmen_buts(Widget, XtPointer, XtPointer);
+ static void       catmen_buta(Widget, XtPointer, XtPointer);
   
  /* External common variables */
- extern int        ncat;        /* number of categories wanted */
 
  /* Internal common variables */
  static Widget     iw_catmen= 0, iw_docgg, iw_nkeyc, iw_ncat;
@@ -260,6 +264,29 @@ C--*********************************************************************
  }
 
 
+@
+
+
+1.13
+log
+@output dialog labels.
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/catmen.c,v 1.12 2005/10/18 17:00:01 leith Exp $*/
+d45 1
+d48 1
+a48 1
+#include <Xm/ToggleBG.h>
+a50 1
+ extern void   cat          (void);
+d53 2
+a54 2
+ void          catmen_buts(Widget, XtPointer, XtPointer);
+ void          catmen_buta(Widget, XtPointer, XtPointer);
+a56 1
+ extern int        ncat;        /* number of categories wanted */
 @
 
 

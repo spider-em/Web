@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/getoldstack.c,v 1.12 2011/08/01 16:02:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/getoldstack.c,v 1.12 2011/08/01 16:02:27 leith Exp $*/
 
 /*
 C++********************************************************************

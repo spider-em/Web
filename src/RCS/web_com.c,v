@@ -1,4 +1,4 @@
-head	1.73;
+head	1.74;
 access;
 symbols
 	pre-tilt-improve:1.73
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.74
+date	2018.12.07.17.03.35;	author leith;	state Exp;
+branches;
+next	1.73;
 
 1.73
 date	2015.04.14.13.25.04;	author leith;	state Exp;
@@ -381,9 +386,9 @@ desc
 @@
 
 
-1.73
+1.74
 log
-@removed lut button
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -405,7 +410,7 @@ text
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright 1985-2015  Health Research Inc.,                        *
  C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -434,10 +439,8 @@ text
 #include "common.h"
 
 #define MAX_ARGS     20
-Arg args[MAX_ARGS];   /* Arg list */
 
 // Function prototypes
-extern Widget wid_seper(Widget, Widget, char *,  int, int);
 
 /*******************************  web_com  ***************************/
 
@@ -604,6 +607,7 @@ extern Widget wid_seper(Widget, Widget, char *,  int, int);
  Widget         iw_seper2 = (Widget) 0;
  Widget         iw_seper3 = (Widget) 0;
  Widget         iw_quicks = (Widget) 0;
+ Arg            args[MAX_ARGS];   /* Arg list */
 
  int            n;
 
@@ -714,6 +718,22 @@ iw_seper3 = wid_seper(iw_quickmen, iw_seper3, "|", 0, 0);
  XtAddCallback(iw_exit2, XmNactivateCallback, (XtCallbackProc) exitexit, "0");
  XtManageChild(iw_exit2); 
  }
+@
+
+
+1.73
+log
+@removed lut button
+@
+text
+@d20 1
+a20 1
+ C=* Email:  spider@@wadsworth.org                                      *
+a48 1
+Arg args[MAX_ARGS];   /* Arg list */
+a50 1
+extern Widget wid_seper(Widget, Widget, char *,  int, int);
+d217 1
 @
 
 

@@ -1,4 +1,4 @@
-head	1.8;
+head	1.9;
 access;
 symbols
 	pre-tilt-improve:1.8
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.9
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.8;
 
 1.8
 date	2005.10.18.16.59.44;	author leith;	state Exp;
@@ -57,13 +62,13 @@ desc
 @
 
 
-1.8
+1.9
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/filtere.c,v 1.7 1995/03/15 15:31:26 liy Exp $*/
+/*$Header: /usr8/web/src/RCS/filtere.c,v 1.8 2005/10/18 16:59:44 leith Exp $*/
 
 /***********************************************************************
  *
@@ -109,10 +114,12 @@ text
  ***********************************************************************
 */
 
-#include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
+#include "std.h"
+#include "routines.h"
+#include "filter.h"
 
  /******************************  filtere **************************/
 
@@ -221,6 +228,23 @@ text
 }
 
 
+@
+
+
+1.8
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filtere.c,v 1.7 1995/03/15 15:31:26 liy Exp $*/
+a47 1
+#include "std.h"
+d49 1
+a49 1
+#include "float.h"
+d51 3
 @
 
 

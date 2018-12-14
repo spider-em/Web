@@ -43,11 +43,9 @@ C **********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "comap.h"
 
   /* Externally definied variables */
-  extern    char      docxnam[81];
-  extern    int       sayno, itrad, key1, key2, itxreg, ityreg;
-  extern    float     stndrt;
   double              factxa, factxb,factya, factyb;
   float               *bufx, *bufy;
   int                 *nkey;
@@ -63,7 +61,7 @@ void comap(void)
   int     maxkeys, icolort,
           maxreg, ix, iy, numtot, numcor, lastkey,
           doc_read, pkey;
-  float   *plist, *ptr, *dbuf, xt, yt;
+  float   *plist = NULL, *ptr, *dbuf, xt, yt;
   double  davx, davx2, davy, davy2, bx, by, xmin, xmax, ymin, ymax, xr, yr,
           sigx, sigy, xrange, yrange;
   char    outstr[81];

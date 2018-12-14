@@ -1,5 +1,5 @@
  
-/*$Header: /usr8/web/src/RCS/xorline.c,v 1.4 2011/09/21 12:11:31 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/xorline.c,v 1.5 2018/12/07 17:06:44 leith Exp $*/
 /*
 C***************************************************************************
 C
@@ -49,6 +49,7 @@ C--***************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  static int drawingt = FALSE;
  static int ix0,iy0,ix1, iy1;

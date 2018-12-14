@@ -62,26 +62,22 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "surf.h"
 
 #define MAX_ARGS 3
 #define EULER	 1
 #define XYZ	 0
 
  /* function prototypes */
- extern void   	projmovie    (int);
- extern void    angle_cb(Widget iw_temp, caddr_t, caddr_t);
- extern void    setangles(int, float, float, float, float, float, float);
 
  /* internal function prototypes */
- void          	projmen_buta(Widget iw_temp, caddr_t, caddr_t);
- void          	projmen_butc(Widget iw_temp, caddr_t, caddr_t);
- void          	proj_pop(Widget, XEvent *, String *, Cardinal *);
- void          	saveproj_cb(Widget iw_temp, caddr_t, caddr_t);
+ static void   	projmen_buta(Widget iw_temp, void *, void *);
+ static void   	projmen_butc(Widget iw_temp, void *, void *);
+ static void   	proj_pop(Widget, XEvent *, String *, Cardinal *);
+ static void   	saveproj_cb(Widget iw_temp, void *, void *);
  
  /* external common variables */
- float                  phi, theta, psi ;
  int                    canrotate;
- extern unsigned char * refmap;
 
  /* internal common variables */
  static Widget   iw_scales[6],iw_angs[6],iw_angsxyz[6],iw_rc,iw_mov;
@@ -228,7 +224,7 @@ C***********************************************************************
 
  /*********** cancel button callback **********************************/
 
- void projmen_butc(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void projmen_butc(Widget iw_temp, void * data, void * call_data)
    {
 	if (first) {
 	    if( filedata && filedata->fp ) 
@@ -239,7 +235,7 @@ C***********************************************************************
 
  /*********** accept button callback **********************************/
 
- void projmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void projmen_buta(Widget iw_temp, void * data, void * call_data)
  {
  char   *string;
  int    iphi, itheta, ipsi, iscale;
@@ -392,7 +388,7 @@ C***********************************************************************
  }
 
  /*************************** saveproj_cb **********************************/
- void saveproj_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void saveproj_cb(Widget iw_temp, void * data, void * call_data)
  {
    float        jslope, kslope;
    int		nsams,nrows;

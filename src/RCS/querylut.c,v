@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2011.09.26.13.16.29;	author leith;	state Exp;
@@ -47,13 +52,13 @@ desc
 @
 
 
-1.6
+1.7
 log
-@ngot --> kgot
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/querylut.c,v 1.5 2011/09/26 12:10:04 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/querylut.c,v 1.6 2011/09/26 13:16:29 leith Exp $*/
 /*
 C***********************************************************************
 C
@@ -97,9 +102,9 @@ C--*********************************************************************
 */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
 
- extern Display   *idispl;
 
  /*************************  lut_info   *******************************/
 
@@ -109,7 +114,7 @@ C--*********************************************************************
  int           i;
  XColor        *colors;
 
- printf(" %s colormap:  %#x contents \n", label,mapt);
+ printf(" %s colormap:  %p contents \n", label,(void *)mapt);
  
  if ((colors = (XColor *) malloc(ncolors*sizeof(XColor))) == (XColor *) 0)
     { spout(" *** Unable to allocate colors in querylut."); return FALSE; }
@@ -126,7 +131,7 @@ C--*********************************************************************
     
  for (i = kgot; i < ncolors; i=i+2)
     { 
-    printf(" %4d: %8X -- %5u %5u %5u   %4d: %8X -- %5u %5u %5u\n", 
+    printf(" %4d: %8lX -- %5u %5u %5u   %4d: %8lX -- %5u %5u %5u\n", 
       i,  colors[i].pixel, colors[i].red,   colors[i].green,  colors[i].blue,
       i+1,colors[i+1].pixel,colors[i+1].red,colors[i+1].green,colors[i+1].blue);
     }
@@ -177,6 +182,26 @@ C--*********************************************************************
  printf(" --------------------------------------- \n");
  ********************/
 
+@
+
+
+1.6
+log
+@ngot --> kgot
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/querylut.c,v 1.5 2011/09/26 12:10:04 leith Exp leith $*/
+d46 1
+a48 1
+ extern Display   *idispl;
+d58 1
+a58 1
+ printf(" %s colormap:  %#x contents \n", label,mapt);
+d75 1
+a75 1
+    printf(" %4d: %8X -- %5u %5u %5u   %4d: %8X -- %5u %5u %5u\n", 
 @
 
 

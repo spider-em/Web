@@ -48,13 +48,14 @@
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 /* Internal function prototypes */
- void          stackmen_buta(Widget, XtPointer, XtPointer);
- void          stackmen_butc(Widget, XtPointer, XtPointer);
- void          stackmen_toga(Widget, XtPointer, XtPointer);
- void          stackmen_togb(Widget, XtPointer, XtPointer);
- void          stackmen_togc(Widget, XtPointer, XtPointer);
+ static void   stackmen_buta(Widget, XtPointer, XtPointer);
+ static void   stackmen_butc(Widget, XtPointer, XtPointer);
+ static void   stackmen_toga(Widget, XtPointer, XtPointer);
+ static void   stackmen_togb(Widget, XtPointer, XtPointer);
+ static void   stackmen_togc(Widget, XtPointer, XtPointer);
 
  /* File variables */
  static Widget   iw_all, iw_single, iw_section;
@@ -67,7 +68,6 @@
  int             stkend;           /* Used in stack display */
  static int      all=TRUE, single=FALSE, section=FALSE;    
 
- extern int      montaverage;      /* Want montage average */
 
  /************************************************************/
 

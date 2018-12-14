@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/pickdraw.c,v 1.12 2011/06/22 19:10:53 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pickdraw.c,v 1.13 2018/12/07 17:03:33 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -43,13 +43,10 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "pick.h"
+#include "fit.h"
 
  /* External common variables */
- extern int    ixull, iyull, ixulr, iyulr;
- extern float  * xu0, * yu0;
- extern float  * xs,  * ys;
- extern float  * xs2, * ys2;
- extern int    iradi;              /* Marker radius, set in pickp */
 
  /************************  pickdraw *********************************/
 

@@ -1,19 +1,16 @@
 
-/*$Header: /usr8/web/new/RCS/windowsp.c,v 1.2 2005/10/18 16:59:52 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/windowsp.c,v 1.3 2018/12/07 17:06:44 leith Exp $*/
 /*
-C++*******************************************************************
-C
-C WINDOW
-C        CONVERTED TO C -- SEPT 2 1992 ArDean Leith
-C
-C **********************************************************************
+ C++*******************************************************************
+ C
+ C WINDOW
+ C        CONVERTED TO C -- SEPT 2 1992 ArDean Leith
+ C
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -30,32 +27,31 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    WINDOW(BUF,NSAM,NROW,NSLICE,NSAMW1,NROWW1,NSLIW1,
-C           NSAM2,NROW2,NSLIC2,BACK)
-C
-C    PURPOSE:  THIS SUBROUTINE CUTS OUT A RECTANGULAR IMAGE SECTION FROM
-C              IMAGE 1 WITH A SPECIFIED SIZE: NSAM2,NROW2 FROM A 
-C              SPECIFIED LOCATION: IXULW, IYULW AND WRITES OUT 
-C              IMAGE 2.
-C
-C    PARAMETERS:
-C         NSAM,NROW,NSLICE 	DIMENSIONS OF INPUT VOLUME/PICTURE
-C         NSAMW1,NROWW1,NSLIW1  COORDINATES, WITH RESPECT TO INPUT VOLUME, 
-C                        	OF TOP LEFT CORNER OF WINDOW
-C         NSAM2,NROW2,NSLIC2    DIMENSIONS OF WINDOW = DIMENSIONS OF OUTPUT 
-C                        	VOLUME
-C         BACK                  BACKGROUND FILL VALUE
-C
-C--*******************************************************************
+ C *********************************************************************
+ C
+ C    WINDOW(BUF,NSAM,NROW,NSLICE,NSAMW1,NROWW1,NSLIW1,
+ C           NSAM2,NROW2,NSLIC2,BACK)
+ C
+ C    PURPOSE:  THIS SUBROUTINE CUTS OUT A RECTANGULAR IMAGE SECTION FROM
+ C              IMAGE 1 WITH A SPECIFIED SIZE: NSAM2,NROW2 FROM A 
+ C              SPECIFIED LOCATION: IXULW, IYULW AND WRITES OUT 
+ C              IMAGE 2.
+ C
+ C    PARAMETERS:
+ C       NSAM,NROW,NSLICE      DIMENSIONS OF INPUT VOLUME/PICTURE
+ C       NSAMW1,NROWW1,NSLIW1  COORDINATES, WITH RESPECT TO INPUT VOLUME, 
+ C                             OF TOP LEFT CORNER OF WINDOW
+ C       NSAM2,NROW2,NSLIC2    DIMENSIONS OF WINDOW = DIMENSIONS OF OUTPUT 
+ C                             VOLUME
+ C       BACK                  BACKGROUND FILL VALUE
+ C
+ C--*******************************************************************
 */
 
 #include "files.h"
+#include "routines.h"
 
  /* external functions */
- extern   int    wrtlin     (FILEDATA *, float *, int, int);
- extern   int    redlin     (FILEDATA *, float *, int, int);
 
 
  /************************  window  *****************************/

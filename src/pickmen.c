@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickmen.c,v 1.37 2015/09/22 16:34:15 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pickmen.c,v 1.38 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -94,50 +94,29 @@
  C*********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/ToggleBG.h>
 #include <Xm/Text.h>
 
+#include "common.h"
+#include "routines.h"
+#include "pick.h"
+#include "fit.h"
+
  // Internal function prototypes 
- void    pickmen_buts  (Widget, XtPointer, XtPointer);
- void    pickmen_butm  (Widget, XtPointer, XtPointer);
- void    pickmen_butsh (Widget, XtPointer, XtPointer);
- void    pickmen_butl  (Widget, XtPointer, XtPointer);
- void    pickmen_butn  (Widget, XtPointer, XtPointer);
- void    pickmen_butcl (Widget, XtPointer, XtPointer);
- void    pickmen_butel (Widget, XtPointer, XtPointer);
- void    pickmen_buter (Widget, XtPointer, XtPointer);
- void    pickmen_butb  (Widget, XtPointer, XtPointer);
- void    pickmen_butk  (Widget, XtPointer, XtPointer);
- void    pickmen_butdet(Widget, XtPointer, XtPointer);
-
- void    fit_butdraw2  (Widget, XtPointer, XtPointer);
- void    fit_butsavang (Widget, XtPointer, XtPointer);
-
- int     det_tilt      (int wantmsg, int wantlabel);
- void    pickmen_butst (Widget, XtPointer, XtPointer);
- void    pickmen_butct (Widget, XtPointer, XtPointer);
- void    pickmen_butat (Widget, XtPointer, XtPointer);
+ static void    pickmen_buts  (Widget, XtPointer, XtPointer);
+ static void    pickmen_butm  (Widget, XtPointer, XtPointer);
+ static void    pickmen_butsh (Widget, XtPointer, XtPointer);
+ static void    pickmen_butcl (Widget, XtPointer, XtPointer);
+ static void    pickmen_butel (Widget, XtPointer, XtPointer);
+ static void    pickmen_buter (Widget, XtPointer, XtPointer);
+ static void    pickmen_butb  (Widget, XtPointer, XtPointer);
+ static void    pickmen_butk  (Widget, XtPointer, XtPointer);
+ static void    pickmen_butst (Widget, XtPointer, XtPointer);
+ static void    pickmen_butct (Widget, XtPointer, XtPointer);
+ static void    pickmen_butat (Widget, XtPointer, XtPointer);
   
  
  // Externally defined global variables 
- extern FILEDATA *  filedatal;               // From: imagemen
- extern FILEDATA *  filedatar;               // From: imagemen
- extern int         maxpart;                 // From: fitdoc
- extern int         numm;                    // From: pickp
- extern float *     xim;                     // From: fitdoc
- extern float *     xu0;                     // From: fitdoc
- extern float *     yu0;                     // From: fitdoc
- extern float *     xs;                      // From: fitdoc
- extern float *     ys;                      // From: fitdoc
- extern float *     xs2;                     // From: fitdoc
- extern float *     ys2;                     // From: fitdoc
- extern float       phif, thetaf, gammaff;   // From: fitmen
- extern float       arealim;                 // From: fitmen
- extern int         fitted;                  // From: pickp
- extern Widget      iw_but_lefrit;           // From: pickp
 
  // Internally defined global variables 
  float              xu0t, yu0t, xs0t, ys0t;
@@ -556,6 +535,8 @@
    sprintf(cval,"%-.2f",gammaff);
    wid_labelg(NULL,iw_gam,cval,0,0);
    }
+
+ return 0;
  }
 
 

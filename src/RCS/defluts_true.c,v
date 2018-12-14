@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -7,6 +7,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.2
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.1;
 
 1.1
 date	2011.09.15.16.30.25;	author leith;	state Exp;
@@ -18,13 +23,13 @@ desc
 @@
 
 
-1.1
+1.2
 log
-@Initial revision
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/defluts.c,v 1.15 2011/07/26 15:28:34 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/defluts_true.c,v 1.1 2011/09/15 16:30:25 leith Exp leith $*/
 /*
 C***********************************************************************
 C
@@ -62,7 +67,7 @@ C    defluts_true(dummy)
 c
 C    PURPOSE:  Handles 24 bit true_color colormap usage.
 C              The color map has a grey ramp in 1...255.
-c              Colors set  in ispicol(COLORGO...COLOREND)
+c              Colors set  in ispicol[colorgo...colorend]
 C
 C    PARAMETERS:  None currently used
 C
@@ -104,8 +109,7 @@ Colormap defluts_true(int dummy)
  printf(" Web ----------------------\n" );
  printf(" Default Screen:     %d  \n",screen);
  printf(" Screen depth:       %d  \n",idepth);
- printf(" Default visual:     %#X \n",visualdef);
-
+ printf(" Default visual:     %p \n",(void *)visualdef);
 
  // Write out shared colormap info 
  //lut_info("shared",mapdef,24,0,256); 
@@ -125,14 +129,17 @@ Colormap defluts_true(int dummy)
  ncolors = visual_data.colormap_size;
  visual  = visual_data.visual;
 
+#ifdef NEVER
  // Refers to truecolor colormap
  mappriv = XCreateColormap(idispl, RootWindowOfScreen(iscreen), 
                            visual, AllocNone);
  if (!mappriv)
     { fprintf(stderr,"*** Failed to find a truecolor colormap!");  
       exit(3);  }
- printf(" Default colormap:   %#X \n",mapdef );
- printf(" Colormap:           %#x \n",mappriv );
+#endif
+ mappriv = mapdef; // Use default colormap
+
+ printf(" Current colormap    %p \n",(void *)mappriv );
  printf(" # Colormap colors:  %d  \n",ncolors);
  
  //Write out private colormap info 
@@ -154,6 +161,7 @@ Colormap defluts_true(int dummy)
      exit(2); }
  ispicoln[i]  = i;             // Used in colmen
  ispicol[i++] = color.pixel;
+ //printf(" black Pixel:        %#8x \n",color.pixel);
 
  ires = XAllocNamedColor(idispl,mappriv,"blue",&exact, &color);;
  if (!ires)
@@ -161,6 +169,7 @@ Colormap defluts_true(int dummy)
      exit(2); }
  ispicoln[i]  = i;             // Used in colmen
  ispicol[i++] = color.pixel;
+ //printf(" blue Pixel:        %#8x \n",color.pixel);
 
  ires = XAllocNamedColor(idispl,mappriv,"green",&exact, &color);;
  if (!ires)
@@ -168,6 +177,7 @@ Colormap defluts_true(int dummy)
      exit(2); }
  ispicoln[i]  = i;             // Used in colmen
  ispicol[i++] = color.pixel;
+ //printf(" green Pixel:        %#8x \n",color.pixel);
 
  ires = XAllocNamedColor(idispl,mappriv,"cyan",&exact, &color);;
  if (!ires)
@@ -175,6 +185,7 @@ Colormap defluts_true(int dummy)
      exit(2); }
  ispicoln[i]  = i;             // Used in colmen
  ispicol[i++] = color.pixel;
+ //printf(" cyan Pixel:        %#8x \n",color.pixel);
 
  ires = XAllocNamedColor(idispl,mappriv,"red",&exact, &color);;
  if (!ires)
@@ -182,6 +193,7 @@ Colormap defluts_true(int dummy)
      exit(2); }
  ispicoln[i]  = i;             // Used in colmen
  ispicol[i++] = color.pixel;
+ //printf(" red Pixel:        %#8x \n",color.pixel);
 
  ires = XAllocNamedColor(idispl,mappriv,"magenta",&exact, &color);;
  if (!ires)
@@ -189,6 +201,7 @@ Colormap defluts_true(int dummy)
      exit(2); }
  ispicoln[i]  = i;             // Used in colmen
  ispicol[i++] = color.pixel;
+ //printf(" magenta Pixel:        %#8x \n",color.pixel);
 
  ires = XAllocNamedColor(idispl,mappriv,"yellow",&exact, &color);;
  if (!ires)
@@ -196,6 +209,7 @@ Colormap defluts_true(int dummy)
      exit(2); }
  ispicoln[i]  = i;             // Used in colmen
  ispicol[i++] = color.pixel;
+ //printf(" yellow Pixel:        %#8x \n",color.pixel);
 
  ires = XAllocNamedColor(idispl,mappriv,"white",&exact, &color);;
  if (!ires)
@@ -203,7 +217,7 @@ Colormap defluts_true(int dummy)
      exit(2); }
  ispicoln[i]  = i;             // Used in colmen
  ispicol[i++] = color.pixel;
-
+ //printf(" white Pixel:        %#8x \n",color.pixel);
 
 #ifdef DEBUG
  for (i = 0; i < ncolors; i=i+4)// Debug info
@@ -262,5 +276,38 @@ Colormap defluts_true(int dummy)
 
 
 
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/defluts.c,v 1.15 2011/07/26 15:28:34 leith Exp $*/
+d40 1
+a40 1
+c              Colors set  in ispicol(COLORGO...COLOREND)
+d82 1
+a82 2
+ printf(" Default visual:     %#X \n",visualdef);
+
+d102 1
+d109 4
+a112 2
+ printf(" Default colormap:   %#X \n",mapdef );
+ printf(" Colormap:           %#x \n",mappriv );
+d134 1
+d142 1
+d150 1
+d158 1
+d166 1
+d174 1
+d182 1
+d190 1
+a190 1
 
 @

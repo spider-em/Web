@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pixel_sc.c,v 1.20 2015/07/27 16:24:29 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pixel_sc.c,v 1.21 2018/12/07 17:03:33 leith Exp $*/
 /*
  C pixel_sc.c
  C               Pixel rewrite                   Jun 2011 ArDean Leith
@@ -38,21 +38,14 @@
 
 #include "common.h"
 #include "routines.h"
+#include "pixel.h"
 
  // Internal functions 
- void    pixel_sc_pop (Widget, XEvent *, String *, Cardinal *);
+ static void    pixel_sc_pop (Widget, XEvent *, String *, Cardinal *);
 
  // Externally defined common variables 
- extern char       outstr[80];
 
- extern int        ixreg_pix, iyreg_pix, isreg_pix;  // From pixelmen_sc 
- extern int        iradius_pix;                      // From pixelmen_sc 
 
- extern XImage   * imagep_sc;                        // From pixelmen_sc 
- extern int        docit_sc;                         // From pixelmen_sc 
- extern int        getscreen_sc;                     // From pixelmen_sc 
- extern int        leavit_sc;                        // From pixelmen_sc 
- extern int        ikey_sc;                          // From pixelmen_sc 
 
  // Internally defined common variables 
  FILE            * fpdocpix_sc = NULL;
@@ -92,6 +85,7 @@
  int    ixs, iys, ipix, i, savdocit;
  float  fval;
  float  dlist[7];
+ char   outstr[81];
 
  getloc(event,'m',&ixs,&iys);
  //printf("  %d,%d  \n",ixs,iys);   

@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2007.05.17.16.02.49;	author leith;	state Exp;
@@ -47,13 +52,13 @@ desc
 @
 
 
-1.6
+1.7
 log
-@round --> round_macro
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/sird.c,v 1.5 1998/02/24 14:50:55 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/sird.c,v 1.6 2007/05/17 16:02:49 leith Exp $*/
 /*
 C***********************************************************************
 C
@@ -79,6 +84,8 @@ C
 C--*********************************************************************
 */
 
+#define _XOPEN_SOURCE 500
+#include <stdlib.h>
 #include "common.h"
 #include "routines.h"
 
@@ -198,6 +205,18 @@ static int * same = (int *) 0;           /* a pixel on right is       */
  return TRUE;
  }
    
+@
+
+
+1.6
+log
+@round --> round_macro
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/sird.c,v 1.5 1998/02/24 14:50:55 leith Exp leith $*/
+d28 2
 @
 
 

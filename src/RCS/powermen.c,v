@@ -1,4 +1,4 @@
-head	1.10;
+head	1.11;
 access;
 symbols
 	pre-tilt-improve:1.10
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.11
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.10;
 
 1.10
 date	2011.09.27.17.22.51;	author leith;	state Exp;
@@ -67,9 +72,9 @@ desc
 @
 
 
-1.10
+1.11
 log
-@true color support
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -116,12 +121,12 @@ text
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
-void  powerbut_pop (Widget, XEvent *, String *, Cardinal *);
+static void  powerbut_pop (Widget, XEvent *, String *, Cardinal *);
 
 static int      erase, chksiz;
 static GC       icontxxt;
-extern int      iwintyp;
 static Boolean  showing = TRUE;
 
 /****************************  powermen  ******************************/
@@ -255,6 +260,20 @@ void powerbut_pop(Widget iw_t, XEvent *event, String *params,
      showbutx("","","",TRUE);
      }
   }
+@
+
+
+1.10
+log
+@true color support
+@
+text
+@d45 1
+d47 1
+a47 1
+void  powerbut_pop (Widget, XEvent *, String *, Cardinal *);
+a50 1
+extern int      iwintyp;
 @
 
 

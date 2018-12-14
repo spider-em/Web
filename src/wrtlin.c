@@ -1,17 +1,14 @@
 
-/*$Header: /usr8/web/new/RCS/wrtlin.c,v 1.9 2005/10/18 16:59:59 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wrtlin.c,v 1.10 2018/12/07 17:06:44 leith Exp $*/
 /*
  * wrtlin.c
  *
- *************************************************************************
- * SPIDER - MODULAR IMAGE PROCESSING SYSTEM.  AUTHOR: J.FRANK 
+ ***********************************************************************
+ C=* SPIDER - MODULAR IMAGE PROCESSING SYSTEM.  AUTHOR: J.FRANK 
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -28,13 +25,13 @@
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
- **************************************************************************
+ ***********************************************************************
  *
  * wrtlin(fileptr,buf,nsam,irec)
  * 
  * PURPOSE:     
  *
- * RETURNS: number of positions written into file
+ * RETURNS:  Number of positions written into file
  * 
  * PARAMETERS:   fileptr
  *               buf
@@ -44,6 +41,7 @@
  *********************************************************************/
 
 #include "files.h"
+#include "routines.h"
 
 unsigned int *pt;
 #define CONVERT_4( A, B )                        \
@@ -72,8 +70,8 @@ unsigned int *pt;
 
  if ((igot = fseek(fp,ioff,SEEK_SET)) != 0) 
     {
-    printf("*** Seek failed in wrtlin: %d \n",igot);
-    printf("wrtlin; igot: %d, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
+    printf("*** Seek failed in wrtlin: %zu \n",igot);
+    printf("wrtlin; igot: %zu, ioff: %d ,nsam: %d \n",igot,ioff,nsam);
     return FALSE;
     }
 
@@ -96,8 +94,8 @@ unsigned int *pt;
  else 
     {
     printf("*** Write error in wrtlin. \n");
-    printf("wrtlin; fp: %d igot: %d   ioff: %d nsam: %d \n",
-                    fp,    igot,      ioff,    nsam);
+    printf("wrtlin; fp: %p igot: %zu   ioff: %d nsam: %d \n",
+                    (void *)fp,    igot,      ioff,    nsam);
     return FALSE;
     }
  }

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/radcur.c,v 1.3 2015/09/01 18:58:21 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/radcur.c,v 1.4 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -47,22 +47,19 @@
 */
 
 #include "common.h"
+#include "routines.h"
 
  /* External function prototypes */
- extern void   spout        (char *);
- extern int    wimakecur    (Cursor *, char * , char *,
-                             XColor *, XColor *, int, int);
- extern void   setacursor   (int, int, int);
  
  /* Externally defined common variables */
- extern Cursor   icurrad;
 
  /* Internal common variables */
+ static Cursor icurrad;
 
  /*  USE A 16X16 GRID FOR CURSORS.  USE A ENDIAN NUMBERING SYSTEM
      THAT STARTS WITH ONE AT LEFT END OF EACH BYTE!  */
 
- static char lfore[] = {
+ static unsigned char lfore[] = {
       0X01, 0X80,   0X02, 0X40, 
       0X04, 0X20,   0X08, 0X10, 
       0X10, 0X08,   0X00, 0X00, 
@@ -72,7 +69,7 @@
       0X08, 0X10,   0X04, 0X20, 
       0X02, 0X40,   0X01, 0X80 };
 
- static char lback[] = {
+ static unsigned char lback[] = {
       0X03, 0XC0,   0X07, 0XE0, 
       0X0E, 0X70,   0X1C, 0X38, 
       0X18, 0X18,   0X00, 0X00, 
@@ -92,7 +89,7 @@
     {
     /* Make cursor before it can be used */
 
-    wimakecur(&icurrad,lfore,lback,
+    wimakecur(&icurrad,(char *)lfore,(char *)lback,
               &colorcursf,&colorcursb, 8,8);
     }
  }

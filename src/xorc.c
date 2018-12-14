@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/xorc.c,v 1.6 2011/09/21 12:10:07 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/xorc.c,v 1.7 2018/12/07 17:06:44 leith Exp $*/
 /*
 C***************************************************************************
 C
@@ -49,6 +49,7 @@ C--***************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  static int drawingt = FALSE;
  static int ixo,iyo,iwido;

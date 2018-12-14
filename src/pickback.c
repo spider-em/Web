@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pickback.c,v 1.15 2015/09/01 17:53:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pickback.c,v 1.16 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -44,25 +44,13 @@
 
 #include "common.h"
 #include "routines.h"
+#include "pick.h"
+#include "fit.h"
 
  /* Internally defined  functions */
- void               pickback_pop (Widget, XEvent *, String *, Cardinal *);
+ static void        pickback_pop (Widget, XEvent *, String *, Cardinal *);
           
  /* Externally defined global variables */
- extern char        dfil4[12], dfil5[12];
- extern int         nsam1l,nrow1l,nsam2l,nrow2l;
- extern int         nsam1r,nrow1r,nsam2r,nrow2r;
- extern int         ixull, iyull, ixulr, iyulr;
- extern int         ixulli,iyulli,ixulri,iyulri;
- extern int         ixulw, iyulw, nsamw, nroww;
- extern int         iredu;               /* Image reduction factor  */
- extern int         fitted;
- extern float       phif, thetaf, gammaff;
- extern FILEDATA *  filedatal;
- extern FILEDATA *  filedatar;
- extern int         firstback;
- extern GC          icontxor;
- extern int         maxpart;
 
  /* Internal file scope variables */
  static int         nsamsl, nrowsl, nsamsr, nrowsr;

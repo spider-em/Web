@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/changedir.c,v 1.11 2011/06/10 14:14:39 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/changedir.c,v 1.12 2018/12/07 17:03:30 leith Exp $*/
 
 /***********************************************************************
  *
@@ -40,15 +40,13 @@
  ***********************************************************************
 */
 
-#include "common.h"
-//#include "routines.h"
-
 #include <unistd.h>
-
 #include <Xm/FileSB.h>
+#include "common.h"
+#include "routines.h"
 
  /* Internal functions */
- void            changedir_cb(Widget, XtPointer, XtPointer);
+ static void     changedir_cb(Widget, XtPointer, XtPointer);
 
  /* File scope variables */
  static Widget     iw_text = (Widget)0;

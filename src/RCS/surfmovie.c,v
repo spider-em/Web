@@ -1,4 +1,4 @@
-head	1.15;
+head	1.16;
 access;
 symbols
 	pre-tilt-improve:1.15
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.16
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.15;
 
 1.15
 date	2007.11.01.19.33.45;	author leith;	state Exp;
@@ -92,13 +97,13 @@ desc
 @
 
 
-1.15
+1.16
 log
-@fmin ->fmin_spi..
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/surfmovie.c,v 1.14 2005/10/18 16:59:53 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/surfmovie.c,v 1.15 2007/11/01 19:33:45 leith Exp $*/
 /*
 C**************************************************************************
 C
@@ -149,23 +154,20 @@ C
 C--*********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
 
+#include "common.h"
+#include "routines.h"
+#include "surf.h"
 
- extern void   surf_pop     (Widget, XEvent *, String *, Cardinal *);
 
  /* externally defined variables used here */
- extern float            phi, theta, psi, thlev;
- extern unsigned char  * refmap;
 
  /* internal function prototypes */
- void          surfmovie_buta(Widget iw_temp, caddr_t, caddr_t);
- void          surfmovie_buts(Widget iw_temp, caddr_t, caddr_t);
- void          surfmovie_next(Widget iw_temp, caddr_t, caddr_t);
+ static void   surfmovie_buta(Widget iw_temp, void *, void *);
+ static void   surfmovie_buts(Widget iw_temp, void *, void *);
+ static void   surfmovie_next(Widget iw_temp, void *, void *);
 
 
  /* internal common variables */
@@ -248,7 +250,7 @@ C--*********************************************************************
 
  /************ next button callback *********************************/
 
- void surfmovie_next(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void surfmovie_next(Widget iw_temp, void * data, void * call_data)
  {
    int          nframes;
    Arg          args[2];
@@ -415,7 +417,7 @@ C--*********************************************************************
 
 /************ accept button callback *********************************/
 
- void surfmovie_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void surfmovie_buta(Widget iw_temp, void * data, void * call_data)
  {
 
    surfmovie_next( NULL, NULL, NULL );
@@ -437,11 +439,46 @@ C--*********************************************************************
 
  /************ cancel button callback *********************************/
 
- void surfmovie_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void surfmovie_buts(Widget iw_temp, void * data, void * call_data)
  {
   XtUnmanageChild(iw_surfmovie);
   seqcount = 1;
  }
+@
+
+
+1.15
+log
+@fmin ->fmin_spi..
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/surfmovie.c,v 1.14 2005/10/18 16:59:53 leith Exp $*/
+a52 3
+#include "common.h"
+#include "routines.h"
+
+d56 3
+a59 1
+ extern void   surf_pop     (Widget, XEvent *, String *, Cardinal *);
+a61 2
+ extern float            phi, theta, psi, thlev;
+ extern unsigned char  * refmap;
+d64 3
+a66 3
+ void          surfmovie_buta(Widget iw_temp, caddr_t, caddr_t);
+ void          surfmovie_buts(Widget iw_temp, caddr_t, caddr_t);
+ void          surfmovie_next(Widget iw_temp, caddr_t, caddr_t);
+d149 1
+a149 1
+ void surfmovie_next(Widget iw_temp, caddr_t data, caddr_t call_data)
+d316 1
+a316 1
+ void surfmovie_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+d338 1
+a338 1
+ void surfmovie_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
 @
 
 

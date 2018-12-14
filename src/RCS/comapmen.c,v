@@ -1,4 +1,4 @@
-head	1.10;
+head	1.11;
 access;
 symbols
 	pre-tilt-improve:1.10
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.11
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.10;
 
 1.10
 date	2011.09.15.16.53.18;	author leith;	state Exp;
@@ -67,9 +72,9 @@ desc
 @
 
 
-1.10
+1.11
 log
-@removed: imagego = mapgo
+@bollingers_email_and_cosmetic
 @
 text
 @/*
@@ -145,13 +150,14 @@ text
 *
 */
 
-#include "routines.h"
-#include "common.h"
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
+#include "common.h"
+#include "routines.h"
+#include "comap.h"
 
   /* function prototypes */
-  void  comapmen_buta (Widget, caddr_t, caddr_t);
+  static void  comapmen_buta (Widget, void *, void *);
 
   /* externally used variables */
   int    itxreg, ityreg, labreg, itrad, sayno, key1, key2;
@@ -165,7 +171,7 @@ text
 
 /**************************  comapmen  *********************************/
 
-void comapmen(void)
+void comapmen(Widget w, XtPointer c, XtPointer u)
   {
   Widget iw_buta, iw_butc, iw_buts, iw_rowcol;
   char   filnamm[] = "sma***", docxnam[]  = "doc_sdc";
@@ -235,7 +241,7 @@ void comapmen(void)
 
       /* create a toggle box for sayno input */
       iw_sayno = wid_toggleg(iw_rowcol,(Widget) 0," Show Image Numbers",
-                             sayno,toggle2_cb,(caddr_t) &sayno ,-1,-1);
+                             sayno,toggle2_cb, &sayno ,-1,-1);
  
       /* create a push button for stop, cancel & apply */
       wid_stdbut(iw_rowcol,iw_comapmen,
@@ -248,7 +254,7 @@ void comapmen(void)
 
 /*******************  comapmen_buta ******************************/
 
-void comapmen_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
+void comapmen_buta(Widget iw_t, void * itag, void * callpar)
   {
   char  outstr[80];
   char *string;
@@ -342,6 +348,30 @@ void comapmen_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
   /* start comap program */
   comap();
   }
+@
+
+
+1.10
+log
+@removed: imagego = mapgo
+@
+text
+@a73 2
+#include "routines.h"
+#include "common.h"
+d76 3
+d81 1
+a81 1
+  void  comapmen_buta (Widget, caddr_t, caddr_t);
+d95 1
+a95 1
+void comapmen(void)
+d165 1
+a165 1
+                             sayno,toggle2_cb,(caddr_t) &sayno ,-1,-1);
+d178 1
+a178 1
+void comapmen_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
 @
 
 

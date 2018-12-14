@@ -1,19 +1,19 @@
 
-/*$Header: /usr8/web/src/RCS/wid_scale.c,v 1.5 2011/07/19 18:06:32 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_scalef.c,v 1.1 2018/12/07 17:03:35 leith Exp $*/
 /*
-C++************************************************************************
-C
-C wid_scalef
-C
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                                 *
+ C++********************************************************************
+ C
+ C wid_scalef
+ C
+ C *********************************************************************
+ C * AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
  C=*                                                                   *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
  C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -30,28 +30,28 @@ C *  AUTHOR:  ArDean Leith                                                 *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C wid_scalef
-C
-C PURPOSE:      Set up scale widget for real numbers 
-C
-C PARAMETERS:   iw_parent         Parent widget         Read
-c               iw_its            Widget numbers        Write
-c               label             Label                 Read
-c               imin,imax         Scale min & max       Read
-c               inow              Current value         Read
-c               iwid,ihi          Scale size            Read
-c               scalef, offsetf   Scale factors         Write
-c
-C CALLED BY:    surfmen
-C
-C***********************************************************************
+ C *********************************************************************
+ C
+ C wid_scalef
+ C
+ C PURPOSE:      Set up scale widget for real numbers 
+ C
+ C PARAMETERS:   iw_parent         Parent widget         Read
+ c               iw_its            Widget numbers        Write
+ c               label             Label                 Read
+ c               imin,imax         Scale min & max       Read
+ c               inow              Current value         Read
+ c               iwid,ihi          Scale size            Read
+ c               scalef, offsetf   Scale factors         Write
+ c
+ C CALLED BY:    surfmen
+ C
+ C***********************************************************************
 */
 
+#include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/Scale.h>
 
 #define  MAX_ARGS 12
  

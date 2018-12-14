@@ -1,4 +1,4 @@
-head	1.7;
+head	1.8;
 access;
 symbols
 	pre-tilt-improve:1.7
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.8
+date	2018.12.07.17.03.35;	author leith;	state Exp;
+branches;
+next	1.7;
 
 1.7
 date	2005.10.18.16.59.58;	author leith;	state Exp;
@@ -51,24 +56,21 @@ desc
 @@
 
 
-1.7
+1.8
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/wid_label.c,v 1.6 1996/05/09 14:44:13 leith Exp $*/
+/*$Header: /usr8/web/new/RCS/wid_label.c,v 1.7 2005/10/18 16:59:58 leith Exp $*/
 /*
  * wid_label.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -88,7 +90,7 @@ text
  ***********************************************************************
  *
  * wid_label(Widget iw_parent, Widget iw_label, 
-               char *label, int ix, int iy)
+ *              char *label, int ix, int iy)
  * 
  * PURPOSE:    creates a label widget  
  *
@@ -101,9 +103,10 @@ text
  ***********************************************************************
 */
 
+#include <Xm/Label.h>
 #include "std.h"
 #include "x.h"
-#include <Xm/Label.h>
+#include "routines.h"
 
 /***************************  wid_label  *****************************/
 
@@ -154,6 +157,32 @@ text
  return iw_label;
  }
  
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_label.c,v 1.6 1996/05/09 14:44:13 leith Exp $*/
+d8 3
+a10 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d30 1
+a30 1
+               char *label, int ix, int iy)
+d43 1
+d46 1
+a46 1
+#include <Xm/Label.h>
 @
 
 

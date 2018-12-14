@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/spoutfile.c,v 1.8 2005/10/18 17:00:03 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/spoutfile.c,v 1.9 2018/12/07 17:03:34 leith Exp $*/
 
 /*
  ***********************************************************************
@@ -44,11 +44,11 @@
  */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
+#include "extras.h"
 
  /* external common variables */
- extern char      datexc[4];         /* file extension  */
- extern int       trace_web;
 
  /* global variables used elsewhere */
  FILE   * resfp = NULL;

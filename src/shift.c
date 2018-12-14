@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/shift.c,v 1.24 2015/09/08 18:14:11 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/shift.c,v 1.25 2018/12/07 17:03:34 leith Exp $*/
 
 /***********************************************************************
  *                                                                     *
@@ -7,15 +7,14 @@
  *          copyarea                             Sep 2011 ArDean Leith *
  *          Redraw locs after shifting tilt pair Jul 2015 ArDean Leith *
  *          Pixelmen_in_nod parameters           Sep 2015 ArDean Leith *
+ *          mask_draw_polys parameters missing   Dec 2018 ArDean Leith *
  *                                                                     *
  ***********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2015  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email: spider@health.ny.gov                                       *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -24,13 +23,11 @@
  C=*                                                                   *
  C=* This program is distributed in the hope that it will be useful,   *
  C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
- C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
+ C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU  *
  C=* General Public License for more details.                          *
  C=*                                                                   *
  C=* You should have received a copy of the GNU General Public License *
- C=* along with this program; if not, write to the                     *
- C=* Free Software Foundation, Inc.,                                   *
- C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
+ C=* with this program. If not, see <http://www.gnu.org/licenses>      *
  C=*                                                                   *
  ***********************************************************************
  *
@@ -44,24 +41,14 @@
 
 #include "common.h"
 #include "routines.h"
+#include "pixel.h"
 
  // Internal functions 
- void           shift_pop (Widget, XEvent *, String *, Cardinal *);
+ static void    shift_pop (Widget, XEvent *, String *, Cardinal *);
 
  // External functions not in routines.h
- void           gold_pop       (Widget, XEvent *, String *, Cardinal *);
- void           pixel_in_pop   (Widget, XEvent *, String *, Cardinal *);
- void           mask_pop       (Widget, XEvent *, String *, Cardinal *);
- void           mask_draw_polys(Pixmap, GC);
- void           goldmen_butm   (Widget, XtPointer, XtPointer);
 
  // Externally defined file variables 
- extern int     nmark;
- extern int     *pixellist;           // Variables for  pixel 
- extern int     pixelnum;             // Picking list 
- extern GC      icontxb;              // Background clear GC
- extern char    outstr[80];
- extern Pixmap  masksav;              // Mask store 
 
  // Internal file common  variables 
  static  int    down = FALSE;         // Button one position      
@@ -96,7 +83,8 @@
                Cardinal *num_params)
  {
  int        ixd,iyd,ixs,iys,nsamlt,nrowlt,nsamrt,nrowrt;
- int	    loop;		/* the viables for pixel picking */
+ int	    loop;		/* Variables for pixel picking */
+ char       outstr[81];
 
 
  if ((!(strcmp(*params, "M")) && down))
@@ -302,9 +290,9 @@
 
         actions(iw_win, "mask_pop", mask_pop, "M123");
 
-        // Draw existing masks
-        mask_draw_polys(imagsav, icontx);
-        mask_draw_polys(iwin, icontx);
+        // Draw existing masks   al 2018 F F added
+        mask_draw_polys(imagsav, icontx, FALSE, FALSE);
+        mask_draw_polys(iwin,    icontx, FALSE, FALSE);
 
         //printf(" Shifted size: %d x %d To: %d %d\n",
         //         nsam, nrow, ixul,iyul);

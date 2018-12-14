@@ -1,4 +1,4 @@
-head	1.13;
+head	1.14;
 access;
 symbols
 	pre-tilt-improve:1.13
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.14
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.13;
 
 1.13
 date	2007.11.21.15.07.03;	author leith;	state Exp;
@@ -82,12 +87,12 @@ desc
 @
 
 
-1.13
+1.14
 log
-@Increased relin length[D[D[D[D
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /net/bali/usr1/web/src/RCS/unsdal.c,v 1.12 2005/10/18 16:59:47 leith Exp $*/
+@/*$Header: /usr8/web/src/RCS/unsdal.c,v 1.13 2007/11/21 15:07:03 leith Exp $*/
 /*
 *****************************************************************************
 **    UNSDAL2.FOR (VAX) converted to C.
@@ -210,10 +215,10 @@ C **********************************************************************
 */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
 
  /* external variables */
- extern char           datexc[4];         /* file extension  */
 
 /***************************  unsdal    *******************************/
 
@@ -362,12 +367,31 @@ C **********************************************************************
 
   ilast = MYMIN(nkey, nlist);
   ptr   = dbuf + (ikey-1) * maxreg;
-  for (i=0; i < ilast;  plist[i++] = *(++ptr));
+  if (plist) {
+    for (i=0; i < ilast;  plist[i++] = *(++ptr));
+  }
 
   if ( ilast < nlist)  return -9;
 
   return lerr;
   }
+@
+
+
+1.13
+log
+@Increased relin length[D[D[D[D
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/bali/usr1/web/src/RCS/unsdal.c,v 1.12 2005/10/18 16:59:47 leith Exp $*/
+d124 1
+a127 1
+ extern char           datexc[4];         /* file extension  */
+d276 3
+a278 1
+  for (i=0; i < ilast;  plist[i++] = *(++ptr));
 @
 
 

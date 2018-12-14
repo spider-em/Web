@@ -1,16 +1,13 @@
 
-/*$Header: /usr8/web/src/RCS/wid_menubar.c,v 1.1 2011/05/09 19:21:22 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_menubar.c,v 1.2 2018/12/07 17:03:35 leith Exp $*/
 /*
  * wid_menubar.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -42,10 +39,9 @@
 */
 
 
+#include <Xm/RowColumn.h>
 #include "common.h"
-#include<Xm/RowColumn.h>
-
-void query_widget(char * label, Widget iw_widget);
+#include "routines.h"
 
 #define MAX_ARGS 3
 

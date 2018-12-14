@@ -1,19 +1,16 @@
 
-/*$Header: /usr8/web/src/RCS/wid_dialog.c,v 1.8 2011/07/19 18:16:57 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_dialog.c,v 1.9 2018/12/07 17:03:35 leith Exp $*/
 /*
-C **********************************************************************
-C
-C WID_DIALOG                        
-C               CONVERTED TO C -- JULY 92 al
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                 
+ C *********************************************************************
+ C
+ C WID_DIALOG                        
+ C               CONVERTED TO C -- JULY 92 al
+ C *********************************************************************
+ C *  AUTHOR:  ArDean Leith                                 
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -46,12 +43,11 @@ C
 C--*********************************************************************
 */
 
-#include<Xm/BulletinB.h>
+#include <Xm/BulletinB.h>
 #include "common.h"
+#include "routines.h"
 
 #define MAX_ARGS 5
-
- extern void  spout(char *);
 
 
 /************************************************************/

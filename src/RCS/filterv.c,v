@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.16.59.44;	author leith;	state Exp;
@@ -47,13 +52,13 @@ desc
 @
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/filterv.c,v 1.5 1995/03/15 15:31:30 liy Exp $*/
+/*$Header: /usr8/web/src/RCS/filterv.c,v 1.6 2005/10/18 16:59:44 leith Exp $*/
 
 /***********************************************************************
  *
@@ -97,13 +102,14 @@ text
  ***********************************************************************
 */
 
-#include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
+#include "std.h"
+#include "routines.h"
+#include "filter.h"
 
  /* external function prototypes */
- extern void     spout       (char *);
 
  /* external common variables */
  
@@ -210,6 +216,25 @@ text
 }
 
 
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filterv.c,v 1.5 1995/03/15 15:31:30 liy Exp $*/
+a45 1
+#include "std.h"
+d47 1
+a47 1
+#include "float.h"
+d49 3
+a53 1
+ extern void     spout       (char *);
 @
 
 

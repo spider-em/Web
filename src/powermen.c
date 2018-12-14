@@ -42,12 +42,12 @@
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
-void  powerbut_pop (Widget, XEvent *, String *, Cardinal *);
+static void  powerbut_pop (Widget, XEvent *, String *, Cardinal *);
 
 static int      erase, chksiz;
 static GC       icontxxt;
-extern int      iwintyp;
 static Boolean  showing = TRUE;
 
 /****************************  powermen  ******************************/

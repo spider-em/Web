@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/exitexit.c,v 1.2 2005/10/18 16:59:50 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/exitexit.c,v 1.3 2018/12/07 17:03:31 leith Exp $*/
 
 /***********************************************************************
  *
@@ -8,10 +8,6 @@
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -31,20 +27,20 @@
  C=*                                                                   *
  ***********************************************************************
  * 
- * PURPOSE:  exits web     
+ * PURPOSE:  Exits web     
  * 
  * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
- *		caddr_t		data		label text string
- *		caddr_t		call_data	not used 
+ *		void *		data		label text string
+ *		void *		call_data	not used 
  *
- ***********************************************************************
+ **********************************************************************
 */
 #include "common.h"
-
+#include "routines.h"
 
 /************************  exitexit  *********************************/
 
- void exitexit(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void exitexit(Widget iw_temp, void * data, void * call_data)
  {
 
  /* exit */

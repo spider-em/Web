@@ -1,20 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/wid_lutinfo.c,v 1.6 2011/07/20 16:45:02 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_lutinfo.c,v 1.7 2018/12/07 17:03:35 leith Exp $*/
 /*
-C***************************************************************************
-C
-C    WID_LUTINFO
-C                Directcolor mods by: Erik Vogan July 2001
-C
-C **********************************************************************
-C *  AUTHOR: ArDean Leith                                                  *
+ C**********************************************************************
+ C
+ C    WID_LUTINFO
+ C                Directcolor mods by: Erik Vogan July 2001
+ C
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -31,23 +28,21 @@ C *  AUTHOR: ArDean Leith                                                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    WID_LUTINFO(MAP)
-C
-C    PURPOSE:        LISTS COLORMAP POSITIONS
-C
-C    PARAMETERS:
-C
-C    CALLED BY:      
-C
-C *********************************************************************
+ C *********************************************************************
+ C
+ C    WID_LUTINFO(MAP)
+ C
+ C    PURPOSE:        Lists colormap positions
+ C
+ C    PARAMETERS:
+ C
+ C *********************************************************************
 */
 
 /* emv - needed for display depths > 8 bits */
 #include "common.h"
+#include "routines.h"
 
- extern Display *idispl;
 
  /************************  wid_lutinfo   **************************/
 
@@ -57,8 +52,8 @@ C *********************************************************************
     int            i;
     XColor         color;
 
-    printf(" Lut contents for first %d positions in map: %d \n",
-           npix,map);
+    printf(" Lut contents for first %d positions in map: %p \n",
+           npix,(void *)map);
     printf(" --------------------------\n");
 
     for (i = 0; i < npix; i++)

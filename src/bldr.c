@@ -1,15 +1,11 @@
 /* 
-C++************************************************************************
-C
-C  bldr.c	Converted from Fortran program in Nov 95
-C
-C **********************************************************************
+ C++********************************************************************
+ C
+ C  bldr.c	Converted from Fortran program in Nov 95
+ C
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -27,19 +23,20 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C  Purpose:	get the rotation matrix from the given eular angles 
-C
-C23456789012345678901234567890123456789012345678901234567890123456789012
-C--************************************************************************
+ C *********************************************************************
+ C
+ C  Purpose:	Get the rotation matrix from the given Eular angles 
+ C
+ C23456789012345678901234567890123456789012345678901234567890123456789012
+ C--********************************************************************
 C
 */
+
+#include <math.h>
 #include "common.h"
 #include "routines.h"
 #include "x.h"
 #include "std.h"
-#include <math.h>
 
 /**************************** bldr *******************************/
  

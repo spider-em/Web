@@ -1,4 +1,4 @@
-head	1.9;
+head	1.10;
 access;
 symbols
 	pre-tilt-improve:1.9
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.10
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.9;
 
 1.9
 date	2012.11.27.19.12.42;	author leith;	state Exp;
@@ -61,13 +66,13 @@ desc
 @@
 
 
-1.9
+1.10
 log
-@MRC support
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/setprm.c,v 1.8 2007/11/01 19:33:45 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/setprm.c,v 1.9 2012/11/27 19:12:42 leith Exp $*/
 /*
  C++********************************************************************
  C
@@ -111,11 +116,9 @@ text
 */
 
 #include "files.h"
+#include "routines.h"
 
  /* External subroutines */
- extern int    redlin (FILEDATA *, float *, int, int);
- extern int    wrtlin (FILEDATA *, float *, int, int);
- extern void   spout  (char *);
 
  /********************** setprm  **********************************/
 
@@ -157,6 +160,22 @@ text
  return TRUE;
  } 
 
+@
+
+
+1.9
+log
+@MRC support
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/setprm.c,v 1.8 2007/11/01 19:33:45 leith Exp $*/
+d46 1
+a48 3
+ extern int    redlin (FILEDATA *, float *, int, int);
+ extern int    wrtlin (FILEDATA *, float *, int, int);
+ extern void   spout  (char *);
 @
 
 

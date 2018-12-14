@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/surfrot.c,v 1.11 2011/10/25 19:06:00 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/surfrot.c,v 1.12 2018/12/07 17:03:34 leith Exp $*/
 /*
 C***********************************************************************
 C
@@ -39,6 +39,7 @@ C **********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  // Static internal variables
  static int            nsr, vcx, vcy, vcz;

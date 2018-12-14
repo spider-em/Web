@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/filterfill.c,v 1.5 2005/10/18 17:00:02 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/filterfill.c,v 1.6 2018/12/07 17:03:31 leith Exp $*/
 
 /***********************************************************************
  *
@@ -45,11 +45,12 @@
 
 #include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
 #include "routines.h"
+#include "filter.h"
  
- void flood (int);
+ static void flood (int);
 
  static int     nsamtt, connect8;
  static float   thresht, fvalt;

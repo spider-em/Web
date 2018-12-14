@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/wid_stdbut.c,v 1.5 2015/09/01 17:54:34 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_stdbut.c,v 1.6 2018/12/07 17:06:44 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -12,11 +12,8 @@
  C   AUTHOR:  ArDean Leith              
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2015  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+  C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -59,12 +56,9 @@
 
 #include "x.h"
 #include "std.h"
+#include "routines.h"
 
  /* Function prototypes */
- extern      Widget wid_rowcol ( Widget, char , int, int);
- extern void web_man           ( Widget, caddr_t, caddr_t );
- extern      Widget wid_pushg  ( Widget, Widget, char *, void (*)(), 
-                                 char *, int, int);
 
 /******************************** wid_stdbut_str *******************/
 
@@ -72,8 +66,8 @@
                    Widget *iw_pushs, Widget *iw_pushc,  Widget *iw_pusha,
                    char * type,
                    char * lab_s,  char * lab_c,  char * lab_a, 
-                   void (*cbs)(), void (*cbc)(), void (*cba)(),  
-                   char * data)
+                   XtCallbackProc cbs, XtCallbackProc cbc, XtCallbackProc cba, 
+                   void * data)
  { 
  Widget  iw_rowcol, iw_pushh;
 
@@ -107,8 +101,8 @@
  Widget wid_stdbut(Widget iw_parent, Widget iw_bigparent,
                    Widget *iw_pushs, Widget *iw_pushc,  Widget *iw_pusha,
                    char * type,
-                   void (*cbs)(), void (*cbc)(), void (*cba)(), 
-                   char * data)
+                   XtCallbackProc cbs, XtCallbackProc cbc, XtCallbackProc cba, 
+                   void * data)
  { 
  Widget  iw_rowcol, iw_pushh;
 

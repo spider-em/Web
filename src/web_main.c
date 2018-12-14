@@ -1,21 +1,21 @@
-/*$Header: /usr8/web/src/RCS/web_main.c,v 1.48 2015/09/01 18:37:56 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/web_main.c,v 1.49 2018/12/07 17:03:35 leith Exp $*/
 
 /*
  ***********************************************************************
  *                                                                     *
  * web_main.c                                                          *
- *               moved: realize all widgets now  Dec 2004 ArDean Leith *
- *               _BGFG foreground & background   Oct 2005 ArDean Leith *
- *               EXIT                            Feb 2011 ArDean Leith *
- *               WEB_TRUE                        Sep 2011 ArDean Leith *
- *               Copyright                       Sep 2015 ArDean Leith *
+ *            moved: realize all widgets now     Dec 2004 ArDean Leith *
+ *            _BGFG foreground & background      Oct 2005 ArDean Leith *
+ *            EXIT                               Feb 2011 ArDean Leith *
+ *            WEB_TRUE                           Sep 2011 ArDean Leith *
+ *            Copyright                          Sep 2015 ArDean Leith *
+ *            Email                              Dec 2018 ArDean Leith *
  *                                                                     *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2015  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
  C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Email: spider@health.ny.gov                                       *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -40,12 +40,6 @@
  ***********************************************************************
 */
 
-#include "routines.h"
-#include "common.h"
-
-/*  Define web icon */
-#include "web_icon.xbm"  
-
 #include <Xm/Text.h>
 #include <Xm/Form.h>
 #include <Xm/ScrollBar.h>
@@ -55,13 +49,16 @@
 #include <Xm/PushBG.h>
 #include <X11/Xatom.h>
 
+#include "common.h"
+#include "routines.h"
+
+/*  Define web icon */
+#include "web_icon.xbm"  
+
 #define MAX_ARGS     20
 
  // Internal functions defined here
- void      query_widget  (char * label, Widget iw_widget);
-
- // File scope variables
- char      outstr[80];
+ static void query_widget  (char * label, Widget iw_widget);
 
 #ifdef WEB_TRUE
  
@@ -87,6 +84,7 @@
   "Web -- A SPIDER image viewer and analyzer       COPYRIGHT (c) 1992-2015 Health Research Inc.";
 
  int                   icolorxtb,icolorxtf;
+ char                  outstr[80];
 
  /* Set main window position and size -------------------------*/
  ihighx = HeightOfScreen(iscreen) - 100;
@@ -111,8 +109,8 @@
 
  icolorxmb = WhitePixelOfScreen(iscreen);
  icolorxmf = BlackPixelOfScreen(iscreen);
- printf(" White Pixel:        %#8x \n",icolorxmb);      
- printf(" Black Pixel:        %#8x \n",icolorxmf);     
+ printf(" White Pixel:        %#8lx \n",icolorxmb);      
+ printf(" Black Pixel:        %#8lx \n",icolorxmf);     
  icolorxmb = 0xEEEEEE;      // jul 2011   
 
  // Create a menu bar for top line commands ---------------------
@@ -231,7 +229,7 @@
 
  // Set default background drawing color. Sets both icolorb and icolorxb 
  wicolor(icontx, -icolorb-1000000);   // Background (YES THIS IS OK)
- printf(" Background color:   %#8x \n", ispicol[icolorb]);
+ printf(" Background color:   %#8lx \n", ispicol[icolorb]);
 
  // Set default foreground drawing color. Sets both icolor and icolorx 
  wicolor(icontx,icolor+colorgo);
@@ -249,7 +247,7 @@
  icon_fore   = col_def.pixel;
  XAllocNamedColor(idispl, mapdef, "Blue", &col_def, &rgb_def);
  icon_back   = col_def.pixel;
- icon_pixmap = XCreatePixmapFromBitmapData(idispl, iwtop, web_icon_bits, 
+ icon_pixmap = XCreatePixmapFromBitmapData(idispl, iwtop, (char *)web_icon_bits, 
                  web_icon_width, web_icon_height, icon_fore, icon_back, idepth);
 
  XStringListToTextProperty(&icon_name,   1, &iconName);
@@ -332,6 +330,7 @@
   "Web -- A SPIDER image viewer and analyzer       COPYRIGHT (c) 1992-2011 Health Research Inc., Menands, NY";
 
  int                   icolorxtb,icolorxtf;
+ char                  outstr[80];
 
  //int screen_num = XDefaultScreen(idispl);
  //printf(" DefaultScreen(idispl):          %d  \n",DefaultScreen(idispl) );
@@ -511,7 +510,7 @@
  icon_fore   = col_def.pixel;
  XAllocNamedColor(idispl, mapdef, "Blue", &col_def, &rgb_def);
  icon_back   = col_def.pixel;
- icon_pixmap = XCreatePixmapFromBitmapData(idispl, iwtop, web_icon_bits, 
+ icon_pixmap = XCreatePixmapFromBitmapData(idispl, iwtop, (char *)web_icon_bits, 
                  web_icon_width, web_icon_height, icon_fore, icon_back, idepth);
 
  XStringListToTextProperty(&icon_name,   1, &iconName);
@@ -585,6 +584,6 @@
                        
  XtGetValues(iw_widget,args,3); 
 
- printf(" %s  -- Colormap:%#x,  Background: %d  Foreground: %d\n",
-         label, mapt,icolorxtb,icolorxtf);
+ printf(" %s  -- Colormap:%p,  Background: %lu  Foreground: %lu\n",
+         label, (void *)mapt,icolorxtb,icolorxtf);
  }

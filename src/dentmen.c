@@ -60,13 +60,13 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "dent.h"
 
  /* external function prototypes */
- extern void  dent(void);
 
  /* internal function prototypes */
- static void dentmen_buta(Widget iw_temp, caddr_t, caddr_t);
- static void dentmen_butc(Widget iw_temp, caddr_t, caddr_t);
+ static void dentmen_buta(Widget iw_temp, void *, void *);
+ static void dentmen_butc(Widget iw_temp, void *, void *);
  
  /* global variables used elsewhere (in dent.c)  */
  float    dentrefl = 0.5, dentfct = 0.5, dentthlev;
@@ -86,7 +86,7 @@ C***********************************************************************
  { 
  int    i, ifct, irefl;
  Widget iw_dum;
- char   cval[50];
+ char   cval[64];
 
  if (iw_dentmen <= (Widget)0)
     {   /* create dentist menu widget first */
@@ -169,7 +169,7 @@ C***********************************************************************
 
  /*********** cancel button callback **********************************/
 
- void dentmen_butc(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void dentmen_butc(Widget iw_temp, void * data, void * call_data)
    {
    if (filedata && filedata->fp) closefile(filedata);
    XtUnmanageChild(iw_dentmen);
@@ -177,7 +177,7 @@ C***********************************************************************
 
  /*********** accept button callback **********************************/
 
- void dentmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void dentmen_buta(Widget iw_temp, void * data, void * call_data)
  {
  char *string;
  int  irefl, ifct;

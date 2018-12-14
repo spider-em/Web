@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/querylut.c,v 1.6 2011/09/26 13:16:29 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/querylut.c,v 1.7 2018/12/07 17:03:33 leith Exp $*/
 /*
 C***********************************************************************
 C
@@ -43,9 +43,9 @@ C--*********************************************************************
 */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
 
- extern Display   *idispl;
 
  /*************************  lut_info   *******************************/
 
@@ -55,7 +55,7 @@ C--*********************************************************************
  int           i;
  XColor        *colors;
 
- printf(" %s colormap:  %#x contents \n", label,mapt);
+ printf(" %s colormap:  %p contents \n", label,(void *)mapt);
  
  if ((colors = (XColor *) malloc(ncolors*sizeof(XColor))) == (XColor *) 0)
     { spout(" *** Unable to allocate colors in querylut."); return FALSE; }
@@ -72,7 +72,7 @@ C--*********************************************************************
     
  for (i = kgot; i < ncolors; i=i+2)
     { 
-    printf(" %4d: %8X -- %5u %5u %5u   %4d: %8X -- %5u %5u %5u\n", 
+    printf(" %4d: %8lX -- %5u %5u %5u   %4d: %8lX -- %5u %5u %5u\n", 
       i,  colors[i].pixel, colors[i].red,   colors[i].green,  colors[i].blue,
       i+1,colors[i+1].pixel,colors[i+1].red,colors[i+1].green,colors[i+1].blue);
     }

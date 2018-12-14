@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/mont2.c,v 1.38 2012/12/05 17:02:40 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/mont2.c,v 1.39 2018/12/07 17:03:32 leith Exp $*/
 
 /*
 C++********************************************************************
@@ -42,25 +42,11 @@ C**********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
  /* External routines */
- extern int sumum(float * first, float * second, float * output, 
-                  int npix);
- extern int average(float * input,  float * output,
-                    int npix, float divisor);
- extern int avgsave(char * avgnam, int nsam, int nrow, float * avgdata);
- extern int setnprow(int nsam);
 
  /* External variables used here */
- extern int      lastfile;           
- extern int    * docimgnums;       /* doc file image numbers */
- extern int      docimgtotal;      /* number of images from doc file */
- extern int      montaverage;      /* want montage average */
- extern char     avgnam[128];      /* name for montage average file */
- extern int      numnext;          /* from docmontmen */
- extern int      numnextout;       /* from docmontmen */
- extern int      stkgo, stkend;
- extern XImage * ximagelist[1000]; /* from showmovie */
 
  /* Internal variables used elsewhere */
  int          ndone;             /* used by cat.c & movie            */

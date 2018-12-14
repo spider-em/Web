@@ -1,14 +1,10 @@
 
-/*$Header: /usr8/web/src/RCS/barmen.c,v 1.9 2011/07/19 18:35:44 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/barmen.c,v 1.10 2018/12/07 17:03:30 leith Exp $*/
 /* 
-C **********************************************************************
-C *  AUTHOR: A. LEITH                                                  *
+ C *********************************************************************
+ C * AUTHOR: A. LEITH                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -26,38 +22,32 @@ C *  AUTHOR: A. LEITH                                                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    BARMEN
-C
-C    PARAMETERS:   
-C
-C    PURPOSE:      Makes super-widget to find bar length
-C
-C    CALLED BY:    WEB_MAIN
-C
-C--********************************************************************
+ C *********************************************************************
+ C
+ C    barmen(Widget, XtPointer, XtPointer)
+ C
+ C    PARAMETERS:   
+ C
+ C    PURPOSE:      Makes super-widget to find bar length
+ C
+ C    CALLED BY:    web_main
+ C
+ C--*******************************************************************
 */
 
-#include "common.h"
 #include <Xm/Scale.h>
 #include <Xm/ToggleBG.h>
+#include "common.h"
+#include "routines.h"
+#include "bar.h"
 
 #define MAX_ARGS 13
 
  /* External function prototypes */
- extern Widget wid_labelg   (Widget, Widget, char *, int, int);
- extern Widget wid_dialog   (Widget, Widget, char *, int, int);
- extern void   spout        (char *);
- extern void   fin_cb       (Widget, XtPointer, XtPointer);
- extern Widget wid_toggleg  (Widget, Widget, char *, int, void (*)(),
-                                char *, int, int);
- extern Widget wid_pushg    (Widget, Widget, char *, void (*)(), 
-                                char *,int,int);
 
  /* internal function prototypes */
- void          barmen_len_cb(Widget, XtPointer, XtPointer);
- void          bar_fin_cb   (Widget, XtPointer, XtPointer);
+ static void   barmen_len_cb(Widget, XtPointer, XtPointer);
+ static void   bar_fin_cb   (Widget, XtPointer, XtPointer);
 
  /* Internal common variables */
  static Widget        iw_hun, iw_ones, iw_or;

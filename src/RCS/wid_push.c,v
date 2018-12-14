@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.35;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2005.10.18.16.59.57;	author leith;	state Exp;
@@ -41,24 +46,21 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/wid_push.c,v 1.4 1996/03/22 17:35:55 leith Exp $*/
+/*$Header: web/new/RCS/wid_push.c,v 1.5 2005/10/18 16:59:57 leith Exp $*/
 /*
  * wid_push.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -91,16 +93,17 @@ text
  ***********************************************************************
 */
 
-#include "x.h"
 #include <Xm/PushB.h>
+#include "x.h"
 #include "std.h"
+#include "routines.h"
 
 #define MAX_ARGS 4
 
 /***********************  wid_push  *************************/
 
  Widget wid_push(Widget iw_parent, Widget iw_push, 
-               char *label, void (*cb)(),
+               char *label, XtCallbackProc cb,
                char *data, Colormap mapt, int ix, int iy)
  { 
 
@@ -147,6 +150,32 @@ text
  return iw_push;
  }
  
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/wid_push.c,v 1.4 1996/03/22 17:35:55 leith Exp $*/
+d8 3
+a10 6
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d43 1
+a44 1
+#include <Xm/PushB.h>
+d46 1
+d53 1
+a53 1
+               char *label, void (*cb)(),
 @
 
 

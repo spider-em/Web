@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/defluts.c,v 1.15 2011/07/26 15:28:34 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/defluts.c,v 1.16 2018/12/07 17:03:31 leith Exp $*/
 /*
 C***********************************************************************
 C
@@ -118,8 +118,8 @@ Colormap defluts(int dummy)
  printf(" Web ----------------------\n" );
  printf(" Default Screen:     %d  \n",screen);
  printf(" Screen depth:       %d  \n",idepth);
- printf(" Default visual:     %#X \n",visualdef);
- printf(" Default colormap:   %#X \n",mapdef );
+ printf(" Default visual:     %p \n",(void *)visualdef);
+ printf(" Default colormap:   %p \n",(void *)mapdef );
 
 
  // Write out private colormap info 
@@ -146,7 +146,7 @@ Colormap defluts(int dummy)
  if (!mappriv)
     { fprintf(stderr,"*** Failed to create private colormap!");  
       exit(3);  }
- printf(" Private map:        %#x \n",mappriv );
+ printf(" Private map:        %p \n",(void *)mappriv );
  printf(" # of colors:        %d  \n",ncolors);
  
 
@@ -350,8 +350,8 @@ Colormap defluts_tryout(int dummy)
  printf("\n" );
  printf(" Default Screen:     %d   ---------------------- \n",screen);
  printf(" Default depth:      %d  \n",idepth);
- printf(" Default visual:     %#X \n",visualdef);
- printf(" Default colormap:   %#X \n",mapdef );
+ printf(" Default visual:     %p \n",(void *)visualdef);
+ printf(" Default colormap:   %p \n",(void *)mapdef );
 
  /* find depth of screen (number of bit planes) */
  if((DefaultDepthOfScreen(iscreen)) <= 8)
@@ -399,7 +399,7 @@ Colormap defluts_tryout(int dummy)
 
  for (i = 0; i < ncolors; i=i+4)
     {
-    printf(" ispicol(%3d..%3d) : %#8x  %#8x   %#8x   %#8x \n",
+    printf(" ispicol(%3d..%3d) : %#8lx  %#8lx   %#8lx   %#8lx \n",
              i,i+3, ispicol[i],   ispicol[i+1],  
                     ispicol[i+2], ispicol[i+3]) ; 
     }
@@ -445,7 +445,7 @@ Colormap defluts_tryout(int dummy)
    // FAILSXFreeColors(idispl, mappriv, cells, tofree, plane_mask);
    //XFreeColors(idispl, mappriv, cells,tofree, plane_mask);
  
- printf(" Freeing %3d cells: %#x  Using mask: %#x  \n",
+ printf(" Freeing %3d cells: %#lx  Using mask: %#lx  \n",
                   tofree,cells[1], plane_mask);
  XFlush(idispl);
 

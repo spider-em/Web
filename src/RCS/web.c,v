@@ -1,4 +1,4 @@
-head	1.45;
+head	1.46;
 access;
 symbols
 	pre-tilt-improve:1.45
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.46
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.45;
 
 1.45
 date	2012.11.27.19.12.20;	author leith;	state Exp;
@@ -241,9 +246,9 @@ desc
 @@
 
 
-1.45
+1.46
 log
-@raw 8 default
+@bollingers_email_and_cosmetic
 @
 text
 @/*
@@ -256,9 +261,9 @@ text
  C *********************************************************************
  C=* PACKAGE AUTHOR: A. LEITH                                          *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright 1985-2012  Health Research Inc.,                        *
+ C=* Copyright 1985-2018  Health Research Inc.,                        *
  C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -285,6 +290,8 @@ text
 
 #include "x.h"
 #include "files.h"
+#include "routines.h"
+#include "extras.h"
 
 #ifdef app_plus
 #include "../AppPlusS/AppPlusS.h"
@@ -296,7 +303,6 @@ text
 #define XtCFontPath "FontPath"
 
  /* External function prototypes */
- extern Widget        web_main(Widget);
  
  /* Command line option recovery structure */
  static XrmOptionDescRec options[] = {
@@ -613,11 +619,11 @@ text
 
 /********************* main  ***********************/
 
- int main(unsigned int argc, char **argv)
+ int main(int argc, char **argv)
  
  { 
- int           i, n;
- char          whichweb[6]; 
+ int           i, n, temp;
+ char          whichweb[8]; 
 
  Arg           args[4];         /* Arg list */
  XVisualInfo   visual_data;
@@ -657,7 +663,7 @@ text
  */
 
  // Open dummy widget to get visual info needed for non-default visual
- iw_dummy = XtAppInitialize(&app_context,"Dummy", NULL, 0, (int *) &argc, argv,
+ iw_dummy = XtAppInitialize(&app_context,"Dummy", NULL, 0, &argc, argv,
 			   (String *) NULL, args, 0);
 
  idispl = XtDisplay(iw_dummy);
@@ -669,7 +675,7 @@ text
     {XtWarning("*** Web can not determine screen!"); exit (-1);}
 
  /* Find depth of screen (number of bit planes) */
- if ((idepth = DefaultDepthOfScreen(iscreen)) < idepth)
+ if (temp = idepth, idepth = DefaultDepthOfScreen(iscreen), idepth < temp)
     {XtWarning("*** Screen depth too shallow need24 bits!"); exit (-1); }
 
 
@@ -708,7 +714,7 @@ text
  XtSetArg(args[n], XtNcolormap, map);                n++;
 
  iw_top = XtOpenApplication(&app_context, whichweb,options,
-                            XtNumber(options), (int *) &argc, argv, NULL, 
+                            XtNumber(options), &argc, argv, NULL, 
                             applicationShellWidgetClass, args, n);
 
  /* Cache the display pointer */ 
@@ -806,7 +812,7 @@ text
  /* Check scaleval */
  if (AppData.scaleval <= 0.0)
    {
-   printf("In resources, ScaleVal: %d must be > zero\n",
+   printf("In resources, ScaleVal: %f must be > zero\n",
           AppData.scaleval);
    AppData.scaleval = scaleval;
    }
@@ -815,7 +821,7 @@ text
  /* Check scaleval */
  if (AppData.scaleval <= 0.0)
    {
-   printf("In resources, ScaleVal: %d must be > zero\n",
+   printf("In resources, ScaleVal: %f must be > zero\n",
           AppData.scaleval);
    AppData.scaleval = scaleval;
    }
@@ -824,7 +830,7 @@ text
  /* Check refl */
  if (AppData.refl < 0.0)
    {
-   printf("In resources, ReflectionFactor: %d must be >= zero.\n",
+   printf("In resources, ReflectionFactor: %f must be >= zero.\n",
           AppData.refl);
    AppData.refl = refl;
    }
@@ -833,7 +839,7 @@ text
  /* Check fct */
  if (AppData.fct < 0.0)
    {
-   printf("In resources, Fct: %d must be >= zero.\n",
+   printf("In resources, Fct: %f must be >= zero.\n",
           AppData.fct);
    AppData.fct = fct;
    }
@@ -909,6 +915,51 @@ text
 
  }
 
+@
+
+
+1.45
+log
+@raw 8 default
+@
+text
+@d11 1
+a11 1
+ C=* Copyright 1985-2012  Health Research Inc.,                        *
+d13 1
+a13 1
+ C=* Email:  spider@@wadsworth.org                                      *
+d40 2
+a52 1
+ extern Widget        web_main(Widget);
+d369 1
+a369 1
+ int main(unsigned int argc, char **argv)
+d372 2
+a373 2
+ int           i, n;
+ char          whichweb[6]; 
+d413 1
+a413 1
+ iw_dummy = XtAppInitialize(&app_context,"Dummy", NULL, 0, (int *) &argc, argv,
+d425 1
+a425 1
+ if ((idepth = DefaultDepthOfScreen(iscreen)) < idepth)
+d464 1
+a464 1
+                            XtNumber(options), (int *) &argc, argv, NULL, 
+d562 1
+a562 1
+   printf("In resources, ScaleVal: %d must be > zero\n",
+d571 1
+a571 1
+   printf("In resources, ScaleVal: %d must be > zero\n",
+d580 1
+a580 1
+   printf("In resources, ReflectionFactor: %d must be >= zero.\n",
+d589 1
+a589 1
+   printf("In resources, Fct: %d must be >= zero.\n",
 @
 
 

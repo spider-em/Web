@@ -1,18 +1,16 @@
 
-/*$Header: /usr8/web/new/RCS/wid_seper.c,v 1.1 2011/05/31 12:21:58 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_seper.c,v 1.2 2018/12/07 17:06:44 leith Exp $*/
 /*
-C++*********************************************************************
-C
-C wid_sep.c                                      ArDean Leith  May 2011
-C **********************************************************************
-C    AUTHOR:  ArDean Leith
+ C++********************************************************************
+ C 
+ C wid_sep.c                                    ArDean Leith  May 2011
+ C
+ C *********************************************************************
+ C   AUTHOR:  ArDean Leith
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -29,20 +27,21 @@ C    AUTHOR:  ArDean Leith
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C  wid_seper
-C
-C  PARAMETERS:    
-C
-C  PURPOSE:    Displays seperating label widget
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C  wid_seper
+ C
+ C  PARAMETERS:    
+ C
+ C  PURPOSE:    Displays seperating label widget
+ C
+ C--*********************************************************************
 */
 
+#include <Xm/LabelG.h>
 #include "x.h"
 #include "std.h"
-#include <Xm/LabelG.h>
+#include "routines.h"
 
 #define MAX_ARGS     20
 

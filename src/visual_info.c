@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/visual_info.c,v 1.5 2011/05/05 12:05:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/visual_info.c,v 1.6 2018/12/07 17:03:34 leith Exp $*/
 /*
 C++*************************************************************************
 C
@@ -38,6 +38,7 @@ C--*******************************************************************
 
 #include "std.h"
 #include "x.h"
+#include "routines.h"
 
  void visual_info(Display *idispl, Visual *vis, 
                   int * depth, int * ncolors)
@@ -75,7 +76,7 @@ C--*******************************************************************
     class = "Unknown";
 
  if (visualList[0].visual != vis)
-    printf("Visual: %d  not same as in caller: \n",visualList[0].visual,vis);
+    printf("Visual: %p  not same as in caller: %p\n",(void *)visualList[0].visual,(void *)vis);
 
     printf(" Visual class:              %s (%d) \n",class,visualList[0].class );
 
@@ -85,7 +86,7 @@ C--*******************************************************************
     *ncolors = visualList[0].colormap_size;
     printf(" Visual map size:        %6d     \n",    visualList[0].colormap_size);
 
-    printf(" RGB masks:                 %#X %#X %#X \n",visualList[0].red_mask,
+    printf(" RGB masks:                 %#lX %#lX %#lX \n",visualList[0].red_mask,
                                                         visualList[0].green_mask,
                                                         visualList[0].blue_mask);
     printf("  \n");

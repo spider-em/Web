@@ -64,20 +64,11 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "surf.h"
 
  /* External function prototypes */
- extern void  cantrot   (int, int, float *, unsigned char *,float,float,float);
- extern float surfrot   (int *, int *, float, float, float, unsigned char *, 
-                         unsigned char, int, int);
- extern float volval    (int, int, int, unsigned char *);    
- extern int surfcolor   (unsigned char * colvol, int nvolcolors, int * ncolrange);
- int redvol8_reform     (FILEDATA *, unsigned char * ,
-                         int, int, int, int, int,  float *, float *);                      
 
  /* Externally defined variables used here */
- extern float      phi, theta, psi, thlev;
- extern XImage     *imagel;
- extern int        nvolcolors;
 
  /* Static variables for use here */
  static unsigned char lthlev, lthlevo = 0;

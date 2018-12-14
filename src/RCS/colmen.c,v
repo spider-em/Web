@@ -1,4 +1,4 @@
-head	1.22;
+head	1.23;
 access;
 symbols
 	pre-tilt-improve:1.22
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.23
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.22;
 
 1.22
 date	2011.09.14.15.47.04;	author leith;	state Exp;
@@ -126,13 +131,13 @@ desc
 @@
 
 
-1.22
+1.23
 log
-@cosmetic
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/colmen.c,v 1.20 2011/07/19 19:37:02 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/colmen.c,v 1.22 2011/09/14 15:47:04 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -186,8 +191,8 @@ C--********************************************************************
 #define MAX_ARGS   12
 
  /* Internal function prototypes */
- void            colmen_but(Widget, XtPointer, XtPointer);
- void            colset    (Widget, XtPointer, XtPointer);
+ static void     colmen_but(Widget, XtPointer, XtPointer);
+ static void     colset    (Widget, XtPointer, XtPointer);
  
  /* Internal common variables */
  static Widget   iw_colmen = (Widget)0;
@@ -419,6 +424,21 @@ C--********************************************************************
 
 
                               
+@
+
+
+1.22
+log
+@cosmetic
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/colmen.c,v 1.20 2011/07/19 19:37:02 leith Exp $*/
+d56 2
+a57 2
+ void            colmen_but(Widget, XtPointer, XtPointer);
+ void            colset    (Widget, XtPointer, XtPointer);
 @
 
 

@@ -1,4 +1,4 @@
-head	1.35;
+head	1.36;
 access;
 symbols
 	pre-tilt-improve:1.32
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.36
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.35;
 
 1.35
 date	2015.09.22.14.21.53;	author leith;	state Exp;
@@ -191,13 +196,13 @@ desc
 @@
 
 
-1.35
+1.36
 log
-@Parameters added for saving location doc file
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/fitdoc.c,v 1.34 2015/09/18 16:14:36 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/fitdoc.c,v 1.35 2015/09/22 14:21:53 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -265,18 +270,12 @@ text
 
 #include "std.h"
 #include "x.h"
+#include "common.h"
 #include "routines.h"
-
- // Internal function prototypes 
- int           fitdoc_addpart(int n,  int iwhich, int xu, int yu, int xt, int yt);
+#include "pick.h"
+#include "fit.h"
 
  /* External global variables */
- extern char   dfil1[12], dfil2[12], dfil3[12], dfil4[12], dfil5[12];
- extern int    numm, back_win_now, iredu;
- extern int    fitted;
- extern float  phif, thetaf, gammaff;
- extern float  xu0t, yu0t, xs0t, ys0t;
- extern char   datexc[4];                 /* File extension  */
 
  /* Global variables used elsewhere */
  int           limfit, ifit;
@@ -558,6 +557,30 @@ text
  return 0;
  }
 
+@
+
+
+1.35
+log
+@Parameters added for saving location doc file
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/fitdoc.c,v 1.34 2015/09/18 16:14:36 leith Exp $*/
+d70 1
+d72 2
+a73 3
+
+ // Internal function prototypes 
+ int           fitdoc_addpart(int n,  int iwhich, int xu, int yu, int xt, int yt);
+a75 6
+ extern char   dfil1[12], dfil2[12], dfil3[12], dfil4[12], dfil5[12];
+ extern int    numm, back_win_now, iredu;
+ extern int    fitted;
+ extern float  phif, thetaf, gammaff;
+ extern float  xu0t, yu0t, xs0t, ys0t;
+ extern char   datexc[4];                 /* File extension  */
 @
 
 

@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2018.12.07.16.32.50;	author leith;	state Exp;
+branches;
+next	;
+
+
+desc
+@coi comap.h
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#include <X11/Intrinsic.h>
+
+extern int idx;
+extern int idy;
+extern Widget iw_barmen;
+@

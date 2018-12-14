@@ -1,20 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/webclear.c,v 1.8 2011/09/21 13:43:10 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/webclear.c,v 1.9 2018/12/07 17:03:34 leith Exp $*/
 /*
-C++*************************************************************************
-C
-C WEBCLEAR.FOR -- MARCH 91 al
-C                 CONVERTED TO C -- AUG 91
-C
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith
+ C++*************************************************************************
+ C
+ C WEBCLEAR.FOR -- MARCH 91 al
+ C                 CONVERTED TO C -- AUG 91
+ C
+ C *********************************************************************
+ C=* AUTHOR:  ArDean Leith
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -31,22 +28,23 @@ C *  AUTHOR:  ArDean Leith
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    webclear(iw_dum, data, call_data)
-C
-C    PURPOSE:          Clears image window
-C
-C    PARAMETERS:       
-C
-C    CALLED BY:        web_com
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C    webclear(iw_dum, data, call_data)
+ C
+ C    PURPOSE:          Clears image window
+ C
+ C    PARAMETERS:       
+ C
+ C    CALLED BY:        web_com
+ C
+ C--*********************************************************************
 */
 
 /*****************  webclear  ******************************/
 
 #include "common.h"
+#include "routines.h"
 
  void webclear(Widget iw_dum, XtPointer data, XtPointer call_data)
  {

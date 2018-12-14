@@ -37,16 +37,16 @@
  ***********************************************************************
  */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
 
+#include "common.h"
+#include "routines.h"
+#include "dist.h"
+
  /* Internal functions */
- void          distmen_buta(Widget,XtPointer,XtPointer);
- void          distmen_buts(Widget,XtPointer,XtPointer);
- void          distmen_d   (Widget,XtPointer,XtPointer);
+ static void   distmen_buta(Widget,XtPointer,XtPointer);
+ static void   distmen_d   (Widget,XtPointer,XtPointer);
 
  /* File scope variables */
  static Widget iw_distmen    = (Widget)0,  iw_singledist = (Widget)0;
@@ -55,12 +55,6 @@
  static Widget iw_distkey    = (Widget)0;
 
  /* Global variables used here */
- extern FILEDATA      *filedatap;
- extern int           opendistdoc;
- extern int           singledist;
- extern int           dist_docit;
- extern int           dist_inimag;
- extern int           dist_leavit;
 
  /* Global variables defined here */
  FILE * 	      fpdocpix;
@@ -72,7 +66,7 @@
  char             cval[5];
  static   Widget  iw_rowcol;
  static   Widget  iw_pushc = 0, iw_pusha = 0, iw_pushs = 0, iw_dum = 0;
- char             * cdum;
+ char             * cdum = NULL;
 
  if (iw_distmen <= (Widget)0)
     {   /* create dist menu widget first */
@@ -138,7 +132,7 @@
 
  void distmen_buta(Widget iw_temp,XtPointer data,XtPointer call_data)
  {
- char * cdum;
+ char * cdum = NULL;
 
  dist_inimag = XmToggleButtonGadgetGetState(iw_distinimag);
  if (dist_inimag && strlen(filnow) == 0)

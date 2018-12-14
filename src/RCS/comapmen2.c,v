@@ -1,4 +1,4 @@
-head	1.7;
+head	1.8;
 access;
 symbols
 	pre-tilt-improve:1.7
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.8
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.7;
 
 1.7
 date	2011.05.19.15.52.12;	author leith;	state Exp;
@@ -52,9 +57,9 @@ desc
 @
 
 
-1.7
+1.8
 log
-@//wisetplanes(id
+@bollingers_email_and_cosmetic
 @
 text
 @/*
@@ -92,21 +97,18 @@ C **********************************************************************
 C **********************************************************************
 */
 
+#include <Xm/ToggleBG.h>
 #include "common.h"
 #include "std.h"
 #include "x.h"
 #include "routines.h" 
-#include <Xm/ToggleBG.h>
+#include "comap.h"
   
  /* Internal functions */
- void     comapmen2_but  (Widget, XtPointer, XtPointer);
- void     comapmen2_buts (Widget, XtPointer, XtPointer);
- void     ovrlap_cb      (Widget, XtPointer, XtPointer);
+ static void     comapmen2_but  (Widget, XtPointer, XtPointer);
+ static void     ovrlap_cb      (Widget, XtPointer, XtPointer);
 
  /* External variables */
- extern GC     icontmx;
- extern float  *bufx, *bufy;
- extern int    *nkey;
  Pixmap        msksav;
  Widget        iw_comapmen2;
  int           ovrlap;
@@ -225,6 +227,27 @@ void comapmen2_buts(Widget iw_t, XtPointer itag, XtPointer callpar)
       { XFreePixmap( idispl, msksav ); msksav = 0; }
   
   } /* End of comapmen2_buts */
+@
+
+
+1.7
+log
+@//wisetplanes(id
+@
+text
+@d36 1
+d41 1
+a41 1
+#include <Xm/ToggleBG.h>
+d44 2
+a45 3
+ void     comapmen2_but  (Widget, XtPointer, XtPointer);
+ void     comapmen2_buts (Widget, XtPointer, XtPointer);
+ void     ovrlap_cb      (Widget, XtPointer, XtPointer);
+a47 3
+ extern GC     icontmx;
+ extern float  *bufx, *bufy;
+ extern int    *nkey;
 @
 
 

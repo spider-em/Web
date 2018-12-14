@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/curmen.c,v 1.12 2015/09/01 17:52:51 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/curmen.c,v 1.13 2018/12/07 17:03:31 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -57,7 +57,7 @@
 #define MAXCURS 77
 
  /* Internal function prototypes */
- void          curmen_but(Widget iw_temp, XtPointer, XtPointer);
+ static void    curmen_but(Widget iw_temp, XtPointer, XtPointer);
  
  /* Externally used common variables */
 

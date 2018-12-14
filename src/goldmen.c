@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/goldmen.c,v 1.18 2011/09/21 13:28:10 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/goldmen.c,v 1.19 2018/12/07 17:03:32 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -43,26 +43,18 @@ C    CALLed BY:  web_com
 C
 C--*********************************************************************
 */
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/ToggleBG.h>
 
+#include "common.h"
+#include "routines.h"
+#include "gold.h"
+
  /* Internal function prototypes */
- void          goldmen_buts  (Widget, XtPointer, XtPointer);
- void          goldmen_butshf(Widget, XtPointer, XtPointer);
- void          goldmen_butm  (Widget, XtPointer, XtPointer);
- void          goldmen_butum (Widget, XtPointer, XtPointer);
- int           goldmen_mark  (void);
- void          goldmen_tgcb(Widget,caddr_t,caddr_t);
+ static void   goldmen_butshf(Widget, XtPointer, XtPointer);
+ static void   goldmen_butum (Widget, XtPointer, XtPointer);
+ static void   goldmen_tgcb(Widget,void *,void *);
   
  /* External common variables */
- extern Widget   iw_dean;
- extern Widget   iw_gold;
- extern FILE *   fpdocg;
- extern char     docnamg[81];
- extern int      markg;
- extern int      iradg;
 
  /* Internal common variables */
  static Widget iw_goldmen = NULL;
@@ -103,7 +95,7 @@ C--*********************************************************************
 
 /************** Goldmen_tgcb ************************************/
 
-void goldmen_tgcb(Widget iw_temp,caddr_t data,caddr_t call_data)
+void goldmen_tgcb(Widget iw_temp,void * data,void * call_data)
   {
   if (iw_num)
     show_num = XmToggleButtonGadgetGetState(iw_num);

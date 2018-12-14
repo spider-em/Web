@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/profilemen.c,v 1.9 2005/10/18 16:59:44 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/profilemen.c,v 1.10 2018/12/07 17:03:33 leith Exp $*/
 /*
 *****************************************************************************
 *  profilemen.c         6/16/93
@@ -43,23 +43,18 @@ C **********************************************************************
 *****************************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/ToggleBG.h>
 
+#include "common.h"
+#include "routines.h"
+#include "profile.h"
+
  /* internal functions */
- void profilemen_buts (Widget, caddr_t, caddr_t);
- void profilemen_buta (Widget, caddr_t, caddr_t);
- void specialline     (Widget, caddr_t, caddr_t);
- void spline_cb       (Widget, caddr_t, caddr_t);
+ static void profilemen_buta (Widget, void *, void *);
+ static void specialline     (Widget, void *, void *);
+ static void spline_cb       (Widget, void *, void *);
 
  /* external common variables */
- extern int   first, horizbar, leavebar, normbar, permbar;
- extern int   spline;			/* special line flag */
- extern int   linenum;			/* the line number of the special line */
- extern GC icontxm;
- extern void  profile_pop(Widget, XEvent *, String *, Cardinal *);
 
  /* common variables */
  Widget iw_profilemen = (Widget) 0;
@@ -83,23 +78,23 @@ void profilemen(void)
   
        /* create a toggle box for horizbar */
        iw_horizbar = wid_toggleg(iw_rowcol,0,"horizontal",
-                    horizbar,toggle2_cb,(caddr_t) &horizbar,-1,-1);
+                    horizbar,toggle2_cb, &horizbar,-1,-1);
 
        /* create a toggle box for leavebar */
        iw_leavebar = wid_toggleg(iw_rowcol,0,"leave bar",
-                    leavebar,toggle2_cb,(caddr_t) &leavebar,-1,-1);
+                    leavebar,toggle2_cb, &leavebar,-1,-1);
 
        /* create a toggle box for permbar */
        iw_permbar = wid_toggleg(iw_rowcol,0,"permanent profile",
-                    permbar,toggle2_cb,(caddr_t) &permbar,-1,-1);
+                    permbar,toggle2_cb, &permbar,-1,-1);
 
        /* create a toggle box for normbar */
        iw_normbar = wid_toggleg(iw_rowcol,0,"normalize along bar only",
-                    normbar,toggle2_cb,(caddr_t) &normbar,-1,-1); 
+                    normbar,toggle2_cb, &normbar,-1,-1); 
 
        /* create a toggle box for normbar */
        iw_spline = wid_toggleg(iw_rowcol,0,"Special line",
-                    spline,specialline,(caddr_t) &spline,-1,-1); 
+                    spline,specialline, &spline,-1,-1); 
 
        /* create a push button for stop, cancel & apply */
        iw_dum = wid_stdbut(iw_rowcol,iw_profilemen,
@@ -114,7 +109,7 @@ void profilemen(void)
 
 /*********************** specialline   ********************/
 
-void specialline(Widget iw_temp, caddr_t data, caddr_t call_data)
+void specialline(Widget iw_temp, void * data, void * call_data)
 {
     Widget	iw_linenum;
 
@@ -132,7 +127,7 @@ void specialline(Widget iw_temp, caddr_t data, caddr_t call_data)
 
 /*********************** spline_cb   ********************/
 
-void spline_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+void spline_cb(Widget iw_temp, void * data, void * call_data)
  {
  XmString    txt_string;
  char        *text;
@@ -151,7 +146,7 @@ void spline_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
 
 /*********************** profilemen_buta   ********************/
 
-void profilemen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+void profilemen_buta(Widget iw_temp, void * data, void * call_data)
   {
      /* get  toggle states */
      normbar  = XmToggleButtonGadgetGetState(iw_normbar);
@@ -170,7 +165,7 @@ void profilemen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
 
 /*********************** profilemen_buts   ********************/
 
-void profilemen_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+void profilemen_buts(Widget iw_temp, void * data, void * call_data)
   {
      /* remove popup button menu */
      showbutx("","","",TRUE);

@@ -48,11 +48,11 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
  /* external function prototypes */
 
  /* externally defined variables used here */
- extern char filcolvol[81];
 
  /* static variables for use here */
  static Colormap mapsurf;

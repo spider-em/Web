@@ -1,4 +1,4 @@
-head	1.12;
+head	1.13;
 access;
 symbols
 	pre-tilt-improve:1.12
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.13
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.12;
 
 1.12
 date	2011.07.19.19.34.26;	author leith;	state Exp;
@@ -77,9 +82,9 @@ desc
 @
 
 
-1.12
+1.13
 log
-@BGFGO
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -122,27 +127,19 @@ C
 C***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/List.h>
+#include "common.h"
+#include "routines.h"
 
 #define MAX_ITEMS 12
 
 
  /* external function prototypes */
 
- extern Widget wid_rowcol   (Widget, char , int, int);
- extern Widget wid_labelg   (Widget, Widget, char *, int, int);
- extern Widget wid_dialog   (Widget, Widget, char *, int, int);
- extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
-                             char *, void (*)(), void (*)(), void (*)(),
-                             void (*)());
- extern void   spout        (char *);
- extern void   fin_cb       (Widget, caddr_t, caddr_t);
-
 
  /* internal function prototypes */
- void          fontmen_buta(Widget, caddr_t, caddr_t);
- void          fontmen_sel(Widget, int, XmListCallbackStruct *);
+ static void   fontmen_buta(Widget, void *, void *);
+ static void   fontmen_sel(Widget, int, XmListCallbackStruct *);
  
 
  /* internal common variables */
@@ -166,7 +163,7 @@ C***********************************************************************
 */
  /********************   fontmen   ****************************/
 
-void fontmen(Widget iw_caller, caddr_t data, caddr_t call_data)
+void fontmen(Widget iw_caller, void * data, void * call_data)
 { 
  Widget iw_rcvt, iw_rcht, iw_rch, iw_rcv;
  Widget iw_pushc, iw_pusha,iw_dums, iw_list;
@@ -412,12 +409,44 @@ void fontmen_sel(Widget iw_temp, int data, XmListCallbackStruct * call_data)
 
  }
 
-void fontmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+void fontmen_buta(Widget iw_temp, void * data, void * call_data)
    {
    XtUnmanageChild(iw_fontmen);
    XSetFont( idispl, icontx, fontptr->fid );
    }
 
+@
+
+
+1.12
+log
+@BGFGO
+@
+text
+@d41 1
+d43 1
+a43 1
+#include <Xm/List.h>
+a49 9
+ extern Widget wid_rowcol   (Widget, char , int, int);
+ extern Widget wid_labelg   (Widget, Widget, char *, int, int);
+ extern Widget wid_dialog   (Widget, Widget, char *, int, int);
+ extern Widget wid_stdbut   (Widget, Widget, Widget*, Widget*, Widget*, 
+                             char *, void (*)(), void (*)(), void (*)(),
+                             void (*)());
+ extern void   spout        (char *);
+ extern void   fin_cb       (Widget, caddr_t, caddr_t);
+
+d52 2
+a53 2
+ void          fontmen_buta(Widget, caddr_t, caddr_t);
+ void          fontmen_sel(Widget, int, XmListCallbackStruct *);
+d77 1
+a77 1
+void fontmen(Widget iw_caller, caddr_t data, caddr_t call_data)
+d323 1
+a323 1
+void fontmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
 @
 
 

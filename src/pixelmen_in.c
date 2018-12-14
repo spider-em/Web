@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pixelmen_in.c,v 1.24 2015/09/08 18:13:32 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pixelmen_in.c,v 1.25 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -50,28 +50,24 @@
  C**********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
+
+#include "common.h"
+#include "routines.h"
+#include "pixel.h"
 
 #define  MAXREGM1 6
 
  /* Internal functions */
- void          pixelmen_in_buta(Widget, XtPointer, XtPointer);
- void          pixelmen_in_buts(Widget, XtPointer, XtPointer);
- void          pixelmen_in_l   (Widget, XtPointer, XtPointer);
- void          pixelmen_in_d   (Widget, XtPointer, XtPointer);
- void          pixelmen_in_sh  (Widget, XtPointer, XtPointer);
- void          pixelmen_in_s   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_buta(Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_l   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_d   (Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_sh  (Widget, XtPointer, XtPointer);
+ static void   pixelmen_in_s   (Widget, XtPointer, XtPointer);
 
  /* Externally defined  common variables used here */
- extern int    ixreg_pix, iyreg_pix;    // From pixelmen_sc
- extern int    isreg_pix, ivreg_pix;    // From pixelmen_sc
- extern int    iradius_pix;
 
- extern FILE * fpdocpix_in;             // From pixel_in
 
  // Common variables defined here
  XImage *      imagep_in    = 0;
@@ -98,7 +94,7 @@
 
  /************************* pixelmen_in_nod **********************************/
 
- void pixelmen_in_nod()
+ void pixelmen_in_nod(void)
  { 
  char            cval[5];
  static Widget   iw_rowcol;
@@ -337,7 +333,7 @@
       
  if (!old_docit && docit_in) 
     {  // Display docit menu instead
-    if( iw_pixelmen_in_nod > 0) XtUnmanageChild(iw_pixelmen_in_nod); 
+    if( iw_pixelmen_in_nod != NULL) XtUnmanageChild(iw_pixelmen_in_nod); 
 
         pixelmen_in_doc(NULL, NULL, NULL);
     ikey_in = 1;
@@ -345,7 +341,7 @@
 
  else if (  old_docit && ! docit_in)
     {  // Display non-docit menu instead
-    if( iw_pixelmen_in_doc > 0) XtUnmanageChild(iw_pixelmen_in_doc); 
+    if( iw_pixelmen_in_doc != NULL) XtUnmanageChild(iw_pixelmen_in_doc); 
 
     pixelmen_in_nod();
     ikey_in = 1;

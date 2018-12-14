@@ -1,4 +1,4 @@
-head	1.7;
+head	1.8;
 access;
 symbols
 	pre-tilt-improve:1.7
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.8
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.7;
 
 1.7
 date	2005.10.18.17.00.03;	author leith;	state Exp;
@@ -51,13 +56,13 @@ desc
 @@
 
 
-1.7
+1.8
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/dispsize.c,v 1.6 1995/08/21 15:36:38 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/dispsize.c,v 1.7 2005/10/18 17:00:03 leith Exp $*/
 
 /***********************************************************************
  *
@@ -104,6 +109,7 @@ text
  /****************************  dispsize  *****************************/
  
 #include <math.h>
+#include "routines.h"
 
  void dispsize(int nsam1t,  int nsam2t, 
                int nrow1t,  int nrow2t, 
@@ -134,6 +140,18 @@ text
  return;
 }
 
+@
+
+
+1.7
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/dispsize.c,v 1.6 1995/08/21 15:36:38 leith Exp $*/
+d49 1
 @
 
 

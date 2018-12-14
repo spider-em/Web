@@ -55,33 +55,27 @@ c
 c--*********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Scale.h>
 #include <Xm/ToggleBG.h>
 #include <Xm/Text.h>
 
+#include "common.h"
+#include "routines.h"
+#include "mont.h"
+#include "movie.h"
+
 /* external function prototypes */
-extern void showmovie(void);
 
 /* internal function prototypes */
-void   showmovmen2          (void);
-void   showmovmen2_buta     (Widget, XtPointer, XtPointer);
-void   showmovmen2_butc     (Widget, XtPointer, XtPointer);
-void   showmovmen3          (void);
-void   showmovmen3_buta     (Widget, XtPointer, XtPointer);
-void   showmovmen3_butc     (Widget, XtPointer, XtPointer);
+static void   showmovmen2_buta     (Widget, XtPointer, XtPointer);
+static void   showmovmen2_butc     (Widget, XtPointer, XtPointer);
+static void   showmovmen3_buta     (Widget, XtPointer, XtPointer);
+static void   showmovmen3_butc     (Widget, XtPointer, XtPointer);
 
-void   showmoviemen         (int);
-void   showmoviemen_buts    (Widget, XtPointer, XtPointer); 
-void   showmoviemen_buta    (Widget, XtPointer, XtPointer);
+static void   showmoviemen_buts    (Widget, XtPointer, XtPointer); 
+static void   showmoviemen_buta    (Widget, XtPointer, XtPointer);
 
 /* external variables defined elsewhere and used here */
-extern int        ndone;             /* total number of images */
-extern XImage *   ximagelist[1000];  /* list of XImages in movie */
-extern int        lastfile;          /* used in mont2 */
-extern char *     cmont3buf ;        /* from mont3 */
 
 
 /* external variables defined here */
@@ -320,7 +314,7 @@ void showmoviemen(int first)
 
       /* create toggle box for movie_twoways ------- movie_twoways */
       iw_twoways = wid_toggleg(iw_rowcol,0,"two-way",movie_twoways,    
-                        toggle2_cb, (char *) &movie_twoways, -1, -1);
+                        toggle2_cb, &movie_twoways, -1, -1);
 
       /* create a scale widget for delay ------------------- delay */
       iw_delayb = wid_scale(iw_rowcol,iw_delayb,"delay (msecs):",

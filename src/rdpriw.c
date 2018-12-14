@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/rdpriw.c,v 1.6 2005/10/18 16:59:41 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/rdpriw.c,v 1.7 2018/12/07 17:03:33 leith Exp $*/
 /*
  * rdpriw.c
  *
@@ -45,15 +45,13 @@
  **********************************************************************
 */
 
-#include "std.h"
-#include "x.h"
 #include <Xm/TextF.h>
 #include <Xm/Text.h>
+#include "std.h"
+#include "x.h"
+#include "routines.h"
 
  /* function prototypes */
- extern void spout(char *);
- extern void spouts(char *);
- extern void spouti(int);
 
  /*************************** rdpriw ******************************/
  

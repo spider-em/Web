@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -10,6 +10,11 @@ locks;
 comment	@ * @;
 
 
+1.2
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.1;
+
 1.1
 date	2005.10.18.16.59.41;	author leith;	state Exp;
 branches;
@@ -20,9 +25,9 @@ desc
 @@
 
 
-1.1
+1.2
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
@@ -78,17 +83,11 @@ C--*********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "surf.h"
 
  /* external function prototypes */
- extern void  cantrot   (int, int, float *, unsigned char *,float,float,float);
- extern float surfrot   (int *, int *, float, float, float, unsigned char *, 
-                         unsigned char, int, int);
- extern float volval    (int, int, int, unsigned char *);    
-
 
  /* externally defined variables used here */
- extern float      phi, theta, psi, thlev;
- extern XImage     *imagel;
 
  /* static variables for use here */
  static unsigned char lthlev, lthlevo = 0;
@@ -724,4 +723,22 @@ C--*********************************************************************
  waitcursor(iwin,FALSE,0);
 
  }
+@
+
+
+1.1
+log
+@GPL
+@
+text
+@d54 1
+a56 5
+ extern void  cantrot   (int, int, float *, unsigned char *,float,float,float);
+ extern float surfrot   (int *, int *, float, float, float, unsigned char *, 
+                         unsigned char, int, int);
+ extern float volval    (int, int, int, unsigned char *);    
+
+a58 2
+ extern float      phi, theta, psi, thlev;
+ extern XImage     *imagel;
 @

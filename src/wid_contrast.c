@@ -1,20 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/wid_contrast.c,v 1.7 2011/09/27 13:44:52 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_contrast.c,v 1.8 2018/12/07 17:03:35 leith Exp $*/
 
 /*C++*******************************************************************
-C                                                                      *
-C wid_contrast.c    New                          ArDean Leith Jun 2011 * 
-C                   if (nend_com <= ngo_com)     ArDean Leith Sep 2011 *
-C                                                                      *
-C **********************************************************************
-C *  AUTHOR: A. LEITH                                                  *
+ C                                                                     *
+ C wid_contrast.c    New                         ArDean Leith Jun 2011 * 
+ C                   if (nend_com <= ngo_com)    ArDean Leith Sep 2011 *
+ C                                                                     *
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -31,32 +28,30 @@ C *  AUTHOR: A. LEITH                                                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    wid_conrast
-C
-C    PARAMETERS:   
-C
-C    PURPOSE:      Menu line widget sets image contrast 
-C
-C    CALLED BY:    web_com
-C
-C--********************************************************************
+ C *********************************************************************
+ C
+ C  wid_conrast
+ C
+ C  PURPOSE:      Menu line widget sets image contrast 
+ C
+ C  CALLED BY:    web_com
+ C
+ C--********************************************************************
 */
+
+#include <Xm/Scale.h>
+
+#include "common.h"
+#include "routines.h"
+#include "extras.h"
 
 #ifdef WEB_TRUE
 // WEB_TRUE -----------------------------------------------------------
 
-#include "common.h"
-#include "routines.h"
-
-#include <Xm/Scale.h>
-
  // Internal function prototypes 
- void   wid_contrast_but(Widget, XtPointer, XtPointer);
+ static void   wid_contrast_but(Widget, XtPointer, XtPointer);
 
  // External common variables
- extern int   vmap[256];          // Virtual colormap
 
  // Common variables defined here
 
@@ -155,12 +150,6 @@ C--********************************************************************
 
 #else
 // WEB_24 --------------------------------------------------- WEB_24
-
-
-#include "common.h"
-#include "routines.h"
-
-#include <Xm/Scale.h>
 
  // Internal function prototypes 
  void          wid_contrast_but(Widget, XtPointer, XtPointer);

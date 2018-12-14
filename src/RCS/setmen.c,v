@@ -1,4 +1,4 @@
-head	1.2;
+head	1.3;
 access;
 symbols
 	pre-tilt-improve:1.2
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.3
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.2;
 
 1.2
 date	2005.10.18.17.00.01;	author leith;	state Exp;
@@ -26,13 +31,13 @@ desc
 @@
 
 
-1.2
+1.3
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/setmen.c,v 1.1 1996/07/31 20:28:22 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/setmen.c,v 1.2 2005/10/18 17:00:01 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -97,22 +102,17 @@ C***********************************************************************
 #include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
 
 #include "std.h"
 #ifndef VMS
-#include "float.h"
+#include <float.h>
 #endif
 
- int           filset  (float *, int, int, float, float,
-                     float *, float *, float *);
- void          setmen       (Widget, XtPointer, XtPointer);
- void          setmen_buta  (Widget, XtPointer, XtPointer);
-
  /* internal function prototypes */
- void          filter_but    (Widget, XtPointer, XtPointer);
+ static void setmen_buta(Widget, XtPointer, XtPointer);
 
  /* external global variables used here */
- extern float    fminold, fmaxold;
  static float    oldset,newset;
 
  /* common global used elsewhere */
@@ -192,28 +192,28 @@ C***********************************************************************
  {
  char   filtertype[2];
  char * string;
+ int result;
 
  string = XmTextGetString(iw_oldset);
- if (sscanf(string,"%f",&oldset) <= 0)  
+ result = sscanf(string,"%f",&oldset);
+ XtFree(string);
+ if (result <= 0)  
     {
     spout("*** Illegal value for: Old value");
-    XmStringFree((unsigned char *) string);
     return;
     } 
 
- XmStringFree((unsigned char *) string);
-
  string = XmTextGetString(iw_newset);
- if (sscanf(string,"%f",&newset) <= 0)  
+ result = sscanf(string,"%f",&newset);
+ XtFree(string);
+ if (result <= 0)  
     {
     spout("*** Illegal value for: New value");
-    XmStringFree((unsigned char *) string);
     return;
     } 
 /***********************/
  printf(" old & new: %f , %f \n",oldset,newset);
 /*****************************/
- XmStringFree((unsigned char *) string);
 
  XtUnmanageChild(iw_setmen);
 
@@ -223,6 +223,48 @@ C***********************************************************************
  }
 
 
+@
+
+
+1.2
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/setmen.c,v 1.1 1996/07/31 20:28:22 leith Exp $*/
+d67 1
+d71 1
+a71 1
+#include "float.h"
+a73 5
+ int           filset  (float *, int, int, float, float,
+                     float *, float *, float *);
+ void          setmen       (Widget, XtPointer, XtPointer);
+ void          setmen_buta  (Widget, XtPointer, XtPointer);
+
+d75 1
+a75 1
+ void          filter_but    (Widget, XtPointer, XtPointer);
+a77 1
+ extern float    fminold, fmaxold;
+d157 1
+d160 3
+a162 1
+ if (sscanf(string,"%f",&oldset) <= 0)  
+a164 1
+    XmStringFree((unsigned char *) string);
+a167 2
+ XmStringFree((unsigned char *) string);
+
+d169 3
+a171 1
+ if (sscanf(string,"%f",&newset) <= 0)  
+a173 1
+    XmStringFree((unsigned char *) string);
+a178 1
+ XmStringFree((unsigned char *) string);
 @
 
 

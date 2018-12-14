@@ -1,4 +1,4 @@
-head	1.11;
+head	1.12;
 access;
 symbols
 	pre-tilt-improve:1.11
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.12
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.11;
 
 1.11
 date	2011.09.23.19.00.58;	author leith;	state Exp;
@@ -71,13 +76,13 @@ desc
 @@
 
 
-1.11
+1.12
 log
-@//showbutx("","... !! CAUSES DELAY
+@bollingers_email_and_cosmetic
 @
 text
 @ 
-/*$Header: /usr8/web/src/RCS/movearea.c,v 1.10 2011/09/23 13:30:28 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/movearea.c,v 1.11 2011/09/23 19:00:58 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -125,15 +130,15 @@ C--********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
  /* Internal function prototypes */
- void            movearea_pop (Widget, XEvent *, String *, Cardinal *);
+ static void     movearea_pop (Widget, XEvent *, String *, Cardinal *);
 
  /* Internal common variables */
  static GC       icontxx;
 
  /* External common variables */
- extern int      iwintyp;
 
  /**************************************************************/
 
@@ -287,6 +292,23 @@ C--********************************************************************
 
  }
 
+@
+
+
+1.11
+log
+@//showbutx("","... !! CAUSES DELAY
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/movearea.c,v 1.10 2011/09/23 13:30:28 leith Exp $*/
+d50 1
+d53 1
+a53 1
+ void            movearea_pop (Widget, XEvent *, String *, Cardinal *);
+a58 1
+ extern int      iwintyp;
 @
 
 

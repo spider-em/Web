@@ -1,20 +1,16 @@
 
-/*$Header: /usr8/web/src/RCS/bar.c,v 1.4 2011/05/05 11:57:30 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/bar.c,v 1.5 2018/12/07 17:03:30 leith Exp $*/
 
 /*
-C***************************************************************************
-C
-C  WID_BAR.FOR  -- CREATED DEC 89
-C                  REWRITTEN MAR 91 al
-C  BAR.C           NOV 92                                                               
-C **********************************************************************
-C *  AUTHOR: ArDean Leith                                                  *
+C***********************************************************************
+ C
+ C  WID_BAR.FOR  -- CREATED DEC 89
+ C                  REWRITTEN MAR 91 al
+ C  bar.c           NOV 92                                                               
+ C *********************************************************************
+ C * AUTHOR: ArDean Leith                                              *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -32,32 +28,31 @@ C *  AUTHOR: ArDean Leith                                                  *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    BAR
-C
-C    PURPOSE:      DRAWS VERTICAL OR HORIZONTAL BAR AT CURSOR
-C
-C    PARAMETERS:   NONE 
-C
-C    CALLED BY:    WEB_COM
-C
-C--*********************************************************************
+ C **********************************************************************
+ C
+ C    bar(Widget, void *, void *)
+ C
+ C    PURPOSE:      Draws vertical or horizontal bar at cursor
+ C
+ C    PARAMETERS:   None 
+ C
+ C    CALLED BY:    web_com
+ C
+ C--*********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
+#include "bar.h"
 
  /* internal subroutines */
- void bar_pop(Widget, XEvent *, String *, Cardinal *);
+ static void bar_pop(Widget, XEvent *, String *, Cardinal *);
 
  /* External common variables */
- extern Widget  iw_barmen;
- extern int     idx, idy;
  
 /**************************  bar  *******************************/
 
- void bar(Widget iw_caller, caddr_t data, caddr_t call_data)
+ void bar(Widget iw_caller, void * data, void * call_data)
 
  {
  /* Put up menu */

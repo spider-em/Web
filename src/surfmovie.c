@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/surfmovie.c,v 1.15 2007/11/01 19:33:45 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/surfmovie.c,v 1.16 2018/12/07 17:03:34 leith Exp $*/
 /*
 C**************************************************************************
 C
@@ -50,23 +50,20 @@ C
 C--*********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
-
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
 
+#include "common.h"
+#include "routines.h"
+#include "surf.h"
 
- extern void   surf_pop     (Widget, XEvent *, String *, Cardinal *);
 
  /* externally defined variables used here */
- extern float            phi, theta, psi, thlev;
- extern unsigned char  * refmap;
 
  /* internal function prototypes */
- void          surfmovie_buta(Widget iw_temp, caddr_t, caddr_t);
- void          surfmovie_buts(Widget iw_temp, caddr_t, caddr_t);
- void          surfmovie_next(Widget iw_temp, caddr_t, caddr_t);
+ static void   surfmovie_buta(Widget iw_temp, void *, void *);
+ static void   surfmovie_buts(Widget iw_temp, void *, void *);
+ static void   surfmovie_next(Widget iw_temp, void *, void *);
 
 
  /* internal common variables */
@@ -149,7 +146,7 @@ C--*********************************************************************
 
  /************ next button callback *********************************/
 
- void surfmovie_next(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void surfmovie_next(Widget iw_temp, void * data, void * call_data)
  {
    int          nframes;
    Arg          args[2];
@@ -316,7 +313,7 @@ C--*********************************************************************
 
 /************ accept button callback *********************************/
 
- void surfmovie_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void surfmovie_buta(Widget iw_temp, void * data, void * call_data)
  {
 
    surfmovie_next( NULL, NULL, NULL );
@@ -338,7 +335,7 @@ C--*********************************************************************
 
  /************ cancel button callback *********************************/
 
- void surfmovie_buts(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void surfmovie_buts(Widget iw_temp, void * data, void * call_data)
  {
   XtUnmanageChild(iw_surfmovie);
   seqcount = 1;

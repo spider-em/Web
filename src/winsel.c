@@ -1,19 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/winsel.c,v 1.9 2011/09/23 19:01:48 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/winsel.c,v 1.10 2018/12/07 17:06:44 leith Exp $*/
 /*
 
-C++*************************************************************************
-C
-C  WID_WINSEL.FOR -- CREATED MAY 91 al
-C                    CONVERTED TO C -- SEPT 92 al 
-C **********************************************************************
+ C++********************************************************************
+ C
+ C  WID_WINSEL.FOR -- CREATED MAY 91 al
+ C                    CONVERTED TO C -- SEPT 92 al 
+ C
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -30,26 +28,26 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C WINSEL
-C
-C PURPOSE:       Selects windowed operations 
-C
-C PARAMETERS:    Void
-C
-C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
-C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
-C                     \ wid_posiz  --> winsiz3    /
-C
-C--*********************************************************************
+ C *********************************************************************
+ C
+ C winsel
+ C
+ C PURPOSE:       Selects windowed operations 
+ C
+ C PARAMETERS:    Void
+ C
+ C                     / winsiz_pop --> winsiz_pop2 --> winsel --> movearea
+ C winsiz --> winsiz1 -- wid_posiz  --> winmov      /           
+ C                     \ wid_posiz  --> winsiz3    /
+ C
+ C--*********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
  /* Global variables */
- extern int iwintyp;
 
 
  /****************************  winsel  *******************************/

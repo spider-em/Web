@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/getdoc.c,v 1.11 2015/09/18 16:22:28 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/getdoc.c,v 1.11 2015/09/18 16:22:28 leith Exp $*/
 /*
  C**********************************************************************
  C    getdoc.c

@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.17.00.00;	author leith;	state Exp;
@@ -46,20 +51,21 @@ desc
 @@
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/bali/usr1/web/src/RCS/lut.c,v 1.5 2001/08/10 12:57:27 leith Exp $*/
+/*$Header: /usr8/web/new/RCS/lut.c,v 1.6 2005/10/18 17:00:00 leith Exp $*/
 /*
 C++*************************************************************************
-C
-C WID_LUT.FOR -- CREATED DEC 89
-C lut.c          ported  DEC 92
-C                Directcolor mods by: Erik Vogan July 2001
-C                                                           
+C                                                                      *
+C wid_lut.for -- Created                        Dec    89              *
+C lut.c          Ported                         Dec    92              *
+C                Directcolor mods               Jul  2001 Erik Vogan   *
+C                Truecolor mods                 Sep  2011 ArDean Leith *
+C                                                                      *
 C **********************************************************************
 C    AUTHOR:  ArDean Leith
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
@@ -87,61 +93,61 @@ C    AUTHOR:  ArDean Leith
  C=*                                                                   *
 C **********************************************************************
 C
-C    LUT(FILLUT,MAP,NMIN,NMAX)
+C    lut(fillut,map,nmin,nmax)
 C
-C    PARAMETERS:    FILNAM        LUT FILE NAME                  INPUT
-C                   MAP           COLORMAP POINTER               INPUT
-C                   NMIN,NMAX     RANGE OF INDICES TO BE SET     INPUT
-C
-C    CALLED BY:     LUTMEN
+C    PARAMETERS:  filnam        Lut file name                  input
+c                 map           Colormap pointer               input
+c                 nmin,nmax     Range of indices to be set     input
+c
+C    CALLED BY:   lutmen
 C
 C--*********************************************************************
 */
 
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
+
 
  /*************************** lut ************************************/
 
  int lut(char * filnam, Colormap mapt, int nmint, int nmaxt)
  {
  int             nindex, neg, nchar, indx, ipixel, ival;
- int             ir, ig, ib;
+ int             ir, ig, ib, ic;
  float           vmax, scalin, facsum, factin, fact, dx;
  FILE            *luncol;
  char            output[80];
  char            ctemp[81];
 
- /* file name sent from caller */
+ /* File name sent from caller */
         
  if (strcmp(filnam,"bwth") == 0) 
-    {
-    spout("*** Use contrast option to do this!"); return FALSE;
-    }
- else if ((strcmp(filnam,"flip") == 0)  || (strcmp(filnam,"colo") ==0)) 
-    {
-    spout("*** Command not implemented yet!");  return FALSE;
-    }
+    { spout("*** Use contrast option to do this!"); return FALSE; }
+
+ else if ((strcmp(filnam,"flip") == 0)  || 
+          (strcmp(filnam,"colo") ==0)) 
+    { spout("*** Operation not implemented yet!");  return FALSE; }
 
  neg = FALSE;
  if (*filnam == '-') 
     {  
-    neg = TRUE;
+    neg     = TRUE;
     *filnam = ' ';
     }
  else if (*filnam == '+')
     *filnam = ' ';
 
  if ((luncol= fopen(filnam,"r")) ==  NULL)
-      {    /* file does not exist */
-      sprintf(output," *** Unable to open look-up-table: %s",filnam);
-      spout(output);  return FALSE;
-      } 
+    {    /* File does not exist */
+    sprintf(output," *** Unable to open look-up-table: %s",filnam);
+    spout(output);  return FALSE;
+    } 
 
- /* find out whether the lut spicifies the indicies or resets */
- /* all of the indices one-by-one */
+ /* Find out whether the lut specifies the indicies or resets   */
+ /* all of the indices one-by-one                               */
  /* if the indicies are specified there are 4 integers per line */
- /* otherwise only 3 integers per line */
+ /* otherwise only 3 integers per line                          */
 
  vmax   = 65535.0;
  fact   = vmax / 255.0;
@@ -153,20 +159,20 @@ C--*********************************************************************
  nchar = strlen(fgets(ctemp, 80, luncol));
  rewind(luncol);
 
-    /*   printf("nchar: %d \n",nchar); */
+ /*   printf("nchar: %d \n",nchar); */
 
 
  if (nchar <= 16 || nchar >= 79) 
     {
-    /* load color lookup table, indicies not specified */
+    /* Load color lookup table, indicies not specified */
     indx = 0;
     for (nindex = 1; nindex <=256; nindex++)
        {
-       /* read a line of the lut file */
+       /* Read a line of the lut file */
        if (fscanf(luncol,"%d %d %d",&ir,&ig,&ib) == EOF)
           break;
 
-      /* determine indx  for this line.  only indices: nmint...nmaxt  */
+      /* Determine indx  for this line.  only indices: nmint...nmaxt  */
       /* (usually 0..127) are to be used. so I map lines 1..256 to    */
       /* this range.  this may discard some lines from the lut file!   */
 
@@ -174,63 +180,201 @@ C--*********************************************************************
       ipixel = dx;
       if (neg) ipixel = nmaxt - ipixel;
 
-      /* make sure ipixel is in range:  nmint...nmaxt */
+      /* Make sure ipixel is in range:  nmint...nmaxt */
       ipixel = MYMAX(MYMIN(ipixel,nmaxt),nmint);
 
-#ifdef WEB_24
-      colort[indx].pixel   = ispicol[ipixel];
+#ifdef WEB_TRUE
+      // Create virtual colormap
+      colvmap[0][indx]     = MYMIN(MYMAX((ir*fact),0),vmax);;
+      colvmap[1][indx]     = MYMIN(MYMAX((ig*fact),0),vmax);
+      colvmap[2][indx]     = MYMIN(MYMAX((ib*fact),0),vmax);
+      colvmap[3][indx]     = 0;
 #else
-      colort[indx].pixel   = ipixel ;
-#endif
+      // Create colormap
+      colort[indx].pixel   = ispicol[ipixel];
       colort[indx].red     = MYMIN(MYMAX((ir*fact),0),vmax);
       colort[indx].green   = MYMIN(MYMAX((ig*fact),0),vmax);
       colort[indx].blue    = MYMIN(MYMAX((ib*fact),0),vmax);
-      colort[indx++].flags   = DoRed|DoGreen|DoBlue;
+      colort[indx++].flags = DoRed|DoGreen|DoBlue;
+#endif
 
-/***********
-      printf(" %d : %d : %d , %d , %d \n",indx,ipixel,colort[indx-1].red,
-                                 colort[indx-1].green,colort[indx-1].blue);
-*********/
+      //printf(" %d : %d : %d , %d , %d \n",indx,ipixel,colort[indx-1].red,
+      //                           colort[indx-1].green,colort[indx-1].blue);
 
       }
     }
  else
     {
-    /* load color lut  at indicies given in file  */
+    /* Load color lut  at indicies given in file  */
     indx = 0;
     for (nindex = 0; nindex < 256; nindex++)
        {
-       /* read a line of the lut file */
+       /* Read a line of the lut file */
        if (fscanf(luncol,"%d %d %d %d",&ir,&ig,&ib,&ival) == EOF)
           break;
-       /* make sure index is within nmint....nmaxt range */
+
+       ic   = 0;
+
+       /* Make sure index is within nmint....nmaxt range */
        if (ival >= nmint && ival <= nmaxt) 
           {
-          /* minus sign is for negative vs positive */
+          /* Minus sign is for negative vs positive */
           if (neg) ival = nmaxt - ival;
 
+#ifdef WEB_TRUE
+          // Create virtual colormap
+          colvmap[0][indx]   = ir * fact;
+          colvmap[1][indx]   = ig * fact;
+          colvmap[2][indx]   = ib * fact;
+          colvmap[3][indx]   = 0;
+#else
+          // Create colormap
+          colort[indx].pixel = ispicol[ival];
+          colort[indx].flags = DoRed|DoGreen|DoBlue;
+
+          colort[indx].red   = ir * fact;
+          colort[indx].green = ig * fact;
+          colort[indx].blue  = ib * fact;
+          indx++;
+#endif
+          }
+       }
+    }
+
+#ifdef WEB_TRUE
+ use3colors = TRUE;
+#else
+ // Put the colors in the desired colormap 
+ XStoreColors(idispl,mapt,colort,indx);
+#endif
+
+ XFlush(idispl);
+ fclose(luncol);
+
+ return TRUE;
+ }
+
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/bali/usr1/web/src/RCS/lut.c,v 1.5 2001/08/10 12:57:27 leith Exp $*/
+d5 6
+a10 5
+C
+C WID_LUT.FOR -- CREATED DEC 89
+C lut.c          ported  DEC 92
+C                Directcolor mods by: Erik Vogan July 2001
+C                                                           
+d38 1
+a38 5
+C    LUT(FILLUT,MAP,NMIN,NMAX)
+C
+C    PARAMETERS:    FILNAM        LUT FILE NAME                  INPUT
+C                   MAP           COLORMAP POINTER               INPUT
+C                   NMIN,NMAX     RANGE OF INDICES TO BE SET     INPUT
+d40 5
+a44 1
+C    CALLED BY:     LUTMEN
+d51 2
+d59 1
+a59 1
+ int             ir, ig, ib;
+d65 1
+a65 1
+ /* file name sent from caller */
+d68 5
+a72 7
+    {
+    spout("*** Use contrast option to do this!"); return FALSE;
+    }
+ else if ((strcmp(filnam,"flip") == 0)  || (strcmp(filnam,"colo") ==0)) 
+    {
+    spout("*** Command not implemented yet!");  return FALSE;
+    }
+d77 1
+a77 1
+    neg = TRUE;
+d84 4
+a87 4
+      {    /* file does not exist */
+      sprintf(output," *** Unable to open look-up-table: %s",filnam);
+      spout(output);  return FALSE;
+      } 
+d89 2
+a90 2
+ /* find out whether the lut spicifies the indicies or resets */
+ /* all of the indices one-by-one */
+d92 1
+a92 1
+ /* otherwise only 3 integers per line */
+d104 1
+a104 1
+    /*   printf("nchar: %d \n",nchar); */
+d109 1
+a109 1
+    /* load color lookup table, indicies not specified */
+d113 1
+a113 1
+       /* read a line of the lut file */
+d117 1
+a117 1
+      /* determine indx  for this line.  only indices: nmint...nmaxt  */
+d125 1
+a125 1
+      /* make sure ipixel is in range:  nmint...nmaxt */
+d128 8
+a135 1
+#ifdef WEB_24
+a136 3
+#else
+      colort[indx].pixel   = ipixel ;
+#endif
+d140 2
+a141 1
+      colort[indx++].flags   = DoRed|DoGreen|DoBlue;
+d143 2
+a144 4
+/***********
+      printf(" %d : %d : %d , %d , %d \n",indx,ipixel,colort[indx-1].red,
+                                 colort[indx-1].green,colort[indx-1].blue);
+*********/
+d150 1
+a150 1
+    /* load color lut  at indicies given in file  */
+d154 1
+a154 1
+       /* read a line of the lut file */
+d157 4
+a160 1
+       /* make sure index is within nmint....nmaxt range */
+d163 1
+a163 1
+          /* minus sign is for negative vs positive */
+d166 6
+a171 2
 #ifdef WEB_24
           colort[indx].pixel   = ispicol[ival];
-#else
+d173 8
+a180 1
           colort[indx].pixel   = ival ;
-#endif
+a181 5
           colort[indx].flags   = DoRed|DoGreen|DoBlue;
 
           colort[indx].red     = ir * fact;
           colort[indx].green   = ig * fact;
           colort[indx++].blue  = ib * fact;
-          }
-       }
-    }
-
+d186 4
+a189 1
  /* put the colors in the desired colormap */
- XStoreColors(idispl,mapt,colort,indx);
-
- XFlush(idispl);
- fclose(luncol);
- return TRUE;
- }
-
+d191 1
+d195 1
 @
 
 

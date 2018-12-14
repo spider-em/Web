@@ -1,0 +1,11 @@
+extern int dentdensity;
+extern int dentdepth;
+extern int * dentdistmap;
+extern float dentfct;
+extern int dentheight;
+extern int dentmovement;
+extern float dentrefl;
+extern unsigned char * dentrefmap;
+extern float dentthlev;
+extern unsigned char * dentvol;
+extern int dentwidth;

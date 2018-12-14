@@ -41,7 +41,6 @@ int fmr_2(float *x, int nsam, int nrow, int * inv)
   register int i,j;
   float *p, *work, *wtemp, q;
   int ins, msiz, irtflg;
-  char outstr[80];  /* delete */
 
   /* run time allocation */
   msiz = MYMAX(nsam, nrow);

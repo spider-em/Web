@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/pixel_in.c,v 1.21 2015/09/08 18:09:02 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/pixel_in.c,v 1.22 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -42,25 +42,15 @@
 
 #include "common.h"
 #include "routines.h"
+#include "pixel.h"
+#include "extras.h"
 
  /* Internal function prototypes */
- void              pixel_in_pop   (Widget, XEvent *, String *, Cardinal *);
 
  // Externally defined common variables 
- extern char       outstr[80];
- extern FILEDATA * filedatap;
 
- extern int        ixreg_pix, iyreg_pix;    // From: pixelmen_sc
- extern int        isreg_pix, ivreg_pix;    // From: pixelmen_sc
- extern int        iradius_pix;             // From: pixelmen_sc 
  
- extern XImage *   imagep_in;               // From: pixelmen_in
- extern int        docit_in;                // From: pixelmen_in 
- extern int        getscreen_in;            // From: pixelmen_in 
- extern int        leavit_in;               // From: pixelmen_in 
- extern int        ikey_in;                 // From: pixelmen_in 
 
- extern float *    fimage;                  // From: imagemen 
 
  /* Internally defined common  variables */
  FILE *            fpdocpix_in = NULL;
@@ -99,6 +89,7 @@
  int   iloc;
  float fpix;
  float dlist[7];
+ char  outstr[81];
 
  getloc(event,'m',&ixs,&iys);
  

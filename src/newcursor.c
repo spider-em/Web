@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/newcursor.c,v 1.3 2015/09/01 18:59:18 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/newcursor.c,v 1.4 2018/12/07 17:03:33 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -46,10 +46,9 @@
 */
 
 #include "common.h"
+#include "routines.h"
 
  /* External function prototypes */
- extern int    wimakecur    (Cursor *, char * , char *,
-                             XColor *, XColor *, int, int);
  
  /* Externally defined common variables */
 
@@ -62,7 +61,7 @@
  /* USE A 16X16 GRID FOR CURSORS.  USE A ENDIAN NUMBERING SYSTEM
     THAT STARTS WITH ONE AT LEFT END OF EACH BYTE!  */
 
- static char radfront[] = {
+ static unsigned char radfront[] = {
       0X01, 0X80,   0X02, 0X40, 
       0X04, 0X20,   0X08, 0X10, 
       0X10, 0X08,   0X00, 0X00, 
@@ -72,7 +71,7 @@
       0X08, 0X10,   0X04, 0X20, 
       0X02, 0X40,   0X01, 0X80 };
 
- static char radback[] = {
+ static unsigned char radback[] = {
       0X03, 0XC0,   0X07, 0XE0, 
       0X0E, 0X70,   0X1C, 0X38, 
       0X18, 0X18,   0X00, 0X00, 
@@ -82,32 +81,32 @@
       0X1C, 0X38,   0X0E, 0X70, 
       0X07, 0XE0,   0X03, 0XC0 };
 
-static char oneback[] = {
+static unsigned char oneback[] = {
    0x00, 0x03, 0x80, 0x02, 0x40, 0x02, 0xa0, 0x02, 0xe0, 0x02, 0x80, 0x02,
    0x80, 0x02, 0x80, 0x02, 0x80, 0x02, 0x80, 0x02, 0x80, 0x02, 0x80, 0x02,
    0xf0, 0x1e, 0x10, 0x10, 0xf0, 0x1f, 0x00, 0x00};
 
-static char onefront[] = {
+static unsigned char onefront[] = {
    0x00, 0x00, 0x00, 0x01, 0x80, 0x01, 0x40, 0x01, 0x00, 0x01, 0x00, 0x01,
    0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01,
    0x00, 0x01, 0xe0, 0x0f, 0x00, 0x00, 0x00, 0x00};
 
-static char twoback[] = {
+static unsigned char twoback[] = {
    0xc0, 0x03, 0x20, 0x04, 0xd0, 0x0b, 0x28, 0x14, 0x34, 0x14, 0x1c, 0x14,
    0x00, 0x14, 0x00, 0x14, 0x00, 0x14, 0x00, 0x16, 0xe0, 0x0b, 0x10, 0x04,
    0xe8, 0x3f, 0x04, 0x20, 0xfc, 0x3f, 0x00, 0x00};
 
-static char twofront[] = {
+static unsigned char twofront[] = {
    0x00, 0x00, 0xc0, 0x03, 0x20, 0x04, 0x10, 0x08, 0x08, 0x08, 0x00, 0x08,
    0x00, 0x08, 0x00, 0x08, 0x00, 0x08, 0x00, 0x08, 0x00, 0x04, 0xe0, 0x03,
    0x10, 0x00, 0xf8, 0x1f, 0x00, 0x00, 0x00, 0x00};
 
-static char threeback[] = {
+static unsigned char threeback[] = {
    0x00, 0x00, 0xf0, 0x07, 0x18, 0x18, 0xe8, 0x17, 0x38, 0x14, 0x00, 0x14,
    0xf0, 0x1b, 0x10, 0x0c, 0x10, 0x0c, 0xf0, 0x1b, 0x00, 0x14, 0x38, 0x14,
    0xe8, 0x17, 0x10, 0x08, 0xe0, 0x07, 0x00, 0x00};
 
-static char threefront[] = {
+static unsigned char threefront[] = {
    0x00, 0x00, 0xe0, 0x07, 0x10, 0x08, 0x00, 0x08, 0x00, 0x08, 0x00, 0x08,
    0x00, 0x08, 0xe0, 0x07, 0xe0, 0x07, 0x00, 0x08, 0x00, 0x08, 0x00, 0x08,
    0x10, 0x08, 0xe0, 0x07, 0x00, 0x00, 0x00, 0x00};
@@ -123,7 +122,7 @@ static char threefront[] = {
     if (icurrad == 0) 
        {
        /* Must make cursor before it can be used */
-       wimakecur(&icurrad,radfront,radback,
+       wimakecur(&icurrad,(char *)radfront,(char *)radback,
                       &colorcursf,&colorcursb, 8,8);
        }
     return icurrad;
@@ -135,7 +134,7 @@ static char threefront[] = {
     if (icurone == 0) 
        {
        /* Must make cursor before it can be used */
-       wimakecur(&icurone,onefront,oneback,
+       wimakecur(&icurone,(char *)onefront,(char *)oneback,
                       &colorcursf,&colorcursb, 8,8);
        }
     return icurone;
@@ -147,7 +146,7 @@ static char threefront[] = {
     if (icurtwo == 0) 
        {
        /* Must make cursor before it can be used */
-       wimakecur(&icurtwo,twofront,twoback,
+       wimakecur(&icurtwo,(char *)twofront,(char *)twoback,
                       &colorcursf,&colorcursb, 8,8);
        }
     return icurtwo;
@@ -159,7 +158,7 @@ static char threefront[] = {
     if (icurthree == 0) 
        {
        /* Must make cursor before it can be used */
-       wimakecur(&icurthree,threefront,threeback,
+       wimakecur(&icurthree,(char *)threefront,(char *)threeback,
                       &colorcursf,&colorcursb, 8,8);
        }
     }

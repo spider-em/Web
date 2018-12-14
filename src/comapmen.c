@@ -71,13 +71,14 @@
 *
 */
 
-#include "routines.h"
-#include "common.h"
 #include <Xm/Text.h>
 #include <Xm/ToggleBG.h>
+#include "common.h"
+#include "routines.h"
+#include "comap.h"
 
   /* function prototypes */
-  void  comapmen_buta (Widget, caddr_t, caddr_t);
+  static void  comapmen_buta (Widget, void *, void *);
 
   /* externally used variables */
   int    itxreg, ityreg, labreg, itrad, sayno, key1, key2;
@@ -91,7 +92,7 @@
 
 /**************************  comapmen  *********************************/
 
-void comapmen(void)
+void comapmen(Widget w, XtPointer c, XtPointer u)
   {
   Widget iw_buta, iw_butc, iw_buts, iw_rowcol;
   char   filnamm[] = "sma***", docxnam[]  = "doc_sdc";
@@ -161,7 +162,7 @@ void comapmen(void)
 
       /* create a toggle box for sayno input */
       iw_sayno = wid_toggleg(iw_rowcol,(Widget) 0," Show Image Numbers",
-                             sayno,toggle2_cb,(caddr_t) &sayno ,-1,-1);
+                             sayno,toggle2_cb, &sayno ,-1,-1);
  
       /* create a push button for stop, cancel & apply */
       wid_stdbut(iw_rowcol,iw_comapmen,
@@ -174,7 +175,7 @@ void comapmen(void)
 
 /*******************  comapmen_buta ******************************/
 
-void comapmen_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
+void comapmen_buta(Widget iw_t, void * itag, void * callpar)
   {
   char  outstr[80];
   char *string;

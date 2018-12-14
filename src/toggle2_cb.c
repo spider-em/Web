@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/toggle2_cb.c,v 1.2 2005/10/18 16:59:40 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/toggle2_cb.c,v 1.3 2018/12/07 17:03:34 leith Exp $*/
 /*
 C+**************************************************************************
 C
@@ -40,11 +40,12 @@ C--*********************************************************************
 */
 
 #include <Xm/ToggleBG.h>
+#include "routines.h"
 
  /********************  toggle2_cb   ****************************/
 
- void  toggle2_cb(Widget iw_temp, int *data, caddr_t call_data)
+ void  toggle2_cb(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
-   *data = XmToggleButtonGadgetGetState(iw_temp); 
+   *(int *)data = XmToggleButtonGadgetGetState(iw_temp); 
  }
 

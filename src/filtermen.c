@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/filtermen.c,v 1.47 2011/05/10 13:33:44 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/filtermen.c,v 1.48 2018/12/07 17:03:31 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -75,40 +75,23 @@ C***********************************************************************
 #include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
+#include "extras.h"
 
  /* Routines called from here */
- extern int  filset     (float *, int, int, float, float,
-                         float *, float *, float *);
- extern int  denoise    (float *, int, int, float *, int, int, 
-                         float *, float *, float *, float);
- extern void setmen     (Widget, XtPointer, XtPointer);
- extern void denoisemen (Widget, XtPointer, XtPointer);
- extern void lahemen    (Widget, XtPointer, XtPointer);
- extern void threshmen  (Widget, XtPointer, XtPointer);
- extern void erodemen   (Widget, XtPointer, XtPointer);
- extern void fillmen    (Widget, XtPointer, XtPointer);
- extern int  filtestb   (float *, int, int, float, float, float *, 
-                         float *, float *);
 
  /* Internal function prototypes */
- void          filter_buts   (Widget, XtPointer, XtPointer);
- void          filter_butsav (Widget, XtPointer, XtPointer);
- void          filter_butrep (Widget, XtPointer, XtPointer);
- void          filter_butflip(Widget, XtPointer, XtPointer);
- void          filtersav_cb  (Widget, XtPointer, XtPointer);
- void          filtersave    (char *);
+ static void   filter_buts   (Widget, XtPointer, XtPointer);
+ static void   filter_butsav (Widget, XtPointer, XtPointer);
+ static void   filter_butrep (Widget, XtPointer, XtPointer);
+ static void   filter_butflip(Widget, XtPointer, XtPointer);
+ static void   filtersav_cb  (Widget, XtPointer, XtPointer);
+ static void   filtersave    (char *);
 
  /* External global variables used here */
- extern int        nsams, nrows, nslices;
- extern float    * fimage;
- extern char       outstr[80];
- extern float      threshval, fillval;    /* From fillmen */
- extern int        ixseed, iyseed;
- extern int        fillconnect;
- extern float      noiselowerlim;
 
  /* Common globals used elsewhere */
- float           fminnew, fmaxnew,fminold, fmaxold;
+ float           fminold, fmaxold;
  int             nsamold, nrowold;
  float           lower, lowerval, upper,  upperval; /* threshmen */
  float           erodethresh;    /* erodemen */
@@ -118,6 +101,7 @@ C***********************************************************************
  float           newset = 0.0;   /* setmen  */
 
  /* File scope variables used here */
+ static float    fminnew, fmaxnew;
  static char *   environm;
  static char*    cimage        = NULL;
  static char     manfile[81]   = "convolve.man";       
@@ -702,6 +686,7 @@ static float laplacian[] = { 0.0,-1.0, 0.0,
  void filter_butflip(Widget iw_temp, XtPointer data, XtPointer call_data)
  {
  float * tempptr;
+ char outstr[81];
 
  tempptr     = newimage;
  newimage    = fimage;

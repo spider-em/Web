@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/filget.c,v 1.12 2005/10/18 16:59:50 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/filget.c,v 1.13 2018/12/07 17:03:31 leith Exp $*/
 
 /*
 C++*************************************************************************
@@ -48,10 +48,9 @@ C--*************************************************************************
 */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
 
- extern char           datexc[4];         /* file extension           */
- extern char           dirnow[81];        /* current directory        */
   
 /************************  filget  *********************************/
 
@@ -129,7 +128,7 @@ C--*************************************************************************
     }
  strcpy(filnam,filpat);
 
- if (sprintf(&filnam[igo],"%0*.*d",numi,numi,inum) < 0) 
+ if (sprintf(&filnam[igo],"%*.*d",(int)numi,(int)numi,inum) < 0) 
     return 0;
  if (dot) strcat(filnam,dataext);
 

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/catmen.c,v 1.13 2012/04/17 18:32:04 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/catmen.c,v 1.14 2018/12/07 17:03:30 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -42,19 +42,18 @@ C    CALLED BY:  mont2
 C
 C--*********************************************************************
 */
+#include <Xm/ToggleBG.h>
 #include "common.h"
 #include "routines.h"
-#include <Xm/ToggleBG.h>
+#include "extras.h"
 
  /* External function prototypes */
- extern void   cat          (void);
 
  /* Internal function prototypes */
- void          catmen_buts(Widget, XtPointer, XtPointer);
- void          catmen_buta(Widget, XtPointer, XtPointer);
+ static void       catmen_buts(Widget, XtPointer, XtPointer);
+ static void       catmen_buta(Widget, XtPointer, XtPointer);
   
  /* External common variables */
- extern int        ncat;        /* number of categories wanted */
 
  /* Internal common variables */
  static Widget     iw_catmen= 0, iw_docgg, iw_nkeyc, iw_ncat;

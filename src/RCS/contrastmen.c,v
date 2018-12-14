@@ -1,4 +1,4 @@
-head	1.18;
+head	1.19;
 access;
 symbols
 	pre-tilt-improve:1.18
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.19
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.18;
 
 1.18
 date	2011.09.27.13.45.31;	author leith;	state Exp;
@@ -106,13 +111,13 @@ desc
 @@
 
 
-1.18
+1.19
 log
-@mods for ngo...nend
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/contrastmen.c,v 1.17 2011/09/22 19:41:05 leith Exp leith $*/
+/*$Header: /usr8/web/src/RCS/contrastmen.c,v 1.18 2011/09/27 13:45:31 leith Exp $*/
 
 /*C++*******************************************************************
 C                                                                      *
@@ -161,26 +166,27 @@ C
 C--********************************************************************
 */
 
+#include <Xm/Scale.h>
 #include "common.h"
 #include "routines.h"
+#include "extras.h"
 
 
 #ifdef WEB_TRUE 
 //     WEB_TRUE ------------------------------------------------------
 
  // Internal function prototypes 
- void          contrastmen_buta(Widget, XtPointer, XtPointer);
+ static void    contrastmen_buta(Widget, XtPointer, XtPointer);
 
  // File scope static variables 
 static Widget  iw_contrastmen = (Widget)0;
 static Widget  iw_ngo, iw_nend;
 
 // Common variables used here
-extern int     vmap[256];          // Virtual colormap
 
  /**********************   contrastmen   ******************************/
 
- Widget contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+ void contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
 
  { 
  Widget iw_lab1, iw_rowcolv, iw_rowcolh;
@@ -232,7 +238,6 @@ extern int     vmap[256];          // Virtual colormap
     }
  XtManageChild(iw_contrastmen);
 
- return iw_contrastmen;
 }
 
  /************* Contrast changed callback ********************************/
@@ -273,7 +278,6 @@ extern int     vmap[256];          // Virtual colormap
 #else
 // WEB_24 --------------------------------------------------------------
 
-#include <Xm/Scale.h>
 #include <Xm/ToggleBG.h>
 
  /* Internal function prototypes */
@@ -288,7 +292,7 @@ extern int     vmap[256];          // Virtual colormap
 
  /**********************   contrastmen   ******************************/
 
- Widget contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+ void contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
 
  { 
  Widget iw_lab1, iw_rowcolv, iw_rowcolh;
@@ -348,7 +352,6 @@ extern int     vmap[256];          // Virtual colormap
 
  XtManageChild(iw_contrastmen);
 
- return iw_contrastmen;
  }
 
 
@@ -427,6 +430,36 @@ extern int     vmap[256];          // Virtual colormap
 
    
   
+@
+
+
+1.18
+log
+@mods for ngo...nend
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/contrastmen.c,v 1.17 2011/09/22 19:41:05 leith Exp leith $*/
+d51 1
+d54 1
+d61 1
+a61 1
+ void          contrastmen_buta(Widget, XtPointer, XtPointer);
+a67 1
+extern int     vmap[256];          // Virtual colormap
+d71 1
+a71 1
+ Widget contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+a122 1
+ return iw_contrastmen;
+a162 1
+#include <Xm/Scale.h>
+d177 1
+a177 1
+ Widget contrastmen(Widget iw_parent, XtPointer data, XtPointer call_data)
+a236 1
+ return iw_contrastmen;
 @
 
 

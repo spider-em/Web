@@ -2,7 +2,7 @@
 /* no longer used ???? */
 
 
-/*$Header: /usr8/web/src/RCS/toggle_cb.c,v 1.4 2005/10/18 16:59:40 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/toggle_cb.c,v 1.5 2018/12/07 17:03:34 leith Exp $*/
 /*
 C+**************************************************************************
 C
@@ -44,10 +44,11 @@ C--*********************************************************************
 */
 
 #include <Xm/ToggleBG.h>
+#include "routines.h"
  
  /********************   toggle_cb   ****************************/
 
- void  toggle_cb(Widget iw_temp, int * data, caddr_t call_data)
+ void  toggle_cb(Widget iw_temp, int * data, void * call_data)
 
  {
  *data  = XmToggleButtonGadgetGetState(iw_temp);

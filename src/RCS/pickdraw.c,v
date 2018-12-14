@@ -1,4 +1,4 @@
-head	1.12;
+head	1.13;
 access;
 symbols
 	pre-tilt-improve:1.12
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.13
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.12;
 
 1.12
 date	2011.06.22.19.10.53;	author leith;	state Exp;
@@ -77,12 +82,12 @@ desc
 @
 
 
-1.12
+1.13
 log
-@color
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /usr8/web/new/RCS/pickdraw.c,v 1.11 2005/10/18 16:59:46 leith Exp $*/
+@/*$Header: /usr8/web/src/RCS/pickdraw.c,v 1.12 2011/06/22 19:10:53 leith Exp $*/
 
 /*
 C++*********************************************************************
@@ -127,13 +132,10 @@ C***********************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "pick.h"
+#include "fit.h"
 
  /* External common variables */
- extern int    ixull, iyull, ixulr, iyulr;
- extern float  * xu0, * yu0;
- extern float  * xs,  * ys;
- extern float  * xs2, * ys2;
- extern int    iradi;              /* Marker radius, set in pickp */
 
  /************************  pickdraw *********************************/
 
@@ -225,6 +227,24 @@ C***********************************************************************
  expos_cb(NULL,NULL,NULL);
 
  }
+@
+
+
+1.12
+log
+@color
+@
+text
+@d1 1
+a1 1
+/*$Header: /usr8/web/new/RCS/pickdraw.c,v 1.11 2005/10/18 16:59:46 leith Exp $*/
+d46 2
+a49 5
+ extern int    ixull, iyull, ixulr, iyulr;
+ extern float  * xu0, * yu0;
+ extern float  * xs,  * ys;
+ extern float  * xs2, * ys2;
+ extern int    iradi;              /* Marker radius, set in pickp */
 @
 
 

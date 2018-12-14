@@ -1,20 +1,17 @@
 
-/*$Header: /usr8/web/src/RCS/wid_file.c,v 1.15 2011/07/20 16:36:51 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/wid_file.c,v 1.16 2018/12/07 17:03:35 leith Exp $*/
 
 /*
-C++*************************************************************************
-C
-C WID_FILE -- CREATED JUNE 91
-C                                                                     
-C **********************************************************************
-C *  AUTHOR: A. LEITH                                                      *
+ C++*************************************************************************
+ C
+ C WID_FILE -- CREATED JUNE 91
+ C                                                                     
+ C *********************************************************************
+ C * AUTHOR: A. LEITH                                                  *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -31,32 +28,31 @@ C *  AUTHOR: A. LEITH                                                      *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    WID_FILE
-C
-C    PARAMETERS:   IW_PARENT   PARENT WIDGET            READ
-C                  IW_FILE     WIDGET NUMBER            READ/WRITE
-C                  LABEL       WIDGET LABEL             READ
-C                  FILNAM      FILE NAME                READ
-C                  FILPATH     DIRECTORY PATH           READ
-C                  CB          CALLBACK ON ACCEPT       READ
-C                  IX,IY       UPPER LEFT CORNER        READ
-C
-C    PURPOSE:      MAKES A FILE WIDGET
-C
-C    CALLED BY:    WID_IMAGEMEN
-C
-C--********************************************************************
+ C **********************************************************************
+ C
+ C    wid_file
+ C
+ C    PARAMETERS:   IW_PARENT   PARENT WIDGET            READ
+ C                  IW_FILE     WIDGET NUMBER            READ/WRITE
+ C                  LABEL       WIDGET LABEL             READ
+ C                  FILNAM      FILE NAME                READ
+ C                  FILPATH     DIRECTORY PATH           READ
+ C                  CB          CALLBACK ON ACCEPT       READ
+ C                  IX,IY       UPPER LEFT CORNER        READ
+ C
+ C    PURPOSE:      MAKES A FILE WIDGET
+ C
+ C    CALLED BY:    WID_IMAGEMEN
+ C
+ C--********************************************************************
 */
 
-#include "common.h"
-#include "routines.h"
 #include <Xm/FileSB.h>
 #include <Xm/SelectioB.h>
+#include "common.h"
+#include "routines.h"
 
  /* External common variables */
- extern Widget         iw_top;            /* Top widget   */
 
  /* File variables */
 
@@ -64,7 +60,7 @@ C--********************************************************************
 
  Widget wid_file(Widget iw_parent, Widget iw_file, 
                char *label, char *filnam, char *filpath,
-               void (*cb) (), int ix, int iy)
+               XtCallbackProc cb, int ix, int iy)
 
  {
  Arg           args[8];          /* Arg list */

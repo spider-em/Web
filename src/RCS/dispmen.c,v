@@ -1,4 +1,4 @@
-head	1.6;
+head	1.7;
 access;
 symbols
 	pre-tilt-improve:1.6
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.7
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.6;
 
 1.6
 date	2005.10.18.16.59.57;	author leith;	state Exp;
@@ -47,13 +52,13 @@ desc
 @
 
 
-1.6
+1.7
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/dispmen.c,v 1.5 1995/07/11 17:28:11 mladjadj Exp $*/
+/*$Header: /usr8/web/src/RCS/dispmen.c,v 1.6 2005/10/18 16:59:57 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -97,17 +102,16 @@ C
 C***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/ToggleBG.h>
+#include "common.h"
 #define MAX_ARGS     3
 #include "routines.h"
 
 
  /* internal function prototypes */
- void          dispmen_buta(Widget, caddr_t, caddr_t);
+ static void    dispmen_buta(Widget, void *, void *);
 
  /* common variables */
- extern Widget    iw_scrollpar;     /* scroll window widget */
 
  /* local file variables */
  static Widget  iw_wantscroll;
@@ -116,7 +120,7 @@ C***********************************************************************
 
  /*************************  dispmen  ********************************/
 
- void dispmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void dispmen(Widget iw_temp, void * data, void * call_data)
  { 
  Widget   iw_rowcol, iw_dums, iw_dum, iw_pushc, iw_pusha;
 
@@ -145,7 +149,7 @@ C***********************************************************************
 
  /************ accept button callback *********************************/
 
- void dispmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void dispmen_buta(Widget iw_temp, void * data, void * call_data)
  {
  int    n, scrolling;
  Arg      args[MAX_ARGS]; 
@@ -180,6 +184,31 @@ C***********************************************************************
  }
 
 
+@
+
+
+1.6
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/dispmen.c,v 1.5 1995/07/11 17:28:11 mladjadj Exp $*/
+d46 1
+a47 1
+#include <Xm/ToggleBG.h>
+d53 1
+a53 1
+ void          dispmen_buta(Widget, caddr_t, caddr_t);
+a55 1
+ extern Widget    iw_scrollpar;     /* scroll window widget */
+d64 1
+a64 1
+ void dispmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+d93 1
+a93 1
+ void dispmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
 @
 
 

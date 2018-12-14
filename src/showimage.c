@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/showimage.c,v 1.13 2005/10/18 16:59:50 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/showimage.c,v 1.14 2018/12/07 17:03:34 leith Exp $*/
 
 /***********************************************************************
  *
@@ -45,8 +45,8 @@
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
-extern int nsami,nrowi,nslicei; /* from mont3.c */
 
 /***********************  showimage **********************************/
 

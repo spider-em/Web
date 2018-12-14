@@ -1,17 +1,14 @@
 
-/*$Header: /usr8/web/src/RCS/web_info.c,v 1.14 2011/07/18 14:29:16 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/web_info.c,v 1.15 2018/12/07 17:03:35 leith Exp $*/
 /*
-C++*********************************************************************
-C
-C  web_info.c
-C **********************************************************************
+ C++********************************************************************
+ C
+ C  web_info.c
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -28,13 +25,13 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C  web_info
-C
-C  PURPOSE:  GIVES MISC. INFO ON X-WINDOWS SYSTEM USEFUL FOR DEBUGGING
-C
-C--********************************************************************
+ C **********************************************************************
+ C
+ C  web_info
+ C
+ C  PURPOSE:  GIVES MISC. INFO ON X-WINDOWS SYSTEM USEFUL FOR DEBUGGING
+ C
+ C--********************************************************************
 */
 
 #include "common.h"
@@ -42,7 +39,7 @@ C--********************************************************************
 
  /**********************  web_info  **************************/
 
- void  web_info(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void  web_info(Widget iw_temp, void * data, void * call_data)
  { 
 
  Arg           args[1];
@@ -83,23 +80,23 @@ C--********************************************************************
  maxmap = XMaxCmapsOfScreen(iscreen);
 
  defmap = XDefaultColormapOfScreen(iscreen);
- printf(" Default colormap:          %#x \n",defmap);
- printf(" Web colormap:              %#x \n",map);
+ printf(" Default colormap:          %p \n",(void *)defmap);
+ printf(" Web colormap:              %p \n",(void *)map);
 
  XtSetArg(args[0], XmNcolormap, &imap); 
  XtGetValues(iw_top,args,1);
- printf(" iw_top colormap:           %#x \n",imap);
+ printf(" iw_top colormap:           %p \n",(void *)imap);
  XtGetValues(iw_main,args,1);
- printf(" iw_main colormap:          %#x \n",imap);
+ printf(" iw_main colormap:          %p \n",(void *)imap);
  XtGetValues(iw_win,args,1);
- printf(" iw_win colormap:           %#x \n",imap);
+ printf(" iw_win colormap:           %p \n",(void *)imap);
  XtGetValues(iw_menub,args,1);
- printf(" iw_menub colormap:         %#x \n",imap);
+ printf(" iw_menub colormap:         %p \n",(void *)imap);
 
  maps = XListInstalledColormaps(idispl,iwtop,&nummap);
  printf(" # of Installed maps:  %6d \n",nummap);
  for (i=0; i<nummap; i++)
- printf(" Map %d:                     %#x \n",i+1,maps[i]);
+ printf(" Map %d:                     %p \n",i+1,(void *)maps[i]);
 
  printf(" Mapgo...mapend:         %6d , %6d\n",mapgo,mapend);
  printf(" Colorgo...colorend:     %6d , %6d\n",colorgo,colorend);
@@ -113,7 +110,7 @@ C--********************************************************************
  visuals(idispl,XDefaultScreen(idispl));
 
  /* list values in SPIDER colormap */
- printf(" ---------- Spider colormap -----%#x -----\n",map);
+ printf(" ---------- Spider colormap -----%p -----\n",(void *)map);
  lut_info("Spider",map,  idepth, 0,256); 
 
  planeforcolor(129);

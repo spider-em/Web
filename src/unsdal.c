@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/unsdal.c,v 1.13 2007/11/21 15:07:03 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/unsdal.c,v 1.14 2018/12/07 17:03:34 leith Exp $*/
 /*
 *****************************************************************************
 **    UNSDAL2.FOR (VAX) converted to C.
@@ -121,10 +121,10 @@ C **********************************************************************
 */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
 
  /* external variables */
- extern char           datexc[4];         /* file extension  */
 
 /***************************  unsdal    *******************************/
 
@@ -273,7 +273,9 @@ C **********************************************************************
 
   ilast = MYMIN(nkey, nlist);
   ptr   = dbuf + (ikey-1) * maxreg;
-  for (i=0; i < ilast;  plist[i++] = *(++ptr));
+  if (plist) {
+    for (i=0; i < ilast;  plist[i++] = *(++ptr));
+  }
 
   if ( ilast < nlist)  return -9;
 

@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2005.10.18.16.59.50;	author leith;	state Exp;
@@ -42,13 +47,13 @@ desc
 @
 
 
-1.5
+1.6
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /net/ithaca/usr1/web/src/RCS/changepat.c,v 1.4 1995/07/11 20:19:05 mladjadj Exp $*/
+/*$Header: /usr8/web/src/RCS/changepat.c,v 1.5 2005/10/18 16:59:50 leith Exp $*/
 
 /***********************************************************************
  *
@@ -83,19 +88,19 @@ text
  * PURPOSE:  Change current filename search pattern     
  * 
  * PARAMETERS:	Widget 		iw_temp		pushbutton (not used)
- *		caddr_t		data		label text string
- *		caddr_t		call_data	not used 
+ *		void *		data		label text string
+ *		void *		call_data	not used 
  *
  ***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/FileSB.h>
+#include "common.h"
 #include "routines.h"
 
 
  /* internal functions */
- void            changepat_cb   (Widget, caddr_t, caddr_t);
+ static void     changepat_cb   (Widget, void *, void *);
 
 
  /* file variables */
@@ -107,7 +112,7 @@ text
 
 /************************  changepat  ***********************************/
 
- void changepat(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void changepat(Widget iw_temp, void * data, void * call_data)
  {
 
  /* create new directory input box */
@@ -118,7 +123,7 @@ text
 
  /**********************  changepat_cb  *********************************/
 
- void changepat_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void changepat_cb(Widget iw_temp, void * data, void * call_data)
  {
  XmString      txt_string;
  Arg           args[1];   /* arg list */
@@ -132,6 +137,33 @@ text
 
  }
 
+@
+
+
+1.5
+log
+@GPL
+@
+text
+@d2 1
+a2 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/changepat.c,v 1.4 1995/07/11 20:19:05 mladjadj Exp $*/
+d37 2
+a38 2
+ *		caddr_t		data		label text string
+ *		caddr_t		call_data	not used 
+d43 1
+a44 1
+#include <Xm/FileSB.h>
+d49 1
+a49 1
+ void            changepat_cb   (Widget, caddr_t, caddr_t);
+d61 1
+a61 1
+ void changepat(Widget iw_temp, caddr_t data, caddr_t call_data)
+d72 1
+a72 1
+ void changepat_cb(Widget iw_temp, caddr_t data, caddr_t call_data)
 @
 
 

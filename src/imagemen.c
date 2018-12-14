@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/imagemen.c,v 1.87 2015/09/08 18:16:07 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/imagemen.c,v 1.88 2018/12/07 17:03:32 leith Exp $*/
 
 /*
  C++********************************************************************
@@ -51,22 +51,20 @@
 
 #include "common.h"
 #include "routines.h"
+#include "pixel.h"
+#include "pick.h"
+#include "filter.h"
+#include "mont.h"
+#include "extras.h"
 
  /* External function  prototypes */
- extern void   dendromen  (char * );
- extern void   ctfmen0    (char * );
- extern void   showmovmen2(void);
 
  /* Internal function  prototypes */
- void          imagemen_cb    (Widget, XtPointer, XtPointer);
- void          imagemennol_cb (Widget, XtPointer, XtPointer);
- void          imagemen_cb_com(void);
+ static void   imagemen_cb    (Widget, XtPointer, XtPointer);
+ static void   imagemennol_cb (Widget, XtPointer, XtPointer);
+ static void   imagemen_cb_com(void);
 
  /* Externally defined common variables */
- extern char   outstr[80];
- extern float  erodethresh;  /* Used in filtermen, erodemen */
- extern int    docimgtotal;  /* From: docmontmen */
- extern int    docit_in;     // From: pixelmen_in
 
 
  /* Common variables defined here and used elsewhere */
@@ -77,9 +75,9 @@
 
  char *       cptrduml = NULL; /* Data used by image right &  left */
  char *       cptrdumr = NULL; 
- int          icattyp;
 
  /* File scope variables used here */
+ static int    icattyp;
  static char   filnew[128];
  static int    imnum = 1;
  static char   ops[] = "123456789abcdefghijklmnop"; // 25 opers
@@ -316,6 +314,7 @@
   float*      fptrdum = NULL;
   XRectangle  rect;
   int         nsams, nrows;   /* Size of the image on screen*/
+  char        outstr[81];
 
   /* Set waitcursor */
   waitcursor(iwin, TRUE, 79);

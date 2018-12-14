@@ -5,11 +5,7 @@
  *                 True color                   Sep 2011 ArDean Leith  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -18,7 +14,7 @@
  C=* the License, or (at your option) any later version.               *
  C=*                                                                   *
  C=* This program is distributed in the hope that it will be useful,   *
- C=* but WITHOUT ANY WAR//RANTY; without even the implied warranty of    *
+ C=* but WITHOUT ANY WARRANTY; without even the implied warranty of    *
  C=* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU *
  C=* General Public License for more details.                          *
  C=*                                                                   *
@@ -42,24 +38,17 @@
 
 #include "x.h"
 #include "std.h"
+#include "common.h"
+#include "routines.h"
+#include "extras.h"
 
  // Functions used here
- void         spout(char *);
- extern void  backclear(Pixmap imagesavn, 
+ static void  backclear(Pixmap imagesavn, 
                         unsigned int iwidex, 
                         unsigned int highx);
 
  // External common variables
- extern Display        *idispl;
- extern Drawable       iwin, imagsav;
- extern unsigned int   iwidex, ihighx;
- extern int            ixulx,iyulx;
- extern GC             icontx, icontxb;
- extern int            drawing;
 
- extern int            icolorxb; 
- extern int            mapgo,mapend;       // Start & end in colormap 
- extern int            ngo,nend;           // Image start & end in colormap 
 
  // Internally defined common variables
  int                   vmap[256];          // Virtual colormap

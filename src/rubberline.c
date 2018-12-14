@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/rubberline.c,v 1.4 2011/05/05 12:05:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/rubberline.c,v 1.5 2018/12/07 17:03:34 leith Exp $*/
 /*
 C***************************************************************************
 C
@@ -48,7 +48,7 @@ C--*********************************************************************
 #include "routines.h"
  
  /* internal subroutines */
- void rubber_pop(Widget, XEvent *, String *, Cardinal *);
+ static void rubber_pop(Widget, XEvent *, String *, Cardinal *);
  
  /* global variables */
  static int firstpt;
@@ -57,7 +57,7 @@ C--*********************************************************************
 
 /*********************  rubberline  *******************************/
 
- void rubberline(void)
+ void rubberline(Widget w, XtPointer c, XtPointer u)
  {
  
  /* open a message window with the following strings */

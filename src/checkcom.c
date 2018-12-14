@@ -1,5 +1,5 @@
  
-/*$Header: /usr8/web/src/RCS/checkcom.c,v 1.3 2005/10/18 17:00:00 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/checkcom.c,v 1.4 2018/12/07 17:03:31 leith Exp $*/
 
 /**********************************************************************
  *
@@ -43,18 +43,15 @@
 */
 
 #include "common.h"
+#include "routines.h"
 
  /* external function prototypes */
- extern void   spout        (char *);
- extern void   fin_cb       (Widget, caddr_t, caddr_t);
- extern void   webclear     (Widget, caddr_t, caddr_t); 
- extern int    wicolor      (GC, int);
 
  static int    newrun = TRUE;
 
  /******************************************************************/
  
- void checkcom(Widget iw_dum, caddr_t cdum1, caddr_t cdum2)
+ void checkcom(Widget iw_dum, void * cdum1, void * cdum2)
  {
 
  /*** printf(" in checkcom now\n");   ***/

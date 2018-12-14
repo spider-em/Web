@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/cat.c,v 1.22 2012/12/12 15:59:04 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/cat.c,v 1.23 2018/12/07 17:03:30 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -41,21 +41,15 @@ C--*********************************************************************
 #define MAXCURSOR 75
 
 #include "routines.h"
+#include "mont.h"
+#include "extras.h"
 
  /* External subroutines */
 
  /* Internal subroutine prototypes */
- void          cat_pop     (Widget, XEvent *, String *, Cardinal *);
+ static void   cat_pop     (Widget, XEvent *, String *, Cardinal *);
 
  /* Externally defined common variables */
- extern int    ndone;
- extern char   filego[81];       /* Name of first image in montage */
- extern char   outstr[80];
- extern int    ixulmon, iyulmon;
- extern int   *docimgnums;
- extern int    docimgtotal;
- extern int    imagelist[1000];  // List of images in montage (for stack)
- extern int    nimage;
 
  // Externally used variables  
  int           ncat = 3;         // No. of categories wanted (used in catmen)
@@ -69,6 +63,7 @@ C--*********************************************************************
  {
  int   nlet;
  char  filejnk[81];    
+ char outstr[81];
 
  /*  Refresh screen */
  expos_cb(NULL,NULL,NULL);
@@ -116,7 +111,8 @@ C--*********************************************************************
  char *        ctemp;
  static FILE  *fpdoc = (FILE *) NULL;
  float         dlist[5];
-
+ char outstr[81];
+ 
  if (!(strcmp(*params,"M")))              /*  Mouse moved */ 
     {
     /*  Get mouse position */

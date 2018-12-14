@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-tilt-improve:1.5
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2018.12.07.17.03.35;	author leith;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2011.07.19.19.39.06;	author leith;	state Exp;
@@ -41,24 +46,22 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@BGFGO
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/wid_optmenu.c,v 1.4 2005/10/18 16:59:57 leith Exp leith $*/
+/*$Header: web/src/RCS/wid_optmenu.c,v 1.5 2011/07/19 19:39:06 leith Exp $*/
 /*
  * wid_optmenu.c
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
  C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@@wadsworth.org                                      *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -89,8 +92,9 @@ text
  ***********************************************************************
 */
 
-#include "common.h"
 #include <Xm/RowColumn.h>
+#include "common.h"
+#include "routines.h"
 
  /************************************************************/
 
@@ -121,6 +125,30 @@ text
  return iw_pull;
  }
  
+@
+
+
+1.5
+log
+@BGFGO
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/wid_optmenu.c,v 1.4 2005/10/18 16:59:57 leith Exp leith $*/
+d8 1
+a8 2
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+d10 2
+a11 3
+ C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
+ C=* Email:  spider@@wadsworth.org                                      *
+d42 1
+d44 1
+a44 1
+#include <Xm/RowColumn.h>
 @
 
 

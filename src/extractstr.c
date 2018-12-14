@@ -1,17 +1,13 @@
 
-/*$Header: /usr8/web/src/RCS/extractstr.c,v 1.3 2005/10/18 16:59:47 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/extractstr.c,v 1.4 2018/12/07 17:03:31 leith Exp $*/
 /*
-C++*************************************************************************
-C
-C extractstr -- CREATED July 92
-C                                                                     
-C **********************************************************************
+ C++********************************************************************
+ C
+ C extractstr -- CREATED July 92
+ C                                                                     
+ C *********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -29,27 +25,26 @@ C **********************************************************************
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    extractstr
-C
-C    PARAMETERS:   compstring           compound string
-C
-C    RETURNS:      STRING               ASCII STRING
-C
-C    PURPOSE:      GETS ASCII STRING FROM A COMPOUND STRING
-C
-C    CALLS:        MOTIF
-C
-C    CALLED BY:    
-C
-C--********************************************************************
+ C *********************************************************************
+ C
+ C    extractstr
+ C
+ C    PARAMETERS:   compstring           compound string
+ C
+ C    RETURNS:      STRING               ASCII STRING
+ C
+ C    PURPOSE:      GETS ASCII STRING FROM A COMPOUND STRING
+ C
+ C    CALLS:        MOTIF
+ C
+ C    CALLED BY:    
+ C
+ C--*******************************************************************
 */
 
 #include "x.h"
 #include "std.h"
-
-void spout(char *);
+#include "routines.h"
 
 char *extractstr(XmString compstring)
 

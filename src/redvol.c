@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/redvol.c,v 1.13 2011/09/27 17:13:55 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/redvol.c,v 1.14 2018/12/07 17:03:34 leith Exp $*/
 
 /*
 C***********************************************************************
@@ -62,13 +62,13 @@ C--*********************************************************************
 */
 
 #include "files.h"
+#include "common.h"
 #include "routines.h"
 
  /* Externally defined variables */
- extern int imagego, imageend;        /* Set norm. range for image */
 
  /* Common variables used here */
- int nsams, nrows, nslices;
+ static int nsams, nrows, nslices;
 
  /*************************   redvol   ****************************/
 

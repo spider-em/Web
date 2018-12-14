@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -9,6 +9,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.2
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.1;
 
 1.1
 date	2011.06.10.14.06.12;	author leith;	state Exp;
@@ -21,13 +26,13 @@ desc
 @
 
 
-1.1
+1.2
 log
-@Initial revision
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header:  $*/
+/*$Header: /usr8/web/src/RCS/planeforcolor.c,v 1.1 2011/06/10 14:06:12 leith Exp $*/
 /*
 C+**********************************************************************
 C
@@ -70,6 +75,7 @@ C--*********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  unsigned long planeforcolor(int icolort)
  {
@@ -119,4 +125,16 @@ C--*********************************************************************
 // ispicol(128..131) :        0      0xff     0xff00     0xffff
 //                     RED            MAG        YEL        WHI 
 // ispicol(132..135) : 0xff0000  0xff00ff   0xffff00   0xffffff
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+/*$Header:  $*/
+d45 1
 @

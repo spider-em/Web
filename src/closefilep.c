@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/closefilep.c,v 1.2 2005/10/18 16:59:46 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/closefilep.c,v 1.3 2018/12/07 17:03:31 leith Exp $*/
 /*
  *************************************************************************
  *
@@ -39,6 +39,7 @@
  *              
  *********************************************************************/
 
+#include "routines.h"
 #include "files.h"
 
  int closefilep(FILEDATA **fileptr)

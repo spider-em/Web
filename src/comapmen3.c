@@ -36,16 +36,16 @@ C **********************************************************************
 *****************************************************************************
 */
 
+#include <Xm/Text.h>
 #include "common.h"
 #include "std.h"
-#include <Xm/Text.h>
 #include "routines.h"
+#include "comap.h"
 
-  extern char   datexc[4];         /* file extension           */
   char   docnammo[81] = "docimg001";
   int    itxrego, ityrego, labrego;
 
-  void   comapmen3_buta (Widget, caddr_t, caddr_t);
+  static void   comapmen3_buta (Widget, void *, void *);
 
   /* internal variables */
   static Widget iw_comapmen3= (Widget) 0, iw_doc, iw_xreg, 
@@ -53,7 +53,7 @@ C **********************************************************************
 
 /********************** comapmen3 ***********************************/
 
-void comapmen3(Widget iw_t, caddr_t itag, caddr_t callpar)
+void comapmen3(Widget iw_t, void * itag, void * callpar)
 {
   Widget iw_rowcol, iw_dum, iw_buts,iw_buta, iw_butc;
   char cval[5];
@@ -101,7 +101,7 @@ void comapmen3(Widget iw_t, caddr_t itag, caddr_t callpar)
 
 /*******************  comapmen3_buta ******************************/
 
-void comapmen3_buta(Widget iw_t, caddr_t itag, caddr_t callpar)
+void comapmen3_buta(Widget iw_t, void * itag, void * callpar)
   {
   char  outstr[80];
   char *string;

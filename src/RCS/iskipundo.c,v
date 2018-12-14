@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -10,6 +10,11 @@ locks;
 comment	@ * @;
 
 
+1.2
+date	2018.12.07.17.03.32;	author leith;	state Exp;
+branches;
+next	1.1;
+
 1.1
 date	2005.10.18.16.59.24;	author leith;	state Exp;
 branches;
@@ -20,12 +25,12 @@ desc
 @@
 
 
-1.1
+1.2
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /net/ithaca/usr1/web/src/RCS/iskipadj.c,v 1.2 2000/06/30 19:20:38 leith Exp $*/
+@/*$Header: /usr8/web/src/RCS/iskipundo.c,v 1.1 2005/10/18 16:59:24 leith Exp $*/
 /*
 C++**********************************************************************
 C
@@ -71,6 +76,7 @@ C
 C--*********************************************************************
 */
 #include "common.h"
+#include "routines.h"
 
 
  /************************  iskipundo   *******************************/
@@ -98,4 +104,16 @@ C--*********************************************************************
  return TRUE;
  }
 
+@
+
+
+1.1
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/iskipadj.c,v 1.2 2000/06/30 19:20:38 leith Exp $*/
+d47 1
 @

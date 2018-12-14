@@ -1,4 +1,4 @@
-/*$Header: /usr8/web/src/RCS/imagedis.c,v 1.21 2007/11/28 16:18:33 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/imagedis.c,v 1.21 2007/11/28 16:18:33 leith Exp $*/
 
 /*
  ***********************************************************************

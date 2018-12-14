@@ -1,4 +1,4 @@
-head	1.11;
+head	1.12;
 access;
 symbols
 	pre-tilt-improve:1.11
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.12
+date	2018.12.07.17.03.34;	author leith;	state Exp;
+branches;
+next	1.11;
 
 1.11
 date	2011.10.25.19.06.00;	author leith;	state Exp;
@@ -71,13 +76,13 @@ desc
 @@
 
 
-1.11
+1.12
 log
-@surf as viewed from top
+@bollingers_email_and_cosmetic
 @
 text
 @
-/*$Header: /usr8/web/src/RCS/surfrot.c,v 1.9 2005/10/18 16:59:48 leith Exp $*/
+/*$Header: /usr8/web/src/RCS/surfrot.c,v 1.11 2011/10/25 19:06:00 leith Exp $*/
 /*
 C***********************************************************************
 C
@@ -117,6 +122,7 @@ C **********************************************************************
 */
 
 #include "common.h"
+#include "routines.h"
 
  // Static internal variables
  static int            nsr, vcx, vcy, vcz;
@@ -359,6 +365,18 @@ float volval(int ipos, int jpos, int kpos, unsigned char * vol)
 
   }
 #endif
+@
+
+
+1.11
+log
+@surf as viewed from top
+@
+text
+@d2 1
+a2 1
+/*$Header: /usr8/web/src/RCS/surfrot.c,v 1.9 2005/10/18 16:59:48 leith Exp $*/
+d42 1
 @
 
 

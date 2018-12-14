@@ -1,4 +1,4 @@
-head	1.13;
+head	1.14;
 access;
 symbols
 	pre-tilt-improve:1.13
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.14
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.13;
 
 1.13
 date	2011.09.21.13.23.20;	author leith;	state Exp;
@@ -82,9 +87,9 @@ desc
 @
 
 
-1.13
+1.14
 log
-@          neednewmap = TRUE;
+@bollingers_email_and_cosmetic
 @
 text
 @/*
@@ -127,21 +132,12 @@ C **********************************************************************
 C **********************************************************************
 */
 
-#include "common.h"
 #include <Xm/Text.h>
 #include <stdlib.h>
+#include "common.h"
 #include "routines.h"
+#include "comap.h"
 
-
-  extern char   docnammo[81], filnamm[81], imnamm[81];  
-  extern int    nline, ixmar, iymar, ixsize, iysize, gotbin, gotav,
-                nowbin, gotavim;
-  extern float  *bufx, *bufy;
-  extern int    *nkey, ovrlap;
-  extern double factxa, factxb,factya, factyb;
-  extern int    itxrego, ityrego, labrego;
-  extern float  rangel, rangeu;
-  extern Pixmap msksav;
 
 /********************** comapsav ***********************************/
 
@@ -290,7 +286,7 @@ void comapsav(int itag)
           }
 
       /* set next filename for doc file */
-      filnam[nlet] = (char) NULL;
+      filnam[nlet] = '\0';
       strcpy(docnammo,filnam);
 
       /* increment the NEXT filename */
@@ -299,7 +295,7 @@ void comapsav(int itag)
            sprintf(outstr,"*** Error - could not increment filename: %s",docnammo);
            spout(outstr); waitcursor(iwin, FALSE, 0); return;
            }
-      filnam[nlet] = (char) NULL;
+      filnam[nlet] = '\0';
       strcpy(docnammo,filnam);     
   
       if(fp) 
@@ -572,13 +568,13 @@ void comapsav(int itag)
             closefile(ptrdoc);
 
             /* increment the NEXT filename */
-            filnam[nlet] = (char) NULL;
+            filnam[nlet] = '\0';
             strcpy(imnamm,filnam);
             if(filinc(imnamm,filnam,&nlet,&numfil) != 2)
               { sprintf(outstr,"*** Error - Could not increment filename: %s",imnamm);
                 spout(outstr); waitcursor(iwin, FALSE, 0); return;       }
 
-            filnam[nlet] = (char) NULL;
+            filnam[nlet] = '\0';
             strcpy(imnamm,filnam); 
             }
       else
@@ -598,6 +594,41 @@ void comapsav(int itag)
   }               
  /****** end of comapsav function ******/
 
+@
+
+
+1.13
+log
+@neednewmap = TRUE;
+@
+text
+@a40 1
+#include "common.h"
+d43 1
+d45 1
+a47 10
+  extern char   docnammo[81], filnamm[81], imnamm[81];  
+  extern int    nline, ixmar, iymar, ixsize, iysize, gotbin, gotav,
+                nowbin, gotavim;
+  extern float  *bufx, *bufy;
+  extern int    *nkey, ovrlap;
+  extern double factxa, factxb,factya, factyb;
+  extern int    itxrego, ityrego, labrego;
+  extern float  rangel, rangeu;
+  extern Pixmap msksav;
+
+d195 1
+a195 1
+      filnam[nlet] = (char) NULL;
+d204 1
+a204 1
+      filnam[nlet] = (char) NULL;
+d477 1
+a477 1
+            filnam[nlet] = (char) NULL;
+d483 1
+a483 1
+            filnam[nlet] = (char) NULL;
 @
 
 

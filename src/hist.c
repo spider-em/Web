@@ -1,18 +1,15 @@
 
-/*$Header: /usr8/web/src/RCS/hist.c,v 1.4 2011/09/14 15:29:04 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/hist.c,v 1.5 2018/12/07 17:03:32 leith Exp $*/
 /*
-C++*********************************************************************
-C
-C WID_HIST.FOR  -- CREATED APRIL 91
-C hist.c                   NOV   92
-C **********************************************************************
-C *  AUTHOR:  ArDean Leith                                                 *
+ C++********************************************************************
+ C
+ C WID_HIST.FOR  -- CREATED APRIL 91
+ C hist.c                   NOV   92
+ C
+ C *********************************************************************
+ C * AUTHOR:  ArDean Leith                                             *
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright (C) 1992-2005  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
  C=* Email:  spider@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -30,26 +27,27 @@ C *  AUTHOR:  ArDean Leith                                                 *
  C=* Free Software Foundation, Inc.,                                   *
  C=* 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.     *
  C=*                                                                   *
-C **********************************************************************
-C
-C    HIST
-C
-C    PURPOSE:     DISPLAY A HISTOGRAM OVERLAY FOR IMAGE
-C
-C    PARAMETERS:  FILEDATA    FILE INFO
-C
-C    VARIABLES:   JHIST       ARRAY WITH HISTOGRAM DATA
-C
-C    CALLS:       
-C
-C    CALLED BY:   
-C 
-C--********************************************************************
+ C *********************************************************************
+ C
+ C    hist
+ C
+ C    PURPOSE:     Display a histogram overlay for image
+ C
+ C    PARAMETERS:  filedata    File info
+ C
+ C    VARIABLES:   jhist       Array with histogram data
+ C
+ C    CALLS:       
+ C
+ C    CALLED BY:   
+ C 
+ C--********************************************************************
 */
 
 #include "files.h"
 #include "common.h"
 #include "routines.h"
+#include "filter.h"
 
 #define NHIST 128
 

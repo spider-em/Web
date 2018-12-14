@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/strtoint.c,v 1.5 2005/10/18 16:59:50 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/strtoint.c,v 1.6 2018/12/07 17:03:34 leith Exp $*/
 /*
  * strtoint.c
  *
@@ -42,15 +42,14 @@
  **********************************************************************
 */
 
-#include "std.h"
-#include "x.h"
 #include <Xm/TextF.h>
 #include <Xm/Text.h>
+#include "std.h"
+#include "x.h"
+#include "routines.h"
 
 
 /* function prototypes */
- extern void spout(char *);
- extern void spouts(char *);
 
  /*********************** strtoint ******************************/
  

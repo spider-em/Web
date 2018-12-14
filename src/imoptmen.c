@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/imoptmen.c,v 1.14 2011/07/22 19:33:40 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/imoptmen.c,v 1.15 2018/12/07 17:03:32 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -54,7 +54,7 @@ C***********************************************************************
 #include "routines.h"
 
  /* Function prototypes */
- void          imoptmen_buta(Widget, caddr_t, caddr_t);
+ static void   imoptmen_buta(Widget, void *, void *);
 
  /* File variables */
  Widget   iw_names,  iw_keepxy, iw_newline, iw_nuscrn, iw_listfi;
@@ -65,7 +65,7 @@ C***********************************************************************
 
  /**************************  imoptmen *******************************/
 
- void imoptmen(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void imoptmen(Widget iw_temp, void * data, void * call_data)
  { 
  char     cval[5];
  Widget   iw_marlefl, iw_martopl, iw_marxl, iw_maryl, iw_iskipl;
@@ -138,7 +138,7 @@ C***********************************************************************
 
  /************ accept button callback *********************************/
 
- void imoptmen_buta(Widget iw_temp, caddr_t data, caddr_t call_data)
+ void imoptmen_buta(Widget iw_temp, void * data, void * call_data)
  {
 
  /* names_height: pixel height of the filename */

@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/gongon.c,v 1.3 1995/09/14 17:03:44 mladjadj Exp $*/
+/*$Header: /usr16/software/web/src/RCS/gongon.c,v 1.4 2018/12/07 17:03:32 leith Exp $*/
 /*
 c    gongon.for
 c    called by:  gold1.c
@@ -14,20 +14,21 @@ c...theta is angle of tilt (around tilt axis.) (y-axis)
 c...phi is angle around microscope axis (counterclockwise, as usual.) (z-axis)
  */
 
+#include "routines.h"
+
 #define tol_error  0.001
 #include "std.h"
 
       /* external functions */
-      extern void  spout(char *);
 
       /* internal functions */
-      double gongon6( double, double, double, double,
+      static double gongon6( double, double, double, double,
                       double, double, double[3][3]);
-      double  gongon5(double, double);
-      void    gongon3(double, double, double,
+      static double  gongon5(double, double);
+      static void    gongon3(double, double, double,
                       double[3][3],  double, double, double);
-      void    gongon4(double[3][3], double[3][3], double[3][3]);
-      void    gongon2(double, double, double, double[3][3]);
+      static void    gongon4(double[3][3], double[3][3], double[3][3]);
+      static void    gongon2(double, double, double, double[3][3]);
 
  /***************************  gongon ***************************/
 

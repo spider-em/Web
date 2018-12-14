@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/montmen3.c,v 1.16 2005/10/18 16:59:56 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/montmen3.c,v 1.17 2018/12/07 17:03:33 leith Exp $*/
 /*
 C++************************************************************************
 C
@@ -51,12 +51,13 @@ C**************************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
 #define MAX_ARGS 2
 
  /* internal function prototypes */
- void          montmen3_buta(Widget iw_temp, XtPointer, XtPointer);
- void          montmen3_butc(Widget iw_temp, XtPointer, XtPointer);
+ static void   montmen3_buta(Widget iw_temp, XtPointer, XtPointer);
+ static void   montmen3_butc(Widget iw_temp, XtPointer, XtPointer);
 
  /* file scope variables */
  static Widget   iw_scales[6];

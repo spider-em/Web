@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/docmontmen.c,v 1.20 2012/04/17 18:35:31 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/docmontmen.c,v 1.21 2018/12/07 17:03:31 leith Exp $*/
 /*
 C++*********************************************************************
 C
@@ -62,12 +62,13 @@ C**************************************************************************
 
 #include "common.h"
 #include "routines.h"
+#include "mont.h"
 
  /* Internal function prototypes */
- void     docmontmen_buta    (Widget, XtPointer, XtPointer);
- void     docmontmen_buta_stk(Widget, XtPointer, XtPointer);
- void     docmontmen_a       (Widget, XtPointer, XtPointer);
- void     docmontmen_a_stk   (Widget, XtPointer, XtPointer);
+ static void     docmontmen_buta    (Widget, XtPointer, XtPointer);
+ static void     docmontmen_buta_stk(Widget, XtPointer, XtPointer);
+ static void     docmontmen_a       (Widget, XtPointer, XtPointer);
+ static void     docmontmen_a_stk   (Widget, XtPointer, XtPointer);
 
  /* File variables */
  static Widget   iw_template, iw_nprow, iw_movie;
@@ -86,14 +87,12 @@ C**************************************************************************
 
  /* Externally used variables (For use in mont2) */
  int * docimgnums;
- int   docimgtotal, numnext, numnextout;
+ int   docimgtotal, numnext;
  int   montaverage = FALSE;
  char  avgnam[128];
 
- /* Externally defined variables (For use in mont2) */
- extern int    lastfile;           
- extern char   filego[81];     /* Name of first image in montage   */
- extern int    minfile, maxfile;
+ /* Internal variables */
+ static int   numnextout;
 
  /***********  docmontmen0  (called from imagemen) ********/
 

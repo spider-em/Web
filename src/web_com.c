@@ -17,7 +17,7 @@
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
  C=* Copyright 1985-2015  Health Research Inc.,                        *
  C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -46,10 +46,8 @@
 #include "common.h"
 
 #define MAX_ARGS     20
-Arg args[MAX_ARGS];   /* Arg list */
 
 // Function prototypes
-extern Widget wid_seper(Widget, Widget, char *,  int, int);
 
 /*******************************  web_com  ***************************/
 
@@ -216,6 +214,7 @@ extern Widget wid_seper(Widget, Widget, char *,  int, int);
  Widget         iw_seper2 = (Widget) 0;
  Widget         iw_seper3 = (Widget) 0;
  Widget         iw_quicks = (Widget) 0;
+ Arg            args[MAX_ARGS];   /* Arg list */
 
  int            n;
 

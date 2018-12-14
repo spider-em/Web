@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/setamap.c,v 1.7 2011/05/05 12:05:27 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/setamap.c,v 1.8 2018/12/07 17:03:34 leith Exp $*/
 /*
 C***************************************************************************
 C
@@ -45,9 +45,9 @@ C--********************************************************************
 
 #include "std.h"
 #include "x.h"
+#include "common.h"
+#include "routines.h"
 
- extern Display   *idispl;
- extern Window    iwin, iwtop;
 
  /**************************  setamap   *****************************/
 

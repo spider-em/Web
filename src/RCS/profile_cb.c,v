@@ -1,4 +1,4 @@
-head	1.1;
+head	1.2;
 access;
 symbols
 	pre-tilt-improve:1.1
@@ -6,6 +6,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.2
+date	2018.12.07.17.03.33;	author leith;	state Exp;
+branches;
+next	1.1;
 
 1.1
 date	93.11.10.15.21.13;	author leith;	state Exp;
@@ -18,10 +23,9 @@ desc
 @
 
 
-
-1.1
+1.2
 log
-@Initial revision
+@bollingers_email_and_cosmetic
 @
 text
 @/*
@@ -48,12 +52,25 @@ C--*********************************************************************
 */
 
 #include <Xm/ToggleBG.h>
+#include "routines.h"
 
  /********************  profile_cb   ****************************/
 
- void  profile_cb(Widget iw_temp, int *data, caddr_t call_data)
+ void  profile_cb(Widget iw_temp, int *data, void * call_data)
  {
    *data = XmToggleButtonGadgetGetState(iw_temp); 
  }
 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d25 1
+d29 1
+a29 1
+ void  profile_cb(Widget iw_temp, int *data, caddr_t call_data)
 @

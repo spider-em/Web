@@ -1,4 +1,4 @@
-head	1.12;
+head	1.13;
 access;
 symbols
 	pre-tilt-improve:1.12
@@ -10,6 +10,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.13
+date	2018.12.07.17.03.31;	author leith;	state Exp;
+branches;
+next	1.12;
 
 1.12
 date	2005.10.18.16.59.50;	author leith;	state Exp;
@@ -77,12 +82,12 @@ desc
 @
 
 
-1.12
+1.13
 log
-@GPL
+@bollingers_email_and_cosmetic
 @
 text
-@/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.11 1998/04/13 15:25:15 leith Exp $*/
+@/*$Header: /usr8/web/src/RCS/filget.c,v 1.12 2005/10/18 16:59:50 leith Exp $*/
 
 /*
 C++*************************************************************************
@@ -132,10 +137,9 @@ C--*************************************************************************
 */
 
 #include "std.h"
+#include "common.h"
 #include "routines.h"
 
- extern char           datexc[4];         /* file extension           */
- extern char           dirnow[81];        /* current directory        */
   
 /************************  filget  *********************************/
 
@@ -213,13 +217,31 @@ C--*************************************************************************
     }
  strcpy(filnam,filpat);
 
- if (sprintf(&filnam[igo],"%0*.*d",numi,numi,inum) < 0) 
+ if (sprintf(&filnam[igo],"%*.*d",(int)numi,(int)numi,inum) < 0) 
     return 0;
  if (dot) strcat(filnam,dataext);
 
  return ierflg;
  }
 
+@
+
+
+1.12
+log
+@GPL
+@
+text
+@d1 1
+a1 1
+/*$Header: /net/ithaca/usr1/web/src/RCS/filget.c,v 1.11 1998/04/13 15:25:15 leith Exp $*/
+d51 1
+a53 2
+ extern char           datexc[4];         /* file extension           */
+ extern char           dirnow[81];        /* current directory        */
+d131 1
+a131 1
+ if (sprintf(&filnam[igo],"%0*.*d",numi,numi,inum) < 0) 
 @
 
 

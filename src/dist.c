@@ -40,17 +40,16 @@
 
 #include "common.h"
 #include "routines.h"
+#include "dist.h"
 
 #define  MAXREG	7
 
  /* external  functions */
- extern void distmen_buts(Widget , XtPointer, XtPointer);
 
  /* internal functions */
- void    dist_pop (Widget, XEvent *, String *, Cardinal *);
+ static void dist_pop (Widget, XEvent *, String *, Cardinal *);
 
  /* external global variables */
- extern FILE    *fpdocpix;
 
  /* global variables used elsewhere (distmen.c) */
  int     opendistdoc = TRUE;

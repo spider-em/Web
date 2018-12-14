@@ -1,5 +1,5 @@
 
-/*$Header: /usr8/web/src/RCS/witran.c,v 1.8 2015/09/22 14:19:54 leith Exp $*/
+/*$Header: /usr16/software/web/src/RCS/witran.c,v 1.9 2018/12/07 17:06:44 leith Exp $*/
 
 /*
  C**********************************************************************
@@ -9,12 +9,9 @@
  C
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2015  Health Research Inc.                     *
- C=*                                                                   *
- C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
- C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
- C=*                                                                   *
- C=* Email:  spider@wadsworth.org                                      *
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Riverview Center, 150 Broadway, Suite 560, Menands, NY 12204.     *
+ C=* Email:  spider@health.ny.gov                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
  C=* modify it under the terms of the GNU General Public License as    *
@@ -39,11 +36,9 @@
 */
 
 #include "std.h"
+#include "routines.h"
+#include "fit.h"
 
- // Internal function prototypes
- void witran_rev(float *, float *, float,float, int, 
-                float, float, float);
- 
 /***************************** witran ****************************/
 
  void witran(float * x, float * y, float * xs, float * ys, int n,
@@ -51,7 +46,6 @@
  {
  float        rgam, rthe, rphi, cgam, sgam, cphi, sphi, cthe;
  float        cthecphi, cthesphi;
- extern float xu0t, yu0t, xs0t, ys0t;
  int          i;
 
  float        xb,yb;    // temp!!!!!!!!!!!!!!!
@@ -99,7 +93,6 @@
  {
  float          rgam, rthe, rphi, cgam, sgam, cphi, sphi, cthe;
  float          cthecphi, cthesphi;
- extern float   xu0t, yu0t, xs0t, ys0t;
  int            i;
  float          TXccss, TXsccs, TYsccc, TYccsc, TX, TY;
 
