@@ -1,20 +1,20 @@
 
 
 
-####*Web* is a graphical user interface for displaying and interacting with 
-[SPIDER](http://spider.wadsworth.org/spider_doc/spider/docs/spider.html) format images. 
-These images are a standard image format often used for biological electron microscopy, 
-especially for single-particle reconstruction. *Web* is distributed as part of the 
-large **SPIDER** electron microscopy imaging package.  
+**Web** is a graphical user interface for displaying and interacting with 
+[SPIDER](https://github.com/spider-em/spider) format images. 
+These images are a standard image format used for biological electron microscopy, 
+especially for single-particle reconstruction. **Web** is distributed as part of the 
+large [*SPIDER*](https://github.com/spider-em/spider) electron microscopy imaging package.  
 
-This repository holds only *Web* source code and documentation including 50,000 lines of code. 
+This repository holds **Web** source code and documentation including 50,000 lines of code. 
 
 --------------------------------------------------------------
 
    
 * History:
 
-   1.  *Web* is derived from an earlier Dec-Windows version and was developed starting in 1990 
+   1.  **Web** was derived from an earlier Dec-Windows version and was developed starting in 1990 
        at the [Wadsworth Center](http://www.wadsworth.org/) in Albany, NY by ArDean Leith.
                   
    2.  Other major contributors:  
