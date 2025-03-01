@@ -1,6 +1,6 @@
 
 
-**[Web](https://spider-em.github.io/web)** is a graphical user interface for displaying and interacting with 
+**[Web](https://spider-em.github.io/Web)** is a graphical user interface for displaying and interacting with 
 [SPIDER](https://spider-em.github.io/SPIDER) format images. 
 These images are a standard image format often used for biological electron
 microscopy,  especially for single-particle reconstruction. *Web* is distributed
