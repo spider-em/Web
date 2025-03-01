@@ -6,7 +6,7 @@ These images are a standard image format often used for biological electron
 microscopy,  especially for single-particle reconstruction. *Web* is distributed
 as part of the  large **SPIDER** electron microscopy imaging package.  
 
-This repository holds *Web* source code and documentation including 50,000 lines of code.   Releases which contain both *SPIDER* and *Web* software are [available](https://github.com/spider-em/SPIDER/releases) on Github.
+This repository holds *Web* source code and documentation including 50,000 lines of code.   Releases which contain both *SPIDER* and *Web* software are [available](https://github.com/spider-em/SPIDER/releases)   on Github.
 
 --------------------------------------------------------------
 
