@@ -1,0 +1,39 @@
+# 
+# PURPOSE: Makefile for OSX Web Using  8 bit Visual 
+#          Byteswaps output images for compatibility with SGI byte order
+#          Uses the Gnu compiler
+#          Links statically with OpenMotif libraries
+#          For Intel architecture
+#
+# USAGE:   make -f Makefile_osx
+
+# Use Gnu compiler
+CC     = cc
+RANLIB = ranlib
+
+# Path for (Open)motif
+MOTIF_BASE = osx/openmotif
+
+# Define compiler flags & header file locations; cpp variable: P_SGIOSF = use byte-swapped images from SGI 
+CFLAGS =  -arch i386 -DFUNCPROTO -O2 -I/usr/X11R6/include -DP_SGIOSF -L $(MOTIF_BASE)/lib -I $(MOTIF_BASE)/include
+
+LF        = -arch i386 -L/usr/X11R6/lib -L$(MOTIF_BASE)/lib
+
+PGM       = web_osx_8
+
+LIB       =  lib$(PGM).a
+
+MOTIFLIBS = $(MOTIF_BASE)/lib/libXm.a -lXp -lXext -liconv 
+
+OTHERLIBS =   $(MOTIFLIBS) -lXt -lX11 -lXmu -lm 
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+# Note: Can not use Makebody.inc as it has "-u main"
+../bin/$(PGM) :  $(LIB)
+	@echo "         linking now --"
+	$(CC) $(LF) $(LIB) $(OTHERLIBS) -o ../bin/$(PGM)
+
+$(LIB) :  $(ELEMENTS)

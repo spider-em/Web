@@ -1,0 +1,87 @@
+
+ WEB README FILE                                    April 4, 1994
+
+
+  CONTENTS OF THIS DOCUMENT:
+  ==========================
+
+                1. GENERAL
+                2. INSTALLATION OF WEB
+                3. RUNNING WEB
+                4. BUGS
+
+1.      WEB is a point-and-click interface for display and 
+     interaction with SPIDER images and data.  Web is written in C
+     for the  MOTIF/X-WINDOW system.  This is an early distribution
+     which is under active development and we invite comments on 
+     bugs or performance issues.
+
+        The WEB executable binary should run on SGI machines.  
+     If you have a  non-SGI computer you will need MOTIF development
+     software  on your computer to be able to recompile and link the 
+     MOTIF based WEB code.     
+      
+2.   INSTALLATION OF THE WEB MODULE.
+
+  A. LOADING THE TAPE
+     Code is distributed on QIC 150 tapes in tar format.
+     To load the tape use the following commands:
+
+     cd PARENT-DIR.     (where PARENT-DIR is parent for desired 
+                         location of WEB)
+     mkdir web          (creates a new sub-directory for WEB)
+     tar xv  web        (assumes environmental variable TAPE has been 
+                         defined for your system) 
+      
+
+     The web directory contains a makefile which compiles the 
+     source code, places the object code in a library,  links 
+     the object code, and creates an executable binary file web.
+     If the executable file which we provide does not run correctly
+     use the following commands:
+
+        a)   cd YOUR-WEB_DIR
+             rm web
+             make
+ 
+        b) if the executable from the above step does not run: 
+             cd YOUR-WEB_DIR
+             rm web.a
+             make
+
+        c) if the executable from the above step does not run and
+           you are on a SGI machine contact us at address below. 
+
+   B.  OTHER INSTALLATION TASKS
+     
+     a.   Place the directory YOUR_WEB_DIR in your PATH in
+          your shell startup file (often .cshrc) so that
+          your system can locate the executable file when
+          you type web.  Alternatively you can define an
+          alias for the web location.
+
+     b.   If you have SPIDER color look-up-tables which you wish
+          to use in WEB you will have to set an environment variable
+          for ther location:
+             setenv SPRGB_DIR  "YOUR_RGB_FILE_DIR/*.RGB"
+
+          Sample color look-up-tables are provided in the rgb 
+          sub-directory of web.
+
+
+3. RUNNING WEB:
+ 
+           web
+           USE MOUSE TO SELECT MENU ITEMS FROM PULL-DOWN MENUS
+
+           Some further information on the use of web is given
+           in web.man which is currently being expanded.
+
+4. BUGS, SUGGESTIONS:
+
+          Please send bug reports to:
+
+              ArDean Leith
+              phone: 518-474-7049 or 518-474-6516
+              fax:   518-474-7992
+              email: DLSPIDER@tethys.ph.albany.edu

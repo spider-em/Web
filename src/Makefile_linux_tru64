@@ -43,20 +43,43 @@ $(LIB) :  $(ELEMENTS)
 	@echo " Linking: $(PGM)    now ----"
 
 
-# lumpur        
-0       /usr/lib/libX11-xcb.so.1       
-0       /usr/lib/libXext.so.6          
-0       /usr/lib/libXau.so.6           
-0       /usr/lib/libX11.so.6 
+# ************* lumpur        
+# 0       /usr/lib/libX11-xcb.so.1       
+# 0       /usr/lib/libXext.so.6          
+# 0       /usr/lib/libXau.so.6           
+# 0       /usr/lib/libX11.so.6 
+# 
+# 
+# 0       /usr/lib/libX11.so.6
+# 0       /usr/lib64/libXt.so
+# 0       /usr/lib64/libX11.so
+# 0       /usr/lib64/libXmu.so
+#   
+# send/web/bin:        
+# linux_dir    dynamic  flashes
+# linux_dirs   static   flashes
+# linux_tru    dynamic
+# linux_trus   static   
+# 
+#***************
+# 2015-09-24 11:55 web_linux_trus.62
+# 2015-09-24 11:55 web_linux_dir.62
+# 2015-09-24 11:55 web_linux_dirs.62
+# 2015-09-24 12:00 web_linux_tru64.62
+#
+#tulasi 212% make -f Makefile_linux_tru64
+#        linking ../bin/web_linux_tru64
+#cc   libweb_linux_tru64.a -u main -lXm -lXt -lX11 -lXmu -lm     -o ../bin/web_linux_tru64_tmp
+# Created:  ../bin/web_linux_tru64_tmp
+#tulasi 213% ldd ../bin/web_linux_tru64_tmp
+#        linux-vdso.so.1 (0x00007ffeb0354000)
+#        libXm.so.4 => /usr/lib64/libXm.so.4 (0x00002b9cfe6b9000)
+#        libXt.so.6 => /usr/lib64/libXt.so.6 (0x00002b9cfeb86000)
+#        libX11.so.6 => /usr/lib64/libX11.so.6 (0x00002b9cfeded000)
+#        libXmu.so.6 => /usr/lib64/libXmu.so.6 (0x00002b9cff12b000)
+#        libm.so.6 => /lib64/libm.so.6 (0x00002b9cff346000)
+#        libc.so.6 => /lib64/libc.so.6 (0x00002b9cff647000)
+#        libXext.so.6 => /usr/lib64/libXext.so.6 (0x00002b9cff9f1000)
+#        libXp.so.6 => /usr/lib64/libXp.so.6 (0x00002b9cffc03000)
 
 
-0       /usr/lib/libX11.so.6
-0       /usr/lib64/libXt.so
-0       /usr/lib64/libX11.so
-0       /usr/lib64/libXmu.so
-  
-send/web/bin:        
-linux_dir    dynamic  flashes
-linux_dirs   static   flashes
-linux_tru    dynamic
-linux_trus   static   

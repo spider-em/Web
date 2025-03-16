@@ -1,4 +1,4 @@
-head	1.5;
+head	1.6;
 access;
 symbols
 	pre-bollinger:1.4
@@ -11,6 +11,11 @@ symbols
 locks;
 comment	@ * @;
 
+
+1.6
+date	2025.03.13.20.22.36;	author dean;	state Exp;
+branches;
+next	1.5;
 
 1.5
 date	2018.12.07.16.50.40;	author leith;	state Exp;
@@ -42,9 +47,9 @@ desc
 @@
 
 
-1.5
+1.6
 log
-@bollingers_email_cosmetic
+@idispl.
 @
 text
 @
@@ -54,8 +59,11 @@ text
  *
  ***********************************************************************
  C=* FROM: WEB - VISUALIZER FOR SPIDER MODULAR IMAGE PROCESSING SYSTEM *
- C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+ C=* Copyright (C) 1992-2005  Health Research Inc.                     *
+ C=*                                                                   *
+ C=* HEALTH RESEARCH INCORPORATED (HRI),                               *   
  C=* ONE UNIVERSITY PLACE, RENSSELAER, NY 12144-3455.                  *
+ C=*                                                                   *
  C=* Email:  spider@@wadsworth.org                                      *
  C=*                                                                   *
  C=* This program is free software; you can redistribute it and/or     *
@@ -94,8 +102,8 @@ text
 #include "std.h"
 #include "x.h"
 #include "routines.h"
-#include "common.h"
 
+extern Display *idispl;
 
 /**********************************************************************/
 void action(Widget iw_t, char *event, char *act_name, char *params)
@@ -119,6 +127,21 @@ void action(Widget iw_t, char *event, char *act_name, char *params)
                          (strcat(tmp_event,
                                  strcat(tmp_act_name, params))));
    }
+@
+
+
+1.5
+log
+@bollingers_email_cosmetic
+@
+text
+@d8 3
+a10 1
+ C=* Copyright (C) 1992-2018  Health Research Inc.                     *
+d12 1
+a50 1
+#include "common.h"
+d52 1
 @
 
 

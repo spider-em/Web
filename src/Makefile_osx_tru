@@ -1,0 +1,40 @@
+# 
+# PURPOSE:  MAKEFILE FOR OSX WEB Using 24 bit TrueColor Visual 
+#           Byteswaps images for compatibility with SGI 
+#           Uses the GNU gcc compiler & X/Motif libraries
+# 
+#  USAGE:   make -f Makefile_osx_tru
+#           swt ; clean ; /web/bin/web_osx_tru_tmp dat
+#
+# Use Gnu compiler
+CC = cc
+
+# Define compiler flags & header include locations
+# Define cpp variable P_SGIOSF to use byte-swapped images from SGI
+# Define cpp variable WEB_BGFG to overcome KDE & Gnome WM focus bug
+CFLAGS = -DFUNCPROTO -O2 -DP_SGIOSF -DWEB_TRUE -DWEB_BGFG -I/usr/X11R6/include -I $(MOTIF_BASE)/include
+
+LF     = -arch i386 -L/usr/X11R6/lib -L$(MOTIF_BASE)/lib 
+
+PGM    = web_osx_tru
+
+LIB    = lib$(PGM).a
+
+# Path for (Open)motif
+MOTIF_BASE = osx-motif/openmotif
+
+# Static link for Motif library: libXm.a 
+MOTIFLIBS = $(MOTIF_BASE)/lib/libXm.a -lXp -lXext -liconv 
+
+OTHERLIBS = $(MOTIFLIBS) -lXt -lX11 -lXmu -lm 
+
+.PRECIOUS : $(LIB) $(PGM)
+
+include Makefile.inc
+
+# Can not use Makebody.inc as it has "-u main"
+../bin/$(PGM) :  $(LIB)
+	@echo "         linking now --"
+	$(CC) $(LF) $(LIB) $(OTHERLIBS) -o ../bin/$(PGM)
+
+$(LIB) :  $(ELEMENTS)
