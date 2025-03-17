@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>JWeb : Installation on Linux</title>
+</head>
+
+<body>
+
+<ol>
+<h3><li><a name="general">INTRODUCTION </a></li></h3>
+    JWeb is a point-and-click interface for display and interaction
+    with SPIDER images and data written by <b>Dr. Bimal Rath</b>.  
+    JWeb is written in Java was developed and tested on  Linux, SGi Irix &
+    Windows computers. </p>
+
+<h3><li><a name="loading">LOADING JWeb</a><br />
+        (Probably has already been done if you have installed SPIDERweb or Web)</h3>
+
+   <ol>
+   <li><b> <a href="https://github.com/spider-em/Web/releases">Download</a>  
+        and uncompress the Web distribution and place it in
+        an appropriate directory: <i>PARENT-DIR</i>.</b>
+   <p />
+
+   <p>The following <i>JWeb</i> related files will be created under: 
+       <i>PARENT-DIR/web/jweb</i> 
+  
+   <table border="1" cellpadding="4" cellspacing="4">
+    <tr><th halign="left">File</th>                       <th halign="left">Contents </th> </tr> 
+    <tr><td>src </td>                                     <td>Jweb source code </td>       </tr>  
+    <tr><td>WEB.jar </td>                                 <td>Linux Jweb Java archive</td> </tr>
+    <tr><td>jweb-inst-linux.html </td>                    <td>Linux Jweb Java archive</td> </tr>
+    <tr><td> web.cshrc </td>                              <td> Jweb 'C' shell env. variables</td></tr>  
+   </table>
+   </ol>
+   </li>
+
+
+<h3><li><a name="installation"> INSTALLATION </a></li></h3>
+   
+   <p> Most Linux distributions install a <i>Java Run Time Environment</i> (JRE) by  default. 
+       If teh Java Advanced Imaging Run Time Environment</i> (JAI) is not already present
+       you can install a second 
+       <i>JRE</i> containing <i>JAI</i> as described in the an earlier web release: 
+       <a href="https://github.com/spider-em/Web/releases"> v26-04 </a>. Since this release is large
+       it is no longer included.  You may extract the java-libraries from: 
+       <a href="https://github.com/spider-em/Web/releases"> v26-04 </a> and place them in your
+       current Jweb directory. </p>
+
+    <p> If so the Jweb directory will have the additional contents:
+
+       <table border="1" cellpadding="4" cellspacing="4">
+       <tr><th halign="left">File</th>                          <th halign="left">Contents </th> </tr> 
+       <tr><td>java-libraries/font.properties">font.properties </td> <td>Linux Jweb fonts</td>   </tr>  
+       <tr><td>java-libraries/j2re-1_4_2_06-linux-i586.bin </td>     <td>JRE install script</td> </tr>
+       <tr><td>java-libraries/j2re1.4.3_06                           </td><td>JAI install script</td> </tr>
+       <tr><td>java-libraries/jai-1_1_2_06-lib-linux-i586-jre.bin    </td><td>JAI install script</td>     
+       </table>
+     </p>
+
+     <dl> 
+     <ol>
+     <li> <p>  To install the ancient JRE and JAI:
+           <ol>
+           <li> Access your Jweb directory:                     <br />
+                <b>cd web/jweb/java-libraries/                  </b>
+           </li> 
+
+          <li> Install the <i>JRE</i> included with JWeb by executing: <br />
+                 <b> j2re-1_4_2_06-linux-i586.bin</b>             <br />
+          </li>  
+
+          <li> Install <i>JAI</i> in the new Java directory:     <br />
+                  <b> cd j2re1.4.2_06 </b>                        <br /> 
+                  <b> ../jai-1_1_2_01-lib-linux-i586-jre.bin</b>  <br />
+          </li>
+    
+          <li> Return to the Jweb directory:                      <br />
+                  <b> cd .. </b>                                  <br /> 
+          </li></p>
+          </ol>
+      </dl>
+
+    <p> <li>
+    Set necessary environment variables and alias for Jweb usage under Java. <br />
+    If you are  using the 'C' shell, edit the first non-comment line in: 
+    <a href="../jweb/linux/jweb.cshrc">jweb.cshrc</a> and create a
+    <i>$JWEB_DIR</i> environment variable specifying location for <i>JWeb</i> on your system i.e.:<br />
+    setenv &nbsp; JWEB_DIR &nbsp;   <b> Enter_path_of_your_JWeb_directory_here </b><br /> 
+    Then place the edited contents of <a href="../jweb/linux/jweb.cshrc">jweb.cshrc</a> 
+    in the <i>.cshrc</i> startup file in your home directory .<br /> 
+    </li>
+
+    <p><li>
+    <dt> The previous step will also create alias, 'jweb', for starting <i>JWeb</i> with a 
+    maximum amount <i>-Xmx512m</i> of memory allowed. You may adjust this amount 
+    to suit your computer.<br />
+    </li></p>
+
+    <p><li>
+    If you are not using a 'C' shell then you will have to alter the last two 
+    steps as appropriate for your shell.
+    </li></p>
+
+    </ol>
+
+<h3><li><a name="testing"> TESTING</a></li></h3>
+ 
+    <dl>
+    <p><dt>Test <i>JWeb</i> : </dt>
+    <dd><b>jweb </b></dd> 
+    <dd><b>USE MOUSE TO SELECT MENU ITEMS FROM PULL-DOWN MENUS </b></dd> 
+    </dl></p>
+
+    <dl>
+    <p><dt>Further information on the use of JWeb is given in the   
+    <a href="jweb.html">JWeb manual</a>. </p></dt>
+    </dl></p>
+
+    <p><dl> 
+      <dt>If you get an error message like: 
+      <i>Exception in thread "GtkMain" java.lang.UnsatisfiedLinkError: gtkInit ... ....</i> </dt>
+      <dd>You are not using the Java run time environment packaged with JWeb. Unknown error.</dd>
+    </dl> </p>
+    </dl>
+  
+</ol>
+
+<hr>
+
+<small> 
+Source: jweb-inst-linux.html   &nbsp;&nbsp;&nbsp; 
+Last update: 3/17/25           &nbsp;&nbsp;&nbsp;&nbsp;
+</small>
+
+</body> 
+</html>
+
+
+
+

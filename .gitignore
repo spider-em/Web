@@ -4,3 +4,6 @@ libs
 xlibs
 utils
 releases
+*.jar
+java-libraries
+j2re*
